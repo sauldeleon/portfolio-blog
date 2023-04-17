@@ -1,5 +1,10 @@
 {
+  "name": "portfolio-blog",
   "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
@@ -7,15 +12,11 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "eslint": "^7.32.0",
+    "eslint": "8.38.0",
     "eslint-config-custom": "*",
-    "prettier": "^2.5.1",
+    "jest": "29.5.0",
+    "prettier": "2.8.7",
     "turbo": "latest"
   },
-  "name": "repo",
-  "packageManager": "yarn@1.22.19",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+  "packageManager": "yarn@3.5.0"
 }
