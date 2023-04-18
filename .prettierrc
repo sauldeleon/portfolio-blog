@@ -1,0 +1,8 @@
+{
+  "singleQuote": true,
+  "semi": false,
+  "importOrderParserPlugins": ["importAssertions", "typescript", "jsx"],
+  "importOrder": ["^web/(.*)$", "^ui/(.*)$", "^[^.]", "^[./]"],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
+}
