@@ -1,11 +1,11 @@
-'use client';
+'use client'
 
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 const StyledPage = styled.div`
   .page {
   }
-`;
+`
 
 export default async function Index() {
   /*
@@ -419,5 +419,5 @@ export default async function Index() {
         </div>
       </div>
     </StyledPage>
-  );
+  )
 }
