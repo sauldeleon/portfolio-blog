@@ -1,0 +1,31 @@
+diff --git a/node_modules/@trivago/prettier-plugin-sort-imports/lib/src/index.js b/node_modules/@trivago/prettier-plugin-sort-imports/lib/src/index.js
+index e6f5c69..c7f8185 100644
+--- a/node_modules/@trivago/prettier-plugin-sort-imports/lib/src/index.js
++++ b/node_modules/@trivago/prettier-plugin-sort-imports/lib/src/index.js
+@@ -18,6 +18,12 @@ var parser_html_1 = require("prettier/parser-html");
+ var default_processor_1 = require("./preprocessors/default-processor");
+ var vue_preprocessor_1 = require("./preprocessors/vue-preprocessor");
+ var options = {
++  importOrderDisabled: {
++    type: 'boolean',
++    category: 'Global',
++    default: false,
++    description: 'Disable sort ordering of imports.',
++  },
+     importOrder: {
+         type: 'path',
+         category: 'Global',
+diff --git a/node_modules/@trivago/prettier-plugin-sort-imports/lib/src/preprocessors/default-processor.js b/node_modules/@trivago/prettier-plugin-sort-imports/lib/src/preprocessors/default-processor.js
+index 391a130..5d9f8a5 100644
+--- a/node_modules/@trivago/prettier-plugin-sort-imports/lib/src/preprocessors/default-processor.js
++++ b/node_modules/@trivago/prettier-plugin-sort-imports/lib/src/preprocessors/default-processor.js
+@@ -3,6 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
+ exports.defaultPreprocessor = void 0;
+ var preprocessor_1 = require("./preprocessor");
+ function defaultPreprocessor(code, options) {
++  if (options.importOrderDisabled) {
++    return code;
++  }
+     var _a;
+     if ((_a = options.filepath) === null || _a === void 0 ? void 0 : _a.endsWith('.vue'))
+         return code;
