@@ -2534,6 +2534,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nx-go/nx-go@npm:2.7.0":
+  version: 2.7.0
+  resolution: "@nx-go/nx-go@npm:2.7.0"
+  dependencies:
+    fs-extra: ^9.1.0
+  checksum: 6986a8c56cde3c859e31226f4e28f1e766987f51bd8b423e2ee4b0e62bca4134c6fbf5b72720bff7fad92c9cc82905b2c02f54df4e7447721257579f1e17349b
+  languageName: node
+  linkType: hard
+
 "@nx/cypress@npm:16.5.0":
   version: 16.5.0
   resolution: "@nx/cypress@npm:16.5.0"
@@ -2892,6 +2901,7 @@ __metadata:
   dependencies:
     "@commitlint/cli": 17.6.6
     "@commitlint/config-conventional": 17.6.6
+    "@nx-go/nx-go": 2.7.0
     "@nx/cypress": 16.5.0
     "@nx/eslint-plugin": 16.5.0
     "@nx/jest": 16.5.0

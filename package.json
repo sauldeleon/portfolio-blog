@@ -13,6 +13,7 @@
     "test:all": "nx run-many --all --target=test --exclude='*-e2e'",
     "analyse:web": "ANALYZE=true yarn build:web",
     "affected": "nx affected",
+    "affected:build": "nx affected:build --exclude='*-e2e'",
     "format:write": "nx format:write",
     "format:check": "nx format:check",
     "update": "nx migrate latest",
@@ -33,6 +34,7 @@
   "devDependencies": {
     "@commitlint/cli": "17.6.6",
     "@commitlint/config-conventional": "17.6.6",
+    "@nx-go/nx-go": "2.7.0",
     "@nx/cypress": "16.5.0",
     "@nx/eslint-plugin": "16.5.0",
     "@nx/jest": "16.5.0",
