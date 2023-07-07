@@ -1,7 +1,0 @@
-{
-  "singleQuote": true,
-  "semi": false,
-  "importOrder": ["<THIRD_PARTY_MODULES>", "^@nx/(.*)$", "^[./]"],
-  "importOrderSeparation": true,
-  "importOrderSortSpecifiers": true
-}
