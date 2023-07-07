@@ -1,13 +1,19 @@
 {
-  "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "nx-cloud",
-      "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"],
-        "accessToken": "M2JjNmZlNzQtZmE3OC00ZTg5LWFlNTgtODUzMDMzMmIyMTY0fHJlYWQtd3JpdGU="
-      }
-    }
+  "implicitDependencies": {
+    "go.mod": "*"
+  },
+  "plugins": ["@nx-go/nx-go"],
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "production": [
+      "default",
+      "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
+      "!{projectRoot}/tsconfig.spec.json",
+      "!{projectRoot}/jest.config.[jt]s",
+      "!{projectRoot}/src/test-setup.[jt]s",
+      "!{projectRoot}/.eslintrc.json"
+    ],
+    "sharedGlobals": []
   },
   "targetDefaults": {
     "build": {
@@ -28,17 +34,14 @@
       ]
     }
   },
-  "namedInputs": {
-    "default": ["{projectRoot}/**/*", "sharedGlobals"],
-    "production": [
-      "default",
-      "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
-      "!{projectRoot}/tsconfig.spec.json",
-      "!{projectRoot}/jest.config.[jt]s",
-      "!{projectRoot}/src/test-setup.[jt]s",
-      "!{projectRoot}/.eslintrc.json"
-    ],
-    "sharedGlobals": []
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "nx-cloud",
+      "options": {
+        "cacheableOperations": ["build", "lint", "test", "e2e"],
+        "accessToken": "M2JjNmZlNzQtZmE3OC00ZTg5LWFlNTgtODUzMDMzMmIyMTY0fHJlYWQtd3JpdGU="
+      }
+    }
   },
   "generators": {
     "@nx/react": {
