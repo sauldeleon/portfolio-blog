@@ -1,8 +1,5 @@
 {
-  "cSpell.words": ["roboto", "sdlgr"],
-  "i18n-ally.localesPaths": ["apps/web/i18n/locales"],
-  "i18n-ally.defaultNamespace": "",
-  "i18n-ally.disabled": false,
+  "cSpell.words": ["roboto", "sawl", "sdlgr"],
   "i18n-ally.autoDetection": true,
-  "i18n-ally.disablePathParsing": false
+  "i18n-ally.localesPaths": ["apps/web/i18n/locales"]
 }

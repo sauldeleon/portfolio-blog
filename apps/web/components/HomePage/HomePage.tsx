@@ -4,8 +4,8 @@ import { useTranslation } from '@web/i18n/client'
 
 import { StyledHeading, StyledPage } from './HomePage.styles'
 
-export function HomePage({ lng }: { lng: string }) {
-  const { t } = useTranslation(lng)
+export function HomePage() {
+  const { t } = useTranslation()
   return (
     <StyledPage>
       <StyledHeading>{t('underConstruction')}</StyledHeading>

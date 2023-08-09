@@ -3553,6 +3553,7 @@ __metadata:
     "@trivago/prettier-plugin-sort-imports": 4.2.0
     "@types/circular-dependency-plugin": ^5
     "@types/jest": 29.5.3
+    "@types/js-cookie": ^3
     "@types/node": 20.4.8
     "@types/react": 18.2.19
     "@types/react-dom": 18.2.7
@@ -3581,6 +3582,7 @@ __metadata:
     i18next-resources-to-backend: 1.1.4
     jest: 29.6.2
     jest-environment-jsdom: 29.6.2
+    js-cookie: 3.0.5
     lint-staged: 13.2.3
     next: 13.4.13
     npm-check-updates: 16.10.18
@@ -4124,6 +4126,13 @@ __metadata:
     expect: ^29.0.0
     pretty-format: ^29.0.0
   checksum: e36bb92e0b9e5ea7d6f8832baa42f087fc1697f6cd30ec309a07ea4c268e06ec460f1f0cfd2581daf5eff5763475190ec1ad8ac6520c49ccfe4f5c0a48bfa676
+  languageName: node
+  linkType: hard
+
+"@types/js-cookie@npm:^3":
+  version: 3.0.3
+  resolution: "@types/js-cookie@npm:3.0.3"
+  checksum: 927254ec37ce4fbe4d9d54f53a446b4351259799d9933db5808ddb7c430396aa2496bdd0a4e47e1b56048ffbec98645cbd4daa9e3ed9a6fff55e25eb640fcb15
   languageName: node
   linkType: hard
 
@@ -10356,6 +10365,13 @@ __metadata:
   version: 1.4.0
   resolution: "jju@npm:1.4.0"
   checksum: 3790481bd2b7827dd6336e6e3dc2dcc6d425679ba7ebde7b679f61dceb4457ea0cda330972494de608571f4973c6dfb5f70fab6f3c5037dbab19ac449a60424f
+  languageName: node
+  linkType: hard
+
+"js-cookie@npm:3.0.5":
+  version: 3.0.5
+  resolution: "js-cookie@npm:3.0.5"
+  checksum: 2dbd2809c6180fbcf060c6957cb82dbb47edae0ead6bd71cbeedf448aa6b6923115003b995f7d3e3077bfe2cb76295ea6b584eb7196cca8ba0a09f389f64967a
   languageName: node
   linkType: hard
 

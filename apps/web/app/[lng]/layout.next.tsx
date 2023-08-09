@@ -1,11 +1,12 @@
 import { dir } from 'i18next'
 
 import StyledComponentsRegistry from '@web/components/StyledComponentsRegistry/StyledComponentsRegistry'
+import { LanguageContextProvider } from '@web/context/LanguageProvider'
 import { languages } from '@web/i18n/settings'
 
 export const metadata = {
   title: 'Saúl de León Guerrero',
-  description: 'My personal Web Developer Portfolio',
+  description: 'My personal Portfolio',
 }
 
 export async function generateStaticParams() {
@@ -39,7 +40,11 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+        <StyledComponentsRegistry>
+          <LanguageContextProvider value={{ language: lng }}>
+            {children}
+          </LanguageContextProvider>
+        </StyledComponentsRegistry>
       </body>
     </html>
   )

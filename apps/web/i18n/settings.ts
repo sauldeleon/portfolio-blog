@@ -1,5 +1,8 @@
+import { InitOptions } from 'i18next'
+
 import common from './locales/en/common.json'
 
+export const LANGUAGE_COOKIE = 'i18nextLng'
 export const fallbackLng = 'en'
 export const languages = [fallbackLng, 'es']
 export const defaultNS = 'common'
@@ -13,7 +16,7 @@ export const resources = {
 export function getOptions(
   lng = fallbackLng,
   ns: string | string[] = defaultNS
-) {
+): InitOptions {
   return {
     // debug: true,
     supportedLngs: languages,
