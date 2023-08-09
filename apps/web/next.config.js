@@ -1,9 +1,8 @@
 //@ts-check
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { composePlugins, withNx } = require('@nx/next')
 
-const locales = ['default', 'en', 'es']
+const locales = ['en', 'es']
 
 /**
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
@@ -14,7 +13,6 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: true,
   },
-
   compiler: {
     // For other options, see https://styled-components.com/docs/tooling#babel-plugin
     styledComponents: true,
@@ -30,11 +28,6 @@ const nextConfig = {
     minimumCacheTTL: 3600,
     domains: ['localhost'],
     disableStaticImages: true,
-  },
-  i18n: {
-    locales,
-    defaultLocale: 'default',
-    localeDetection: false,
   },
   async rewrites() {
     return {
