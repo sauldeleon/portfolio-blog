@@ -1,4 +1,8 @@
 {
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "affected": {
+    "defaultBase": "origin/main"
+  },
   "implicitDependencies": {
     "go.mod": "*"
   },
@@ -15,6 +19,7 @@
     ],
     "sharedGlobals": []
   },
+  "defaultProject": "web",
   "targetDefaults": {
     "build": {
       "dependsOn": ["^build"],
@@ -47,6 +52,9 @@
     "@nx/react": {
       "application": {
         "babel": true
+      },
+      "library": {
+        "unitTestRunner": "jest"
       }
     },
     "@nx/next": {

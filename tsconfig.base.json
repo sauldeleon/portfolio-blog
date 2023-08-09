@@ -14,7 +14,12 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@sdlgr/assets": ["libs/assets/src/index.ts"],
+      "@sdlgr/main-theme": ["libs/main-theme/src/index.ts"],
+      "@sdlgr/test-utils": ["libs/test-utils/src/index.ts"],
+      "@web/*": ["apps/web/*"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HomePage should render successfully 1`] = `
+<body>
+  <div>
+    <div
+      class="sc-bcPKhP kSIvGB"
+    >
+      <h1
+        class="sc-grXZZQ leXWRB"
+      >
+        Under construction
+      </h1>
+      <svg>
+        slLogo.svg
+      </svg>
+    </div>
+  </div>
+</body>
+`;

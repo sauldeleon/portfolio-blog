@@ -2,9 +2,17 @@
 
 import { useServerInsertedHTML } from 'next/navigation'
 import React, { useState } from 'react'
-import { ServerStyleSheet, StyleSheetManager } from 'styled-components'
+import {
+  ServerStyleSheet,
+  StyleSheetManager,
+  ThemeProvider,
+} from 'styled-components'
 
-export function StyledComponentsRegistry({
+import { mainTheme } from '@sdlgr/main-theme'
+
+import { GlobalStyles } from '@web/components/GlobalStyles/GlobalStyles'
+
+export default function StyledComponentsRegistry({
   children,
 }: {
   children: React.ReactNode
@@ -15,19 +23,22 @@ export function StyledComponentsRegistry({
 
   useServerInsertedHTML(() => {
     const styles = styledComponentsStyleSheet.getStyleElement()
-
-    // Types are out of date, clearTag is not defined.
-    // See: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/65021
-    ;(styledComponentsStyleSheet.instance as any).clearTag()
-
+    styledComponentsStyleSheet.instance.clearTag()
     return <>{styles}</>
   })
 
-  if (typeof window !== 'undefined') return <>{children}</>
+  const styledLayout = (
+    <ThemeProvider theme={mainTheme}>
+      <GlobalStyles />
+      {children}
+    </ThemeProvider>
+  )
+
+  if (typeof window !== 'undefined') return styledLayout
 
   return (
     <StyleSheetManager sheet={styledComponentsStyleSheet.instance}>
-      {children}
+      {styledLayout}
     </StyleSheetManager>
   )
 }
