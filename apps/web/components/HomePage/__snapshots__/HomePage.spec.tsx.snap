@@ -1,19 +1,168 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`HomePage should render successfully 1`] = `
+.c5 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 400;
+  color: #FFFFFF;
+  font-size: 3rem;
+  line-height: normal;
+  margin: 0;
+}
+
+.c7 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 400;
+  color: #FFFFFF;
+  font-size: 1.5rem;
+  line-height: normal;
+  margin: 0;
+}
+
+.c3 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 400;
+  color: #FFFFFF;
+  font-size: 0.9rem;
+  line-height: normal;
+  white-space: pre-line;
+}
+
+.c3 ul,
+.c3 ol {
+  margin-left: 40px;
+  margin-bottom: 10px;
+}
+
+.c3 ul {
+  list-style: outside disc;
+}
+
+.c3 ol {
+  list-style: decimal;
+}
+
+.c3 li {
+  padding-left: 10px;
+}
+
+.c1 {
+  height: 115px;
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+}
+
+.c2 {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  justify-content: center;
+  gap: 60px;
+}
+
+.c0 {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.c4 {
+  display: flex;
+  min-height: calc(100vh - 115px);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.c6 {
+  margin-bottom: 50px;
+}
+
 <body>
   <div>
     <div
-      class="sc-bcPKhP kSIvGB"
+      class="c0"
     >
-      <h1
-        class="sc-grXZZQ leXWRB"
+      <nav
+        class="c1"
       >
-        Under construction
-      </h1>
-      <svg>
-        slLogo.svg
-      </svg>
+        <a
+          href="/"
+        >
+          <svg
+            height="55"
+          >
+            slLogo.svg
+          </svg>
+        </a>
+        <ul
+          class="c2"
+        >
+          <li
+            class=""
+          >
+            <a
+              href="/experience"
+            >
+              <p
+                class="c3"
+              >
+                Experience
+              </p>
+            </a>
+          </li>
+          <li
+            class=""
+          >
+            <a
+              href="/contact"
+            >
+              <p
+                class="c3"
+              >
+                Contact
+              </p>
+            </a>
+          </li>
+          <li
+            class=""
+          >
+            <a
+              href="/portfolio"
+            >
+              <p
+                class="c3"
+              >
+                CV/Portfolio
+              </p>
+            </a>
+          </li>
+        </ul>
+        <button>
+          Get in touch
+        </button>
+      </nav>
+      <div
+        class="c4"
+      >
+        <h1
+          class="c5 c6"
+        >
+          Saúl de León Guerrero
+        </h1>
+        <h2
+          class="c7 c6"
+        >
+          Under construction
+        </h2>
+        <svg>
+          slLogo.svg
+        </svg>
+      </div>
     </div>
   </div>
 </body>

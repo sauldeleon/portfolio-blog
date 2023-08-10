@@ -1,6 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Layout should render successfully 1`] = `
+exports[`Page should render successfully 1`] = `
+.c5 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 400;
+  color: #FFFFFF;
+  font-size: 3rem;
+  line-height: normal;
+  margin: 0;
+}
+
+.c7 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 400;
+  color: #FFFFFF;
+  font-size: 1.5rem;
+  line-height: normal;
+  margin: 0;
+}
+
 .c3 {
   font-family: 'Roboto mono',monospace;
   font-weight: 400;
@@ -58,6 +76,10 @@ exports[`Layout should render successfully 1`] = `
   align-items: center;
   justify-content: center;
   flex-direction: column;
+}
+
+.c6 {
+  margin-bottom: 50px;
 }
 
 <body>
@@ -127,7 +149,19 @@ exports[`Layout should render successfully 1`] = `
       <div
         class="c4"
       >
-        test
+        <h1
+          class="c5 c6"
+        >
+          Saúl de León Guerrero
+        </h1>
+        <h2
+          class="c7 c6"
+        >
+          Under construction
+        </h2>
+        <svg>
+          slLogo.svg
+        </svg>
       </div>
     </div>
   </div>

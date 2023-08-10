@@ -30,29 +30,29 @@ describe('mainTheme', () => {
           "robotoMono": {
             "light": [
               "font-family:",
-              "'Roboto Mono', monospace",
+              "'Roboto mono', monospace",
               ";font-weight:300;",
             ],
             "medium": [
               "font-family:",
-              "'Roboto Mono', monospace",
+              "'Roboto mono', monospace",
               ";font-weight:500;",
             ],
             "regular": [
               "font-family:",
-              "'Roboto Mono', monospace",
+              "'Roboto mono', monospace",
               ";font-weight:400;",
             ],
             "thin": [
               "font-family:",
-              "'Roboto Mono', monospace",
+              "'Roboto mono', monospace",
               ";font-weight:100;",
             ],
           },
         },
         "fonts": {
           "baseSize": 20,
-          "bodyFont": "'Roboto Mono', monospace",
+          "bodyFont": "'Roboto mono', monospace",
         },
         "helpers": {
           "noLinkUnderline": [
@@ -90,7 +90,7 @@ describe('mainTheme', () => {
           "body": {
             "L": [
               "font-family:",
-              "'Roboto Mono', monospace",
+              "'Roboto mono', monospace",
               ";font-weight:400;",
               " color:",
               "#FFFFFF",
@@ -100,7 +100,7 @@ describe('mainTheme', () => {
             ],
             "M": [
               "font-family:",
-              "'Roboto Mono', monospace",
+              "'Roboto mono', monospace",
               ";font-weight:400;",
               " color:",
               "#FFFFFF",
@@ -110,7 +110,7 @@ describe('mainTheme', () => {
             ],
             "S": [
               "font-family:",
-              "'Roboto Mono', monospace",
+              "'Roboto mono', monospace",
               ";font-weight:400;",
               " color:",
               "#FFFFFF",
@@ -122,7 +122,7 @@ describe('mainTheme', () => {
           "heading": {
             "heading1": [
               "font-family:",
-              "'Roboto Mono', monospace",
+              "'Roboto mono', monospace",
               ";font-weight:400;",
               " color:",
               "#FFFFFF",
@@ -132,7 +132,7 @@ describe('mainTheme', () => {
             ],
             "heading2": [
               "font-family:",
-              "'Roboto Mono', monospace",
+              "'Roboto mono', monospace",
               ";font-weight:400;",
               " color:",
               "#FFFFFF",
@@ -144,7 +144,7 @@ describe('mainTheme', () => {
           "label": {
             "L": [
               "font-family:",
-              "'Roboto Mono', monospace",
+              "'Roboto mono', monospace",
               ";font-weight:500;",
               " color:",
               "#FFFFFF",
@@ -154,7 +154,7 @@ describe('mainTheme', () => {
             ],
             "XS": [
               "font-family:",
-              "'Roboto Mono', monospace",
+              "'Roboto mono', monospace",
               ";font-weight:500;",
               " color:",
               "#FFFFFF",

@@ -1,3 +1,5 @@
+'use client'
+
 import { SLLogo } from '@sdlgr/assets'
 
 import { useTranslation } from '@web/i18n/client'
@@ -10,7 +12,9 @@ export function HomePage() {
   return (
     <Layout>
       <StyledHeading>Saúl de León Guerrero</StyledHeading>
-      <StyledHeading $level={2}>{t('underConstruction')}</StyledHeading>
+      <StyledHeading as="h2" $level={2}>
+        {t('underConstruction')}
+      </StyledHeading>
       <SLLogo />
     </Layout>
   )

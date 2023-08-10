@@ -3,19 +3,27 @@
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
     "module": "commonjs",
-    "types": ["jest", "node"],
-    "jsx": "react"
+    "types": [
+      "jest",
+      "@testing-library/jest-dom",
+      "@testing-library/jest-dom/extend-expect",
+      "jest-styled-components",
+      "node"
+    ],
+    "jsx": "react-jsx",
+    "lib": ["DOM", "ES2022", "dom.iterable"],
+    "target": "ES2020"
   },
   "include": [
-    "jest.config.ts",
-    "src/**/*.test.ts",
-    "src/**/*.spec.ts",
-    "src/**/*.test.tsx",
-    "src/**/*.spec.tsx",
-    "src/**/*.test.js",
-    "src/**/*.spec.js",
-    "src/**/*.test.jsx",
-    "src/**/*.spec.jsx",
-    "src/**/*.d.ts"
+    "**/*.spec.ts",
+    "**/*.test.ts",
+    "**/*.spec.tsx",
+    "**/*.test.tsx",
+    "**/*.spec.js",
+    "**/*.test.js",
+    "**/*.spec.jsx",
+    "**/*.test.jsx",
+    "**/*.d.ts",
+    "./types"
   ]
 }
