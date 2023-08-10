@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
+import { Heading } from '@sdlgr/typography'
+
 export const StyledPage = styled.div`
   height: 100vh;
   width: 100%;
@@ -9,7 +11,6 @@ export const StyledPage = styled.div`
   flex-direction: column;
 `
 
-export const StyledHeading = styled.h1`
-  ${({ theme }) => theme.typography.heading.heading1};
+export const StyledHeading = styled(Heading)`
   margin-bottom: 50px;
 `
