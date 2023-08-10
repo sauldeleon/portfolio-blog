@@ -1,23 +1,33 @@
 import { dir } from 'i18next'
+import { ScriptProps } from 'next/script'
+import { Metadata, ResolvingMetadata } from 'next/types'
 
 import StyledComponentsRegistry from '@web/components/StyledComponentsRegistry/StyledComponentsRegistry'
 import { LanguageContextProvider } from '@web/context/LanguageProvider'
+import { getTranslation } from '@web/i18n'
 import { languages } from '@web/i18n/settings'
-
-export const metadata = {
-  title: 'Saúl de León Guerrero',
-  description: 'My personal Portfolio',
-}
-
-export async function generateStaticParams() {
-  return languages.map((lng) => ({ lng }))
-}
 
 interface RootLayoutProps {
   children: React.ReactNode
   params: {
     lng: string
   }
+}
+
+export async function generateMetadata(
+  props: ScriptProps,
+  parent?: ResolvingMetadata
+): Promise<Metadata> {
+  const { t } = await getTranslation()
+
+  return {
+    title: 'Saúl de León Guerrero',
+    description: t('metadata.description'),
+  }
+}
+
+export async function generateStaticParams() {
+  return languages.map((lng) => ({ lng }))
 }
 
 export default function RootLayout({

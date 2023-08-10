@@ -4,7 +4,7 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import Page from './page.next'
 
-describe('Page', () => {
+describe('[lng] route - Page', () => {
   it('should render successfully', async () => {
     const { baseElement } = renderApp(<Page />)
     const heading = await screen.findByRole('heading', { level: 1 })
