@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components'
 
 type HeadingLevels = 1 | 2
 interface HeadingProps {
-  level?: HeadingLevels
+  $level?: HeadingLevels
 }
 
 export const Heading = styled.h1<HeadingProps>`
@@ -10,32 +10,32 @@ export const Heading = styled.h1<HeadingProps>`
     theme: {
       typography: { heading },
     },
-    level = 1,
+    $level = 1,
   }) => css`
-    ${heading[`heading${level}`]}
+    ${heading[`heading${$level}`]}
     margin: 0;
   `}
 `
 
 export type BodyLevel = 'L' | 'M' | 'S'
 export type BodyProps = {
-  level?: BodyLevel
-  centered?: boolean
+  $level?: BodyLevel
+  $centered?: boolean
 }
 export const Body = styled.p<{
-  level?: BodyLevel
-  centered?: boolean
+  $level?: BodyLevel
+  $centered?: boolean
 }>`
   ${({
     theme: {
       typography: { body },
     },
-    level = 'M',
-    centered = false,
+    $level = 'M',
+    $centered = false,
   }) => css`
-    ${body[level]}
+    ${body[$level]}
     white-space: pre-line;
-    ${centered &&
+    ${$centered &&
     css`
       text-align: center;
     `}
@@ -57,16 +57,15 @@ export const Body = styled.p<{
 
 export type LabelLevel = 'L' | 'XS'
 export type LabelProps = {
-  level?: LabelLevel
-  centered?: boolean
+  $level?: LabelLevel
 }
 export const Label = styled.div<LabelProps>`
   ${({
     theme: {
       typography: { label },
     },
-    level = 'L',
+    $level = 'L',
   }) => css`
-    ${label[level]}
+    ${label[$level]}
   `}
 `

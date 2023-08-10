@@ -17,7 +17,7 @@ describe('Typography', () => {
     })
 
     it('should render with centered prop successfully', () => {
-      const { baseElement } = renderWithTheme(<Body centered>Test</Body>)
+      const { baseElement } = renderWithTheme(<Body $centered>Test</Body>)
       expect(baseElement).toBeTruthy()
     })
   })

@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Layout should render successfully 1`] = `
+<body>
+  <div>
+    <div
+      class="sc-hLclGa emwSmd"
+    >
+      <nav
+        class="sc-bcPKhP jYQTWZ"
+      >
+        <svg
+          height="55"
+        >
+          slLogo.svg
+        </svg>
+        <ul
+          class="sc-grXZZQ eypZKR"
+        >
+          <li
+            class="sc-dkjKgF"
+          >
+            <a
+              href=""
+            >
+              Experience
+            </a>
+          </li>
+          <li
+            class="sc-dkjKgF"
+          >
+            <a
+              href=""
+            >
+              Contact
+            </a>
+          </li>
+          <li
+            class="sc-dkjKgF"
+          >
+            <a
+              href=""
+            >
+              CV/Portfolio
+            </a>
+          </li>
+        </ul>
+        <button>
+          Get in touch
+        </button>
+      </nav>
+      <div
+        class="sc-eDnVMP khTKjB"
+      >
+        test
+      </div>
+    </div>
+  </div>
+</body>
+`;
