@@ -5,9 +5,10 @@ import { StyledList, StyledListItem, StyledNav } from './header.styles'
 
 interface HeaderProps {
   items?: { href: string; label: string }[]
+  actionButtonLabel: string
 }
 
-export function Header({ items }: HeaderProps) {
+export function Header({ items, actionButtonLabel }: HeaderProps) {
   return (
     <StyledNav>
       <a href="/">
@@ -24,7 +25,7 @@ export function Header({ items }: HeaderProps) {
           ))}
         </StyledList>
       )}
-      <button>Get in touch</button>
+      <button>{actionButtonLabel}</button>
     </StyledNav>
   )
 }

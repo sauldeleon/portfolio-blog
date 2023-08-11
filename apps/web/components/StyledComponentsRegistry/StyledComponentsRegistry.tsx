@@ -21,6 +21,7 @@ export default function StyledComponentsRegistry({
   // x-ref: https://reactjs.org/docs/hooks-reference.html#lazy-initial-state
   const [styledComponentsStyleSheet] = useState(() => new ServerStyleSheet())
 
+  /* istanbul ignore next */
   useServerInsertedHTML(() => {
     const styles = styledComponentsStyleSheet.getStyleElement()
     styledComponentsStyleSheet.instance.clearTag()
@@ -34,8 +35,10 @@ export default function StyledComponentsRegistry({
     </ThemeProvider>
   )
 
+  /* istanbul ignore else */
   if (typeof window !== 'undefined') return styledLayout
 
+  /* istanbul ignore next */
   return (
     <StyleSheetManager sheet={styledComponentsStyleSheet.instance}>
       {styledLayout}

@@ -1,6 +1,4 @@
-import { Header } from '@sdlgr/header'
-
-import { useTranslation } from '@web/i18n/client'
+import { Header } from '@web/components/Header/Header'
 
 import { StyledContent, StyledPage } from './Layout.styles'
 
@@ -9,16 +7,9 @@ interface LayoutProps {
 }
 
 export function Layout({ children }: LayoutProps) {
-  const { t } = useTranslation('header')
   return (
     <StyledPage>
-      <Header
-        items={[
-          { href: '/experience', label: t('experience') },
-          { href: '/contact', label: t('contact') },
-          { href: '/portfolio', label: t('portfolio') },
-        ]}
-      />
+      <Header />
       <StyledContent>{children}</StyledContent>
     </StyledPage>
   )

@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header should render successfully 1`] = `
+.c2 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 400;
+  color: #FFFFFF;
+  font-size: 0.9rem;
+  line-height: normal;
+  white-space: pre-line;
+}
+
+.c2 ul,
+.c2 ol {
+  margin-left: 40px;
+  margin-bottom: 10px;
+}
+
+.c2 ul {
+  list-style: outside disc;
+}
+
+.c2 ol {
+  list-style: decimal;
+}
+
+.c2 li {
+  padding-left: 10px;
+}
+
+.c0 {
+  height: 115px;
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+}
+
+.c1 {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  justify-content: center;
+  gap: 60px;
+}
+
+<body>
+  <div>
+    <nav
+      class="c0"
+    >
+      <a
+        href="/"
+      >
+        <svg
+          height="55"
+        >
+          slLogo.svg
+        </svg>
+      </a>
+      <ul
+        class="c1"
+      >
+        <li
+          class=""
+        >
+          <a
+            href="/experience"
+          >
+            <p
+              class="c2"
+            >
+              Experience
+            </p>
+          </a>
+        </li>
+        <li
+          class=""
+        >
+          <a
+            href="/contact"
+          >
+            <p
+              class="c2"
+            >
+              Contact
+            </p>
+          </a>
+        </li>
+        <li
+          class=""
+        >
+          <a
+            href="/portfolio"
+          >
+            <p
+              class="c2"
+            >
+              CV/Portfolio
+            </p>
+          </a>
+        </li>
+      </ul>
+      <button>
+        Get in touch
+      </button>
+    </nav>
+  </div>
+</body>
+`;

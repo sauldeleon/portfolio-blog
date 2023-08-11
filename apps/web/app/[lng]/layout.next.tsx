@@ -2,9 +2,10 @@ import { dir } from 'i18next'
 import { ScriptProps } from 'next/script'
 import { Metadata, ResolvingMetadata } from 'next/types'
 
+import { LanguageContextProvider } from '@sdlgr/i18n-config'
+
 import StyledComponentsRegistry from '@web/components/StyledComponentsRegistry/StyledComponentsRegistry'
-import { LanguageContextProvider } from '@web/context/LanguageProvider'
-import { getTranslation } from '@web/i18n'
+import { getServerTranslation } from '@web/i18n/server'
 import { languages } from '@web/i18n/settings'
 
 interface RootLayoutProps {
@@ -18,7 +19,7 @@ export async function generateMetadata(
   props: ScriptProps,
   parent?: ResolvingMetadata
 ): Promise<Metadata> {
-  const { t } = await getTranslation()
+  const { t } = await getServerTranslation()
 
   return {
     title: 'Saúl de León Guerrero',

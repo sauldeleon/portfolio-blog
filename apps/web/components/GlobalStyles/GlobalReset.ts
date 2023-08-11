@@ -128,7 +128,7 @@ export const GlobalReset = createGlobalStyle`
   }
 
   body {
-    line-height: 1;
+    line-height: normal;
   }
 
   ol,

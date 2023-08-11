@@ -3,7 +3,7 @@
 import Cookies from 'js-cookie'
 import { Dispatch, SetStateAction, createContext, useState } from 'react'
 
-import { LANGUAGE_COOKIE } from '@web/i18n/settings'
+import { LANGUAGE_COOKIE } from './i18n-config'
 
 export type LanguageContext = {
   language: string | undefined
