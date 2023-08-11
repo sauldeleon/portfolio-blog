@@ -14,6 +14,7 @@
     "lint:api": "nx lint api",
     "test:web": "nx test web",
     "test:api": "nx test api",
+    "test:libs": "nx run-many --all --target=test --exclude $(nx print-affected --select=projects --type=app) \\'*-e2e\\'",
     "test:all": "nx run-many --all --target=test --exclude='*-e2e'",
     "analyse:web": "ANALYZE=true yarn build:web",
     "affected": "nx affected",

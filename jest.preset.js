@@ -33,7 +33,7 @@ module.exports = {
     '!*.config.js',
     '!jest.config.ts',
     '!*.d.ts',
-    '!**/pages/*_*.tsx',
+    '!**/app/*_*.tsx',
     '!**/src/index.ts',
     '!**/**.mock.{ts,tsx}',
     '!**/**.handlers.{ts,tsx}',
