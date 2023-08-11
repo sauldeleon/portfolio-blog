@@ -116,6 +116,7 @@ function matcherCustomFn(
   let matching = false
   if (isTag) {
     matching = content === matcher
+    /* istanbul ignore else*/
     if (typeof matcher === 'function') {
       matching = matcher(content, element)
     } else if (matcher instanceof RegExp) {

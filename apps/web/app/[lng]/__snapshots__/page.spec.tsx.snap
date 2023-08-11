@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Page should render successfully 1`] = `
+exports[`[lng] route - Page should render successfully 1`] = `
 .c5 {
   font-family: 'Roboto mono',monospace;
   font-weight: 400;
