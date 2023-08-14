@@ -86,6 +86,12 @@ const typography: MainTheme['typography'] = {
       font-size: ${fontSize(16)};
       line-height: normal;
     `,
+    XS: css`
+      ${fontStyles.robotoMono.medium}
+      color: ${colors.white};
+      font-size: ${fontSize(11)};
+      line-height: normal;
+    `,
   },
   label: {
     L: css`
@@ -188,7 +194,7 @@ export interface MainTheme {
   }
   typography: {
     heading: Record<`heading${1 | 2}`, RuleSet<object>>
-    body: Record<'L' | 'M' | 'S', RuleSet<object>>
+    body: Record<'L' | 'M' | 'S' | 'XS', RuleSet<object>>
     label: Record<'L' | 'XS', RuleSet<object>>
   }
   fonts: {

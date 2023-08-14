@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Header should render successfully 1`] = `
-.c2 {
+.c5 {
   font-family: 'Roboto mono',monospace;
   font-weight: 400;
   color: #FFFFFF;
@@ -10,25 +10,107 @@ exports[`Header should render successfully 1`] = `
   white-space: pre-line;
 }
 
-.c2 ul,
-.c2 ol {
+.c5 ul,
+.c5 ol {
   margin-left: 40px;
   margin-bottom: 10px;
 }
 
-.c2 ul {
+.c5 ul {
   list-style: outside disc;
 }
 
-.c2 ol {
+.c5 ol {
   list-style: decimal;
 }
 
-.c2 li {
+.c5 li {
   padding-left: 10px;
 }
 
+.c0 {
+  background-color: #FFFFFF;
+  color: #000000;
+  height: 130px;
+  max-width: 1440px;
+  width: 100%;
+  padding: 0 15px;
+  margin: 0 auto;
+  display: flex;
+  justify-items: center;
+  align-items: end;
+}
+
+.c1 {
+  color: #000000;
+  margin-bottom: 25px;
+}
+
+.c2 {
+  display: flex;
+  align-items: end;
+  flex-grow: 1;
+  justify-content: center;
+  height: 100%;
+}
+
 .c3 {
+  width: 59px;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  padding-bottom: 25px;
+}
+
+.c3 .c4 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 500;
+  color: #FFFFFF;
+  font-size: 0.55rem;
+  line-height: normal;
+  color: #000000;
+  writing-mode: tb-rl;
+  transform: rotate(-180deg);
+}
+
+.c3:hover {
+  background-color: #000000;
+  cursor: pointer;
+}
+
+.c3:hover .c4 {
+  color: #FFFFFF;
+}
+
+.c6 {
+  width: 59px;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  padding-bottom: 25px;
+}
+
+.c6 .c4 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 500;
+  color: #FFFFFF;
+  font-size: 0.55rem;
+  line-height: normal;
+  color: #000000;
+  writing-mode: tb-rl;
+  transform: rotate(-180deg);
+}
+
+.c6:hover {
+  background-color: #000000;
+  cursor: pointer;
+}
+
+.c6:hover .c4 {
+  color: #FFFFFF;
+}
+
+.c7 {
   outline: none;
   cursor: pointer;
   display: flex;
@@ -36,7 +118,7 @@ exports[`Header should render successfully 1`] = `
   max-height: 42px;
 }
 
-.c3:hover circle.loading {
+.c7:hover circle.loading {
   stroke: white;
   stroke-width: 6px;
   stroke-dasharray: 110;
@@ -46,20 +128,20 @@ exports[`Header should render successfully 1`] = `
   transform-origin: center;
 }
 
-.c4 {
+.c9 {
   position: relative;
   width: 42px;
   height: 42px;
 }
 
-.c5 {
+.c10 {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
   left: 50%;
 }
 
-.c6 {
+.c11 {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
@@ -67,26 +149,91 @@ exports[`Header should render successfully 1`] = `
   display: flex;
 }
 
-.c7 {
+.c12 {
   margin-left: 8px;
 }
 
-.c0 {
-  height: 115px;
-  max-width: 1440px;
-  width: 100%;
-  margin: 0 auto;
-  display: flex;
-  justify-items: center;
-  align-items: center;
+.c8 {
+  display: none;
 }
 
-.c1 {
-  display: flex;
-  align-items: center;
-  flex-grow: 1;
-  justify-content: center;
-  gap: 60px;
+@media (min-width: 768px) {
+  .c0 {
+    align-items: center;
+    background-color: transparent;
+    color: #FFFFFF;
+    height: 115px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .c0 {
+    padding: 0 30;
+  }
+}
+
+@media (min-width: 1440px) {
+  .c0 {
+    padding: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .c1 {
+    color: #FFFFFF;
+    margin-bottom: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .c2 {
+    gap: 30px;
+    align-items: center;
+    height: unset;
+  }
+}
+
+@media (min-width: 768px) {
+  .c3 {
+    width: auto;
+    padding-bottom: 0;
+  }
+
+  .c3 .c4 {
+    font-family: 'Roboto mono',monospace;
+    font-weight: 400;
+    color: #FFFFFF;
+    font-size: 0.9rem;
+    line-height: normal;
+    color: #FFFFFF;
+    writing-mode: unset;
+    transform: unset;
+  }
+}
+
+@media (min-width: 768px) {
+  .c6 {
+    display: none;
+    width: auto;
+    padding-bottom: 0;
+  }
+
+  .c6 .c4 {
+    font-family: 'Roboto mono',monospace;
+    font-weight: 400;
+    color: #FFFFFF;
+    font-size: 0.9rem;
+    line-height: normal;
+    color: #FFFFFF;
+    writing-mode: unset;
+    transform: unset;
+  }
+}
+
+@media (min-width: 768px) {
+  .c8 {
+    display: flex;
+  }
 }
 
 <body>
@@ -98,70 +245,84 @@ exports[`Header should render successfully 1`] = `
         href="/"
       >
         <svg
+          class="c1"
           height="55"
         >
           slLogo.svg
         </svg>
       </a>
       <ul
-        class="c1"
+        class="c2"
       >
         <li
-          class=""
+          class="c3"
         >
           <a
             href="/experience"
           >
             <p
-              class="c2"
+              class="c4 c5"
             >
               Experience
             </p>
           </a>
         </li>
         <li
-          class=""
+          class="c3"
         >
           <a
             href="/contact"
           >
             <p
-              class="c2"
+              class="c4 c5"
             >
               Contact
             </p>
           </a>
         </li>
         <li
-          class=""
+          class="c3"
         >
           <a
             href="/portfolio"
           >
             <p
-              class="c2"
+              class="c4 c5"
             >
               CV/Portfolio
             </p>
           </a>
         </li>
+        <li
+          class="c6"
+        >
+          <a
+            href="/contact"
+          >
+            <p
+              class="c4 c5"
+            >
+              Get in touch
+            </p>
+          </a>
+        </li>
       </ul>
       <a
-        class="c3"
-        href="/"
+        class="c7 c8"
+        href="/contact"
       >
         <div
-          class="c4"
+          class="c9"
         >
           <svg
-            class="c5"
+            class="c10"
             height="42"
             width="42"
           >
             circleButton.svg
           </svg>
           <div
-            class="c6"
+            class="c11"
           >
             <svg>
               arrowRight.svg
@@ -169,7 +330,7 @@ exports[`Header should render successfully 1`] = `
           </div>
         </div>
         <p
-          class="c2 c7"
+          class="c4 c5 c12"
         >
           Get in touch
         </p>

@@ -6,7 +6,7 @@ import { Header } from './header'
 
 describe('Header', () => {
   it('should render successfully with no items', () => {
-    renderWithTheme(<Header actionButtonLabel="wadus" />)
+    renderWithTheme(<Header actionItem="wadus" />)
     expect(screen.getByText('slLogo.svg')).toBeTruthy()
   })
 
@@ -15,11 +15,13 @@ describe('Header', () => {
       <Header
         items={[
           { href: 'a', label: 'a' },
-          { href: 'b', label: 'b' },
+          { href: 'b', label: 'b', hideOnDesktop: true },
         ]}
-        actionButtonLabel="wadus"
+        actionItem="wadus"
       />
     )
-    expect(screen.getAllByRole('link')).toHaveLength(4)
+    expect(screen.getAllByRole('link')).toHaveLength(3)
+    expect(screen.getByText('wadus')).toBeInTheDocument()
+    expect(screen.getByText('b')).toHaveStyle('display:block')
   })
 })

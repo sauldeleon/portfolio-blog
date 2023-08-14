@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`HomePage should render successfully 1`] = `
-.c10 {
+.c15 {
   font-family: 'Roboto mono',monospace;
   font-weight: 400;
   color: #FFFFFF;
@@ -10,7 +10,7 @@ exports[`HomePage should render successfully 1`] = `
   margin: 0;
 }
 
-.c15 {
+.c20 {
   font-family: 'Roboto mono',monospace;
   font-weight: 400;
   color: #FFFFFF;
@@ -19,7 +19,7 @@ exports[`HomePage should render successfully 1`] = `
   margin: 0;
 }
 
-.c3 {
+.c6 {
   font-family: 'Roboto mono',monospace;
   font-weight: 400;
   color: #FFFFFF;
@@ -28,25 +28,25 @@ exports[`HomePage should render successfully 1`] = `
   white-space: pre-line;
 }
 
-.c3 ul,
-.c3 ol {
+.c6 ul,
+.c6 ol {
   margin-left: 40px;
   margin-bottom: 10px;
 }
 
-.c3 ul {
+.c6 ul {
   list-style: outside disc;
 }
 
-.c3 ol {
+.c6 ol {
   list-style: decimal;
 }
 
-.c3 li {
+.c6 li {
   padding-left: 10px;
 }
 
-.c14 {
+.c19 {
   font-family: 'Roboto mono',monospace;
   font-weight: 500;
   color: #FFFFFF;
@@ -55,7 +55,7 @@ exports[`HomePage should render successfully 1`] = `
   text-transform: uppercase;
 }
 
-.c12 {
+.c17 {
   outline: none;
   cursor: pointer;
   display: flex;
@@ -63,7 +63,7 @@ exports[`HomePage should render successfully 1`] = `
   max-height: 76px;
 }
 
-.c12:hover circle.loading {
+.c17:hover circle.loading {
   stroke: white;
   stroke-width: 6px;
   stroke-dasharray: 110;
@@ -73,7 +73,7 @@ exports[`HomePage should render successfully 1`] = `
   transform-origin: center;
 }
 
-.c4 {
+.c8 {
   outline: none;
   cursor: pointer;
   display: flex;
@@ -81,7 +81,7 @@ exports[`HomePage should render successfully 1`] = `
   max-height: 42px;
 }
 
-.c4:hover circle.loading {
+.c8:hover circle.loading {
   stroke: white;
   stroke-width: 6px;
   stroke-dasharray: 110;
@@ -91,26 +91,26 @@ exports[`HomePage should render successfully 1`] = `
   transform-origin: center;
 }
 
-.c13 {
+.c18 {
   position: relative;
   width: 76px;
   height: 76px;
 }
 
-.c5 {
+.c10 {
   position: relative;
   width: 42px;
   height: 42px;
 }
 
-.c6 {
+.c11 {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
   left: 50%;
 }
 
-.c7 {
+.c12 {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
@@ -118,26 +118,94 @@ exports[`HomePage should render successfully 1`] = `
   display: flex;
 }
 
-.c8 {
+.c13 {
   margin-left: 8px;
 }
 
 .c1 {
-  height: 115px;
+  background-color: #FFFFFF;
+  color: #000000;
+  height: 130px;
   max-width: 1440px;
   width: 100%;
+  padding: 0 15px;
   margin: 0 auto;
   display: flex;
   justify-items: center;
-  align-items: center;
+  align-items: end;
 }
 
 .c2 {
+  color: #000000;
+  margin-bottom: 25px;
+}
+
+.c3 {
   display: flex;
-  align-items: center;
+  align-items: end;
   flex-grow: 1;
   justify-content: center;
-  gap: 60px;
+  height: 100%;
+}
+
+.c4 {
+  width: 59px;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  padding-bottom: 25px;
+}
+
+.c4 .c5 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 500;
+  color: #FFFFFF;
+  font-size: 0.55rem;
+  line-height: normal;
+  color: #000000;
+  writing-mode: tb-rl;
+  transform: rotate(-180deg);
+}
+
+.c4:hover {
+  background-color: #000000;
+  cursor: pointer;
+}
+
+.c4:hover .c5 {
+  color: #FFFFFF;
+}
+
+.c7 {
+  width: 59px;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  padding-bottom: 25px;
+}
+
+.c7 .c5 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 500;
+  color: #FFFFFF;
+  font-size: 0.55rem;
+  line-height: normal;
+  color: #000000;
+  writing-mode: tb-rl;
+  transform: rotate(-180deg);
+}
+
+.c7:hover {
+  background-color: #000000;
+  cursor: pointer;
+}
+
+.c7:hover .c5 {
+  color: #FFFFFF;
+}
+
+.c9 {
+  display: none;
 }
 
 .c0 {
@@ -146,7 +214,7 @@ exports[`HomePage should render successfully 1`] = `
   flex-direction: column;
 }
 
-.c9 {
+.c14 {
   display: flex;
   min-height: calc(100vh - 115px);
   align-items: center;
@@ -154,8 +222,87 @@ exports[`HomePage should render successfully 1`] = `
   flex-direction: column;
 }
 
-.c11 {
+.c16 {
   margin-bottom: 50px;
+}
+
+@media (min-width: 768px) {
+  .c1 {
+    align-items: center;
+    background-color: transparent;
+    color: #FFFFFF;
+    height: 115px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .c1 {
+    padding: 0 30;
+  }
+}
+
+@media (min-width: 1440px) {
+  .c1 {
+    padding: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .c2 {
+    color: #FFFFFF;
+    margin-bottom: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .c3 {
+    gap: 30px;
+    align-items: center;
+    height: unset;
+  }
+}
+
+@media (min-width: 768px) {
+  .c4 {
+    width: auto;
+    padding-bottom: 0;
+  }
+
+  .c4 .c5 {
+    font-family: 'Roboto mono',monospace;
+    font-weight: 400;
+    color: #FFFFFF;
+    font-size: 0.9rem;
+    line-height: normal;
+    color: #FFFFFF;
+    writing-mode: unset;
+    transform: unset;
+  }
+}
+
+@media (min-width: 768px) {
+  .c7 {
+    display: none;
+    width: auto;
+    padding-bottom: 0;
+  }
+
+  .c7 .c5 {
+    font-family: 'Roboto mono',monospace;
+    font-weight: 400;
+    color: #FFFFFF;
+    font-size: 0.9rem;
+    line-height: normal;
+    color: #FFFFFF;
+    writing-mode: unset;
+    transform: unset;
+  }
+}
+
+@media (min-width: 768px) {
+  .c9 {
+    display: flex;
+  }
 }
 
 <body>
@@ -170,70 +317,84 @@ exports[`HomePage should render successfully 1`] = `
           href="/"
         >
           <svg
+            class="c2"
             height="55"
           >
             slLogo.svg
           </svg>
         </a>
         <ul
-          class="c2"
+          class="c3"
         >
           <li
-            class=""
+            class="c4"
           >
             <a
               href="/experience"
             >
               <p
-                class="c3"
+                class="c5 c6"
               >
                 Experience
               </p>
             </a>
           </li>
           <li
-            class=""
+            class="c4"
           >
             <a
               href="/contact"
             >
               <p
-                class="c3"
+                class="c5 c6"
               >
                 Contact
               </p>
             </a>
           </li>
           <li
-            class=""
+            class="c4"
           >
             <a
               href="/portfolio"
             >
               <p
-                class="c3"
+                class="c5 c6"
               >
                 CV/Portfolio
               </p>
             </a>
           </li>
+          <li
+            class="c7"
+          >
+            <a
+              href="/contact"
+            >
+              <p
+                class="c5 c6"
+              >
+                Get in touch
+              </p>
+            </a>
+          </li>
         </ul>
         <a
-          class="c4"
-          href="/"
+          class="c8 c9"
+          href="/contact"
         >
           <div
-            class="c5"
+            class="c10"
           >
             <svg
-              class="c6"
+              class="c11"
               height="42"
               width="42"
             >
               circleButton.svg
             </svg>
             <div
-              class="c7"
+              class="c12"
             >
               <svg>
                 arrowRight.svg
@@ -241,39 +402,39 @@ exports[`HomePage should render successfully 1`] = `
             </div>
           </div>
           <p
-            class="c3 c8"
+            class="c5 c6 c13"
           >
             Get in touch
           </p>
         </a>
       </nav>
       <div
-        class="c9"
+        class="c14"
       >
         <h1
-          class="c10 c11"
+          class="c15 c16"
         >
           Saúl de León Guerrero
         </h1>
         <a
-          class="c12"
+          class="c17"
           href="/"
         >
           <div
-            class="c13"
+            class="c18"
           >
             <svg
-              class="c6"
+              class="c11"
               height="76"
               width="76"
             >
               circleButton.svg
             </svg>
             <div
-              class="c7"
+              class="c12"
             >
               <div
-                class="c14"
+                class="c19"
               >
                 Explore
               </div>
@@ -281,7 +442,7 @@ exports[`HomePage should render successfully 1`] = `
           </div>
         </a>
         <h2
-          class="c15 c11"
+          class="c20 c16"
         >
           Under construction
         </h2>
