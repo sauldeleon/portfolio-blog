@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@sdlgr/assets": ["libs/assets/src/index.ts"],
+      "@sdlgr/circle-link": ["libs/circle-link/src/index.ts"],
       "@sdlgr/header": ["libs/header/src/index.ts"],
       "@sdlgr/i18n-client": ["libs/i18n-client/src/index.ts"],
       "@sdlgr/i18n-config": ["libs/i18n-config/src/index.ts"],

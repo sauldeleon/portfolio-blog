@@ -6,6 +6,7 @@
   fill="none"
 >
   <circle cx="21" cy="21" r="14.5" stroke="white" />
+  <circle class="loading" cx="21" cy="21" r="17.5" stroke="none" />
   <circle cx="21" cy="21" r="20.5" stroke="white" />
   <path
     d="M35.4238 6.42969L31.2021 10.6931M10.7968 31.2995L6.57502 35.5629"

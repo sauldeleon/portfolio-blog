@@ -9,7 +9,7 @@ describe('Header', () => {
     const { baseElement } = renderApp(<Header />)
     const nav = await screen.findByRole('navigation')
     expect(nav).toBeTruthy()
-    expect(screen.getAllByRole('link')).toHaveLength(4)
+    expect(screen.getAllByRole('link')).toHaveLength(5)
     expect(baseElement).toMatchSnapshot()
   })
 })

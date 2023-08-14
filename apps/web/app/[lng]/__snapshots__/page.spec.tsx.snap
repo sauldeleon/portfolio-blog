@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`[lng] route - Page should render successfully 1`] = `
-.c5 {
+.c10 {
   font-family: 'Roboto mono',monospace;
   font-weight: 400;
   color: #FFFFFF;
@@ -10,7 +10,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   margin: 0;
 }
 
-.c7 {
+.c15 {
   font-family: 'Roboto mono',monospace;
   font-weight: 400;
   color: #FFFFFF;
@@ -46,6 +46,82 @@ exports[`[lng] route - Page should render successfully 1`] = `
   padding-left: 10px;
 }
 
+.c14 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 500;
+  color: #FFFFFF;
+  font-size: 0.5rem;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.c12 {
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  max-height: 76px;
+}
+
+.c12:hover circle.loading {
+  stroke: white;
+  stroke-width: 6px;
+  stroke-dasharray: 110;
+  stroke-dashoffset: 82;
+  animation: clock-loading 0.5s steps(4, jump-none) forwards;
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+.c4 {
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  max-height: 42px;
+}
+
+.c4:hover circle.loading {
+  stroke: white;
+  stroke-width: 6px;
+  stroke-dasharray: 110;
+  stroke-dashoffset: 82;
+  animation: clock-loading 0.5s steps(4, jump-none) forwards;
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+.c13 {
+  position: relative;
+  width: 76px;
+  height: 76px;
+}
+
+.c5 {
+  position: relative;
+  width: 42px;
+  height: 42px;
+}
+
+.c6 {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+}
+
+.c7 {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  display: flex;
+}
+
+.c8 {
+  margin-left: 8px;
+}
+
 .c1 {
   height: 115px;
   max-width: 1440px;
@@ -70,7 +146,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   flex-direction: column;
 }
 
-.c4 {
+.c9 {
   display: flex;
   min-height: calc(100vh - 115px);
   align-items: center;
@@ -78,7 +154,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   flex-direction: column;
 }
 
-.c6 {
+.c11 {
   margin-bottom: 50px;
 }
 
@@ -142,20 +218,70 @@ exports[`[lng] route - Page should render successfully 1`] = `
             </a>
           </li>
         </ul>
-        <button>
-          Get in touch
-        </button>
+        <a
+          class="c4"
+          href="/"
+        >
+          <div
+            class="c5"
+          >
+            <svg
+              class="c6"
+              height="42"
+              width="42"
+            >
+              circleButton.svg
+            </svg>
+            <div
+              class="c7"
+            >
+              <svg>
+                arrowRight.svg
+              </svg>
+            </div>
+          </div>
+          <p
+            class="c3 c8"
+          >
+            Get in touch
+          </p>
+        </a>
       </nav>
       <div
-        class="c4"
+        class="c9"
       >
         <h1
-          class="c5 c6"
+          class="c10 c11"
         >
           Saúl de León Guerrero
         </h1>
+        <a
+          class="c12"
+          href="/"
+        >
+          <div
+            class="c13"
+          >
+            <svg
+              class="c6"
+              height="76"
+              width="76"
+            >
+              circleButton.svg
+            </svg>
+            <div
+              class="c7"
+            >
+              <div
+                class="c14"
+              >
+                Explore
+              </div>
+            </div>
+          </div>
+        </a>
         <h2
-          class="c7 c6"
+          class="c15 c11"
         >
           Under construction
         </h2>

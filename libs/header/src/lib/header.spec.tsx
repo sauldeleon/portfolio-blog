@@ -6,9 +6,8 @@ import { Header } from './header'
 
 describe('Header', () => {
   it('should render successfully with no items', () => {
-    renderWithTheme(<Header />)
+    renderWithTheme(<Header actionButtonLabel="wadus" />)
     expect(screen.getByText('slLogo.svg')).toBeTruthy()
-    expect(screen.getAllByRole('button')).toHaveLength(1)
   })
 
   it('should render links', () => {
@@ -18,8 +17,9 @@ describe('Header', () => {
           { href: 'a', label: 'a' },
           { href: 'b', label: 'b' },
         ]}
+        actionButtonLabel="wadus"
       />
     )
-    expect(screen.getAllByRole('link')).toHaveLength(3)
+    expect(screen.getAllByRole('link')).toHaveLength(4)
   })
 })

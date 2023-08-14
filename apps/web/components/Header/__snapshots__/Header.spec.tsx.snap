@@ -28,6 +28,49 @@ exports[`Header should render successfully 1`] = `
   padding-left: 10px;
 }
 
+.c3 {
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  max-height: 42px;
+}
+
+.c3:hover circle.loading {
+  stroke: white;
+  stroke-width: 6px;
+  stroke-dasharray: 110;
+  stroke-dashoffset: 82;
+  animation: clock-loading 0.5s steps(4, jump-none) forwards;
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+.c4 {
+  position: relative;
+  width: 42px;
+  height: 42px;
+}
+
+.c5 {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+}
+
+.c6 {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  display: flex;
+}
+
+.c7 {
+  margin-left: 8px;
+}
+
 .c0 {
   height: 115px;
   max-width: 1440px;
@@ -103,9 +146,34 @@ exports[`Header should render successfully 1`] = `
           </a>
         </li>
       </ul>
-      <button>
-        Get in touch
-      </button>
+      <a
+        class="c3"
+        href="/"
+      >
+        <div
+          class="c4"
+        >
+          <svg
+            class="c5"
+            height="42"
+            width="42"
+          >
+            circleButton.svg
+          </svg>
+          <div
+            class="c6"
+          >
+            <svg>
+              arrowRight.svg
+            </svg>
+          </div>
+        </div>
+        <p
+          class="c2 c7"
+        >
+          Get in touch
+        </p>
+      </a>
     </nav>
   </div>
 </body>

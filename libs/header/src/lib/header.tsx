@@ -1,4 +1,5 @@
-import { SLLogo } from '@sdlgr/assets'
+import { ArrowRightIcon, SLLogo } from '@sdlgr/assets'
+import { CircleLink } from '@sdlgr/circle-link'
 import { Body } from '@sdlgr/typography'
 
 import { StyledList, StyledListItem, StyledNav } from './header.styles'
@@ -25,7 +26,11 @@ export function Header({ items, actionButtonLabel }: HeaderProps) {
           ))}
         </StyledList>
       )}
-      <button>{actionButtonLabel}</button>
+      <CircleLink
+        href="/"
+        label={actionButtonLabel}
+        iconContent={<ArrowRightIcon />}
+      />
     </StyledNav>
   )
 }
