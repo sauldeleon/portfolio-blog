@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { LinkProps } from '@sdlgr/link'
+
 import {
   StyledBody,
   StyledCircleButtonIcon,
@@ -8,8 +10,7 @@ import {
   StyledIconWrapper,
 } from './circle-link.styles'
 
-export interface CircleLinkProps
-  extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+export interface CircleLinkProps extends LinkProps {
   label?: React.ReactNode
   iconContent?: React.ReactNode
   iconSize?: number
@@ -19,6 +20,7 @@ export function CircleLink({
   label,
   iconContent,
   iconSize = 42,
+  ref,
   ...rest
 }: CircleLinkProps) {
   return (

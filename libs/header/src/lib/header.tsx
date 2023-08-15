@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import React from 'react'
 
 import { Body } from '@sdlgr/typography'
@@ -6,7 +5,9 @@ import { Body } from '@sdlgr/typography'
 import {
   StyledList,
   StyledListItem,
+  StyledLogoLink,
   StyledNav,
+  StyledNavLink,
   StyledSLLogo,
 } from './header.styles'
 
@@ -18,16 +19,16 @@ interface HeaderProps {
 export function Header({ items, actionItem }: HeaderProps) {
   return (
     <StyledNav>
-      <Link href="/">
+      <StyledLogoLink href="/">
         <StyledSLLogo height={55} />
-      </Link>
+      </StyledLogoLink>
       {items && items.length && (
         <StyledList>
           {items.map(({ href, label, hideOnDesktop }, index) => (
             <StyledListItem key={index} $hideOnDesktop={hideOnDesktop}>
-              <Link href={href}>
+              <StyledNavLink href={href}>
                 <Body>{label}</Body>
-              </Link>
+              </StyledNavLink>
             </StyledListItem>
           ))}
         </StyledList>

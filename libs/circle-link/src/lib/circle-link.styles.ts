@@ -1,9 +1,10 @@
 import styled, { css } from 'styled-components'
 
 import { CircleButtonIcon } from '@sdlgr/assets'
+import { Link } from '@sdlgr/link'
 import { Body } from '@sdlgr/typography'
 
-export const StyledCircleLink = styled.a<{ $size: number }>`
+export const StyledCircleLink = styled(Link)<{ $size: number }>`
   outline: none;
   cursor: pointer;
   display: flex;

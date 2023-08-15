@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 import { SLLogo } from '@sdlgr/assets'
+import { Link } from '@sdlgr/link'
 import { Body } from '@sdlgr/typography'
 
 export const StyledNav = styled.nav`
@@ -28,6 +29,17 @@ export const StyledNav = styled.nav`
 
   ${({ theme }) => theme.media.up.xl} {
     padding: 0;
+  }
+`
+export const StyledLogoLink = styled(Link)`
+  display: flex;
+`
+
+export const StyledNavLink = styled(Link)`
+  display: flex;
+
+  ${({ theme }) => theme.media.up.md} {
+    display: unset;
   }
 `
 

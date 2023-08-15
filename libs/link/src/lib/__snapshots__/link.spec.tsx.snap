@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Link should render successfully 1`] = `
+<body>
+  <div>
+    <a
+      href="/contact"
+    />
+  </div>
+</body>
+`;

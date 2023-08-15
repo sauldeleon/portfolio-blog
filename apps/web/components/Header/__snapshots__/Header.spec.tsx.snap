@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Header should render successfully 1`] = `
-.c5 {
+.c7 {
   font-family: 'Roboto mono',monospace;
   font-weight: 400;
   color: #FFFFFF;
@@ -10,21 +10,21 @@ exports[`Header should render successfully 1`] = `
   white-space: pre-line;
 }
 
-.c5 ul,
-.c5 ol {
+.c7 ul,
+.c7 ol {
   margin-left: 40px;
   margin-bottom: 10px;
 }
 
-.c5 ul {
+.c7 ul {
   list-style: outside disc;
 }
 
-.c5 ol {
+.c7 ol {
   list-style: decimal;
 }
 
-.c5 li {
+.c7 li {
   padding-left: 10px;
 }
 
@@ -42,11 +42,19 @@ exports[`Header should render successfully 1`] = `
 }
 
 .c1 {
+  display: flex;
+}
+
+.c5 {
+  display: flex;
+}
+
+.c2 {
   color: #000000;
   margin-bottom: 25px;
 }
 
-.c2 {
+.c3 {
   display: flex;
   align-items: end;
   flex-grow: 1;
@@ -54,7 +62,7 @@ exports[`Header should render successfully 1`] = `
   height: 100%;
 }
 
-.c3 {
+.c4 {
   width: 59px;
   display: flex;
   justify-content: center;
@@ -62,7 +70,7 @@ exports[`Header should render successfully 1`] = `
   padding-bottom: 25px;
 }
 
-.c3 .c4 {
+.c4 .c6 {
   font-family: 'Roboto mono',monospace;
   font-weight: 500;
   color: #FFFFFF;
@@ -73,16 +81,16 @@ exports[`Header should render successfully 1`] = `
   transform: rotate(-180deg);
 }
 
-.c3:hover {
+.c4:hover {
   background-color: #000000;
   cursor: pointer;
 }
 
-.c3:hover .c4 {
+.c4:hover .c6 {
   color: #FFFFFF;
 }
 
-.c6 {
+.c8 {
   width: 59px;
   display: flex;
   justify-content: center;
@@ -90,7 +98,7 @@ exports[`Header should render successfully 1`] = `
   padding-bottom: 25px;
 }
 
-.c6 .c4 {
+.c8 .c6 {
   font-family: 'Roboto mono',monospace;
   font-weight: 500;
   color: #FFFFFF;
@@ -101,16 +109,16 @@ exports[`Header should render successfully 1`] = `
   transform: rotate(-180deg);
 }
 
-.c6:hover {
+.c8:hover {
   background-color: #000000;
   cursor: pointer;
 }
 
-.c6:hover .c4 {
+.c8:hover .c6 {
   color: #FFFFFF;
 }
 
-.c7 {
+.c9 {
   outline: none;
   cursor: pointer;
   display: flex;
@@ -118,7 +126,7 @@ exports[`Header should render successfully 1`] = `
   max-height: 42px;
 }
 
-.c7:hover circle.loading {
+.c9:hover circle.loading {
   stroke: white;
   stroke-width: 6px;
   stroke-dasharray: 110;
@@ -128,20 +136,20 @@ exports[`Header should render successfully 1`] = `
   transform-origin: center;
 }
 
-.c9 {
+.c11 {
   position: relative;
   width: 42px;
   height: 42px;
 }
 
-.c10 {
+.c12 {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
   left: 50%;
 }
 
-.c11 {
+.c13 {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
@@ -149,11 +157,11 @@ exports[`Header should render successfully 1`] = `
   display: flex;
 }
 
-.c12 {
+.c14 {
   margin-left: 8px;
 }
 
-.c8 {
+.c10 {
   display: none;
 }
 
@@ -179,14 +187,20 @@ exports[`Header should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c1 {
+  .c5 {
+    display: unset;
+  }
+}
+
+@media (min-width: 768px) {
+  .c2 {
     color: #FFFFFF;
     margin-bottom: 0;
   }
 }
 
 @media (min-width: 768px) {
-  .c2 {
+  .c3 {
     gap: 30px;
     align-items: center;
     height: unset;
@@ -194,31 +208,12 @@ exports[`Header should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c3 {
+  .c4 {
     width: auto;
     padding-bottom: 0;
   }
 
-  .c3 .c4 {
-    font-family: 'Roboto mono',monospace;
-    font-weight: 400;
-    color: #FFFFFF;
-    font-size: 0.9rem;
-    line-height: normal;
-    color: #FFFFFF;
-    writing-mode: unset;
-    transform: unset;
-  }
-}
-
-@media (min-width: 768px) {
-  .c6 {
-    display: none;
-    width: auto;
-    padding-bottom: 0;
-  }
-
-  .c6 .c4 {
+  .c4 .c6 {
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
     color: #FFFFFF;
@@ -232,6 +227,25 @@ exports[`Header should render successfully 1`] = `
 
 @media (min-width: 768px) {
   .c8 {
+    display: none;
+    width: auto;
+    padding-bottom: 0;
+  }
+
+  .c8 .c6 {
+    font-family: 'Roboto mono',monospace;
+    font-weight: 400;
+    color: #FFFFFF;
+    font-size: 0.9rem;
+    line-height: normal;
+    color: #FFFFFF;
+    writing-mode: unset;
+    transform: unset;
+  }
+}
+
+@media (min-width: 768px) {
+  .c10 {
     display: flex;
   }
 }
@@ -242,65 +256,70 @@ exports[`Header should render successfully 1`] = `
       class="c0"
     >
       <a
+        class="c1"
         href="/"
       >
         <svg
-          class="c1"
+          class="c2"
           height="55"
         >
           slLogo.svg
         </svg>
       </a>
       <ul
-        class="c2"
+        class="c3"
       >
         <li
-          class="c3"
+          class="c4"
         >
           <a
+            class="c5"
             href="/experience"
           >
             <p
-              class="c4 c5"
+              class="c6 c7"
             >
               Experience
             </p>
           </a>
         </li>
         <li
-          class="c3"
+          class="c4"
         >
           <a
+            class="c5"
             href="/contact"
           >
             <p
-              class="c4 c5"
+              class="c6 c7"
             >
               Contact
             </p>
           </a>
         </li>
         <li
-          class="c3"
+          class="c4"
         >
           <a
+            class="c5"
             href="/portfolio"
           >
             <p
-              class="c4 c5"
+              class="c6 c7"
             >
               CV/Portfolio
             </p>
           </a>
         </li>
         <li
-          class="c6"
+          class="c8"
         >
           <a
+            class="c5"
             href="/contact"
           >
             <p
-              class="c4 c5"
+              class="c6 c7"
             >
               Get in touch
             </p>
@@ -308,21 +327,21 @@ exports[`Header should render successfully 1`] = `
         </li>
       </ul>
       <a
-        class="c7 c8"
+        class="c9 c10"
         href="/contact"
       >
         <div
-          class="c9"
+          class="c11"
         >
           <svg
-            class="c10"
+            class="c12"
             height="42"
             width="42"
           >
             circleButton.svg
           </svg>
           <div
-            class="c11"
+            class="c13"
           >
             <svg>
               arrowRight.svg
@@ -330,7 +349,7 @@ exports[`Header should render successfully 1`] = `
           </div>
         </div>
         <p
-          class="c4 c5 c12"
+          class="c6 c7 c14"
         >
           Get in touch
         </p>
