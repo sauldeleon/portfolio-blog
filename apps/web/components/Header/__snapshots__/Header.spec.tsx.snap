@@ -114,12 +114,40 @@ exports[`Header should render successfully 1`] = `
   color: #FFFFFF;
 }
 
+.c15 {
+  margin-left: 8px;
+  position: relative;
+}
+
+.c15:hover,
+.c15:focus {
+  text-decoration: none;
+}
+
+.c15::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #FFFFFF;
+  transform-origin: bottom right;
+  transition: transform 0.5s ease-out;
+}
+
 .c9 {
   outline: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   max-height: 42px;
+}
+
+.c9:hover,
+.c9:focus {
+  text-decoration: none;
 }
 
 .c9:hover circle.loading {
@@ -130,6 +158,11 @@ exports[`Header should render successfully 1`] = `
   animation: clock-loading 0.5s steps(4, jump-none) forwards;
   transform: rotate(-90deg);
   transform-origin: center;
+}
+
+.c9:hover .c14::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
 }
 
 .c11 {
@@ -151,10 +184,6 @@ exports[`Header should render successfully 1`] = `
   top: 50%;
   left: 50%;
   display: flex;
-}
-
-.c14 {
-  margin-left: 8px;
 }
 
 .c1 {
@@ -193,12 +222,26 @@ exports[`Header should render successfully 1`] = `
 
 @media (min-width: 768px) {
   .c5 {
-    display: unset;
+    display: inline-block;
+    position: relative;
   }
 
-  .c5:hover,
-  .c5:focus {
-    text-decoration: underline;
+  .c5::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #FFFFFF;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+  }
+
+  .c5:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
   }
 }
 
@@ -366,7 +409,7 @@ exports[`Header should render successfully 1`] = `
           </div>
         </div>
         <p
-          class="c6 c7 c14"
+          class="c6 c14 c7 c15"
         >
           Get in touch
         </p>

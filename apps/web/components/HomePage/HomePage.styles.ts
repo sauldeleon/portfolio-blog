@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 
+import { CircleLink } from '@sdlgr/circle-link'
 import { Heading } from '@sdlgr/typography'
 
 export const StyledHeading = styled(Heading)`
@@ -18,4 +19,12 @@ export const StyledHeading = styled(Heading)`
 export const StyledSubHeading = styled(Heading)`
   margin-top: 50px;
   margin-bottom: 50px;
+`
+
+export const StyledCircleLink = styled(CircleLink)`
+  margin-bottom: 30px;
+
+  ${({ theme }) => theme.media.up.md} {
+    margin-bottom: 50px;
+  }
 `

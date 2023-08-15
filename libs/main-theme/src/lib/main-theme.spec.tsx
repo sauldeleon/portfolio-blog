@@ -118,6 +118,16 @@ describe('mainTheme', () => {
               "0.8rem",
               ";line-height:normal;",
             ],
+            "XS": [
+              "font-family:",
+              "'Roboto mono', monospace",
+              ";font-weight:500;",
+              " color:",
+              "#FFFFFF",
+              ";font-size:",
+              "0.55rem",
+              ";line-height:normal;",
+            ],
           },
           "heading": {
             "heading1": [

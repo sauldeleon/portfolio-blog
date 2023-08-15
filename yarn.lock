@@ -1913,7 +1913,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.19.4, @babel/runtime@npm:^7.21.5, @babel/runtime@npm:^7.22.5, @babel/runtime@npm:^7.22.6, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.17.8, @babel/runtime@npm:^7.19.4, @babel/runtime@npm:^7.21.5, @babel/runtime@npm:^7.22.5, @babel/runtime@npm:^7.22.6, @babel/runtime@npm:^7.9.2":
   version: 7.22.10
   resolution: "@babel/runtime@npm:7.22.10"
   dependencies:
@@ -3566,6 +3566,7 @@ __metadata:
     "@types/react": 18.2.19
     "@types/react-dom": 18.2.7
     "@types/react-is": 18.2.1
+    "@types/seedrandom": ^3
     "@types/styled-components": 5.1.26
     "@types/testing-library__jest-dom": ^5
     "@typescript-eslint/eslint-plugin": 6.3.0
@@ -3599,11 +3600,13 @@ __metadata:
     nx: 16.6.0
     nx-cloud: latest
     patch-package: 8.0.0
+    polished: 4.2.2
     prettier: 2.8.8
     react: 18.2.0
     react-dom: 18.2.0
     react-i18next: 13.0.3
     react-is: 18.2.0
+    seedrandom: 3.0.5
     styled-components: 6.0.7
     ts-jest: 29.1.1
     ts-node: 10.9.1
@@ -4297,6 +4300,13 @@ __metadata:
   version: 0.16.3
   resolution: "@types/scheduler@npm:0.16.3"
   checksum: 2b0aec39c24268e3ce938c5db2f2e77f5c3dd280e05c262d9c2fe7d890929e4632a6b8e94334017b66b45e4f92a5aa42ba3356640c2a1175fa37bef2f5200767
+  languageName: node
+  linkType: hard
+
+"@types/seedrandom@npm:^3":
+  version: 3.0.5
+  resolution: "@types/seedrandom@npm:3.0.5"
+  checksum: d63d56ebc609203cf8cbe2ab7e7934237446bc2463ade664be130dcd4a3d74915d529909de2e1b18141cfabc9e42784998b7e5ff30c016919ac5b83911a700f0
   languageName: node
   linkType: hard
 
@@ -12471,6 +12481,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"polished@npm:4.2.2":
+  version: 4.2.2
+  resolution: "polished@npm:4.2.2"
+  dependencies:
+    "@babel/runtime": ^7.17.8
+  checksum: 97fb927dc55cd34aeb11b31ae2a3332463f114351c86e8aa6580d7755864a0120164fdc3770e6160c8b1775052f0eda14db9a6e34402cd4b08ab2d658a593725
+  languageName: node
+  linkType: hard
+
 "portfinder@npm:^1.0.28":
   version: 1.0.32
   resolution: "portfinder@npm:1.0.32"
@@ -13379,6 +13398,13 @@ __metadata:
   version: 3.0.1
   resolution: "secure-compare@npm:3.0.1"
   checksum: 0a8d8d3e54d5772d2cf1c02325f01fc7366d0bd33f964a08a84fe3ee5f34d46435a6ae729c1d239c750e160ef9b58c764d3efb945a1d07faf47978a8e4161594
+  languageName: node
+  linkType: hard
+
+"seedrandom@npm:3.0.5":
+  version: 3.0.5
+  resolution: "seedrandom@npm:3.0.5"
+  checksum: 728b56bc3bc1b9ddeabd381e449b51cb31bdc0aa86e27fcd0190cea8c44613d5bcb2f6bb63ed79f78180cbe791c20b8ec31a9627f7b7fc7f476fd2bdb7e2da9f
   languageName: node
   linkType: hard
 

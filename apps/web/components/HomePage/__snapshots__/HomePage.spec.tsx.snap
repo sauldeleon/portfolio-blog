@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`HomePage should render successfully 1`] = `
-.c17 {
+.c18 {
   font-family: 'Roboto mono',monospace;
   font-weight: 400;
   color: #FFFFFF;
@@ -37,7 +37,7 @@ exports[`HomePage should render successfully 1`] = `
   padding-left: 10px;
 }
 
-.c21 {
+.c23 {
   font-family: 'Roboto mono',monospace;
   font-weight: 500;
   color: #FFFFFF;
@@ -46,71 +46,935 @@ exports[`HomePage should render successfully 1`] = `
   text-transform: uppercase;
 }
 
-.c19 {
-  outline: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  max-height: 76px;
-}
-
-.c19:hover circle.loading {
-  stroke: white;
-  stroke-width: 6px;
-  stroke-dasharray: 110;
-  stroke-dashoffset: 82;
-  animation: clock-loading 0.5s steps(4, jump-none) forwards;
-  transform: rotate(-90deg);
-  transform-origin: center;
-}
-
-.c10 {
-  outline: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  max-height: 42px;
-}
-
-.c10:hover circle.loading {
-  stroke: white;
-  stroke-width: 6px;
-  stroke-dasharray: 110;
-  stroke-dashoffset: 82;
-  animation: clock-loading 0.5s steps(4, jump-none) forwards;
-  transform: rotate(-90deg);
-  transform-origin: center;
-}
-
-.c20 {
-  position: relative;
-  width: 76px;
-  height: 76px;
-}
-
-.c12 {
-  position: relative;
-  width: 42px;
-  height: 42px;
-}
-
-.c13 {
+.c36 {
+  --size: 100px;
+  left: calc(0px - var(--size));
+  top: 87px;
   position: absolute;
-  transform: translate(-50%, -50%);
-  top: 50%;
-  left: 50%;
+  animation: 6s horizontal-1 3s linear infinite;
 }
 
-.c14 {
+.c39 {
+  --size: 50px;
+  left: calc(0px - var(--size));
+  top: 64px;
   position: absolute;
-  transform: translate(-50%, -50%);
-  top: 50%;
-  left: 50%;
-  display: flex;
+  animation: 8s horizontal-2 2s linear infinite;
 }
 
-.c15 {
-  margin-left: 8px;
+.c41 {
+  --size: 50px;
+  left: calc(0px - var(--size));
+  top: 84px;
+  position: absolute;
+  animation: 20s horizontal-3 2s linear infinite;
+}
+
+.c43 {
+  --size: 50px;
+  left: calc(0px - var(--size));
+  top: 192px;
+  position: absolute;
+  animation: 11s horizontal-4 3s linear infinite;
+}
+
+.c45 {
+  --size: 50px;
+  left: calc(0px - var(--size));
+  top: 56px;
+  position: absolute;
+  animation: 16s horizontal-5 3s linear infinite;
+}
+
+.c47 {
+  --size: 50px;
+  left: calc(0px - var(--size));
+  top: 138px;
+  position: absolute;
+  animation: 20s horizontal-6 2s linear infinite;
+}
+
+.c49 {
+  --size: 50px;
+  left: calc(0px - var(--size));
+  top: 177px;
+  position: absolute;
+  animation: 20s horizontal-7 1s linear infinite;
+}
+
+.c51 {
+  --size: 50px;
+  left: calc(0px - var(--size));
+  top: 107px;
+  position: absolute;
+  animation: 16s horizontal-8 1s linear infinite;
+}
+
+.c53 {
+  --size: 50px;
+  left: calc(0px - var(--size));
+  top: 24px;
+  position: absolute;
+  animation: 19s horizontal-9 5s linear infinite;
+}
+
+.c37 {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 50%;
+  width: var(--size);
+  height: var(--size);
+  z-index: 5;
+  animation: 10s vertical-1 5s ease-in-out alternate infinite;
+}
+
+.c40 {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 50%;
+  width: var(--size);
+  height: var(--size);
+  z-index: 4;
+  background: #4695c0;
+  animation: 15s vertical-2 3s ease-in-out alternate infinite;
+}
+
+.c42 {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 50%;
+  width: var(--size);
+  height: var(--size);
+  z-index: 3;
+  background: #77aaeb;
+  animation: 12s vertical-3 5s ease-in-out alternate infinite;
+}
+
+.c44 {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 50%;
+  width: var(--size);
+  height: var(--size);
+  z-index: 4;
+  background: #4c93f;
+  animation: 9s vertical-4 4s ease-in-out alternate infinite;
+}
+
+.c46 {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 50%;
+  width: var(--size);
+  height: var(--size);
+  z-index: 2;
+  background: #6d2efc;
+  animation: 11s vertical-5 4s ease-in-out alternate infinite;
+}
+
+.c48 {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 50%;
+  width: var(--size);
+  height: var(--size);
+  z-index: 2;
+  background: #4882d0;
+  animation: 10s vertical-6 4s ease-in-out alternate infinite;
+}
+
+.c50 {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 50%;
+  width: var(--size);
+  height: var(--size);
+  z-index: 2;
+  background: #5cb27;
+  animation: 9s vertical-7 2s ease-in-out alternate infinite;
+}
+
+.c52 {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 50%;
+  width: var(--size);
+  height: var(--size);
+  z-index: 3;
+  background: #9f0cfb;
+  animation: 6s vertical-8 3s ease-in-out alternate infinite;
+}
+
+.c54 {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 50%;
+  width: var(--size);
+  height: var(--size);
+  z-index: 5;
+  background: #d9284f;
+  animation: 18s vertical-9 4s ease-in-out alternate infinite;
+}
+
+.c38 {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 50%;
+  width: var(--size);
+  height: var(--size);
+  z-index: 4;
+  background-image: url(/assets/react-logo.png);
+  background-size: contain;
+  animation: 2s rotate-1 2s linear infinite;
+}
+
+.c32 .circle-container {
+  position: absolute;
+  transform: translateX(-27px);
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.c32 .circle-container .circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(         hsl(180, 100%, 80%),         hsl(180, 100%, 80%) 10%,         hsla(180, 100%, 80%, 0) 56%       );
+  animation: fade-frames 200ms infinite,scale-frames 2s infinite;
+}
+
+.c32 .circle-container:nth-child(0) {
+  width: 7px;
+  height: 7px;
+  animation-name: move-frames-0;
+  animation-duration: 5824ms;
+  animation-delay: 7126ms;
+}
+
+.c32 .circle-container:nth-child(0) .circle {
+  animation-delay: 37ms;
+}
+
+.c32 .circle-container:nth-child(1) {
+  width: 9px;
+  height: 9px;
+  animation-name: move-frames-1;
+  animation-duration: 4192ms;
+  animation-delay: 5130ms;
+}
+
+.c32 .circle-container:nth-child(1) .circle {
+  animation-delay: 36ms;
+}
+
+.c32 .circle-container:nth-child(2) {
+  width: 6px;
+  height: 6px;
+  animation-name: move-frames-2;
+  animation-duration: 3101ms;
+  animation-delay: 10881ms;
+}
+
+.c32 .circle-container:nth-child(2) .circle {
+  animation-delay: 28ms;
+}
+
+.c32 .circle-container:nth-child(3) {
+  width: 9px;
+  height: 9px;
+  animation-name: move-frames-3;
+  animation-duration: 3829ms;
+  animation-delay: 4917ms;
+}
+
+.c32 .circle-container:nth-child(3) .circle {
+  animation-delay: 90ms;
+}
+
+.c32 .circle-container:nth-child(4) {
+  width: 4px;
+  height: 4px;
+  animation-name: move-frames-4;
+  animation-duration: 3051ms;
+  animation-delay: 9391ms;
+}
+
+.c32 .circle-container:nth-child(4) .circle {
+  animation-delay: 31ms;
+}
+
+.c32 .circle-container:nth-child(5) {
+  width: 5px;
+  height: 5px;
+  animation-name: move-frames-5;
+  animation-duration: 5169ms;
+  animation-delay: 10917ms;
+}
+
+.c32 .circle-container:nth-child(5) .circle {
+  animation-delay: 99ms;
+}
+
+.c32 .circle-container:nth-child(6) {
+  width: 7px;
+  height: 7px;
+  animation-name: move-frames-6;
+  animation-duration: 3143ms;
+  animation-delay: 9687ms;
+}
+
+.c32 .circle-container:nth-child(6) .circle {
+  animation-delay: 95ms;
+}
+
+.c32 .circle-container:nth-child(7) {
+  width: 6px;
+  height: 6px;
+  animation-name: move-frames-7;
+  animation-duration: 3442ms;
+  animation-delay: 9330ms;
+}
+
+.c32 .circle-container:nth-child(7) .circle {
+  animation-delay: 13ms;
+}
+
+.c32 .circle-container:nth-child(8) {
+  width: 0px;
+  height: 0px;
+  animation-name: move-frames-8;
+  animation-duration: 5280ms;
+  animation-delay: 4236ms;
+}
+
+.c32 .circle-container:nth-child(8) .circle {
+  animation-delay: 38ms;
+}
+
+.c32 .circle-container:nth-child(9) {
+  width: 9px;
+  height: 9px;
+  animation-name: move-frames-9;
+  animation-duration: 5677ms;
+  animation-delay: 6551ms;
+}
+
+.c32 .circle-container:nth-child(9) .circle {
+  animation-delay: 22ms;
+}
+
+.c32 .circle-container:nth-child(10) {
+  width: 3px;
+  height: 3px;
+  animation-name: move-frames-10;
+  animation-duration: 4195ms;
+  animation-delay: 6031ms;
+}
+
+.c32 .circle-container:nth-child(10) .circle {
+  animation-delay: 2ms;
+}
+
+.c32 .circle-container:nth-child(11) {
+  width: 3px;
+  height: 3px;
+  animation-name: move-frames-11;
+  animation-duration: 6846ms;
+  animation-delay: 608ms;
+}
+
+.c32 .circle-container:nth-child(11) .circle {
+  animation-delay: 57ms;
+}
+
+.c32 .circle-container:nth-child(12) {
+  width: 6px;
+  height: 6px;
+  animation-name: move-frames-12;
+  animation-duration: 5803ms;
+  animation-delay: 6889ms;
+}
+
+.c32 .circle-container:nth-child(12) .circle {
+  animation-delay: 4ms;
+}
+
+.c32 .circle-container:nth-child(13) {
+  width: 4px;
+  height: 4px;
+  animation-name: move-frames-13;
+  animation-duration: 4084ms;
+  animation-delay: 8270ms;
+}
+
+.c32 .circle-container:nth-child(13) .circle {
+  animation-delay: 13ms;
+}
+
+.c32 .circle-container:nth-child(14) {
+  width: 1px;
+  height: 1px;
+  animation-name: move-frames-14;
+  animation-duration: 3453ms;
+  animation-delay: 10382ms;
+}
+
+.c32 .circle-container:nth-child(14) .circle {
+  animation-delay: 2ms;
+}
+
+.c32 .circle-container:nth-child(15) {
+  width: 0px;
+  height: 0px;
+  animation-name: move-frames-15;
+  animation-duration: 5881ms;
+  animation-delay: 2759ms;
+}
+
+.c32 .circle-container:nth-child(15) .circle {
+  animation-delay: 80ms;
+}
+
+.c32 .circle-container:nth-child(16) {
+  width: 10px;
+  height: 10px;
+  animation-name: move-frames-16;
+  animation-duration: 5890ms;
+  animation-delay: 634ms;
+}
+
+.c32 .circle-container:nth-child(16) .circle {
+  animation-delay: 97ms;
+}
+
+.c32 .circle-container:nth-child(17) {
+  width: 10px;
+  height: 10px;
+  animation-name: move-frames-17;
+  animation-duration: 4460ms;
+  animation-delay: 9582ms;
+}
+
+.c32 .circle-container:nth-child(17) .circle {
+  animation-delay: 60ms;
+}
+
+.c32 .circle-container:nth-child(18) {
+  width: 3px;
+  height: 3px;
+  animation-name: move-frames-18;
+  animation-duration: 4082ms;
+  animation-delay: 7572ms;
+}
+
+.c32 .circle-container:nth-child(18) .circle {
+  animation-delay: 66ms;
+}
+
+.c32 .circle-container:nth-child(19) {
+  width: 10px;
+  height: 10px;
+  animation-name: move-frames-19;
+  animation-duration: 3912ms;
+  animation-delay: 8598ms;
+}
+
+.c32 .circle-container:nth-child(19) .circle {
+  animation-delay: 2ms;
+}
+
+.c32 .circle-container:nth-child(20) {
+  width: 10px;
+  height: 10px;
+  animation-name: move-frames-20;
+  animation-duration: 5744ms;
+  animation-delay: 2663ms;
+}
+
+.c32 .circle-container:nth-child(20) .circle {
+  animation-delay: 13ms;
+}
+
+.c32 .circle-container:nth-child(21) {
+  width: 7px;
+  height: 7px;
+  animation-name: move-frames-21;
+  animation-duration: 6735ms;
+  animation-delay: 6562ms;
+}
+
+.c32 .circle-container:nth-child(21) .circle {
+  animation-delay: 74ms;
+}
+
+.c32 .circle-container:nth-child(22) {
+  width: 2px;
+  height: 2px;
+  animation-name: move-frames-22;
+  animation-duration: 6899ms;
+  animation-delay: 10094ms;
+}
+
+.c32 .circle-container:nth-child(22) .circle {
+  animation-delay: 11ms;
+}
+
+.c32 .circle-container:nth-child(23) {
+  width: 2px;
+  height: 2px;
+  animation-name: move-frames-23;
+  animation-duration: 5317ms;
+  animation-delay: 6235ms;
+}
+
+.c32 .circle-container:nth-child(23) .circle {
+  animation-delay: 95ms;
+}
+
+.c32 .circle-container:nth-child(24) {
+  width: 3px;
+  height: 3px;
+  animation-name: move-frames-24;
+  animation-duration: 4493ms;
+  animation-delay: 2139ms;
+}
+
+.c32 .circle-container:nth-child(24) .circle {
+  animation-delay: 63ms;
+}
+
+.c32 .circle-container:nth-child(25) {
+  width: 9px;
+  height: 9px;
+  animation-name: move-frames-25;
+  animation-duration: 4739ms;
+  animation-delay: 789ms;
+}
+
+.c32 .circle-container:nth-child(25) .circle {
+  animation-delay: 100ms;
+}
+
+.c32 .circle-container:nth-child(26) {
+  width: 4px;
+  height: 4px;
+  animation-name: move-frames-26;
+  animation-duration: 4331ms;
+  animation-delay: 8047ms;
+}
+
+.c32 .circle-container:nth-child(26) .circle {
+  animation-delay: 88ms;
+}
+
+.c32 .circle-container:nth-child(27) {
+  width: 0px;
+  height: 0px;
+  animation-name: move-frames-27;
+  animation-duration: 4660ms;
+  animation-delay: 2693ms;
+}
+
+.c32 .circle-container:nth-child(27) .circle {
+  animation-delay: 46ms;
+}
+
+.c32 .circle-container:nth-child(28) {
+  width: 0px;
+  height: 0px;
+  animation-name: move-frames-28;
+  animation-duration: 6955ms;
+  animation-delay: 6874ms;
+}
+
+.c32 .circle-container:nth-child(28) .circle {
+  animation-delay: 41ms;
+}
+
+.c32 .circle-container:nth-child(29) {
+  width: 4px;
+  height: 4px;
+  animation-name: move-frames-29;
+  animation-duration: 6221ms;
+  animation-delay: 5479ms;
+}
+
+.c32 .circle-container:nth-child(29) .circle {
+  animation-delay: 91ms;
+}
+
+.c32 .circle-container:nth-child(30) {
+  width: 8px;
+  height: 8px;
+  animation-name: move-frames-30;
+  animation-duration: 6583ms;
+  animation-delay: 2442ms;
+}
+
+.c32 .circle-container:nth-child(30) .circle {
+  animation-delay: 78ms;
+}
+
+.c32 .circle-container:nth-child(31) {
+  width: 10px;
+  height: 10px;
+  animation-name: move-frames-31;
+  animation-duration: 6879ms;
+  animation-delay: 625ms;
+}
+
+.c32 .circle-container:nth-child(31) .circle {
+  animation-delay: 89ms;
+}
+
+.c32 .circle-container:nth-child(32) {
+  width: 6px;
+  height: 6px;
+  animation-name: move-frames-32;
+  animation-duration: 3433ms;
+  animation-delay: 4130ms;
+}
+
+.c32 .circle-container:nth-child(32) .circle {
+  animation-delay: 69ms;
+}
+
+.c32 .circle-container:nth-child(33) {
+  width: 2px;
+  height: 2px;
+  animation-name: move-frames-33;
+  animation-duration: 6110ms;
+  animation-delay: 5804ms;
+}
+
+.c32 .circle-container:nth-child(33) .circle {
+  animation-delay: 37ms;
+}
+
+.c32 .circle-container:nth-child(34) {
+  width: 6px;
+  height: 6px;
+  animation-name: move-frames-34;
+  animation-duration: 4570ms;
+  animation-delay: 8846ms;
+}
+
+.c32 .circle-container:nth-child(34) .circle {
+  animation-delay: 13ms;
+}
+
+.c32 .circle-container:nth-child(35) {
+  width: 3px;
+  height: 3px;
+  animation-name: move-frames-35;
+  animation-duration: 4403ms;
+  animation-delay: 5642ms;
+}
+
+.c32 .circle-container:nth-child(35) .circle {
+  animation-delay: 32ms;
+}
+
+.c32 .circle-container:nth-child(36) {
+  width: 7px;
+  height: 7px;
+  animation-name: move-frames-36;
+  animation-duration: 5883ms;
+  animation-delay: 2698ms;
+}
+
+.c32 .circle-container:nth-child(36) .circle {
+  animation-delay: 90ms;
+}
+
+.c32 .circle-container:nth-child(37) {
+  width: 0px;
+  height: 0px;
+  animation-name: move-frames-37;
+  animation-duration: 6559ms;
+  animation-delay: 9259ms;
+}
+
+.c32 .circle-container:nth-child(37) .circle {
+  animation-delay: 20ms;
+}
+
+.c32 .circle-container:nth-child(38) {
+  width: 0px;
+  height: 0px;
+  animation-name: move-frames-38;
+  animation-duration: 6312ms;
+  animation-delay: 8760ms;
+}
+
+.c32 .circle-container:nth-child(38) .circle {
+  animation-delay: 85ms;
+}
+
+.c32 .circle-container:nth-child(39) {
+  width: 4px;
+  height: 4px;
+  animation-name: move-frames-39;
+  animation-duration: 4242ms;
+  animation-delay: 8288ms;
+}
+
+.c32 .circle-container:nth-child(39) .circle {
+  animation-delay: 33ms;
+}
+
+.c32 .circle-container:nth-child(40) {
+  width: 9px;
+  height: 9px;
+  animation-name: move-frames-40;
+  animation-duration: 5632ms;
+  animation-delay: 9649ms;
+}
+
+.c32 .circle-container:nth-child(40) .circle {
+  animation-delay: 25ms;
+}
+
+.c32 .circle-container:nth-child(41) {
+  width: 2px;
+  height: 2px;
+  animation-name: move-frames-41;
+  animation-duration: 6452ms;
+  animation-delay: 6326ms;
+}
+
+.c32 .circle-container:nth-child(41) .circle {
+  animation-delay: 97ms;
+}
+
+.c32 .circle-container:nth-child(42) {
+  width: 10px;
+  height: 10px;
+  animation-name: move-frames-42;
+  animation-duration: 5609ms;
+  animation-delay: 8273ms;
+}
+
+.c32 .circle-container:nth-child(42) .circle {
+  animation-delay: 99ms;
+}
+
+.c32 .circle-container:nth-child(43) {
+  width: 9px;
+  height: 9px;
+  animation-name: move-frames-43;
+  animation-duration: 3988ms;
+  animation-delay: 4512ms;
+}
+
+.c32 .circle-container:nth-child(43) .circle {
+  animation-delay: 17ms;
+}
+
+.c32 .circle-container:nth-child(44) {
+  width: 3px;
+  height: 3px;
+  animation-name: move-frames-44;
+  animation-duration: 4021ms;
+  animation-delay: 6108ms;
+}
+
+.c32 .circle-container:nth-child(44) .circle {
+  animation-delay: 60ms;
+}
+
+.c32 .circle-container:nth-child(45) {
+  width: 7px;
+  height: 7px;
+  animation-name: move-frames-45;
+  animation-duration: 4794ms;
+  animation-delay: 674ms;
+}
+
+.c32 .circle-container:nth-child(45) .circle {
+  animation-delay: 33ms;
+}
+
+.c32 .circle-container:nth-child(46) {
+  width: 4px;
+  height: 4px;
+  animation-name: move-frames-46;
+  animation-duration: 3944ms;
+  animation-delay: 7380ms;
+}
+
+.c32 .circle-container:nth-child(46) .circle {
+  animation-delay: 15ms;
+}
+
+.c32 .circle-container:nth-child(47) {
+  width: 8px;
+  height: 8px;
+  animation-name: move-frames-47;
+  animation-duration: 3165ms;
+  animation-delay: 4778ms;
+}
+
+.c32 .circle-container:nth-child(47) .circle {
+  animation-delay: 15ms;
+}
+
+.c32 .circle-container:nth-child(48) {
+  width: 2px;
+  height: 2px;
+  animation-name: move-frames-48;
+  animation-duration: 3915ms;
+  animation-delay: 8734ms;
+}
+
+.c32 .circle-container:nth-child(48) .circle {
+  animation-delay: 46ms;
+}
+
+.c32 .circle-container:nth-child(49) {
+  width: 2px;
+  height: 2px;
+  animation-name: move-frames-49;
+  animation-duration: 5214ms;
+  animation-delay: 1943ms;
+}
+
+.c32 .circle-container:nth-child(49) .circle {
+  animation-delay: 22ms;
+}
+
+.c27 {
+  z-index: 2;
+  width: 147%;
+  top: -34%;
+  left: -24%;
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  transform: rotate(90deg);
+}
+
+.c29 {
+  width: 130px;
+  height: 249px;
+}
+
+.c28 {
+  background-color: #000000;
+  border-top-right-radius: 42px 50%;
+  border-bottom-right-radius: 44px 50%;
+  border-top-left-radius: 44px 50%;
+  border-bottom-left-radius: 44px 50%;
+  margin-bottom: 5px;
+  line-height: 0px;
+}
+
+.c33 {
+  position: absolute;
+  height: 212px;
+  width: 62px;
+  left: -43px;
+  top: 2px;
+  border-top-left-radius: 35px 50%;
+  border-top-right-radius: 32px 50%;
+  border-bottom-left-radius: 32px 50%;
+  border-bottom-right-radius: 32px 50%;
+  box-shadow: inset 0px 0px 18px 1px #FFDD83;
+}
+
+.c34 {
+  position: absolute;
+  box-shadow: inset 0px 0px 18px 1px #98DFD6;
+  height: 213px;
+  width: 62px;
+  right: -41px;
+  top: -3px;
+  border-top-left-radius: 34px 50%;
+  border-top-right-radius: 29px 50%;
+  border-bottom-left-radius: 28px 49%;
+  border-bottom-right-radius: 28px 50%;
+}
+
+.c30 {
+  border-top-right-radius: 41px 50%;
+  border-bottom-right-radius: 44px 50%;
+  border-top-left-radius: 43px 50%;
+  border-bottom-left-radius: 45px 50%;
+  background-color: #000000;
+  margin-bottom: 5px;
+  line-height: 0px;
+  transform: scaleX(-1);
+}
+
+.c35 {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  z-index: 5;
+  height: 212px;
+  border-top-left-radius: 30px 50%;
+  border-bottom-left-radius: 30px 50%;
+  border-top-right-radius: 31px 50%;
+  border-bottom-right-radius: 32px 50%;
+}
+
+.c31 {
+  position: absolute;
+  overflow: hidden;
+  margin: 30px auto;
+  height: 212px;
+  border-top-left-radius: 30px 50%;
+  border-bottom-left-radius: 30px 50%;
+  border-top-right-radius: 31px 50%;
+  border-bottom-right-radius: 32px 50%;
+  top: -12px;
+  left: 62px;
+  right: 61px;
+}
+
+.c24 {
+  --transform-origin-first: bottom;
+  --transform-origin-last: top;
+  --rotate3D-first: 1,0,0,-45deg;
+  --rotate3D-last: 1,0,0,45deg;
+  --height-middle: 30%;
+  --width-middle: unset;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 1/1.7;
+  align-items: stretch;
+  gap: 15px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.c25 {
+  flex-grow: 1;
+  border: 1px solid #FFDD83;
+  transform-origin: var(--transform-origin-first);
+  transform: perspective(600px) rotate3D(var(--rotate3D-first));
+  background-color: #000000;
+}
+
+.c26 {
+  position: relative;
+  border: 1px solid;
+  border-image-slice: 1;
+  border-width: 1px;
+  border-image-source: linear-gradient(       to right,       #FFDD83,       #98DFD6     );
+  height: var(--height-middle);
+  width: var(--width-middle);
+  background-color: #000000;
+}
+
+.c55 {
+  flex-grow: 1;
+  border: 1px solid #98DFD6;
+  transform-origin: var(--transform-origin-last);
+  transform: perspective(600px) rotate3D(var(--rotate3D-last));
+  background-color: #000000;
 }
 
 .c1 {
@@ -199,6 +1063,112 @@ exports[`HomePage should render successfully 1`] = `
   color: #FFFFFF;
 }
 
+.c16 {
+  margin-left: 8px;
+  position: relative;
+}
+
+.c16:hover,
+.c16:focus {
+  text-decoration: none;
+}
+
+.c16::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #FFFFFF;
+  transform-origin: bottom right;
+  transition: transform 0.5s ease-out;
+}
+
+.c20 {
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  max-height: 76px;
+}
+
+.c20:hover,
+.c20:focus {
+  text-decoration: none;
+}
+
+.c20:hover circle.loading {
+  stroke: white;
+  stroke-width: 6px;
+  stroke-dasharray: 110;
+  stroke-dashoffset: 82;
+  animation: clock-loading 0.5s steps(4, jump-none) forwards;
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+.c20:hover .c15::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c10 {
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  max-height: 42px;
+}
+
+.c10:hover,
+.c10:focus {
+  text-decoration: none;
+}
+
+.c10:hover circle.loading {
+  stroke: white;
+  stroke-width: 6px;
+  stroke-dasharray: 110;
+  stroke-dashoffset: 82;
+  animation: clock-loading 0.5s steps(4, jump-none) forwards;
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+.c10:hover .c15::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c22 {
+  position: relative;
+  width: 76px;
+  height: 76px;
+}
+
+.c12 {
+  position: relative;
+  width: 42px;
+  height: 42px;
+}
+
+.c13 {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+}
+
+.c14 {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  display: flex;
+}
+
 .c2 {
   display: flex;
 }
@@ -218,7 +1188,7 @@ exports[`HomePage should render successfully 1`] = `
   flex-direction: column;
 }
 
-.c16 {
+.c17 {
   display: flex;
   min-height: calc(100vh - 115px);
   padding-top: 80px;
@@ -226,14 +1196,119 @@ exports[`HomePage should render successfully 1`] = `
   flex-direction: column;
 }
 
-.c18 {
+.c19 {
   margin-bottom: 30px;
   text-align: center;
 }
 
-.c22 {
+.c56 {
   margin-top: 50px;
   margin-bottom: 50px;
+}
+
+.c21 {
+  margin-bottom: 30px;
+}
+
+@media (min-width: 768px) {
+  .c27 {
+    width: 152%;
+    top: unset;
+    left: -26%;
+    margin: 18px auto;
+    transform: unset;
+  }
+}
+
+@media (min-width: 768px) {
+  .c29 {
+    width: unset;
+    height: unset;
+  }
+}
+
+@media (min-width: 768px) {
+  .c28 {
+    background-color: #000000;
+    border-top-right-radius: 59px 50%;
+    border-bottom-right-radius: 61px 50%;
+    border-top-left-radius: 62px 50%;
+    border-bottom-left-radius: 62px 50%;
+  }
+}
+
+@media (min-width: 768px) {
+  .c33 {
+    height: 309px;
+    width: 92px;
+    left: -65px;
+    top: -2px;
+    border-top-left-radius: 44px 50%;
+    border-top-right-radius: 45px 50%;
+    border-bottom-left-radius: 42px 50%;
+    border-bottom-right-radius: 43px 50%;
+  }
+}
+
+@media (min-width: 768px) {
+  .c34 {
+    height: 308px;
+    width: 89px;
+    right: -63px;
+    top: -1px;
+    border-top-left-radius: 46px 50%;
+    border-top-right-radius: 51px 50%;
+    border-bottom-left-radius: 51px 50%;
+    border-bottom-right-radius: 51px 50%;
+  }
+}
+
+@media (min-width: 768px) {
+  .c30 {
+    border-top-right-radius: 59px 50%;
+    border-bottom-right-radius: 62px 50%;
+    border-top-left-radius: 61px 50%;
+    border-bottom-left-radius: 63px 50%;
+  }
+}
+
+@media (min-width: 768px) {
+  .c35 {
+    height: 305px;
+    border-top-left-radius: 45px 50%;
+    border-bottom-left-radius: 45px 50%;
+    border-top-right-radius: 40px 50%;
+    border-bottom-right-radius: 40px 50%;
+  }
+}
+
+@media (min-width: 768px) {
+  .c31 {
+    height: 305px;
+    border-top-left-radius: 45px 50%;
+    border-bottom-left-radius: 45px 50%;
+    border-top-right-radius: 40px 50%;
+    border-bottom-right-radius: 40px 50%;
+    top: -4px;
+    left: 91px;
+    right: 91px;
+  }
+}
+
+@media (min-width: 768px) {
+  .c24 {
+    --transform-origin-first: right;
+    --transform-origin-last: left;
+    --rotate3D-first: 0,1,0,45deg;
+    --rotate3D-last: 0,1,0,-45deg;
+    --height-middle: unset;
+    --width-middle: clamp(0px, 60%, 830px);
+    flex-direction: row;
+    aspect-ratio: unset;
+    height: 395px;
+    overflow-x: clip;
+    max-width: unset;
+  }
 }
 
 @media (min-width: 768px) {
@@ -259,12 +1334,26 @@ exports[`HomePage should render successfully 1`] = `
 
 @media (min-width: 768px) {
   .c6 {
-    display: unset;
+    display: inline-block;
+    position: relative;
   }
 
-  .c6:hover,
-  .c6:focus {
-    text-decoration: underline;
+  .c6::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #FFFFFF;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+  }
+
+  .c6:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
   }
 }
 
@@ -328,7 +1417,7 @@ exports[`HomePage should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c18 {
+  .c19 {
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
     color: #FFFFFF;
@@ -338,7 +1427,13 @@ exports[`HomePage should render successfully 1`] = `
 }
 
 @media (min-width: 1024px) {
-  .c18 {
+  .c19 {
+    margin-bottom: 50px;
+  }
+}
+
+@media (min-width: 768px) {
+  .c21 {
     margin-bottom: 50px;
   }
 }
@@ -451,26 +1546,26 @@ exports[`HomePage should render successfully 1`] = `
             </div>
           </div>
           <p
-            class="c7 c8 c15"
+            class="c7 c15 c8 c16"
           >
             Get in touch
           </p>
         </a>
       </nav>
       <div
-        class="c16"
+        class="c17"
       >
         <h1
-          class="c17 c18"
+          class="c18 c19"
         >
           Saúl de León Guerrero
         </h1>
         <a
-          class="c19"
+          class="c20 c21"
           href="/"
         >
           <div
-            class="c20"
+            class="c22"
           >
             <svg
               class="c13"
@@ -483,15 +1578,487 @@ exports[`HomePage should render successfully 1`] = `
               class="c14"
             >
               <div
-                class="c21"
+                class="c23"
               >
                 Explore
               </div>
             </div>
           </div>
         </a>
+        <div
+          class="c24"
+        >
+          <div
+            class="c25"
+          />
+          <div
+            class="c26"
+          >
+            <div
+              class="c27"
+            >
+              <div
+                class="c28"
+              >
+                <svg
+                  class="c29"
+                  color="#FFDD83"
+                >
+                  portal.svg
+                </svg>
+              </div>
+              <div
+                class="c30"
+              >
+                <svg
+                  class="c29"
+                  color="#98DFD6"
+                >
+                  portal.svg
+                </svg>
+              </div>
+              <div
+                class="c31"
+              >
+                <div
+                  class="c32"
+                >
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                  <div
+                    class="circle-container"
+                  >
+                    <div
+                      class="circle"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="c33"
+                />
+                <div
+                  class="c34"
+                />
+                <div
+                  class="c35"
+                />
+                <div
+                  class="c36"
+                >
+                  <div
+                    class="c37"
+                  >
+                    <div
+                      class="c38"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="c39"
+                >
+                  <div
+                    class="c40"
+                  />
+                </div>
+                <div
+                  class="c41"
+                >
+                  <div
+                    class="c42"
+                  />
+                </div>
+                <div
+                  class="c43"
+                >
+                  <div
+                    class="c44"
+                  />
+                </div>
+                <div
+                  class="c45"
+                >
+                  <div
+                    class="c46"
+                  />
+                </div>
+                <div
+                  class="c47"
+                >
+                  <div
+                    class="c48"
+                  />
+                </div>
+                <div
+                  class="c49"
+                >
+                  <div
+                    class="c50"
+                  />
+                </div>
+                <div
+                  class="c51"
+                >
+                  <div
+                    class="c52"
+                  />
+                </div>
+                <div
+                  class="c53"
+                >
+                  <div
+                    class="c54"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="c55"
+          />
+        </div>
         <h2
-          class="c17 c22"
+          class="c18 c56"
         >
           Under construction
         </h2>

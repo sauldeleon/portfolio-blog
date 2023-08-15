@@ -33,17 +33,31 @@ export const StyledNav = styled.nav`
 
 export const StyledNavLink = styled(Link)`
   display: flex;
+
   &:hover,
   &:focus {
     text-decoration: none;
   }
 
   ${({ theme }) => theme.media.up.md} {
-    display: unset;
+    display: inline-block;
+    position: relative;
 
-    &:hover,
-    &:focus {
-      text-decoration: underline;
+    &::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      transform: scaleX(0);
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: ${({ theme }) => theme.colors.white};
+      transform-origin: bottom right;
+      transition: transform 0.25s ease-out;
+    }
+    &:hover::after {
+      transform: scaleX(1);
+      transform-origin: bottom left;
     }
   }
 `
