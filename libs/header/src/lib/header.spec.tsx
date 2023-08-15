@@ -6,22 +6,23 @@ import { Header } from './header'
 
 describe('Header', () => {
   it('should render successfully with no items', () => {
-    renderWithTheme(<Header actionItem="wadus" />)
-    expect(screen.getByText('slLogo.svg')).toBeTruthy()
+    renderWithTheme(<Header logo="slLogo.svg" actionItem="wadus" />)
+    expect(screen.getByText(/slLogo.svg/)).toBeTruthy()
+    expect(screen.getByText(/wadus/)).toBeTruthy()
   })
 
   it('should render links', () => {
     renderWithTheme(
       <Header
-        items={[
+        navItems={[
           { href: 'a', label: 'a' },
           { href: 'b', label: 'b', hideOnDesktop: true },
         ]}
         actionItem="wadus"
       />
     )
-    expect(screen.getAllByRole('link')).toHaveLength(3)
+    expect(screen.getAllByRole('link')).toHaveLength(2)
     expect(screen.getByText('wadus')).toBeInTheDocument()
-    expect(screen.getByText('b')).toHaveStyle('display:block')
+    expect(screen.getAllByText('b')[1]).toHaveStyle('display:block')
   })
 })

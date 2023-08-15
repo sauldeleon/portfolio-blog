@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`HomePage should render successfully 1`] = `
-.c17 {
+.c18 {
   font-family: 'Roboto mono',monospace;
   font-weight: 400;
   color: #FFFFFF;
@@ -10,7 +10,7 @@ exports[`HomePage should render successfully 1`] = `
   margin: 0;
 }
 
-.c22 {
+.c23 {
   font-family: 'Roboto mono',monospace;
   font-weight: 400;
   color: #FFFFFF;
@@ -19,7 +19,7 @@ exports[`HomePage should render successfully 1`] = `
   margin: 0;
 }
 
-.c8 {
+.c9 {
   font-family: 'Roboto mono',monospace;
   font-weight: 400;
   color: #FFFFFF;
@@ -28,25 +28,25 @@ exports[`HomePage should render successfully 1`] = `
   white-space: pre-line;
 }
 
-.c8 ul,
-.c8 ol {
+.c9 ul,
+.c9 ol {
   margin-left: 40px;
   margin-bottom: 10px;
 }
 
-.c8 ul {
+.c9 ul {
   list-style: outside disc;
 }
 
-.c8 ol {
+.c9 ol {
   list-style: decimal;
 }
 
-.c8 li {
+.c9 li {
   padding-left: 10px;
 }
 
-.c21 {
+.c22 {
   font-family: 'Roboto mono',monospace;
   font-weight: 500;
   color: #FFFFFF;
@@ -55,7 +55,7 @@ exports[`HomePage should render successfully 1`] = `
   text-transform: uppercase;
 }
 
-.c19 {
+.c20 {
   outline: none;
   cursor: pointer;
   display: flex;
@@ -63,7 +63,7 @@ exports[`HomePage should render successfully 1`] = `
   max-height: 76px;
 }
 
-.c19:hover circle.loading {
+.c20:hover circle.loading {
   stroke: white;
   stroke-width: 6px;
   stroke-dasharray: 110;
@@ -73,7 +73,7 @@ exports[`HomePage should render successfully 1`] = `
   transform-origin: center;
 }
 
-.c10 {
+.c11 {
   outline: none;
   cursor: pointer;
   display: flex;
@@ -81,7 +81,7 @@ exports[`HomePage should render successfully 1`] = `
   max-height: 42px;
 }
 
-.c10:hover circle.loading {
+.c11:hover circle.loading {
   stroke: white;
   stroke-width: 6px;
   stroke-dasharray: 110;
@@ -91,23 +91,16 @@ exports[`HomePage should render successfully 1`] = `
   transform-origin: center;
 }
 
-.c20 {
+.c21 {
   position: relative;
   width: 76px;
   height: 76px;
 }
 
-.c12 {
+.c13 {
   position: relative;
   width: 42px;
   height: 42px;
-}
-
-.c13 {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  top: 50%;
-  left: 50%;
 }
 
 .c14 {
@@ -115,11 +108,31 @@ exports[`HomePage should render successfully 1`] = `
   transform: translate(-50%, -50%);
   top: 50%;
   left: 50%;
-  display: flex;
 }
 
 .c15 {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  display: flex;
+}
+
+.c16 {
   margin-left: 8px;
+}
+
+.c3 {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: nowrap;
+  width: 1px;
+  inset: 0;
 }
 
 .c1 {
@@ -135,20 +148,11 @@ exports[`HomePage should render successfully 1`] = `
   align-items: end;
 }
 
-.c2 {
+.c7 {
   display: flex;
 }
 
-.c6 {
-  display: flex;
-}
-
-.c3 {
-  color: #000000;
-  margin-bottom: 25px;
-}
-
-.c4 {
+.c5 {
   display: flex;
   align-items: end;
   flex-grow: 1;
@@ -156,7 +160,7 @@ exports[`HomePage should render successfully 1`] = `
   height: 100%;
 }
 
-.c5 {
+.c6 {
   width: 59px;
   display: flex;
   justify-content: center;
@@ -164,7 +168,7 @@ exports[`HomePage should render successfully 1`] = `
   padding-bottom: 25px;
 }
 
-.c5 .c7 {
+.c6 .c8 {
   font-family: 'Roboto mono',monospace;
   font-weight: 500;
   color: #FFFFFF;
@@ -175,16 +179,16 @@ exports[`HomePage should render successfully 1`] = `
   transform: rotate(-180deg);
 }
 
-.c5:hover {
+.c6:hover {
   background-color: #000000;
   cursor: pointer;
 }
 
-.c5:hover .c7 {
+.c6:hover .c8 {
   color: #FFFFFF;
 }
 
-.c9 {
+.c10 {
   width: 59px;
   display: flex;
   justify-content: center;
@@ -192,7 +196,7 @@ exports[`HomePage should render successfully 1`] = `
   padding-bottom: 25px;
 }
 
-.c9 .c7 {
+.c10 .c8 {
   font-family: 'Roboto mono',monospace;
   font-weight: 500;
   color: #FFFFFF;
@@ -203,16 +207,25 @@ exports[`HomePage should render successfully 1`] = `
   transform: rotate(-180deg);
 }
 
-.c9:hover {
+.c10:hover {
   background-color: #000000;
   cursor: pointer;
 }
 
-.c9:hover .c7 {
+.c10:hover .c8 {
   color: #FFFFFF;
 }
 
-.c11 {
+.c2 {
+  display: flex;
+}
+
+.c4 {
+  color: #000000;
+  margin-bottom: 25px;
+}
+
+.c12 {
   display: none;
 }
 
@@ -222,7 +235,7 @@ exports[`HomePage should render successfully 1`] = `
   flex-direction: column;
 }
 
-.c16 {
+.c17 {
   display: flex;
   min-height: calc(100vh - 115px);
   align-items: center;
@@ -230,7 +243,7 @@ exports[`HomePage should render successfully 1`] = `
   flex-direction: column;
 }
 
-.c18 {
+.c19 {
   margin-bottom: 50px;
 }
 
@@ -256,20 +269,13 @@ exports[`HomePage should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c6 {
+  .c7 {
     display: unset;
   }
 }
 
 @media (min-width: 768px) {
-  .c3 {
-    color: #FFFFFF;
-    margin-bottom: 0;
-  }
-}
-
-@media (min-width: 768px) {
-  .c4 {
+  .c5 {
     gap: 30px;
     align-items: center;
     height: unset;
@@ -277,12 +283,12 @@ exports[`HomePage should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c5 {
+  .c6 {
     width: auto;
     padding-bottom: 0;
   }
 
-  .c5 .c7 {
+  .c6 .c8 {
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
     color: #FFFFFF;
@@ -295,13 +301,13 @@ exports[`HomePage should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c9 {
+  .c10 {
     display: none;
     width: auto;
     padding-bottom: 0;
   }
 
-  .c9 .c7 {
+  .c10 .c8 {
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
     color: #FFFFFF;
@@ -314,7 +320,14 @@ exports[`HomePage should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c11 {
+  .c4 {
+    color: #FFFFFF;
+    margin-bottom: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .c12 {
     display: flex;
   }
 }
@@ -325,73 +338,99 @@ exports[`HomePage should render successfully 1`] = `
       class="c0"
     >
       <nav
+        aria-label="Main menu"
         class="c1"
       >
         <a
           class="c2"
           href="/"
         >
-          <svg
+          <span
             class="c3"
+          >
+            Header Logo
+          </span>
+          <svg
+            class="c4"
             height="55"
           >
             slLogo.svg
           </svg>
         </a>
         <ul
-          class="c4"
+          class="c5"
         >
           <li
-            class="c5"
+            class="c6"
           >
             <a
-              class="c6"
+              class="c7"
               href="/experience"
             >
+              <span
+                class="c3"
+              >
+                Experience
+              </span>
               <p
-                class="c7 c8"
+                class="c8 c9"
               >
                 Experience
               </p>
             </a>
           </li>
           <li
-            class="c5"
+            class="c6"
           >
             <a
-              class="c6"
+              class="c7"
               href="/contact"
             >
+              <span
+                class="c3"
+              >
+                Contact
+              </span>
               <p
-                class="c7 c8"
+                class="c8 c9"
               >
                 Contact
               </p>
             </a>
           </li>
           <li
-            class="c5"
+            class="c6"
           >
             <a
-              class="c6"
+              class="c7"
               href="/portfolio"
             >
+              <span
+                class="c3"
+              >
+                CV/Portfolio
+              </span>
               <p
-                class="c7 c8"
+                class="c8 c9"
               >
                 CV/Portfolio
               </p>
             </a>
           </li>
           <li
-            class="c9"
+            class="c10"
           >
             <a
-              class="c6"
+              class="c7"
               href="/contact"
             >
+              <span
+                class="c3"
+              >
+                Get in touch
+              </span>
               <p
-                class="c7 c8"
+                class="c8 c9"
               >
                 Get in touch
               </p>
@@ -399,21 +438,21 @@ exports[`HomePage should render successfully 1`] = `
           </li>
         </ul>
         <a
-          class="c10 c11"
+          class="c11 c12"
           href="/contact"
         >
           <div
-            class="c12"
+            class="c13"
           >
             <svg
-              class="c13"
+              class="c14"
               height="42"
               width="42"
             >
               circleButton.svg
             </svg>
             <div
-              class="c14"
+              class="c15"
             >
               <svg>
                 arrowRight.svg
@@ -421,39 +460,39 @@ exports[`HomePage should render successfully 1`] = `
             </div>
           </div>
           <p
-            class="c7 c8 c15"
+            class="c8 c9 c16"
           >
             Get in touch
           </p>
         </a>
       </nav>
       <div
-        class="c16"
+        class="c17"
       >
         <h1
-          class="c17 c18"
+          class="c18 c19"
         >
           Saúl de León Guerrero
         </h1>
         <a
-          class="c19"
+          class="c20"
           href="/"
         >
           <div
-            class="c20"
+            class="c21"
           >
             <svg
-              class="c13"
+              class="c14"
               height="76"
               width="76"
             >
               circleButton.svg
             </svg>
             <div
-              class="c14"
+              class="c15"
             >
               <div
-                class="c21"
+                class="c22"
               >
                 Explore
               </div>
@@ -461,7 +500,7 @@ exports[`HomePage should render successfully 1`] = `
           </div>
         </a>
         <h2
-          class="c22 c18"
+          class="c23 c19"
         >
           Under construction
         </h2>

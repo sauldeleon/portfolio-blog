@@ -1,32 +1,30 @@
-import React from 'react'
+import React, { DetailedHTMLProps, HTMLAttributes } from 'react'
 
 import { Body } from '@sdlgr/typography'
 
 import {
   StyledList,
   StyledListItem,
-  StyledLogoLink,
   StyledNav,
   StyledNavLink,
-  StyledSLLogo,
 } from './header.styles'
 
-interface HeaderProps {
-  items?: { href: string; label: string; hideOnDesktop?: boolean }[]
+interface HeaderProps
+  extends DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> {
+  logo?: React.ReactNode
+  navItems?: { href: string; label: string; hideOnDesktop?: boolean }[]
   actionItem?: React.ReactNode
 }
 
-export function Header({ items, actionItem }: HeaderProps) {
+export function Header({ logo, navItems, actionItem, ...rest }: HeaderProps) {
   return (
-    <StyledNav>
-      <StyledLogoLink href="/">
-        <StyledSLLogo height={55} />
-      </StyledLogoLink>
-      {items && items.length && (
+    <StyledNav {...rest}>
+      {logo}
+      {navItems && navItems.length && (
         <StyledList>
-          {items.map(({ href, label, hideOnDesktop }, index) => (
+          {navItems.map(({ href, label, hideOnDesktop }, index) => (
             <StyledListItem key={index} $hideOnDesktop={hideOnDesktop}>
-              <StyledNavLink href={href}>
+              <StyledNavLink href={href} aria-label={label}>
                 <Body>{label}</Body>
               </StyledNavLink>
             </StyledListItem>

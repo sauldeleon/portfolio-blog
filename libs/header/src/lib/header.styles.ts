@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 
-import { SLLogo } from '@sdlgr/assets'
 import { Link } from '@sdlgr/link'
 import { Body } from '@sdlgr/typography'
 
@@ -31,25 +30,21 @@ export const StyledNav = styled.nav`
     padding: 0;
   }
 `
-export const StyledLogoLink = styled(Link)`
-  display: flex;
-`
 
 export const StyledNavLink = styled(Link)`
   display: flex;
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
 
   ${({ theme }) => theme.media.up.md} {
     display: unset;
-  }
-`
 
-export const StyledSLLogo = styled(SLLogo)`
-  color: ${({ theme }) => theme.colors.black};
-  margin-bottom: 25px;
-
-  ${({ theme }) => theme.media.up.md} {
-    color: ${({ theme }) => theme.colors.white};
-    margin-bottom: 0;
+    &:hover,
+    &:focus {
+      text-decoration: underline;
+    }
   }
 `
 
