@@ -52,12 +52,13 @@ export const StyledList = styled.ul`
   display: flex;
   align-items: end;
   flex-grow: 1;
-  justify-content: center;
+  justify-content: space-around;
   height: 100%;
 
   ${({ theme }) => theme.media.up.md} {
     gap: 30px;
     align-items: center;
+    justify-content: center;
     height: unset;
   }
 `
