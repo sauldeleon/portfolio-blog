@@ -7,21 +7,21 @@ import { Label } from '@sdlgr/typography'
 import { Layout } from '@web/components/Layout/Layout'
 import { useClientTranslation } from '@web/i18n/client'
 
-import { StyledHeading } from './HomePage.styles'
+import { StyledHeading, StyledSubHeading } from './HomePage.styles'
 
 export function HomePage() {
-  const { t } = useClientTranslation()
+  const { t } = useClientTranslation('homepage')
   return (
     <Layout>
-      <StyledHeading>Saúl de León Guerrero</StyledHeading>
+      <StyledHeading $level={2}>Saúl de León Guerrero</StyledHeading>
       <CircleLink
         href="/"
-        iconContent={<Label $level="XS">Explore</Label>}
+        iconContent={<Label $level="XS">{t('explore')}</Label>}
         iconSize={76}
       />
-      <StyledHeading as="h2" $level={2}>
+      <StyledSubHeading as="h2" $level={2}>
         {t('underConstruction')}
-      </StyledHeading>
+      </StyledSubHeading>
       <SLLogo />
     </Layout>
   )

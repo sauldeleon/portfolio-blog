@@ -1,16 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`HomePage should render successfully 1`] = `
-.c18 {
-  font-family: 'Roboto mono',monospace;
-  font-weight: 400;
-  color: #FFFFFF;
-  font-size: 3rem;
-  line-height: normal;
-  margin: 0;
-}
-
-.c23 {
+.c17 {
   font-family: 'Roboto mono',monospace;
   font-weight: 400;
   color: #FFFFFF;
@@ -19,7 +10,7 @@ exports[`HomePage should render successfully 1`] = `
   margin: 0;
 }
 
-.c9 {
+.c8 {
   font-family: 'Roboto mono',monospace;
   font-weight: 400;
   color: #FFFFFF;
@@ -28,25 +19,25 @@ exports[`HomePage should render successfully 1`] = `
   white-space: pre-line;
 }
 
-.c9 ul,
-.c9 ol {
+.c8 ul,
+.c8 ol {
   margin-left: 40px;
   margin-bottom: 10px;
 }
 
-.c9 ul {
+.c8 ul {
   list-style: outside disc;
 }
 
-.c9 ol {
+.c8 ol {
   list-style: decimal;
 }
 
-.c9 li {
+.c8 li {
   padding-left: 10px;
 }
 
-.c22 {
+.c21 {
   font-family: 'Roboto mono',monospace;
   font-weight: 500;
   color: #FFFFFF;
@@ -55,7 +46,7 @@ exports[`HomePage should render successfully 1`] = `
   text-transform: uppercase;
 }
 
-.c20 {
+.c19 {
   outline: none;
   cursor: pointer;
   display: flex;
@@ -63,7 +54,7 @@ exports[`HomePage should render successfully 1`] = `
   max-height: 76px;
 }
 
-.c20:hover circle.loading {
+.c19:hover circle.loading {
   stroke: white;
   stroke-width: 6px;
   stroke-dasharray: 110;
@@ -73,7 +64,7 @@ exports[`HomePage should render successfully 1`] = `
   transform-origin: center;
 }
 
-.c11 {
+.c10 {
   outline: none;
   cursor: pointer;
   display: flex;
@@ -81,7 +72,7 @@ exports[`HomePage should render successfully 1`] = `
   max-height: 42px;
 }
 
-.c11:hover circle.loading {
+.c10:hover circle.loading {
   stroke: white;
   stroke-width: 6px;
   stroke-dasharray: 110;
@@ -91,16 +82,23 @@ exports[`HomePage should render successfully 1`] = `
   transform-origin: center;
 }
 
-.c21 {
+.c20 {
   position: relative;
   width: 76px;
   height: 76px;
 }
 
-.c13 {
+.c12 {
   position: relative;
   width: 42px;
   height: 42px;
+}
+
+.c13 {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
 }
 
 .c14 {
@@ -108,31 +106,11 @@ exports[`HomePage should render successfully 1`] = `
   transform: translate(-50%, -50%);
   top: 50%;
   left: 50%;
-}
-
-.c15 {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  top: 50%;
-  left: 50%;
   display: flex;
 }
 
-.c16 {
+.c15 {
   margin-left: 8px;
-}
-
-.c3 {
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  height: 1px;
-  overflow: hidden;
-  position: absolute;
-  left: 0;
-  top: 0;
-  white-space: nowrap;
-  width: 1px;
-  inset: 0;
 }
 
 .c1 {
@@ -148,11 +126,16 @@ exports[`HomePage should render successfully 1`] = `
   align-items: end;
 }
 
-.c7 {
+.c6 {
   display: flex;
 }
 
-.c5 {
+.c6:hover,
+.c6:focus {
+  text-decoration: none;
+}
+
+.c4 {
   display: flex;
   align-items: end;
   flex-grow: 1;
@@ -160,7 +143,7 @@ exports[`HomePage should render successfully 1`] = `
   height: 100%;
 }
 
-.c6 {
+.c5 {
   width: 59px;
   display: flex;
   justify-content: center;
@@ -168,7 +151,7 @@ exports[`HomePage should render successfully 1`] = `
   padding-bottom: 25px;
 }
 
-.c6 .c8 {
+.c5 .c7 {
   font-family: 'Roboto mono',monospace;
   font-weight: 500;
   color: #FFFFFF;
@@ -179,16 +162,16 @@ exports[`HomePage should render successfully 1`] = `
   transform: rotate(-180deg);
 }
 
-.c6:hover {
+.c5:hover {
   background-color: #000000;
   cursor: pointer;
 }
 
-.c6:hover .c8 {
+.c5:hover .c7 {
   color: #FFFFFF;
 }
 
-.c10 {
+.c9 {
   width: 59px;
   display: flex;
   justify-content: center;
@@ -196,7 +179,7 @@ exports[`HomePage should render successfully 1`] = `
   padding-bottom: 25px;
 }
 
-.c10 .c8 {
+.c9 .c7 {
   font-family: 'Roboto mono',monospace;
   font-weight: 500;
   color: #FFFFFF;
@@ -207,12 +190,12 @@ exports[`HomePage should render successfully 1`] = `
   transform: rotate(-180deg);
 }
 
-.c10:hover {
+.c9:hover {
   background-color: #000000;
   cursor: pointer;
 }
 
-.c10:hover .c8 {
+.c9:hover .c7 {
   color: #FFFFFF;
 }
 
@@ -220,12 +203,12 @@ exports[`HomePage should render successfully 1`] = `
   display: flex;
 }
 
-.c4 {
+.c3 {
   color: #000000;
   margin-bottom: 25px;
 }
 
-.c12 {
+.c11 {
   display: none;
 }
 
@@ -235,15 +218,21 @@ exports[`HomePage should render successfully 1`] = `
   flex-direction: column;
 }
 
-.c17 {
+.c16 {
   display: flex;
   min-height: calc(100vh - 115px);
+  padding-top: 80px;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
 }
 
-.c19 {
+.c18 {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.c22 {
+  margin-top: 50px;
   margin-bottom: 50px;
 }
 
@@ -269,13 +258,18 @@ exports[`HomePage should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c7 {
+  .c6 {
     display: unset;
+  }
+
+  .c6:hover,
+  .c6:focus {
+    text-decoration: underline;
   }
 }
 
 @media (min-width: 768px) {
-  .c5 {
+  .c4 {
     gap: 30px;
     align-items: center;
     height: unset;
@@ -283,12 +277,12 @@ exports[`HomePage should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c6 {
+  .c5 {
     width: auto;
     padding-bottom: 0;
   }
 
-  .c6 .c8 {
+  .c5 .c7 {
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
     color: #FFFFFF;
@@ -301,13 +295,13 @@ exports[`HomePage should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c10 {
+  .c9 {
     display: none;
     width: auto;
     padding-bottom: 0;
   }
 
-  .c10 .c8 {
+  .c9 .c7 {
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
     color: #FFFFFF;
@@ -320,15 +314,31 @@ exports[`HomePage should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c4 {
+  .c3 {
     color: #FFFFFF;
     margin-bottom: 0;
   }
 }
 
 @media (min-width: 768px) {
-  .c12 {
+  .c11 {
     display: flex;
+  }
+}
+
+@media (min-width: 768px) {
+  .c18 {
+    font-family: 'Roboto mono',monospace;
+    font-weight: 400;
+    color: #FFFFFF;
+    font-size: 3rem;
+    line-height: normal;
+  }
+}
+
+@media (min-width: 1024px) {
+  .c18 {
+    margin-bottom: 50px;
   }
 }
 
@@ -342,95 +352,75 @@ exports[`HomePage should render successfully 1`] = `
         class="c1"
       >
         <a
+          aria-label="Header Logo"
           class="c2"
           href="/"
         >
-          <span
-            class="c3"
-          >
-            Header Logo
-          </span>
           <svg
-            class="c4"
+            class="c3"
             height="55"
           >
             slLogo.svg
           </svg>
         </a>
         <ul
-          class="c5"
+          class="c4"
         >
           <li
-            class="c6"
+            class="c5"
           >
             <a
-              class="c7"
+              aria-label="Experience"
+              class="c6"
               href="/experience"
             >
-              <span
-                class="c3"
-              >
-                Experience
-              </span>
               <p
-                class="c8 c9"
+                class="c7 c8"
               >
                 Experience
               </p>
             </a>
           </li>
           <li
-            class="c6"
+            class="c5"
           >
             <a
-              class="c7"
+              aria-label="Contact"
+              class="c6"
               href="/contact"
             >
-              <span
-                class="c3"
-              >
-                Contact
-              </span>
               <p
-                class="c8 c9"
+                class="c7 c8"
               >
                 Contact
               </p>
             </a>
           </li>
           <li
-            class="c6"
+            class="c5"
           >
             <a
-              class="c7"
+              aria-label="CV/Portfolio"
+              class="c6"
               href="/portfolio"
             >
-              <span
-                class="c3"
-              >
-                CV/Portfolio
-              </span>
               <p
-                class="c8 c9"
+                class="c7 c8"
               >
                 CV/Portfolio
               </p>
             </a>
           </li>
           <li
-            class="c10"
+            class="c9"
           >
             <a
-              class="c7"
+              aria-label="Get in touch"
+              class="c6"
               href="/contact"
             >
-              <span
-                class="c3"
-              >
-                Get in touch
-              </span>
               <p
-                class="c8 c9"
+                class="c7 c8"
               >
                 Get in touch
               </p>
@@ -438,21 +428,21 @@ exports[`HomePage should render successfully 1`] = `
           </li>
         </ul>
         <a
-          class="c11 c12"
+          class="c10 c11"
           href="/contact"
         >
           <div
-            class="c13"
+            class="c12"
           >
             <svg
-              class="c14"
+              class="c13"
               height="42"
               width="42"
             >
               circleButton.svg
             </svg>
             <div
-              class="c15"
+              class="c14"
             >
               <svg>
                 arrowRight.svg
@@ -460,39 +450,39 @@ exports[`HomePage should render successfully 1`] = `
             </div>
           </div>
           <p
-            class="c8 c9 c16"
+            class="c7 c8 c15"
           >
             Get in touch
           </p>
         </a>
       </nav>
       <div
-        class="c17"
+        class="c16"
       >
         <h1
-          class="c18 c19"
+          class="c17 c18"
         >
           Saúl de León Guerrero
         </h1>
         <a
-          class="c20"
+          class="c19"
           href="/"
         >
           <div
-            class="c21"
+            class="c20"
           >
             <svg
-              class="c14"
+              class="c13"
               height="76"
               width="76"
             >
               circleButton.svg
             </svg>
             <div
-              class="c15"
+              class="c14"
             >
               <div
-                class="c22"
+                class="c21"
               >
                 Explore
               </div>
@@ -500,7 +490,7 @@ exports[`HomePage should render successfully 1`] = `
           </div>
         </a>
         <h2
-          class="c23 c19"
+          class="c17 c22"
         >
           Under construction
         </h2>

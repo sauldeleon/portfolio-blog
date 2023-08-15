@@ -23,6 +23,6 @@ describe('Header', () => {
     )
     expect(screen.getAllByRole('link')).toHaveLength(2)
     expect(screen.getByText('wadus')).toBeInTheDocument()
-    expect(screen.getAllByText('b')[1]).toHaveStyle('display:block')
+    expect(screen.getByText('b')).toHaveStyle('display:block')
   })
 })
