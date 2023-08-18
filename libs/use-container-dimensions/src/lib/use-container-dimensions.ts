@@ -1,28 +1,32 @@
 import { RefObject, useEffect, useState } from 'react'
 
+import { useDebounce } from '@sdlgr/use-debounce'
+
+const getDimensions = (ref: RefObject<HTMLElement>) => ({
+  width: ref.current?.offsetWidth || 0,
+  height: ref.current?.offsetHeight || 300,
+})
+
 export const useContainerDimensions = (myRef: RefObject<HTMLElement>) => {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
 
+  const handleResize = () => {
+    setDimensions(getDimensions(myRef))
+  }
+
+  const debouncedHandleResize = useDebounce(handleResize, 200)
+
   useEffect(() => {
-    const getDimensions = () => ({
-      width: myRef.current?.offsetWidth || 0,
-      height: myRef.current?.offsetHeight || 300,
-    })
-
-    const handleResize = () => {
-      setDimensions(getDimensions())
-    }
-
     if (myRef.current) {
-      setDimensions(getDimensions())
+      setDimensions(getDimensions(myRef))
     }
 
-    window.addEventListener('resize', handleResize)
+    window.addEventListener('resize', debouncedHandleResize)
 
     return () => {
-      window.removeEventListener('resize', handleResize)
+      window.removeEventListener('resize', debouncedHandleResize)
     }
-  }, [myRef])
+  }, [myRef, debouncedHandleResize])
 
   return dimensions
 }

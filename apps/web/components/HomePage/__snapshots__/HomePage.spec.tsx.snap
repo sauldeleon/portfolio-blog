@@ -46,1094 +46,6 @@ exports[`HomePage should render successfully 1`] = `
   text-transform: uppercase;
 }
 
-.c38 {
-  --size: 100px;
-  left: calc(0px - var(--size));
-  top: 82px;
-  position: absolute;
-  animation: 6s horizontal-1 5s linear infinite;
-}
-
-.c41 {
-  --size: 50px;
-  left: calc(0px - var(--size));
-  top: 120px;
-  position: absolute;
-  animation: 9s horizontal-2 3s linear infinite;
-}
-
-.c43 {
-  --size: 50px;
-  left: calc(0px - var(--size));
-  top: 112px;
-  position: absolute;
-  animation: 9s horizontal-3 5s linear infinite;
-}
-
-.c45 {
-  --size: 50px;
-  left: calc(0px - var(--size));
-  top: 142px;
-  position: absolute;
-  animation: 13s horizontal-4 2s linear infinite;
-}
-
-.c47 {
-  --size: 50px;
-  left: calc(0px - var(--size));
-  top: 167px;
-  position: absolute;
-  animation: 14s horizontal-5 4s linear infinite;
-}
-
-.c49 {
-  --size: 50px;
-  left: calc(0px - var(--size));
-  top: 180px;
-  position: absolute;
-  animation: 7s horizontal-6 1s linear infinite;
-}
-
-.c51 {
-  --size: 50px;
-  left: calc(0px - var(--size));
-  top: 161px;
-  position: absolute;
-  animation: 6s horizontal-7 3s linear infinite;
-}
-
-.c53 {
-  --size: 50px;
-  left: calc(0px - var(--size));
-  top: 42px;
-  position: absolute;
-  animation: 9s horizontal-8 4s linear infinite;
-}
-
-.c39 {
-  position: absolute;
-  overflow: hidden;
-  border-radius: 50%;
-  width: var(--size);
-  height: var(--size);
-  z-index: 4;
-  animation: 8s vertical-1 ease-in-out alternate infinite;
-}
-
-.c42 {
-  position: absolute;
-  overflow: hidden;
-  border-radius: 50%;
-  width: var(--size);
-  height: var(--size);
-  z-index: 2;
-  background: #e6f805;
-  animation: 7s vertical-2 ease-in-out alternate infinite;
-}
-
-.c44 {
-  position: absolute;
-  overflow: hidden;
-  border-radius: 50%;
-  width: var(--size);
-  height: var(--size);
-  z-index: 3;
-  background: #f62e0b;
-  animation: 6s vertical-3 ease-in-out alternate infinite;
-}
-
-.c46 {
-  position: absolute;
-  overflow: hidden;
-  border-radius: 50%;
-  width: var(--size);
-  height: var(--size);
-  z-index: 4;
-  background: #b43fdf;
-  animation: 7s vertical-4 ease-in-out alternate infinite;
-}
-
-.c48 {
-  position: absolute;
-  overflow: hidden;
-  border-radius: 50%;
-  width: var(--size);
-  height: var(--size);
-  z-index: 3;
-  background: #d235ed;
-  animation: 10s vertical-5 ease-in-out alternate infinite;
-}
-
-.c50 {
-  position: absolute;
-  overflow: hidden;
-  border-radius: 50%;
-  width: var(--size);
-  height: var(--size);
-  z-index: 3;
-  background: #3739f4;
-  animation: 9s vertical-6 ease-in-out alternate infinite;
-}
-
-.c52 {
-  position: absolute;
-  overflow: hidden;
-  border-radius: 50%;
-  width: var(--size);
-  height: var(--size);
-  z-index: 5;
-  background: #a02fa0;
-  animation: 6s vertical-7 ease-in-out alternate infinite;
-}
-
-.c54 {
-  position: absolute;
-  overflow: hidden;
-  border-radius: 50%;
-  width: var(--size);
-  height: var(--size);
-  z-index: 5;
-  background: #913e0b;
-  animation: 8s vertical-8 ease-in-out alternate infinite;
-}
-
-.c40 {
-  position: absolute;
-  overflow: hidden;
-  border-radius: 50%;
-  width: var(--size);
-  height: var(--size);
-  z-index: 3;
-  background-image: url(/assets/react-logo.png);
-  background-size: contain;
-  animation: 4s rotate-1 linear infinite;
-}
-
-.c34 {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-}
-
-.c32 {
-  position: absolute;
-  transform: translateX(-27px);
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
-}
-
-.c32:nth-child(0) {
-  width: 7px;
-  height: 7px;
-  animation-name: move-frames-0;
-  animation-duration: 5824ms;
-  animation-delay: 7126ms;
-}
-
-.c32:nth-child(0) .c33 {
-  animation: fade-frames 973ms infinite,scale-frames 1382ms infinite;
-  animation-delay: 37ms;
-}
-
-.c32:nth-child(1) {
-  width: 9px;
-  height: 9px;
-  animation-name: move-frames-1;
-  animation-duration: 4192ms;
-  animation-delay: 5130ms;
-}
-
-.c32:nth-child(1) .c33 {
-  animation: fade-frames 796ms infinite,scale-frames 1649ms infinite;
-  animation-delay: 36ms;
-}
-
-.c32:nth-child(2) {
-  width: 7px;
-  height: 7px;
-  animation-name: move-frames-2;
-  animation-duration: 3101ms;
-  animation-delay: 10881ms;
-}
-
-.c32:nth-child(2) .c33 {
-  animation: fade-frames 542ms infinite,scale-frames 1637ms infinite;
-  animation-delay: 28ms;
-}
-
-.c32:nth-child(3) {
-  width: 9px;
-  height: 9px;
-  animation-name: move-frames-3;
-  animation-duration: 3829ms;
-  animation-delay: 4917ms;
-}
-
-.c32:nth-child(3) .c33 {
-  animation: fade-frames 511ms infinite,scale-frames 1068ms infinite;
-  animation-delay: 90ms;
-}
-
-.c32:nth-child(4) {
-  width: 4px;
-  height: 4px;
-  animation-name: move-frames-4;
-  animation-duration: 3051ms;
-  animation-delay: 9391ms;
-}
-
-.c32:nth-child(4) .c33 {
-  animation: fade-frames 529ms infinite,scale-frames 1469ms infinite;
-  animation-delay: 31ms;
-}
-
-.c32:nth-child(5) {
-  width: 6px;
-  height: 6px;
-  animation-name: move-frames-5;
-  animation-duration: 5169ms;
-  animation-delay: 10917ms;
-}
-
-.c32:nth-child(5) .c33 {
-  animation: fade-frames 657ms infinite,scale-frames 1886ms infinite;
-  animation-delay: 99ms;
-}
-
-.c32:nth-child(6) {
-  width: 7px;
-  height: 7px;
-  animation-name: move-frames-6;
-  animation-duration: 3143ms;
-  animation-delay: 9687ms;
-}
-
-.c32:nth-child(6) .c33 {
-  animation: fade-frames 970ms infinite,scale-frames 1568ms infinite;
-  animation-delay: 95ms;
-}
-
-.c32:nth-child(7) {
-  width: 6px;
-  height: 6px;
-  animation-name: move-frames-7;
-  animation-duration: 3442ms;
-  animation-delay: 9330ms;
-}
-
-.c32:nth-child(7) .c33 {
-  animation: fade-frames 949ms infinite,scale-frames 1038ms infinite;
-  animation-delay: 13ms;
-}
-
-.c32:nth-child(8) {
-  width: 1px;
-  height: 1px;
-  animation-name: move-frames-8;
-  animation-duration: 5280ms;
-  animation-delay: 4236ms;
-}
-
-.c32:nth-child(8) .c33 {
-  animation: fade-frames 735ms infinite,scale-frames 1039ms infinite;
-  animation-delay: 38ms;
-}
-
-.c32:nth-child(9) {
-  width: 9px;
-  height: 9px;
-  animation-name: move-frames-9;
-  animation-duration: 5677ms;
-  animation-delay: 6551ms;
-}
-
-.c32:nth-child(9) .c33 {
-  animation: fade-frames 974ms infinite,scale-frames 1561ms infinite;
-  animation-delay: 22ms;
-}
-
-.c32:nth-child(10) {
-  width: 4px;
-  height: 4px;
-  animation-name: move-frames-10;
-  animation-duration: 4195ms;
-  animation-delay: 6031ms;
-}
-
-.c32:nth-child(10) .c33 {
-  animation: fade-frames 974ms infinite,scale-frames 1823ms infinite;
-  animation-delay: 2ms;
-}
-
-.c32:nth-child(11) {
-  width: 4px;
-  height: 4px;
-  animation-name: move-frames-11;
-  animation-duration: 6846ms;
-  animation-delay: 608ms;
-}
-
-.c32:nth-child(11) .c33 {
-  animation: fade-frames 717ms infinite,scale-frames 1376ms infinite;
-  animation-delay: 57ms;
-}
-
-.c32:nth-child(12) {
-  width: 6px;
-  height: 6px;
-  animation-name: move-frames-12;
-  animation-duration: 5803ms;
-  animation-delay: 6889ms;
-}
-
-.c32:nth-child(12) .c33 {
-  animation: fade-frames 529ms infinite,scale-frames 1137ms infinite;
-  animation-delay: 4ms;
-}
-
-.c32:nth-child(13) {
-  width: 5px;
-  height: 5px;
-  animation-name: move-frames-13;
-  animation-duration: 4084ms;
-  animation-delay: 8270ms;
-}
-
-.c32:nth-child(13) .c33 {
-  animation: fade-frames 579ms infinite,scale-frames 1480ms infinite;
-  animation-delay: 13ms;
-}
-
-.c32:nth-child(14) {
-  width: 1px;
-  height: 1px;
-  animation-name: move-frames-14;
-  animation-duration: 3453ms;
-  animation-delay: 10382ms;
-}
-
-.c32:nth-child(14) .c33 {
-  animation: fade-frames 589ms infinite,scale-frames 1570ms infinite;
-  animation-delay: 2ms;
-}
-
-.c32:nth-child(15) {
-  width: 1px;
-  height: 1px;
-  animation-name: move-frames-15;
-  animation-duration: 5881ms;
-  animation-delay: 2759ms;
-}
-
-.c32:nth-child(15) .c33 {
-  animation: fade-frames 634ms infinite,scale-frames 1632ms infinite;
-  animation-delay: 80ms;
-}
-
-.c32:nth-child(16) {
-  width: 10px;
-  height: 10px;
-  animation-name: move-frames-16;
-  animation-duration: 5890ms;
-  animation-delay: 634ms;
-}
-
-.c32:nth-child(16) .c33 {
-  animation: fade-frames 509ms infinite,scale-frames 1824ms infinite;
-  animation-delay: 97ms;
-}
-
-.c32:nth-child(17) {
-  width: 10px;
-  height: 10px;
-  animation-name: move-frames-17;
-  animation-duration: 4460ms;
-  animation-delay: 9582ms;
-}
-
-.c32:nth-child(17) .c33 {
-  animation: fade-frames 820ms infinite,scale-frames 1448ms infinite;
-  animation-delay: 60ms;
-}
-
-.c32:nth-child(18) {
-  width: 3px;
-  height: 3px;
-  animation-name: move-frames-18;
-  animation-duration: 4082ms;
-  animation-delay: 7572ms;
-}
-
-.c32:nth-child(18) .c33 {
-  animation: fade-frames 720ms infinite,scale-frames 1359ms infinite;
-  animation-delay: 66ms;
-}
-
-.c32:nth-child(19) {
-  width: 10px;
-  height: 10px;
-  animation-name: move-frames-19;
-  animation-duration: 3912ms;
-  animation-delay: 8598ms;
-}
-
-.c32:nth-child(19) .c33 {
-  animation: fade-frames 628ms infinite,scale-frames 1598ms infinite;
-  animation-delay: 2ms;
-}
-
-.c32:nth-child(20) {
-  width: 10px;
-  height: 10px;
-  animation-name: move-frames-20;
-  animation-duration: 5744ms;
-  animation-delay: 2663ms;
-}
-
-.c32:nth-child(20) .c33 {
-  animation: fade-frames 898ms infinite,scale-frames 1199ms infinite;
-  animation-delay: 13ms;
-}
-
-.c32:nth-child(21) {
-  width: 8px;
-  height: 8px;
-  animation-name: move-frames-21;
-  animation-duration: 6735ms;
-  animation-delay: 6562ms;
-}
-
-.c32:nth-child(21) .c33 {
-  animation: fade-frames 837ms infinite,scale-frames 1058ms infinite;
-  animation-delay: 74ms;
-}
-
-.c32:nth-child(22) {
-  width: 3px;
-  height: 3px;
-  animation-name: move-frames-22;
-  animation-duration: 6899ms;
-  animation-delay: 10094ms;
-}
-
-.c32:nth-child(22) .c33 {
-  animation: fade-frames 842ms infinite,scale-frames 1237ms infinite;
-  animation-delay: 11ms;
-}
-
-.c32:nth-child(23) {
-  width: 3px;
-  height: 3px;
-  animation-name: move-frames-23;
-  animation-duration: 5317ms;
-  animation-delay: 6235ms;
-}
-
-.c32:nth-child(23) .c33 {
-  animation: fade-frames 910ms infinite,scale-frames 1472ms infinite;
-  animation-delay: 95ms;
-}
-
-.c32:nth-child(24) {
-  width: 4px;
-  height: 4px;
-  animation-name: move-frames-24;
-  animation-duration: 4493ms;
-  animation-delay: 2139ms;
-}
-
-.c32:nth-child(24) .c33 {
-  animation: fade-frames 500ms infinite,scale-frames 1924ms infinite;
-  animation-delay: 63ms;
-}
-
-.c32:nth-child(25) {
-  width: 9px;
-  height: 9px;
-  animation-name: move-frames-25;
-  animation-duration: 4739ms;
-  animation-delay: 789ms;
-}
-
-.c32:nth-child(25) .c33 {
-  animation: fade-frames 514ms infinite,scale-frames 1144ms infinite;
-  animation-delay: 100ms;
-}
-
-.c32:nth-child(26) {
-  width: 4px;
-  height: 4px;
-  animation-name: move-frames-26;
-  animation-duration: 4331ms;
-  animation-delay: 8047ms;
-}
-
-.c32:nth-child(26) .c33 {
-  animation: fade-frames 633ms infinite,scale-frames 1061ms infinite;
-  animation-delay: 88ms;
-}
-
-.c32:nth-child(27) {
-  width: 1px;
-  height: 1px;
-  animation-name: move-frames-27;
-  animation-duration: 4660ms;
-  animation-delay: 2693ms;
-}
-
-.c32:nth-child(27) .c33 {
-  animation: fade-frames 925ms infinite,scale-frames 1134ms infinite;
-  animation-delay: 46ms;
-}
-
-.c32:nth-child(28) {
-  width: 1px;
-  height: 1px;
-  animation-name: move-frames-28;
-  animation-duration: 6955ms;
-  animation-delay: 6874ms;
-}
-
-.c32:nth-child(28) .c33 {
-  animation: fade-frames 863ms infinite,scale-frames 1752ms infinite;
-  animation-delay: 41ms;
-}
-
-.c32:nth-child(29) {
-  width: 5px;
-  height: 5px;
-  animation-name: move-frames-29;
-  animation-duration: 6221ms;
-  animation-delay: 5479ms;
-}
-
-.c32:nth-child(29) .c33 {
-  animation: fade-frames 780ms infinite,scale-frames 1330ms infinite;
-  animation-delay: 91ms;
-}
-
-.c32:nth-child(30) {
-  width: 8px;
-  height: 8px;
-  animation-name: move-frames-30;
-  animation-duration: 6583ms;
-  animation-delay: 2442ms;
-}
-
-.c32:nth-child(30) .c33 {
-  animation: fade-frames 567ms infinite,scale-frames 1526ms infinite;
-  animation-delay: 78ms;
-}
-
-.c32:nth-child(31) {
-  width: 10px;
-  height: 10px;
-  animation-name: move-frames-31;
-  animation-duration: 6879ms;
-  animation-delay: 625ms;
-}
-
-.c32:nth-child(31) .c33 {
-  animation: fade-frames 685ms infinite,scale-frames 1237ms infinite;
-  animation-delay: 89ms;
-}
-
-.c32:nth-child(32) {
-  width: 6px;
-  height: 6px;
-  animation-name: move-frames-32;
-  animation-duration: 3433ms;
-  animation-delay: 4130ms;
-}
-
-.c32:nth-child(32) .c33 {
-  animation: fade-frames 826ms infinite,scale-frames 1010ms infinite;
-  animation-delay: 69ms;
-}
-
-.c32:nth-child(33) {
-  width: 3px;
-  height: 3px;
-  animation-name: move-frames-33;
-  animation-duration: 6110ms;
-  animation-delay: 5804ms;
-}
-
-.c32:nth-child(33) .c33 {
-  animation: fade-frames 891ms infinite,scale-frames 1673ms infinite;
-  animation-delay: 37ms;
-}
-
-.c32:nth-child(34) {
-  width: 6px;
-  height: 6px;
-  animation-name: move-frames-34;
-  animation-duration: 4570ms;
-  animation-delay: 8846ms;
-}
-
-.c32:nth-child(34) .c33 {
-  animation: fade-frames 618ms infinite,scale-frames 1734ms infinite;
-  animation-delay: 13ms;
-}
-
-.c32:nth-child(35) {
-  width: 3px;
-  height: 3px;
-  animation-name: move-frames-35;
-  animation-duration: 4403ms;
-  animation-delay: 5642ms;
-}
-
-.c32:nth-child(35) .c33 {
-  animation: fade-frames 702ms infinite,scale-frames 1013ms infinite;
-  animation-delay: 32ms;
-}
-
-.c32:nth-child(36) {
-  width: 8px;
-  height: 8px;
-  animation-name: move-frames-36;
-  animation-duration: 5883ms;
-  animation-delay: 2698ms;
-}
-
-.c32:nth-child(36) .c33 {
-  animation: fade-frames 939ms infinite,scale-frames 1075ms infinite;
-  animation-delay: 90ms;
-}
-
-.c32:nth-child(37) {
-  width: 1px;
-  height: 1px;
-  animation-name: move-frames-37;
-  animation-duration: 6559ms;
-  animation-delay: 9259ms;
-}
-
-.c32:nth-child(37) .c33 {
-  animation: fade-frames 646ms infinite,scale-frames 1091ms infinite;
-  animation-delay: 20ms;
-}
-
-.c32:nth-child(38) {
-  width: 1px;
-  height: 1px;
-  animation-name: move-frames-38;
-  animation-duration: 6312ms;
-  animation-delay: 8760ms;
-}
-
-.c32:nth-child(38) .c33 {
-  animation: fade-frames 550ms infinite,scale-frames 1908ms infinite;
-  animation-delay: 85ms;
-}
-
-.c32:nth-child(39) {
-  width: 4px;
-  height: 4px;
-  animation-name: move-frames-39;
-  animation-duration: 4242ms;
-  animation-delay: 8288ms;
-}
-
-.c32:nth-child(39) .c33 {
-  animation: fade-frames 565ms infinite,scale-frames 1529ms infinite;
-  animation-delay: 33ms;
-}
-
-.c32:nth-child(40) {
-  width: 9px;
-  height: 9px;
-  animation-name: move-frames-40;
-  animation-duration: 5632ms;
-  animation-delay: 9649ms;
-}
-
-.c32:nth-child(40) .c33 {
-  animation: fade-frames 787ms infinite,scale-frames 1551ms infinite;
-  animation-delay: 25ms;
-}
-
-.c32:nth-child(41) {
-  width: 3px;
-  height: 3px;
-  animation-name: move-frames-41;
-  animation-duration: 6452ms;
-  animation-delay: 6326ms;
-}
-
-.c32:nth-child(41) .c33 {
-  animation: fade-frames 964ms infinite,scale-frames 1911ms infinite;
-  animation-delay: 97ms;
-}
-
-.c32:nth-child(42) {
-  width: 10px;
-  height: 10px;
-  animation-name: move-frames-42;
-  animation-duration: 5609ms;
-  animation-delay: 8273ms;
-}
-
-.c32:nth-child(42) .c33 {
-  animation: fade-frames 774ms infinite,scale-frames 1356ms infinite;
-  animation-delay: 99ms;
-}
-
-.c32:nth-child(43) {
-  width: 9px;
-  height: 9px;
-  animation-name: move-frames-43;
-  animation-duration: 3988ms;
-  animation-delay: 4512ms;
-}
-
-.c32:nth-child(43) .c33 {
-  animation: fade-frames 721ms infinite,scale-frames 1476ms infinite;
-  animation-delay: 17ms;
-}
-
-.c32:nth-child(44) {
-  width: 4px;
-  height: 4px;
-  animation-name: move-frames-44;
-  animation-duration: 4021ms;
-  animation-delay: 6108ms;
-}
-
-.c32:nth-child(44) .c33 {
-  animation: fade-frames 616ms infinite,scale-frames 1324ms infinite;
-  animation-delay: 60ms;
-}
-
-.c32:nth-child(45) {
-  width: 7px;
-  height: 7px;
-  animation-name: move-frames-45;
-  animation-duration: 4794ms;
-  animation-delay: 674ms;
-}
-
-.c32:nth-child(45) .c33 {
-  animation: fade-frames 987ms infinite,scale-frames 1467ms infinite;
-  animation-delay: 33ms;
-}
-
-.c32:nth-child(46) {
-  width: 5px;
-  height: 5px;
-  animation-name: move-frames-46;
-  animation-duration: 3944ms;
-  animation-delay: 7380ms;
-}
-
-.c32:nth-child(46) .c33 {
-  animation: fade-frames 976ms infinite,scale-frames 1464ms infinite;
-  animation-delay: 15ms;
-}
-
-.c32:nth-child(47) {
-  width: 9px;
-  height: 9px;
-  animation-name: move-frames-47;
-  animation-duration: 3165ms;
-  animation-delay: 4778ms;
-}
-
-.c32:nth-child(47) .c33 {
-  animation: fade-frames 810ms infinite,scale-frames 1446ms infinite;
-  animation-delay: 15ms;
-}
-
-.c32:nth-child(48) {
-  width: 2px;
-  height: 2px;
-  animation-name: move-frames-48;
-  animation-duration: 3915ms;
-  animation-delay: 8734ms;
-}
-
-.c32:nth-child(48) .c33 {
-  animation: fade-frames 779ms infinite,scale-frames 1266ms infinite;
-  animation-delay: 46ms;
-}
-
-.c32:nth-child(49) {
-  width: 3px;
-  height: 3px;
-  animation-name: move-frames-49;
-  animation-duration: 5214ms;
-  animation-delay: 1943ms;
-}
-
-.c32:nth-child(49) .c33 {
-  animation: fade-frames 551ms infinite,scale-frames 1810ms infinite;
-  animation-delay: 22ms;
-}
-
-.c32:nth-child(50) {
-  width: 7px;
-  height: 7px;
-  animation-name: move-frames-50;
-  animation-duration: 5051ms;
-  animation-delay: 10732ms;
-}
-
-.c32:nth-child(50) .c33 {
-  animation: fade-frames 819ms infinite,scale-frames 1855ms infinite;
-  animation-delay: 17ms;
-}
-
-.c32:nth-child(51) {
-  width: 3px;
-  height: 3px;
-  animation-name: move-frames-51;
-  animation-duration: 6240ms;
-  animation-delay: 9327ms;
-}
-
-.c32:nth-child(51) .c33 {
-  animation: fade-frames 711ms infinite,scale-frames 1137ms infinite;
-  animation-delay: 55ms;
-}
-
-.c32:nth-child(52) {
-  width: 8px;
-  height: 8px;
-  animation-name: move-frames-52;
-  animation-duration: 4687ms;
-  animation-delay: 3453ms;
-}
-
-.c32:nth-child(52) .c33 {
-  animation: fade-frames 809ms infinite,scale-frames 1371ms infinite;
-  animation-delay: 5ms;
-}
-
-.c32:nth-child(53) {
-  width: 6px;
-  height: 6px;
-  animation-name: move-frames-53;
-  animation-duration: 3317ms;
-  animation-delay: 7685ms;
-}
-
-.c32:nth-child(53) .c33 {
-  animation: fade-frames 876ms infinite,scale-frames 1866ms infinite;
-  animation-delay: 48ms;
-}
-
-.c32:nth-child(54) {
-  width: 9px;
-  height: 9px;
-  animation-name: move-frames-54;
-  animation-duration: 6222ms;
-  animation-delay: 2983ms;
-}
-
-.c32:nth-child(54) .c33 {
-  animation: fade-frames 628ms infinite,scale-frames 1423ms infinite;
-  animation-delay: 89ms;
-}
-
-.c32:nth-child(55) {
-  width: 9px;
-  height: 9px;
-  animation-name: move-frames-55;
-  animation-duration: 3493ms;
-  animation-delay: 4866ms;
-}
-
-.c32:nth-child(55) .c33 {
-  animation: fade-frames 903ms infinite,scale-frames 1265ms infinite;
-  animation-delay: 15ms;
-}
-
-.c32:nth-child(56) {
-  width: 5px;
-  height: 5px;
-  animation-name: move-frames-56;
-  animation-duration: 4032ms;
-  animation-delay: 6615ms;
-}
-
-.c32:nth-child(56) .c33 {
-  animation: fade-frames 877ms infinite,scale-frames 1711ms infinite;
-  animation-delay: 3ms;
-}
-
-.c32:nth-child(57) {
-  width: 7px;
-  height: 7px;
-  animation-name: move-frames-57;
-  animation-duration: 3452ms;
-  animation-delay: 6491ms;
-}
-
-.c32:nth-child(57) .c33 {
-  animation: fade-frames 764ms infinite,scale-frames 1203ms infinite;
-  animation-delay: 46ms;
-}
-
-.c32:nth-child(58) {
-  width: 3px;
-  height: 3px;
-  animation-name: move-frames-58;
-  animation-duration: 5963ms;
-  animation-delay: 4581ms;
-}
-
-.c32:nth-child(58) .c33 {
-  animation: fade-frames 813ms infinite,scale-frames 1004ms infinite;
-  animation-delay: 69ms;
-}
-
-.c32:nth-child(59) {
-  width: 1px;
-  height: 1px;
-  animation-name: move-frames-59;
-  animation-duration: 5235ms;
-  animation-delay: 1764ms;
-}
-
-.c32:nth-child(59) .c33 {
-  animation: fade-frames 711ms infinite,scale-frames 1824ms infinite;
-  animation-delay: 89ms;
-}
-
-.c32:nth-child(60) {
-  width: 7px;
-  height: 7px;
-  animation-name: move-frames-60;
-  animation-duration: 4203ms;
-  animation-delay: 1439ms;
-}
-
-.c32:nth-child(60) .c33 {
-  animation: fade-frames 780ms infinite,scale-frames 1634ms infinite;
-  animation-delay: 60ms;
-}
-
-.c32:nth-child(61) {
-  width: 4px;
-  height: 4px;
-  animation-name: move-frames-61;
-  animation-duration: 6181ms;
-  animation-delay: 5045ms;
-}
-
-.c32:nth-child(61) .c33 {
-  animation: fade-frames 502ms infinite,scale-frames 1757ms infinite;
-  animation-delay: 92ms;
-}
-
-.c32:nth-child(62) {
-  width: 2px;
-  height: 2px;
-  animation-name: move-frames-62;
-  animation-duration: 4414ms;
-  animation-delay: 8739ms;
-}
-
-.c32:nth-child(62) .c33 {
-  animation: fade-frames 511ms infinite,scale-frames 1783ms infinite;
-  animation-delay: 43ms;
-}
-
-.c32:nth-child(63) {
-  width: 7px;
-  height: 7px;
-  animation-name: move-frames-63;
-  animation-duration: 6737ms;
-  animation-delay: 7262ms;
-}
-
-.c32:nth-child(63) .c33 {
-  animation: fade-frames 986ms infinite,scale-frames 1324ms infinite;
-  animation-delay: 20ms;
-}
-
-.c32:nth-child(64) {
-  width: 9px;
-  height: 9px;
-  animation-name: move-frames-64;
-  animation-duration: 3804ms;
-  animation-delay: 3512ms;
-}
-
-.c32:nth-child(64) .c33 {
-  animation: fade-frames 598ms infinite,scale-frames 1275ms infinite;
-  animation-delay: 67ms;
-}
-
-.c32:nth-child(65) {
-  width: 6px;
-  height: 6px;
-  animation-name: move-frames-65;
-  animation-duration: 4114ms;
-  animation-delay: 1739ms;
-}
-
-.c32:nth-child(65) .c33 {
-  animation: fade-frames 1000ms infinite,scale-frames 1157ms infinite;
-  animation-delay: 53ms;
-}
-
-.c32:nth-child(66) {
-  width: 2px;
-  height: 2px;
-  animation-name: move-frames-66;
-  animation-duration: 6176ms;
-  animation-delay: 5490ms;
-}
-
-.c32:nth-child(66) .c33 {
-  animation: fade-frames 690ms infinite,scale-frames 1108ms infinite;
-  animation-delay: 73ms;
-}
-
-.c32:nth-child(67) {
-  width: 8px;
-  height: 8px;
-  animation-name: move-frames-67;
-  animation-duration: 6353ms;
-  animation-delay: 6643ms;
-}
-
-.c32:nth-child(67) .c33 {
-  animation: fade-frames 866ms infinite,scale-frames 1728ms infinite;
-  animation-delay: 21ms;
-}
-
-.c32:nth-child(68) {
-  width: 7px;
-  height: 7px;
-  animation-name: move-frames-68;
-  animation-duration: 4642ms;
-  animation-delay: 4392ms;
-}
-
-.c32:nth-child(68) .c33 {
-  animation: fade-frames 847ms infinite,scale-frames 1861ms infinite;
-  animation-delay: 70ms;
-}
-
-.c32:nth-child(69) {
-  width: 8px;
-  height: 8px;
-  animation-name: move-frames-69;
-  animation-duration: 3695ms;
-  animation-delay: 2518ms;
-}
-
-.c32:nth-child(69) .c33 {
-  animation: fade-frames 867ms infinite,scale-frames 1687ms infinite;
-  animation-delay: 19ms;
-}
-
 .c27 {
   z-index: 2;
   width: 147%;
@@ -1160,32 +72,6 @@ exports[`HomePage should render successfully 1`] = `
   line-height: 0px;
 }
 
-.c35 {
-  position: absolute;
-  height: 212px;
-  width: 62px;
-  left: -43px;
-  top: 2px;
-  border-top-left-radius: 35px 50%;
-  border-top-right-radius: 32px 50%;
-  border-bottom-left-radius: 32px 50%;
-  border-bottom-right-radius: 32px 50%;
-  animation: 3s portal-first-glow ease-in-out infinite;
-}
-
-.c36 {
-  position: absolute;
-  height: 213px;
-  width: 62px;
-  right: -41px;
-  top: -3px;
-  border-top-left-radius: 34px 50%;
-  border-top-right-radius: 29px 50%;
-  border-bottom-left-radius: 28px 49%;
-  border-bottom-right-radius: 28px 50%;
-  animation: 3s portal-last-glow ease-in-out infinite;
-}
-
 .c30 {
   border-top-right-radius: 41px 50%;
   border-bottom-right-radius: 44px 50%;
@@ -1195,18 +81,6 @@ exports[`HomePage should render successfully 1`] = `
   margin-bottom: 5px;
   line-height: 0px;
   transform: scaleX(-1);
-}
-
-.c37 {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  z-index: 5;
-  height: 212px;
-  border-top-left-radius: 30px 50%;
-  border-bottom-left-radius: 30px 50%;
-  border-top-right-radius: 31px 50%;
-  border-bottom-right-radius: 32px 50%;
 }
 
 .c31 {
@@ -1259,7 +133,7 @@ exports[`HomePage should render successfully 1`] = `
   background-color: #000000;
 }
 
-.c55 {
+.c32 {
   flex-grow: 1;
   border: 1px solid #98DFD6;
   transform-origin: var(--transform-origin-last);
@@ -1267,7 +141,7 @@ exports[`HomePage should render successfully 1`] = `
   background-color: #000000;
 }
 
-.c58 {
+.c35 {
   position: relative;
   width: 100%;
   display: flex;
@@ -1277,25 +151,25 @@ exports[`HomePage should render successfully 1`] = `
   margin-top: 50px;
 }
 
-.c59 {
+.c36 {
   position: relative;
   width: 100%;
   height: 15px;
 }
 
-.c62 {
+.c39 {
   position: absolute;
   top: -61px;
   left: 30px;
 }
 
-.c60 {
+.c37 {
   height: 7px;
   width: 100%;
   position: relative;
 }
 
-.c60:before {
+.c37:before {
   content: '';
   position: absolute;
   width: 100%;
@@ -1303,7 +177,7 @@ exports[`HomePage should render successfully 1`] = `
   background: linear-gradient(         to bottom,         rgba(0,0,0,0.3),         rgba(152,223,214,0.3)       );
 }
 
-.c61 {
+.c38 {
   position: relative;
   max-width: 1440px;
   min-height: 120px;
@@ -1314,13 +188,13 @@ exports[`HomePage should render successfully 1`] = `
   padding: 30px;
 }
 
-.c63 {
+.c40 {
   display: flex;
   align-items: center;
   position: relative;
 }
 
-.c64 {
+.c41 {
   display: flex;
   align-items: center;
   flex-grow: 1;
@@ -1330,18 +204,18 @@ exports[`HomePage should render successfully 1`] = `
   flex-wrap: wrap;
 }
 
-.c65 {
+.c42 {
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
-.c65:hover,
-.c65:focus {
+.c42:hover,
+.c42:focus {
   text-decoration: none;
 }
 
-.c66 {
+.c43 {
   height: 20px;
   display: flex;
   gap: 20px;
@@ -1573,7 +447,7 @@ exports[`HomePage should render successfully 1`] = `
   text-align: center;
 }
 
-.c56 {
+.c33 {
   margin-top: 30px;
 }
 
@@ -1582,13 +456,13 @@ exports[`HomePage should render successfully 1`] = `
   margin-bottom: 30px;
 }
 
-.c57 {
+.c34 {
   text-align: center;
   max-width: 1180px;
   padding: 0 34px;
 }
 
-.c57 .c7 {
+.c34 .c7 {
   margin-top: 20px;
 }
 
@@ -1620,47 +494,11 @@ exports[`HomePage should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c35 {
-    height: 309px;
-    width: 92px;
-    left: -65px;
-    top: -2px;
-    border-top-left-radius: 44px 50%;
-    border-top-right-radius: 45px 50%;
-    border-bottom-left-radius: 42px 50%;
-    border-bottom-right-radius: 43px 50%;
-  }
-}
-
-@media (min-width: 768px) {
-  .c36 {
-    height: 308px;
-    width: 89px;
-    right: -63px;
-    top: -1px;
-    border-top-left-radius: 46px 50%;
-    border-top-right-radius: 51px 50%;
-    border-bottom-left-radius: 51px 50%;
-    border-bottom-right-radius: 51px 50%;
-  }
-}
-
-@media (min-width: 768px) {
   .c30 {
     border-top-right-radius: 59px 50%;
     border-bottom-right-radius: 62px 50%;
     border-top-left-radius: 61px 50%;
     border-bottom-left-radius: 63px 50%;
-  }
-}
-
-@media (min-width: 768px) {
-  .c37 {
-    height: 305px;
-    border-top-left-radius: 45px 50%;
-    border-bottom-left-radius: 45px 50%;
-    border-top-right-radius: 40px 50%;
-    border-bottom-right-radius: 40px 50%;
   }
 }
 
@@ -1694,19 +532,19 @@ exports[`HomePage should render successfully 1`] = `
 }
 
 @media (min-width: 1024px) {
-  .c61 {
+  .c38 {
     justify-content: space-between;
     grid-template-columns: 1fr 100px;
   }
 }
 
 @media (min-width: 768px) {
-  .c65 {
+  .c42 {
     display: flex;
     position: relative;
   }
 
-  .c65::after {
+  .c42::after {
     content: '';
     position: absolute;
     width: 100%;
@@ -1719,14 +557,14 @@ exports[`HomePage should render successfully 1`] = `
     transition: transform 0.25s ease-out;
   }
 
-  .c65:hover::after {
+  .c42:hover::after {
     transform: scaleX(1);
     transform-origin: bottom left;
   }
 }
 
 @media (min-width: 1024px) {
-  .c66 {
+  .c43 {
     justify-self: end;
     padding: 0;
   }
@@ -1848,7 +686,7 @@ exports[`HomePage should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c56 {
+  .c33 {
     margin-bottom: 40px;
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
@@ -1865,7 +703,7 @@ exports[`HomePage should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c57 .c7 {
+  .c34 .c7 {
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
     color: #FBFBFB;
@@ -2056,668 +894,20 @@ exports[`HomePage should render successfully 1`] = `
               </div>
               <div
                 class="c31"
-              >
-                <div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                  <div
-                    class="c32"
-                  >
-                    <div
-                      class="c33 c34"
-                      role="presentation"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c35"
-                />
-                <div
-                  class="c36"
-                />
-                <div
-                  class="c37"
-                />
-                <div
-                  class="c38"
-                  role="presentation"
-                >
-                  <div
-                    class="c39"
-                  >
-                    <div
-                      class="c40"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c41"
-                  role="presentation"
-                >
-                  <div
-                    class="c42"
-                    role="none"
-                  />
-                </div>
-                <div
-                  class="c43"
-                  role="presentation"
-                >
-                  <div
-                    class="c44"
-                    role="none"
-                  />
-                </div>
-                <div
-                  class="c45"
-                  role="presentation"
-                >
-                  <div
-                    class="c46"
-                    role="none"
-                  />
-                </div>
-                <div
-                  class="c47"
-                  role="presentation"
-                >
-                  <div
-                    class="c48"
-                    role="none"
-                  />
-                </div>
-                <div
-                  class="c49"
-                  role="presentation"
-                >
-                  <div
-                    class="c50"
-                    role="none"
-                  />
-                </div>
-                <div
-                  class="c51"
-                  role="presentation"
-                >
-                  <div
-                    class="c52"
-                    role="none"
-                  />
-                </div>
-                <div
-                  class="c53"
-                  role="presentation"
-                >
-                  <div
-                    class="c54"
-                    role="none"
-                  />
-                </div>
-              </div>
+              />
             </div>
           </div>
           <div
-            class="c55"
+            class="c32"
           />
         </div>
         <h2
-          class="c18 c56"
+          class="c18 c33"
         >
           About me
         </h2>
         <section
-          class="c57"
+          class="c34"
         >
           <p
             class="c7 c8"
@@ -2765,27 +955,27 @@ exports[`HomePage should render successfully 1`] = `
         </a>
       </div>
       <footer
-        class="c58"
+        class="c35"
         tabindex="-1"
       >
         <div
-          class="c59"
+          class="c36"
         >
           <div
-            class="c60"
+            class="c37"
           />
           <div
-            class="c60"
+            class="c37"
           />
           <div
-            class="c60"
+            class="c37"
           />
         </div>
         <div
-          class="c61"
+          class="c38"
         >
           <svg
-            class="c62"
+            class="c39"
             height="64"
             width="120"
           >
@@ -2793,14 +983,14 @@ exports[`HomePage should render successfully 1`] = `
           </svg>
           <nav
             aria-label="Site map"
-            class="c63"
+            class="c40"
           >
             <ul
-              class="c64"
+              class="c41"
             >
               <li>
                 <a
-                  class="c65"
+                  class="c42"
                   href="/experience"
                 >
                   <p
@@ -2812,7 +1002,7 @@ exports[`HomePage should render successfully 1`] = `
               </li>
               <li>
                 <a
-                  class="c65"
+                  class="c42"
                   href="/contact"
                 >
                   <p
@@ -2824,7 +1014,7 @@ exports[`HomePage should render successfully 1`] = `
               </li>
               <li>
                 <a
-                  class="c65"
+                  class="c42"
                   href="/portfolio"
                 >
                   <p
@@ -2836,7 +1026,7 @@ exports[`HomePage should render successfully 1`] = `
               </li>
               <li>
                 <a
-                  class="c65"
+                  class="c42"
                   href="#"
                 >
                   <svg
@@ -2855,7 +1045,7 @@ exports[`HomePage should render successfully 1`] = `
               </li>
               <li>
                 <a
-                  class="c65"
+                  class="c42"
                   href="#"
                 >
                   <svg
@@ -2875,7 +1065,7 @@ exports[`HomePage should render successfully 1`] = `
             </ul>
           </nav>
           <div
-            class="c66"
+            class="c43"
           >
             <a
               aria-label="Telegram"

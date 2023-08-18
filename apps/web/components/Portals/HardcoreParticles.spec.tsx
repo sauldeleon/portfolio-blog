@@ -7,7 +7,7 @@ import { HardcoreParticles } from './HardcoreParticles'
 describe('HardcoreParticles', () => {
   it('should render successfully', () => {
     renderWithTheme(<HardcoreParticles parentWidth={100} parentHeight={300} />)
-    expect(screen.getAllByRole('presentation')).toHaveLength(70)
+    expect(screen.getAllByRole('presentation')).toHaveLength(50)
   })
 
   it('should override particles number', () => {

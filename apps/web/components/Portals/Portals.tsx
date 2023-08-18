@@ -55,7 +55,7 @@ export function Portals({ items }: PortalsProps) {
         <StyledPortalIcon color={mainTheme.colors.green} />
       </PortalLast>
       <PortalPath ref={ref}>
-        {items.length > 0 && height > 0 ? (
+        {items.length > 0 && height > 0 && width > 0 ? (
           <>
             <HardcoreParticles parentWidth={width} parentHeight={height} />
             <PortalFirstGlow />

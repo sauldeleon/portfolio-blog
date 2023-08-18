@@ -135,7 +135,7 @@ interface HardcoreParticlesProps {
 export function HardcoreParticles({
   parentWidth,
   parentHeight,
-  numParticles = 70,
+  numParticles = 50,
 }: HardcoreParticlesProps) {
   return (
     <div>

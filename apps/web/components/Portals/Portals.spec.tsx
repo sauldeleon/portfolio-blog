@@ -18,7 +18,12 @@ const mockSeeds = {
   rotationColor: 'rotationColor',
   rotationDuration: 'rotationDuration',
   rotationDelay: 'rotationDelay',
+  rotationAmount: 'rotationAmount',
 }
+
+jest.mock('@sdlgr/use-container-dimensions', () => ({
+  useContainerDimensions: jest.fn().mockReturnValue({ width: 1, height: 1 }),
+}))
 
 jest.mock('./HardcoreParticles', () => ({
   HardcoreParticles: () => <div>ParticlesMock</div>,

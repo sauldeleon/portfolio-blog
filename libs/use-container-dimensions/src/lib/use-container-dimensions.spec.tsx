@@ -28,7 +28,7 @@ describe('useContainerDimensions', () => {
     const { result } = renderHook(() => useContainerDimensions(ref))
     expect(result).toEqual({
       current: {
-        height: 0,
+        height: 300,
         width: 0,
       },
     })
