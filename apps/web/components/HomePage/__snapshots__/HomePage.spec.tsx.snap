@@ -46,174 +46,68 @@ exports[`HomePage should render successfully 1`] = `
   text-transform: uppercase;
 }
 
-.c36 {
+.c37 {
   --size: 100px;
   left: calc(0px - var(--size));
-  top: 87px;
+  top: 82px;
   position: absolute;
-  animation: 6s horizontal-1 3s linear infinite;
-}
-
-.c39 {
-  --size: 50px;
-  left: calc(0px - var(--size));
-  top: 64px;
-  position: absolute;
-  animation: 8s horizontal-2 2s linear infinite;
-}
-
-.c41 {
-  --size: 50px;
-  left: calc(0px - var(--size));
-  top: 84px;
-  position: absolute;
-  animation: 20s horizontal-3 2s linear infinite;
-}
-
-.c43 {
-  --size: 50px;
-  left: calc(0px - var(--size));
-  top: 192px;
-  position: absolute;
-  animation: 11s horizontal-4 3s linear infinite;
-}
-
-.c45 {
-  --size: 50px;
-  left: calc(0px - var(--size));
-  top: 56px;
-  position: absolute;
-  animation: 16s horizontal-5 3s linear infinite;
-}
-
-.c47 {
-  --size: 50px;
-  left: calc(0px - var(--size));
-  top: 138px;
-  position: absolute;
-  animation: 20s horizontal-6 2s linear infinite;
-}
-
-.c49 {
-  --size: 50px;
-  left: calc(0px - var(--size));
-  top: 177px;
-  position: absolute;
-  animation: 20s horizontal-7 1s linear infinite;
-}
-
-.c51 {
-  --size: 50px;
-  left: calc(0px - var(--size));
-  top: 107px;
-  position: absolute;
-  animation: 16s horizontal-8 1s linear infinite;
-}
-
-.c53 {
-  --size: 50px;
-  left: calc(0px - var(--size));
-  top: 24px;
-  position: absolute;
-  animation: 19s horizontal-9 5s linear infinite;
-}
-
-.c37 {
-  position: absolute;
-  overflow: hidden;
-  border-radius: 50%;
-  width: var(--size);
-  height: var(--size);
-  z-index: 5;
-  animation: 10s vertical-1 5s ease-in-out alternate infinite;
+  animation: 6s horizontal-1 5s linear infinite;
 }
 
 .c40 {
+  --size: 50px;
+  left: calc(0px - var(--size));
+  top: 120px;
   position: absolute;
-  overflow: hidden;
-  border-radius: 50%;
-  width: var(--size);
-  height: var(--size);
-  z-index: 4;
-  background: #4695c0;
-  animation: 15s vertical-2 3s ease-in-out alternate infinite;
+  animation: 9s horizontal-2 3s linear infinite;
 }
 
 .c42 {
+  --size: 50px;
+  left: calc(0px - var(--size));
+  top: 112px;
   position: absolute;
-  overflow: hidden;
-  border-radius: 50%;
-  width: var(--size);
-  height: var(--size);
-  z-index: 3;
-  background: #77aaeb;
-  animation: 12s vertical-3 5s ease-in-out alternate infinite;
+  animation: 9s horizontal-3 5s linear infinite;
 }
 
 .c44 {
+  --size: 50px;
+  left: calc(0px - var(--size));
+  top: 142px;
   position: absolute;
-  overflow: hidden;
-  border-radius: 50%;
-  width: var(--size);
-  height: var(--size);
-  z-index: 4;
-  background: #4c93f;
-  animation: 9s vertical-4 4s ease-in-out alternate infinite;
+  animation: 13s horizontal-4 2s linear infinite;
 }
 
 .c46 {
+  --size: 50px;
+  left: calc(0px - var(--size));
+  top: 167px;
   position: absolute;
-  overflow: hidden;
-  border-radius: 50%;
-  width: var(--size);
-  height: var(--size);
-  z-index: 2;
-  background: #6d2efc;
-  animation: 11s vertical-5 4s ease-in-out alternate infinite;
+  animation: 14s horizontal-5 4s linear infinite;
 }
 
 .c48 {
+  --size: 50px;
+  left: calc(0px - var(--size));
+  top: 180px;
   position: absolute;
-  overflow: hidden;
-  border-radius: 50%;
-  width: var(--size);
-  height: var(--size);
-  z-index: 2;
-  background: #4882d0;
-  animation: 10s vertical-6 4s ease-in-out alternate infinite;
+  animation: 7s horizontal-6 1s linear infinite;
 }
 
 .c50 {
+  --size: 50px;
+  left: calc(0px - var(--size));
+  top: 161px;
   position: absolute;
-  overflow: hidden;
-  border-radius: 50%;
-  width: var(--size);
-  height: var(--size);
-  z-index: 2;
-  background: #5cb27;
-  animation: 9s vertical-7 2s ease-in-out alternate infinite;
+  animation: 6s horizontal-7 3s linear infinite;
 }
 
 .c52 {
+  --size: 50px;
+  left: calc(0px - var(--size));
+  top: 42px;
   position: absolute;
-  overflow: hidden;
-  border-radius: 50%;
-  width: var(--size);
-  height: var(--size);
-  z-index: 3;
-  background: #9f0cfb;
-  animation: 6s vertical-8 3s ease-in-out alternate infinite;
-}
-
-.c54 {
-  position: absolute;
-  overflow: hidden;
-  border-radius: 50%;
-  width: var(--size);
-  height: var(--size);
-  z-index: 5;
-  background: #d9284f;
-  animation: 18s vertical-9 4s ease-in-out alternate infinite;
+  animation: 9s horizontal-8 4s linear infinite;
 }
 
 .c38 {
@@ -223,28 +117,115 @@ exports[`HomePage should render successfully 1`] = `
   width: var(--size);
   height: var(--size);
   z-index: 4;
-  background-image: url(/assets/react-logo.png);
-  background-size: contain;
-  animation: 2s rotate-1 2s linear infinite;
+  animation: 8s vertical-1 ease-in-out alternate infinite;
 }
 
-.c32 .circle-container {
+.c41 {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 50%;
+  width: var(--size);
+  height: var(--size);
+  z-index: 2;
+  background: #e6f805;
+  animation: 7s vertical-2 ease-in-out alternate infinite;
+}
+
+.c43 {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 50%;
+  width: var(--size);
+  height: var(--size);
+  z-index: 3;
+  background: #f62e0b;
+  animation: 6s vertical-3 ease-in-out alternate infinite;
+}
+
+.c45 {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 50%;
+  width: var(--size);
+  height: var(--size);
+  z-index: 4;
+  background: #b43fdf;
+  animation: 7s vertical-4 ease-in-out alternate infinite;
+}
+
+.c47 {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 50%;
+  width: var(--size);
+  height: var(--size);
+  z-index: 3;
+  background: #d235ed;
+  animation: 10s vertical-5 ease-in-out alternate infinite;
+}
+
+.c49 {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 50%;
+  width: var(--size);
+  height: var(--size);
+  z-index: 3;
+  background: #3739f4;
+  animation: 9s vertical-6 ease-in-out alternate infinite;
+}
+
+.c51 {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 50%;
+  width: var(--size);
+  height: var(--size);
+  z-index: 5;
+  background: #a02fa0;
+  animation: 6s vertical-7 ease-in-out alternate infinite;
+}
+
+.c53 {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 50%;
+  width: var(--size);
+  height: var(--size);
+  z-index: 5;
+  background: #913e0b;
+  animation: 8s vertical-8 ease-in-out alternate infinite;
+}
+
+.c39 {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 50%;
+  width: var(--size);
+  height: var(--size);
+  z-index: 3;
+  background-image: url(/assets/react-logo.png);
+  background-size: contain;
+  animation: 4s rotate-1 linear infinite;
+}
+
+.c33 {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: fade-frames 200ms infinite,scale-frames 2s infinite;
+}
+
+.c32 {
   position: absolute;
   transform: translateX(-27px);
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 }
 
-.c32 .circle-container .circle {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(         hsl(180, 100%, 80%),         hsl(180, 100%, 80%) 10%,         hsla(180, 100%, 80%, 0) 56%       );
-  animation: fade-frames 200ms infinite,scale-frames 2s infinite;
-}
-
-.c32 .circle-container:nth-child(0) {
+.c32:nth-child(0) {
   width: 7px;
   height: 7px;
   animation-name: move-frames-0;
@@ -252,11 +233,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 7126ms;
 }
 
-.c32 .circle-container:nth-child(0) .circle {
+.c32:nth-child(0) .circle {
   animation-delay: 37ms;
 }
 
-.c32 .circle-container:nth-child(1) {
+.c32:nth-child(1) {
   width: 9px;
   height: 9px;
   animation-name: move-frames-1;
@@ -264,11 +245,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 5130ms;
 }
 
-.c32 .circle-container:nth-child(1) .circle {
+.c32:nth-child(1) .circle {
   animation-delay: 36ms;
 }
 
-.c32 .circle-container:nth-child(2) {
+.c32:nth-child(2) {
   width: 6px;
   height: 6px;
   animation-name: move-frames-2;
@@ -276,11 +257,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 10881ms;
 }
 
-.c32 .circle-container:nth-child(2) .circle {
+.c32:nth-child(2) .circle {
   animation-delay: 28ms;
 }
 
-.c32 .circle-container:nth-child(3) {
+.c32:nth-child(3) {
   width: 9px;
   height: 9px;
   animation-name: move-frames-3;
@@ -288,11 +269,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 4917ms;
 }
 
-.c32 .circle-container:nth-child(3) .circle {
+.c32:nth-child(3) .circle {
   animation-delay: 90ms;
 }
 
-.c32 .circle-container:nth-child(4) {
+.c32:nth-child(4) {
   width: 4px;
   height: 4px;
   animation-name: move-frames-4;
@@ -300,11 +281,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 9391ms;
 }
 
-.c32 .circle-container:nth-child(4) .circle {
+.c32:nth-child(4) .circle {
   animation-delay: 31ms;
 }
 
-.c32 .circle-container:nth-child(5) {
+.c32:nth-child(5) {
   width: 5px;
   height: 5px;
   animation-name: move-frames-5;
@@ -312,11 +293,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 10917ms;
 }
 
-.c32 .circle-container:nth-child(5) .circle {
+.c32:nth-child(5) .circle {
   animation-delay: 99ms;
 }
 
-.c32 .circle-container:nth-child(6) {
+.c32:nth-child(6) {
   width: 7px;
   height: 7px;
   animation-name: move-frames-6;
@@ -324,11 +305,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 9687ms;
 }
 
-.c32 .circle-container:nth-child(6) .circle {
+.c32:nth-child(6) .circle {
   animation-delay: 95ms;
 }
 
-.c32 .circle-container:nth-child(7) {
+.c32:nth-child(7) {
   width: 6px;
   height: 6px;
   animation-name: move-frames-7;
@@ -336,11 +317,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 9330ms;
 }
 
-.c32 .circle-container:nth-child(7) .circle {
+.c32:nth-child(7) .circle {
   animation-delay: 13ms;
 }
 
-.c32 .circle-container:nth-child(8) {
+.c32:nth-child(8) {
   width: 0px;
   height: 0px;
   animation-name: move-frames-8;
@@ -348,11 +329,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 4236ms;
 }
 
-.c32 .circle-container:nth-child(8) .circle {
+.c32:nth-child(8) .circle {
   animation-delay: 38ms;
 }
 
-.c32 .circle-container:nth-child(9) {
+.c32:nth-child(9) {
   width: 9px;
   height: 9px;
   animation-name: move-frames-9;
@@ -360,11 +341,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 6551ms;
 }
 
-.c32 .circle-container:nth-child(9) .circle {
+.c32:nth-child(9) .circle {
   animation-delay: 22ms;
 }
 
-.c32 .circle-container:nth-child(10) {
+.c32:nth-child(10) {
   width: 3px;
   height: 3px;
   animation-name: move-frames-10;
@@ -372,11 +353,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 6031ms;
 }
 
-.c32 .circle-container:nth-child(10) .circle {
+.c32:nth-child(10) .circle {
   animation-delay: 2ms;
 }
 
-.c32 .circle-container:nth-child(11) {
+.c32:nth-child(11) {
   width: 3px;
   height: 3px;
   animation-name: move-frames-11;
@@ -384,11 +365,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 608ms;
 }
 
-.c32 .circle-container:nth-child(11) .circle {
+.c32:nth-child(11) .circle {
   animation-delay: 57ms;
 }
 
-.c32 .circle-container:nth-child(12) {
+.c32:nth-child(12) {
   width: 6px;
   height: 6px;
   animation-name: move-frames-12;
@@ -396,11 +377,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 6889ms;
 }
 
-.c32 .circle-container:nth-child(12) .circle {
+.c32:nth-child(12) .circle {
   animation-delay: 4ms;
 }
 
-.c32 .circle-container:nth-child(13) {
+.c32:nth-child(13) {
   width: 4px;
   height: 4px;
   animation-name: move-frames-13;
@@ -408,11 +389,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 8270ms;
 }
 
-.c32 .circle-container:nth-child(13) .circle {
+.c32:nth-child(13) .circle {
   animation-delay: 13ms;
 }
 
-.c32 .circle-container:nth-child(14) {
+.c32:nth-child(14) {
   width: 1px;
   height: 1px;
   animation-name: move-frames-14;
@@ -420,11 +401,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 10382ms;
 }
 
-.c32 .circle-container:nth-child(14) .circle {
+.c32:nth-child(14) .circle {
   animation-delay: 2ms;
 }
 
-.c32 .circle-container:nth-child(15) {
+.c32:nth-child(15) {
   width: 0px;
   height: 0px;
   animation-name: move-frames-15;
@@ -432,11 +413,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 2759ms;
 }
 
-.c32 .circle-container:nth-child(15) .circle {
+.c32:nth-child(15) .circle {
   animation-delay: 80ms;
 }
 
-.c32 .circle-container:nth-child(16) {
+.c32:nth-child(16) {
   width: 10px;
   height: 10px;
   animation-name: move-frames-16;
@@ -444,11 +425,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 634ms;
 }
 
-.c32 .circle-container:nth-child(16) .circle {
+.c32:nth-child(16) .circle {
   animation-delay: 97ms;
 }
 
-.c32 .circle-container:nth-child(17) {
+.c32:nth-child(17) {
   width: 10px;
   height: 10px;
   animation-name: move-frames-17;
@@ -456,11 +437,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 9582ms;
 }
 
-.c32 .circle-container:nth-child(17) .circle {
+.c32:nth-child(17) .circle {
   animation-delay: 60ms;
 }
 
-.c32 .circle-container:nth-child(18) {
+.c32:nth-child(18) {
   width: 3px;
   height: 3px;
   animation-name: move-frames-18;
@@ -468,11 +449,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 7572ms;
 }
 
-.c32 .circle-container:nth-child(18) .circle {
+.c32:nth-child(18) .circle {
   animation-delay: 66ms;
 }
 
-.c32 .circle-container:nth-child(19) {
+.c32:nth-child(19) {
   width: 10px;
   height: 10px;
   animation-name: move-frames-19;
@@ -480,11 +461,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 8598ms;
 }
 
-.c32 .circle-container:nth-child(19) .circle {
+.c32:nth-child(19) .circle {
   animation-delay: 2ms;
 }
 
-.c32 .circle-container:nth-child(20) {
+.c32:nth-child(20) {
   width: 10px;
   height: 10px;
   animation-name: move-frames-20;
@@ -492,11 +473,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 2663ms;
 }
 
-.c32 .circle-container:nth-child(20) .circle {
+.c32:nth-child(20) .circle {
   animation-delay: 13ms;
 }
 
-.c32 .circle-container:nth-child(21) {
+.c32:nth-child(21) {
   width: 7px;
   height: 7px;
   animation-name: move-frames-21;
@@ -504,11 +485,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 6562ms;
 }
 
-.c32 .circle-container:nth-child(21) .circle {
+.c32:nth-child(21) .circle {
   animation-delay: 74ms;
 }
 
-.c32 .circle-container:nth-child(22) {
+.c32:nth-child(22) {
   width: 2px;
   height: 2px;
   animation-name: move-frames-22;
@@ -516,11 +497,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 10094ms;
 }
 
-.c32 .circle-container:nth-child(22) .circle {
+.c32:nth-child(22) .circle {
   animation-delay: 11ms;
 }
 
-.c32 .circle-container:nth-child(23) {
+.c32:nth-child(23) {
   width: 2px;
   height: 2px;
   animation-name: move-frames-23;
@@ -528,11 +509,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 6235ms;
 }
 
-.c32 .circle-container:nth-child(23) .circle {
+.c32:nth-child(23) .circle {
   animation-delay: 95ms;
 }
 
-.c32 .circle-container:nth-child(24) {
+.c32:nth-child(24) {
   width: 3px;
   height: 3px;
   animation-name: move-frames-24;
@@ -540,11 +521,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 2139ms;
 }
 
-.c32 .circle-container:nth-child(24) .circle {
+.c32:nth-child(24) .circle {
   animation-delay: 63ms;
 }
 
-.c32 .circle-container:nth-child(25) {
+.c32:nth-child(25) {
   width: 9px;
   height: 9px;
   animation-name: move-frames-25;
@@ -552,11 +533,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 789ms;
 }
 
-.c32 .circle-container:nth-child(25) .circle {
+.c32:nth-child(25) .circle {
   animation-delay: 100ms;
 }
 
-.c32 .circle-container:nth-child(26) {
+.c32:nth-child(26) {
   width: 4px;
   height: 4px;
   animation-name: move-frames-26;
@@ -564,11 +545,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 8047ms;
 }
 
-.c32 .circle-container:nth-child(26) .circle {
+.c32:nth-child(26) .circle {
   animation-delay: 88ms;
 }
 
-.c32 .circle-container:nth-child(27) {
+.c32:nth-child(27) {
   width: 0px;
   height: 0px;
   animation-name: move-frames-27;
@@ -576,11 +557,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 2693ms;
 }
 
-.c32 .circle-container:nth-child(27) .circle {
+.c32:nth-child(27) .circle {
   animation-delay: 46ms;
 }
 
-.c32 .circle-container:nth-child(28) {
+.c32:nth-child(28) {
   width: 0px;
   height: 0px;
   animation-name: move-frames-28;
@@ -588,11 +569,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 6874ms;
 }
 
-.c32 .circle-container:nth-child(28) .circle {
+.c32:nth-child(28) .circle {
   animation-delay: 41ms;
 }
 
-.c32 .circle-container:nth-child(29) {
+.c32:nth-child(29) {
   width: 4px;
   height: 4px;
   animation-name: move-frames-29;
@@ -600,11 +581,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 5479ms;
 }
 
-.c32 .circle-container:nth-child(29) .circle {
+.c32:nth-child(29) .circle {
   animation-delay: 91ms;
 }
 
-.c32 .circle-container:nth-child(30) {
+.c32:nth-child(30) {
   width: 8px;
   height: 8px;
   animation-name: move-frames-30;
@@ -612,11 +593,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 2442ms;
 }
 
-.c32 .circle-container:nth-child(30) .circle {
+.c32:nth-child(30) .circle {
   animation-delay: 78ms;
 }
 
-.c32 .circle-container:nth-child(31) {
+.c32:nth-child(31) {
   width: 10px;
   height: 10px;
   animation-name: move-frames-31;
@@ -624,11 +605,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 625ms;
 }
 
-.c32 .circle-container:nth-child(31) .circle {
+.c32:nth-child(31) .circle {
   animation-delay: 89ms;
 }
 
-.c32 .circle-container:nth-child(32) {
+.c32:nth-child(32) {
   width: 6px;
   height: 6px;
   animation-name: move-frames-32;
@@ -636,11 +617,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 4130ms;
 }
 
-.c32 .circle-container:nth-child(32) .circle {
+.c32:nth-child(32) .circle {
   animation-delay: 69ms;
 }
 
-.c32 .circle-container:nth-child(33) {
+.c32:nth-child(33) {
   width: 2px;
   height: 2px;
   animation-name: move-frames-33;
@@ -648,11 +629,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 5804ms;
 }
 
-.c32 .circle-container:nth-child(33) .circle {
+.c32:nth-child(33) .circle {
   animation-delay: 37ms;
 }
 
-.c32 .circle-container:nth-child(34) {
+.c32:nth-child(34) {
   width: 6px;
   height: 6px;
   animation-name: move-frames-34;
@@ -660,11 +641,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 8846ms;
 }
 
-.c32 .circle-container:nth-child(34) .circle {
+.c32:nth-child(34) .circle {
   animation-delay: 13ms;
 }
 
-.c32 .circle-container:nth-child(35) {
+.c32:nth-child(35) {
   width: 3px;
   height: 3px;
   animation-name: move-frames-35;
@@ -672,11 +653,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 5642ms;
 }
 
-.c32 .circle-container:nth-child(35) .circle {
+.c32:nth-child(35) .circle {
   animation-delay: 32ms;
 }
 
-.c32 .circle-container:nth-child(36) {
+.c32:nth-child(36) {
   width: 7px;
   height: 7px;
   animation-name: move-frames-36;
@@ -684,11 +665,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 2698ms;
 }
 
-.c32 .circle-container:nth-child(36) .circle {
+.c32:nth-child(36) .circle {
   animation-delay: 90ms;
 }
 
-.c32 .circle-container:nth-child(37) {
+.c32:nth-child(37) {
   width: 0px;
   height: 0px;
   animation-name: move-frames-37;
@@ -696,11 +677,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 9259ms;
 }
 
-.c32 .circle-container:nth-child(37) .circle {
+.c32:nth-child(37) .circle {
   animation-delay: 20ms;
 }
 
-.c32 .circle-container:nth-child(38) {
+.c32:nth-child(38) {
   width: 0px;
   height: 0px;
   animation-name: move-frames-38;
@@ -708,11 +689,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 8760ms;
 }
 
-.c32 .circle-container:nth-child(38) .circle {
+.c32:nth-child(38) .circle {
   animation-delay: 85ms;
 }
 
-.c32 .circle-container:nth-child(39) {
+.c32:nth-child(39) {
   width: 4px;
   height: 4px;
   animation-name: move-frames-39;
@@ -720,11 +701,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 8288ms;
 }
 
-.c32 .circle-container:nth-child(39) .circle {
+.c32:nth-child(39) .circle {
   animation-delay: 33ms;
 }
 
-.c32 .circle-container:nth-child(40) {
+.c32:nth-child(40) {
   width: 9px;
   height: 9px;
   animation-name: move-frames-40;
@@ -732,11 +713,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 9649ms;
 }
 
-.c32 .circle-container:nth-child(40) .circle {
+.c32:nth-child(40) .circle {
   animation-delay: 25ms;
 }
 
-.c32 .circle-container:nth-child(41) {
+.c32:nth-child(41) {
   width: 2px;
   height: 2px;
   animation-name: move-frames-41;
@@ -744,11 +725,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 6326ms;
 }
 
-.c32 .circle-container:nth-child(41) .circle {
+.c32:nth-child(41) .circle {
   animation-delay: 97ms;
 }
 
-.c32 .circle-container:nth-child(42) {
+.c32:nth-child(42) {
   width: 10px;
   height: 10px;
   animation-name: move-frames-42;
@@ -756,11 +737,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 8273ms;
 }
 
-.c32 .circle-container:nth-child(42) .circle {
+.c32:nth-child(42) .circle {
   animation-delay: 99ms;
 }
 
-.c32 .circle-container:nth-child(43) {
+.c32:nth-child(43) {
   width: 9px;
   height: 9px;
   animation-name: move-frames-43;
@@ -768,11 +749,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 4512ms;
 }
 
-.c32 .circle-container:nth-child(43) .circle {
+.c32:nth-child(43) .circle {
   animation-delay: 17ms;
 }
 
-.c32 .circle-container:nth-child(44) {
+.c32:nth-child(44) {
   width: 3px;
   height: 3px;
   animation-name: move-frames-44;
@@ -780,11 +761,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 6108ms;
 }
 
-.c32 .circle-container:nth-child(44) .circle {
+.c32:nth-child(44) .circle {
   animation-delay: 60ms;
 }
 
-.c32 .circle-container:nth-child(45) {
+.c32:nth-child(45) {
   width: 7px;
   height: 7px;
   animation-name: move-frames-45;
@@ -792,11 +773,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 674ms;
 }
 
-.c32 .circle-container:nth-child(45) .circle {
+.c32:nth-child(45) .circle {
   animation-delay: 33ms;
 }
 
-.c32 .circle-container:nth-child(46) {
+.c32:nth-child(46) {
   width: 4px;
   height: 4px;
   animation-name: move-frames-46;
@@ -804,11 +785,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 7380ms;
 }
 
-.c32 .circle-container:nth-child(46) .circle {
+.c32:nth-child(46) .circle {
   animation-delay: 15ms;
 }
 
-.c32 .circle-container:nth-child(47) {
+.c32:nth-child(47) {
   width: 8px;
   height: 8px;
   animation-name: move-frames-47;
@@ -816,11 +797,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 4778ms;
 }
 
-.c32 .circle-container:nth-child(47) .circle {
+.c32:nth-child(47) .circle {
   animation-delay: 15ms;
 }
 
-.c32 .circle-container:nth-child(48) {
+.c32:nth-child(48) {
   width: 2px;
   height: 2px;
   animation-name: move-frames-48;
@@ -828,11 +809,11 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 8734ms;
 }
 
-.c32 .circle-container:nth-child(48) .circle {
+.c32:nth-child(48) .circle {
   animation-delay: 46ms;
 }
 
-.c32 .circle-container:nth-child(49) {
+.c32:nth-child(49) {
   width: 2px;
   height: 2px;
   animation-name: move-frames-49;
@@ -840,8 +821,248 @@ exports[`HomePage should render successfully 1`] = `
   animation-delay: 1943ms;
 }
 
-.c32 .circle-container:nth-child(49) .circle {
+.c32:nth-child(49) .circle {
   animation-delay: 22ms;
+}
+
+.c32:nth-child(50) {
+  width: 6px;
+  height: 6px;
+  animation-name: move-frames-50;
+  animation-duration: 5051ms;
+  animation-delay: 10732ms;
+}
+
+.c32:nth-child(50) .circle {
+  animation-delay: 17ms;
+}
+
+.c32:nth-child(51) {
+  width: 2px;
+  height: 2px;
+  animation-name: move-frames-51;
+  animation-duration: 6240ms;
+  animation-delay: 9327ms;
+}
+
+.c32:nth-child(51) .circle {
+  animation-delay: 55ms;
+}
+
+.c32:nth-child(52) {
+  width: 8px;
+  height: 8px;
+  animation-name: move-frames-52;
+  animation-duration: 4687ms;
+  animation-delay: 3453ms;
+}
+
+.c32:nth-child(52) .circle {
+  animation-delay: 5ms;
+}
+
+.c32:nth-child(53) {
+  width: 5px;
+  height: 5px;
+  animation-name: move-frames-53;
+  animation-duration: 3317ms;
+  animation-delay: 7685ms;
+}
+
+.c32:nth-child(53) .circle {
+  animation-delay: 48ms;
+}
+
+.c32:nth-child(54) {
+  width: 9px;
+  height: 9px;
+  animation-name: move-frames-54;
+  animation-duration: 6222ms;
+  animation-delay: 2983ms;
+}
+
+.c32:nth-child(54) .circle {
+  animation-delay: 89ms;
+}
+
+.c32:nth-child(55) {
+  width: 9px;
+  height: 9px;
+  animation-name: move-frames-55;
+  animation-duration: 3493ms;
+  animation-delay: 4866ms;
+}
+
+.c32:nth-child(55) .circle {
+  animation-delay: 15ms;
+}
+
+.c32:nth-child(56) {
+  width: 5px;
+  height: 5px;
+  animation-name: move-frames-56;
+  animation-duration: 4032ms;
+  animation-delay: 6615ms;
+}
+
+.c32:nth-child(56) .circle {
+  animation-delay: 3ms;
+}
+
+.c32:nth-child(57) {
+  width: 6px;
+  height: 6px;
+  animation-name: move-frames-57;
+  animation-duration: 3452ms;
+  animation-delay: 6491ms;
+}
+
+.c32:nth-child(57) .circle {
+  animation-delay: 46ms;
+}
+
+.c32:nth-child(58) {
+  width: 2px;
+  height: 2px;
+  animation-name: move-frames-58;
+  animation-duration: 5963ms;
+  animation-delay: 4581ms;
+}
+
+.c32:nth-child(58) .circle {
+  animation-delay: 69ms;
+}
+
+.c32:nth-child(59) {
+  width: 0px;
+  height: 0px;
+  animation-name: move-frames-59;
+  animation-duration: 5235ms;
+  animation-delay: 1764ms;
+}
+
+.c32:nth-child(59) .circle {
+  animation-delay: 89ms;
+}
+
+.c32:nth-child(60) {
+  width: 6px;
+  height: 6px;
+  animation-name: move-frames-60;
+  animation-duration: 4203ms;
+  animation-delay: 1439ms;
+}
+
+.c32:nth-child(60) .circle {
+  animation-delay: 60ms;
+}
+
+.c32:nth-child(61) {
+  width: 3px;
+  height: 3px;
+  animation-name: move-frames-61;
+  animation-duration: 6181ms;
+  animation-delay: 5045ms;
+}
+
+.c32:nth-child(61) .circle {
+  animation-delay: 92ms;
+}
+
+.c32:nth-child(62) {
+  width: 1px;
+  height: 1px;
+  animation-name: move-frames-62;
+  animation-duration: 4414ms;
+  animation-delay: 8739ms;
+}
+
+.c32:nth-child(62) .circle {
+  animation-delay: 43ms;
+}
+
+.c32:nth-child(63) {
+  width: 7px;
+  height: 7px;
+  animation-name: move-frames-63;
+  animation-duration: 6737ms;
+  animation-delay: 7262ms;
+}
+
+.c32:nth-child(63) .circle {
+  animation-delay: 20ms;
+}
+
+.c32:nth-child(64) {
+  width: 8px;
+  height: 8px;
+  animation-name: move-frames-64;
+  animation-duration: 3804ms;
+  animation-delay: 3512ms;
+}
+
+.c32:nth-child(64) .circle {
+  animation-delay: 67ms;
+}
+
+.c32:nth-child(65) {
+  width: 6px;
+  height: 6px;
+  animation-name: move-frames-65;
+  animation-duration: 4114ms;
+  animation-delay: 1739ms;
+}
+
+.c32:nth-child(65) .circle {
+  animation-delay: 53ms;
+}
+
+.c32:nth-child(66) {
+  width: 1px;
+  height: 1px;
+  animation-name: move-frames-66;
+  animation-duration: 6176ms;
+  animation-delay: 5490ms;
+}
+
+.c32:nth-child(66) .circle {
+  animation-delay: 73ms;
+}
+
+.c32:nth-child(67) {
+  width: 8px;
+  height: 8px;
+  animation-name: move-frames-67;
+  animation-duration: 6353ms;
+  animation-delay: 6643ms;
+}
+
+.c32:nth-child(67) .circle {
+  animation-delay: 21ms;
+}
+
+.c32:nth-child(68) {
+  width: 7px;
+  height: 7px;
+  animation-name: move-frames-68;
+  animation-duration: 4642ms;
+  animation-delay: 4392ms;
+}
+
+.c32:nth-child(68) .circle {
+  animation-delay: 70ms;
+}
+
+.c32:nth-child(69) {
+  width: 8px;
+  height: 8px;
+  animation-name: move-frames-69;
+  animation-duration: 3695ms;
+  animation-delay: 2518ms;
+}
+
+.c32:nth-child(69) .circle {
+  animation-delay: 19ms;
 }
 
 .c27 {
@@ -870,7 +1091,7 @@ exports[`HomePage should render successfully 1`] = `
   line-height: 0px;
 }
 
-.c33 {
+.c34 {
   position: absolute;
   height: 212px;
   width: 62px;
@@ -880,12 +1101,11 @@ exports[`HomePage should render successfully 1`] = `
   border-top-right-radius: 32px 50%;
   border-bottom-left-radius: 32px 50%;
   border-bottom-right-radius: 32px 50%;
-  box-shadow: inset 0px 0px 18px 1px #FFDD83;
+  animation: 3s portal-first-glow ease-in-out infinite;
 }
 
-.c34 {
+.c35 {
   position: absolute;
-  box-shadow: inset 0px 0px 18px 1px #98DFD6;
   height: 213px;
   width: 62px;
   right: -41px;
@@ -894,6 +1114,7 @@ exports[`HomePage should render successfully 1`] = `
   border-top-right-radius: 29px 50%;
   border-bottom-left-radius: 28px 49%;
   border-bottom-right-radius: 28px 50%;
+  animation: 3s portal-last-glow ease-in-out infinite;
 }
 
 .c30 {
@@ -907,7 +1128,7 @@ exports[`HomePage should render successfully 1`] = `
   transform: scaleX(-1);
 }
 
-.c35 {
+.c36 {
   position: relative;
   overflow: hidden;
   width: 100%;
@@ -969,7 +1190,7 @@ exports[`HomePage should render successfully 1`] = `
   background-color: #000000;
 }
 
-.c55 {
+.c54 {
   flex-grow: 1;
   border: 1px solid #98DFD6;
   transform-origin: var(--transform-origin-last);
@@ -1201,7 +1422,7 @@ exports[`HomePage should render successfully 1`] = `
   text-align: center;
 }
 
-.c56 {
+.c55 {
   margin-top: 50px;
   margin-bottom: 50px;
 }
@@ -1238,7 +1459,7 @@ exports[`HomePage should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c33 {
+  .c34 {
     height: 309px;
     width: 92px;
     left: -65px;
@@ -1251,7 +1472,7 @@ exports[`HomePage should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c34 {
+  .c35 {
     height: 308px;
     width: 89px;
     right: -63px;
@@ -1273,7 +1494,7 @@ exports[`HomePage should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c35 {
+  .c36 {
     height: 305px;
     border-top-left-radius: 45px 50%;
     border-bottom-left-radius: 45px 50%;
@@ -1620,363 +1841,568 @@ exports[`HomePage should render successfully 1`] = `
               <div
                 class="c31"
               >
-                <div
-                  class="c32"
-                >
+                <div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                   <div
-                    class="circle-container"
+                    class="c32"
                   >
                     <div
-                      class="circle"
+                      class="c33"
+                      role="presentation"
+                    />
+                  </div>
+                  <div
+                    class="c32"
+                  >
+                    <div
+                      class="c33"
+                      role="presentation"
+                    />
+                  </div>
+                  <div
+                    class="c32"
+                  >
+                    <div
+                      class="c33"
+                      role="presentation"
+                    />
+                  </div>
+                  <div
+                    class="c32"
+                  >
+                    <div
+                      class="c33"
+                      role="presentation"
+                    />
+                  </div>
+                  <div
+                    class="c32"
+                  >
+                    <div
+                      class="c33"
+                      role="presentation"
+                    />
+                  </div>
+                  <div
+                    class="c32"
+                  >
+                    <div
+                      class="c33"
+                      role="presentation"
+                    />
+                  </div>
+                  <div
+                    class="c32"
+                  >
+                    <div
+                      class="c33"
+                      role="presentation"
+                    />
+                  </div>
+                  <div
+                    class="c32"
+                  >
+                    <div
+                      class="c33"
+                      role="presentation"
+                    />
+                  </div>
+                  <div
+                    class="c32"
+                  >
+                    <div
+                      class="c33"
+                      role="presentation"
+                    />
+                  </div>
+                  <div
+                    class="c32"
+                  >
+                    <div
+                      class="c33"
+                      role="presentation"
+                    />
+                  </div>
+                  <div
+                    class="c32"
+                  >
+                    <div
+                      class="c33"
+                      role="presentation"
+                    />
+                  </div>
+                  <div
+                    class="c32"
+                  >
+                    <div
+                      class="c33"
+                      role="presentation"
+                    />
+                  </div>
+                  <div
+                    class="c32"
+                  >
+                    <div
+                      class="c33"
+                      role="presentation"
+                    />
+                  </div>
+                  <div
+                    class="c32"
+                  >
+                    <div
+                      class="c33"
+                      role="presentation"
+                    />
+                  </div>
+                  <div
+                    class="c32"
+                  >
+                    <div
+                      class="c33"
+                      role="presentation"
+                    />
+                  </div>
+                  <div
+                    class="c32"
+                  >
+                    <div
+                      class="c33"
+                      role="presentation"
+                    />
+                  </div>
+                  <div
+                    class="c32"
+                  >
+                    <div
+                      class="c33"
+                      role="presentation"
+                    />
+                  </div>
+                  <div
+                    class="c32"
+                  >
+                    <div
+                      class="c33"
+                      role="presentation"
+                    />
+                  </div>
+                  <div
+                    class="c32"
+                  >
+                    <div
+                      class="c33"
+                      role="presentation"
+                    />
+                  </div>
+                  <div
+                    class="c32"
+                  >
+                    <div
+                      class="c33"
+                      role="presentation"
+                    />
+                  </div>
+                  <div
+                    class="c32"
+                  >
+                    <div
+                      class="c33"
+                      role="presentation"
                     />
                   </div>
                 </div>
-                <div
-                  class="c33"
-                />
                 <div
                   class="c34"
                 />
@@ -1985,80 +2411,92 @@ exports[`HomePage should render successfully 1`] = `
                 />
                 <div
                   class="c36"
+                />
+                <div
+                  class="c37"
+                  role="presentation"
                 >
                   <div
-                    class="c37"
+                    class="c38"
                   >
                     <div
-                      class="c38"
+                      class="c39"
+                      role="none"
                     />
                   </div>
                 </div>
                 <div
-                  class="c39"
+                  class="c40"
+                  role="presentation"
                 >
                   <div
-                    class="c40"
+                    class="c41"
+                    role="none"
                   />
                 </div>
                 <div
-                  class="c41"
+                  class="c42"
+                  role="presentation"
                 >
                   <div
-                    class="c42"
+                    class="c43"
+                    role="none"
                   />
                 </div>
                 <div
-                  class="c43"
+                  class="c44"
+                  role="presentation"
                 >
                   <div
-                    class="c44"
+                    class="c45"
+                    role="none"
                   />
                 </div>
                 <div
-                  class="c45"
+                  class="c46"
+                  role="presentation"
                 >
                   <div
-                    class="c46"
+                    class="c47"
+                    role="none"
                   />
                 </div>
                 <div
-                  class="c47"
+                  class="c48"
+                  role="presentation"
                 >
                   <div
-                    class="c48"
+                    class="c49"
+                    role="none"
                   />
                 </div>
                 <div
-                  class="c49"
+                  class="c50"
+                  role="presentation"
                 >
                   <div
-                    class="c50"
+                    class="c51"
+                    role="none"
                   />
                 </div>
                 <div
-                  class="c51"
+                  class="c52"
+                  role="presentation"
                 >
                   <div
-                    class="c52"
-                  />
-                </div>
-                <div
-                  class="c53"
-                >
-                  <div
-                    class="c54"
+                    class="c53"
+                    role="none"
                   />
                 </div>
               </div>
             </div>
           </div>
           <div
-            class="c55"
+            class="c54"
           />
         </div>
         <h2
-          class="c18 c56"
+          class="c18 c55"
         >
           Under construction
         </h2>

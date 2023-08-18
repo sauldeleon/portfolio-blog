@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AnimatedItem should render successfully 1`] = `
+.c0 {
+  --size: 50px;
+  left: calc(0px - var(--size));
+  top: 0px;
+  position: absolute;
+  animation: 16s horizontal-id 2s linear infinite;
+}
+
+.c1 {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 50%;
+  width: var(--size);
+  height: var(--size);
+  z-index: 5;
+  background: #12364c;
+  animation: 6s vertical-id ease-in-out alternate infinite;
+}
+
+<body>
+  <div>
+    <div
+      class="c0"
+      role="presentation"
+    >
+      <div
+        class="c1"
+        role="none"
+      />
+    </div>
+  </div>
+</body>
+`;

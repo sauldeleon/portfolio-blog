@@ -5,7 +5,7 @@ import { randomColor, randomIntFromInterval } from './helpers'
 export const HorizontalMovement = styled.div<{
   $parentWidth: number
   $verticalStartPoint: number
-  $id: number
+  $id: number | string
   $size: number
   $customAnimation?: RuleSet<object>
   $durationSeed: string
@@ -38,7 +38,7 @@ const sharedStyles = css`
 `
 
 export const VerticalMovement = styled.div<{
-  $id: number
+  $id: number | string
   $verticalStartPoint: number
   $parentHeight: number
   $size: number
@@ -48,7 +48,6 @@ export const VerticalMovement = styled.div<{
   $zIndexSeed: string
   $colorSeed: string
   $durationSeed: string
-  $delaySeed: string
   $verticalRangeSeed: string
 }>`
   ${sharedStyles}
@@ -74,21 +73,20 @@ export const VerticalMovement = styled.div<{
     $parentHeight,
     $size,
     $durationSeed,
-    $delaySeed,
     $verticalRangeSeed,
   }) =>
     $customAnimation
       ? $customAnimation
       : css`
-          animation: ${randomIntFromInterval(6, 20, $durationSeed)}s vertical-${$id}
-            ${randomIntFromInterval(1, 5, $delaySeed)}s ease-in-out alternate infinite;
+          animation: ${randomIntFromInterval(6, 10, $durationSeed)}s vertical-${$id}
+            ease-in-out alternate infinite;
 
           @keyframes vertical-${$id} {
             100% {
               transform: translateY(
                 ${randomIntFromInterval(
                   0,
-                  $parentHeight - $verticalStartPoint - 2 * $size,
+                  $parentHeight - $verticalStartPoint - $size,
                   $verticalRangeSeed
                 )}px
               );
@@ -98,13 +96,13 @@ export const VerticalMovement = styled.div<{
 `
 
 export const RotationMovement = styled.div<{
-  $id: number
+  $id: number | string
   $customAnimation?: RuleSet<object>
   $path?: string
   $zIndexSeed: string
   $colorSeed: string
   $durationSeed: string
-  $delaySeed: string
+  $rotationAmountSeed: string
 }>`
   ${sharedStyles}
 
@@ -121,19 +119,20 @@ export const RotationMovement = styled.div<{
           background: ${randomColor($colorSeed)};
         `}
 
-  ${({ $customAnimation, $id, $durationSeed, $delaySeed }) =>
+  ${({ $customAnimation, $id, $durationSeed, $rotationAmountSeed }) =>
     $customAnimation
       ? $customAnimation
       : css`
           animation: ${randomIntFromInterval(2, 4, $durationSeed)}s rotate-${$id}
-            ${randomIntFromInterval(1, 5, $delaySeed)}s linear infinite;
+            linear infinite;
 
           @keyframes rotate-${$id} {
             from {
               rotate: 0deg;
             }
             to {
-              rotate: 360deg;
+              rotate: ${randomIntFromInterval(1, 3, $rotationAmountSeed) *
+              360}deg;
             }
           }
         `}

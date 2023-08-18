@@ -25,12 +25,13 @@ export function HomePagePortalGame() {
     { id: 6 },
     { id: 7 },
     { id: 8 },
-    { id: 9 },
     {
-      id: 10,
+      id: 'watcher',
       path: watcher,
       isHidden: true,
-      customAnimation: ({ parentWidth }: CustomAnimationProps) => ({
+      customAnimation: /* istanbul ignore next */ ({
+        parentWidth,
+      }: CustomAnimationProps) => ({
         horizontal: css`
           top: 30px;
         `,

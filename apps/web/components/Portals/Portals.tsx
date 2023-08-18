@@ -23,11 +23,11 @@ import { useContainerDimensions } from './useContainerDimensions'
 export type CustomAnimationProps = {
   parentWidth?: number
   parentHeight?: number
-  id?: number
+  id?: number | string
 }
 
 export type AnimatedItem = {
-  id: number
+  id: number | string
   path?: string
   isHidden?: boolean
   rotate?: boolean
@@ -55,9 +55,9 @@ export function Portals({ items }: PortalsProps) {
         <StyledPortalIcon color={mainTheme.colors.green} />
       </PortalLast>
       <PortalPath ref={ref}>
-        {height > 0 ? (
+        {items.length > 0 && height > 0 ? (
           <>
-            <HardcoreParticles parentHeight={height} parentWidth={width} />
+            <HardcoreParticles parentWidth={width} parentHeight={height} />
             <PortalFirstGlow />
             <PortalLastGlow />
             <StyledCylinderShape />

@@ -15,13 +15,12 @@ export type AnimatedItemSeeds = {
   horizontalDelay: string
   verticalZIndex: string
   verticalDuration: string
-  verticalDelay: string
   verticalRange: string
   verticalColor: string
   rotationZIndex: string
   rotationColor: string
   rotationDuration: string
-  rotationDelay: string
+  rotationAmount: string
 }
 
 export type CustomAnimation = {
@@ -31,7 +30,7 @@ export type CustomAnimation = {
 }
 
 export interface AnimatedItemProps {
-  id: number
+  id: number | string
   seeds: AnimatedItemSeeds
   parentWidth: number
   parentHeight: number
@@ -66,7 +65,6 @@ export function AnimatedItem({
       $size={size}
       $verticalStartPoint={verticalStartPoint}
       $colorSeed={seeds.verticalColor}
-      $delaySeed={seeds.verticalDelay}
       $durationSeed={seeds.verticalDuration}
       $verticalRangeSeed={seeds.verticalRange}
       $zIndexSeed={seeds.verticalZIndex}
@@ -76,9 +74,10 @@ export function AnimatedItem({
         $id={id}
         $path={path}
         $colorSeed={seeds.rotationZIndex}
-        $delaySeed={seeds.rotationDelay}
         $durationSeed={seeds.rotationDuration}
         $zIndexSeed={seeds.rotationZIndex}
+        $rotationAmountSeed={seeds.rotationAmount}
+        role="none"
       />
     </VerticalMovement>
   ) : (
@@ -90,15 +89,16 @@ export function AnimatedItem({
       $size={size}
       $verticalStartPoint={verticalStartPoint}
       $colorSeed={seeds.verticalColor}
-      $delaySeed={seeds.verticalDelay}
       $durationSeed={seeds.verticalDuration}
       $verticalRangeSeed={seeds.verticalRange}
       $zIndexSeed={seeds.verticalZIndex}
+      role="none"
     />
   )
 
   return (
     <HorizontalMovement
+      role="presentation"
       $customAnimation={customAnimation?.horizontal}
       $id={id}
       $parentWidth={parentWidth}

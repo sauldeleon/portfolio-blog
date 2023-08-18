@@ -59,7 +59,19 @@ export const PortalFirstGlow = styled.div`
   border-top-right-radius: 32px 50%;
   border-bottom-left-radius: 32px 50%;
   border-bottom-right-radius: 32px 50%;
-  box-shadow: inset 0px 0px 18px 1px ${({ theme }) => theme.colors.yellow};
+  animation: 3s portal-first-glow ease-in-out infinite;
+
+  @keyframes portal-first-glow {
+    0% {
+      box-shadow: inset 0px 0px 13px 1px ${({ theme }) => theme.colors.yellow};
+    }
+    50% {
+      box-shadow: inset 0px 0px 20px 1px ${({ theme }) => theme.colors.yellow};
+    }
+    100% {
+      box-shadow: inset 0px 0px 13px 1px ${({ theme }) => theme.colors.yellow};
+    }
+  }
 
   ${({ theme }) => theme.media.up.md} {
     height: 309px;
@@ -74,7 +86,6 @@ export const PortalFirstGlow = styled.div`
 `
 export const PortalLastGlow = styled.div`
   position: absolute;
-  box-shadow: inset 0px 0px 18px 1px ${({ theme }) => theme.colors.green};
   height: 213px;
   width: 62px;
   right: -41px;
@@ -83,6 +94,20 @@ export const PortalLastGlow = styled.div`
   border-top-right-radius: 29px 50%;
   border-bottom-left-radius: 28px 49%;
   border-bottom-right-radius: 28px 50%;
+
+  animation: 3s portal-last-glow ease-in-out infinite;
+
+  @keyframes portal-last-glow {
+    0% {
+      box-shadow: inset 0px 0px 13px 1px ${({ theme }) => theme.colors.green};
+    }
+    50% {
+      box-shadow: inset 0px 0px 20px 1px ${({ theme }) => theme.colors.green};
+    }
+    100% {
+      box-shadow: inset 0px 0px 13px 1px ${({ theme }) => theme.colors.green};
+    }
+  }
 
   ${({ theme }) => theme.media.up.md} {
     height: 308px;

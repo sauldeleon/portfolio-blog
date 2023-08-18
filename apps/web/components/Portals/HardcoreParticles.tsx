@@ -5,10 +5,10 @@ import { randomIntFromInterval } from './helpers'
 function generateParticles(
   parentWidth: number,
   parentHeight: number,
-  max: number
+  numParticles: number
 ) {
   const circles: RuleSet<object>[] = []
-  for (let i = 0; i < max; i++) {
+  for (let i = 0; i < numParticles; i++) {
     const circleSize = randomIntFromInterval(0, 10, `size${i}`)
     const framesName = `move-frames-${i}`
     const moveDuration =
@@ -63,85 +63,87 @@ function generateParticles(
   return circles
 }
 
-const StyledParticles = styled.div<{
+const Circle = styled.div`
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(
+    hsl(180, 100%, 80%),
+    hsl(180, 100%, 80%) 10%,
+    hsla(180, 100%, 80%, 0) 56%
+  );
+
+  animation: fade-frames 200ms infinite, scale-frames 2s infinite;
+
+  @keyframes fade-frames {
+    0% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.7;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes scale-frames {
+    0% {
+      transform: scale3d(0.4, 0.4, 1);
+    }
+
+    50% {
+      transform: scale3d(1, 1, 1);
+    }
+
+    100% {
+      transform: scale3d(0.4, 0.4, 1);
+    }
+  }
+`
+
+const CircleContainer = styled.div<{
   $parentWidth: number
   $parentHeight: number
   $numParticles: number
 }>`
-  .circle-container {
-    position: absolute;
-    transform: translateX(-27px);
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
+  position: absolute;
+  transform: translateX(-27px);
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 
-    .circle {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      mix-blend-mode: screen;
-      background-image: radial-gradient(
-        hsl(180, 100%, 80%),
-        hsl(180, 100%, 80%) 10%,
-        hsla(180, 100%, 80%, 0) 56%
-      );
+  ${({ $parentWidth, $parentHeight, $numParticles }) =>
+    generateParticles($parentWidth, $parentHeight, $numParticles)}
 
-      animation: fade-frames 200ms infinite, scale-frames 2s infinite;
-
-      @keyframes fade-frames {
-        0% {
-          opacity: 1;
-        }
-
-        50% {
-          opacity: 0.7;
-        }
-
-        100% {
-          opacity: 1;
-        }
-      }
-
-      @keyframes scale-frames {
-        0% {
-          transform: scale3d(0.4, 0.4, 1);
-        }
-
-        50% {
-          transform: scale3d(1, 1, 1);
-        }
-
-        100% {
-          transform: scale3d(0.4, 0.4, 1);
-        }
-      }
-    }
-
-    ${({ $parentWidth, $parentHeight, $numParticles }) =>
-      generateParticles($parentWidth, $parentHeight, $numParticles)}
-  }
+  ${Circle}
 `
 
 interface HardcoreParticlesProps {
   parentHeight: number
   parentWidth: number
+  numParticles?: number
 }
 
 export function HardcoreParticles({
   parentWidth,
   parentHeight,
+  numParticles = 70,
 }: HardcoreParticlesProps) {
-  const numParticles = 50
   return (
-    <StyledParticles
-      $parentHeight={parentHeight}
-      $parentWidth={parentWidth}
-      $numParticles={numParticles}
-    >
+    <div>
       {[...Array(numParticles).keys()].map((id) => (
-        <div key={id} className="circle-container">
-          <div className="circle" />
-        </div>
+        <CircleContainer
+          key={id}
+          $parentHeight={parentHeight}
+          $parentWidth={parentWidth}
+          $numParticles={numParticles}
+        >
+          <Circle role="presentation" />
+        </CircleContainer>
       ))}
-    </StyledParticles>
+    </div>
   )
 }

@@ -2,48 +2,41 @@ import { css, styled } from 'styled-components'
 
 import { randomIntFromInterval } from './helpers'
 
-function generateParticlesShadow(max: number) {
-  let shadow = '0px 0px #fff'
-  for (let i = 0; i < max; i++) {
-    shadow = shadow.concat(
-      `, ${randomIntFromInterval(0, 1000)}px ${randomIntFromInterval(
+function generateParticlesGroup(
+  numParticles: number,
+  maxWidth: number,
+  maxHeight: number,
+  seed: string
+) {
+  let particleGroup = '0px 0px #fff'
+  for (let i = 0; i < numParticles; i++) {
+    particleGroup = particleGroup.concat(
+      `, ${randomIntFromInterval(0, maxWidth)}px ${randomIntFromInterval(
         0,
-        1000
+        maxHeight
       )}px #fff`
     )
   }
-  return shadow
+  return particleGroup
 }
 
-const particlesMixin = (max: number) => css`
-  box-shadow: ${generateParticlesShadow(max)};
-`
+const FirstParticleGroup = styled.div<{
+  $numParticles: number
+  $parentWidth: number
+  $parentHeight: number
+}>`
+  ${({ $numParticles, $parentWidth, $parentHeight }) => css`
+    animation: 30s move-first-particle-group linear forwards;
+    box-shadow: ${generateParticlesGroup(
+      $numParticles,
+      $parentWidth,
+      $parentHeight,
+      'first-group'
+    )};
+    height: 1px;
+    width: 1px;
 
-export const StyledParticles = styled.div<{ $parentWidth: number }>`
-  ${({ $parentWidth }) => css`
-    .particle-first {
-      animation: 30s animParticle-first linear forwards;
-      ${particlesMixin(100)}
-      height: 1px;
-      width: 1px;
-    }
-
-    .particle-1 {
-      animation: 60s animParticle-1 linear infinite;
-      ${particlesMixin(100)}
-      height: 1px;
-      width: 1px;
-    }
-
-    .particle-2 {
-      opacity: 0;
-      animation: 60s animParticle-2 30s linear infinite;
-      ${particlesMixin(100)}
-      height: 1px;
-      width: 1px;
-    }
-
-    @keyframes animParticle-first {
+    @keyframes move-first-particle-group {
       0% {
         transform: translateX(0);
       }
@@ -51,8 +44,26 @@ export const StyledParticles = styled.div<{ $parentWidth: number }>`
         transform: translateX(${$parentWidth}px);
       }
     }
+  `}
+`
 
-    @keyframes animParticle-1 {
+const ParticleGroupA = styled.div<{
+  $numParticles: number
+  $parentWidth: number
+  $parentHeight: number
+}>`
+  ${({ $numParticles, $parentWidth, $parentHeight }) => css`
+    animation: 60s move-particle-group-a linear infinite;
+    box-shadow: ${generateParticlesGroup(
+      $numParticles,
+      $parentWidth,
+      $parentHeight,
+      'group-a'
+    )};
+    height: 1px;
+    width: 1px;
+
+    @keyframes move-particle-group-a {
       0% {
         transform: translateX(-${$parentWidth}px);
       }
@@ -60,8 +71,27 @@ export const StyledParticles = styled.div<{ $parentWidth: number }>`
         transform: translateX(${$parentWidth}px);
       }
     }
+  `}
+`
 
-    @keyframes animParticle-2 {
+const ParticleGroupB = styled.div<{
+  $numParticles: number
+  $parentWidth: number
+  $parentHeight: number
+}>`
+  ${({ $numParticles, $parentWidth, $parentHeight }) => css`
+    opacity: 0;
+    animation: 60s move-particle-group-b 30s linear infinite;
+    box-shadow: ${generateParticlesGroup(
+      $numParticles,
+      $parentWidth,
+      $parentHeight,
+      'group-b'
+    )};
+    height: 1px;
+    width: 1px;
+
+    @keyframes move-particle-group-b {
       0% {
         opacity: 1;
         transform: translateX(-${$parentWidth}px);
@@ -79,14 +109,35 @@ export const StyledParticles = styled.div<{ $parentWidth: number }>`
 
 interface SoftParticlesProps {
   parentWidth: number
+  parentHeight: number
+  numParticles?: number
 }
 
-export function SoftParticles({ parentWidth }: SoftParticlesProps) {
+export function SoftParticles({
+  parentWidth,
+  parentHeight,
+  numParticles = 100,
+}: SoftParticlesProps) {
   return (
-    <StyledParticles $parentWidth={parentWidth}>
-      <div className="particle-first" />
-      <div className="particle-1" />
-      <div className="particle-2" />
-    </StyledParticles>
+    <div>
+      <FirstParticleGroup
+        $parentWidth={parentWidth}
+        $parentHeight={parentHeight}
+        $numParticles={numParticles}
+        role="presentation"
+      />
+      <ParticleGroupA
+        $parentWidth={parentWidth}
+        $parentHeight={parentHeight}
+        $numParticles={numParticles}
+        role="presentation"
+      />
+      <ParticleGroupB
+        $parentWidth={parentWidth}
+        $parentHeight={parentHeight}
+        $numParticles={numParticles}
+        role="presentation"
+      />
+    </div>
   )
 }
