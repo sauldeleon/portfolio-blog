@@ -9,7 +9,7 @@ function generateParticles(
 ) {
   const circles: RuleSet<object>[] = []
   for (let i = 0; i < numParticles; i++) {
-    const circleSize = randomIntFromInterval(0, 10, `size${i}`)
+    const circleSize = randomIntFromInterval(1, 10, `size${i}`)
     const framesName = `move-frames-${i}`
     const moveDuration =
       3000 + randomIntFromInterval(0, 4000, `moveDuration${i}`)
@@ -48,7 +48,14 @@ function generateParticles(
           }
         }
 
-        .circle {
+        ${Circle} {
+          animation: fade-frames
+              ${randomIntFromInterval(500, 1000, `circleFadeFrames${i}`)}ms
+              infinite,
+            scale-frames
+              ${randomIntFromInterval(1000, 2000, `circleScaleFrames${i}`)}ms
+              infinite;
+
           animation-delay: ${randomIntFromInterval(
             0,
             100,
@@ -73,8 +80,6 @@ const Circle = styled.div`
     hsl(180, 100%, 80%) 10%,
     hsla(180, 100%, 80%, 0) 56%
   );
-
-  animation: fade-frames 200ms infinite, scale-frames 2s infinite;
 
   @keyframes fade-frames {
     0% {
