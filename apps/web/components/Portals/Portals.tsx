@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 
 import { mainTheme } from '@sdlgr/main-theme'
+import { useContainerDimensions } from '@sdlgr/use-container-dimensions'
 
 import {
   AnimatedItem,
@@ -18,7 +19,6 @@ import {
   StyledPortalIcon,
   StyledPortals,
 } from './Portals.styles'
-import { useContainerDimensions } from './useContainerDimensions'
 
 export type CustomAnimationProps = {
   parentWidth?: number

@@ -7,7 +7,7 @@ import {
 } from '@testing-library/react'
 import React, { useRef } from 'react'
 
-import { useContainerDimensions } from './useContainerDimensions'
+import { useContainerDimensions } from './use-container-dimensions'
 
 function TestComponent() {
   const ref = useRef<HTMLDivElement>(null)

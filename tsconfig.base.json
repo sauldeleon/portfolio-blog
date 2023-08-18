@@ -26,6 +26,10 @@
       "@sdlgr/main-theme": ["libs/main-theme/src/index.ts"],
       "@sdlgr/test-utils": ["libs/test-utils/src/index.ts"],
       "@sdlgr/typography": ["libs/typography/src/index.ts"],
+      "@sdlgr/use-container-dimensions": [
+        "libs/use-container-dimensions/src/index.ts"
+      ],
+      "@sdlgr/use-debounce": ["libs/use-debounce/src/index.ts"],
       "@sdlgr/visually-hidden": ["libs/visually-hidden/src/index.ts"],
       "@web/*": ["apps/web/*"]
     }
