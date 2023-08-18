@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 import { CircleLink } from '@sdlgr/circle-link'
-import { Heading } from '@sdlgr/typography'
+import { Body, Heading } from '@sdlgr/typography'
 
 export const StyledHeading = styled(Heading)`
   margin-bottom: 30px;
@@ -17,8 +17,11 @@ export const StyledHeading = styled(Heading)`
 `
 
 export const StyledSubHeading = styled(Heading)`
-  margin-top: 50px;
-  margin-bottom: 50px;
+  margin-top: 30px;
+
+  ${({ theme }) => theme.media.up.md} {
+    margin-bottom: 40px;
+  }
 `
 
 export const StyledCircleLink = styled(CircleLink)`
@@ -26,5 +29,21 @@ export const StyledCircleLink = styled(CircleLink)`
 
   ${({ theme }) => theme.media.up.md} {
     margin-bottom: 50px;
+  }
+`
+
+export const StyledSummary = styled.section`
+  text-align: center;
+  max-width: 1180px;
+  padding: 0 34px;
+
+  ${Body} {
+    margin-top: 20px;
+  }
+
+  ${({ theme }) => theme.media.up.md} {
+    ${Body} {
+      ${({ theme }) => theme.typography.body.M}
+    }
   }
 `

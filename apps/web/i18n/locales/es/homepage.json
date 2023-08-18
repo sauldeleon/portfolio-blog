@@ -1,4 +1,10 @@
 {
   "explore": "Explorar",
-  "underConstruction": "En construcción"
+  "underConstruction": "En construcción",
+  "aboutMe": "Acerca de mí",
+  "summary": {
+    "p1": "Desarrollador Front-End con experiencia, sólidos conocimientos en tecnologías web y una pasión por crear interfaces visualmente atractivas y amigables para el usuario. Competente en una variedad de frameworks y bibliotecas front-end, poniendo el foco en React.JS, con una sólida comprensión de HTML5, CSS3 y JavaScript. Hábil en transformar conceptos de diseño en experiencias web responsivas e interactivas.",
+    "p2": "Además, cuento con experiencia en el desarrollo backend utilizando tecnologías como Node.js y Java, lo que me permite crear soluciones completas y robustas.",
+    "p3": "Comprometido a estar al día con las últimas tendencias de la industria y mejorar continuamente las habilidades para ofrecer soluciones digitales fluidas."
+  }
 }

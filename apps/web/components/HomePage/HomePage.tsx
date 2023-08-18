@@ -1,7 +1,6 @@
 'use client'
 
-import { SLLogo } from '@sdlgr/assets'
-import { Label } from '@sdlgr/typography'
+import { Body, Label } from '@sdlgr/typography'
 
 import { HomePagePortalGame } from '@web/components/HomePagePortalGame/HomePagePortalGame'
 import { Layout } from '@web/components/Layout/Layout'
@@ -11,10 +10,16 @@ import {
   StyledCircleLink,
   StyledHeading,
   StyledSubHeading,
+  StyledSummary,
 } from './HomePage.styles'
 
 export function HomePage() {
   const { t } = useClientTranslation('homepage')
+  const summaryParagraphs: string[] = [
+    t('summary.p1'),
+    t('summary.p2'),
+    t('summary.p3'),
+  ]
   return (
     <Layout>
       <StyledHeading $level={2}>Saúl de León Guerrero</StyledHeading>
@@ -24,10 +29,14 @@ export function HomePage() {
         iconSize={76}
       />
       <HomePagePortalGame />
-      <StyledSubHeading as="h2" $level={2}>
-        {t('underConstruction')}
+      <StyledSubHeading as="h2" $level={1}>
+        {t('aboutMe')}
       </StyledSubHeading>
-      <SLLogo />
+      <StyledSummary>
+        {summaryParagraphs.map((text, index) => (
+          <Body key={index}>{text}</Body>
+        ))}
+      </StyledSummary>
     </Layout>
   )
 }

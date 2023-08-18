@@ -10,6 +10,15 @@ exports[`[lng] route - Page should render successfully 1`] = `
   margin: 0;
 }
 
+.c56 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 400;
+  color: #FFFFFF;
+  font-size: 3rem;
+  line-height: normal;
+  margin: 0;
+}
+
 .c8 {
   font-family: 'Roboto mono',monospace;
   font-weight: 400;
@@ -1491,13 +1500,22 @@ exports[`[lng] route - Page should render successfully 1`] = `
   text-align: center;
 }
 
-.c56 {
-  margin-top: 50px;
-  margin-bottom: 50px;
+.c57 {
+  margin-top: 30px;
 }
 
 .c21 {
   margin-bottom: 30px;
+}
+
+.c58 {
+  text-align: center;
+  max-width: 1180px;
+  padding: 0 34px;
+}
+
+.c58 .c7 {
+  margin-top: 20px;
 }
 
 @media (min-width: 768px) {
@@ -1723,8 +1741,24 @@ exports[`[lng] route - Page should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
+  .c57 {
+    margin-bottom: 40px;
+  }
+}
+
+@media (min-width: 768px) {
   .c21 {
     margin-bottom: 50px;
+  }
+}
+
+@media (min-width: 768px) {
+  .c58 .c7 {
+    font-family: 'Roboto mono',monospace;
+    font-weight: 400;
+    color: #FFFFFF;
+    font-size: 0.9rem;
+    line-height: normal;
   }
 }
 
@@ -2565,13 +2599,29 @@ exports[`[lng] route - Page should render successfully 1`] = `
           />
         </div>
         <h2
-          class="c18 c56"
+          class="c56 c57"
         >
-          Under construction
+          About me
         </h2>
-        <svg>
-          slLogo.svg
-        </svg>
+        <section
+          class="c58"
+        >
+          <p
+            class="c7 c8"
+          >
+            Experienced Front-End Developer with a strong foundation in web technologies and a passion for creating visually appealing and user-friendly interfaces. Proficient in a variety of front-end frameworks and libraries, more focused in React.JS, with a solid understanding of HTML5, CSS3, and JavaScript. Skilled at translating design concepts into responsive and interactive web experiences.
+          </p>
+          <p
+            class="c7 c8"
+          >
+            Additionally, I have experience in backend development using technologies such as Node.js and Java, which enables me to create comprehensive and robust solutions.
+          </p>
+          <p
+            class="c7 c8"
+          >
+            Committed to staying up-to-date with the latest industry trends and consistently enhancing skills to deliver seamless digital solutions.
+          </p>
+        </section>
       </div>
     </div>
   </div>
