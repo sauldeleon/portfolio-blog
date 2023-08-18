@@ -9,7 +9,7 @@ export const StyledNav = styled.nav`
   height: 130px;
   max-width: 1440px;
   width: 100%;
-  padding: 0 15px;
+  padding: 0 30px;
   margin: 0 auto;
   display: flex;
   justify-items: center;
@@ -20,10 +20,6 @@ export const StyledNav = styled.nav`
     background-color: transparent;
     color: ${({ theme }) => theme.colors.white};
     height: 115px;
-  }
-
-  ${({ theme }) => theme.media.up.lg} {
-    padding: 0 30;
   }
 
   ${({ theme }) => theme.media.up.xl} {
@@ -40,7 +36,7 @@ export const StyledNavLink = styled(Link)`
   }
 
   ${({ theme }) => theme.media.up.md} {
-    display: inline-block;
+    display: flex;
     position: relative;
 
     &::after {

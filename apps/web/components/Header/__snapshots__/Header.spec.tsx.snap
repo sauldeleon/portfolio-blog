@@ -4,7 +4,7 @@ exports[`Header should render successfully 1`] = `
 .c7 {
   font-family: 'Roboto mono',monospace;
   font-weight: 400;
-  color: #FFFFFF;
+  color: #FBFBFB;
   font-size: 0.9rem;
   line-height: normal;
   white-space: pre-line;
@@ -29,12 +29,12 @@ exports[`Header should render successfully 1`] = `
 }
 
 .c0 {
-  background-color: #FFFFFF;
+  background-color: #FBFBFB;
   color: #000000;
   height: 130px;
   max-width: 1440px;
   width: 100%;
-  padding: 0 15px;
+  padding: 0 30px;
   margin: 0 auto;
   display: flex;
   justify-items: center;
@@ -69,7 +69,7 @@ exports[`Header should render successfully 1`] = `
 .c4 .c6 {
   font-family: 'Roboto mono',monospace;
   font-weight: 500;
-  color: #FFFFFF;
+  color: #FBFBFB;
   font-size: 0.55rem;
   line-height: normal;
   color: #000000;
@@ -83,7 +83,7 @@ exports[`Header should render successfully 1`] = `
 }
 
 .c4:hover .c6 {
-  color: #FFFFFF;
+  color: #FBFBFB;
 }
 
 .c8 {
@@ -97,7 +97,7 @@ exports[`Header should render successfully 1`] = `
 .c8 .c6 {
   font-family: 'Roboto mono',monospace;
   font-weight: 500;
-  color: #FFFFFF;
+  color: #FBFBFB;
   font-size: 0.55rem;
   line-height: normal;
   color: #000000;
@@ -111,7 +111,7 @@ exports[`Header should render successfully 1`] = `
 }
 
 .c8:hover .c6 {
-  color: #FFFFFF;
+  color: #FBFBFB;
 }
 
 .c15 {
@@ -132,7 +132,7 @@ exports[`Header should render successfully 1`] = `
   height: 2px;
   bottom: 0;
   left: 0;
-  background-color: #FFFFFF;
+  background-color: #FBFBFB;
   transform-origin: bottom right;
   transition: transform 0.5s ease-out;
 }
@@ -203,14 +203,8 @@ exports[`Header should render successfully 1`] = `
   .c0 {
     align-items: center;
     background-color: transparent;
-    color: #FFFFFF;
+    color: #FBFBFB;
     height: 115px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .c0 {
-    padding: 0 30;
   }
 }
 
@@ -222,7 +216,7 @@ exports[`Header should render successfully 1`] = `
 
 @media (min-width: 768px) {
   .c5 {
-    display: inline-block;
+    display: flex;
     position: relative;
   }
 
@@ -234,7 +228,7 @@ exports[`Header should render successfully 1`] = `
     height: 2px;
     bottom: 0;
     left: 0;
-    background-color: #FFFFFF;
+    background-color: #FBFBFB;
     transform-origin: bottom right;
     transition: transform 0.25s ease-out;
   }
@@ -263,10 +257,10 @@ exports[`Header should render successfully 1`] = `
   .c4 .c6 {
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
-    color: #FFFFFF;
+    color: #FBFBFB;
     font-size: 0.9rem;
     line-height: normal;
-    color: #FFFFFF;
+    color: #FBFBFB;
     writing-mode: unset;
     transform: unset;
   }
@@ -282,10 +276,10 @@ exports[`Header should render successfully 1`] = `
   .c8 .c6 {
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
-    color: #FFFFFF;
+    color: #FBFBFB;
     font-size: 0.9rem;
     line-height: normal;
-    color: #FFFFFF;
+    color: #FBFBFB;
     writing-mode: unset;
     transform: unset;
   }
@@ -293,7 +287,7 @@ exports[`Header should render successfully 1`] = `
 
 @media (min-width: 768px) {
   .c2 {
-    color: #FFFFFF;
+    color: #FBFBFB;
     margin-bottom: 0;
   }
 }
@@ -318,6 +312,7 @@ exports[`Header should render successfully 1`] = `
         <svg
           class="c2"
           height="55"
+          width="106"
         >
           slLogo.svg
         </svg>

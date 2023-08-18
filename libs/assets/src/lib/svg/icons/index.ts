@@ -1,3 +1,7 @@
 export { ReactComponent as ArrowRightIcon } from './arrowRight.svg'
+export { ReactComponent as CactusIcon } from './cactus.svg'
 export { ReactComponent as CircleButtonIcon } from './circleButton.svg'
+export { ReactComponent as GithubIcon } from './github.svg'
+export { ReactComponent as LinkedinIcon } from './linkedin.svg'
 export { ReactComponent as MoonIcon } from './moon.svg'
+export { ReactComponent as TelegramIcon } from './telegram.svg'

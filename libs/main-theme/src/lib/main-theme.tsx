@@ -19,7 +19,7 @@ const breakpoints = {
 }
 
 const colors: MainTheme['colors'] = {
-  white: '#FFFFFF',
+  white: '#FBFBFB',
   black: '#000000',
   green: '#98DFD6',
   blue: '#00235B',

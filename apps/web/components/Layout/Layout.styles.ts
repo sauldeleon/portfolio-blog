@@ -12,4 +12,5 @@ export const StyledContent = styled.div`
   padding-top: 80px;
   align-items: center;
   flex-direction: column;
+  overflow: hidden;
 `

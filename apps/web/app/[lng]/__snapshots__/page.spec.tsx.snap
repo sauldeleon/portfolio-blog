@@ -4,17 +4,8 @@ exports[`[lng] route - Page should render successfully 1`] = `
 .c18 {
   font-family: 'Roboto mono',monospace;
   font-weight: 400;
-  color: #FFFFFF;
+  color: #FBFBFB;
   font-size: 1.5rem;
-  line-height: normal;
-  margin: 0;
-}
-
-.c56 {
-  font-family: 'Roboto mono',monospace;
-  font-weight: 400;
-  color: #FFFFFF;
-  font-size: 3rem;
   line-height: normal;
   margin: 0;
 }
@@ -22,7 +13,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
 .c8 {
   font-family: 'Roboto mono',monospace;
   font-weight: 400;
-  color: #FFFFFF;
+  color: #FBFBFB;
   font-size: 0.9rem;
   line-height: normal;
   white-space: pre-line;
@@ -49,7 +40,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
 .c23 {
   font-family: 'Roboto mono',monospace;
   font-weight: 500;
-  color: #FFFFFF;
+  color: #FBFBFB;
   font-size: 0.5rem;
   line-height: normal;
   text-transform: uppercase;
@@ -1276,13 +1267,95 @@ exports[`[lng] route - Page should render successfully 1`] = `
   background-color: #000000;
 }
 
+.c58 {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 120px;
+  margin-top: 50px;
+}
+
+.c59 {
+  position: relative;
+  width: 100%;
+  height: 15px;
+}
+
+.c62 {
+  position: absolute;
+  top: -61px;
+  left: 30px;
+}
+
+.c60 {
+  height: 7px;
+  width: 100%;
+  position: relative;
+}
+
+.c60:before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(         to bottom,         rgba(0,0,0,0.3),         rgba(152,223,214,0.3)       );
+}
+
+.c61 {
+  position: relative;
+  max-width: 1440px;
+  min-height: 120px;
+  align-items: center;
+  justify-content: unset;
+  width: 100%;
+  display: grid;
+  padding: 30px;
+}
+
+.c63 {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.c64 {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  flex-direction: row;
+  width: 100%;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.c65 {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.c65:hover,
+.c65:focus {
+  text-decoration: none;
+}
+
+.c66 {
+  height: 20px;
+  display: flex;
+  gap: 20px;
+  justify-self: end;
+  padding: 30px 0;
+}
+
 .c1 {
-  background-color: #FFFFFF;
+  background-color: #FBFBFB;
   color: #000000;
   height: 130px;
   max-width: 1440px;
   width: 100%;
-  padding: 0 15px;
+  padding: 0 30px;
   margin: 0 auto;
   display: flex;
   justify-items: center;
@@ -1317,7 +1390,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
 .c5 .c7 {
   font-family: 'Roboto mono',monospace;
   font-weight: 500;
-  color: #FFFFFF;
+  color: #FBFBFB;
   font-size: 0.55rem;
   line-height: normal;
   color: #000000;
@@ -1331,7 +1404,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
 }
 
 .c5:hover .c7 {
-  color: #FFFFFF;
+  color: #FBFBFB;
 }
 
 .c9 {
@@ -1345,7 +1418,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
 .c9 .c7 {
   font-family: 'Roboto mono',monospace;
   font-weight: 500;
-  color: #FFFFFF;
+  color: #FBFBFB;
   font-size: 0.55rem;
   line-height: normal;
   color: #000000;
@@ -1359,7 +1432,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
 }
 
 .c9:hover .c7 {
-  color: #FFFFFF;
+  color: #FBFBFB;
 }
 
 .c16 {
@@ -1380,7 +1453,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   height: 2px;
   bottom: 0;
   left: 0;
-  background-color: #FFFFFF;
+  background-color: #FBFBFB;
   transform-origin: bottom right;
   transition: transform 0.5s ease-out;
 }
@@ -1493,28 +1566,29 @@ exports[`[lng] route - Page should render successfully 1`] = `
   padding-top: 80px;
   align-items: center;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .c19 {
-  margin-bottom: 30px;
   text-align: center;
 }
 
-.c57 {
+.c56 {
   margin-top: 30px;
 }
 
 .c21 {
+  margin-top: 40px;
   margin-bottom: 30px;
 }
 
-.c58 {
+.c57 {
   text-align: center;
   max-width: 1180px;
   padding: 0 34px;
 }
 
-.c58 .c7 {
+.c57 .c7 {
   margin-top: 20px;
 }
 
@@ -1619,18 +1693,51 @@ exports[`[lng] route - Page should render successfully 1`] = `
   }
 }
 
+@media (min-width: 1024px) {
+  .c61 {
+    justify-content: space-between;
+    grid-template-columns: 1fr 100px;
+  }
+}
+
 @media (min-width: 768px) {
-  .c1 {
-    align-items: center;
-    background-color: transparent;
-    color: #FFFFFF;
-    height: 115px;
+  .c65 {
+    display: flex;
+    position: relative;
+  }
+
+  .c65::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #FBFBFB;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+  }
+
+  .c65:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
   }
 }
 
 @media (min-width: 1024px) {
+  .c66 {
+    justify-self: end;
+    padding: 0;
+  }
+}
+
+@media (min-width: 768px) {
   .c1 {
-    padding: 0 30;
+    align-items: center;
+    background-color: transparent;
+    color: #FBFBFB;
+    height: 115px;
   }
 }
 
@@ -1642,7 +1749,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
 
 @media (min-width: 768px) {
   .c6 {
-    display: inline-block;
+    display: flex;
     position: relative;
   }
 
@@ -1654,7 +1761,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
     height: 2px;
     bottom: 0;
     left: 0;
-    background-color: #FFFFFF;
+    background-color: #FBFBFB;
     transform-origin: bottom right;
     transition: transform 0.25s ease-out;
   }
@@ -1683,10 +1790,10 @@ exports[`[lng] route - Page should render successfully 1`] = `
   .c5 .c7 {
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
-    color: #FFFFFF;
+    color: #FBFBFB;
     font-size: 0.9rem;
     line-height: normal;
-    color: #FFFFFF;
+    color: #FBFBFB;
     writing-mode: unset;
     transform: unset;
   }
@@ -1702,10 +1809,10 @@ exports[`[lng] route - Page should render successfully 1`] = `
   .c9 .c7 {
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
-    color: #FFFFFF;
+    color: #FBFBFB;
     font-size: 0.9rem;
     line-height: normal;
-    color: #FFFFFF;
+    color: #FBFBFB;
     writing-mode: unset;
     transform: unset;
   }
@@ -1713,7 +1820,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
 
 @media (min-width: 768px) {
   .c3 {
-    color: #FFFFFF;
+    color: #FBFBFB;
     margin-bottom: 0;
   }
 }
@@ -1728,7 +1835,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   .c19 {
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
-    color: #FFFFFF;
+    color: #FBFBFB;
     font-size: 3rem;
     line-height: normal;
   }
@@ -1736,13 +1843,18 @@ exports[`[lng] route - Page should render successfully 1`] = `
 
 @media (min-width: 1024px) {
   .c19 {
-    margin-bottom: 50px;
+    margin-bottom: 10px;
   }
 }
 
 @media (min-width: 768px) {
-  .c57 {
+  .c56 {
     margin-bottom: 40px;
+    font-family: 'Roboto mono',monospace;
+    font-weight: 400;
+    color: #FBFBFB;
+    font-size: 3rem;
+    line-height: normal;
   }
 }
 
@@ -1753,11 +1865,11 @@ exports[`[lng] route - Page should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c58 .c7 {
+  .c57 .c7 {
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
-    color: #FFFFFF;
-    font-size: 0.9rem;
+    color: #FBFBFB;
+    font-size: 1rem;
     line-height: normal;
   }
 }
@@ -1779,6 +1891,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
           <svg
             class="c3"
             height="55"
+            width="106"
           >
             slLogo.svg
           </svg>
@@ -2599,12 +2712,12 @@ exports[`[lng] route - Page should render successfully 1`] = `
           />
         </div>
         <h2
-          class="c56 c57"
+          class="c18 c56"
         >
           About me
         </h2>
         <section
-          class="c58"
+          class="c57"
         >
           <p
             class="c7 c8"
@@ -2622,7 +2735,187 @@ exports[`[lng] route - Page should render successfully 1`] = `
             Committed to staying up-to-date with the latest industry trends and consistently enhancing skills to deliver seamless digital solutions.
           </p>
         </section>
+        <a
+          class="c10 c21"
+          href="/experience"
+        >
+          <div
+            class="c12"
+          >
+            <svg
+              class="c13"
+              height="42"
+              width="42"
+            >
+              circleButton.svg
+            </svg>
+            <div
+              class="c14"
+            >
+              <svg>
+                arrowRight.svg
+              </svg>
+            </div>
+          </div>
+          <p
+            class="c7 c15 c8 c16"
+          >
+            Experience
+          </p>
+        </a>
       </div>
+      <footer
+        class="c58"
+        tabindex="-1"
+      >
+        <div
+          class="c59"
+        >
+          <div
+            class="c60"
+          />
+          <div
+            class="c60"
+          />
+          <div
+            class="c60"
+          />
+        </div>
+        <div
+          class="c61"
+        >
+          <svg
+            class="c62"
+            height="64"
+            width="120"
+          >
+            slLogo.svg
+          </svg>
+          <nav
+            aria-label="Site map"
+            class="c63"
+          >
+            <ul
+              class="c64"
+            >
+              <li>
+                <a
+                  class="c65"
+                  href="/experience"
+                >
+                  <p
+                    class="c7 c8"
+                  >
+                    Experience
+                  </p>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="c65"
+                  href="/contact"
+                >
+                  <p
+                    class="c7 c8"
+                  >
+                    Contact
+                  </p>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="c65"
+                  href="/portfolio"
+                >
+                  <p
+                    class="c7 c8"
+                  >
+                    CV/Portfolio
+                  </p>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="c65"
+                  href="#"
+                >
+                  <svg
+                    color="#FBFBFB"
+                    height="14"
+                    width="14"
+                  >
+                    moon.svg
+                  </svg>
+                  <p
+                    class="c7 c8"
+                  >
+                    Dark mode
+                  </p>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="c65"
+                  href="#"
+                >
+                  <svg
+                    color="#FBFBFB"
+                    height="14"
+                    width="14"
+                  >
+                    cactus.svg
+                  </svg>
+                  <p
+                    class="c7 c8"
+                  >
+                    Pain mode
+                  </p>
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <div
+            class="c66"
+          >
+            <a
+              aria-label="Telegram"
+              class=""
+              data-testid="plain-anchor"
+              href="https://t.me/Sdlgr"
+            >
+              <svg
+                color="#FBFBFB"
+              >
+                telegram.svg
+              </svg>
+            </a>
+            <a
+              aria-label="Github"
+              class=""
+              data-testid="plain-anchor"
+              href="https://github.com/sauldeleon"
+            >
+              <svg
+                color="#FBFBFB"
+              >
+                github.svg
+              </svg>
+            </a>
+            <a
+              aria-label="LinkedIn"
+              class=""
+              data-testid="plain-anchor"
+              href="https://www.linkedin.com/in/sauldeleonguerrero"
+            >
+              <svg
+                color="#FBFBFB"
+              >
+                linkedin.svg
+              </svg>
+            </a>
+          </div>
+        </div>
+      </footer>
     </div>
   </div>
 </body>

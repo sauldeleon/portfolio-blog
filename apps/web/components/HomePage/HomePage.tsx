@@ -1,5 +1,6 @@
 'use client'
 
+import { ArrowRightIcon } from '@sdlgr/assets'
 import { Body, Label } from '@sdlgr/typography'
 
 import { HomePagePortalGame } from '@web/components/HomePagePortalGame/HomePagePortalGame'
@@ -29,7 +30,7 @@ export function HomePage() {
         iconSize={76}
       />
       <HomePagePortalGame />
-      <StyledSubHeading as="h2" $level={1}>
+      <StyledSubHeading as="h2" $level={2}>
         {t('aboutMe')}
       </StyledSubHeading>
       <StyledSummary>
@@ -37,6 +38,11 @@ export function HomePage() {
           <Body key={index}>{text}</Body>
         ))}
       </StyledSummary>
+      <StyledCircleLink
+        href="/experience"
+        iconContent={<ArrowRightIcon />}
+        label={t('experience')}
+      />
     </Layout>
   )
 }

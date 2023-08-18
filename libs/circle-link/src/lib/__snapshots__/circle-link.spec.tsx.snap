@@ -4,7 +4,7 @@ exports[`CircleLink should render with a different size 1`] = `
 .c5 {
   font-family: 'Roboto mono',monospace;
   font-weight: 400;
-  color: #FFFFFF;
+  color: #FBFBFB;
   font-size: 0.9rem;
   line-height: normal;
   white-space: pre-line;
@@ -46,7 +46,7 @@ exports[`CircleLink should render with a different size 1`] = `
   height: 2px;
   bottom: 0;
   left: 0;
-  background-color: #FFFFFF;
+  background-color: #FBFBFB;
   transform-origin: bottom right;
   transition: transform 0.5s ease-out;
 }

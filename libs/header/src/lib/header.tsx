@@ -20,7 +20,7 @@ export function Header({ logo, navItems, actionItem, ...rest }: HeaderProps) {
   return (
     <StyledNav {...rest}>
       {logo}
-      {navItems && navItems.length && (
+      {navItems?.length && (
         <StyledList>
           {navItems.map(({ href, label, hideOnDesktop }, index) => (
             <StyledListItem key={index} $hideOnDesktop={hideOnDesktop}>

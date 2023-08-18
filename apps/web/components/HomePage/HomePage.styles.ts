@@ -4,7 +4,6 @@ import { CircleLink } from '@sdlgr/circle-link'
 import { Body, Heading } from '@sdlgr/typography'
 
 export const StyledHeading = styled(Heading)`
-  margin-bottom: 30px;
   text-align: center;
 
   ${({ theme }) => theme.media.up.md} {
@@ -12,7 +11,7 @@ export const StyledHeading = styled(Heading)`
   }
 
   ${({ theme }) => theme.media.up.lg} {
-    margin-bottom: 50px;
+    margin-bottom: 10px;
   }
 `
 
@@ -21,10 +20,12 @@ export const StyledSubHeading = styled(Heading)`
 
   ${({ theme }) => theme.media.up.md} {
     margin-bottom: 40px;
+    ${({ theme }) => theme.typography.heading.heading1}
   }
 `
 
 export const StyledCircleLink = styled(CircleLink)`
+  margin-top: 40px;
   margin-bottom: 30px;
 
   ${({ theme }) => theme.media.up.md} {
@@ -43,7 +44,7 @@ export const StyledSummary = styled.section`
 
   ${({ theme }) => theme.media.up.md} {
     ${Body} {
-      ${({ theme }) => theme.typography.body.M}
+      ${({ theme }) => theme.typography.body.L}
     }
   }
 `

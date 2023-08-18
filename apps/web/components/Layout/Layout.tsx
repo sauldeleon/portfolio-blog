@@ -1,3 +1,4 @@
+import { Footer } from '@web/components/Footer/Footer'
 import { Header } from '@web/components/Header/Header'
 
 import { StyledContent, StyledPage } from './Layout.styles'
@@ -11,6 +12,7 @@ export function Layout({ children }: LayoutProps) {
     <StyledPage>
       <Header />
       <StyledContent>{children}</StyledContent>
+      <Footer />
     </StyledPage>
   )
 }
