@@ -210,21 +210,19 @@ export const PortalPath = styled.div`
 
     @keyframes horizontal-movement {
       0% {
-        opacity: 1;
         transform: translateX(calc(-50% - var(--itemSize)));
       }
       100% {
-        opacity: 1;
         transform: translateX(calc(50% + var(--itemSize)));
       }
     }
 
     @keyframes vertical-movement {
       0% {
-        transform: translateY(calc(var(--translateY-begin)));
+        transform: translateY(var(--translateY-begin));
       }
       100% {
-        transform: translateY(calc(var(--translateY-end)));
+        transform: translateY(var(--translateY-end));
       }
     }
 

@@ -13,7 +13,7 @@ export const HorizontalMovement = styled.div<{
 }>`
   --itemSize: ${({ $size }) => `${$size}%`};
   position: absolute;
-  opacity: 0;
+  transform: translateX(-60%);
   width: 100%;
   height: 100%;
 
@@ -42,11 +42,15 @@ export const VerticalMovement = styled.div<{
       ? $customAnimation
       : css`
           --translateY-begin: ${randomIntFromInterval(
-            -40,
-            0,
+            -37,
+            37,
             `${$seed}-y-begin`
           )}%;
-          --translateY-end: ${randomIntFromInterval(0, 40, `${$seed}-y-end`)}%;
+          --translateY-end: ${randomIntFromInterval(
+            -37,
+            37,
+            `${$seed}-y-end`
+          )}%;
           animation: ${randomDecimalFromInterval(2, 10, `${$seed}-y-duration`)}s
             vertical-movement ease-in-out alternate infinite;
         `};

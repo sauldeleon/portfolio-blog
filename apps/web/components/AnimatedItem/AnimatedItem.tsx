@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useId } from 'react'
 import { RuleSet } from 'styled-components'
 
 import {
@@ -13,37 +13,38 @@ export type CustomAnimation = {
   rotate?: RuleSet<object>
 }
 
+export type AnimationSize = 14 | 20 | 26
+
 export interface AnimatedItemProps {
-  seed: string
   path?: string
   rotate?: boolean
-  size?: number
+  size?: AnimationSize
   customAnimation?: CustomAnimation
 }
 
 export function AnimatedItem({
-  seed,
   path,
   rotate,
   customAnimation,
   size = 20,
 }: AnimatedItemProps) {
+  const theKey = useId()
   return (
     <HorizontalMovement
       role="presentation"
       $size={size}
-      $seed={seed}
+      $seed={theKey}
       $customAnimation={customAnimation?.horizontal}
     >
       <VerticalMovement
-        $seed={seed}
+        $seed={theKey}
         $customAnimation={customAnimation?.vertical}
       >
         <RotationMovement
           role="none"
           $rotate={rotate}
           $path={path}
-          $seed={seed}
+          $seed={theKey}
           $customAnimation={customAnimation?.rotate}
         />
       </VerticalMovement>

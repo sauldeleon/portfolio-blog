@@ -8,26 +8,19 @@ import { AnimatedItem } from './AnimatedItem'
 
 describe('AnimatedItem', () => {
   it('should render successfully', () => {
-    const { baseElement } = renderWithTheme(<AnimatedItem seed="wadus" />)
+    const { baseElement } = renderWithTheme(<AnimatedItem />)
     expect(baseElement).toMatchSnapshot()
   })
 
   it('should render successfully with a path image', () => {
-    renderWithTheme(<AnimatedItem seed="wadus" path="/path/to/image.jpg" />)
+    renderWithTheme(<AnimatedItem path="/path/to/image.jpg" />)
     expect(screen.getByRole('presentation').firstChild).toHaveStyleRule(
       'background-image: url(/path/to/image.jpg)'
     )
   })
 
   it('should render successfully with a rotation and a custom size', () => {
-    renderWithTheme(
-      <AnimatedItem
-        seed="wadus"
-        path="/path/to/image.jpg"
-        rotate={true}
-        size={100}
-      />
-    )
+    renderWithTheme(<AnimatedItem path="/path/to/image.jpg" rotate={true} />)
 
     expect(screen.getByRole('none')).toHaveStyleRule(
       'animation',
@@ -35,14 +28,12 @@ describe('AnimatedItem', () => {
     )
     expect(screen.getByRole('presentation')).toHaveStyleRule(
       '--itemSize',
-      '100%'
+      '20%'
     )
   })
 
   it('should render successfully with a rotation and no path', () => {
-    const { baseElement } = renderWithTheme(
-      <AnimatedItem seed="wadus" rotate={true} />
-    )
+    const { baseElement } = renderWithTheme(<AnimatedItem rotate={true} />)
     expect(baseElement).toMatchSnapshot()
   })
 
@@ -61,7 +52,6 @@ describe('AnimatedItem', () => {
 
     renderWithTheme(
       <AnimatedItem
-        seed="wadus"
         rotate={true}
         path="/test.jpg"
         customAnimation={customAnimation()}

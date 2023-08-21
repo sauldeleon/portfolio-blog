@@ -4,10 +4,10 @@ exports[`AnimatedItem should render successfully 1`] = `
 .c0 {
   --itemSize: 20%;
   position: absolute;
-  opacity: 0;
+  transform: translateX(-60%);
   width: 100%;
   height: 100%;
-  animation: 12.934647558342018s horizontal-movement 1.522062212116881s linear infinite;
+  animation: 17.140170417003283s horizontal-movement 3.97933877306252s linear infinite;
 }
 
 .c1 {
@@ -16,14 +16,14 @@ exports[`AnimatedItem should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -34%;
-  --translateY-end: 18%;
-  animation: 5.070044212504139s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: 7%;
+  --translateY-end: 29%;
+  animation: 10.670527360938634s vertical-movement ease-in-out alternate infinite;
 }
 
 .c2 {
   position: absolute;
-  z-index: 5;
+  z-index: 3;
   transform-origin: center;
   height: var(--itemSize);
   aspect-ratio: 1/1;
@@ -36,7 +36,7 @@ exports[`AnimatedItem should render successfully 1`] = `
   border-radius: 50%;
   overflow: hidden;
   display: block;
-  background: #7fa37a;
+  background: #d1b896;
 }
 
 <body>
@@ -62,10 +62,10 @@ exports[`AnimatedItem should render successfully with a rotation and no path 1`]
 .c0 {
   --itemSize: 20%;
   position: absolute;
-  opacity: 0;
+  transform: translateX(-60%);
   width: 100%;
   height: 100%;
-  animation: 12.934647558342018s horizontal-movement 1.522062212116881s linear infinite;
+  animation: 10.996571156816461s horizontal-movement 3.873373897466914s linear infinite;
 }
 
 .c1 {
@@ -74,19 +74,19 @@ exports[`AnimatedItem should render successfully with a rotation and no path 1`]
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -34%;
-  --translateY-end: 18%;
-  animation: 5.070044212504139s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -18%;
+  --translateY-end: -10%;
+  animation: 10.803377092813527s vertical-movement ease-in-out alternate infinite;
 }
 
 .c2 {
   position: absolute;
-  z-index: 5;
+  z-index: 4;
   transform-origin: center;
   height: var(--itemSize);
   aspect-ratio: 1/1;
-  --rotation: calc(               1 *                 360deg             );
-  animation: 3.0889862130244072s rotate-movement linear infinite;
+  --rotation: calc(               2 *                 360deg             );
+  animation: 4.892788063963371s rotate-movement linear infinite;
 }
 
 .c2::after {
@@ -96,7 +96,7 @@ exports[`AnimatedItem should render successfully with a rotation and no path 1`]
   border-radius: 50%;
   overflow: hidden;
   display: block;
-  background: #7fa37a;
+  background: #718844;
 }
 
 <body>

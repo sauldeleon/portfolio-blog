@@ -5,10 +5,10 @@ import { randomIntFromInterval } from '@web/utils/random'
 export const StyledHardcoreParticles = styled.div`
   @keyframes particle-movement {
     from {
-      transform: translate3d(0px, var(--initial-y), 0);
+      transform: translate(-50%, var(--begin-y));
     }
     to {
-      transform: translate3d(100%, var(--final-y), 0);
+      transform: translate(50%, var(--end-y));
     }
   }
 
@@ -48,20 +48,12 @@ const generateParticles = (parentHeight: number, numParticles: number) =>
         &:nth-child(${i}) {
           --particleSize: ${randomIntFromInterval(1, 10, `size${i}`)}px;
           display: grid;
-          place-content: start start;
+          place-items: center;
           width: 100%;
           height: 100%;
-
-          --initial-y: ${randomIntFromInterval(
-            0,
-            parentHeight,
-            `translate3DFromY${i}`
-          )}px;
-          --final-y: ${randomIntFromInterval(
-            0,
-            parentHeight,
-            `translate3DToY${i}`
-          )}px;
+          transform: translateX(-60%);
+          --begin-y: ${randomIntFromInterval(-46, 46, `translate3DFromY${i}`)}%;
+          --end-y: ${randomIntFromInterval(-46, 46, `translate3DToY${i}`)}%;
           animation-name: particle-movement;
           animation-duration: ${3000 +
           randomIntFromInterval(0, 4000, `moveDuration${i}`)}ms;

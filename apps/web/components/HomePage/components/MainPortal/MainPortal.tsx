@@ -1,5 +1,4 @@
 import { AnimatedItem, Portals } from '@web/components/Portals/Portals'
-import { animationItemSeedGenerator } from '@web/components/Portals/helpers'
 
 import {
   FirstWall,
@@ -11,14 +10,26 @@ import { watcher } from './watcher'
 
 export function MainPortal() {
   const items: AnimatedItem[] = [
-    { path: '/assets/react-logo.png', rotate: true },
-    // { path: '/assets/andromeda.jpg', size: 75 },
-    // { path: '/assets/nodejs-logo.png' },
-    // { path: '/assets/github-logo.png', size: 60 },
-    // { path: '/assets/reactQuery-logo.png', rotate: true, size: 60 },
-    // { path: '/assets/nextjs-logo.png', size: 75 },
-    // { path: '/assets/css3-logo.png', size: 50 },
-    // { path: '/assets/typescript-logo.png', size: 50 },
+    { path: '/assets/react-logo.png', rotate: true, size: 26 as const },
+    { path: '/assets/nodejs-logo.png', size: 26 as const },
+    { path: '/assets/github-logo.png', size: 26 as const },
+    { path: '/assets/reactQuery-logo.png', rotate: true },
+    { path: '/assets/nextjs-logo.png' },
+    { path: '/assets/css3-logo.png' },
+    { path: '/assets/typescript-logo.png' },
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
     {},
     {},
     {},
@@ -45,7 +56,7 @@ export function MainPortal() {
       path: watcher,
       isHidden: true,
     },
-  ].map(animationItemSeedGenerator)
+  ]
 
   return (
     <PortalContainer>

@@ -5,6 +5,7 @@ import { useContainerDimensions } from '@sdlgr/use-container-dimensions'
 
 import {
   AnimatedItem,
+  AnimationSize,
   CustomAnimation,
 } from '@web/components/AnimatedItem/AnimatedItem'
 import { HardcoreParticles } from '@web/components/HardcoreParticles/HardcoreParticles'
@@ -20,18 +21,13 @@ import {
   StyledPortals,
 } from './Portals.styles'
 
-export type CustomAnimationProps = {
-  parentHeight?: number
-}
-
 export type AnimatedItem = {
   path?: string
   isHidden?: boolean
   rotate?: boolean
   bounce?: boolean
-  size?: number
-  seed: string
-  customAnimation?: (props: CustomAnimationProps) => CustomAnimation
+  size?: AnimationSize
+  customAnimation?: () => CustomAnimation
 }
 
 interface PortalsProps {
@@ -65,16 +61,13 @@ export function Portals({
             {enableParticles && <HardcoreParticles parentHeight={height} />}
             {items
               .filter(({ isHidden }) => !isHidden)
-              .map(({ path, customAnimation, rotate, size, seed }, index) => (
+              .map(({ path, customAnimation, rotate, size }, index) => (
                 <AnimatedItem
                   key={index}
-                  seed={seed}
                   size={size}
                   path={path}
                   rotate={rotate}
-                  customAnimation={customAnimation?.({
-                    parentHeight: height,
-                  })}
+                  customAnimation={customAnimation?.()}
                 />
               ))}
           </>
