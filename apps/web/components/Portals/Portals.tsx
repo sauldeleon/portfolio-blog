@@ -69,9 +69,9 @@ export function Portals({
                 <AnimatedItem
                   key={index}
                   seed={seed}
+                  size={size}
                   path={path}
                   rotate={rotate}
-                  size={size}
                   customAnimation={customAnimation?.({
                     parentHeight: height,
                   })}

@@ -2468,7 +2468,6 @@ exports[`[lng] route - Page should render successfully 1`] = `
 }
 
 .c31 {
-  border: 1px dashed red;
   --height: 212px;
   position: absolute;
   overflow: hidden;

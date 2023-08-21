@@ -1,4 +1,3 @@
-import { rgba } from 'polished'
 import styled, { css } from 'styled-components'
 
 import { Portal } from '@sdlgr/assets'
@@ -146,6 +145,7 @@ export const StyledCylinderShape = styled.div`
     position: relative;
     overflow: hidden;
     width: 100%;
+    backdrop-filter: blur(2px);
     z-index: 5;
     height: 212px;
     border-top-left-radius: 30px 50%;
@@ -183,7 +183,6 @@ export const StyledCylinderShape = styled.div`
 `
 
 export const PortalPath = styled.div`
-  border: 1px dashed red;
   ${({ theme }) => css`
     --height: 212px;
     position: absolute;
@@ -197,28 +196,6 @@ export const PortalPath = styled.div`
     top: -12px;
     left: 62px;
     right: 61px;
-    /* backdrop-filter: blur(2px); */
-    /* background: linear-gradient(
-        45deg,
-        ${rgba(theme.colors.white, 0.1)},
-        ${rgba(theme.colors.white, 0.01)}
-      )
-      border-box;
-
-    background-size: 400% 400%;
-    animation: gradient 5s ease infinite; */
-
-    /* @keyframes gradient {
-      0% {
-        background-position: 0% 0%;
-      }
-      50% {
-        background-position: 100% 100%;
-      }
-      100% {
-        background-position: 0% 0%;
-      }
-    } */
 
     ${theme.media.up.md} {
       height: 305px;
