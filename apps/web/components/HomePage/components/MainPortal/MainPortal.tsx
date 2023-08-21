@@ -6,10 +6,10 @@ import {
   LastWall,
   MiddleWall,
   PortalContainer,
-} from './HomePagePortalGame.styles'
+} from './MainPortal.styles'
 import { watcher } from './watcher'
 
-export function HomePagePortalGame() {
+export function MainPortal() {
   const items: AnimatedItem[] = [
     { path: '/assets/react-logo.png', rotate: true, size: 100 },
     { path: '/assets/andromeda.jpg', size: 75 },

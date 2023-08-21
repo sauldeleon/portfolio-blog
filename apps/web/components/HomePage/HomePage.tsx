@@ -3,7 +3,6 @@
 import { ArrowRightIcon } from '@sdlgr/assets'
 import { Body, Label } from '@sdlgr/typography'
 
-import { HomePagePortalGame } from '@web/components/HomePagePortalGame/HomePagePortalGame'
 import { Layout } from '@web/components/Layout/Layout'
 import { useClientTranslation } from '@web/i18n/client'
 
@@ -13,6 +12,7 @@ import {
   StyledSubHeading,
   StyledSummary,
 } from './HomePage.styles'
+import { MainPortal } from './components/MainPortal/MainPortal'
 
 export function HomePage() {
   const { t } = useClientTranslation('homepage')
@@ -29,7 +29,7 @@ export function HomePage() {
         iconContent={<Label $level="XS">{t('explore')}</Label>}
         iconSize={76}
       />
-      <HomePagePortalGame />
+      <MainPortal />
       <StyledSubHeading as="h2" $level={2}>
         {t('aboutMe')}
       </StyledSubHeading>

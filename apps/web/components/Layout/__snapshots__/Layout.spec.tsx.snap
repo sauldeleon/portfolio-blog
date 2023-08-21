@@ -1,6 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Layout should render successfully 1`] = `
+.c0 {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.c17 {
+  display: flex;
+  min-height: calc(100vh - 115px);
+  padding-top: 80px;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+}
+
 .c8 {
   font-family: 'Roboto mono',monospace;
   font-weight: 400;
@@ -279,21 +294,6 @@ exports[`Layout should render successfully 1`] = `
 
 .c11 {
   display: none;
-}
-
-.c0 {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.c17 {
-  display: flex;
-  min-height: calc(100vh - 115px);
-  padding-top: 80px;
-  align-items: center;
-  flex-direction: column;
-  overflow: hidden;
 }
 
 @media (min-width: 1024px) {

@@ -1,7 +1,6 @@
-import { Footer } from '@web/components/Footer/Footer'
-import { Header } from '@web/components/Header/Header'
-
 import { StyledContent, StyledPage } from './Layout.styles'
+import { Footer } from './components/Footer/Footer'
+import { Header } from './components/Header/Header'
 
 interface LayoutProps {
   children: React.ReactNode
