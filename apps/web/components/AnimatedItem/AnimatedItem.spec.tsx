@@ -7,30 +7,23 @@ import { renderWithTheme } from '@sdlgr/test-utils'
 import { AnimatedItem } from './AnimatedItem'
 
 const mockSeeds = {
-  keyframe: 'keyframe',
   verticalStartPoint: 'verticalStartPoint',
   horizontalDuration: 'horizontalDuration',
   horizontalDelay: 'horizontalDelay',
-  verticalZIndex: 'verticalZIndex',
   verticalDuration: 'verticalDuration',
   verticalDelay: 'verticalDelay',
   verticalRange: 'verticalRange',
-  verticalColor: 'verticalColor',
-  rotationZIndex: 'rotationZIndex',
-  rotationColor: 'rotationColor',
+  color: 'color',
+  zIndex: 'zIndex',
   rotationDuration: 'rotationDuration',
   rotationDelay: 'rotationDelay',
+  rotationAmount: 'rotationAmount',
 }
 
 describe('AnimatedItem', () => {
   it('should render successfully', () => {
     const { baseElement } = renderWithTheme(
-      <AnimatedItem
-        id="id"
-        seeds={mockSeeds}
-        parentWidth={300}
-        parentHeight={200}
-      />
+      <AnimatedItem seeds={mockSeeds} parentHeight={200} />
     )
     expect(baseElement).toMatchSnapshot()
   })
@@ -38,9 +31,7 @@ describe('AnimatedItem', () => {
   it('should render successfully with a path image', () => {
     renderWithTheme(
       <AnimatedItem
-        id="id"
         seeds={mockSeeds}
-        parentWidth={300}
         parentHeight={200}
         path="/path/to/image.jpg"
       />
@@ -53,9 +44,7 @@ describe('AnimatedItem', () => {
   it('should render successfully with a rotation and a custom size', () => {
     renderWithTheme(
       <AnimatedItem
-        id="id"
         seeds={mockSeeds}
-        parentWidth={300}
         parentHeight={200}
         path="/path/to/image.jpg"
         rotate={true}
@@ -65,23 +54,19 @@ describe('AnimatedItem', () => {
 
     expect(screen.getByRole('none')).toHaveStyleRule(
       'animation',
-      expect.stringMatching(/(\d+)s rotate-id linear infinite/)
+      expect.stringMatching(/(\d+)s rotate-movement linear infinite/)
     )
-    expect(screen.getByRole('presentation')).toHaveStyleRule('--size', '100px')
+    expect(screen.getByRole('presentation')).toHaveStyleRule(
+      '--itemSize',
+      '100px'
+    )
   })
 
   it('should render successfully with a rotation and no path', () => {
-    renderWithTheme(
-      <AnimatedItem
-        id="id"
-        seeds={mockSeeds}
-        parentWidth={300}
-        parentHeight={200}
-        rotate={true}
-      />
+    const { baseElement } = renderWithTheme(
+      <AnimatedItem seeds={mockSeeds} parentHeight={200} rotate={true} />
     )
-
-    expect(screen.getByRole('none')).toHaveStyleRule('background', '#14ed15')
+    expect(baseElement).toMatchSnapshot()
   })
 
   it('should render successfully with a custom animation', () => {
@@ -99,9 +84,7 @@ describe('AnimatedItem', () => {
 
     renderWithTheme(
       <AnimatedItem
-        id="id"
         seeds={mockSeeds}
-        parentWidth={300}
         parentHeight={200}
         rotate={true}
         path="/test.jpg"

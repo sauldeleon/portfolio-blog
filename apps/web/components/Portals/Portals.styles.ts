@@ -152,7 +152,7 @@ export const StyledCylinderShape = styled.div`
     border-bottom-left-radius: 30px 50%;
     border-top-right-radius: 31px 50%;
     border-bottom-right-radius: 32px 50%;
-    /* background-image: linear-gradient(
+    background-image: linear-gradient(
       to top,
       rgb(255, 255, 255, 0.5) 0%,
       rgb(255, 255, 255, 0.35) 2%,
@@ -170,7 +170,7 @@ export const StyledCylinderShape = styled.div`
       rgb(255, 255, 255, 0.3) 97%,
       rgb(255, 255, 255, 0.35) 98%,
       rgb(255, 255, 255, 0.5) 100%
-    ); */
+    );
 
     ${theme.media.up.md} {
       height: 305px;
@@ -184,6 +184,7 @@ export const StyledCylinderShape = styled.div`
 
 export const PortalPath = styled.div`
   ${({ theme }) => css`
+    --height: 212px;
     position: absolute;
     overflow: hidden;
     margin: 30px auto;
@@ -227,6 +228,32 @@ export const PortalPath = styled.div`
       top: -4px;
       left: 91px;
       right: 91px;
+    }
+
+    @keyframes horizontal-movement {
+      0% {
+        opacity: 1;
+        transform: translateX(calc(-50% - var(--itemSize)));
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(calc(50% + var(--itemSize)));
+      }
+    }
+
+    @keyframes vertical-movement {
+      100% {
+        transform: translateY(var(--vertical-slide));
+      }
+    }
+
+    @keyframes rotate-movement {
+      from {
+        rotate: 0deg;
+      }
+      to {
+        rotate: var(--rotation);
+      }
     }
   `}
 `

@@ -11,7 +11,10 @@ import { useContainerDimensions } from './use-container-dimensions'
 
 function TestComponent() {
   const ref = useRef<HTMLDivElement>(null)
-  const dimensions = useContainerDimensions(ref)
+  const dimensions = useContainerDimensions({
+    myRef: ref,
+    enableResizeListener: true,
+  })
 
   return (
     <>
@@ -25,11 +28,11 @@ function TestComponent() {
 describe('useContainerDimensions', () => {
   it('should initialize be initialized to 0', () => {
     const ref = React.createRef<HTMLElement>()
-    const { result } = renderHook(() => useContainerDimensions(ref))
+    const { result } = renderHook(() => useContainerDimensions({ myRef: ref }))
     expect(result).toEqual({
       current: {
-        height: 300,
-        width: 0,
+        height: 305,
+        width: 600,
       },
     })
   })
@@ -37,15 +40,17 @@ describe('useContainerDimensions', () => {
   it('should return default dimensions on resize', () => {
     const ref = React.createRef<HTMLElement>()
 
-    const { result, rerender } = renderHook(() => useContainerDimensions(ref))
+    const { result, rerender } = renderHook(() =>
+      useContainerDimensions({ myRef: ref })
+    )
     act(() => {
       window.dispatchEvent(new Event('resize'))
     })
     rerender()
     expect(result).toEqual({
       current: {
-        height: 300,
-        width: 0,
+        height: 305,
+        width: 600,
       },
     })
   })

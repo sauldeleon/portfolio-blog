@@ -7,8 +7,9 @@ import {
   AnimatedItem,
   AnimatedItemSeeds,
   CustomAnimation,
-} from './AnimatedItem'
-import { HardcoreParticles } from './HardcoreParticles'
+} from '@web/components/AnimatedItem/AnimatedItem'
+import { HardcoreParticles } from '@web/components/HardcoreParticles/HardcoreParticles'
+
 import {
   PortalFirst,
   PortalFirstGlow,
@@ -21,13 +22,10 @@ import {
 } from './Portals.styles'
 
 export type CustomAnimationProps = {
-  parentWidth?: number
   parentHeight?: number
-  id?: number | string
 }
 
 export type AnimatedItem = {
-  id: number | string
   path?: string
   isHidden?: boolean
   rotate?: boolean
@@ -39,12 +37,18 @@ export type AnimatedItem = {
 
 interface PortalsProps {
   items: AnimatedItem[]
+  enableParticles?: boolean
+  enableCylinder?: boolean
 }
 
-export function Portals({ items }: PortalsProps) {
+export function Portals({
+  items,
+  enableParticles = false,
+  enableCylinder = false,
+}: PortalsProps) {
   const ref = useRef<HTMLDivElement>(null)
 
-  const { width, height } = useContainerDimensions(ref)
+  const { height, width } = useContainerDimensions({ myRef: ref })
 
   return (
     <StyledPortals>
@@ -55,35 +59,29 @@ export function Portals({ items }: PortalsProps) {
         <StyledPortalIcon color={mainTheme.colors.green} />
       </PortalLast>
       <PortalPath ref={ref}>
-        {items.length > 0 && height > 0 && width > 0 ? (
+        <PortalFirstGlow />
+        <PortalLastGlow />
+        {items.length > 0 && width > 0 ? (
           <>
-            <HardcoreParticles parentWidth={width} parentHeight={height} />
-            <PortalFirstGlow />
-            <PortalLastGlow />
-            <StyledCylinderShape />
+            {enableParticles && <HardcoreParticles parentHeight={height} />}
             {items
               .filter(({ isHidden }) => !isHidden)
-              .map(
-                ({ id, path, customAnimation, rotate, size, seeds }, index) => (
-                  <AnimatedItem
-                    key={index}
-                    id={id}
-                    seeds={seeds}
-                    parentWidth={width}
-                    parentHeight={height}
-                    path={path}
-                    rotate={rotate}
-                    size={size}
-                    customAnimation={customAnimation?.({
-                      parentWidth: width,
-                      parentHeight: height,
-                      id,
-                    })}
-                  />
-                )
-              )}
+              .map(({ path, customAnimation, rotate, size, seeds }, index) => (
+                <AnimatedItem
+                  key={index}
+                  seeds={seeds}
+                  parentHeight={height}
+                  path={path}
+                  rotate={rotate}
+                  size={size}
+                  customAnimation={customAnimation?.({
+                    parentHeight: height,
+                  })}
+                />
+              ))}
           </>
         ) : null}
+        {enableCylinder && <StyledCylinderShape />}
       </PortalPath>
     </StyledPortals>
   )

@@ -2,12 +2,20 @@ import { RefObject, useEffect, useState } from 'react'
 
 import { useDebounce } from '@sdlgr/use-debounce'
 
-const getDimensions = (ref: RefObject<HTMLElement>) => ({
-  width: ref.current?.offsetWidth || 0,
-  height: ref.current?.offsetHeight || 300,
+export const getDimensions = (ref: RefObject<HTMLElement>) => ({
+  width: ref.current?.offsetWidth || 600,
+  height: ref.current?.offsetHeight || 305,
 })
 
-export const useContainerDimensions = (myRef: RefObject<HTMLElement>) => {
+interface UseContainerDimensionsProps {
+  myRef: RefObject<HTMLElement>
+  enableResizeListener?: boolean
+}
+
+export const useContainerDimensions = ({
+  myRef,
+  enableResizeListener = false,
+}: UseContainerDimensionsProps) => {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
 
   const handleResize = () => {
@@ -21,12 +29,16 @@ export const useContainerDimensions = (myRef: RefObject<HTMLElement>) => {
       setDimensions(getDimensions(myRef))
     }
 
-    window.addEventListener('resize', debouncedHandleResize)
+    if (enableResizeListener) {
+      window.addEventListener('resize', debouncedHandleResize)
+    }
 
     return () => {
-      window.removeEventListener('resize', debouncedHandleResize)
+      if (enableResizeListener) {
+        window.removeEventListener('resize', debouncedHandleResize)
+      }
     }
-  }, [myRef, debouncedHandleResize])
+  }, [myRef, enableResizeListener, debouncedHandleResize])
 
   return dimensions
 }

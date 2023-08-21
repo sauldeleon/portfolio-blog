@@ -1,6 +1,6 @@
 import { css, styled } from 'styled-components'
 
-import { randomIntFromInterval } from './helpers'
+import { randomIntFromInterval } from '@web/utils/random'
 
 function generateParticlesGroup(
   numParticles: number,
