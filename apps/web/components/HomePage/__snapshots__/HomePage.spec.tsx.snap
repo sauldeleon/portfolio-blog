@@ -127,7 +127,7 @@ exports[`HomePage should render successfully 1`] = `
   border: 1px solid;
   border-image-slice: 1;
   border-width: 1px;
-  border-image-source: linear-gradient(       to right,       #FFDD83,       #98DFD6     );
+  border-image-source: linear-gradient(       to bottom,       #FFDD83,       #98DFD6     );
   height: var(--height-middle);
   width: var(--width-middle);
   background-color: #000000;
@@ -528,6 +528,12 @@ exports[`HomePage should render successfully 1`] = `
     height: 395px;
     overflow-x: clip;
     max-width: unset;
+  }
+}
+
+@media (min-width: 768px) {
+  .c26 {
+    border-image-source: linear-gradient(         to right,         #FFDD83,         #98DFD6       );
   }
 }
 

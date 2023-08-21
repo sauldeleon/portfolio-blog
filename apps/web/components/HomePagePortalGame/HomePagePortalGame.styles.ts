@@ -50,13 +50,21 @@ export const MiddleWall = styled.div`
     border-image-slice: 1;
     border-width: 1px;
     border-image-source: linear-gradient(
-      to right,
+      to bottom,
       ${theme.colors.yellow},
       ${theme.colors.green}
     );
     height: var(--height-middle);
     width: var(--width-middle);
     background-color: ${theme.colors.black};
+
+    ${theme.media.up.md} {
+      border-image-source: linear-gradient(
+        to right,
+        ${theme.colors.yellow},
+        ${theme.colors.green}
+      );
+    }
   `}
 `
 
