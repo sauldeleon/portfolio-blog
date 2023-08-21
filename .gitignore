@@ -5,6 +5,7 @@ dist
 tmp
 /out-tsc
 .yarn/cache
+.yarn/install-state.gz
 
 # dependencies
 node_modules
