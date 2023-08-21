@@ -16,8 +16,8 @@ exports[`AnimatedItem should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: 7%;
-  --translateY-end: 29%;
+  --translateY-begin: -3%;
+  --translateY-end: 31%;
   animation: 10.670527360938634s vertical-movement ease-in-out alternate infinite;
 }
 
@@ -74,8 +74,8 @@ exports[`AnimatedItem should render successfully with a rotation and no path 1`]
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -18%;
-  --translateY-end: -10%;
+  --translateY-begin: -22%;
+  --translateY-end: 1%;
   animation: 10.803377092813527s vertical-movement ease-in-out alternate infinite;
 }
 

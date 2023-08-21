@@ -13,7 +13,7 @@ export type CustomAnimation = {
   rotate?: RuleSet<object>
 }
 
-export type AnimationSize = 14 | 20 | 26
+export type AnimationSize = 'S' | 'M' | 'L'
 
 export interface AnimatedItemProps {
   path?: string
@@ -26,25 +26,38 @@ export function AnimatedItem({
   path,
   rotate,
   customAnimation,
-  size = 20,
+  size = 'M',
 }: AnimatedItemProps) {
-  const theKey = useId()
+  const seed = useId()
+
+  let itemSize
+  switch (size) {
+    case 'S':
+      itemSize = 16
+      break
+    case 'L':
+      itemSize = 26
+      break
+    default:
+      itemSize = 20
+  }
+
   return (
     <HorizontalMovement
       role="presentation"
-      $size={size}
-      $seed={theKey}
+      $size={itemSize}
+      $seed={seed}
       $customAnimation={customAnimation?.horizontal}
     >
       <VerticalMovement
-        $seed={theKey}
+        $seed={seed}
         $customAnimation={customAnimation?.vertical}
       >
         <RotationMovement
           role="none"
           $rotate={rotate}
           $path={path}
-          $seed={theKey}
+          $seed={seed}
           $customAnimation={customAnimation?.rotate}
         />
       </VerticalMovement>

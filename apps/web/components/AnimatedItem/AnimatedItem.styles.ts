@@ -43,11 +43,11 @@ export const VerticalMovement = styled.div<{
       : css`
           --translateY-begin: ${randomIntFromInterval(
             -37,
-            37,
+            20,
             `${$seed}-y-begin`
           )}%;
           --translateY-end: ${randomIntFromInterval(
-            -37,
+            -20,
             37,
             `${$seed}-y-end`
           )}%;

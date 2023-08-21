@@ -41,7 +41,7 @@ export const StyledHardcoreParticles = styled.div`
   }
 `
 
-const generateParticles = (parentHeight: number, numParticles: number) =>
+const generateParticles = (numParticles: number) =>
   Array.from(Array(numParticles).keys()).map(
     (i) =>
       css`
@@ -94,13 +94,11 @@ export const StyledParticle = styled.div<{ $id: number }>`
 `
 
 export const StyledParticleContainer = styled.div<{
-  $parentHeight: number
   $numParticles: number
 }>`
   position: absolute;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 
-  ${({ $parentHeight, $numParticles }) =>
-    generateParticles($parentHeight, $numParticles)}
+  ${({ $numParticles }) => generateParticles($numParticles)}
 `

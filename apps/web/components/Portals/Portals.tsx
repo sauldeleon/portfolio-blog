@@ -1,7 +1,4 @@
-import { useRef } from 'react'
-
 import { mainTheme } from '@sdlgr/main-theme'
-import { useContainerDimensions } from '@sdlgr/use-container-dimensions'
 
 import {
   AnimatedItem,
@@ -41,10 +38,6 @@ export function Portals({
   enableParticles = false,
   enableCylinder = false,
 }: PortalsProps) {
-  const ref = useRef<HTMLDivElement>(null)
-
-  const { height, width } = useContainerDimensions({ myRef: ref })
-
   return (
     <StyledPortals>
       <PortalFirst>
@@ -53,25 +46,21 @@ export function Portals({
       <PortalLast>
         <StyledPortalIcon color={mainTheme.colors.green} />
       </PortalLast>
-      <PortalPath ref={ref}>
+      <PortalPath>
         <PortalFirstGlow />
         <PortalLastGlow />
-        {items.length > 0 && width > 0 && height > 0 ? (
-          <>
-            {enableParticles && <HardcoreParticles parentHeight={height} />}
-            {items
-              .filter(({ isHidden }) => !isHidden)
-              .map(({ path, customAnimation, rotate, size }, index) => (
-                <AnimatedItem
-                  key={index}
-                  size={size}
-                  path={path}
-                  rotate={rotate}
-                  customAnimation={customAnimation?.()}
-                />
-              ))}
-          </>
-        ) : null}
+        {enableParticles && <HardcoreParticles />}
+        {items
+          .filter(({ isHidden }) => !isHidden)
+          .map(({ path, customAnimation, rotate, size }, index) => (
+            <AnimatedItem
+              key={index}
+              size={size}
+              path={path}
+              rotate={rotate}
+              customAnimation={customAnimation?.()}
+            />
+          ))}
         {enableCylinder && <StyledCylinderShape />}
       </PortalPath>
     </StyledPortals>

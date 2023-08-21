@@ -61,7 +61,7 @@ exports[`HomePage should render successfully 1`] = `
   overflow: hidden;
 }
 
-.c214 {
+.c109 {
   position: relative;
   width: 100%;
   display: flex;
@@ -71,25 +71,25 @@ exports[`HomePage should render successfully 1`] = `
   margin-top: 50px;
 }
 
-.c215 {
+.c110 {
   position: relative;
   width: 100%;
   height: 15px;
 }
 
-.c218 {
+.c113 {
   position: absolute;
   top: -61px;
   left: 30px;
 }
 
-.c216 {
+.c111 {
   height: 7px;
   width: 100%;
   position: relative;
 }
 
-.c216:before {
+.c111:before {
   content: '';
   position: absolute;
   width: 100%;
@@ -97,7 +97,7 @@ exports[`HomePage should render successfully 1`] = `
   background: linear-gradient(         to bottom,         rgba(0,0,0,0.3),         rgba(152,223,214,0.3)       );
 }
 
-.c217 {
+.c112 {
   position: relative;
   max-width: 1440px;
   min-height: 120px;
@@ -108,13 +108,13 @@ exports[`HomePage should render successfully 1`] = `
   padding: 30px;
 }
 
-.c219 {
+.c114 {
   display: flex;
   align-items: center;
   position: relative;
 }
 
-.c220 {
+.c115 {
   display: flex;
   align-items: center;
   flex-grow: 1;
@@ -124,18 +124,18 @@ exports[`HomePage should render successfully 1`] = `
   flex-wrap: wrap;
 }
 
-.c221 {
+.c116 {
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
-.c221:hover,
-.c221:focus {
+.c116:hover,
+.c116:focus {
   text-decoration: none;
 }
 
-.c222 {
+.c117 {
   height: 20px;
   display: flex;
   gap: 20px;
@@ -352,7 +352,7 @@ exports[`HomePage should render successfully 1`] = `
   text-align: center;
 }
 
-.c212 {
+.c107 {
   margin-top: 30px;
 }
 
@@ -361,23 +361,23 @@ exports[`HomePage should render successfully 1`] = `
   margin-bottom: 30px;
 }
 
-.c213 {
+.c108 {
   text-align: center;
   max-width: 1180px;
   padding: 0 34px;
 }
 
-.c213 .c7 {
+.c108 .c7 {
   margin-top: 20px;
 }
 
 .c85 {
-  --itemSize: 26%;
+  --itemSize: 16%;
   position: absolute;
   transform: translateX(-60%);
   width: 100%;
   height: 100%;
-  animation: 11.696220171485741s horizontal-movement 4.198368064714828s linear infinite;
+  animation: 14.8415583279881s horizontal-movement 1.7987487321941518s linear infinite;
 }
 
 .c88 {
@@ -386,16 +386,16 @@ exports[`HomePage should render successfully 1`] = `
   transform: translateX(-60%);
   width: 100%;
   height: 100%;
-  animation: 11.997003244704826s horizontal-movement 5.12543083121603s linear infinite;
+  animation: 11.105377110168757s horizontal-movement 2.812618726654161s linear infinite;
 }
 
 .c91 {
-  --itemSize: 26%;
+  --itemSize: 20%;
   position: absolute;
   transform: translateX(-60%);
   width: 100%;
   height: 100%;
-  animation: 8.448410262685364s horizontal-movement 5.045333448515773s linear infinite;
+  animation: 9.951294974489972s horizontal-movement 2.580435944901573s linear infinite;
 }
 
 .c94 {
@@ -404,7 +404,7 @@ exports[`HomePage should render successfully 1`] = `
   transform: translateX(-60%);
   width: 100%;
   height: 100%;
-  animation: 16.117660800242824s horizontal-movement 4.1372060009092335s linear infinite;
+  animation: 14.556469530754674s horizontal-movement 5.4596533045190325s linear infinite;
 }
 
 .c97 {
@@ -413,7 +413,7 @@ exports[`HomePage should render successfully 1`] = `
   transform: translateX(-60%);
   width: 100%;
   height: 100%;
-  animation: 12.196281629835664s horizontal-movement 3.3055207712488457s linear infinite;
+  animation: 9.755756115020109s horizontal-movement 5.807913597384728s linear infinite;
 }
 
 .c100 {
@@ -422,7 +422,7 @@ exports[`HomePage should render successfully 1`] = `
   transform: translateX(-60%);
   width: 100%;
   height: 100%;
-  animation: 11.267948745146436s horizontal-movement 5.8889538769914616s linear infinite;
+  animation: 16.55258853770606s horizontal-movement 5.828525797688637s linear infinite;
 }
 
 .c103 {
@@ -431,322 +431,7 @@ exports[`HomePage should render successfully 1`] = `
   transform: translateX(-60%);
   width: 100%;
   height: 100%;
-  animation: 16.579466806216583s horizontal-movement 1.6480909551065415s linear infinite;
-}
-
-.c106 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 6.758737585382583s horizontal-movement 5.828769754359383s linear infinite;
-}
-
-.c109 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 8.818178724693066s horizontal-movement 2.430566662103406s linear infinite;
-}
-
-.c112 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 10.147075518949237s horizontal-movement 5.712107326075092s linear infinite;
-}
-
-.c115 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 8.779980926245686s horizontal-movement 4.172267512876236s linear infinite;
-}
-
-.c118 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 7.310597632896619s horizontal-movement 1.8804997169352362s linear infinite;
-}
-
-.c121 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 19.21606986761645s horizontal-movement 5.59328003815661s linear infinite;
-}
-
-.c124 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 6.1568495432442605s horizontal-movement 1.0862292710337047s linear infinite;
-}
-
-.c127 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 17.581107808811275s horizontal-movement 3.3425237096749894s linear infinite;
-}
-
-.c130 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 15.817725497520689s horizontal-movement 5.671253826824976s linear infinite;
-}
-
-.c133 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 10.01193206749599s horizontal-movement 4.8206097087330155s linear infinite;
-}
-
-.c136 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 15.295453356097413s horizontal-movement 5.235155167254247s linear infinite;
-}
-
-.c139 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 10.42742343708466s horizontal-movement 4.6534759593666895s linear infinite;
-}
-
-.c142 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 9.13614856147461s horizontal-movement 5.938095501960845s linear infinite;
-}
-
-.c145 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 7.7374393481390005s horizontal-movement 4.455319042839358s linear infinite;
-}
-
-.c148 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 18.201229319637992s horizontal-movement 4.138763478752961s linear infinite;
-}
-
-.c151 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 13.66496306716266s horizontal-movement 3.404277063896581s linear infinite;
-}
-
-.c154 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 10.710745095851273s horizontal-movement 2.34778323898485s linear infinite;
-}
-
-.c157 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 14.092351136866633s horizontal-movement 1.9428711515483972s linear infinite;
-}
-
-.c160 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 7.737757128527447s horizontal-movement 1.294306810727282s linear infinite;
-}
-
-.c163 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 13.689070585231928s horizontal-movement 3.7803016786105457s linear infinite;
-}
-
-.c166 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 16.026520066808967s horizontal-movement 3.8769188752180828s linear infinite;
-}
-
-.c169 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 13.064008391561327s horizontal-movement 2.117663591261253s linear infinite;
-}
-
-.c172 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 10.357740426240795s horizontal-movement 4.819621194909269s linear infinite;
-}
-
-.c175 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 9.52410859250864s horizontal-movement 2.7975299938063234s linear infinite;
-}
-
-.c178 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 15.854609938628647s horizontal-movement 1.7611185334903685s linear infinite;
-}
-
-.c181 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 15.556420235133924s horizontal-movement 5.8956694898309525s linear infinite;
-}
-
-.c184 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 17.230552472237626s horizontal-movement 5.79928397446195s linear infinite;
-}
-
-.c187 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 12.192020559139703s horizontal-movement 1.2745501527630172s linear infinite;
-}
-
-.c190 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 10.878378692966429s horizontal-movement 3.901071354243314s linear infinite;
-}
-
-.c193 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 12.548111104508468s horizontal-movement 2.9214352928151106s linear infinite;
-}
-
-.c196 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 10.503856619658347s horizontal-movement 3.911364177978802s linear infinite;
-}
-
-.c199 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 19.62276920481451s horizontal-movement 5.293842754885806s linear infinite;
-}
-
-.c202 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 13.415093153741708s horizontal-movement 5.1670522576835864s linear infinite;
-}
-
-.c205 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 20.348797101080777s horizontal-movement 1.840975689415448s linear infinite;
-}
-
-.c208 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 6.333214088442141s horizontal-movement 2.9511345032243197s linear infinite;
+  animation: 13.365824025259808s horizontal-movement 2.4300366110149976s linear infinite;
 }
 
 .c86 {
@@ -755,9 +440,9 @@ exports[`HomePage should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -26%;
-  --translateY-end: 32%;
-  animation: 2.2117073348902156s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: 2%;
+  --translateY-end: -18%;
+  animation: 7.643500854825585s vertical-movement ease-in-out alternate infinite;
 }
 
 .c89 {
@@ -766,9 +451,9 @@ exports[`HomePage should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: 25%;
-  --translateY-end: -19%;
-  animation: 4.891207395665755s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -3%;
+  --translateY-end: 34%;
+  animation: 8.447162093994722s vertical-movement ease-in-out alternate infinite;
 }
 
 .c92 {
@@ -777,9 +462,9 @@ exports[`HomePage should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -10%;
-  --translateY-end: 24%;
-  animation: 5.981601085039117s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -15%;
+  --translateY-end: 6%;
+  animation: 4.786232317360223s vertical-movement ease-in-out alternate infinite;
 }
 
 .c95 {
@@ -788,9 +473,9 @@ exports[`HomePage should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: 12%;
-  --translateY-end: 20%;
-  animation: 3.0238763514390685s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: 19%;
+  --translateY-end: 27%;
+  animation: 8.909214115632027s vertical-movement ease-in-out alternate infinite;
 }
 
 .c98 {
@@ -800,8 +485,8 @@ exports[`HomePage should render successfully 1`] = `
   display: grid;
   place-items: center;
   --translateY-begin: -13%;
-  --translateY-end: 16%;
-  animation: 3.618633575981422s vertical-movement ease-in-out alternate infinite;
+  --translateY-end: 1%;
+  animation: 8.510823939308228s vertical-movement ease-in-out alternate infinite;
 }
 
 .c101 {
@@ -810,9 +495,9 @@ exports[`HomePage should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -25%;
-  --translateY-end: 3%;
-  animation: 9.293374234795436s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -34%;
+  --translateY-end: 9%;
+  animation: 2.280661862156785s vertical-movement ease-in-out alternate infinite;
 }
 
 .c104 {
@@ -821,439 +506,14 @@ exports[`HomePage should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -9%;
-  --translateY-end: 5%;
-  animation: 7.728596848415394s vertical-movement ease-in-out alternate infinite;
-}
-
-.c107 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: 7%;
-  --translateY-end: -22%;
-  animation: 4.595994533324559s vertical-movement ease-in-out alternate infinite;
-}
-
-.c110 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: 31%;
-  --translateY-end: 19%;
-  animation: 3.993757912849645s vertical-movement ease-in-out alternate infinite;
-}
-
-.c113 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -16%;
-  --translateY-end: 32%;
-  animation: 8.040153048469993s vertical-movement ease-in-out alternate infinite;
-}
-
-.c116 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -16%;
-  --translateY-end: -21%;
-  animation: 10.988585686213975s vertical-movement ease-in-out alternate infinite;
-}
-
-.c119 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -16%;
-  --translateY-end: -26%;
-  animation: 4.597217634363249s vertical-movement ease-in-out alternate infinite;
-}
-
-.c122 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -16%;
-  --translateY-end: 32%;
-  animation: 3.6007033963501884s vertical-movement ease-in-out alternate infinite;
-}
-
-.c125 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -26%;
-  --translateY-end: -28%;
-  animation: 7.843845369580145s vertical-movement ease-in-out alternate infinite;
-}
-
-.c128 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -21%;
-  --translateY-end: 9%;
-  animation: 8.366083162547543s vertical-movement ease-in-out alternate infinite;
-}
-
-.c131 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: 9%;
-  --translateY-end: 16%;
-  animation: 7.265597202148661s vertical-movement ease-in-out alternate infinite;
-}
-
-.c134 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: 1%;
-  --translateY-end: -34%;
-  animation: 8.327467170345503s vertical-movement ease-in-out alternate infinite;
-}
-
-.c137 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: 6%;
-  --translateY-end: 5%;
-  animation: 9.49854297417216s vertical-movement ease-in-out alternate infinite;
-}
-
-.c140 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -31%;
-  --translateY-end: 35%;
-  animation: 2.662245564026884s vertical-movement ease-in-out alternate infinite;
-}
-
-.c143 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -32%;
-  --translateY-end: -6%;
-  animation: 9.15735203324558s vertical-movement ease-in-out alternate infinite;
-}
-
-.c146 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: 21%;
-  --translateY-end: -12%;
-  animation: 8.549997091100867s vertical-movement ease-in-out alternate infinite;
-}
-
-.c149 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: 19%;
-  --translateY-end: -36%;
-  animation: 3.4628860586373795s vertical-movement ease-in-out alternate infinite;
-}
-
-.c152 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: 14%;
-  --translateY-end: 17%;
-  animation: 6.10658537026652s vertical-movement ease-in-out alternate infinite;
-}
-
-.c155 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: 4%;
-  --translateY-end: -5%;
-  animation: 2.1986268906827493s vertical-movement ease-in-out alternate infinite;
-}
-
-.c158 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: 3%;
-  --translateY-end: 17%;
-  animation: 8.97443140061309s vertical-movement ease-in-out alternate infinite;
-}
-
-.c161 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: 30%;
-  --translateY-end: -24%;
-  animation: 9.293827720016445s vertical-movement ease-in-out alternate infinite;
-}
-
-.c164 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -24%;
-  --translateY-end: 30%;
-  animation: 5.973347524817753s vertical-movement ease-in-out alternate infinite;
-}
-
-.c167 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -21%;
-  --translateY-end: -25%;
-  animation: 9.522474759477355s vertical-movement ease-in-out alternate infinite;
-}
-
-.c170 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -31%;
-  --translateY-end: 6%;
-  animation: 8.408524310244289s vertical-movement ease-in-out alternate infinite;
-}
-
-.c173 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -5%;
-  --translateY-end: 37%;
-  animation: 3.810325600338932s vertical-movement ease-in-out alternate infinite;
-}
-
-.c176 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -3%;
-  --translateY-end: -20%;
-  animation: 6.968331876708792s vertical-movement ease-in-out alternate infinite;
-}
-
-.c179 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
   --translateY-begin: -19%;
-  --translateY-end: 33%;
-  animation: 3.3234071343976215s vertical-movement ease-in-out alternate infinite;
-}
-
-.c182 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: 28%;
-  --translateY-end: 18%;
-  animation: 6.993800204136907s vertical-movement ease-in-out alternate infinite;
-}
-
-.c185 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: 9%;
-  --translateY-end: 11%;
-  animation: 8.172284529719045s vertical-movement ease-in-out alternate infinite;
-}
-
-.c188 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: 31%;
-  --translateY-end: -2%;
-  animation: 5.620679610188935s vertical-movement ease-in-out alternate infinite;
-}
-
-.c191 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -24%;
-  --translateY-end: -14%;
-  animation: 8.609291366977951s vertical-movement ease-in-out alternate infinite;
-}
-
-.c194 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: 37%;
-  --translateY-end: -31%;
-  animation: 7.614407802708291s vertical-movement ease-in-out alternate infinite;
-}
-
-.c197 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -28%;
-  --translateY-end: 27%;
-  animation: 7.292836428676743s vertical-movement ease-in-out alternate infinite;
-}
-
-.c200 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -26%;
-  --translateY-end: 24%;
-  animation: 2.31990409975036s vertical-movement ease-in-out alternate infinite;
-}
-
-.c203 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: 5%;
-  --translateY-end: -7%;
-  animation: 2.8052929525097308s vertical-movement ease-in-out alternate infinite;
-}
-
-.c206 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -26%;
-  --translateY-end: -33%;
-  animation: 9.028414521755035s vertical-movement ease-in-out alternate infinite;
-}
-
-.c209 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -6%;
-  --translateY-end: 24%;
-  animation: 5.087963426793106s vertical-movement ease-in-out alternate infinite;
-}
-
-.c102 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c102::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background-image: url(/assets/css3-logo.png);
-  background-size: contain;
-}
-
-.c87 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-  --rotation: calc(               2 *                 360deg             );
-  animation: 3.639881081339578s rotate-movement linear infinite;
-}
-
-.c87::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background-image: url(/assets/react-logo.png);
-  background-size: contain;
+  --translateY-end: -16%;
+  animation: 10.68588908311629s vertical-movement ease-in-out alternate infinite;
 }
 
 .c90 {
   position: absolute;
-  z-index: 5;
+  z-index: 2;
   transform-origin: center;
   height: var(--itemSize);
   aspect-ratio: 1/1;
@@ -1272,7 +532,7 @@ exports[`HomePage should render successfully 1`] = `
 
 .c93 {
   position: absolute;
-  z-index: 3;
+  z-index: 4;
   transform-origin: center;
   height: var(--itemSize);
   aspect-ratio: 1/1;
@@ -1289,14 +549,35 @@ exports[`HomePage should render successfully 1`] = `
   background-size: contain;
 }
 
-.c96 {
+.c87 {
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   transform-origin: center;
   height: var(--itemSize);
   aspect-ratio: 1/1;
-  --rotation: calc(               2 *                 360deg             );
-  animation: 4.055001973521499s rotate-movement linear infinite;
+  --rotation: calc(               1 *                 360deg             );
+  animation: 2.155771032965s rotate-movement linear infinite;
+}
+
+.c87::after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  display: block;
+  background-image: url(/assets/react-logo.png);
+  background-size: contain;
+}
+
+.c96 {
+  position: absolute;
+  z-index: 4;
+  transform-origin: center;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  --rotation: calc(               1 *                 360deg             );
+  animation: 3.001619354246908s rotate-movement linear infinite;
 }
 
 .c96::after {
@@ -1312,7 +593,7 @@ exports[`HomePage should render successfully 1`] = `
 
 .c99 {
   position: absolute;
-  z-index: 4;
+  z-index: 5;
   transform-origin: center;
   height: var(--itemSize);
   aspect-ratio: 1/1;
@@ -1326,6 +607,25 @@ exports[`HomePage should render successfully 1`] = `
   overflow: hidden;
   display: block;
   background-image: url(/assets/nextjs-logo.png);
+  background-size: contain;
+}
+
+.c102 {
+  position: absolute;
+  z-index: 4;
+  transform-origin: center;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+}
+
+.c102::after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  display: block;
+  background-image: url(/assets/css3-logo.png);
   background-size: contain;
 }
 
@@ -1346,636 +646,6 @@ exports[`HomePage should render successfully 1`] = `
   display: block;
   background-image: url(/assets/typescript-logo.png);
   background-size: contain;
-}
-
-.c108 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c108::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #8fb8f7;
-}
-
-.c111 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c111::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #4a5d1d;
-}
-
-.c114 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c114::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #57ab3e;
-}
-
-.c117 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c117::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #a74147;
-}
-
-.c120 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c120::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #3fec57;
-}
-
-.c123 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c123::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #47ca28;
-}
-
-.c126 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c126::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #5bd5fd;
-}
-
-.c129 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c129::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #57efa5;
-}
-
-.c132 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c132::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #2fe7bf;
-}
-
-.c135 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c135::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #b72f28;
-}
-
-.c138 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c138::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #31a4e1;
-}
-
-.c141 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c141::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #d35365;
-}
-
-.c144 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c144::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #aa2028;
-}
-
-.c147 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c147::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #a4af82;
-}
-
-.c150 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c150::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #233418;
-}
-
-.c153 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c153::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #69bade;
-}
-
-.c156 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c156::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #596013;
-}
-
-.c159 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c159::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #c67995;
-}
-
-.c162 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c162::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #4e9df1;
-}
-
-.c165 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c165::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #f4c2bb;
-}
-
-.c168 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c168::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #6dbae0;
-}
-
-.c171 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c171::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #7c9452;
-}
-
-.c174 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c174::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #15c7bc;
-}
-
-.c177 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c177::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #982b3d;
-}
-
-.c180 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c180::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #cf619b;
-}
-
-.c183 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c183::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #ef9e02;
-}
-
-.c186 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c186::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #160a4d;
-}
-
-.c189 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c189::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #c4a19c;
-}
-
-.c192 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c192::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #493b02;
-}
-
-.c195 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c195::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #561f9a;
-}
-
-.c198 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c198::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #bdbdb3;
-}
-
-.c201 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c201::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #f20e19;
-}
-
-.c204 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c204::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #c64028;
-}
-
-.c207 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c207::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #8191a5;
-}
-
-.c210 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c210::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #e67652;
 }
 
 .c35 {
@@ -3298,7 +1968,7 @@ exports[`HomePage should render successfully 1`] = `
   background-color: #000000;
 }
 
-.c211 {
+.c106 {
   flex-grow: 1;
   border: 1px solid #98DFD6;
   transform-origin: var(--transform-origin-last);
@@ -3307,19 +1977,19 @@ exports[`HomePage should render successfully 1`] = `
 }
 
 @media (min-width: 1024px) {
-  .c217 {
+  .c112 {
     justify-content: space-between;
     grid-template-columns: 1fr 100px;
   }
 }
 
 @media (min-width: 768px) {
-  .c221 {
+  .c116 {
     display: flex;
     position: relative;
   }
 
-  .c221::after {
+  .c116::after {
     content: '';
     position: absolute;
     width: 100%;
@@ -3332,14 +2002,14 @@ exports[`HomePage should render successfully 1`] = `
     transition: transform 0.25s ease-out;
   }
 
-  .c221:hover::after {
+  .c116:hover::after {
     transform: scaleX(1);
     transform-origin: bottom left;
   }
 }
 
 @media (min-width: 1024px) {
-  .c222 {
+  .c117 {
     justify-self: end;
     padding: 0;
   }
@@ -3461,7 +2131,7 @@ exports[`HomePage should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c212 {
+  .c107 {
     margin-bottom: 40px;
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
@@ -3478,7 +2148,7 @@ exports[`HomePage should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c213 .c7 {
+  .c108 .c7 {
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
     color: #FBFBFB;
@@ -4268,475 +2938,20 @@ exports[`HomePage should render successfully 1`] = `
                     />
                   </div>
                 </div>
-                <div
-                  class="c106"
-                  role="presentation"
-                >
-                  <div
-                    class="c107"
-                  >
-                    <div
-                      class="c108"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c109"
-                  role="presentation"
-                >
-                  <div
-                    class="c110"
-                  >
-                    <div
-                      class="c111"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c112"
-                  role="presentation"
-                >
-                  <div
-                    class="c113"
-                  >
-                    <div
-                      class="c114"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c115"
-                  role="presentation"
-                >
-                  <div
-                    class="c116"
-                  >
-                    <div
-                      class="c117"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c118"
-                  role="presentation"
-                >
-                  <div
-                    class="c119"
-                  >
-                    <div
-                      class="c120"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c121"
-                  role="presentation"
-                >
-                  <div
-                    class="c122"
-                  >
-                    <div
-                      class="c123"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c124"
-                  role="presentation"
-                >
-                  <div
-                    class="c125"
-                  >
-                    <div
-                      class="c126"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c127"
-                  role="presentation"
-                >
-                  <div
-                    class="c128"
-                  >
-                    <div
-                      class="c129"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c130"
-                  role="presentation"
-                >
-                  <div
-                    class="c131"
-                  >
-                    <div
-                      class="c132"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c133"
-                  role="presentation"
-                >
-                  <div
-                    class="c134"
-                  >
-                    <div
-                      class="c135"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c136"
-                  role="presentation"
-                >
-                  <div
-                    class="c137"
-                  >
-                    <div
-                      class="c138"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c139"
-                  role="presentation"
-                >
-                  <div
-                    class="c140"
-                  >
-                    <div
-                      class="c141"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c142"
-                  role="presentation"
-                >
-                  <div
-                    class="c143"
-                  >
-                    <div
-                      class="c144"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c145"
-                  role="presentation"
-                >
-                  <div
-                    class="c146"
-                  >
-                    <div
-                      class="c147"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c148"
-                  role="presentation"
-                >
-                  <div
-                    class="c149"
-                  >
-                    <div
-                      class="c150"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c151"
-                  role="presentation"
-                >
-                  <div
-                    class="c152"
-                  >
-                    <div
-                      class="c153"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c154"
-                  role="presentation"
-                >
-                  <div
-                    class="c155"
-                  >
-                    <div
-                      class="c156"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c157"
-                  role="presentation"
-                >
-                  <div
-                    class="c158"
-                  >
-                    <div
-                      class="c159"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c160"
-                  role="presentation"
-                >
-                  <div
-                    class="c161"
-                  >
-                    <div
-                      class="c162"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c163"
-                  role="presentation"
-                >
-                  <div
-                    class="c164"
-                  >
-                    <div
-                      class="c165"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c166"
-                  role="presentation"
-                >
-                  <div
-                    class="c167"
-                  >
-                    <div
-                      class="c168"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c169"
-                  role="presentation"
-                >
-                  <div
-                    class="c170"
-                  >
-                    <div
-                      class="c171"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c172"
-                  role="presentation"
-                >
-                  <div
-                    class="c173"
-                  >
-                    <div
-                      class="c174"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c175"
-                  role="presentation"
-                >
-                  <div
-                    class="c176"
-                  >
-                    <div
-                      class="c177"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c178"
-                  role="presentation"
-                >
-                  <div
-                    class="c179"
-                  >
-                    <div
-                      class="c180"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c181"
-                  role="presentation"
-                >
-                  <div
-                    class="c182"
-                  >
-                    <div
-                      class="c183"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c184"
-                  role="presentation"
-                >
-                  <div
-                    class="c185"
-                  >
-                    <div
-                      class="c186"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c187"
-                  role="presentation"
-                >
-                  <div
-                    class="c188"
-                  >
-                    <div
-                      class="c189"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c190"
-                  role="presentation"
-                >
-                  <div
-                    class="c191"
-                  >
-                    <div
-                      class="c192"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c193"
-                  role="presentation"
-                >
-                  <div
-                    class="c194"
-                  >
-                    <div
-                      class="c195"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c196"
-                  role="presentation"
-                >
-                  <div
-                    class="c197"
-                  >
-                    <div
-                      class="c198"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c199"
-                  role="presentation"
-                >
-                  <div
-                    class="c200"
-                  >
-                    <div
-                      class="c201"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c202"
-                  role="presentation"
-                >
-                  <div
-                    class="c203"
-                  >
-                    <div
-                      class="c204"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c205"
-                  role="presentation"
-                >
-                  <div
-                    class="c206"
-                  >
-                    <div
-                      class="c207"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c208"
-                  role="presentation"
-                >
-                  <div
-                    class="c209"
-                  >
-                    <div
-                      class="c210"
-                      role="none"
-                    />
-                  </div>
-                </div>
               </div>
             </div>
           </div>
           <div
-            class="c211"
+            class="c106"
           />
         </div>
         <h2
-          class="c18 c212"
+          class="c18 c107"
         >
           About me
         </h2>
         <section
-          class="c213"
+          class="c108"
         >
           <p
             class="c7 c8"
@@ -4784,27 +2999,27 @@ exports[`HomePage should render successfully 1`] = `
         </a>
       </div>
       <footer
-        class="c214"
+        class="c109"
         tabindex="-1"
       >
         <div
-          class="c215"
+          class="c110"
         >
           <div
-            class="c216"
+            class="c111"
           />
           <div
-            class="c216"
+            class="c111"
           />
           <div
-            class="c216"
+            class="c111"
           />
         </div>
         <div
-          class="c217"
+          class="c112"
         >
           <svg
-            class="c218"
+            class="c113"
             height="64"
             width="120"
           >
@@ -4812,14 +3027,14 @@ exports[`HomePage should render successfully 1`] = `
           </svg>
           <nav
             aria-label="Site map"
-            class="c219"
+            class="c114"
           >
             <ul
-              class="c220"
+              class="c115"
             >
               <li>
                 <a
-                  class="c221"
+                  class="c116"
                   href="/experience"
                 >
                   <p
@@ -4831,7 +3046,7 @@ exports[`HomePage should render successfully 1`] = `
               </li>
               <li>
                 <a
-                  class="c221"
+                  class="c116"
                   href="/contact"
                 >
                   <p
@@ -4843,7 +3058,7 @@ exports[`HomePage should render successfully 1`] = `
               </li>
               <li>
                 <a
-                  class="c221"
+                  class="c116"
                   href="/portfolio"
                 >
                   <p
@@ -4855,7 +3070,7 @@ exports[`HomePage should render successfully 1`] = `
               </li>
               <li>
                 <a
-                  class="c221"
+                  class="c116"
                   href="#"
                 >
                   <svg
@@ -4874,7 +3089,7 @@ exports[`HomePage should render successfully 1`] = `
               </li>
               <li>
                 <a
-                  class="c221"
+                  class="c116"
                   href="#"
                 >
                   <svg
@@ -4894,7 +3109,7 @@ exports[`HomePage should render successfully 1`] = `
             </ul>
           </nav>
           <div
-            class="c222"
+            class="c117"
           >
             <a
               aria-label="Telegram"
