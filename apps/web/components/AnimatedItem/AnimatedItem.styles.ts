@@ -3,61 +3,48 @@ import { RuleSet, css, styled } from 'styled-components'
 import { randomColor, randomIntFromInterval } from '@web/utils/random'
 
 export const HorizontalMovement = styled.div<{
-  $verticalStartPoint: number
   $size: number
-  $durationSeed: string
-  $delaySeed: string
+  $seed: string
   $customAnimation?: RuleSet<object>
 }>`
   --itemSize: ${({ $size }) => `${$size}px`};
-  top: ${({ $verticalStartPoint }) => `${$verticalStartPoint}px`};
   position: absolute;
   opacity: 0;
   width: 100%;
   height: 100%;
 
-  ${({ $customAnimation, $durationSeed, $delaySeed }) =>
+  ${({ $customAnimation, $seed }) =>
     $customAnimation
       ? $customAnimation
       : css`
-          animation: ${randomIntFromInterval(6, 20, $durationSeed)}s
-            horizontal-movement ${randomIntFromInterval(1, 5, $delaySeed)}s
-            linear infinite;
+          animation: ${randomIntFromInterval(6, 20, `${$seed}-x-duration`)}s
+            horizontal-movement
+            ${randomIntFromInterval(1, 5, `${$seed}-x-delay`)}s linear infinite;
         `}
 `
 
 export const VerticalMovement = styled.div<{
-  $verticalStartPoint: number
   $size: number
   $parentHeight: number
-  $durationSeed: string
-  $verticalRangeSeed: string
+  $seed: string
   $customAnimation?: RuleSet<object>
 }>`
   position: absolute;
   width: 100%;
   height: 100%;
-  transform-origin: top left;
   display: grid;
-  place-items: start center;
-
-  ${({
-    $customAnimation,
-    $verticalStartPoint,
-    $parentHeight,
-    $size,
-    $durationSeed,
-    $verticalRangeSeed,
-  }) =>
+  place-items: center;
+  ${({ $customAnimation, $seed }) =>
     $customAnimation
       ? $customAnimation
       : css`
-          --vertical-slide: ${randomIntFromInterval(
+          --translateY-begin: ${randomIntFromInterval(
+            -50,
             0,
-            $parentHeight - $verticalStartPoint - $size,
-            $verticalRangeSeed
-          )}px;
-          animation: ${randomIntFromInterval(6, 10, $durationSeed)}s
+            `${$seed}-y-begin`
+          )}%;
+          --translateY-end: ${randomIntFromInterval(0, 50, `${$seed}-y-end`)}%;
+          animation: ${randomIntFromInterval(6, 10, `${$seed}-y-duration`)}s
             vertical-movement ease-in-out alternate infinite;
         `};
 `
@@ -65,14 +52,12 @@ export const VerticalMovement = styled.div<{
 export const RotationMovement = styled.div<{
   $customAnimation?: RuleSet<object>
   $path?: string
-  $zIndexSeed: string
-  $colorSeed: string
-  $durationSeed: string
-  $rotationAmountSeed: string
+  $seed: string
   $rotate?: boolean
 }>`
   position: absolute;
-  z-index: ${({ $zIndexSeed }) => randomIntFromInterval(2, 5, $zIndexSeed)};
+  z-index: ${({ $seed }) =>
+    randomIntFromInterval(2, 5, `${$seed}-z-indez-rotate`)};
   transform-origin: center;
 
   &::after {
@@ -83,26 +68,31 @@ export const RotationMovement = styled.div<{
     overflow: hidden;
     display: block;
 
-    ${({ $path, $colorSeed }) =>
+    ${({ $path, $seed }) =>
       $path
         ? css`
             background-image: url(${$path});
             background-size: contain;
           `
         : css`
-            background: ${randomColor($colorSeed)};
+            background: ${randomColor(`${$seed}-color`)};
           `}
   }
 
-  ${({ $rotate, $customAnimation, $durationSeed, $rotationAmountSeed }) =>
+  ${({ $rotate, $customAnimation, $seed }) =>
     $rotate
       ? $customAnimation
         ? $customAnimation
         : css`
             --rotation: calc(
-              ${randomIntFromInterval(1, 2, $rotationAmountSeed)} * 360deg
+              ${randomIntFromInterval(1, 2, `${$seed}-rotation-amount`)} *
+                360deg
             );
-            animation: ${randomIntFromInterval(2, 4, $durationSeed)}s
+            animation: ${randomIntFromInterval(
+                2,
+                4,
+                `${$seed}-rotation-duration`
+              )}s
               rotate-movement linear infinite;
           `
       : css``}

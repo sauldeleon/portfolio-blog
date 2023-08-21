@@ -183,6 +183,7 @@ export const StyledCylinderShape = styled.div`
 `
 
 export const PortalPath = styled.div`
+  border: 1px dashed red;
   ${({ theme }) => css`
     --height: 212px;
     position: absolute;
@@ -242,8 +243,15 @@ export const PortalPath = styled.div`
     }
 
     @keyframes vertical-movement {
+      0% {
+        transform: translateY(
+          calc(var(--translateY-begin) + var(--itemSize) / 2)
+        );
+      }
       100% {
-        transform: translateY(var(--vertical-slide));
+        transform: translateY(
+          calc(var(--translateY-end) - var(--itemSize) / 2)
+        );
       }
     }
 

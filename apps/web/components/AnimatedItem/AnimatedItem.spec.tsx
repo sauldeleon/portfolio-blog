@@ -6,35 +6,17 @@ import { renderWithTheme } from '@sdlgr/test-utils'
 
 import { AnimatedItem } from './AnimatedItem'
 
-const mockSeeds = {
-  verticalStartPoint: 'verticalStartPoint',
-  horizontalDuration: 'horizontalDuration',
-  horizontalDelay: 'horizontalDelay',
-  verticalDuration: 'verticalDuration',
-  verticalDelay: 'verticalDelay',
-  verticalRange: 'verticalRange',
-  color: 'color',
-  zIndex: 'zIndex',
-  rotationDuration: 'rotationDuration',
-  rotationDelay: 'rotationDelay',
-  rotationAmount: 'rotationAmount',
-}
-
 describe('AnimatedItem', () => {
   it('should render successfully', () => {
     const { baseElement } = renderWithTheme(
-      <AnimatedItem seeds={mockSeeds} parentHeight={200} />
+      <AnimatedItem seed="wadus" parentHeight={200} />
     )
     expect(baseElement).toMatchSnapshot()
   })
 
   it('should render successfully with a path image', () => {
     renderWithTheme(
-      <AnimatedItem
-        seeds={mockSeeds}
-        parentHeight={200}
-        path="/path/to/image.jpg"
-      />
+      <AnimatedItem seed="wadus" parentHeight={200} path="/path/to/image.jpg" />
     )
     expect(screen.getByRole('presentation').firstChild).toHaveStyleRule(
       'background-image: url(/path/to/image.jpg)'
@@ -44,7 +26,7 @@ describe('AnimatedItem', () => {
   it('should render successfully with a rotation and a custom size', () => {
     renderWithTheme(
       <AnimatedItem
-        seeds={mockSeeds}
+        seed="wadus"
         parentHeight={200}
         path="/path/to/image.jpg"
         rotate={true}
@@ -64,7 +46,7 @@ describe('AnimatedItem', () => {
 
   it('should render successfully with a rotation and no path', () => {
     const { baseElement } = renderWithTheme(
-      <AnimatedItem seeds={mockSeeds} parentHeight={200} rotate={true} />
+      <AnimatedItem seed="wadus" parentHeight={200} rotate={true} />
     )
     expect(baseElement).toMatchSnapshot()
   })
@@ -84,7 +66,7 @@ describe('AnimatedItem', () => {
 
     renderWithTheme(
       <AnimatedItem
-        seeds={mockSeeds}
+        seed="wadus"
         parentHeight={200}
         rotate={true}
         path="/test.jpg"

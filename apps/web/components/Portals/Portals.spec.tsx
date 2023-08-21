@@ -4,20 +4,6 @@ import { renderWithTheme } from '@sdlgr/test-utils'
 
 import { Portals } from './Portals'
 
-const mockSeeds = {
-  verticalStartPoint: 'verticalStartPoint',
-  horizontalDuration: 'horizontalDuration',
-  horizontalDelay: 'horizontalDelay',
-  verticalDuration: 'verticalDuration',
-  verticalDelay: 'verticalDelay',
-  verticalRange: 'verticalRange',
-  zIndex: 'rotationZIndex',
-  color: 'rotationColor',
-  rotationDuration: 'rotationDuration',
-  rotationDelay: 'rotationDelay',
-  rotationAmount: 'rotationAmount',
-}
-
 jest.mock('@sdlgr/use-container-dimensions', () => ({
   useContainerDimensions: jest.fn().mockReturnValue({ width: 1, height: 1 }),
 }))
@@ -40,9 +26,9 @@ describe('Portals', () => {
     renderWithTheme(
       <Portals
         items={[
-          { seeds: mockSeeds, path: '/test.jpg' },
-          { seeds: mockSeeds, path: '/test.jpg' },
-          { seeds: mockSeeds, isHidden: true, path: '/test.jpg' },
+          { seed: 'wadus', path: '/test.jpg' },
+          { seed: 'wadus', path: '/test.jpg' },
+          { seed: 'wadus', isHidden: true, path: '/test.jpg' },
         ]}
         enableParticles
       />

@@ -3,28 +3,27 @@
 exports[`AnimatedItem should render successfully 1`] = `
 .c0 {
   --itemSize: 50px;
-  top: 0px;
   position: absolute;
   opacity: 0;
   width: 100%;
   height: 100%;
-  animation: 16s horizontal-movement 2s linear infinite;
+  animation: 12s horizontal-movement 1s linear infinite;
 }
 
 .c1 {
   position: absolute;
   width: 100%;
   height: 100%;
-  transform-origin: top left;
   display: grid;
-  place-items: start center;
-  --vertical-slide: 16px;
-  animation: 6s vertical-movement ease-in-out alternate infinite;
+  place-items: center;
+  --translateY-begin: -43%;
+  --translateY-end: 23%;
+  animation: 7s vertical-movement ease-in-out alternate infinite;
 }
 
 .c2 {
   position: absolute;
-  z-index: 5;
+  z-index: 3;
   transform-origin: center;
 }
 
@@ -35,7 +34,7 @@ exports[`AnimatedItem should render successfully 1`] = `
   border-radius: 50%;
   overflow: hidden;
   display: block;
-  background: #2392e8;
+  background: #7fa37a;
 }
 
 <body>
@@ -60,30 +59,29 @@ exports[`AnimatedItem should render successfully 1`] = `
 exports[`AnimatedItem should render successfully with a rotation and no path 1`] = `
 .c0 {
   --itemSize: 50px;
-  top: 0px;
   position: absolute;
   opacity: 0;
   width: 100%;
   height: 100%;
-  animation: 16s horizontal-movement 2s linear infinite;
+  animation: 12s horizontal-movement 1s linear infinite;
 }
 
 .c1 {
   position: absolute;
   width: 100%;
   height: 100%;
-  transform-origin: top left;
   display: grid;
-  place-items: start center;
-  --vertical-slide: 16px;
-  animation: 6s vertical-movement ease-in-out alternate infinite;
+  place-items: center;
+  --translateY-begin: -43%;
+  --translateY-end: 23%;
+  animation: 7s vertical-movement ease-in-out alternate infinite;
 }
 
 .c2 {
   position: absolute;
-  z-index: 5;
+  z-index: 3;
   transform-origin: center;
-  --rotation: calc(               2 * 360deg             );
+  --rotation: calc(               1 *                 360deg             );
   animation: 3s rotate-movement linear infinite;
 }
 
@@ -94,7 +92,7 @@ exports[`AnimatedItem should render successfully with a rotation and no path 1`]
   border-radius: 50%;
   overflow: hidden;
   display: block;
-  background: #2392e8;
+  background: #7fa37a;
 }
 
 <body>

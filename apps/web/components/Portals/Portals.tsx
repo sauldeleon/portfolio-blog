@@ -5,7 +5,6 @@ import { useContainerDimensions } from '@sdlgr/use-container-dimensions'
 
 import {
   AnimatedItem,
-  AnimatedItemSeeds,
   CustomAnimation,
 } from '@web/components/AnimatedItem/AnimatedItem'
 import { HardcoreParticles } from '@web/components/HardcoreParticles/HardcoreParticles'
@@ -31,7 +30,7 @@ export type AnimatedItem = {
   rotate?: boolean
   bounce?: boolean
   size?: number
-  seeds: AnimatedItemSeeds
+  seed: string
   customAnimation?: (props: CustomAnimationProps) => CustomAnimation
 }
 
@@ -61,15 +60,15 @@ export function Portals({
       <PortalPath ref={ref}>
         <PortalFirstGlow />
         <PortalLastGlow />
-        {items.length > 0 && width > 0 ? (
+        {items.length > 0 && width > 0 && height > 0 ? (
           <>
             {enableParticles && <HardcoreParticles parentHeight={height} />}
             {items
               .filter(({ isHidden }) => !isHidden)
-              .map(({ path, customAnimation, rotate, size, seeds }, index) => (
+              .map(({ path, customAnimation, rotate, size, seed }, index) => (
                 <AnimatedItem
                   key={index}
-                  seeds={seeds}
+                  seed={seed}
                   parentHeight={height}
                   path={path}
                   rotate={rotate}
