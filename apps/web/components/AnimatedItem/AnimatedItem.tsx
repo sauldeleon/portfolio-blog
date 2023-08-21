@@ -14,7 +14,6 @@ export type CustomAnimation = {
 }
 
 export interface AnimatedItemProps {
-  parentHeight: number
   seed: string
   path?: string
   rotate?: boolean
@@ -24,24 +23,21 @@ export interface AnimatedItemProps {
 
 export function AnimatedItem({
   seed,
-  parentHeight,
   path,
   rotate,
   customAnimation,
-  size = 50,
+  size = 20,
 }: AnimatedItemProps) {
   return (
     <HorizontalMovement
       role="presentation"
-      $customAnimation={customAnimation?.horizontal}
       $size={size}
       $seed={seed}
+      $customAnimation={customAnimation?.horizontal}
     >
       <VerticalMovement
-        $customAnimation={customAnimation?.vertical}
-        $parentHeight={parentHeight}
-        $size={size}
         $seed={seed}
+        $customAnimation={customAnimation?.vertical}
       >
         <RotationMovement
           role="none"

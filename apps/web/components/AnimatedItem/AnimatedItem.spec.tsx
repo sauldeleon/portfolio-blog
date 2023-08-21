@@ -8,16 +8,12 @@ import { AnimatedItem } from './AnimatedItem'
 
 describe('AnimatedItem', () => {
   it('should render successfully', () => {
-    const { baseElement } = renderWithTheme(
-      <AnimatedItem seed="wadus" parentHeight={200} />
-    )
+    const { baseElement } = renderWithTheme(<AnimatedItem seed="wadus" />)
     expect(baseElement).toMatchSnapshot()
   })
 
   it('should render successfully with a path image', () => {
-    renderWithTheme(
-      <AnimatedItem seed="wadus" parentHeight={200} path="/path/to/image.jpg" />
-    )
+    renderWithTheme(<AnimatedItem seed="wadus" path="/path/to/image.jpg" />)
     expect(screen.getByRole('presentation').firstChild).toHaveStyleRule(
       'background-image: url(/path/to/image.jpg)'
     )
@@ -27,7 +23,6 @@ describe('AnimatedItem', () => {
     renderWithTheme(
       <AnimatedItem
         seed="wadus"
-        parentHeight={200}
         path="/path/to/image.jpg"
         rotate={true}
         size={100}
@@ -40,13 +35,13 @@ describe('AnimatedItem', () => {
     )
     expect(screen.getByRole('presentation')).toHaveStyleRule(
       '--itemSize',
-      '100px'
+      '100%'
     )
   })
 
   it('should render successfully with a rotation and no path', () => {
     const { baseElement } = renderWithTheme(
-      <AnimatedItem seed="wadus" parentHeight={200} rotate={true} />
+      <AnimatedItem seed="wadus" rotate={true} />
     )
     expect(baseElement).toMatchSnapshot()
   })
@@ -67,7 +62,6 @@ describe('AnimatedItem', () => {
     renderWithTheme(
       <AnimatedItem
         seed="wadus"
-        parentHeight={200}
         rotate={true}
         path="/test.jpg"
         customAnimation={customAnimation()}

@@ -244,14 +244,10 @@ export const PortalPath = styled.div`
 
     @keyframes vertical-movement {
       0% {
-        transform: translateY(
-          calc(var(--translateY-begin) + var(--itemSize) / 2)
-        );
+        transform: translateY(calc(var(--translateY-begin)));
       }
       100% {
-        transform: translateY(
-          calc(var(--translateY-end) - var(--itemSize) / 2)
-        );
+        transform: translateY(calc(var(--translateY-end)));
       }
     }
 

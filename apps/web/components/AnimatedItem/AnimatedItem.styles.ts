@@ -1,13 +1,17 @@
 import { RuleSet, css, styled } from 'styled-components'
 
-import { randomColor, randomIntFromInterval } from '@web/utils/random'
+import {
+  randomColor,
+  randomDecimalFromInterval,
+  randomIntFromInterval,
+} from '@web/utils/random'
 
 export const HorizontalMovement = styled.div<{
   $size: number
   $seed: string
   $customAnimation?: RuleSet<object>
 }>`
-  --itemSize: ${({ $size }) => `${$size}px`};
+  --itemSize: ${({ $size }) => `${$size}%`};
   position: absolute;
   opacity: 0;
   width: 100%;
@@ -17,15 +21,14 @@ export const HorizontalMovement = styled.div<{
     $customAnimation
       ? $customAnimation
       : css`
-          animation: ${randomIntFromInterval(6, 20, `${$seed}-x-duration`)}s
+          animation: ${randomDecimalFromInterval(6, 20, `${$seed}-x-duration`)}s
             horizontal-movement
-            ${randomIntFromInterval(1, 5, `${$seed}-x-delay`)}s linear infinite;
+            ${randomDecimalFromInterval(1, 5, `${$seed}-x-delay`)}s linear
+            infinite;
         `}
 `
 
 export const VerticalMovement = styled.div<{
-  $size: number
-  $parentHeight: number
   $seed: string
   $customAnimation?: RuleSet<object>
 }>`
@@ -39,12 +42,12 @@ export const VerticalMovement = styled.div<{
       ? $customAnimation
       : css`
           --translateY-begin: ${randomIntFromInterval(
-            -50,
+            -40,
             0,
             `${$seed}-y-begin`
           )}%;
-          --translateY-end: ${randomIntFromInterval(0, 50, `${$seed}-y-end`)}%;
-          animation: ${randomIntFromInterval(6, 10, `${$seed}-y-duration`)}s
+          --translateY-end: ${randomIntFromInterval(0, 40, `${$seed}-y-end`)}%;
+          animation: ${randomDecimalFromInterval(2, 10, `${$seed}-y-duration`)}s
             vertical-movement ease-in-out alternate infinite;
         `};
 `
@@ -56,14 +59,15 @@ export const RotationMovement = styled.div<{
   $rotate?: boolean
 }>`
   position: absolute;
-  z-index: ${({ $seed }) =>
-    randomIntFromInterval(2, 5, `${$seed}-z-indez-rotate`)};
+  z-index: ${({ $seed }) => randomIntFromInterval(2, 5, `${$seed}-z-index`)};
   transform-origin: center;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
 
   &::after {
     content: '';
-    width: var(--itemSize);
-    height: var(--itemSize);
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
     overflow: hidden;
     display: block;
@@ -88,7 +92,7 @@ export const RotationMovement = styled.div<{
               ${randomIntFromInterval(1, 2, `${$seed}-rotation-amount`)} *
                 360deg
             );
-            animation: ${randomIntFromInterval(
+            animation: ${randomDecimalFromInterval(
                 2,
                 4,
                 `${$seed}-rotation-duration`

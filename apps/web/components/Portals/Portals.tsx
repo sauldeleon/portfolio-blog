@@ -69,7 +69,6 @@ export function Portals({
                 <AnimatedItem
                   key={index}
                   seed={seed}
-                  parentHeight={height}
                   path={path}
                   rotate={rotate}
                   size={size}

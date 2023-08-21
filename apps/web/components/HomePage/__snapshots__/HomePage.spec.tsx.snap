@@ -61,7 +61,7 @@ exports[`HomePage should render successfully 1`] = `
   overflow: hidden;
 }
 
-.c424 {
+.c157 {
   position: relative;
   width: 100%;
   display: flex;
@@ -71,25 +71,25 @@ exports[`HomePage should render successfully 1`] = `
   margin-top: 50px;
 }
 
-.c425 {
+.c158 {
   position: relative;
   width: 100%;
   height: 15px;
 }
 
-.c428 {
+.c161 {
   position: absolute;
   top: -61px;
   left: 30px;
 }
 
-.c426 {
+.c159 {
   height: 7px;
   width: 100%;
   position: relative;
 }
 
-.c426:before {
+.c159:before {
   content: '';
   position: absolute;
   width: 100%;
@@ -97,7 +97,7 @@ exports[`HomePage should render successfully 1`] = `
   background: linear-gradient(         to bottom,         rgba(0,0,0,0.3),         rgba(152,223,214,0.3)       );
 }
 
-.c427 {
+.c160 {
   position: relative;
   max-width: 1440px;
   min-height: 120px;
@@ -108,13 +108,13 @@ exports[`HomePage should render successfully 1`] = `
   padding: 30px;
 }
 
-.c429 {
+.c162 {
   display: flex;
   align-items: center;
   position: relative;
 }
 
-.c430 {
+.c163 {
   display: flex;
   align-items: center;
   flex-grow: 1;
@@ -124,18 +124,18 @@ exports[`HomePage should render successfully 1`] = `
   flex-wrap: wrap;
 }
 
-.c431 {
+.c164 {
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
-.c431:hover,
-.c431:focus {
+.c164:hover,
+.c164:focus {
   text-decoration: none;
 }
 
-.c432 {
+.c165 {
   height: 20px;
   display: flex;
   gap: 20px;
@@ -352,7 +352,7 @@ exports[`HomePage should render successfully 1`] = `
   text-align: center;
 }
 
-.c422 {
+.c155 {
   margin-top: 30px;
 }
 
@@ -361,590 +361,221 @@ exports[`HomePage should render successfully 1`] = `
   margin-bottom: 30px;
 }
 
-.c423 {
+.c156 {
   text-align: center;
   max-width: 1180px;
   padding: 0 34px;
 }
 
-.c423 .c7 {
+.c156 .c7 {
   margin-top: 20px;
 }
 
-.c405 {
-  --itemSize: 50px;
+.c85 {
+  --itemSize: 20%;
   position: absolute;
   opacity: 0;
   width: 100%;
   height: 100%;
-  animation: 12s horizontal-movement 3s linear infinite;
-}
-
-.c145 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 6s horizontal-movement 5s linear infinite;
-}
-
-.c148 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 19s horizontal-movement 4s linear infinite;
-}
-
-.c108 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 13s horizontal-movement 2s linear infinite;
-}
-
-.c97 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 15s horizontal-movement 3s linear infinite;
-}
-
-.c218 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 19s horizontal-movement 2s linear infinite;
-}
-
-.c151 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 12s horizontal-movement 4s linear infinite;
-}
-
-.c183 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 18s horizontal-movement 2s linear infinite;
-}
-
-.c318 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 6s horizontal-movement 4s linear infinite;
+  animation: 13.361017719113136s horizontal-movement 3.7094338440028527s linear infinite;
 }
 
 .c88 {
-  --itemSize: 50px;
+  --itemSize: 20%;
   position: absolute;
   opacity: 0;
   width: 100%;
   height: 100%;
-  animation: 6s horizontal-movement 3s linear infinite;
-}
-
-.c240 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 11s horizontal-movement 2s linear infinite;
-}
-
-.c169 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 8s horizontal-movement 5s linear infinite;
-}
-
-.c195 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 13s horizontal-movement 3s linear infinite;
-}
-
-.c281 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 16s horizontal-movement 3s linear infinite;
-}
-
-.c288 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 15s horizontal-movement 2s linear infinite;
-}
-
-.c157 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 9s horizontal-movement 4s linear infinite;
-}
-
-.c136 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 17s horizontal-movement 3s linear infinite;
-}
-
-.c189 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 7s horizontal-movement 5s linear infinite;
-}
-
-.c114 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 9s horizontal-movement 5s linear infinite;
-}
-
-.c275 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 16s horizontal-movement 4s linear infinite;
-}
-
-.c139 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 12s horizontal-movement 2s linear infinite;
-}
-
-.c402 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 19s horizontal-movement 3s linear infinite;
-}
-
-.c133 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 12s horizontal-movement 1s linear infinite;
-}
-
-.c103 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 14s horizontal-movement 1s linear infinite;
-}
-
-.c258 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 8s horizontal-movement 2s linear infinite;
-}
-
-.c130 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 6s horizontal-movement 1s linear infinite;
-}
-
-.c245 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 10s horizontal-movement 2s linear infinite;
-}
-
-.c200 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 7s horizontal-movement 2s linear infinite;
-}
-
-.c339 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 11s horizontal-movement 5s linear infinite;
-}
-
-.c346 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 18s horizontal-movement 5s linear infinite;
-}
-
-.c127 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 17s horizontal-movement 5s linear infinite;
-}
-
-.c397 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 9s horizontal-movement 3s linear infinite;
-}
-
-.c192 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 16s horizontal-movement 2s linear infinite;
-}
-
-.c278 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 20s horizontal-movement 4s linear infinite;
-}
-
-.c295 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 11s horizontal-movement 1s linear infinite;
-}
-
-.c315 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 19s horizontal-movement 1s linear infinite;
+  animation: 9.433838159097727s horizontal-movement 5.729506527924766s linear infinite;
 }
 
 .c91 {
-  --itemSize: 50px;
+  --itemSize: 20%;
   position: absolute;
   opacity: 0;
   width: 100%;
   height: 100%;
-  animation: 13s horizontal-movement 1s linear infinite;
-}
-
-.c124 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 16s horizontal-movement 5s linear infinite;
-}
-
-.c410 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 18s horizontal-movement 1s linear infinite;
-}
-
-.c212 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 17s horizontal-movement 1s linear infinite;
-}
-
-.c226 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 18s horizontal-movement 3s linear infinite;
-}
-
-.c381 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 18s horizontal-movement 4s linear infinite;
-}
-
-.c351 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 7s horizontal-movement 1s linear infinite;
-}
-
-.c186 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 7s horizontal-movement 4s linear infinite;
-}
-
-.c164 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 6s horizontal-movement 2s linear infinite;
-}
-
-.c111 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 7s horizontal-movement 3s linear infinite;
-}
-
-.c100 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 14s horizontal-movement 2s linear infinite;
-}
-
-.c121 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 12s horizontal-movement 5s linear infinite;
-}
-
-.c221 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 15s horizontal-movement 5s linear infinite;
-}
-
-.c384 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 14s horizontal-movement 4s linear infinite;
-}
-
-.c175 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 10s horizontal-movement 3s linear infinite;
-}
-
-.c178 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 20s horizontal-movement 1s linear infinite;
-}
-
-.c253 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 11s horizontal-movement 4s linear infinite;
-}
-
-.c154 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 16s horizontal-movement 1s linear infinite;
-}
-
-.c85 {
-  --itemSize: 90px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 16s horizontal-movement 5s linear infinite;
+  animation: 12.171178389214962s horizontal-movement 2.557262314041742s linear infinite;
 }
 
 .c94 {
-  --itemSize: 50px;
+  --itemSize: 20%;
   position: absolute;
   opacity: 0;
   width: 100%;
   height: 100%;
-  animation: 10s horizontal-movement 1s linear infinite;
+  animation: 19.862238982803138s horizontal-movement 2.453826233864693s linear infinite;
+}
+
+.c97 {
+  --itemSize: 20%;
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  animation: 19.086195302377476s horizontal-movement 3.6754788246774375s linear infinite;
+}
+
+.c100 {
+  --itemSize: 20%;
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  animation: 12.867334656694439s horizontal-movement 1.41836607095937s linear infinite;
+}
+
+.c103 {
+  --itemSize: 20%;
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  animation: 17.05506255384065s horizontal-movement 2.122748327837681s linear infinite;
+}
+
+.c106 {
+  --itemSize: 20%;
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  animation: 14.864164329362865s horizontal-movement 1.1552118439434165s linear infinite;
+}
+
+.c109 {
+  --itemSize: 20%;
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  animation: 8.22791729684474s horizontal-movement 2.1123228571704544s linear infinite;
+}
+
+.c112 {
+  --itemSize: 20%;
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  animation: 6.852875118023229s horizontal-movement 1.8514698893318877s linear infinite;
+}
+
+.c115 {
+  --itemSize: 20%;
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  animation: 12.263523865552148s horizontal-movement 3.897167493837152s linear infinite;
+}
+
+.c118 {
+  --itemSize: 20%;
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  animation: 17.16997235647387s horizontal-movement 3.917696261829233s linear infinite;
+}
+
+.c121 {
+  --itemSize: 20%;
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  animation: 10.492095088075562s horizontal-movement 2.3413861143826633s linear infinite;
+}
+
+.c124 {
+  --itemSize: 20%;
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  animation: 17.415416075837825s horizontal-movement 2.470861283499053s linear infinite;
+}
+
+.c127 {
+  --itemSize: 20%;
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  animation: 9.714271177719167s horizontal-movement 5.352557508310857s linear infinite;
+}
+
+.c130 {
+  --itemSize: 20%;
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  animation: 7.6432173501881575s horizontal-movement 2.3574898001531714s linear infinite;
+}
+
+.c133 {
+  --itemSize: 20%;
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  animation: 11.95720964170214s horizontal-movement 5.43674581898386s linear infinite;
+}
+
+.c136 {
+  --itemSize: 20%;
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  animation: 18.75003352314075s horizontal-movement 5.98816051381034s linear infinite;
+}
+
+.c139 {
+  --itemSize: 20%;
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  animation: 17.20348829116948s horizontal-movement 5.370189376420939s linear infinite;
 }
 
 .c142 {
-  --itemSize: 50px;
+  --itemSize: 20%;
   position: absolute;
   opacity: 0;
   width: 100%;
   height: 100%;
-  animation: 19s horizontal-movement 5s linear infinite;
+  animation: 9.222666072986431s horizontal-movement 3.7468208360855155s linear infinite;
 }
 
-.c172 {
-  --itemSize: 50px;
+.c145 {
+  --itemSize: 20%;
   position: absolute;
   opacity: 0;
   width: 100%;
   height: 100%;
-  animation: 10s horizontal-movement 4s linear infinite;
+  animation: 16.289431140135967s horizontal-movement 2.5513417013930297s linear infinite;
 }
 
-.c203 {
-  --itemSize: 50px;
+.c148 {
+  --itemSize: 20%;
   position: absolute;
   opacity: 0;
   width: 100%;
   height: 100%;
-  animation: 20s horizontal-movement 2s linear infinite;
+  animation: 20.845260999375725s horizontal-movement 4.383407571305889s linear infinite;
 }
 
-.c215 {
-  --itemSize: 50px;
+.c151 {
+  --itemSize: 20%;
   position: absolute;
   opacity: 0;
   width: 100%;
   height: 100%;
-  animation: 20s horizontal-movement 5s linear infinite;
-}
-
-.c233 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 9s horizontal-movement 1s linear infinite;
-}
-
-.c250 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 8s horizontal-movement 3s linear infinite;
-}
-
-.c302 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 17s horizontal-movement 4s linear infinite;
-}
-
-.c362 {
-  --itemSize: 50px;
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  animation: 14s horizontal-movement 5s linear infinite;
+  animation: 11.156745828694362s horizontal-movement 1.977345382178557s linear infinite;
 }
 
 .c86 {
@@ -953,9 +584,9 @@ exports[`HomePage should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -34%;
-  --translateY-end: 32%;
-  animation: 7s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -17%;
+  --translateY-end: 12%;
+  animation: 10.667889333944972s vertical-movement ease-in-out alternate infinite;
 }
 
 .c89 {
@@ -964,9 +595,9 @@ exports[`HomePage should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -4%;
-  --translateY-end: 30%;
-  animation: 8s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -9%;
+  --translateY-end: 9%;
+  animation: 3.113511628530693s vertical-movement ease-in-out alternate infinite;
 }
 
 .c92 {
@@ -975,9 +606,9 @@ exports[`HomePage should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -50%;
-  --translateY-end: 10%;
-  animation: 6s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -21%;
+  --translateY-end: 21%;
+  animation: 5.079646629015135s vertical-movement ease-in-out alternate infinite;
 }
 
 .c95 {
@@ -986,9 +617,9 @@ exports[`HomePage should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -12%;
-  --translateY-end: 27%;
-  animation: 6s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -27%;
+  --translateY-end: 2%;
+  animation: 8.047602049184066s vertical-movement ease-in-out alternate infinite;
 }
 
 .c98 {
@@ -997,9 +628,9 @@ exports[`HomePage should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -32%;
-  --translateY-end: 32%;
-  animation: 6s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -5%;
+  --translateY-end: 29%;
+  animation: 2.839064018573417s vertical-movement ease-in-out alternate infinite;
 }
 
 .c101 {
@@ -1008,9 +639,9 @@ exports[`HomePage should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -47%;
-  --translateY-end: 25%;
-  animation: 8s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -14%;
+  --translateY-end: 39%;
+  animation: 10.666854067497264s vertical-movement ease-in-out alternate infinite;
 }
 
 .c104 {
@@ -1019,64 +650,53 @@ exports[`HomePage should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -10%;
-  --translateY-end: 4%;
-  animation: 8s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -34%;
+  --translateY-end: 19%;
+  animation: 9.194175736708132s vertical-movement ease-in-out alternate infinite;
 }
 
-.c106 {
+.c107 {
   position: absolute;
   width: 100%;
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -12%;
-  --translateY-end: 47%;
-  animation: 7s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -30%;
+  --translateY-end: 40%;
+  animation: 5.541227904293283s vertical-movement ease-in-out alternate infinite;
 }
 
-.c109 {
+.c110 {
   position: absolute;
   width: 100%;
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -32%;
-  --translateY-end: 47%;
-  animation: 7s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -23%;
+  --translateY-end: 30%;
+  animation: 4.530818302136237s vertical-movement ease-in-out alternate infinite;
 }
 
-.c112 {
+.c113 {
   position: absolute;
   width: 100%;
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -31%;
-  --translateY-end: 27%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: 0%;
+  --translateY-end: 26%;
+  animation: 5.336886805046982s vertical-movement ease-in-out alternate infinite;
 }
 
-.c115 {
+.c116 {
   position: absolute;
   width: 100%;
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -44%;
-  --translateY-end: 2%;
-  animation: 7s vertical-movement ease-in-out alternate infinite;
-}
-
-.c117 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -15%;
-  --translateY-end: 20%;
-  animation: 7s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -25%;
+  --translateY-end: 30%;
+  animation: 8.331348016996087s vertical-movement ease-in-out alternate infinite;
 }
 
 .c119 {
@@ -1085,9 +705,9 @@ exports[`HomePage should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -47%;
-  --translateY-end: 1%;
-  animation: 10s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -18%;
+  --translateY-end: 12%;
+  animation: 5.143276748357786s vertical-movement ease-in-out alternate infinite;
 }
 
 .c122 {
@@ -1096,9 +716,9 @@ exports[`HomePage should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -40%;
-  --translateY-end: 10%;
-  animation: 7s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -30%;
+  --translateY-end: 8%;
+  animation: 6.976388341371837s vertical-movement ease-in-out alternate infinite;
 }
 
 .c125 {
@@ -1107,9 +727,9 @@ exports[`HomePage should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -46%;
-  --translateY-end: 40%;
-  animation: 6s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -29%;
+  --translateY-end: 39%;
+  animation: 7.09736682965288s vertical-movement ease-in-out alternate infinite;
 }
 
 .c128 {
@@ -1118,9 +738,9 @@ exports[`HomePage should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -28%;
-  --translateY-end: 20%;
-  animation: 6s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -6%;
+  --translateY-end: 39%;
+  animation: 5.31022189935765s vertical-movement ease-in-out alternate infinite;
 }
 
 .c131 {
@@ -1129,9 +749,9 @@ exports[`HomePage should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -41%;
-  --translateY-end: 0%;
-  animation: 10s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -1%;
+  --translateY-end: 7%;
+  animation: 9.104904743471351s vertical-movement ease-in-out alternate infinite;
 }
 
 .c134 {
@@ -1140,9 +760,9 @@ exports[`HomePage should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -47%;
-  --translateY-end: 28%;
-  animation: 10s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -23%;
+  --translateY-end: 4%;
+  animation: 7.278903070610936s vertical-movement ease-in-out alternate infinite;
 }
 
 .c137 {
@@ -1151,9 +771,9 @@ exports[`HomePage should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -37%;
-  --translateY-end: 47%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -13%;
+  --translateY-end: 10%;
+  animation: 7.798768861069058s vertical-movement ease-in-out alternate infinite;
 }
 
 .c140 {
@@ -1162,9 +782,9 @@ exports[`HomePage should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -44%;
-  --translateY-end: 34%;
-  animation: 8s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -19%;
+  --translateY-end: 17%;
+  animation: 6.774587735663957s vertical-movement ease-in-out alternate infinite;
 }
 
 .c143 {
@@ -1173,9 +793,9 @@ exports[`HomePage should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -49%;
-  --translateY-end: 7%;
-  animation: 8s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -5%;
+  --translateY-end: 4%;
+  animation: 7.9722825890974525s vertical-movement ease-in-out alternate infinite;
 }
 
 .c146 {
@@ -1184,9 +804,9 @@ exports[`HomePage should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -43%;
-  --translateY-end: 17%;
-  animation: 7s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -2%;
+  --translateY-end: 26%;
+  animation: 8.507726045839462s vertical-movement ease-in-out alternate infinite;
 }
 
 .c149 {
@@ -1195,9 +815,9 @@ exports[`HomePage should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -42%;
-  --translateY-end: 42%;
-  animation: 10s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -11%;
+  --translateY-end: 39%;
+  animation: 4.450890935087399s vertical-movement ease-in-out alternate infinite;
 }
 
 .c152 {
@@ -1206,1255 +826,25 @@ exports[`HomePage should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -21%;
-  --translateY-end: 19%;
-  animation: 7s vertical-movement ease-in-out alternate infinite;
-}
-
-.c155 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -18%;
-  --translateY-end: 36%;
-  animation: 8s vertical-movement ease-in-out alternate infinite;
-}
-
-.c158 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -50%;
-  --translateY-end: 33%;
-  animation: 7s vertical-movement ease-in-out alternate infinite;
-}
-
-.c160 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -20%;
-  --translateY-end: 11%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
-}
-
-.c162 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -12%;
-  --translateY-end: 48%;
-  animation: 6s vertical-movement ease-in-out alternate infinite;
-}
-
-.c165 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -24%;
-  --translateY-end: 27%;
-  animation: 10s vertical-movement ease-in-out alternate infinite;
-}
-
-.c167 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -8%;
-  --translateY-end: 48%;
-  animation: 8s vertical-movement ease-in-out alternate infinite;
-}
-
-.c170 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -50%;
-  --translateY-end: 15%;
-  animation: 6s vertical-movement ease-in-out alternate infinite;
-}
-
-.c173 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -27%;
-  --translateY-end: 35%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
-}
-
-.c176 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -47%;
-  --translateY-end: 48%;
-  animation: 10s vertical-movement ease-in-out alternate infinite;
-}
-
-.c179 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -7%;
-  --translateY-end: 0%;
-  animation: 7s vertical-movement ease-in-out alternate infinite;
-}
-
-.c181 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -13%;
-  --translateY-end: 21%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
-}
-
-.c184 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -15%;
-  --translateY-end: 7%;
-  animation: 8s vertical-movement ease-in-out alternate infinite;
-}
-
-.c187 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -12%;
-  --translateY-end: 8%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
-}
-
-.c190 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -34%;
-  --translateY-end: 39%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
-}
-
-.c193 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -23%;
-  --translateY-end: 38%;
-  animation: 8s vertical-movement ease-in-out alternate infinite;
-}
-
-.c196 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -19%;
-  --translateY-end: 22%;
-  animation: 7s vertical-movement ease-in-out alternate infinite;
-}
-
-.c198 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -20%;
-  --translateY-end: 11%;
-  animation: 10s vertical-movement ease-in-out alternate infinite;
-}
-
-.c201 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -1%;
-  --translateY-end: 34%;
-  animation: 8s vertical-movement ease-in-out alternate infinite;
-}
-
-.c204 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -20%;
-  --translateY-end: 29%;
-  animation: 10s vertical-movement ease-in-out alternate infinite;
-}
-
-.c206 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -32%;
-  --translateY-end: 33%;
-  animation: 10s vertical-movement ease-in-out alternate infinite;
-}
-
-.c208 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -5%;
-  --translateY-end: 26%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
-}
-
-.c210 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -10%;
-  --translateY-end: 33%;
-  animation: 10s vertical-movement ease-in-out alternate infinite;
-}
-
-.c213 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -3%;
-  --translateY-end: 15%;
-  animation: 7s vertical-movement ease-in-out alternate infinite;
-}
-
-.c216 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -24%;
-  --translateY-end: 49%;
-  animation: 7s vertical-movement ease-in-out alternate infinite;
-}
-
-.c219 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -33%;
-  --translateY-end: 23%;
-  animation: 6s vertical-movement ease-in-out alternate infinite;
-}
-
-.c222 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -34%;
-  --translateY-end: 0%;
-  animation: 6s vertical-movement ease-in-out alternate infinite;
-}
-
-.c224 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -11%;
-  --translateY-end: 14%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
-}
-
-.c227 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -27%;
-  --translateY-end: 15%;
-  animation: 8s vertical-movement ease-in-out alternate infinite;
-}
-
-.c229 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -44%;
-  --translateY-end: 21%;
-  animation: 6s vertical-movement ease-in-out alternate infinite;
-}
-
-.c231 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -30%;
-  --translateY-end: 26%;
-  animation: 6s vertical-movement ease-in-out alternate infinite;
-}
-
-.c234 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -1%;
-  --translateY-end: 1%;
-  animation: 8s vertical-movement ease-in-out alternate infinite;
-}
-
-.c236 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -1%;
-  --translateY-end: 30%;
-  animation: 6s vertical-movement ease-in-out alternate infinite;
-}
-
-.c238 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -45%;
-  --translateY-end: 32%;
-  animation: 8s vertical-movement ease-in-out alternate infinite;
-}
-
-.c241 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -27%;
-  --translateY-end: 20%;
-  animation: 7s vertical-movement ease-in-out alternate infinite;
-}
-
-.c243 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -35%;
-  --translateY-end: 23%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
-}
-
-.c246 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -22%;
-  --translateY-end: 30%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
-}
-
-.c248 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -48%;
-  --translateY-end: 4%;
-  animation: 7s vertical-movement ease-in-out alternate infinite;
-}
-
-.c251 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -45%;
-  --translateY-end: 4%;
-  animation: 6s vertical-movement ease-in-out alternate infinite;
-}
-
-.c254 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -47%;
-  --translateY-end: 29%;
-  animation: 6s vertical-movement ease-in-out alternate infinite;
-}
-
-.c256 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -36%;
-  --translateY-end: 6%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
-}
-
-.c259 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -37%;
-  --translateY-end: 11%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
-}
-
-.c261 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -38%;
-  --translateY-end: 9%;
-  animation: 8s vertical-movement ease-in-out alternate infinite;
-}
-
-.c263 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -44%;
-  --translateY-end: 29%;
-  animation: 7s vertical-movement ease-in-out alternate infinite;
-}
-
-.c265 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -14%;
-  --translateY-end: 11%;
-  animation: 8s vertical-movement ease-in-out alternate infinite;
-}
-
-.c267 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -37%;
-  --translateY-end: 39%;
-  animation: 6s vertical-movement ease-in-out alternate infinite;
-}
-
-.c269 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -20%;
-  --translateY-end: 46%;
-  animation: 10s vertical-movement ease-in-out alternate infinite;
-}
-
-.c271 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -28%;
-  --translateY-end: 11%;
-  animation: 8s vertical-movement ease-in-out alternate infinite;
-}
-
-.c273 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -40%;
-  --translateY-end: 33%;
-  animation: 10s vertical-movement ease-in-out alternate infinite;
-}
-
-.c276 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -22%;
-  --translateY-end: 17%;
-  animation: 10s vertical-movement ease-in-out alternate infinite;
-}
-
-.c279 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -47%;
-  --translateY-end: 18%;
-  animation: 10s vertical-movement ease-in-out alternate infinite;
-}
-
-.c282 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -5%;
-  --translateY-end: 12%;
-  animation: 8s vertical-movement ease-in-out alternate infinite;
-}
-
-.c284 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -5%;
-  --translateY-end: 16%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
-}
-
-.c286 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -15%;
-  --translateY-end: 2%;
-  animation: 6s vertical-movement ease-in-out alternate infinite;
-}
-
-.c289 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -37%;
-  --translateY-end: 32%;
-  animation: 7s vertical-movement ease-in-out alternate infinite;
-}
-
-.c291 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -24%;
-  --translateY-end: 20%;
-  animation: 6s vertical-movement ease-in-out alternate infinite;
-}
-
-.c293 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -11%;
-  --translateY-end: 6%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
-}
-
-.c296 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -44%;
-  --translateY-end: 13%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
-}
-
-.c298 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -45%;
-  --translateY-end: 46%;
-  animation: 7s vertical-movement ease-in-out alternate infinite;
-}
-
-.c300 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -24%;
-  --translateY-end: 3%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
-}
-
-.c303 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -47%;
-  --translateY-end: 37%;
-  animation: 8s vertical-movement ease-in-out alternate infinite;
-}
-
-.c305 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -20%;
-  --translateY-end: 14%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
-}
-
-.c307 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -14%;
-  --translateY-end: 9%;
-  animation: 10s vertical-movement ease-in-out alternate infinite;
-}
-
-.c309 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -31%;
-  --translateY-end: 0%;
-  animation: 6s vertical-movement ease-in-out alternate infinite;
-}
-
-.c311 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -27%;
-  --translateY-end: 48%;
-  animation: 8s vertical-movement ease-in-out alternate infinite;
-}
-
-.c313 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -27%;
-  --translateY-end: 3%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
-}
-
-.c316 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -42%;
-  --translateY-end: 23%;
-  animation: 6s vertical-movement ease-in-out alternate infinite;
-}
-
-.c319 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -16%;
-  --translateY-end: 41%;
-  animation: 8s vertical-movement ease-in-out alternate infinite;
-}
-
-.c321 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -14%;
-  --translateY-end: 42%;
-  animation: 6s vertical-movement ease-in-out alternate infinite;
-}
-
-.c323 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -6%;
-  --translateY-end: 37%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
-}
-
-.c325 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -46%;
-  --translateY-end: 11%;
-  animation: 6s vertical-movement ease-in-out alternate infinite;
-}
-
-.c327 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -32%;
-  --translateY-end: 39%;
-  animation: 6s vertical-movement ease-in-out alternate infinite;
-}
-
-.c329 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -22%;
-  --translateY-end: 50%;
-  animation: 7s vertical-movement ease-in-out alternate infinite;
-}
-
-.c331 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -36%;
-  --translateY-end: 38%;
-  animation: 6s vertical-movement ease-in-out alternate infinite;
-}
-
-.c333 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -9%;
-  --translateY-end: 11%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
-}
-
-.c335 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -32%;
-  --translateY-end: 10%;
-  animation: 10s vertical-movement ease-in-out alternate infinite;
-}
-
-.c337 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -44%;
-  --translateY-end: 17%;
-  animation: 6s vertical-movement ease-in-out alternate infinite;
-}
-
-.c340 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -44%;
-  --translateY-end: 28%;
-  animation: 10s vertical-movement ease-in-out alternate infinite;
-}
-
-.c342 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -50%;
-  --translateY-end: 45%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
-}
-
-.c344 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -39%;
-  --translateY-end: 38%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
-}
-
-.c347 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -11%;
-  --translateY-end: 11%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
-}
-
-.c349 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -2%;
-  --translateY-end: 3%;
-  animation: 7s vertical-movement ease-in-out alternate infinite;
-}
-
-.c352 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -26%;
-  --translateY-end: 37%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
-}
-
-.c354 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -33%;
-  --translateY-end: 49%;
-  animation: 8s vertical-movement ease-in-out alternate infinite;
-}
-
-.c356 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: 0%;
-  --translateY-end: 11%;
-  animation: 6s vertical-movement ease-in-out alternate infinite;
-}
-
-.c358 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -20%;
-  --translateY-end: 19%;
-  animation: 10s vertical-movement ease-in-out alternate infinite;
-}
-
-.c360 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -16%;
-  --translateY-end: 19%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
-}
-
-.c363 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -21%;
-  --translateY-end: 39%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
-}
-
-.c365 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -39%;
-  --translateY-end: 47%;
-  animation: 7s vertical-movement ease-in-out alternate infinite;
-}
-
-.c367 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -48%;
-  --translateY-end: 18%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
-}
-
-.c369 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -35%;
-  --translateY-end: 37%;
-  animation: 8s vertical-movement ease-in-out alternate infinite;
-}
-
-.c371 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -15%;
-  --translateY-end: 40%;
-  animation: 10s vertical-movement ease-in-out alternate infinite;
-}
-
-.c373 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -1%;
-  --translateY-end: 30%;
-  animation: 7s vertical-movement ease-in-out alternate infinite;
-}
-
-.c375 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -44%;
-  --translateY-end: 3%;
-  animation: 10s vertical-movement ease-in-out alternate infinite;
-}
-
-.c377 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -36%;
-  --translateY-end: 10%;
-  animation: 6s vertical-movement ease-in-out alternate infinite;
-}
-
-.c379 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -19%;
-  --translateY-end: 33%;
-  animation: 6s vertical-movement ease-in-out alternate infinite;
-}
-
-.c382 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -15%;
-  --translateY-end: 1%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
-}
-
-.c385 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -49%;
-  --translateY-end: 48%;
-  animation: 6s vertical-movement ease-in-out alternate infinite;
-}
-
-.c387 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -29%;
-  --translateY-end: 3%;
-  animation: 8s vertical-movement ease-in-out alternate infinite;
-}
-
-.c389 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
   --translateY-begin: -4%;
-  --translateY-end: 38%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
-}
-
-.c391 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -20%;
-  --translateY-end: 43%;
-  animation: 10s vertical-movement ease-in-out alternate infinite;
-}
-
-.c393 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -5%;
-  --translateY-end: 23%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
-}
-
-.c395 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -44%;
-  --translateY-end: 23%;
-  animation: 7s vertical-movement ease-in-out alternate infinite;
-}
-
-.c398 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -33%;
-  --translateY-end: 48%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
-}
-
-.c400 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -16%;
-  --translateY-end: 46%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
-}
-
-.c403 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -13%;
-  --translateY-end: 43%;
-  animation: 8s vertical-movement ease-in-out alternate infinite;
-}
-
-.c406 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -9%;
-  --translateY-end: 4%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
-}
-
-.c408 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -31%;
-  --translateY-end: 1%;
-  animation: 7s vertical-movement ease-in-out alternate infinite;
-}
-
-.c411 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -38%;
-  --translateY-end: 27%;
-  animation: 10s vertical-movement ease-in-out alternate infinite;
-}
-
-.c413 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -30%;
-  --translateY-end: 6%;
-  animation: 10s vertical-movement ease-in-out alternate infinite;
-}
-
-.c415 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -28%;
-  --translateY-end: 16%;
-  animation: 10s vertical-movement ease-in-out alternate infinite;
-}
-
-.c417 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -38%;
-  --translateY-end: 31%;
-  animation: 7s vertical-movement ease-in-out alternate infinite;
-}
-
-.c419 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -2%;
-  --translateY-end: 39%;
-  animation: 9s vertical-movement ease-in-out alternate infinite;
+  --translateY-end: 14%;
+  animation: 8.198467029658513s vertical-movement ease-in-out alternate infinite;
 }
 
 .c87 {
   position: absolute;
-  z-index: 3;
+  z-index: 2;
   transform-origin: center;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
   --rotation: calc(               1 *                 360deg             );
-  animation: 4s rotate-movement linear infinite;
+  animation: 2.7199740902766525s rotate-movement linear infinite;
 }
 
 .c87::after {
   content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   overflow: hidden;
   display: block;
@@ -2464,2162 +854,398 @@ exports[`HomePage should render successfully 1`] = `
 
 .c90 {
   position: absolute;
-  z-index: 3;
+  z-index: 2;
   transform-origin: center;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
 }
 
 .c90::after {
   content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   overflow: hidden;
   display: block;
-  background: #4c1468;
+  background: #b9ad04;
 }
 
 .c93 {
   position: absolute;
   z-index: 2;
   transform-origin: center;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
 }
 
 .c93::after {
   content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   overflow: hidden;
   display: block;
-  background: #50adff;
+  background: #66be97;
 }
 
 .c96 {
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   transform-origin: center;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
 }
 
 .c96::after {
   content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   overflow: hidden;
   display: block;
-  background: #dc9452;
+  background: #905272;
 }
 
 .c99 {
   position: absolute;
-  z-index: 4;
+  z-index: 2;
   transform-origin: center;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
 }
 
 .c99::after {
   content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   overflow: hidden;
   display: block;
-  background: #e0e106;
+  background: #a2272f;
 }
 
 .c102 {
   position: absolute;
   z-index: 4;
   transform-origin: center;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
 }
 
 .c102::after {
   content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   overflow: hidden;
   display: block;
-  background: #da3d64;
+  background: #4e7edf;
 }
 
 .c105 {
   position: absolute;
   z-index: 3;
   transform-origin: center;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
 }
 
 .c105::after {
   content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   overflow: hidden;
   display: block;
-  background: #cd8d0;
+  background: #31f053;
 }
 
-.c107 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-}
-
-.c107::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #e1825d;
-}
-
-.c110 {
+.c108 {
   position: absolute;
   z-index: 4;
   transform-origin: center;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
 }
 
-.c110::after {
+.c108::after {
   content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   overflow: hidden;
   display: block;
-  background: #1e5fcc;
+  background: #f50536;
 }
 
-.c113 {
+.c111 {
   position: absolute;
   z-index: 3;
   transform-origin: center;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
 }
 
-.c113::after {
+.c111::after {
   content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   overflow: hidden;
   display: block;
-  background: #f0783f;
+  background: #3d20f1;
 }
 
-.c116 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-}
-
-.c116::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #8f8fe8;
-}
-
-.c118 {
+.c114 {
   position: absolute;
   z-index: 4;
   transform-origin: center;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
 }
 
-.c118::after {
+.c114::after {
   content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   overflow: hidden;
   display: block;
-  background: #413390;
+  background: #84c710;
+}
+
+.c117 {
+  position: absolute;
+  z-index: 3;
+  transform-origin: center;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+}
+
+.c117::after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  display: block;
+  background: #1f4689;
 }
 
 .c120 {
   position: absolute;
-  z-index: 3;
+  z-index: 2;
   transform-origin: center;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
 }
 
 .c120::after {
   content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   overflow: hidden;
   display: block;
-  background: #a6eebc;
+  background: #12061b;
 }
 
 .c123 {
   position: absolute;
-  z-index: 3;
+  z-index: 4;
   transform-origin: center;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
 }
 
 .c123::after {
   content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   overflow: hidden;
   display: block;
-  background: #8910f4;
+  background: #9af326;
 }
 
 .c126 {
   position: absolute;
   z-index: 2;
   transform-origin: center;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
 }
 
 .c126::after {
   content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   overflow: hidden;
   display: block;
-  background: #7d9436;
+  background: #4447bb;
 }
 
 .c129 {
   position: absolute;
-  z-index: 4;
+  z-index: 2;
   transform-origin: center;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
 }
 
 .c129::after {
   content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   overflow: hidden;
   display: block;
-  background: #26aec2;
+  background: #65f8a2;
 }
 
 .c132 {
   position: absolute;
-  z-index: 2;
+  z-index: 5;
   transform-origin: center;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
 }
 
 .c132::after {
   content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   overflow: hidden;
   display: block;
-  background: #2161bf;
+  background: #ed55d0;
 }
 
 .c135 {
   position: absolute;
   z-index: 3;
   transform-origin: center;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
 }
 
 .c135::after {
   content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   overflow: hidden;
   display: block;
-  background: #15cf05;
+  background: #e8cc3b;
 }
 
 .c138 {
   position: absolute;
-  z-index: 4;
+  z-index: 2;
   transform-origin: center;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
 }
 
 .c138::after {
   content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   overflow: hidden;
   display: block;
-  background: #919636;
+  background: #a8d44a;
 }
 
 .c141 {
   position: absolute;
-  z-index: 4;
+  z-index: 2;
   transform-origin: center;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
 }
 
 .c141::after {
   content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   overflow: hidden;
   display: block;
-  background: #54728d;
+  background: #4d811f;
 }
 
 .c144 {
   position: absolute;
   z-index: 2;
   transform-origin: center;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
 }
 
 .c144::after {
   content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   overflow: hidden;
   display: block;
-  background: #2067f7;
+  background: #b42683;
 }
 
 .c147 {
   position: absolute;
-  z-index: 3;
+  z-index: 4;
   transform-origin: center;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
 }
 
 .c147::after {
   content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   overflow: hidden;
   display: block;
-  background: #140420;
+  background: #b3d907;
 }
 
 .c150 {
   position: absolute;
-  z-index: 4;
+  z-index: 2;
   transform-origin: center;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
 }
 
 .c150::after {
   content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   overflow: hidden;
   display: block;
-  background: #a2be80;
+  background: #fd4f20;
 }
 
 .c153 {
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   transform-origin: center;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
 }
 
 .c153::after {
   content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   overflow: hidden;
   display: block;
-  background: #cba8ec;
-}
-
-.c156 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-}
-
-.c156::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #fd6970;
-}
-
-.c159 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-}
-
-.c159::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #6eb820;
-}
-
-.c161 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-}
-
-.c161::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #37f7ac;
-}
-
-.c163 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-}
-
-.c163::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #961743;
-}
-
-.c166 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-}
-
-.c166::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #83f7f1;
-}
-
-.c168 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-}
-
-.c168::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #d2a15c;
-}
-
-.c171 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-}
-
-.c171::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #78899d;
-}
-
-.c174 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-}
-
-.c174::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #84234d;
-}
-
-.c177 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-}
-
-.c177::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #db2455;
-}
-
-.c180 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-}
-
-.c180::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #f7f381;
-}
-
-.c182 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-}
-
-.c182::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #ed5b54;
-}
-
-.c185 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-}
-
-.c185::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #75c6aa;
-}
-
-.c188 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-}
-
-.c188::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #d816b0;
-}
-
-.c191 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-}
-
-.c191::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #b76f1b;
-}
-
-.c194 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-}
-
-.c194::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #39b6dd;
-}
-
-.c197 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-}
-
-.c197::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #4c723a;
-}
-
-.c199 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-}
-
-.c199::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #545bc9;
-}
-
-.c202 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-}
-
-.c202::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #a7a465;
-}
-
-.c205 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-}
-
-.c205::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #44fbff;
-}
-
-.c207 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-}
-
-.c207::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #969aa2;
-}
-
-.c209 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-}
-
-.c209::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #520e7e;
-}
-
-.c211 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-}
-
-.c211::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #20be84;
-}
-
-.c214 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-}
-
-.c214::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #181c89;
-}
-
-.c217 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-}
-
-.c217::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #f88d65;
-}
-
-.c220 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-}
-
-.c220::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #15266a;
-}
-
-.c223 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-}
-
-.c223::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #333341;
-}
-
-.c225 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-}
-
-.c225::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #4c5713;
-}
-
-.c228 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-}
-
-.c228::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #2ddbe2;
-}
-
-.c230 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-}
-
-.c230::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #837f24;
-}
-
-.c232 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-}
-
-.c232::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #9029ed;
-}
-
-.c235 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-}
-
-.c235::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #a4b9a1;
-}
-
-.c237 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-}
-
-.c237::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #55b5d1;
-}
-
-.c239 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-}
-
-.c239::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #292c9f;
-}
-
-.c242 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-}
-
-.c242::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #bf0589;
-}
-
-.c244 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-}
-
-.c244::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #b386d6;
-}
-
-.c247 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-}
-
-.c247::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #daf47d;
-}
-
-.c249 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-}
-
-.c249::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #1ff8be;
-}
-
-.c252 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-}
-
-.c252::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #cf116f;
-}
-
-.c255 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-}
-
-.c255::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #fd2176;
-}
-
-.c257 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-}
-
-.c257::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #623fa6;
-}
-
-.c260 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-}
-
-.c260::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #710191;
-}
-
-.c262 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-}
-
-.c262::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #527cb0;
-}
-
-.c264 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-}
-
-.c264::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #28c757;
-}
-
-.c266 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-}
-
-.c266::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #e91866;
-}
-
-.c268 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-}
-
-.c268::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #6be96e;
-}
-
-.c270 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-}
-
-.c270::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #e138de;
-}
-
-.c272 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-}
-
-.c272::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #37c39b;
-}
-
-.c274 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-}
-
-.c274::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #9e1f3a;
-}
-
-.c277 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-}
-
-.c277::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #b2970d;
-}
-
-.c280 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-}
-
-.c280::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #229d53;
-}
-
-.c283 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-}
-
-.c283::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #29a434;
-}
-
-.c285 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-}
-
-.c285::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #f5eb;
-}
-
-.c287 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-}
-
-.c287::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #366b0b;
-}
-
-.c290 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-}
-
-.c290::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #412428;
-}
-
-.c292 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-}
-
-.c292::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #e1f6db;
-}
-
-.c294 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-}
-
-.c294::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #435866;
-}
-
-.c297 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-}
-
-.c297::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #b205c0;
-}
-
-.c299 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-}
-
-.c299::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #a35392;
-}
-
-.c301 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-}
-
-.c301::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #b365c9;
-}
-
-.c304 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-}
-
-.c304::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #c252cb;
-}
-
-.c306 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-}
-
-.c306::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #f6c2b4;
-}
-
-.c308 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-}
-
-.c308::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #c18a5e;
-}
-
-.c310 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-}
-
-.c310::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #fc519e;
-}
-
-.c312 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-}
-
-.c312::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #45e626;
-}
-
-.c314 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-}
-
-.c314::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #c4f932;
-}
-
-.c317 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-}
-
-.c317::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #9f70d6;
-}
-
-.c320 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-}
-
-.c320::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #345e6b;
-}
-
-.c322 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-}
-
-.c322::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #7df0de;
-}
-
-.c324 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-}
-
-.c324::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #76825c;
-}
-
-.c326 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-}
-
-.c326::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #4de405;
-}
-
-.c328 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-}
-
-.c328::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #1fdcd2;
-}
-
-.c330 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-}
-
-.c330::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #ed53a5;
-}
-
-.c332 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-}
-
-.c332::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #c6bf22;
-}
-
-.c334 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-}
-
-.c334::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #ecab78;
-}
-
-.c336 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-}
-
-.c336::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #f51664;
-}
-
-.c338 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-}
-
-.c338::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #f774ee;
-}
-
-.c341 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-}
-
-.c341::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #af8cb2;
-}
-
-.c343 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-}
-
-.c343::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #5b8b71;
-}
-
-.c345 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-}
-
-.c345::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #41b74e;
-}
-
-.c348 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-}
-
-.c348::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #c2dd65;
-}
-
-.c350 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-}
-
-.c350::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #8c2d8d;
-}
-
-.c353 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-}
-
-.c353::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #ea29c1;
-}
-
-.c355 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-}
-
-.c355::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #3fa12;
-}
-
-.c357 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-}
-
-.c357::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #de34a3;
-}
-
-.c359 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-}
-
-.c359::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #706f56;
-}
-
-.c361 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-}
-
-.c361::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #96251f;
-}
-
-.c364 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-}
-
-.c364::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #92ac1d;
-}
-
-.c366 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-}
-
-.c366::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #f6f1f7;
-}
-
-.c368 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-}
-
-.c368::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #b9ea21;
-}
-
-.c370 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-}
-
-.c370::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #18d675;
-}
-
-.c372 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-}
-
-.c372::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #1a62f8;
-}
-
-.c374 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-}
-
-.c374::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #a94356;
-}
-
-.c376 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-}
-
-.c376::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #9622ba;
-}
-
-.c378 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-}
-
-.c378::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #ed773d;
-}
-
-.c380 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-}
-
-.c380::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #c1eba9;
-}
-
-.c383 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-}
-
-.c383::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #f437e9;
-}
-
-.c386 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-}
-
-.c386::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #418a47;
-}
-
-.c388 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-}
-
-.c388::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #747a09;
-}
-
-.c390 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-}
-
-.c390::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #e97d69;
-}
-
-.c392 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-}
-
-.c392::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #79080f;
-}
-
-.c394 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-}
-
-.c394::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #20d417;
-}
-
-.c396 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-}
-
-.c396::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #90727b;
-}
-
-.c399 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-}
-
-.c399::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #9e53a4;
-}
-
-.c401 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-}
-
-.c401::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #5a1d53;
-}
-
-.c404 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-}
-
-.c404::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #e9ee02;
-}
-
-.c407 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-}
-
-.c407::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #7312d4;
-}
-
-.c409 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-}
-
-.c409::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #27b7b8;
-}
-
-.c412 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-}
-
-.c412::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #d9aabe;
-}
-
-.c414 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-}
-
-.c414::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #6cdd7;
-}
-
-.c416 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-}
-
-.c416::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #ef8dd9;
-}
-
-.c418 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-}
-
-.c418::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #e2e00b;
-}
-
-.c420 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
-}
-
-.c420::after {
-  content: '';
-  width: var(--itemSize);
-  height: var(--itemSize);
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #daa974;
+  background: #29c372;
 }
 
 .c35 {
@@ -5893,7 +2519,7 @@ exports[`HomePage should render successfully 1`] = `
   background-color: #000000;
 }
 
-.c421 {
+.c154 {
   flex-grow: 1;
   border: 1px solid #98DFD6;
   transform-origin: var(--transform-origin-last);
@@ -5902,19 +2528,19 @@ exports[`HomePage should render successfully 1`] = `
 }
 
 @media (min-width: 1024px) {
-  .c427 {
+  .c160 {
     justify-content: space-between;
     grid-template-columns: 1fr 100px;
   }
 }
 
 @media (min-width: 768px) {
-  .c431 {
+  .c164 {
     display: flex;
     position: relative;
   }
 
-  .c431::after {
+  .c164::after {
     content: '';
     position: absolute;
     width: 100%;
@@ -5927,14 +2553,14 @@ exports[`HomePage should render successfully 1`] = `
     transition: transform 0.25s ease-out;
   }
 
-  .c431:hover::after {
+  .c164:hover::after {
     transform: scaleX(1);
     transform-origin: bottom left;
   }
 }
 
 @media (min-width: 1024px) {
-  .c432 {
+  .c165 {
     justify-self: end;
     padding: 0;
   }
@@ -6056,7 +2682,7 @@ exports[`HomePage should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c422 {
+  .c155 {
     margin-bottom: 40px;
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
@@ -6073,7 +2699,7 @@ exports[`HomePage should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c423 .c7 {
+  .c156 .c7 {
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
     color: #FBFBFB;
@@ -6864,72 +3490,59 @@ exports[`HomePage should render successfully 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c100"
+                  class="c106"
                   role="presentation"
                 >
                   <div
-                    class="c106"
+                    class="c107"
                   >
                     <div
-                      class="c107"
+                      class="c108"
                       role="none"
                     />
                   </div>
                 </div>
                 <div
-                  class="c108"
+                  class="c109"
                   role="presentation"
                 >
                   <div
-                    class="c109"
+                    class="c110"
                   >
                     <div
-                      class="c110"
+                      class="c111"
                       role="none"
                     />
                   </div>
                 </div>
                 <div
-                  class="c111"
+                  class="c112"
                   role="presentation"
                 >
                   <div
-                    class="c112"
+                    class="c113"
                   >
                     <div
-                      class="c113"
+                      class="c114"
                       role="none"
                     />
                   </div>
                 </div>
                 <div
-                  class="c114"
+                  class="c115"
                   role="presentation"
                 >
                   <div
-                    class="c115"
+                    class="c116"
                   >
                     <div
-                      class="c116"
+                      class="c117"
                       role="none"
                     />
                   </div>
                 </div>
                 <div
-                  class="c94"
-                  role="presentation"
-                >
-                  <div
-                    class="c117"
-                  >
-                    <div
-                      class="c118"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c100"
+                  class="c118"
                   role="presentation"
                 >
                   <div
@@ -7084,1476 +3697,20 @@ exports[`HomePage should render successfully 1`] = `
                     />
                   </div>
                 </div>
-                <div
-                  class="c154"
-                  role="presentation"
-                >
-                  <div
-                    class="c155"
-                  >
-                    <div
-                      class="c156"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c157"
-                  role="presentation"
-                >
-                  <div
-                    class="c158"
-                  >
-                    <div
-                      class="c159"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c97"
-                  role="presentation"
-                >
-                  <div
-                    class="c160"
-                  >
-                    <div
-                      class="c161"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c88"
-                  role="presentation"
-                >
-                  <div
-                    class="c162"
-                  >
-                    <div
-                      class="c163"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c164"
-                  role="presentation"
-                >
-                  <div
-                    class="c165"
-                  >
-                    <div
-                      class="c166"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c142"
-                  role="presentation"
-                >
-                  <div
-                    class="c167"
-                  >
-                    <div
-                      class="c168"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c169"
-                  role="presentation"
-                >
-                  <div
-                    class="c170"
-                  >
-                    <div
-                      class="c171"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c172"
-                  role="presentation"
-                >
-                  <div
-                    class="c173"
-                  >
-                    <div
-                      class="c174"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c175"
-                  role="presentation"
-                >
-                  <div
-                    class="c176"
-                  >
-                    <div
-                      class="c177"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c178"
-                  role="presentation"
-                >
-                  <div
-                    class="c179"
-                  >
-                    <div
-                      class="c180"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c136"
-                  role="presentation"
-                >
-                  <div
-                    class="c181"
-                  >
-                    <div
-                      class="c182"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c183"
-                  role="presentation"
-                >
-                  <div
-                    class="c184"
-                  >
-                    <div
-                      class="c185"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c186"
-                  role="presentation"
-                >
-                  <div
-                    class="c187"
-                  >
-                    <div
-                      class="c188"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c189"
-                  role="presentation"
-                >
-                  <div
-                    class="c190"
-                  >
-                    <div
-                      class="c191"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c192"
-                  role="presentation"
-                >
-                  <div
-                    class="c193"
-                  >
-                    <div
-                      class="c194"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c195"
-                  role="presentation"
-                >
-                  <div
-                    class="c196"
-                  >
-                    <div
-                      class="c197"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c130"
-                  role="presentation"
-                >
-                  <div
-                    class="c198"
-                  >
-                    <div
-                      class="c199"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c200"
-                  role="presentation"
-                >
-                  <div
-                    class="c201"
-                  >
-                    <div
-                      class="c202"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c203"
-                  role="presentation"
-                >
-                  <div
-                    class="c204"
-                  >
-                    <div
-                      class="c205"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c195"
-                  role="presentation"
-                >
-                  <div
-                    class="c206"
-                  >
-                    <div
-                      class="c207"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c142"
-                  role="presentation"
-                >
-                  <div
-                    class="c208"
-                  >
-                    <div
-                      class="c209"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c154"
-                  role="presentation"
-                >
-                  <div
-                    class="c210"
-                  >
-                    <div
-                      class="c211"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c212"
-                  role="presentation"
-                >
-                  <div
-                    class="c213"
-                  >
-                    <div
-                      class="c214"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c215"
-                  role="presentation"
-                >
-                  <div
-                    class="c216"
-                  >
-                    <div
-                      class="c217"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c218"
-                  role="presentation"
-                >
-                  <div
-                    class="c219"
-                  >
-                    <div
-                      class="c220"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c221"
-                  role="presentation"
-                >
-                  <div
-                    class="c222"
-                  >
-                    <div
-                      class="c223"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c164"
-                  role="presentation"
-                >
-                  <div
-                    class="c224"
-                  >
-                    <div
-                      class="c225"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c226"
-                  role="presentation"
-                >
-                  <div
-                    class="c227"
-                  >
-                    <div
-                      class="c228"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c103"
-                  role="presentation"
-                >
-                  <div
-                    class="c229"
-                  >
-                    <div
-                      class="c230"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c192"
-                  role="presentation"
-                >
-                  <div
-                    class="c231"
-                  >
-                    <div
-                      class="c232"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c233"
-                  role="presentation"
-                >
-                  <div
-                    class="c234"
-                  >
-                    <div
-                      class="c235"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c203"
-                  role="presentation"
-                >
-                  <div
-                    class="c236"
-                  >
-                    <div
-                      class="c237"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c157"
-                  role="presentation"
-                >
-                  <div
-                    class="c238"
-                  >
-                    <div
-                      class="c239"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c240"
-                  role="presentation"
-                >
-                  <div
-                    class="c241"
-                  >
-                    <div
-                      class="c242"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c178"
-                  role="presentation"
-                >
-                  <div
-                    class="c243"
-                  >
-                    <div
-                      class="c244"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c245"
-                  role="presentation"
-                >
-                  <div
-                    class="c246"
-                  >
-                    <div
-                      class="c247"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c130"
-                  role="presentation"
-                >
-                  <div
-                    class="c248"
-                  >
-                    <div
-                      class="c249"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c250"
-                  role="presentation"
-                >
-                  <div
-                    class="c251"
-                  >
-                    <div
-                      class="c252"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c253"
-                  role="presentation"
-                >
-                  <div
-                    class="c254"
-                  >
-                    <div
-                      class="c255"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c130"
-                  role="presentation"
-                >
-                  <div
-                    class="c256"
-                  >
-                    <div
-                      class="c257"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c258"
-                  role="presentation"
-                >
-                  <div
-                    class="c259"
-                  >
-                    <div
-                      class="c260"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c157"
-                  role="presentation"
-                >
-                  <div
-                    class="c261"
-                  >
-                    <div
-                      class="c262"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c136"
-                  role="presentation"
-                >
-                  <div
-                    class="c263"
-                  >
-                    <div
-                      class="c264"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c195"
-                  role="presentation"
-                >
-                  <div
-                    class="c265"
-                  >
-                    <div
-                      class="c266"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c189"
-                  role="presentation"
-                >
-                  <div
-                    class="c267"
-                  >
-                    <div
-                      class="c268"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c142"
-                  role="presentation"
-                >
-                  <div
-                    class="c269"
-                  >
-                    <div
-                      class="c270"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c189"
-                  role="presentation"
-                >
-                  <div
-                    class="c271"
-                  >
-                    <div
-                      class="c272"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c195"
-                  role="presentation"
-                >
-                  <div
-                    class="c273"
-                  >
-                    <div
-                      class="c274"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c275"
-                  role="presentation"
-                >
-                  <div
-                    class="c276"
-                  >
-                    <div
-                      class="c277"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c278"
-                  role="presentation"
-                >
-                  <div
-                    class="c279"
-                  >
-                    <div
-                      class="c280"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c281"
-                  role="presentation"
-                >
-                  <div
-                    class="c282"
-                  >
-                    <div
-                      class="c283"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c157"
-                  role="presentation"
-                >
-                  <div
-                    class="c284"
-                  >
-                    <div
-                      class="c285"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c97"
-                  role="presentation"
-                >
-                  <div
-                    class="c286"
-                  >
-                    <div
-                      class="c287"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c288"
-                  role="presentation"
-                >
-                  <div
-                    class="c289"
-                  >
-                    <div
-                      class="c290"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c124"
-                  role="presentation"
-                >
-                  <div
-                    class="c291"
-                  >
-                    <div
-                      class="c292"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c108"
-                  role="presentation"
-                >
-                  <div
-                    class="c293"
-                  >
-                    <div
-                      class="c294"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c295"
-                  role="presentation"
-                >
-                  <div
-                    class="c296"
-                  >
-                    <div
-                      class="c297"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c114"
-                  role="presentation"
-                >
-                  <div
-                    class="c298"
-                  >
-                    <div
-                      class="c299"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c130"
-                  role="presentation"
-                >
-                  <div
-                    class="c300"
-                  >
-                    <div
-                      class="c301"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c302"
-                  role="presentation"
-                >
-                  <div
-                    class="c303"
-                  >
-                    <div
-                      class="c304"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c133"
-                  role="presentation"
-                >
-                  <div
-                    class="c305"
-                  >
-                    <div
-                      class="c306"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c91"
-                  role="presentation"
-                >
-                  <div
-                    class="c307"
-                  >
-                    <div
-                      class="c308"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c295"
-                  role="presentation"
-                >
-                  <div
-                    class="c309"
-                  >
-                    <div
-                      class="c310"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c240"
-                  role="presentation"
-                >
-                  <div
-                    class="c311"
-                  >
-                    <div
-                      class="c312"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c218"
-                  role="presentation"
-                >
-                  <div
-                    class="c313"
-                  >
-                    <div
-                      class="c314"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c315"
-                  role="presentation"
-                >
-                  <div
-                    class="c316"
-                  >
-                    <div
-                      class="c317"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c318"
-                  role="presentation"
-                >
-                  <div
-                    class="c319"
-                  >
-                    <div
-                      class="c320"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c221"
-                  role="presentation"
-                >
-                  <div
-                    class="c321"
-                  >
-                    <div
-                      class="c322"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c175"
-                  role="presentation"
-                >
-                  <div
-                    class="c323"
-                  >
-                    <div
-                      class="c324"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c215"
-                  role="presentation"
-                >
-                  <div
-                    class="c325"
-                  >
-                    <div
-                      class="c326"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c157"
-                  role="presentation"
-                >
-                  <div
-                    class="c327"
-                  >
-                    <div
-                      class="c328"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c195"
-                  role="presentation"
-                >
-                  <div
-                    class="c329"
-                  >
-                    <div
-                      class="c330"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c130"
-                  role="presentation"
-                >
-                  <div
-                    class="c331"
-                  >
-                    <div
-                      class="c332"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c240"
-                  role="presentation"
-                >
-                  <div
-                    class="c333"
-                  >
-                    <div
-                      class="c334"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c302"
-                  role="presentation"
-                >
-                  <div
-                    class="c335"
-                  >
-                    <div
-                      class="c336"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c121"
-                  role="presentation"
-                >
-                  <div
-                    class="c337"
-                  >
-                    <div
-                      class="c338"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c339"
-                  role="presentation"
-                >
-                  <div
-                    class="c340"
-                  >
-                    <div
-                      class="c341"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c127"
-                  role="presentation"
-                >
-                  <div
-                    class="c342"
-                  >
-                    <div
-                      class="c343"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c139"
-                  role="presentation"
-                >
-                  <div
-                    class="c344"
-                  >
-                    <div
-                      class="c345"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c346"
-                  role="presentation"
-                >
-                  <div
-                    class="c347"
-                  >
-                    <div
-                      class="c348"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c315"
-                  role="presentation"
-                >
-                  <div
-                    class="c349"
-                  >
-                    <div
-                      class="c350"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c351"
-                  role="presentation"
-                >
-                  <div
-                    class="c352"
-                  >
-                    <div
-                      class="c353"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c275"
-                  role="presentation"
-                >
-                  <div
-                    class="c354"
-                  >
-                    <div
-                      class="c355"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c218"
-                  role="presentation"
-                >
-                  <div
-                    class="c356"
-                  >
-                    <div
-                      class="c357"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c186"
-                  role="presentation"
-                >
-                  <div
-                    class="c358"
-                  >
-                    <div
-                      class="c359"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c215"
-                  role="presentation"
-                >
-                  <div
-                    class="c360"
-                  >
-                    <div
-                      class="c361"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c362"
-                  role="presentation"
-                >
-                  <div
-                    class="c363"
-                  >
-                    <div
-                      class="c364"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c318"
-                  role="presentation"
-                >
-                  <div
-                    class="c365"
-                  >
-                    <div
-                      class="c366"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c103"
-                  role="presentation"
-                >
-                  <div
-                    class="c367"
-                  >
-                    <div
-                      class="c368"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c318"
-                  role="presentation"
-                >
-                  <div
-                    class="c369"
-                  >
-                    <div
-                      class="c370"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c142"
-                  role="presentation"
-                >
-                  <div
-                    class="c371"
-                  >
-                    <div
-                      class="c372"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c91"
-                  role="presentation"
-                >
-                  <div
-                    class="c373"
-                  >
-                    <div
-                      class="c374"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c142"
-                  role="presentation"
-                >
-                  <div
-                    class="c375"
-                  >
-                    <div
-                      class="c376"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c258"
-                  role="presentation"
-                >
-                  <div
-                    class="c377"
-                  >
-                    <div
-                      class="c378"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c169"
-                  role="presentation"
-                >
-                  <div
-                    class="c379"
-                  >
-                    <div
-                      class="c380"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c381"
-                  role="presentation"
-                >
-                  <div
-                    class="c382"
-                  >
-                    <div
-                      class="c383"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c384"
-                  role="presentation"
-                >
-                  <div
-                    class="c385"
-                  >
-                    <div
-                      class="c386"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c253"
-                  role="presentation"
-                >
-                  <div
-                    class="c387"
-                  >
-                    <div
-                      class="c388"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c362"
-                  role="presentation"
-                >
-                  <div
-                    class="c389"
-                  >
-                    <div
-                      class="c390"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c245"
-                  role="presentation"
-                >
-                  <div
-                    class="c391"
-                  >
-                    <div
-                      class="c392"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c189"
-                  role="presentation"
-                >
-                  <div
-                    class="c393"
-                  >
-                    <div
-                      class="c394"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c381"
-                  role="presentation"
-                >
-                  <div
-                    class="c395"
-                  >
-                    <div
-                      class="c396"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c397"
-                  role="presentation"
-                >
-                  <div
-                    class="c398"
-                  >
-                    <div
-                      class="c399"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c226"
-                  role="presentation"
-                >
-                  <div
-                    class="c400"
-                  >
-                    <div
-                      class="c401"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c402"
-                  role="presentation"
-                >
-                  <div
-                    class="c403"
-                  >
-                    <div
-                      class="c404"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c405"
-                  role="presentation"
-                >
-                  <div
-                    class="c406"
-                  >
-                    <div
-                      class="c407"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c397"
-                  role="presentation"
-                >
-                  <div
-                    class="c408"
-                  >
-                    <div
-                      class="c409"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c410"
-                  role="presentation"
-                >
-                  <div
-                    class="c411"
-                  >
-                    <div
-                      class="c412"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c151"
-                  role="presentation"
-                >
-                  <div
-                    class="c413"
-                  >
-                    <div
-                      class="c414"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c97"
-                  role="presentation"
-                >
-                  <div
-                    class="c415"
-                  >
-                    <div
-                      class="c416"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c114"
-                  role="presentation"
-                >
-                  <div
-                    class="c417"
-                  >
-                    <div
-                      class="c418"
-                      role="none"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c346"
-                  role="presentation"
-                >
-                  <div
-                    class="c419"
-                  >
-                    <div
-                      class="c420"
-                      role="none"
-                    />
-                  </div>
-                </div>
               </div>
             </div>
           </div>
           <div
-            class="c421"
+            class="c154"
           />
         </div>
         <h2
-          class="c18 c422"
+          class="c18 c155"
         >
           About me
         </h2>
         <section
-          class="c423"
+          class="c156"
         >
           <p
             class="c7 c8"
@@ -8601,27 +3758,27 @@ exports[`HomePage should render successfully 1`] = `
         </a>
       </div>
       <footer
-        class="c424"
+        class="c157"
         tabindex="-1"
       >
         <div
-          class="c425"
+          class="c158"
         >
           <div
-            class="c426"
+            class="c159"
           />
           <div
-            class="c426"
+            class="c159"
           />
           <div
-            class="c426"
+            class="c159"
           />
         </div>
         <div
-          class="c427"
+          class="c160"
         >
           <svg
-            class="c428"
+            class="c161"
             height="64"
             width="120"
           >
@@ -8629,14 +3786,14 @@ exports[`HomePage should render successfully 1`] = `
           </svg>
           <nav
             aria-label="Site map"
-            class="c429"
+            class="c162"
           >
             <ul
-              class="c430"
+              class="c163"
             >
               <li>
                 <a
-                  class="c431"
+                  class="c164"
                   href="/experience"
                 >
                   <p
@@ -8648,7 +3805,7 @@ exports[`HomePage should render successfully 1`] = `
               </li>
               <li>
                 <a
-                  class="c431"
+                  class="c164"
                   href="/contact"
                 >
                   <p
@@ -8660,7 +3817,7 @@ exports[`HomePage should render successfully 1`] = `
               </li>
               <li>
                 <a
-                  class="c431"
+                  class="c164"
                   href="/portfolio"
                 >
                   <p
@@ -8672,7 +3829,7 @@ exports[`HomePage should render successfully 1`] = `
               </li>
               <li>
                 <a
-                  class="c431"
+                  class="c164"
                   href="#"
                 >
                   <svg
@@ -8691,7 +3848,7 @@ exports[`HomePage should render successfully 1`] = `
               </li>
               <li>
                 <a
-                  class="c431"
+                  class="c164"
                   href="#"
                 >
                   <svg
@@ -8711,7 +3868,7 @@ exports[`HomePage should render successfully 1`] = `
             </ul>
           </nav>
           <div
-            class="c432"
+            class="c165"
           >
             <a
               aria-label="Telegram"
