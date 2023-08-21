@@ -1,23 +1,21 @@
 import {
-  StyledHardcoreParticles,
   StyledParticle,
   StyledParticleContainer,
-} from './HardcoreParticles.styles'
+  StyledParticles,
+} from './Particles.styles'
 
-interface HardcoreParticlesProps {
+interface ParticlesProps {
   numParticles?: number
 }
 
-export function HardcoreParticles({
-  numParticles = 50,
-}: HardcoreParticlesProps) {
+export function Particles({ numParticles = 50 }: ParticlesProps) {
   return (
-    <StyledHardcoreParticles>
+    <StyledParticles>
       {[...Array(numParticles).keys()].map((id) => (
         <StyledParticleContainer key={id} $numParticles={numParticles}>
           <StyledParticle role="presentation" $id={id} />
         </StyledParticleContainer>
       ))}
-    </StyledHardcoreParticles>
+    </StyledParticles>
   )
 }

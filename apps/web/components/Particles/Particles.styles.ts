@@ -2,7 +2,7 @@ import { css, styled } from 'styled-components'
 
 import { randomIntFromInterval } from '@web/utils/random'
 
-export const StyledHardcoreParticles = styled.div`
+export const StyledParticles = styled.div`
   @keyframes particle-movement {
     from {
       transform: translate(-50%, var(--begin-y));

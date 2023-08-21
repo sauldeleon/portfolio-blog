@@ -8,8 +8,8 @@ jest.mock('@sdlgr/use-container-dimensions', () => ({
   useContainerDimensions: jest.fn().mockReturnValue({ width: 1, height: 1 }),
 }))
 
-jest.mock('@web/components/HardcoreParticles/HardcoreParticles', () => ({
-  HardcoreParticles: () => <div>ParticlesMock</div>,
+jest.mock('@web/components/Particles/Particles', () => ({
+  Particles: () => <div>ParticlesMock</div>,
 }))
 
 describe('Portals', () => {
@@ -26,9 +26,9 @@ describe('Portals', () => {
     renderWithTheme(
       <Portals
         items={[
-          { seed: 'wadus', path: '/test.jpg' },
-          { seed: 'wadus', path: '/test.jpg' },
-          { seed: 'wadus', isHidden: true, path: '/test.jpg' },
+          { path: '/test.jpg' },
+          { path: '/test.jpg' },
+          { isHidden: true, path: '/test.jpg' },
         ]}
         enableParticles
       />

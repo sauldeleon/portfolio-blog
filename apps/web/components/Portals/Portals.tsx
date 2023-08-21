@@ -5,7 +5,7 @@ import {
   AnimationSize,
   CustomAnimation,
 } from '@web/components/AnimatedItem/AnimatedItem'
-import { HardcoreParticles } from '@web/components/HardcoreParticles/HardcoreParticles'
+import { Particles } from '@web/components/Particles/Particles'
 
 import {
   PortalFirst,
@@ -49,7 +49,7 @@ export function Portals({
       <PortalPath>
         <PortalFirstGlow />
         <PortalLastGlow />
-        {enableParticles && <HardcoreParticles />}
+        {enableParticles && <Particles />}
         {items
           .filter(({ isHidden }) => !isHidden)
           .map(({ path, customAnimation, rotate, size }, index) => (
