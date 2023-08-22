@@ -1,8 +1,5 @@
-import {
-  StyledParticle,
-  StyledParticleContainer,
-  StyledParticles,
-} from './Particles.styles'
+import { Particle } from './Particle'
+import { StyledParticles } from './Particles.styles'
 
 interface ParticlesProps {
   numParticles?: number
@@ -10,11 +7,9 @@ interface ParticlesProps {
 
 export function Particles({ numParticles = 50 }: ParticlesProps) {
   return (
-    <StyledParticles>
+    <StyledParticles role="presentation">
       {[...Array(numParticles).keys()].map((id) => (
-        <StyledParticleContainer key={id} $numParticles={numParticles}>
-          <StyledParticle role="presentation" $id={id} />
-        </StyledParticleContainer>
+        <Particle key={id} />
       ))}
     </StyledParticles>
   )

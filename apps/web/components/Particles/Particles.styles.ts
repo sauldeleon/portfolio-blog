@@ -1,6 +1,4 @@
-import { css, styled } from 'styled-components'
-
-import { randomIntFromInterval } from '@web/utils/random'
+import { styled } from 'styled-components'
 
 export const StyledParticles = styled.div`
   @keyframes particle-movement {
@@ -39,66 +37,4 @@ export const StyledParticles = styled.div`
       transform: scale3d(0.4, 0.4, 1);
     }
   }
-`
-
-const generateParticles = (numParticles: number) =>
-  Array.from(Array(numParticles).keys()).map(
-    (i) =>
-      css`
-        &:nth-child(${i}) {
-          --particleSize: ${randomIntFromInterval(1, 10, `size${i}`)}px;
-          display: grid;
-          place-items: center;
-          width: 100%;
-          height: 100%;
-          transform: translateX(-60%);
-          --begin-y: ${randomIntFromInterval(-46, 46, `translate3DFromY${i}`)}%;
-          --end-y: ${randomIntFromInterval(-46, 46, `translate3DToY${i}`)}%;
-          animation-name: particle-movement;
-          animation-duration: ${3000 +
-          randomIntFromInterval(0, 4000, `moveDuration${i}`)}ms;
-          animation-delay: ${randomIntFromInterval(
-            0,
-            11000,
-            `childAnimationDelay${i}`
-          )}ms;
-        }
-      `
-  )
-
-export const StyledParticle = styled.div<{ $id: number }>`
-  ${({ $id }) => css`
-    width: var(--particleSize);
-    height: var(--particleSize);
-    border-radius: 50%;
-    mix-blend-mode: screen;
-    background-image: radial-gradient(
-      hsl(180, 100%, 80%),
-      hsl(180, 100%, 80%) 10%,
-      hsla(180, 100%, 80%, 0) 56%
-    );
-
-    animation: particle-fade
-        ${randomIntFromInterval(500, 1000, `particleFadeFrames${$id}`)}ms
-        infinite,
-      particle-scale
-        ${randomIntFromInterval(1000, 2000, `particleScaleFrames${$id}`)}ms
-        infinite;
-
-    animation-delay: ${randomIntFromInterval(
-      0,
-      100,
-      `particleAnimationDelay${$id}`
-    )}ms;
-  `}
-`
-
-export const StyledParticleContainer = styled.div<{
-  $numParticles: number
-}>`
-  position: absolute;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
-
-  ${({ $numParticles }) => generateParticles($numParticles)}
 `
