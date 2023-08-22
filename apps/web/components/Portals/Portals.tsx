@@ -39,7 +39,7 @@ export function Portals({
   enableCylinder = false,
 }: PortalsProps) {
   return (
-    <StyledPortals>
+    <StyledPortals role="presentation">
       <PortalFirst>
         <StyledPortalIcon color={mainTheme.colors.yellow} />
       </PortalFirst>
@@ -61,7 +61,9 @@ export function Portals({
               customAnimation={customAnimation?.()}
             />
           ))}
-        {enableCylinder && <StyledCylinderShape />}
+        {enableCylinder && (
+          <StyledCylinderShape data-testid="cylinder-wrapper" />
+        )}
       </PortalPath>
     </StyledPortals>
   )

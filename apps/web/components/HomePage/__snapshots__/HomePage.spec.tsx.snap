@@ -2357,6 +2357,7 @@ exports[`HomePage should render successfully 1`] = `
           >
             <div
               class="c27"
+              role="presentation"
             >
               <div
                 class="c28"
@@ -2744,92 +2745,99 @@ exports[`HomePage should render successfully 1`] = `
                 </div>
                 <div
                   class="c134"
-                  role="presentation"
+                  data-testid="horizontal-movement"
                 >
                   <div
                     class="c135"
+                    data-testid="vertical-movement"
                   >
                     <div
                       class="c136"
-                      role="none"
+                      data-testid="rotation-movement"
                     />
                   </div>
                 </div>
                 <div
                   class="c137"
-                  role="presentation"
+                  data-testid="horizontal-movement"
                 >
                   <div
                     class="c138"
+                    data-testid="vertical-movement"
                   >
                     <div
                       class="c139"
-                      role="none"
+                      data-testid="rotation-movement"
                     />
                   </div>
                 </div>
                 <div
                   class="c140"
-                  role="presentation"
+                  data-testid="horizontal-movement"
                 >
                   <div
                     class="c141"
+                    data-testid="vertical-movement"
                   >
                     <div
                       class="c142"
-                      role="none"
+                      data-testid="rotation-movement"
                     />
                   </div>
                 </div>
                 <div
                   class="c143"
-                  role="presentation"
+                  data-testid="horizontal-movement"
                 >
                   <div
                     class="c144"
+                    data-testid="vertical-movement"
                   >
                     <div
                       class="c145"
-                      role="none"
+                      data-testid="rotation-movement"
                     />
                   </div>
                 </div>
                 <div
                   class="c146"
-                  role="presentation"
+                  data-testid="horizontal-movement"
                 >
                   <div
                     class="c147"
+                    data-testid="vertical-movement"
                   >
                     <div
                       class="c148"
-                      role="none"
+                      data-testid="rotation-movement"
                     />
                   </div>
                 </div>
                 <div
                   class="c149"
-                  role="presentation"
+                  data-testid="horizontal-movement"
                 >
                   <div
                     class="c150"
+                    data-testid="vertical-movement"
                   >
                     <div
                       class="c151"
-                      role="none"
+                      data-testid="rotation-movement"
                     />
                   </div>
                 </div>
                 <div
                   class="c152"
-                  role="presentation"
+                  data-testid="horizontal-movement"
                 >
                   <div
                     class="c153"
+                    data-testid="vertical-movement"
                   >
                     <div
                       class="c154"
-                      role="none"
+                      data-testid="rotation-movement"
                     />
                   </div>
                 </div>

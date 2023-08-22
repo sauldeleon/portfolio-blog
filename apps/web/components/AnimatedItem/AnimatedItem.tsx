@@ -15,7 +15,7 @@ export type CustomAnimation = {
 
 export type AnimationSize = 'S' | 'M' | 'L'
 
-export interface AnimatedItemProps {
+interface AnimatedItemProps {
   path?: string
   rotate?: boolean
   size?: AnimationSize
@@ -27,6 +27,7 @@ export function AnimatedItem({
   rotate,
   customAnimation,
   size = 'M',
+  ...rest
 }: AnimatedItemProps) {
   const seed = useId()
 
@@ -44,17 +45,18 @@ export function AnimatedItem({
 
   return (
     <HorizontalMovement
-      role="presentation"
+      data-testid="horizontal-movement"
       $size={itemSize}
       $seed={seed}
       $customAnimation={customAnimation?.horizontal}
     >
       <VerticalMovement
+        data-testid="vertical-movement"
         $seed={seed}
         $customAnimation={customAnimation?.vertical}
       >
         <RotationMovement
-          role="none"
+          data-testid="rotation-movement"
           $rotate={rotate}
           $path={path}
           $seed={seed}
