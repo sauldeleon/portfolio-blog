@@ -8,6 +8,7 @@ import {
   NxIcon,
   ReactJSIcon,
   ReactQueryIcon,
+  StyledComponentsIcon,
   TypescriptIcon,
   XataIOIcon,
   YarnIcon,
@@ -88,6 +89,11 @@ export function MainPortal() {
       svg: <XataIOIcon />,
       rotate: true,
       size: 'S',
+    },
+    {
+      svg: <StyledComponentsIcon />,
+      rotate: true,
+      colorSwap: true,
     },
   ]
 
