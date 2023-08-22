@@ -4,7 +4,7 @@ import { renderWithTheme } from '@sdlgr/test-utils'
 
 import { Portals } from './Portals'
 
-jest.mock('@web/components/Particles/Particles', () => ({
+jest.mock('./components/Particles/Particles', () => ({
   Particles: () => <div>ParticlesMock</div>,
 }))
 
@@ -24,9 +24,9 @@ describe('Portals', () => {
     renderWithTheme(
       <Portals
         items={[
-          { path: '/test.jpg' },
-          { path: '/test.jpg' },
-          { isHidden: true, path: '/test.jpg' },
+          { svg: <svg /> },
+          { svg: <svg /> },
+          { isHidden: true, svg: <svg /> },
         ]}
         enableParticles
       />

@@ -1,7 +1,6 @@
 import { RuleSet, css, styled } from 'styled-components'
 
 import {
-  randomColor,
   randomDecimalFromInterval,
   randomIntFromInterval,
 } from '@web/utils/random'
@@ -21,10 +20,18 @@ export const HorizontalMovement = styled.div<{
     $customAnimation
       ? $customAnimation
       : css`
-          animation: ${randomDecimalFromInterval(6, 20, `${$seed}-x-duration`)}s
+          animation: ${randomDecimalFromInterval(
+              6,
+              20,
+              `${$seed}-item-horizontal-duration`
+            )}s
             horizontal-movement
-            ${randomDecimalFromInterval(1, 5, `${$seed}-x-delay`)}s linear
-            infinite;
+            ${randomDecimalFromInterval(
+              1,
+              5,
+              `${$seed}-item-horizontal-delay`
+            )}s
+            linear infinite;
         `}
 `
 
@@ -51,41 +58,25 @@ export const VerticalMovement = styled.div<{
             37,
             `${$seed}-y-end`
           )}%;
-          animation: ${randomDecimalFromInterval(2, 10, `${$seed}-y-duration`)}s
+          animation: ${randomDecimalFromInterval(
+              2,
+              10,
+              `${$seed}-item-vertical-duration`
+            )}s
             vertical-movement ease-in-out alternate infinite;
         `};
 `
 
 export const RotationMovement = styled.div<{
   $customAnimation?: RuleSet<object>
-  $path?: string
   $seed: string
   $rotate?: boolean
 }>`
-  position: absolute;
-  z-index: ${({ $seed }) => randomIntFromInterval(2, 5, `${$seed}-z-index`)};
-  transform-origin: center;
+  z-index: ${({ $seed }) =>
+    randomIntFromInterval(2, 5, `${$seed}-item-z-index`)};
   height: var(--itemSize);
   aspect-ratio: 1/1;
-
-  &::after {
-    content: '';
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    overflow: hidden;
-    display: block;
-
-    ${({ $path, $seed }) =>
-      $path
-        ? css`
-            background-image: url(${$path});
-            background-size: contain;
-          `
-        : css`
-            background: ${randomColor(`${$seed}-color`)};
-          `}
-  }
+  position: absolute;
 
   ${({ $rotate, $customAnimation, $seed }) =>
     $rotate
@@ -97,11 +88,36 @@ export const RotationMovement = styled.div<{
                 360deg
             );
             animation: ${randomDecimalFromInterval(
-                2,
                 4,
-                `${$seed}-rotation-duration`
+                6,
+                `${$seed}-item-rotation-duration`
               )}s
               rotate-movement linear infinite;
           `
       : css``}
+`
+
+export const StyledSVGWrapper = styled.div<{
+  $seed: string
+  $colorSwap?: boolean
+}>`
+  ${({ theme, $seed, $colorSwap }) => css`
+    svg {
+      width: 100%;
+      height: 100%;
+
+      ${$colorSwap &&
+      css`
+        color: ${theme.colors.yellow};
+        animation: ${randomDecimalFromInterval(
+            6,
+            20,
+            `${$seed}-item-horizontal-duration`
+          )}s
+          color-swap
+          ${randomDecimalFromInterval(1, 5, `${$seed}-item-horizontal-delay`)}s
+          linear infinite;
+      `}
+    }
+  `}
 `

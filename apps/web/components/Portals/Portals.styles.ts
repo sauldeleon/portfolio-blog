@@ -208,6 +208,15 @@ export const PortalPath = styled.div`
       right: 91px;
     }
 
+    @keyframes color-swap {
+      from {
+        color: ${theme.colors.yellow};
+      }
+      to {
+        color: ${theme.colors.green};
+      }
+    }
+
     @keyframes horizontal-movement {
       0% {
         transform: translateX(calc(-50% - var(--itemSize)));

@@ -1,3 +1,5 @@
+import { NodeJSIcon } from '@sdlgr/assets'
+
 import { AnimatedItem, Portals } from '@web/components/Portals/Portals'
 
 import {
@@ -6,21 +8,26 @@ import {
   MiddleWall,
   PortalContainer,
 } from './MainPortal.styles'
-import { watcher } from './watcher'
 
 export function MainPortal() {
   const items: AnimatedItem[] = [
-    { path: '/assets/react-logo.png', rotate: true, size: 'S' },
-    { path: '/assets/nodejs-logo.png', size: 'L' },
-    { path: '/assets/github-logo.png', size: 'M' },
-    { path: '/assets/reactQuery-logo.png', rotate: true },
-    { path: '/assets/nextjs-logo.png' },
-    { path: '/assets/css3-logo.png' },
-    { path: '/assets/typescript-logo.png' },
     {
-      path: watcher,
-      isHidden: true,
+      svg: <NodeJSIcon color="red" />,
+      rotate: true,
+      colorSwap: true,
     },
+    // { path: '/assets/react-logo.png', rotate: true, size: 'S' },
+    // { path: '/assets/github-logo.png', size: 'M' },
+    // { path: '/assets/reactQuery-logo.png', rotate: true },
+    // { path: '/assets/nextjs-logo.png' },
+    // { path: '/assets/css3-logo.png' },
+    // { path: '/assets/typescript-logo.png' },
+    // {},
+    // {},
+    // {},
+    // {},
+    // {},
+    // {},
   ]
 
   return (

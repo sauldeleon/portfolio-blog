@@ -7,7 +7,7 @@ exports[`AnimatedItem should render successfully 1`] = `
   transform: translateX(-60%);
   width: 100%;
   height: 100%;
-  animation: 17.140170417003283s horizontal-movement 3.97933877306252s linear infinite;
+  animation: 14.013358467316657s horizontal-movement 4.7038491055429414s linear infinite;
 }
 
 .c1 {
@@ -18,25 +18,19 @@ exports[`AnimatedItem should render successfully 1`] = `
   place-items: center;
   --translateY-begin: -3%;
   --translateY-end: 31%;
-  animation: 10.670527360938634s vertical-movement ease-in-out alternate infinite;
+  animation: 7.388991085926664s vertical-movement ease-in-out alternate infinite;
 }
 
 .c2 {
-  position: absolute;
-  z-index: 3;
-  transform-origin: center;
+  z-index: 5;
   height: var(--itemSize);
   aspect-ratio: 1/1;
+  position: absolute;
 }
 
-.c2::after {
-  content: '';
+.c3 svg {
   width: 100%;
   height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background: #d1b896;
 }
 
 <body>
@@ -52,7 +46,14 @@ exports[`AnimatedItem should render successfully 1`] = `
         <div
           class="c2"
           data-testid="rotation-movement"
-        />
+        >
+          <div
+            class="c3"
+            data-testid="color-swapping"
+          >
+            <svg />
+          </div>
+        </div>
       </div>
     </div>
   </div>

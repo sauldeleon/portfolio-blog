@@ -7,13 +7,13 @@ import { AnimatedItem } from './AnimatedItem'
 
 describe('AnimatedItem', () => {
   it('should render successfully', () => {
-    const { baseElement } = renderWithTheme(<AnimatedItem />)
+    const { baseElement } = renderWithTheme(<AnimatedItem svg={<svg />} />)
     expect(baseElement).toMatchSnapshot()
   })
 
-  it('should render successfully with custom path, rotation and custom size', () => {
+  it('should render successfully image, colorSwap, rotation and custom size', () => {
     renderWithTheme(
-      <AnimatedItem path="/path/to/image.jpg" rotate={true} size="L" />
+      <AnimatedItem svg={<svg />} rotate={true} size="L" colorSwap />
     )
 
     expect(screen.getByTestId('horizontal-movement')).toHaveStyleRule(
@@ -28,6 +28,14 @@ describe('AnimatedItem', () => {
     expect(screen.getByTestId('rotation-movement')).toHaveStyleRule(
       'animation',
       expect.stringMatching(/(\d+)s rotate-movement linear infinite/)
+    )
+
+    expect(screen.getByTestId('color-swapping')).toHaveStyleRule(
+      'animation',
+      expect.stringMatching(
+        /(\d+\.?\d*)s color-swap (\d+\.?\d*)s linear infinite/
+      ),
+      { modifier: ' svg' }
     )
   })
 
@@ -46,8 +54,9 @@ describe('AnimatedItem', () => {
 
     renderWithTheme(
       <AnimatedItem
+        svg={<svg />}
         rotate={true}
-        path="/test.jpg"
+        size="S"
         customAnimation={customAnimation()}
       />
     )

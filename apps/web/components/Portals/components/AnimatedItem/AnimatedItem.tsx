@@ -4,6 +4,7 @@ import { RuleSet } from 'styled-components'
 import {
   HorizontalMovement,
   RotationMovement,
+  StyledSVGWrapper,
   VerticalMovement,
 } from './AnimatedItem.styles'
 
@@ -15,19 +16,20 @@ export type CustomAnimation = {
 
 export type AnimationSize = 'S' | 'M' | 'L'
 
-interface AnimatedItemProps {
-  path?: string
-  rotate?: boolean
+export interface AnimatedItemProps {
+  svg: React.ReactNode
   size?: AnimationSize
+  rotate?: boolean
+  colorSwap?: boolean
   customAnimation?: CustomAnimation
 }
 
 export function AnimatedItem({
-  path,
+  svg,
   rotate,
+  colorSwap,
   customAnimation,
   size = 'M',
-  ...rest
 }: AnimatedItemProps) {
   const seed = useId()
 
@@ -58,10 +60,17 @@ export function AnimatedItem({
         <RotationMovement
           data-testid="rotation-movement"
           $rotate={rotate}
-          $path={path}
           $seed={seed}
           $customAnimation={customAnimation?.rotate}
-        />
+        >
+          <StyledSVGWrapper
+            data-testid="color-swapping"
+            $seed={seed}
+            $colorSwap={colorSwap}
+          >
+            {svg}
+          </StyledSVGWrapper>
+        </RotationMovement>
       </VerticalMovement>
     </HorizontalMovement>
   )

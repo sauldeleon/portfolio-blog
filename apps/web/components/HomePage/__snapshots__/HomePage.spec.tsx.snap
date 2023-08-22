@@ -61,7 +61,7 @@ exports[`HomePage should render successfully 1`] = `
   overflow: hidden;
 }
 
-.c158 {
+.c141 {
   position: relative;
   width: 100%;
   display: flex;
@@ -71,25 +71,25 @@ exports[`HomePage should render successfully 1`] = `
   margin-top: 50px;
 }
 
-.c159 {
+.c142 {
   position: relative;
   width: 100%;
   height: 15px;
 }
 
-.c162 {
+.c145 {
   position: absolute;
   top: -61px;
   left: 30px;
 }
 
-.c160 {
+.c143 {
   height: 7px;
   width: 100%;
   position: relative;
 }
 
-.c160:before {
+.c143:before {
   content: '';
   position: absolute;
   width: 100%;
@@ -97,7 +97,7 @@ exports[`HomePage should render successfully 1`] = `
   background: linear-gradient(         to bottom,         rgba(0,0,0,0.3),         rgba(152,223,214,0.3)       );
 }
 
-.c161 {
+.c144 {
   position: relative;
   max-width: 1440px;
   min-height: 120px;
@@ -108,13 +108,13 @@ exports[`HomePage should render successfully 1`] = `
   padding: 30px;
 }
 
-.c163 {
+.c146 {
   display: flex;
   align-items: center;
   position: relative;
 }
 
-.c164 {
+.c147 {
   display: flex;
   align-items: center;
   flex-grow: 1;
@@ -124,18 +124,18 @@ exports[`HomePage should render successfully 1`] = `
   flex-wrap: wrap;
 }
 
-.c165 {
+.c148 {
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
-.c165:hover,
-.c165:focus {
+.c148:hover,
+.c148:focus {
   text-decoration: none;
 }
 
-.c166 {
+.c149 {
   height: 20px;
   display: flex;
   gap: 20px;
@@ -352,7 +352,7 @@ exports[`HomePage should render successfully 1`] = `
   text-align: center;
 }
 
-.c156 {
+.c139 {
   margin-top: 30px;
 }
 
@@ -361,1441 +361,14 @@ exports[`HomePage should render successfully 1`] = `
   margin-bottom: 30px;
 }
 
-.c157 {
+.c140 {
   text-align: center;
   max-width: 1180px;
   padding: 0 34px;
 }
 
-.c157 .c7 {
+.c140 .c7 {
   margin-top: 20px;
-}
-
-.c134 {
-  --itemSize: 16%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 11.282896359909834s horizontal-movement 5.845172184927626s linear infinite;
-}
-
-.c137 {
-  --itemSize: 26%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 8.973305570936638s horizontal-movement 1.7765020675485301s linear infinite;
-}
-
-.c140 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 16.33338572602885s horizontal-movement 1.446387916561446s linear infinite;
-}
-
-.c143 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 6.169848658108784s horizontal-movement 5.835787866877705s linear infinite;
-}
-
-.c146 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 13.173587769687574s horizontal-movement 4.858582996244602s linear infinite;
-}
-
-.c149 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 10.29120779580655s horizontal-movement 2.708077339156948s linear infinite;
-}
-
-.c152 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  animation: 8.129512738126783s horizontal-movement 1.4665372978701585s linear infinite;
-}
-
-.c135 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -17%;
-  --translateY-end: -8%;
-  animation: 6.414401255525849s vertical-movement ease-in-out alternate infinite;
-}
-
-.c138 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -1%;
-  --translateY-end: 10%;
-  animation: 7.575515702056713s vertical-movement ease-in-out alternate infinite;
-}
-
-.c141 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -13%;
-  --translateY-end: -13%;
-  animation: 10.04503511477702s vertical-movement ease-in-out alternate infinite;
-}
-
-.c144 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -10%;
-  --translateY-end: -20%;
-  animation: 5.448453319605771s vertical-movement ease-in-out alternate infinite;
-}
-
-.c147 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -28%;
-  --translateY-end: 9%;
-  animation: 6.7059312360789365s vertical-movement ease-in-out alternate infinite;
-}
-
-.c150 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -32%;
-  --translateY-end: 13%;
-  animation: 2.836313748798311s vertical-movement ease-in-out alternate infinite;
-}
-
-.c153 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  --translateY-begin: -1%;
-  --translateY-end: 37%;
-  animation: 10.385489776304995s vertical-movement ease-in-out alternate infinite;
-}
-
-.c154 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c154::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background-image: url(/assets/typescript-logo.png);
-  background-size: contain;
-}
-
-.c136 {
-  position: absolute;
-  z-index: 2;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-  --rotation: calc(               2 *                 360deg             );
-  animation: 4.123839753545414s rotate-movement linear infinite;
-}
-
-.c136::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background-image: url(/assets/react-logo.png);
-  background-size: contain;
-}
-
-.c139 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c139::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background-image: url(/assets/nodejs-logo.png);
-  background-size: contain;
-}
-
-.c142 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c142::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background-image: url(/assets/github-logo.png);
-  background-size: contain;
-}
-
-.c145 {
-  position: absolute;
-  z-index: 4;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-  --rotation: calc(               1 *                 360deg             );
-  animation: 3.398862565392478s rotate-movement linear infinite;
-}
-
-.c145::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background-image: url(/assets/reactQuery-logo.png);
-  background-size: contain;
-}
-
-.c148 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c148::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background-image: url(/assets/nextjs-logo.png);
-  background-size: contain;
-}
-
-.c151 {
-  position: absolute;
-  z-index: 5;
-  transform-origin: center;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-}
-
-.c151::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  display: block;
-  background-image: url(/assets/css3-logo.png);
-  background-size: contain;
-}
-
-.c34 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 9px;
-  --begin-y: 3%;
-  --end-y: 41%;
-  animation: 5029ms particle-movement 8040ms infinite linear;
-}
-
-.c36 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 3px;
-  --begin-y: -18%;
-  --end-y: -19%;
-  animation: 3951ms particle-movement 1418ms infinite linear;
-}
-
-.c38 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 1px;
-  --begin-y: -7%;
-  --end-y: 27%;
-  animation: 3702ms particle-movement 2667ms infinite linear;
-}
-
-.c40 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 9px;
-  --begin-y: -45%;
-  --end-y: -18%;
-  animation: 6412ms particle-movement 9756ms infinite linear;
-}
-
-.c42 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 3px;
-  --begin-y: 30%;
-  --end-y: 2%;
-  animation: 6074ms particle-movement 226ms infinite linear;
-}
-
-.c44 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 8px;
-  --begin-y: 27%;
-  --end-y: 21%;
-  animation: 3487ms particle-movement 4523ms infinite linear;
-}
-
-.c46 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 5px;
-  --begin-y: 34%;
-  --end-y: -9%;
-  animation: 3538ms particle-movement 3021ms infinite linear;
-}
-
-.c48 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 3px;
-  --begin-y: 34%;
-  --end-y: -42%;
-  animation: 5503ms particle-movement 631ms infinite linear;
-}
-
-.c50 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 2px;
-  --begin-y: 28%;
-  --end-y: -42%;
-  animation: 6225ms particle-movement 2157ms infinite linear;
-}
-
-.c52 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 1px;
-  --begin-y: 36%;
-  --end-y: 45%;
-  animation: 5946ms particle-movement 7200ms infinite linear;
-}
-
-.c54 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 6px;
-  --begin-y: 40%;
-  --end-y: 24%;
-  animation: 5439ms particle-movement 279ms infinite linear;
-}
-
-.c56 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 5px;
-  --begin-y: 25%;
-  --end-y: 6%;
-  animation: 4284ms particle-movement 2490ms infinite linear;
-}
-
-.c58 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 5px;
-  --begin-y: 25%;
-  --end-y: -1%;
-  animation: 6498ms particle-movement 10701ms infinite linear;
-}
-
-.c60 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 6px;
-  --begin-y: -17%;
-  --end-y: -6%;
-  animation: 3375ms particle-movement 1883ms infinite linear;
-}
-
-.c62 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 8px;
-  --begin-y: -7%;
-  --end-y: -21%;
-  animation: 3331ms particle-movement 1776ms infinite linear;
-}
-
-.c64 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 5px;
-  --begin-y: 24%;
-  --end-y: 20%;
-  animation: 3792ms particle-movement 10795ms infinite linear;
-}
-
-.c66 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 4px;
-  --begin-y: -17%;
-  --end-y: -24%;
-  animation: 5358ms particle-movement 10234ms infinite linear;
-}
-
-.c68 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 9px;
-  --begin-y: -31%;
-  --end-y: 35%;
-  animation: 6640ms particle-movement 6321ms infinite linear;
-}
-
-.c70 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 1px;
-  --begin-y: 18%;
-  --end-y: -14%;
-  animation: 5951ms particle-movement 5293ms infinite linear;
-}
-
-.c72 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 10px;
-  --begin-y: -31%;
-  --end-y: 30%;
-  animation: 6739ms particle-movement 545ms infinite linear;
-}
-
-.c74 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 6px;
-  --begin-y: 22%;
-  --end-y: -15%;
-  animation: 5808ms particle-movement 5659ms infinite linear;
-}
-
-.c76 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 10px;
-  --begin-y: -35%;
-  --end-y: -28%;
-  animation: 6234ms particle-movement 6944ms infinite linear;
-}
-
-.c78 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 10px;
-  --begin-y: 31%;
-  --end-y: -32%;
-  animation: 4790ms particle-movement 9416ms infinite linear;
-}
-
-.c80 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 7px;
-  --begin-y: -41%;
-  --end-y: 7%;
-  animation: 4585ms particle-movement 814ms infinite linear;
-}
-
-.c82 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 9px;
-  --begin-y: -34%;
-  --end-y: -14%;
-  animation: 5459ms particle-movement 10528ms infinite linear;
-}
-
-.c84 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 10px;
-  --begin-y: -12%;
-  --end-y: 15%;
-  animation: 6263ms particle-movement 6435ms infinite linear;
-}
-
-.c86 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 7px;
-  --begin-y: -29%;
-  --end-y: 26%;
-  animation: 6145ms particle-movement 1970ms infinite linear;
-}
-
-.c88 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 5px;
-  --begin-y: 45%;
-  --end-y: 12%;
-  animation: 5385ms particle-movement 3946ms infinite linear;
-}
-
-.c90 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 9px;
-  --begin-y: 9%;
-  --end-y: -31%;
-  animation: 4442ms particle-movement 2862ms infinite linear;
-}
-
-.c92 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 1px;
-  --begin-y: 14%;
-  --end-y: -40%;
-  animation: 4843ms particle-movement 4667ms infinite linear;
-}
-
-.c94 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 9px;
-  --begin-y: -3%;
-  --end-y: -41%;
-  animation: 3629ms particle-movement 2589ms infinite linear;
-}
-
-.c96 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 4px;
-  --begin-y: 21%;
-  --end-y: -26%;
-  animation: 4976ms particle-movement 10601ms infinite linear;
-}
-
-.c98 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 9px;
-  --begin-y: -39%;
-  --end-y: -23%;
-  animation: 6283ms particle-movement 9023ms infinite linear;
-}
-
-.c100 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 6px;
-  --begin-y: 43%;
-  --end-y: 33%;
-  animation: 4921ms particle-movement 2305ms infinite linear;
-}
-
-.c102 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 2px;
-  --begin-y: 24%;
-  --end-y: 28%;
-  animation: 4358ms particle-movement 9810ms infinite linear;
-}
-
-.c104 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 4px;
-  --begin-y: 9%;
-  --end-y: 18%;
-  animation: 6550ms particle-movement 82ms infinite linear;
-}
-
-.c106 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 1px;
-  --begin-y: 6%;
-  --end-y: -21%;
-  animation: 5304ms particle-movement 7556ms infinite linear;
-}
-
-.c108 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 9px;
-  --begin-y: 42%;
-  --end-y: -19%;
-  animation: 4599ms particle-movement 4673ms infinite linear;
-}
-
-.c110 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 2px;
-  --begin-y: -4%;
-  --end-y: -12%;
-  animation: 5188ms particle-movement 6583ms infinite linear;
-}
-
-.c112 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 7px;
-  --begin-y: 28%;
-  --end-y: 38%;
-  animation: 4282ms particle-movement 6669ms infinite linear;
-}
-
-.c114 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 8px;
-  --begin-y: 0%;
-  --end-y: -13%;
-  animation: 5637ms particle-movement 1075ms infinite linear;
-}
-
-.c116 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 8px;
-  --begin-y: -15%;
-  --end-y: -38%;
-  animation: 4368ms particle-movement 3014ms infinite linear;
-}
-
-.c118 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 4px;
-  --begin-y: -14%;
-  --end-y: 10%;
-  animation: 6662ms particle-movement 6161ms infinite linear;
-}
-
-.c120 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 3px;
-  --begin-y: 24%;
-  --end-y: -24%;
-  animation: 3934ms particle-movement 2905ms infinite linear;
-}
-
-.c122 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 3px;
-  --begin-y: 31%;
-  --end-y: 42%;
-  animation: 6851ms particle-movement 4329ms infinite linear;
-}
-
-.c124 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 3px;
-  --begin-y: -10%;
-  --end-y: -2%;
-  animation: 4278ms particle-movement 6466ms infinite linear;
-}
-
-.c126 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 10px;
-  --begin-y: -9%;
-  --end-y: -29%;
-  animation: 6641ms particle-movement 10354ms infinite linear;
-}
-
-.c128 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 1px;
-  --begin-y: 34%;
-  --end-y: 25%;
-  animation: 5693ms particle-movement 10544ms infinite linear;
-}
-
-.c130 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 10px;
-  --begin-y: -24%;
-  --end-y: 21%;
-  animation: 4226ms particle-movement 2963ms infinite linear;
-}
-
-.c132 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 3px;
-  --begin-y: 33%;
-  --end-y: 34%;
-  animation: 3646ms particle-movement 1265ms infinite linear;
-}
-
-.c35 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 536ms infinite,particle-scale 1978ms infinite;
-  animation-delay: 5ms;
-}
-
-.c37 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 591ms infinite,particle-scale 1374ms infinite;
-  animation-delay: 29ms;
-}
-
-.c39 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 594ms infinite,particle-scale 1177ms infinite;
-  animation-delay: 81ms;
-}
-
-.c41 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 743ms infinite,particle-scale 1608ms infinite;
-  animation-delay: 60ms;
-}
-
-.c43 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 793ms infinite,particle-scale 1292ms infinite;
-  animation-delay: 81ms;
-}
-
-.c45 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 766ms infinite,particle-scale 1872ms infinite;
-  animation-delay: 56ms;
-}
-
-.c47 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 882ms infinite,particle-scale 1996ms infinite;
-  animation-delay: 63ms;
-}
-
-.c49 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 718ms infinite,particle-scale 1543ms infinite;
-  animation-delay: 50ms;
-}
-
-.c51 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 535ms infinite,particle-scale 1070ms infinite;
-  animation-delay: 67ms;
-}
-
-.c53 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 631ms infinite,particle-scale 1779ms infinite;
-  animation-delay: 21ms;
-}
-
-.c55 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 715ms infinite,particle-scale 1720ms infinite;
-  animation-delay: 19ms;
-}
-
-.c57 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 697ms infinite,particle-scale 1949ms infinite;
-  animation-delay: 82ms;
-}
-
-.c59 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 575ms infinite,particle-scale 1903ms infinite;
-  animation-delay: 80ms;
-}
-
-.c61 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 673ms infinite,particle-scale 1705ms infinite;
-  animation-delay: 16ms;
-}
-
-.c63 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 572ms infinite,particle-scale 1978ms infinite;
-  animation-delay: 26ms;
-}
-
-.c65 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 970ms infinite,particle-scale 1972ms infinite;
-  animation-delay: 59ms;
-}
-
-.c67 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 940ms infinite,particle-scale 1652ms infinite;
-  animation-delay: 57ms;
-}
-
-.c69 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 743ms infinite,particle-scale 1964ms infinite;
-  animation-delay: 44ms;
-}
-
-.c71 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 571ms infinite,particle-scale 1093ms infinite;
-  animation-delay: 35ms;
-}
-
-.c73 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 764ms infinite,particle-scale 1972ms infinite;
-  animation-delay: 75ms;
-}
-
-.c75 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 701ms infinite,particle-scale 1905ms infinite;
-  animation-delay: 26ms;
-}
-
-.c77 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 723ms infinite,particle-scale 1198ms infinite;
-  animation-delay: 71ms;
-}
-
-.c79 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 510ms infinite,particle-scale 1151ms infinite;
-  animation-delay: 16ms;
-}
-
-.c81 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 892ms infinite,particle-scale 1863ms infinite;
-  animation-delay: 2ms;
-}
-
-.c83 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 667ms infinite,particle-scale 1310ms infinite;
-  animation-delay: 64ms;
-}
-
-.c85 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 976ms infinite,particle-scale 1395ms infinite;
-  animation-delay: 89ms;
-}
-
-.c87 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 621ms infinite,particle-scale 1759ms infinite;
-  animation-delay: 24ms;
-}
-
-.c89 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 997ms infinite,particle-scale 1886ms infinite;
-  animation-delay: 92ms;
-}
-
-.c91 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 957ms infinite,particle-scale 1842ms infinite;
-  animation-delay: 97ms;
-}
-
-.c93 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 922ms infinite,particle-scale 1606ms infinite;
-  animation-delay: 84ms;
-}
-
-.c95 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 896ms infinite,particle-scale 1561ms infinite;
-  animation-delay: 99ms;
-}
-
-.c97 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 796ms infinite,particle-scale 1924ms infinite;
-  animation-delay: 86ms;
-}
-
-.c99 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 830ms infinite,particle-scale 1828ms infinite;
-  animation-delay: 86ms;
-}
-
-.c101 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 564ms infinite,particle-scale 1679ms infinite;
-  animation-delay: 2ms;
-}
-
-.c103 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 827ms infinite,particle-scale 1979ms infinite;
-  animation-delay: 12ms;
-}
-
-.c105 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 772ms infinite,particle-scale 1694ms infinite;
-  animation-delay: 68ms;
-}
-
-.c107 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 720ms infinite,particle-scale 1263ms infinite;
-  animation-delay: 55ms;
-}
-
-.c109 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 528ms infinite,particle-scale 1294ms infinite;
-  animation-delay: 17ms;
-}
-
-.c111 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 571ms infinite,particle-scale 1908ms infinite;
-  animation-delay: 88ms;
-}
-
-.c113 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 588ms infinite,particle-scale 1130ms infinite;
-  animation-delay: 62ms;
-}
-
-.c115 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 844ms infinite,particle-scale 1763ms infinite;
-  animation-delay: 89ms;
-}
-
-.c117 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 948ms infinite,particle-scale 1197ms infinite;
-  animation-delay: 16ms;
-}
-
-.c119 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 821ms infinite,particle-scale 1976ms infinite;
-  animation-delay: 54ms;
-}
-
-.c121 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 941ms infinite,particle-scale 1702ms infinite;
-  animation-delay: 27ms;
-}
-
-.c123 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 865ms infinite,particle-scale 1154ms infinite;
-  animation-delay: 85ms;
-}
-
-.c125 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 686ms infinite,particle-scale 1319ms infinite;
-  animation-delay: 62ms;
-}
-
-.c127 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 780ms infinite,particle-scale 1306ms infinite;
-  animation-delay: 55ms;
-}
-
-.c129 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 599ms infinite,particle-scale 1002ms infinite;
-  animation-delay: 95ms;
-}
-
-.c131 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 541ms infinite,particle-scale 1620ms infinite;
-  animation-delay: 30ms;
-}
-
-.c133 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 727ms infinite,particle-scale 1263ms infinite;
-  animation-delay: 28ms;
 }
 
 .c27 {
@@ -1876,6 +449,1192 @@ exports[`HomePage should render successfully 1`] = `
   right: 61px;
 }
 
+.c134 {
+  --itemSize: 20%;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  animation: 13.647565047038274s horizontal-movement 4.785845932065498s linear infinite;
+}
+
+.c135 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  --translateY-begin: -10%;
+  --translateY-end: -16%;
+  animation: 10.026187239264399s vertical-movement ease-in-out alternate infinite;
+}
+
+.c136 {
+  z-index: 3;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               1 *                 360deg             );
+  animation: 4.8212733888441495s rotate-movement linear infinite;
+}
+
+.c137 svg {
+  width: 100%;
+  height: 100%;
+  color: #FFDD83;
+  animation: 13.647565047038274s color-swap 4.785845932065498s linear infinite;
+}
+
+.c34 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 1px;
+  --begin-y: -37%;
+  --end-y: 46%;
+  animation: 4349ms particle-movement 9669ms infinite linear;
+}
+
+.c36 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 7px;
+  --begin-y: 8%;
+  --end-y: 22%;
+  animation: 5896ms particle-movement 6456ms infinite linear;
+}
+
+.c38 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 6px;
+  --begin-y: 9%;
+  --end-y: -27%;
+  animation: 6912ms particle-movement 3022ms infinite linear;
+}
+
+.c40 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 5px;
+  --begin-y: -10%;
+  --end-y: -24%;
+  animation: 4303ms particle-movement 8257ms infinite linear;
+}
+
+.c42 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 9px;
+  --begin-y: -36%;
+  --end-y: -10%;
+  animation: 4454ms particle-movement 6051ms infinite linear;
+}
+
+.c44 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 2px;
+  --begin-y: 10%;
+  --end-y: -24%;
+  animation: 5185ms particle-movement 4717ms infinite linear;
+}
+
+.c46 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 9px;
+  --begin-y: 3%;
+  --end-y: 41%;
+  animation: 5029ms particle-movement 8040ms infinite linear;
+}
+
+.c48 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 3px;
+  --begin-y: -18%;
+  --end-y: -19%;
+  animation: 3951ms particle-movement 1418ms infinite linear;
+}
+
+.c50 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 1px;
+  --begin-y: -7%;
+  --end-y: 27%;
+  animation: 3702ms particle-movement 2667ms infinite linear;
+}
+
+.c52 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 9px;
+  --begin-y: -45%;
+  --end-y: -18%;
+  animation: 6412ms particle-movement 9756ms infinite linear;
+}
+
+.c54 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 3px;
+  --begin-y: 30%;
+  --end-y: 2%;
+  animation: 6074ms particle-movement 226ms infinite linear;
+}
+
+.c56 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 8px;
+  --begin-y: 27%;
+  --end-y: 21%;
+  animation: 3487ms particle-movement 4523ms infinite linear;
+}
+
+.c58 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 5px;
+  --begin-y: 34%;
+  --end-y: -9%;
+  animation: 3538ms particle-movement 3021ms infinite linear;
+}
+
+.c60 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 3px;
+  --begin-y: 34%;
+  --end-y: -42%;
+  animation: 5503ms particle-movement 631ms infinite linear;
+}
+
+.c62 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 2px;
+  --begin-y: 28%;
+  --end-y: -42%;
+  animation: 6225ms particle-movement 2157ms infinite linear;
+}
+
+.c64 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 1px;
+  --begin-y: 36%;
+  --end-y: 45%;
+  animation: 5946ms particle-movement 7200ms infinite linear;
+}
+
+.c66 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 6px;
+  --begin-y: 40%;
+  --end-y: 24%;
+  animation: 5439ms particle-movement 279ms infinite linear;
+}
+
+.c68 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 5px;
+  --begin-y: 25%;
+  --end-y: 6%;
+  animation: 4284ms particle-movement 2490ms infinite linear;
+}
+
+.c70 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 5px;
+  --begin-y: 25%;
+  --end-y: -1%;
+  animation: 6498ms particle-movement 10701ms infinite linear;
+}
+
+.c72 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 6px;
+  --begin-y: -17%;
+  --end-y: -6%;
+  animation: 3375ms particle-movement 1883ms infinite linear;
+}
+
+.c74 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 8px;
+  --begin-y: -7%;
+  --end-y: -21%;
+  animation: 3331ms particle-movement 1776ms infinite linear;
+}
+
+.c76 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 5px;
+  --begin-y: 24%;
+  --end-y: 20%;
+  animation: 3792ms particle-movement 10795ms infinite linear;
+}
+
+.c78 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 4px;
+  --begin-y: -17%;
+  --end-y: -24%;
+  animation: 5358ms particle-movement 10234ms infinite linear;
+}
+
+.c80 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 9px;
+  --begin-y: -31%;
+  --end-y: 35%;
+  animation: 6640ms particle-movement 6321ms infinite linear;
+}
+
+.c82 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 1px;
+  --begin-y: 18%;
+  --end-y: -14%;
+  animation: 5951ms particle-movement 5293ms infinite linear;
+}
+
+.c84 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 10px;
+  --begin-y: -31%;
+  --end-y: 30%;
+  animation: 6739ms particle-movement 545ms infinite linear;
+}
+
+.c86 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 6px;
+  --begin-y: 22%;
+  --end-y: -15%;
+  animation: 5808ms particle-movement 5659ms infinite linear;
+}
+
+.c88 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 10px;
+  --begin-y: -35%;
+  --end-y: -28%;
+  animation: 6234ms particle-movement 6944ms infinite linear;
+}
+
+.c90 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 10px;
+  --begin-y: 31%;
+  --end-y: -32%;
+  animation: 4790ms particle-movement 9416ms infinite linear;
+}
+
+.c92 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 7px;
+  --begin-y: -41%;
+  --end-y: 7%;
+  animation: 4585ms particle-movement 814ms infinite linear;
+}
+
+.c94 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 9px;
+  --begin-y: -34%;
+  --end-y: -14%;
+  animation: 5459ms particle-movement 10528ms infinite linear;
+}
+
+.c96 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 10px;
+  --begin-y: -12%;
+  --end-y: 15%;
+  animation: 6263ms particle-movement 6435ms infinite linear;
+}
+
+.c98 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 7px;
+  --begin-y: -29%;
+  --end-y: 26%;
+  animation: 6145ms particle-movement 1970ms infinite linear;
+}
+
+.c100 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 5px;
+  --begin-y: 45%;
+  --end-y: 12%;
+  animation: 5385ms particle-movement 3946ms infinite linear;
+}
+
+.c102 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 9px;
+  --begin-y: 9%;
+  --end-y: -31%;
+  animation: 4442ms particle-movement 2862ms infinite linear;
+}
+
+.c104 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 1px;
+  --begin-y: 14%;
+  --end-y: -40%;
+  animation: 4843ms particle-movement 4667ms infinite linear;
+}
+
+.c106 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 9px;
+  --begin-y: -3%;
+  --end-y: -41%;
+  animation: 3629ms particle-movement 2589ms infinite linear;
+}
+
+.c108 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 4px;
+  --begin-y: 21%;
+  --end-y: -26%;
+  animation: 4976ms particle-movement 10601ms infinite linear;
+}
+
+.c110 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 9px;
+  --begin-y: -39%;
+  --end-y: -23%;
+  animation: 6283ms particle-movement 9023ms infinite linear;
+}
+
+.c112 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 6px;
+  --begin-y: 43%;
+  --end-y: 33%;
+  animation: 4921ms particle-movement 2305ms infinite linear;
+}
+
+.c114 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 2px;
+  --begin-y: 24%;
+  --end-y: 28%;
+  animation: 4358ms particle-movement 9810ms infinite linear;
+}
+
+.c116 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 4px;
+  --begin-y: 9%;
+  --end-y: 18%;
+  animation: 6550ms particle-movement 82ms infinite linear;
+}
+
+.c118 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 1px;
+  --begin-y: 6%;
+  --end-y: -21%;
+  animation: 5304ms particle-movement 7556ms infinite linear;
+}
+
+.c120 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 9px;
+  --begin-y: 42%;
+  --end-y: -19%;
+  animation: 4599ms particle-movement 4673ms infinite linear;
+}
+
+.c122 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 2px;
+  --begin-y: -4%;
+  --end-y: -12%;
+  animation: 5188ms particle-movement 6583ms infinite linear;
+}
+
+.c124 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 7px;
+  --begin-y: 28%;
+  --end-y: 38%;
+  animation: 4282ms particle-movement 6669ms infinite linear;
+}
+
+.c126 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 8px;
+  --begin-y: 0%;
+  --end-y: -13%;
+  animation: 5637ms particle-movement 1075ms infinite linear;
+}
+
+.c128 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 8px;
+  --begin-y: -15%;
+  --end-y: -38%;
+  animation: 4368ms particle-movement 3014ms infinite linear;
+}
+
+.c130 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 4px;
+  --begin-y: -14%;
+  --end-y: 10%;
+  animation: 6662ms particle-movement 6161ms infinite linear;
+}
+
+.c132 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 3px;
+  --begin-y: 24%;
+  --end-y: -24%;
+  animation: 3934ms particle-movement 2905ms infinite linear;
+}
+
+.c35 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 736ms infinite,particle-scale 1634ms infinite;
+  animation-delay: 14ms;
+}
+
+.c37 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 888ms infinite,particle-scale 1521ms infinite;
+  animation-delay: 89ms;
+}
+
+.c39 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 775ms infinite,particle-scale 1709ms infinite;
+  animation-delay: 17ms;
+}
+
+.c41 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 754ms infinite,particle-scale 1082ms infinite;
+  animation-delay: 96ms;
+}
+
+.c43 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 782ms infinite,particle-scale 1138ms infinite;
+  animation-delay: 34ms;
+}
+
+.c45 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 782ms infinite,particle-scale 1482ms infinite;
+  animation-delay: 22ms;
+}
+
+.c47 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 536ms infinite,particle-scale 1978ms infinite;
+  animation-delay: 5ms;
+}
+
+.c49 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 591ms infinite,particle-scale 1374ms infinite;
+  animation-delay: 29ms;
+}
+
+.c51 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 594ms infinite,particle-scale 1177ms infinite;
+  animation-delay: 81ms;
+}
+
+.c53 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 743ms infinite,particle-scale 1608ms infinite;
+  animation-delay: 60ms;
+}
+
+.c55 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 793ms infinite,particle-scale 1292ms infinite;
+  animation-delay: 81ms;
+}
+
+.c57 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 766ms infinite,particle-scale 1872ms infinite;
+  animation-delay: 56ms;
+}
+
+.c59 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 882ms infinite,particle-scale 1996ms infinite;
+  animation-delay: 63ms;
+}
+
+.c61 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 718ms infinite,particle-scale 1543ms infinite;
+  animation-delay: 50ms;
+}
+
+.c63 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 535ms infinite,particle-scale 1070ms infinite;
+  animation-delay: 67ms;
+}
+
+.c65 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 631ms infinite,particle-scale 1779ms infinite;
+  animation-delay: 21ms;
+}
+
+.c67 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 715ms infinite,particle-scale 1720ms infinite;
+  animation-delay: 19ms;
+}
+
+.c69 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 697ms infinite,particle-scale 1949ms infinite;
+  animation-delay: 82ms;
+}
+
+.c71 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 575ms infinite,particle-scale 1903ms infinite;
+  animation-delay: 80ms;
+}
+
+.c73 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 673ms infinite,particle-scale 1705ms infinite;
+  animation-delay: 16ms;
+}
+
+.c75 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 572ms infinite,particle-scale 1978ms infinite;
+  animation-delay: 26ms;
+}
+
+.c77 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 970ms infinite,particle-scale 1972ms infinite;
+  animation-delay: 59ms;
+}
+
+.c79 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 940ms infinite,particle-scale 1652ms infinite;
+  animation-delay: 57ms;
+}
+
+.c81 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 743ms infinite,particle-scale 1964ms infinite;
+  animation-delay: 44ms;
+}
+
+.c83 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 571ms infinite,particle-scale 1093ms infinite;
+  animation-delay: 35ms;
+}
+
+.c85 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 764ms infinite,particle-scale 1972ms infinite;
+  animation-delay: 75ms;
+}
+
+.c87 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 701ms infinite,particle-scale 1905ms infinite;
+  animation-delay: 26ms;
+}
+
+.c89 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 723ms infinite,particle-scale 1198ms infinite;
+  animation-delay: 71ms;
+}
+
+.c91 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 510ms infinite,particle-scale 1151ms infinite;
+  animation-delay: 16ms;
+}
+
+.c93 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 892ms infinite,particle-scale 1863ms infinite;
+  animation-delay: 2ms;
+}
+
+.c95 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 667ms infinite,particle-scale 1310ms infinite;
+  animation-delay: 64ms;
+}
+
+.c97 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 976ms infinite,particle-scale 1395ms infinite;
+  animation-delay: 89ms;
+}
+
+.c99 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 621ms infinite,particle-scale 1759ms infinite;
+  animation-delay: 24ms;
+}
+
+.c101 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 997ms infinite,particle-scale 1886ms infinite;
+  animation-delay: 92ms;
+}
+
+.c103 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 957ms infinite,particle-scale 1842ms infinite;
+  animation-delay: 97ms;
+}
+
+.c105 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 922ms infinite,particle-scale 1606ms infinite;
+  animation-delay: 84ms;
+}
+
+.c107 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 896ms infinite,particle-scale 1561ms infinite;
+  animation-delay: 99ms;
+}
+
+.c109 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 796ms infinite,particle-scale 1924ms infinite;
+  animation-delay: 86ms;
+}
+
+.c111 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 830ms infinite,particle-scale 1828ms infinite;
+  animation-delay: 86ms;
+}
+
+.c113 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 564ms infinite,particle-scale 1679ms infinite;
+  animation-delay: 2ms;
+}
+
+.c115 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 827ms infinite,particle-scale 1979ms infinite;
+  animation-delay: 12ms;
+}
+
+.c117 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 772ms infinite,particle-scale 1694ms infinite;
+  animation-delay: 68ms;
+}
+
+.c119 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 720ms infinite,particle-scale 1263ms infinite;
+  animation-delay: 55ms;
+}
+
+.c121 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 528ms infinite,particle-scale 1294ms infinite;
+  animation-delay: 17ms;
+}
+
+.c123 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 571ms infinite,particle-scale 1908ms infinite;
+  animation-delay: 88ms;
+}
+
+.c125 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 588ms infinite,particle-scale 1130ms infinite;
+  animation-delay: 62ms;
+}
+
+.c127 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 844ms infinite,particle-scale 1763ms infinite;
+  animation-delay: 89ms;
+}
+
+.c129 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 948ms infinite,particle-scale 1197ms infinite;
+  animation-delay: 16ms;
+}
+
+.c131 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 821ms infinite,particle-scale 1976ms infinite;
+  animation-delay: 54ms;
+}
+
+.c133 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 941ms infinite,particle-scale 1702ms infinite;
+  animation-delay: 27ms;
+}
+
 .c24 {
   --transform-origin-first: bottom;
   --transform-origin-last: top;
@@ -1912,7 +1671,7 @@ exports[`HomePage should render successfully 1`] = `
   background-color: #000000;
 }
 
-.c155 {
+.c138 {
   flex-grow: 1;
   border: 1px solid #98DFD6;
   transform-origin: var(--transform-origin-last);
@@ -1921,19 +1680,19 @@ exports[`HomePage should render successfully 1`] = `
 }
 
 @media (min-width: 1024px) {
-  .c161 {
+  .c144 {
     justify-content: space-between;
     grid-template-columns: 1fr 100px;
   }
 }
 
 @media (min-width: 768px) {
-  .c165 {
+  .c148 {
     display: flex;
     position: relative;
   }
 
-  .c165::after {
+  .c148::after {
     content: '';
     position: absolute;
     width: 100%;
@@ -1946,14 +1705,14 @@ exports[`HomePage should render successfully 1`] = `
     transition: transform 0.25s ease-out;
   }
 
-  .c165:hover::after {
+  .c148:hover::after {
     transform: scaleX(1);
     transform-origin: bottom left;
   }
 }
 
 @media (min-width: 1024px) {
-  .c166 {
+  .c149 {
     justify-self: end;
     padding: 0;
   }
@@ -2075,7 +1834,7 @@ exports[`HomePage should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c156 {
+  .c139 {
     margin-bottom: 40px;
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
@@ -2092,7 +1851,7 @@ exports[`HomePage should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c157 .c7 {
+  .c140 .c7 {
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
     color: #FBFBFB;
@@ -2754,107 +2513,34 @@ exports[`HomePage should render successfully 1`] = `
                     <div
                       class="c136"
                       data-testid="rotation-movement"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c137"
-                  data-testid="horizontal-movement"
-                >
-                  <div
-                    class="c138"
-                    data-testid="vertical-movement"
-                  >
-                    <div
-                      class="c139"
-                      data-testid="rotation-movement"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c140"
-                  data-testid="horizontal-movement"
-                >
-                  <div
-                    class="c141"
-                    data-testid="vertical-movement"
-                  >
-                    <div
-                      class="c142"
-                      data-testid="rotation-movement"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c143"
-                  data-testid="horizontal-movement"
-                >
-                  <div
-                    class="c144"
-                    data-testid="vertical-movement"
-                  >
-                    <div
-                      class="c145"
-                      data-testid="rotation-movement"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c146"
-                  data-testid="horizontal-movement"
-                >
-                  <div
-                    class="c147"
-                    data-testid="vertical-movement"
-                  >
-                    <div
-                      class="c148"
-                      data-testid="rotation-movement"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c149"
-                  data-testid="horizontal-movement"
-                >
-                  <div
-                    class="c150"
-                    data-testid="vertical-movement"
-                  >
-                    <div
-                      class="c151"
-                      data-testid="rotation-movement"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c152"
-                  data-testid="horizontal-movement"
-                >
-                  <div
-                    class="c153"
-                    data-testid="vertical-movement"
-                  >
-                    <div
-                      class="c154"
-                      data-testid="rotation-movement"
-                    />
+                    >
+                      <div
+                        class="c137"
+                        data-testid="color-swapping"
+                      >
+                        <svg
+                          color="red"
+                        >
+                          nodejs.svg
+                        </svg>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div
-            class="c155"
+            class="c138"
           />
         </div>
         <h2
-          class="c18 c156"
+          class="c18 c139"
         >
           About me
         </h2>
         <section
-          class="c157"
+          class="c140"
         >
           <p
             class="c7 c8"
@@ -2902,27 +2588,27 @@ exports[`HomePage should render successfully 1`] = `
         </a>
       </div>
       <footer
-        class="c158"
+        class="c141"
         tabindex="-1"
       >
         <div
-          class="c159"
+          class="c142"
         >
           <div
-            class="c160"
+            class="c143"
           />
           <div
-            class="c160"
+            class="c143"
           />
           <div
-            class="c160"
+            class="c143"
           />
         </div>
         <div
-          class="c161"
+          class="c144"
         >
           <svg
-            class="c162"
+            class="c145"
             height="64"
             width="120"
           >
@@ -2930,14 +2616,14 @@ exports[`HomePage should render successfully 1`] = `
           </svg>
           <nav
             aria-label="Site map"
-            class="c163"
+            class="c146"
           >
             <ul
-              class="c164"
+              class="c147"
             >
               <li>
                 <a
-                  class="c165"
+                  class="c148"
                   href="/experience"
                 >
                   <p
@@ -2949,7 +2635,7 @@ exports[`HomePage should render successfully 1`] = `
               </li>
               <li>
                 <a
-                  class="c165"
+                  class="c148"
                   href="/contact"
                 >
                   <p
@@ -2961,7 +2647,7 @@ exports[`HomePage should render successfully 1`] = `
               </li>
               <li>
                 <a
-                  class="c165"
+                  class="c148"
                   href="/portfolio"
                 >
                   <p
@@ -2973,7 +2659,7 @@ exports[`HomePage should render successfully 1`] = `
               </li>
               <li>
                 <a
-                  class="c165"
+                  class="c148"
                   href="#"
                 >
                   <svg
@@ -2992,7 +2678,7 @@ exports[`HomePage should render successfully 1`] = `
               </li>
               <li>
                 <a
-                  class="c165"
+                  class="c148"
                   href="#"
                 >
                   <svg
@@ -3012,7 +2698,7 @@ exports[`HomePage should render successfully 1`] = `
             </ul>
           </nav>
           <div
-            class="c166"
+            class="c149"
           >
             <a
               aria-label="Telegram"
