@@ -61,7 +61,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   overflow: hidden;
 }
 
-.c188 {
+.c268 {
   position: relative;
   width: 100%;
   display: flex;
@@ -71,25 +71,25 @@ exports[`[lng] route - Page should render successfully 1`] = `
   margin-top: 50px;
 }
 
-.c189 {
+.c269 {
   position: relative;
   width: 100%;
   height: 15px;
 }
 
-.c192 {
+.c272 {
   position: absolute;
   top: -61px;
   left: 30px;
 }
 
-.c190 {
+.c270 {
   height: 7px;
   width: 100%;
   position: relative;
 }
 
-.c190:before {
+.c270:before {
   content: '';
   position: absolute;
   width: 100%;
@@ -97,7 +97,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   background: linear-gradient(         to bottom,         rgba(0,0,0,0.3),         rgba(152,223,214,0.3)       );
 }
 
-.c191 {
+.c271 {
   position: relative;
   max-width: 1440px;
   min-height: 120px;
@@ -108,13 +108,13 @@ exports[`[lng] route - Page should render successfully 1`] = `
   padding: 30px;
 }
 
-.c193 {
+.c273 {
   display: flex;
   align-items: center;
   position: relative;
 }
 
-.c194 {
+.c274 {
   display: flex;
   align-items: center;
   flex-grow: 1;
@@ -124,18 +124,18 @@ exports[`[lng] route - Page should render successfully 1`] = `
   flex-wrap: wrap;
 }
 
-.c195 {
+.c275 {
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
-.c195:hover,
-.c195:focus {
+.c275:hover,
+.c275:focus {
   text-decoration: none;
 }
 
-.c196 {
+.c276 {
   height: 20px;
   display: flex;
   gap: 20px;
@@ -352,7 +352,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   text-align: center;
 }
 
-.c186 {
+.c266 {
   margin-top: 30px;
 }
 
@@ -361,13 +361,13 @@ exports[`[lng] route - Page should render successfully 1`] = `
   margin-bottom: 30px;
 }
 
-.c187 {
+.c267 {
   text-align: center;
   max-width: 1180px;
   padding: 0 34px;
 }
 
-.c187 .c7 {
+.c267 .c7 {
   margin-top: 20px;
 }
 
@@ -455,7 +455,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   transform: translateX(-60%);
   width: 100%;
   height: 100%;
-  animation: 18.05300058120506s horizontal-movement 1.2597847900663388s linear infinite;
+  animation: 14.501948412237848s horizontal-movement 4.004758931177131s linear infinite;
 }
 
 .c138 {
@@ -464,7 +464,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   transform: translateX(-60%);
   width: 100%;
   height: 100%;
-  animation: 18.88102079690248s horizontal-movement 4.476795931285851s linear infinite;
+  animation: 6.396043301898936s horizontal-movement 4.300147641144077s linear infinite;
 }
 
 .c142 {
@@ -473,7 +473,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   transform: translateX(-60%);
   width: 100%;
   height: 100%;
-  animation: 13.082434717886677s horizontal-movement 5.785497649948763s linear infinite;
+  animation: 6.739226836196641s horizontal-movement 5.3146807916333705s linear infinite;
 }
 
 .c146 {
@@ -482,7 +482,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   transform: translateX(-60%);
   width: 100%;
   height: 100%;
-  animation: 13.998429508231345s horizontal-movement 1.3198346450422775s linear infinite;
+  animation: 7.314999009263957s horizontal-movement 3.884677080400321s linear infinite;
 }
 
 .c150 {
@@ -491,7 +491,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   transform: translateX(-60%);
   width: 100%;
   height: 100%;
-  animation: 15.839977620116896s horizontal-movement 5.954514895873972s linear infinite;
+  animation: 18.129616403901895s horizontal-movement 1.0692666569511644s linear infinite;
 }
 
 .c154 {
@@ -500,7 +500,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   transform: translateX(-60%);
   width: 100%;
   height: 100%;
-  animation: 9.567827032117348s horizontal-movement 2.4903645871762716s linear infinite;
+  animation: 13.674047718239011s horizontal-movement 3.1258417150020077s linear infinite;
 }
 
 .c158 {
@@ -509,7 +509,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   transform: translateX(-60%);
   width: 100%;
   height: 100%;
-  animation: 16.547170604589763s horizontal-movement 5.080389063344657s linear infinite;
+  animation: 9.82836261259583s horizontal-movement 2.062870944938072s linear infinite;
 }
 
 .c162 {
@@ -518,7 +518,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   transform: translateX(-60%);
   width: 100%;
   height: 100%;
-  animation: 17.491744852899615s horizontal-movement 1.9908158093620472s linear infinite;
+  animation: 17.743241187822683s horizontal-movement 2.7885967428804683s linear infinite;
 }
 
 .c166 {
@@ -527,7 +527,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   transform: translateX(-60%);
   width: 100%;
   height: 100%;
-  animation: 12.491132583585378s horizontal-movement 5.8541714215255904s linear infinite;
+  animation: 10.938713171824439s horizontal-movement 3.3156658398184984s linear infinite;
 }
 
 .c170 {
@@ -536,7 +536,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   transform: translateX(-60%);
   width: 100%;
   height: 100%;
-  animation: 11.001141353180081s horizontal-movement 2.5718628558273195s linear infinite;
+  animation: 17.44306583067705s horizontal-movement 5.294487432922727s linear infinite;
 }
 
 .c174 {
@@ -545,7 +545,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   transform: translateX(-60%);
   width: 100%;
   height: 100%;
-  animation: 11.689741753614907s horizontal-movement 4.080281814075244s linear infinite;
+  animation: 15.509893016471953s horizontal-movement 2.9572919940548696s linear infinite;
 }
 
 .c178 {
@@ -554,7 +554,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   transform: translateX(-60%);
   width: 100%;
   height: 100%;
-  animation: 12.67383407329346s horizontal-movement 5.160581943556555s linear infinite;
+  animation: 19.12932580573847s horizontal-movement 3.989656098364553s linear infinite;
 }
 
 .c181 {
@@ -563,7 +563,187 @@ exports[`[lng] route - Page should render successfully 1`] = `
   transform: translateX(-60%);
   width: 100%;
   height: 100%;
-  animation: 10.891433412217104s horizontal-movement 1.764246867578978s linear infinite;
+  animation: 19.065050256372224s horizontal-movement 2.5073406847660316s linear infinite;
+}
+
+.c185 {
+  --itemSize: 20%;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  animation: 10.957052644999306s horizontal-movement 3.1785129841322397s linear infinite;
+}
+
+.c189 {
+  --itemSize: 20%;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  animation: 16.949068012652717s horizontal-movement 5.839230432550049s linear infinite;
+}
+
+.c193 {
+  --itemSize: 20%;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  animation: 7.173010084705733s horizontal-movement 5.714081736000347s linear infinite;
+}
+
+.c197 {
+  --itemSize: 20%;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  animation: 13.712099113382012s horizontal-movement 4.971796085611452s linear infinite;
+}
+
+.c201 {
+  --itemSize: 20%;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  animation: 19.111644713022578s horizontal-movement 1.1530847856295299s linear infinite;
+}
+
+.c205 {
+  --itemSize: 20%;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  animation: 9.442560736080011s horizontal-movement 2.3807010218515328s linear infinite;
+}
+
+.c209 {
+  --itemSize: 20%;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  animation: 16.28764367003651s horizontal-movement 1.4004741685948354s linear infinite;
+}
+
+.c213 {
+  --itemSize: 20%;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  animation: 7.1587829938286776s horizontal-movement 3.255874519059253s linear infinite;
+}
+
+.c217 {
+  --itemSize: 20%;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  animation: 19.030547634796502s horizontal-movement 1.1112909909995383s linear infinite;
+}
+
+.c221 {
+  --itemSize: 20%;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  animation: 8.145223527287094s horizontal-movement 2.0840018811835015s linear infinite;
+}
+
+.c225 {
+  --itemSize: 20%;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  animation: 16.18610079292373s horizontal-movement 3.4837155706149545s linear infinite;
+}
+
+.c229 {
+  --itemSize: 20%;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  animation: 14.582321789319911s horizontal-movement 2.3972271471352573s linear infinite;
+}
+
+.c233 {
+  --itemSize: 20%;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  animation: 18.18068535179151s horizontal-movement 3.270809953828155s linear infinite;
+}
+
+.c237 {
+  --itemSize: 20%;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  animation: 10.26636822372047s horizontal-movement 2.6510962818446795s linear infinite;
+}
+
+.c241 {
+  --itemSize: 20%;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  animation: 7.290128121353404s horizontal-movement 1.3366963321038612s linear infinite;
+}
+
+.c245 {
+  --itemSize: 20%;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  animation: 10.393107584698136s horizontal-movement 1.2516098387668853s linear infinite;
+}
+
+.c249 {
+  --itemSize: 20%;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  animation: 17.507425237904364s horizontal-movement 1.595570484119789s linear infinite;
+}
+
+.c253 {
+  --itemSize: 20%;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  animation: 6.801547858923821s horizontal-movement 1.89541591731918s linear infinite;
+}
+
+.c257 {
+  --itemSize: 20%;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  animation: 12.468810528646326s horizontal-movement 2.4120887105284696s linear infinite;
+}
+
+.c261 {
+  --itemSize: 20%;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  animation: 16.70012363872681s horizontal-movement 5.005393507744465s linear infinite;
 }
 
 .c135 {
@@ -572,9 +752,9 @@ exports[`[lng] route - Page should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -1%;
-  --translateY-end: 37%;
-  animation: 10.353047293629341s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -5%;
+  --translateY-end: 13%;
+  animation: 9.129342322797918s vertical-movement ease-in-out alternate infinite;
 }
 
 .c139 {
@@ -583,9 +763,9 @@ exports[`[lng] route - Page should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: 1%;
-  --translateY-end: 23%;
-  animation: 9.159940978761442s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -32%;
+  --translateY-end: 9%;
+  animation: 10.759541623030781s vertical-movement ease-in-out alternate infinite;
 }
 
 .c143 {
@@ -594,9 +774,9 @@ exports[`[lng] route - Page should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: 1%;
-  --translateY-end: -5%;
-  animation: 9.42194608558071s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -2%;
+  --translateY-end: 0%;
+  animation: 2.5066806257683485s vertical-movement ease-in-out alternate infinite;
 }
 
 .c147 {
@@ -605,9 +785,9 @@ exports[`[lng] route - Page should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -12%;
-  --translateY-end: -16%;
-  animation: 5.178123905800033s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -23%;
+  --translateY-end: 11%;
+  animation: 10.845403714500012s vertical-movement ease-in-out alternate infinite;
 }
 
 .c151 {
@@ -616,9 +796,9 @@ exports[`[lng] route - Page should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -24%;
-  --translateY-end: -20%;
-  animation: 10.961216391346184s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: 5%;
+  --translateY-end: -1%;
+  animation: 10.004175459426957s vertical-movement ease-in-out alternate infinite;
 }
 
 .c155 {
@@ -627,9 +807,9 @@ exports[`[lng] route - Page should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -8%;
-  --translateY-end: -19%;
-  animation: 7.005948813078015s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -31%;
+  --translateY-end: 37%;
+  animation: 2.4787571780616036s vertical-movement ease-in-out alternate infinite;
 }
 
 .c159 {
@@ -638,9 +818,9 @@ exports[`[lng] route - Page should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -19%;
-  --translateY-end: 5%;
-  animation: 6.3929699041486145s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -20%;
+  --translateY-end: -19%;
+  animation: 10.031570773327761s vertical-movement ease-in-out alternate infinite;
 }
 
 .c163 {
@@ -649,9 +829,9 @@ exports[`[lng] route - Page should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -23%;
-  --translateY-end: 22%;
-  animation: 7.382745424928679s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -35%;
+  --translateY-end: 3%;
+  animation: 10.811304991432383s vertical-movement ease-in-out alternate infinite;
 }
 
 .c167 {
@@ -660,9 +840,9 @@ exports[`[lng] route - Page should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -23%;
-  --translateY-end: 19%;
-  animation: 6.419642216820769s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -21%;
+  --translateY-end: -14%;
+  animation: 9.368347550616107s vertical-movement ease-in-out alternate infinite;
 }
 
 .c171 {
@@ -671,9 +851,9 @@ exports[`[lng] route - Page should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: 9%;
-  --translateY-end: -13%;
-  animation: 10.35149314136392s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: 12%;
+  --translateY-end: 33%;
+  animation: 2.5493336316316473s vertical-movement ease-in-out alternate infinite;
 }
 
 .c175 {
@@ -682,9 +862,9 @@ exports[`[lng] route - Page should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -34%;
-  --translateY-end: -1%;
-  animation: 9.440784825847377s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: -3%;
+  --translateY-end: 9%;
+  animation: 6.941524031214518s vertical-movement ease-in-out alternate infinite;
 }
 
 .c179 {
@@ -693,9 +873,9 @@ exports[`[lng] route - Page should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: 8%;
-  --translateY-end: 22%;
-  animation: 5.563308686799888s vertical-movement ease-in-out alternate infinite;
+  --translateY-begin: 19%;
+  --translateY-end: -6%;
+  animation: 2.7199534102363s vertical-movement ease-in-out alternate infinite;
 }
 
 .c182 {
@@ -704,27 +884,247 @@ exports[`[lng] route - Page should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
+  --translateY-begin: 20%;
+  --translateY-end: -15%;
+  animation: 10.179241264107626s vertical-movement ease-in-out alternate infinite;
+}
+
+.c186 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  --translateY-begin: -29%;
+  --translateY-end: 10%;
+  animation: 10.798829573931165s vertical-movement ease-in-out alternate infinite;
+}
+
+.c190 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  --translateY-begin: -27%;
+  --translateY-end: -6%;
+  animation: 6.502186472027496s vertical-movement ease-in-out alternate infinite;
+}
+
+.c194 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  --translateY-begin: 12%;
+  --translateY-end: -8%;
+  animation: 2.0589262506386983s vertical-movement ease-in-out alternate infinite;
+}
+
+.c198 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  --translateY-begin: 3%;
+  --translateY-end: -18%;
+  animation: 3.3771295501574863s vertical-movement ease-in-out alternate infinite;
+}
+
+.c202 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
   --translateY-begin: -16%;
-  --translateY-end: -3%;
-  animation: 8.189448116882934s vertical-movement ease-in-out alternate infinite;
+  --translateY-end: -14%;
+  animation: 6.407205183696668s vertical-movement ease-in-out alternate infinite;
+}
+
+.c206 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  --translateY-begin: -23%;
+  --translateY-end: 4%;
+  animation: 2.905729835425222s vertical-movement ease-in-out alternate infinite;
+}
+
+.c210 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  --translateY-begin: 5%;
+  --translateY-end: 36%;
+  animation: 7.867785208049629s vertical-movement ease-in-out alternate infinite;
+}
+
+.c214 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  --translateY-begin: -12%;
+  --translateY-end: -19%;
+  animation: 10.56959945230979s vertical-movement ease-in-out alternate infinite;
+}
+
+.c218 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  --translateY-begin: 6%;
+  --translateY-end: 31%;
+  animation: 7.001243076776379s vertical-movement ease-in-out alternate infinite;
+}
+
+.c222 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  --translateY-begin: -9%;
+  --translateY-end: -18%;
+  animation: 7.901987037490444s vertical-movement ease-in-out alternate infinite;
+}
+
+.c226 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  --translateY-begin: -27%;
+  --translateY-end: 16%;
+  animation: 4.144337180384126s vertical-movement ease-in-out alternate infinite;
+}
+
+.c230 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  --translateY-begin: 4%;
+  --translateY-end: 35%;
+  animation: 3.8691014795239904s vertical-movement ease-in-out alternate infinite;
+}
+
+.c234 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  --translateY-begin: 5%;
+  --translateY-end: 17%;
+  animation: 4.041907335662055s vertical-movement ease-in-out alternate infinite;
+}
+
+.c238 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  --translateY-begin: -16%;
+  --translateY-end: 4%;
+  animation: 9.877947969749975s vertical-movement ease-in-out alternate infinite;
+}
+
+.c242 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  --translateY-begin: -8%;
+  --translateY-end: 29%;
+  animation: 10.038002561953624s vertical-movement ease-in-out alternate infinite;
+}
+
+.c246 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  --translateY-begin: -34%;
+  --translateY-end: 29%;
+  animation: 6.454865900384189s vertical-movement ease-in-out alternate infinite;
+}
+
+.c250 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  --translateY-begin: -33%;
+  --translateY-end: 32%;
+  animation: 4.055582915600783s vertical-movement ease-in-out alternate infinite;
+}
+
+.c254 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  --translateY-begin: 10%;
+  --translateY-end: 26%;
+  animation: 4.185707118651536s vertical-movement ease-in-out alternate infinite;
+}
+
+.c258 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  --translateY-begin: -31%;
+  --translateY-end: -1%;
+  animation: 9.828468656007312s vertical-movement ease-in-out alternate infinite;
+}
+
+.c262 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  --translateY-begin: -30%;
+  --translateY-end: 22%;
+  animation: 8.49847475695126s vertical-movement ease-in-out alternate infinite;
 }
 
 .c136 {
-  z-index: 5;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-  position: absolute;
-  --rotation: calc(               2 *                 360deg             );
-  animation: 5.889611280970905s rotate-movement linear infinite;
-}
-
-.c140 {
   z-index: 4;
   height: var(--itemSize);
   aspect-ratio: 1/1;
   position: absolute;
   --rotation: calc(               2 *                 360deg             );
-  animation: 4.216557068355115s rotate-movement linear infinite;
+  animation: 5.912643144979278s rotate-movement linear infinite;
+}
+
+.c140 {
+  z-index: 2;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               2 *                 360deg             );
+  animation: 6.324187225850375s rotate-movement linear infinite;
 }
 
 .c144 {
@@ -732,62 +1132,62 @@ exports[`[lng] route - Page should render successfully 1`] = `
   height: var(--itemSize);
   aspect-ratio: 1/1;
   position: absolute;
-  --rotation: calc(               2 *                 360deg             );
-  animation: 4.405631597558116s rotate-movement linear infinite;
+  --rotation: calc(               1 *                 360deg             );
+  animation: 5.2626261398042296s rotate-movement linear infinite;
 }
 
 .c148 {
-  z-index: 3;
+  z-index: 5;
   height: var(--itemSize);
   aspect-ratio: 1/1;
   position: absolute;
   --rotation: calc(               1 *                 360deg             );
-  animation: 5.760003882940972s rotate-movement linear infinite;
+  animation: 6.068246516350455s rotate-movement linear infinite;
 }
 
 .c152 {
+  z-index: 2;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               1 *                 360deg             );
+  animation: 4.949448078384307s rotate-movement linear infinite;
+}
+
+.c156 {
+  z-index: 5;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               2 *                 360deg             );
+  animation: 6.603453111838558s rotate-movement linear infinite;
+}
+
+.c160 {
+  z-index: 4;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               1 *                 360deg             );
+  animation: 5.858647913985538s rotate-movement linear infinite;
+}
+
+.c164 {
   z-index: 4;
   height: var(--itemSize);
   aspect-ratio: 1/1;
   position: absolute;
   --rotation: calc(               2 *                 360deg             );
-  animation: 6.10501989532445s rotate-movement linear infinite;
-}
-
-.c156 {
-  z-index: 3;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-  position: absolute;
-  --rotation: calc(               2 *                 360deg             );
-  animation: 5.949146980447107s rotate-movement linear infinite;
-}
-
-.c160 {
-  z-index: 5;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-  position: absolute;
-  --rotation: calc(               2 *                 360deg             );
-  animation: 6.85102439265857s rotate-movement linear infinite;
-}
-
-.c164 {
-  z-index: 3;
-  height: var(--itemSize);
-  aspect-ratio: 1/1;
-  position: absolute;
-  --rotation: calc(               2 *                 360deg             );
-  animation: 5.971988232101946s rotate-movement linear infinite;
+  animation: 6.4054358722909726s rotate-movement linear infinite;
 }
 
 .c168 {
-  z-index: 5;
+  z-index: 4;
   height: var(--itemSize);
   aspect-ratio: 1/1;
   position: absolute;
-  --rotation: calc(               2 *                 360deg             );
-  animation: 6.217863946220371s rotate-movement linear infinite;
+  --rotation: calc(               1 *                 360deg             );
+  animation: 4.9117398579476585s rotate-movement linear infinite;
 }
 
 .c172 {
@@ -796,16 +1196,16 @@ exports[`[lng] route - Page should render successfully 1`] = `
   aspect-ratio: 1/1;
   position: absolute;
   --rotation: calc(               1 *                 360deg             );
-  animation: 5.347832197359062s rotate-movement linear infinite;
+  animation: 4.283448155037411s rotate-movement linear infinite;
 }
 
 .c176 {
-  z-index: 5;
+  z-index: 4;
   height: var(--itemSize);
   aspect-ratio: 1/1;
   position: absolute;
   --rotation: calc(               2 *                 360deg             );
-  animation: 4.852951642248924s rotate-movement linear infinite;
+  animation: 5.264710303448324s rotate-movement linear infinite;
 }
 
 .c180 {
@@ -814,16 +1214,196 @@ exports[`[lng] route - Page should render successfully 1`] = `
   aspect-ratio: 1/1;
   position: absolute;
   --rotation: calc(               1 *                 360deg             );
-  animation: 4.788811298943727s rotate-movement linear infinite;
+  animation: 5.651332525300555s rotate-movement linear infinite;
 }
 
 .c183 {
+  z-index: 2;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               2 *                 360deg             );
+  animation: 6.250688076703802s rotate-movement linear infinite;
+}
+
+.c187 {
+  z-index: 5;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               1 *                 360deg             );
+  animation: 6.257555761833286s rotate-movement linear infinite;
+}
+
+.c191 {
+  z-index: 2;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               1 *                 360deg             );
+  animation: 5.015494710517083s rotate-movement linear infinite;
+}
+
+.c195 {
+  z-index: 4;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               2 *                 360deg             );
+  animation: 6.470605791132803s rotate-movement linear infinite;
+}
+
+.c199 {
+  z-index: 5;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               1 *                 360deg             );
+  animation: 4.2520525463335455s rotate-movement linear infinite;
+}
+
+.c203 {
+  z-index: 2;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               2 *                 360deg             );
+  animation: 5.580737645365122s rotate-movement linear infinite;
+}
+
+.c207 {
+  z-index: 2;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               1 *                 360deg             );
+  animation: 6.071483801295315s rotate-movement linear infinite;
+}
+
+.c211 {
+  z-index: 5;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               1 *                 360deg             );
+  animation: 6.867544308781067s rotate-movement linear infinite;
+}
+
+.c215 {
+  z-index: 4;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               2 *                 360deg             );
+  animation: 6.469780496085746s rotate-movement linear infinite;
+}
+
+.c219 {
+  z-index: 2;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               2 *                 360deg             );
+  animation: 6.019309438063367s rotate-movement linear infinite;
+}
+
+.c223 {
+  z-index: 3;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               2 *                 360deg             );
+  animation: 4.576257363924087s rotate-movement linear infinite;
+}
+
+.c227 {
   z-index: 3;
   height: var(--itemSize);
   aspect-ratio: 1/1;
   position: absolute;
   --rotation: calc(               1 *                 360deg             );
-  animation: 4.8917157417680315s rotate-movement linear infinite;
+  animation: 4.811645332258291s rotate-movement linear infinite;
+}
+
+.c231 {
+  z-index: 3;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               1 *                 360deg             );
+  animation: 4.252142611465066s rotate-movement linear infinite;
+}
+
+.c235 {
+  z-index: 2;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               1 *                 360deg             );
+  animation: 4.291779296365691s rotate-movement linear infinite;
+}
+
+.c239 {
+  z-index: 4;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               2 *                 360deg             );
+  animation: 5.124856916242249s rotate-movement linear infinite;
+}
+
+.c243 {
+  z-index: 4;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               2 *                 360deg             );
+  animation: 6.702973116861532s rotate-movement linear infinite;
+}
+
+.c247 {
+  z-index: 4;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               1 *                 360deg             );
+  animation: 4.5242902452701985s rotate-movement linear infinite;
+}
+
+.c251 {
+  z-index: 3;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               1 *                 360deg             );
+  animation: 5.174002220073131s rotate-movement linear infinite;
+}
+
+.c255 {
+  z-index: 4;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               2 *                 360deg             );
+  animation: 6.2290803355067395s rotate-movement linear infinite;
+}
+
+.c259 {
+  z-index: 5;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               1 *                 360deg             );
+  animation: 6.573826253275422s rotate-movement linear infinite;
+}
+
+.c263 {
+  z-index: 4;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               1 *                 360deg             );
+  animation: 4.425559476649603s rotate-movement linear infinite;
 }
 
 .c165 svg {
@@ -835,340 +1415,220 @@ exports[`[lng] route - Page should render successfully 1`] = `
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 18.05300058120506s color-swap 1.2597847900663388s linear infinite;
+  animation: 14.501948412237848s color-swap 4.004758931177131s linear infinite;
 }
 
 .c141 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 18.88102079690248s color-swap 4.476795931285851s linear infinite;
+  animation: 6.396043301898936s color-swap 4.300147641144077s linear infinite;
 }
 
 .c145 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 13.082434717886677s color-swap 5.785497649948763s linear infinite;
+  animation: 6.739226836196641s color-swap 5.3146807916333705s linear infinite;
 }
 
 .c149 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 13.998429508231345s color-swap 1.3198346450422775s linear infinite;
+  animation: 7.314999009263957s color-swap 3.884677080400321s linear infinite;
 }
 
 .c153 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 15.839977620116896s color-swap 5.954514895873972s linear infinite;
+  animation: 18.129616403901895s color-swap 1.0692666569511644s linear infinite;
 }
 
 .c157 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 9.567827032117348s color-swap 2.4903645871762716s linear infinite;
+  animation: 13.674047718239011s color-swap 3.1258417150020077s linear infinite;
 }
 
 .c161 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 16.547170604589763s color-swap 5.080389063344657s linear infinite;
+  animation: 9.82836261259583s color-swap 2.062870944938072s linear infinite;
 }
 
 .c169 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 12.491132583585378s color-swap 5.8541714215255904s linear infinite;
+  animation: 10.938713171824439s color-swap 3.3156658398184984s linear infinite;
 }
 
 .c173 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 11.001141353180081s color-swap 2.5718628558273195s linear infinite;
+  animation: 17.44306583067705s color-swap 5.294487432922727s linear infinite;
 }
 
 .c177 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 11.689741753614907s color-swap 4.080281814075244s linear infinite;
+  animation: 15.509893016471953s color-swap 2.9572919940548696s linear infinite;
 }
 
 .c184 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 10.891433412217104s color-swap 1.764246867578978s linear infinite;
+  animation: 19.065050256372224s color-swap 2.5073406847660316s linear infinite;
+}
+
+.c188 svg {
+  width: 100%;
+  height: 100%;
+  color: #FFDD83;
+  animation: 10.957052644999306s color-swap 3.1785129841322397s linear infinite;
+}
+
+.c192 svg {
+  width: 100%;
+  height: 100%;
+  color: #FFDD83;
+  animation: 16.949068012652717s color-swap 5.839230432550049s linear infinite;
+}
+
+.c196 svg {
+  width: 100%;
+  height: 100%;
+  color: #FFDD83;
+  animation: 7.173010084705733s color-swap 5.714081736000347s linear infinite;
+}
+
+.c200 svg {
+  width: 100%;
+  height: 100%;
+  color: #FFDD83;
+  animation: 13.712099113382012s color-swap 4.971796085611452s linear infinite;
+}
+
+.c204 svg {
+  width: 100%;
+  height: 100%;
+  color: #FFDD83;
+  animation: 19.111644713022578s color-swap 1.1530847856295299s linear infinite;
+}
+
+.c208 svg {
+  width: 100%;
+  height: 100%;
+  color: #FFDD83;
+  animation: 9.442560736080011s color-swap 2.3807010218515328s linear infinite;
+}
+
+.c212 svg {
+  width: 100%;
+  height: 100%;
+  color: #FFDD83;
+  animation: 16.28764367003651s color-swap 1.4004741685948354s linear infinite;
+}
+
+.c216 svg {
+  width: 100%;
+  height: 100%;
+  color: #FFDD83;
+  animation: 7.1587829938286776s color-swap 3.255874519059253s linear infinite;
+}
+
+.c220 svg {
+  width: 100%;
+  height: 100%;
+  color: #FFDD83;
+  animation: 19.030547634796502s color-swap 1.1112909909995383s linear infinite;
+}
+
+.c224 svg {
+  width: 100%;
+  height: 100%;
+  color: #FFDD83;
+  animation: 8.145223527287094s color-swap 2.0840018811835015s linear infinite;
+}
+
+.c228 svg {
+  width: 100%;
+  height: 100%;
+  color: #FFDD83;
+  animation: 16.18610079292373s color-swap 3.4837155706149545s linear infinite;
+}
+
+.c232 svg {
+  width: 100%;
+  height: 100%;
+  color: #FFDD83;
+  animation: 14.582321789319911s color-swap 2.3972271471352573s linear infinite;
+}
+
+.c236 svg {
+  width: 100%;
+  height: 100%;
+  color: #FFDD83;
+  animation: 18.18068535179151s color-swap 3.270809953828155s linear infinite;
+}
+
+.c240 svg {
+  width: 100%;
+  height: 100%;
+  color: #FFDD83;
+  animation: 10.26636822372047s color-swap 2.6510962818446795s linear infinite;
+}
+
+.c244 svg {
+  width: 100%;
+  height: 100%;
+  color: #FFDD83;
+  animation: 7.290128121353404s color-swap 1.3366963321038612s linear infinite;
+}
+
+.c248 svg {
+  width: 100%;
+  height: 100%;
+  color: #FFDD83;
+  animation: 10.393107584698136s color-swap 1.2516098387668853s linear infinite;
+}
+
+.c252 svg {
+  width: 100%;
+  height: 100%;
+  color: #FFDD83;
+  animation: 17.507425237904364s color-swap 1.595570484119789s linear infinite;
+}
+
+.c256 svg {
+  width: 100%;
+  height: 100%;
+  color: #FFDD83;
+  animation: 6.801547858923821s color-swap 1.89541591731918s linear infinite;
+}
+
+.c260 svg {
+  width: 100%;
+  height: 100%;
+  color: #FFDD83;
+  animation: 12.468810528646326s color-swap 2.4120887105284696s linear infinite;
+}
+
+.c264 svg {
+  width: 100%;
+  height: 100%;
+  color: #FFDD83;
+  animation: 16.70012363872681s color-swap 5.005393507744465s linear infinite;
 }
 
 .c34 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 5px;
-  --begin-y: 34%;
-  --end-y: -9%;
-  animation: 3538ms particle-movement 3021ms infinite linear;
-}
-
-.c36 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 3px;
-  --begin-y: 34%;
-  --end-y: -42%;
-  animation: 5503ms particle-movement 631ms infinite linear;
-}
-
-.c38 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 2px;
-  --begin-y: 28%;
-  --end-y: -42%;
-  animation: 6225ms particle-movement 2157ms infinite linear;
-}
-
-.c40 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 1px;
-  --begin-y: 36%;
-  --end-y: 45%;
-  animation: 5946ms particle-movement 7200ms infinite linear;
-}
-
-.c42 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 6px;
-  --begin-y: 40%;
-  --end-y: 24%;
-  animation: 5439ms particle-movement 279ms infinite linear;
-}
-
-.c44 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 5px;
-  --begin-y: 25%;
-  --end-y: 6%;
-  animation: 4284ms particle-movement 2490ms infinite linear;
-}
-
-.c46 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 5px;
-  --begin-y: 25%;
-  --end-y: -1%;
-  animation: 6498ms particle-movement 10701ms infinite linear;
-}
-
-.c48 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 6px;
-  --begin-y: -17%;
-  --end-y: -6%;
-  animation: 3375ms particle-movement 1883ms infinite linear;
-}
-
-.c50 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 8px;
-  --begin-y: -7%;
-  --end-y: -21%;
-  animation: 3331ms particle-movement 1776ms infinite linear;
-}
-
-.c52 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 5px;
-  --begin-y: 24%;
-  --end-y: 20%;
-  animation: 3792ms particle-movement 10795ms infinite linear;
-}
-
-.c54 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 4px;
-  --begin-y: -17%;
-  --end-y: -24%;
-  animation: 5358ms particle-movement 10234ms infinite linear;
-}
-
-.c56 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 9px;
-  --begin-y: -31%;
-  --end-y: 35%;
-  animation: 6640ms particle-movement 6321ms infinite linear;
-}
-
-.c58 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 1px;
-  --begin-y: 18%;
-  --end-y: -14%;
-  animation: 5951ms particle-movement 5293ms infinite linear;
-}
-
-.c60 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 10px;
-  --begin-y: -31%;
-  --end-y: 30%;
-  animation: 6739ms particle-movement 545ms infinite linear;
-}
-
-.c62 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 6px;
-  --begin-y: 22%;
-  --end-y: -15%;
-  animation: 5808ms particle-movement 5659ms infinite linear;
-}
-
-.c64 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 10px;
-  --begin-y: -35%;
-  --end-y: -28%;
-  animation: 6234ms particle-movement 6944ms infinite linear;
-}
-
-.c66 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 10px;
-  --begin-y: 31%;
-  --end-y: -32%;
-  animation: 4790ms particle-movement 9416ms infinite linear;
-}
-
-.c68 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 7px;
-  --begin-y: -41%;
-  --end-y: 7%;
-  animation: 4585ms particle-movement 814ms infinite linear;
-}
-
-.c70 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 9px;
-  --begin-y: -34%;
-  --end-y: -14%;
-  animation: 5459ms particle-movement 10528ms infinite linear;
-}
-
-.c72 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 10px;
-  --begin-y: -12%;
-  --end-y: 15%;
-  animation: 6263ms particle-movement 6435ms infinite linear;
-}
-
-.c74 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1181,7 +1641,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 6145ms particle-movement 1970ms infinite linear;
 }
 
-.c76 {
+.c36 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1194,7 +1654,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 5385ms particle-movement 3946ms infinite linear;
 }
 
-.c78 {
+.c38 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1207,7 +1667,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 4442ms particle-movement 2862ms infinite linear;
 }
 
-.c80 {
+.c40 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1220,7 +1680,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 4843ms particle-movement 4667ms infinite linear;
 }
 
-.c82 {
+.c42 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1233,7 +1693,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 3629ms particle-movement 2589ms infinite linear;
 }
 
-.c84 {
+.c44 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1246,7 +1706,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 4976ms particle-movement 10601ms infinite linear;
 }
 
-.c86 {
+.c46 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1259,7 +1719,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 6283ms particle-movement 9023ms infinite linear;
 }
 
-.c88 {
+.c48 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1272,7 +1732,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 4921ms particle-movement 2305ms infinite linear;
 }
 
-.c90 {
+.c50 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1285,7 +1745,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 4358ms particle-movement 9810ms infinite linear;
 }
 
-.c92 {
+.c52 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1298,7 +1758,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 6550ms particle-movement 82ms infinite linear;
 }
 
-.c94 {
+.c54 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1311,7 +1771,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 5304ms particle-movement 7556ms infinite linear;
 }
 
-.c96 {
+.c56 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1324,7 +1784,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 4599ms particle-movement 4673ms infinite linear;
 }
 
-.c98 {
+.c58 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1337,7 +1797,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 5188ms particle-movement 6583ms infinite linear;
 }
 
-.c100 {
+.c60 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1350,7 +1810,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 4282ms particle-movement 6669ms infinite linear;
 }
 
-.c102 {
+.c62 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1363,7 +1823,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 5637ms particle-movement 1075ms infinite linear;
 }
 
-.c104 {
+.c64 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1376,7 +1836,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 4368ms particle-movement 3014ms infinite linear;
 }
 
-.c106 {
+.c66 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1389,7 +1849,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 6662ms particle-movement 6161ms infinite linear;
 }
 
-.c108 {
+.c68 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1402,7 +1862,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 3934ms particle-movement 2905ms infinite linear;
 }
 
-.c110 {
+.c70 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1415,7 +1875,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 6851ms particle-movement 4329ms infinite linear;
 }
 
-.c112 {
+.c72 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1428,7 +1888,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 4278ms particle-movement 6466ms infinite linear;
 }
 
-.c114 {
+.c74 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1441,7 +1901,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 6641ms particle-movement 10354ms infinite linear;
 }
 
-.c116 {
+.c76 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1454,7 +1914,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 5693ms particle-movement 10544ms infinite linear;
 }
 
-.c118 {
+.c78 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1467,7 +1927,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 4226ms particle-movement 2963ms infinite linear;
 }
 
-.c120 {
+.c80 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1480,7 +1940,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 3646ms particle-movement 1265ms infinite linear;
 }
 
-.c122 {
+.c82 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1493,7 +1953,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 3248ms particle-movement 10223ms infinite linear;
 }
 
-.c124 {
+.c84 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1506,7 +1966,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 5259ms particle-movement 250ms infinite linear;
 }
 
-.c126 {
+.c86 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1519,7 +1979,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 6689ms particle-movement 2748ms infinite linear;
 }
 
-.c128 {
+.c88 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1532,7 +1992,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 4780ms particle-movement 1238ms infinite linear;
 }
 
-.c130 {
+.c90 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1545,7 +2005,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 6939ms particle-movement 357ms infinite linear;
 }
 
-.c132 {
+.c92 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1558,207 +2018,267 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 6736ms particle-movement 7959ms infinite linear;
 }
 
+.c94 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 4px;
+  --begin-y: -21%;
+  --end-y: -46%;
+  animation: 4501ms particle-movement 6583ms infinite linear;
+}
+
+.c96 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 5px;
+  --begin-y: -42%;
+  --end-y: -26%;
+  animation: 6905ms particle-movement 4883ms infinite linear;
+}
+
+.c98 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 10px;
+  --begin-y: -26%;
+  --end-y: -43%;
+  animation: 5049ms particle-movement 3570ms infinite linear;
+}
+
+.c100 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 3px;
+  --begin-y: 27%;
+  --end-y: -31%;
+  animation: 3097ms particle-movement 10628ms infinite linear;
+}
+
+.c102 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 8px;
+  --begin-y: -24%;
+  --end-y: 41%;
+  animation: 3008ms particle-movement 3150ms infinite linear;
+}
+
+.c104 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 5px;
+  --begin-y: -38%;
+  --end-y: -15%;
+  animation: 3580ms particle-movement 8248ms infinite linear;
+}
+
+.c106 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 5px;
+  --begin-y: -28%;
+  --end-y: -36%;
+  animation: 3091ms particle-movement 8114ms infinite linear;
+}
+
+.c108 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 9px;
+  --begin-y: 1%;
+  --end-y: 2%;
+  animation: 4688ms particle-movement 7533ms infinite linear;
+}
+
+.c110 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 6px;
+  --begin-y: -13%;
+  --end-y: 38%;
+  animation: 5679ms particle-movement 10482ms infinite linear;
+}
+
+.c112 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 10px;
+  --begin-y: -36%;
+  --end-y: -11%;
+  animation: 3330ms particle-movement 9892ms infinite linear;
+}
+
+.c114 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 7px;
+  --begin-y: -15%;
+  --end-y: -4%;
+  animation: 4808ms particle-movement 3506ms infinite linear;
+}
+
+.c116 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 1px;
+  --begin-y: 20%;
+  --end-y: 29%;
+  animation: 6102ms particle-movement 3934ms infinite linear;
+}
+
+.c118 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 10px;
+  --begin-y: 2%;
+  --end-y: 8%;
+  animation: 5553ms particle-movement 4295ms infinite linear;
+}
+
+.c120 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 5px;
+  --begin-y: 35%;
+  --end-y: -11%;
+  animation: 4368ms particle-movement 801ms infinite linear;
+}
+
+.c122 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 9px;
+  --begin-y: 35%;
+  --end-y: -35%;
+  animation: 4511ms particle-movement 7569ms infinite linear;
+}
+
+.c124 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 10px;
+  --begin-y: -28%;
+  --end-y: -36%;
+  animation: 3569ms particle-movement 1157ms infinite linear;
+}
+
+.c126 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 1px;
+  --begin-y: -36%;
+  --end-y: 44%;
+  animation: 4280ms particle-movement 252ms infinite linear;
+}
+
+.c128 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 6px;
+  --begin-y: -17%;
+  --end-y: 18%;
+  animation: 3928ms particle-movement 9208ms infinite linear;
+}
+
+.c130 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 8px;
+  --begin-y: -18%;
+  --end-y: -4%;
+  animation: 5040ms particle-movement 7763ms infinite linear;
+}
+
+.c132 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 3px;
+  --begin-y: -19%;
+  --end-y: 21%;
+  animation: 6117ms particle-movement 6134ms infinite linear;
+}
+
 .c35 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 882ms infinite,particle-scale 1996ms infinite;
-  animation-delay: 63ms;
-}
-
-.c37 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 718ms infinite,particle-scale 1543ms infinite;
-  animation-delay: 50ms;
-}
-
-.c39 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 535ms infinite,particle-scale 1070ms infinite;
-  animation-delay: 67ms;
-}
-
-.c41 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 631ms infinite,particle-scale 1779ms infinite;
-  animation-delay: 21ms;
-}
-
-.c43 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 715ms infinite,particle-scale 1720ms infinite;
-  animation-delay: 19ms;
-}
-
-.c45 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 697ms infinite,particle-scale 1949ms infinite;
-  animation-delay: 82ms;
-}
-
-.c47 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 575ms infinite,particle-scale 1903ms infinite;
-  animation-delay: 80ms;
-}
-
-.c49 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 673ms infinite,particle-scale 1705ms infinite;
-  animation-delay: 16ms;
-}
-
-.c51 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 572ms infinite,particle-scale 1978ms infinite;
-  animation-delay: 26ms;
-}
-
-.c53 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 970ms infinite,particle-scale 1972ms infinite;
-  animation-delay: 59ms;
-}
-
-.c55 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 940ms infinite,particle-scale 1652ms infinite;
-  animation-delay: 57ms;
-}
-
-.c57 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 743ms infinite,particle-scale 1964ms infinite;
-  animation-delay: 44ms;
-}
-
-.c59 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 571ms infinite,particle-scale 1093ms infinite;
-  animation-delay: 35ms;
-}
-
-.c61 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 764ms infinite,particle-scale 1972ms infinite;
-  animation-delay: 75ms;
-}
-
-.c63 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 701ms infinite,particle-scale 1905ms infinite;
-  animation-delay: 26ms;
-}
-
-.c65 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 723ms infinite,particle-scale 1198ms infinite;
-  animation-delay: 71ms;
-}
-
-.c67 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 510ms infinite,particle-scale 1151ms infinite;
-  animation-delay: 16ms;
-}
-
-.c69 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 892ms infinite,particle-scale 1863ms infinite;
-  animation-delay: 2ms;
-}
-
-.c71 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 667ms infinite,particle-scale 1310ms infinite;
-  animation-delay: 64ms;
-}
-
-.c73 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 976ms infinite,particle-scale 1395ms infinite;
-  animation-delay: 89ms;
-}
-
-.c75 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1768,7 +2288,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 24ms;
 }
 
-.c77 {
+.c37 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1778,7 +2298,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 92ms;
 }
 
-.c79 {
+.c39 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1788,7 +2308,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 97ms;
 }
 
-.c81 {
+.c41 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1798,7 +2318,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 84ms;
 }
 
-.c83 {
+.c43 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1808,7 +2328,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 99ms;
 }
 
-.c85 {
+.c45 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1818,7 +2338,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 86ms;
 }
 
-.c87 {
+.c47 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1828,7 +2348,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 86ms;
 }
 
-.c89 {
+.c49 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1838,7 +2358,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 2ms;
 }
 
-.c91 {
+.c51 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1848,7 +2368,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 12ms;
 }
 
-.c93 {
+.c53 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1858,7 +2378,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 68ms;
 }
 
-.c95 {
+.c55 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1868,7 +2388,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 55ms;
 }
 
-.c97 {
+.c57 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1878,7 +2398,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 17ms;
 }
 
-.c99 {
+.c59 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1888,7 +2408,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 88ms;
 }
 
-.c101 {
+.c61 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1898,7 +2418,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 62ms;
 }
 
-.c103 {
+.c63 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1908,7 +2428,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 89ms;
 }
 
-.c105 {
+.c65 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1918,7 +2438,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 16ms;
 }
 
-.c107 {
+.c67 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1928,7 +2448,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 54ms;
 }
 
-.c109 {
+.c69 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1938,7 +2458,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 27ms;
 }
 
-.c111 {
+.c71 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1948,7 +2468,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 85ms;
 }
 
-.c113 {
+.c73 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1958,7 +2478,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 62ms;
 }
 
-.c115 {
+.c75 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1968,7 +2488,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 55ms;
 }
 
-.c117 {
+.c77 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1978,7 +2498,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 95ms;
 }
 
-.c119 {
+.c79 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1988,7 +2508,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 30ms;
 }
 
-.c121 {
+.c81 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1998,7 +2518,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 28ms;
 }
 
-.c123 {
+.c83 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -2008,7 +2528,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 52ms;
 }
 
-.c125 {
+.c85 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -2018,7 +2538,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 64ms;
 }
 
-.c127 {
+.c87 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -2028,7 +2548,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 49ms;
 }
 
-.c129 {
+.c89 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -2038,7 +2558,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 4ms;
 }
 
-.c131 {
+.c91 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -2048,7 +2568,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 92ms;
 }
 
-.c133 {
+.c93 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -2056,6 +2576,206 @@ exports[`[lng] route - Page should render successfully 1`] = `
   background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
   animation: particle-fade 636ms infinite,particle-scale 1166ms infinite;
   animation-delay: 20ms;
+}
+
+.c95 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 638ms infinite,particle-scale 1031ms infinite;
+  animation-delay: 28ms;
+}
+
+.c97 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 800ms infinite,particle-scale 1876ms infinite;
+  animation-delay: 48ms;
+}
+
+.c99 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 827ms infinite,particle-scale 1646ms infinite;
+  animation-delay: 37ms;
+}
+
+.c101 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 669ms infinite,particle-scale 1149ms infinite;
+  animation-delay: 89ms;
+}
+
+.c103 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 858ms infinite,particle-scale 1368ms infinite;
+  animation-delay: 41ms;
+}
+
+.c105 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 555ms infinite,particle-scale 1058ms infinite;
+  animation-delay: 93ms;
+}
+
+.c107 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 620ms infinite,particle-scale 1446ms infinite;
+  animation-delay: 91ms;
+}
+
+.c109 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 768ms infinite,particle-scale 1245ms infinite;
+  animation-delay: 56ms;
+}
+
+.c111 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 743ms infinite,particle-scale 1604ms infinite;
+  animation-delay: 39ms;
+}
+
+.c113 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 544ms infinite,particle-scale 1985ms infinite;
+  animation-delay: 100ms;
+}
+
+.c115 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 759ms infinite,particle-scale 1388ms infinite;
+  animation-delay: 88ms;
+}
+
+.c117 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 623ms infinite,particle-scale 1207ms infinite;
+  animation-delay: 20ms;
+}
+
+.c119 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 635ms infinite,particle-scale 1138ms infinite;
+  animation-delay: 1ms;
+}
+
+.c121 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 996ms infinite,particle-scale 1809ms infinite;
+  animation-delay: 88ms;
+}
+
+.c123 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 608ms infinite,particle-scale 1152ms infinite;
+  animation-delay: 65ms;
+}
+
+.c125 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 825ms infinite,particle-scale 1830ms infinite;
+  animation-delay: 74ms;
+}
+
+.c127 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 947ms infinite,particle-scale 1511ms infinite;
+  animation-delay: 5ms;
+}
+
+.c129 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 896ms infinite,particle-scale 1856ms infinite;
+  animation-delay: 15ms;
+}
+
+.c131 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 819ms infinite,particle-scale 1019ms infinite;
+  animation-delay: 83ms;
+}
+
+.c133 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 655ms infinite,particle-scale 1638ms infinite;
+  animation-delay: 6ms;
 }
 
 .c24 {
@@ -2094,7 +2814,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   background-color: #000000;
 }
 
-.c185 {
+.c265 {
   flex-grow: 1;
   border: 1px solid #98DFD6;
   transform-origin: var(--transform-origin-last);
@@ -2103,19 +2823,19 @@ exports[`[lng] route - Page should render successfully 1`] = `
 }
 
 @media (min-width: 1024px) {
-  .c191 {
+  .c271 {
     justify-content: space-between;
     grid-template-columns: 1fr 100px;
   }
 }
 
 @media (min-width: 768px) {
-  .c195 {
+  .c275 {
     display: flex;
     position: relative;
   }
 
-  .c195::after {
+  .c275::after {
     content: '';
     position: absolute;
     width: 100%;
@@ -2128,14 +2848,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
     transition: transform 0.25s ease-out;
   }
 
-  .c195:hover::after {
+  .c275:hover::after {
     transform: scaleX(1);
     transform-origin: bottom left;
   }
 }
 
 @media (min-width: 1024px) {
-  .c196 {
+  .c276 {
     justify-self: end;
     padding: 0;
   }
@@ -2257,7 +2977,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c186 {
+  .c266 {
     margin-bottom: 40px;
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
@@ -2274,7 +2994,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c187 .c7 {
+  .c267 .c7 {
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
     color: #FBFBFB;
@@ -3224,20 +3944,480 @@ exports[`[lng] route - Page should render successfully 1`] = `
                     </div>
                   </div>
                 </div>
+                <div
+                  class="c185"
+                  data-testid="horizontal-movement"
+                >
+                  <div
+                    class="c186"
+                    data-testid="vertical-movement"
+                  >
+                    <div
+                      class="c187"
+                      data-testid="rotation-movement"
+                    >
+                      <div
+                        class="c188"
+                        data-testid="color-swapping"
+                      >
+                        <svg>
+                          eslint.svg
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c189"
+                  data-testid="horizontal-movement"
+                >
+                  <div
+                    class="c190"
+                    data-testid="vertical-movement"
+                  >
+                    <div
+                      class="c191"
+                      data-testid="rotation-movement"
+                    >
+                      <div
+                        class="c192"
+                        data-testid="color-swapping"
+                      >
+                        <svg>
+                          cypress.svg
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c193"
+                  data-testid="horizontal-movement"
+                >
+                  <div
+                    class="c194"
+                    data-testid="vertical-movement"
+                  >
+                    <div
+                      class="c195"
+                      data-testid="rotation-movement"
+                    >
+                      <div
+                        class="c196"
+                        data-testid="color-swapping"
+                      >
+                        <svg>
+                          prettier.svg
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c197"
+                  data-testid="horizontal-movement"
+                >
+                  <div
+                    class="c198"
+                    data-testid="vertical-movement"
+                  >
+                    <div
+                      class="c199"
+                      data-testid="rotation-movement"
+                    >
+                      <div
+                        class="c200"
+                        data-testid="color-swapping"
+                      >
+                        <svg>
+                          docker.svg
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c201"
+                  data-testid="horizontal-movement"
+                >
+                  <div
+                    class="c202"
+                    data-testid="vertical-movement"
+                  >
+                    <div
+                      class="c203"
+                      data-testid="rotation-movement"
+                    >
+                      <div
+                        class="c204"
+                        data-testid="color-swapping"
+                      >
+                        <svg>
+                          html5.svg
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c205"
+                  data-testid="horizontal-movement"
+                >
+                  <div
+                    class="c206"
+                    data-testid="vertical-movement"
+                  >
+                    <div
+                      class="c207"
+                      data-testid="rotation-movement"
+                    >
+                      <div
+                        class="c208"
+                        data-testid="color-swapping"
+                      >
+                        <svg>
+                          javascript.svg
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c209"
+                  data-testid="horizontal-movement"
+                >
+                  <div
+                    class="c210"
+                    data-testid="vertical-movement"
+                  >
+                    <div
+                      class="c211"
+                      data-testid="rotation-movement"
+                    >
+                      <div
+                        class="c212"
+                        data-testid="color-swapping"
+                      >
+                        <svg>
+                          npm.svg
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c213"
+                  data-testid="horizontal-movement"
+                >
+                  <div
+                    class="c214"
+                    data-testid="vertical-movement"
+                  >
+                    <div
+                      class="c215"
+                      data-testid="rotation-movement"
+                    >
+                      <div
+                        class="c216"
+                        data-testid="color-swapping"
+                      >
+                        <svg>
+                          git.svg
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c217"
+                  data-testid="horizontal-movement"
+                >
+                  <div
+                    class="c218"
+                    data-testid="vertical-movement"
+                  >
+                    <div
+                      class="c219"
+                      data-testid="rotation-movement"
+                    >
+                      <div
+                        class="c220"
+                        data-testid="color-swapping"
+                      >
+                        <svg>
+                          chrome.svg
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c221"
+                  data-testid="horizontal-movement"
+                >
+                  <div
+                    class="c222"
+                    data-testid="vertical-movement"
+                  >
+                    <div
+                      class="c223"
+                      data-testid="rotation-movement"
+                    >
+                      <div
+                        class="c224"
+                        data-testid="color-swapping"
+                      >
+                        <svg>
+                          vscode.svg
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c225"
+                  data-testid="horizontal-movement"
+                >
+                  <div
+                    class="c226"
+                    data-testid="vertical-movement"
+                  >
+                    <div
+                      class="c227"
+                      data-testid="rotation-movement"
+                    >
+                      <div
+                        class="c228"
+                        data-testid="color-swapping"
+                      >
+                        <svg>
+                          materialui.svg
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c229"
+                  data-testid="horizontal-movement"
+                >
+                  <div
+                    class="c230"
+                    data-testid="vertical-movement"
+                  >
+                    <div
+                      class="c231"
+                      data-testid="rotation-movement"
+                    >
+                      <div
+                        class="c232"
+                        data-testid="color-swapping"
+                      >
+                        <svg>
+                          postgresql.svg
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c233"
+                  data-testid="horizontal-movement"
+                >
+                  <div
+                    class="c234"
+                    data-testid="vertical-movement"
+                  >
+                    <div
+                      class="c235"
+                      data-testid="rotation-movement"
+                    >
+                      <div
+                        class="c236"
+                        data-testid="color-swapping"
+                      >
+                        <svg>
+                          sentry.svg
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c237"
+                  data-testid="horizontal-movement"
+                >
+                  <div
+                    class="c238"
+                    data-testid="vertical-movement"
+                  >
+                    <div
+                      class="c239"
+                      data-testid="rotation-movement"
+                    >
+                      <div
+                        class="c240"
+                        data-testid="color-swapping"
+                      >
+                        <svg>
+                          storybook.svg
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c241"
+                  data-testid="horizontal-movement"
+                >
+                  <div
+                    class="c242"
+                    data-testid="vertical-movement"
+                  >
+                    <div
+                      class="c243"
+                      data-testid="rotation-movement"
+                    >
+                      <div
+                        class="c244"
+                        data-testid="color-swapping"
+                      >
+                        <svg>
+                          webpack.svg
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c245"
+                  data-testid="horizontal-movement"
+                >
+                  <div
+                    class="c246"
+                    data-testid="vertical-movement"
+                  >
+                    <div
+                      class="c247"
+                      data-testid="rotation-movement"
+                    >
+                      <div
+                        class="c248"
+                        data-testid="color-swapping"
+                      >
+                        <svg>
+                          gitlab.svg
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c249"
+                  data-testid="horizontal-movement"
+                >
+                  <div
+                    class="c250"
+                    data-testid="vertical-movement"
+                  >
+                    <div
+                      class="c251"
+                      data-testid="rotation-movement"
+                    >
+                      <div
+                        class="c252"
+                        data-testid="color-swapping"
+                      >
+                        <svg>
+                          json.svg
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c253"
+                  data-testid="horizontal-movement"
+                >
+                  <div
+                    class="c254"
+                    data-testid="vertical-movement"
+                  >
+                    <div
+                      class="c255"
+                      data-testid="rotation-movement"
+                    >
+                      <div
+                        class="c256"
+                        data-testid="color-swapping"
+                      >
+                        <svg>
+                          vercel.svg
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c257"
+                  data-testid="horizontal-movement"
+                >
+                  <div
+                    class="c258"
+                    data-testid="vertical-movement"
+                  >
+                    <div
+                      class="c259"
+                      data-testid="rotation-movement"
+                    >
+                      <div
+                        class="c260"
+                        data-testid="color-swapping"
+                      >
+                        <svg>
+                          auth0.svg
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c261"
+                  data-testid="horizontal-movement"
+                >
+                  <div
+                    class="c262"
+                    data-testid="vertical-movement"
+                  >
+                    <div
+                      class="c263"
+                      data-testid="rotation-movement"
+                    >
+                      <div
+                        class="c264"
+                        data-testid="color-swapping"
+                      >
+                        <svg>
+                          spidermask.svg
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
           <div
-            class="c185"
+            class="c265"
           />
         </div>
         <h2
-          class="c18 c186"
+          class="c18 c266"
         >
           About me
         </h2>
         <section
-          class="c187"
+          class="c267"
         >
           <p
             class="c7 c8"
@@ -3285,27 +4465,27 @@ exports[`[lng] route - Page should render successfully 1`] = `
         </a>
       </div>
       <footer
-        class="c188"
+        class="c268"
         tabindex="-1"
       >
         <div
-          class="c189"
+          class="c269"
         >
           <div
-            class="c190"
+            class="c270"
           />
           <div
-            class="c190"
+            class="c270"
           />
           <div
-            class="c190"
+            class="c270"
           />
         </div>
         <div
-          class="c191"
+          class="c271"
         >
           <svg
-            class="c192"
+            class="c272"
             height="64"
             width="120"
           >
@@ -3313,14 +4493,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
           </svg>
           <nav
             aria-label="Site map"
-            class="c193"
+            class="c273"
           >
             <ul
-              class="c194"
+              class="c274"
             >
               <li>
                 <a
-                  class="c195"
+                  class="c275"
                   href="/experience"
                 >
                   <p
@@ -3332,7 +4512,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               </li>
               <li>
                 <a
-                  class="c195"
+                  class="c275"
                   href="/contact"
                 >
                   <p
@@ -3344,7 +4524,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               </li>
               <li>
                 <a
-                  class="c195"
+                  class="c275"
                   href="/portfolio"
                 >
                   <p
@@ -3356,7 +4536,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               </li>
               <li>
                 <a
-                  class="c195"
+                  class="c275"
                   href="#"
                 >
                   <svg
@@ -3375,7 +4555,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               </li>
               <li>
                 <a
-                  class="c195"
+                  class="c275"
                   href="#"
                 >
                   <svg
@@ -3395,7 +4575,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
             </ul>
           </nav>
           <div
-            class="c196"
+            class="c276"
           >
             <a
               aria-label="Telegram"
