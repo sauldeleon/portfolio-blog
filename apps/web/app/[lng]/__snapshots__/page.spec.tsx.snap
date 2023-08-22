@@ -61,7 +61,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   overflow: hidden;
 }
 
-.c141 {
+.c184 {
   position: relative;
   width: 100%;
   display: flex;
@@ -71,25 +71,25 @@ exports[`[lng] route - Page should render successfully 1`] = `
   margin-top: 50px;
 }
 
-.c142 {
+.c185 {
   position: relative;
   width: 100%;
   height: 15px;
 }
 
-.c145 {
+.c188 {
   position: absolute;
   top: -61px;
   left: 30px;
 }
 
-.c143 {
+.c186 {
   height: 7px;
   width: 100%;
   position: relative;
 }
 
-.c143:before {
+.c186:before {
   content: '';
   position: absolute;
   width: 100%;
@@ -97,7 +97,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   background: linear-gradient(         to bottom,         rgba(0,0,0,0.3),         rgba(152,223,214,0.3)       );
 }
 
-.c144 {
+.c187 {
   position: relative;
   max-width: 1440px;
   min-height: 120px;
@@ -108,13 +108,13 @@ exports[`[lng] route - Page should render successfully 1`] = `
   padding: 30px;
 }
 
-.c146 {
+.c189 {
   display: flex;
   align-items: center;
   position: relative;
 }
 
-.c147 {
+.c190 {
   display: flex;
   align-items: center;
   flex-grow: 1;
@@ -124,18 +124,18 @@ exports[`[lng] route - Page should render successfully 1`] = `
   flex-wrap: wrap;
 }
 
-.c148 {
+.c191 {
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
-.c148:hover,
-.c148:focus {
+.c191:hover,
+.c191:focus {
   text-decoration: none;
 }
 
-.c149 {
+.c192 {
   height: 20px;
   display: flex;
   gap: 20px;
@@ -352,7 +352,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   text-align: center;
 }
 
-.c139 {
+.c182 {
   margin-top: 30px;
 }
 
@@ -361,13 +361,13 @@ exports[`[lng] route - Page should render successfully 1`] = `
   margin-bottom: 30px;
 }
 
-.c140 {
+.c183 {
   text-align: center;
   max-width: 1180px;
   padding: 0 34px;
 }
 
-.c140 .c7 {
+.c183 .c7 {
   margin-top: 20px;
 }
 
@@ -455,7 +455,106 @@ exports[`[lng] route - Page should render successfully 1`] = `
   transform: translateX(-60%);
   width: 100%;
   height: 100%;
-  animation: 13.647565047038274s horizontal-movement 4.785845932065498s linear infinite;
+  animation: 10.59912597782304s horizontal-movement 2.4870388249528483s linear infinite;
+}
+
+.c138 {
+  --itemSize: 16%;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  animation: 18.05300058120506s horizontal-movement 1.2597847900663388s linear infinite;
+}
+
+.c142 {
+  --itemSize: 16%;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  animation: 18.88102079690248s horizontal-movement 4.476795931285851s linear infinite;
+}
+
+.c146 {
+  --itemSize: 16%;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  animation: 13.082434717886677s horizontal-movement 5.785497649948763s linear infinite;
+}
+
+.c150 {
+  --itemSize: 20%;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  animation: 13.998429508231345s horizontal-movement 1.3198346450422775s linear infinite;
+}
+
+.c154 {
+  --itemSize: 20%;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  animation: 15.839977620116896s horizontal-movement 5.954514895873972s linear infinite;
+}
+
+.c158 {
+  --itemSize: 16%;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  animation: 9.567827032117348s horizontal-movement 2.4903645871762716s linear infinite;
+}
+
+.c162 {
+  --itemSize: 20%;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  animation: 16.547170604589763s horizontal-movement 5.080389063344657s linear infinite;
+}
+
+.c166 {
+  --itemSize: 20%;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  animation: 17.491744852899615s horizontal-movement 1.9908158093620472s linear infinite;
+}
+
+.c170 {
+  --itemSize: 16%;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  animation: 12.491132583585378s horizontal-movement 5.8541714215255904s linear infinite;
+}
+
+.c174 {
+  --itemSize: 16%;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  animation: 11.001141353180081s horizontal-movement 2.5718628558273195s linear infinite;
+}
+
+.c178 {
+  --itemSize: 16%;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  animation: 11.689741753614907s horizontal-movement 4.080281814075244s linear infinite;
 }
 
 .c135 {
@@ -464,9 +563,130 @@ exports[`[lng] route - Page should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -10%;
+  --translateY-begin: -32%;
+  --translateY-end: 13%;
+  animation: 10.456793825113433s vertical-movement ease-in-out alternate infinite;
+}
+
+.c139 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  --translateY-begin: -1%;
+  --translateY-end: 37%;
+  animation: 10.353047293629341s vertical-movement ease-in-out alternate infinite;
+}
+
+.c143 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  --translateY-begin: 1%;
+  --translateY-end: 23%;
+  animation: 9.159940978761442s vertical-movement ease-in-out alternate infinite;
+}
+
+.c147 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  --translateY-begin: 1%;
+  --translateY-end: -5%;
+  animation: 9.42194608558071s vertical-movement ease-in-out alternate infinite;
+}
+
+.c151 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  --translateY-begin: -12%;
   --translateY-end: -16%;
-  animation: 10.026187239264399s vertical-movement ease-in-out alternate infinite;
+  animation: 5.178123905800033s vertical-movement ease-in-out alternate infinite;
+}
+
+.c155 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  --translateY-begin: -24%;
+  --translateY-end: -20%;
+  animation: 10.961216391346184s vertical-movement ease-in-out alternate infinite;
+}
+
+.c159 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  --translateY-begin: -8%;
+  --translateY-end: -19%;
+  animation: 7.005948813078015s vertical-movement ease-in-out alternate infinite;
+}
+
+.c163 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  --translateY-begin: -19%;
+  --translateY-end: 5%;
+  animation: 6.3929699041486145s vertical-movement ease-in-out alternate infinite;
+}
+
+.c167 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  --translateY-begin: -23%;
+  --translateY-end: 22%;
+  animation: 7.382745424928679s vertical-movement ease-in-out alternate infinite;
+}
+
+.c171 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  --translateY-begin: -23%;
+  --translateY-end: 19%;
+  animation: 6.419642216820769s vertical-movement ease-in-out alternate infinite;
+}
+
+.c175 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  --translateY-begin: 9%;
+  --translateY-end: -13%;
+  animation: 10.35149314136392s vertical-movement ease-in-out alternate infinite;
+}
+
+.c179 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  --translateY-begin: -34%;
+  --translateY-end: -1%;
+  animation: 9.440784825847377s vertical-movement ease-in-out alternate infinite;
 }
 
 .c136 {
@@ -474,161 +694,185 @@ exports[`[lng] route - Page should render successfully 1`] = `
   height: var(--itemSize);
   aspect-ratio: 1/1;
   position: absolute;
+  --rotation: calc(               2 *                 360deg             );
+  animation: 4.237818594588826s rotate-movement linear infinite;
+}
+
+.c140 {
+  z-index: 5;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               2 *                 360deg             );
+  animation: 5.889611280970905s rotate-movement linear infinite;
+}
+
+.c144 {
+  z-index: 4;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               2 *                 360deg             );
+  animation: 4.216557068355115s rotate-movement linear infinite;
+}
+
+.c148 {
+  z-index: 5;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               2 *                 360deg             );
+  animation: 4.405631597558116s rotate-movement linear infinite;
+}
+
+.c152 {
+  z-index: 3;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
   --rotation: calc(               1 *                 360deg             );
-  animation: 4.8212733888441495s rotate-movement linear infinite;
+  animation: 5.760003882940972s rotate-movement linear infinite;
+}
+
+.c156 {
+  z-index: 4;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               2 *                 360deg             );
+  animation: 6.10501989532445s rotate-movement linear infinite;
+}
+
+.c160 {
+  z-index: 3;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               2 *                 360deg             );
+  animation: 5.949146980447107s rotate-movement linear infinite;
+}
+
+.c164 {
+  z-index: 5;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               2 *                 360deg             );
+  animation: 6.85102439265857s rotate-movement linear infinite;
+}
+
+.c168 {
+  z-index: 3;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               2 *                 360deg             );
+  animation: 5.971988232101946s rotate-movement linear infinite;
+}
+
+.c172 {
+  z-index: 5;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               2 *                 360deg             );
+  animation: 6.217863946220371s rotate-movement linear infinite;
+}
+
+.c176 {
+  z-index: 5;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               1 *                 360deg             );
+  animation: 5.347832197359062s rotate-movement linear infinite;
+}
+
+.c180 {
+  z-index: 5;
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  --rotation: calc(               2 *                 360deg             );
+  animation: 4.852951642248924s rotate-movement linear infinite;
+}
+
+.c165 svg {
+  width: 100%;
+  height: 100%;
 }
 
 .c137 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 13.647565047038274s color-swap 4.785845932065498s linear infinite;
+  animation: 10.59912597782304s color-swap 2.4870388249528483s linear infinite;
+}
+
+.c141 svg {
+  width: 100%;
+  height: 100%;
+  color: #FFDD83;
+  animation: 18.05300058120506s color-swap 1.2597847900663388s linear infinite;
+}
+
+.c145 svg {
+  width: 100%;
+  height: 100%;
+  color: #FFDD83;
+  animation: 18.88102079690248s color-swap 4.476795931285851s linear infinite;
+}
+
+.c149 svg {
+  width: 100%;
+  height: 100%;
+  color: #FFDD83;
+  animation: 13.082434717886677s color-swap 5.785497649948763s linear infinite;
+}
+
+.c153 svg {
+  width: 100%;
+  height: 100%;
+  color: #FFDD83;
+  animation: 13.998429508231345s color-swap 1.3198346450422775s linear infinite;
+}
+
+.c157 svg {
+  width: 100%;
+  height: 100%;
+  color: #FFDD83;
+  animation: 15.839977620116896s color-swap 5.954514895873972s linear infinite;
+}
+
+.c161 svg {
+  width: 100%;
+  height: 100%;
+  color: #FFDD83;
+  animation: 9.567827032117348s color-swap 2.4903645871762716s linear infinite;
+}
+
+.c169 svg {
+  width: 100%;
+  height: 100%;
+  color: #FFDD83;
+  animation: 17.491744852899615s color-swap 1.9908158093620472s linear infinite;
+}
+
+.c173 svg {
+  width: 100%;
+  height: 100%;
+  color: #FFDD83;
+  animation: 12.491132583585378s color-swap 5.8541714215255904s linear infinite;
+}
+
+.c177 svg {
+  width: 100%;
+  height: 100%;
+  color: #FFDD83;
+  animation: 11.001141353180081s color-swap 2.5718628558273195s linear infinite;
 }
 
 .c34 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 1px;
-  --begin-y: -37%;
-  --end-y: 46%;
-  animation: 4349ms particle-movement 9669ms infinite linear;
-}
-
-.c36 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 7px;
-  --begin-y: 8%;
-  --end-y: 22%;
-  animation: 5896ms particle-movement 6456ms infinite linear;
-}
-
-.c38 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 6px;
-  --begin-y: 9%;
-  --end-y: -27%;
-  animation: 6912ms particle-movement 3022ms infinite linear;
-}
-
-.c40 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 5px;
-  --begin-y: -10%;
-  --end-y: -24%;
-  animation: 4303ms particle-movement 8257ms infinite linear;
-}
-
-.c42 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 9px;
-  --begin-y: -36%;
-  --end-y: -10%;
-  animation: 4454ms particle-movement 6051ms infinite linear;
-}
-
-.c44 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 2px;
-  --begin-y: 10%;
-  --end-y: -24%;
-  animation: 5185ms particle-movement 4717ms infinite linear;
-}
-
-.c46 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 9px;
-  --begin-y: 3%;
-  --end-y: 41%;
-  animation: 5029ms particle-movement 8040ms infinite linear;
-}
-
-.c48 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 3px;
-  --begin-y: -18%;
-  --end-y: -19%;
-  animation: 3951ms particle-movement 1418ms infinite linear;
-}
-
-.c50 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 1px;
-  --begin-y: -7%;
-  --end-y: 27%;
-  animation: 3702ms particle-movement 2667ms infinite linear;
-}
-
-.c52 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 9px;
-  --begin-y: -45%;
-  --end-y: -18%;
-  animation: 6412ms particle-movement 9756ms infinite linear;
-}
-
-.c54 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(-60%);
-  display: grid;
-  place-items: center;
-  --particleSize: 3px;
-  --begin-y: 30%;
-  --end-y: 2%;
-  animation: 6074ms particle-movement 226ms infinite linear;
-}
-
-.c56 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -641,7 +885,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 3487ms particle-movement 4523ms infinite linear;
 }
 
-.c58 {
+.c36 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -654,7 +898,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 3538ms particle-movement 3021ms infinite linear;
 }
 
-.c60 {
+.c38 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -667,7 +911,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 5503ms particle-movement 631ms infinite linear;
 }
 
-.c62 {
+.c40 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -680,7 +924,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 6225ms particle-movement 2157ms infinite linear;
 }
 
-.c64 {
+.c42 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -693,7 +937,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 5946ms particle-movement 7200ms infinite linear;
 }
 
-.c66 {
+.c44 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -706,7 +950,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 5439ms particle-movement 279ms infinite linear;
 }
 
-.c68 {
+.c46 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -719,7 +963,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 4284ms particle-movement 2490ms infinite linear;
 }
 
-.c70 {
+.c48 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -732,7 +976,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 6498ms particle-movement 10701ms infinite linear;
 }
 
-.c72 {
+.c50 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -745,7 +989,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 3375ms particle-movement 1883ms infinite linear;
 }
 
-.c74 {
+.c52 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -758,7 +1002,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 3331ms particle-movement 1776ms infinite linear;
 }
 
-.c76 {
+.c54 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -771,7 +1015,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 3792ms particle-movement 10795ms infinite linear;
 }
 
-.c78 {
+.c56 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -784,7 +1028,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 5358ms particle-movement 10234ms infinite linear;
 }
 
-.c80 {
+.c58 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -797,7 +1041,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 6640ms particle-movement 6321ms infinite linear;
 }
 
-.c82 {
+.c60 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -810,7 +1054,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 5951ms particle-movement 5293ms infinite linear;
 }
 
-.c84 {
+.c62 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -823,7 +1067,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 6739ms particle-movement 545ms infinite linear;
 }
 
-.c86 {
+.c64 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -836,7 +1080,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 5808ms particle-movement 5659ms infinite linear;
 }
 
-.c88 {
+.c66 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -849,7 +1093,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 6234ms particle-movement 6944ms infinite linear;
 }
 
-.c90 {
+.c68 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -862,7 +1106,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 4790ms particle-movement 9416ms infinite linear;
 }
 
-.c92 {
+.c70 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -875,7 +1119,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 4585ms particle-movement 814ms infinite linear;
 }
 
-.c94 {
+.c72 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -888,7 +1132,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 5459ms particle-movement 10528ms infinite linear;
 }
 
-.c96 {
+.c74 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -901,7 +1145,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 6263ms particle-movement 6435ms infinite linear;
 }
 
-.c98 {
+.c76 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -914,7 +1158,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 6145ms particle-movement 1970ms infinite linear;
 }
 
-.c100 {
+.c78 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -927,7 +1171,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 5385ms particle-movement 3946ms infinite linear;
 }
 
-.c102 {
+.c80 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -940,7 +1184,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 4442ms particle-movement 2862ms infinite linear;
 }
 
-.c104 {
+.c82 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -953,7 +1197,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 4843ms particle-movement 4667ms infinite linear;
 }
 
-.c106 {
+.c84 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -966,7 +1210,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 3629ms particle-movement 2589ms infinite linear;
 }
 
-.c108 {
+.c86 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -979,7 +1223,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 4976ms particle-movement 10601ms infinite linear;
 }
 
-.c110 {
+.c88 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -992,7 +1236,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 6283ms particle-movement 9023ms infinite linear;
 }
 
-.c112 {
+.c90 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1005,7 +1249,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 4921ms particle-movement 2305ms infinite linear;
 }
 
-.c114 {
+.c92 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1018,7 +1262,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 4358ms particle-movement 9810ms infinite linear;
 }
 
-.c116 {
+.c94 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1031,7 +1275,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 6550ms particle-movement 82ms infinite linear;
 }
 
-.c118 {
+.c96 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1044,7 +1288,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 5304ms particle-movement 7556ms infinite linear;
 }
 
-.c120 {
+.c98 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1057,7 +1301,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 4599ms particle-movement 4673ms infinite linear;
 }
 
-.c122 {
+.c100 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1070,7 +1314,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 5188ms particle-movement 6583ms infinite linear;
 }
 
-.c124 {
+.c102 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1083,7 +1327,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 4282ms particle-movement 6669ms infinite linear;
 }
 
-.c126 {
+.c104 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1096,7 +1340,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 5637ms particle-movement 1075ms infinite linear;
 }
 
-.c128 {
+.c106 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1109,7 +1353,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 4368ms particle-movement 3014ms infinite linear;
 }
 
-.c130 {
+.c108 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1122,7 +1366,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 6662ms particle-movement 6161ms infinite linear;
 }
 
-.c132 {
+.c110 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1135,117 +1379,150 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 3934ms particle-movement 2905ms infinite linear;
 }
 
+.c112 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 3px;
+  --begin-y: 31%;
+  --end-y: 42%;
+  animation: 6851ms particle-movement 4329ms infinite linear;
+}
+
+.c114 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 3px;
+  --begin-y: -10%;
+  --end-y: -2%;
+  animation: 4278ms particle-movement 6466ms infinite linear;
+}
+
+.c116 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 10px;
+  --begin-y: -9%;
+  --end-y: -29%;
+  animation: 6641ms particle-movement 10354ms infinite linear;
+}
+
+.c118 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 1px;
+  --begin-y: 34%;
+  --end-y: 25%;
+  animation: 5693ms particle-movement 10544ms infinite linear;
+}
+
+.c120 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 10px;
+  --begin-y: -24%;
+  --end-y: 21%;
+  animation: 4226ms particle-movement 2963ms infinite linear;
+}
+
+.c122 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 3px;
+  --begin-y: 33%;
+  --end-y: 34%;
+  animation: 3646ms particle-movement 1265ms infinite linear;
+}
+
+.c124 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 5px;
+  --begin-y: 0%;
+  --end-y: 18%;
+  animation: 3248ms particle-movement 10223ms infinite linear;
+}
+
+.c126 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 9px;
+  --begin-y: 34%;
+  --end-y: 42%;
+  animation: 5259ms particle-movement 250ms infinite linear;
+}
+
+.c128 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 7px;
+  --begin-y: 37%;
+  --end-y: -20%;
+  animation: 6689ms particle-movement 2748ms infinite linear;
+}
+
+.c130 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 2px;
+  --begin-y: -14%;
+  --end-y: -29%;
+  animation: 4780ms particle-movement 1238ms infinite linear;
+}
+
+.c132 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-60%);
+  display: grid;
+  place-items: center;
+  --particleSize: 1px;
+  --begin-y: -35%;
+  --end-y: -18%;
+  animation: 6939ms particle-movement 357ms infinite linear;
+}
+
 .c35 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 736ms infinite,particle-scale 1634ms infinite;
-  animation-delay: 14ms;
-}
-
-.c37 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 888ms infinite,particle-scale 1521ms infinite;
-  animation-delay: 89ms;
-}
-
-.c39 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 775ms infinite,particle-scale 1709ms infinite;
-  animation-delay: 17ms;
-}
-
-.c41 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 754ms infinite,particle-scale 1082ms infinite;
-  animation-delay: 96ms;
-}
-
-.c43 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 782ms infinite,particle-scale 1138ms infinite;
-  animation-delay: 34ms;
-}
-
-.c45 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 782ms infinite,particle-scale 1482ms infinite;
-  animation-delay: 22ms;
-}
-
-.c47 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 536ms infinite,particle-scale 1978ms infinite;
-  animation-delay: 5ms;
-}
-
-.c49 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 591ms infinite,particle-scale 1374ms infinite;
-  animation-delay: 29ms;
-}
-
-.c51 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 594ms infinite,particle-scale 1177ms infinite;
-  animation-delay: 81ms;
-}
-
-.c53 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 743ms infinite,particle-scale 1608ms infinite;
-  animation-delay: 60ms;
-}
-
-.c55 {
-  width: var(--particleSize);
-  height: var(--particleSize);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 793ms infinite,particle-scale 1292ms infinite;
-  animation-delay: 81ms;
-}
-
-.c57 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1255,7 +1532,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 56ms;
 }
 
-.c59 {
+.c37 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1265,7 +1542,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 63ms;
 }
 
-.c61 {
+.c39 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1275,7 +1552,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 50ms;
 }
 
-.c63 {
+.c41 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1285,7 +1562,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 67ms;
 }
 
-.c65 {
+.c43 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1295,7 +1572,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 21ms;
 }
 
-.c67 {
+.c45 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1305,7 +1582,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 19ms;
 }
 
-.c69 {
+.c47 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1315,7 +1592,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 82ms;
 }
 
-.c71 {
+.c49 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1325,7 +1602,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 80ms;
 }
 
-.c73 {
+.c51 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1335,7 +1612,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 16ms;
 }
 
-.c75 {
+.c53 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1345,7 +1622,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 26ms;
 }
 
-.c77 {
+.c55 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1355,7 +1632,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 59ms;
 }
 
-.c79 {
+.c57 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1365,7 +1642,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 57ms;
 }
 
-.c81 {
+.c59 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1375,7 +1652,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 44ms;
 }
 
-.c83 {
+.c61 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1385,7 +1662,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 35ms;
 }
 
-.c85 {
+.c63 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1395,7 +1672,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 75ms;
 }
 
-.c87 {
+.c65 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1405,7 +1682,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 26ms;
 }
 
-.c89 {
+.c67 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1415,7 +1692,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 71ms;
 }
 
-.c91 {
+.c69 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1425,7 +1702,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 16ms;
 }
 
-.c93 {
+.c71 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1435,7 +1712,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 2ms;
 }
 
-.c95 {
+.c73 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1445,7 +1722,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 64ms;
 }
 
-.c97 {
+.c75 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1455,7 +1732,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 89ms;
 }
 
-.c99 {
+.c77 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1465,7 +1742,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 24ms;
 }
 
-.c101 {
+.c79 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1475,7 +1752,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 92ms;
 }
 
-.c103 {
+.c81 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1485,7 +1762,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 97ms;
 }
 
-.c105 {
+.c83 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1495,7 +1772,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 84ms;
 }
 
-.c107 {
+.c85 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1505,7 +1782,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 99ms;
 }
 
-.c109 {
+.c87 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1515,7 +1792,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 86ms;
 }
 
-.c111 {
+.c89 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1525,7 +1802,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 86ms;
 }
 
-.c113 {
+.c91 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1535,7 +1812,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 2ms;
 }
 
-.c115 {
+.c93 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1545,7 +1822,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 12ms;
 }
 
-.c117 {
+.c95 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1555,7 +1832,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 68ms;
 }
 
-.c119 {
+.c97 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1565,7 +1842,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 55ms;
 }
 
-.c121 {
+.c99 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1575,7 +1852,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 17ms;
 }
 
-.c123 {
+.c101 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1585,7 +1862,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 88ms;
 }
 
-.c125 {
+.c103 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1595,7 +1872,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 62ms;
 }
 
-.c127 {
+.c105 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1605,7 +1882,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 89ms;
 }
 
-.c129 {
+.c107 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1615,7 +1892,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 16ms;
 }
 
-.c131 {
+.c109 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1625,7 +1902,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-delay: 54ms;
 }
 
-.c133 {
+.c111 {
   width: var(--particleSize);
   height: var(--particleSize);
   border-radius: 50%;
@@ -1633,6 +1910,116 @@ exports[`[lng] route - Page should render successfully 1`] = `
   background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
   animation: particle-fade 941ms infinite,particle-scale 1702ms infinite;
   animation-delay: 27ms;
+}
+
+.c113 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 865ms infinite,particle-scale 1154ms infinite;
+  animation-delay: 85ms;
+}
+
+.c115 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 686ms infinite,particle-scale 1319ms infinite;
+  animation-delay: 62ms;
+}
+
+.c117 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 780ms infinite,particle-scale 1306ms infinite;
+  animation-delay: 55ms;
+}
+
+.c119 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 599ms infinite,particle-scale 1002ms infinite;
+  animation-delay: 95ms;
+}
+
+.c121 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 541ms infinite,particle-scale 1620ms infinite;
+  animation-delay: 30ms;
+}
+
+.c123 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 727ms infinite,particle-scale 1263ms infinite;
+  animation-delay: 28ms;
+}
+
+.c125 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 960ms infinite,particle-scale 1006ms infinite;
+  animation-delay: 52ms;
+}
+
+.c127 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 948ms infinite,particle-scale 1697ms infinite;
+  animation-delay: 64ms;
+}
+
+.c129 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 656ms infinite,particle-scale 1100ms infinite;
+  animation-delay: 49ms;
+}
+
+.c131 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 850ms infinite,particle-scale 1489ms infinite;
+  animation-delay: 4ms;
+}
+
+.c133 {
+  width: var(--particleSize);
+  height: var(--particleSize);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
+  animation: particle-fade 635ms infinite,particle-scale 1826ms infinite;
+  animation-delay: 92ms;
 }
 
 .c24 {
@@ -1671,7 +2058,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   background-color: #000000;
 }
 
-.c138 {
+.c181 {
   flex-grow: 1;
   border: 1px solid #98DFD6;
   transform-origin: var(--transform-origin-last);
@@ -1680,19 +2067,19 @@ exports[`[lng] route - Page should render successfully 1`] = `
 }
 
 @media (min-width: 1024px) {
-  .c144 {
+  .c187 {
     justify-content: space-between;
     grid-template-columns: 1fr 100px;
   }
 }
 
 @media (min-width: 768px) {
-  .c148 {
+  .c191 {
     display: flex;
     position: relative;
   }
 
-  .c148::after {
+  .c191::after {
     content: '';
     position: absolute;
     width: 100%;
@@ -1705,14 +2092,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
     transition: transform 0.25s ease-out;
   }
 
-  .c148:hover::after {
+  .c191:hover::after {
     transform: scaleX(1);
     transform-origin: bottom left;
   }
 }
 
 @media (min-width: 1024px) {
-  .c149 {
+  .c192 {
     justify-self: end;
     padding: 0;
   }
@@ -1834,7 +2221,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c139 {
+  .c182 {
     margin-bottom: 40px;
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
@@ -1851,7 +2238,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c140 .c7 {
+  .c183 .c7 {
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
     color: #FBFBFB;
@@ -2518,10 +2905,261 @@ exports[`[lng] route - Page should render successfully 1`] = `
                         class="c137"
                         data-testid="color-swapping"
                       >
-                        <svg
-                          color="red"
-                        >
+                        <svg>
                           nodejs.svg
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c138"
+                  data-testid="horizontal-movement"
+                >
+                  <div
+                    class="c139"
+                    data-testid="vertical-movement"
+                  >
+                    <div
+                      class="c140"
+                      data-testid="rotation-movement"
+                    >
+                      <div
+                        class="c141"
+                        data-testid="color-swapping"
+                      >
+                        <svg>
+                          css3.svg
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c142"
+                  data-testid="horizontal-movement"
+                >
+                  <div
+                    class="c143"
+                    data-testid="vertical-movement"
+                  >
+                    <div
+                      class="c144"
+                      data-testid="rotation-movement"
+                    >
+                      <div
+                        class="c145"
+                        data-testid="color-swapping"
+                      >
+                        <svg>
+                          github.svg
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c146"
+                  data-testid="horizontal-movement"
+                >
+                  <div
+                    class="c147"
+                    data-testid="vertical-movement"
+                  >
+                    <div
+                      class="c148"
+                      data-testid="rotation-movement"
+                    >
+                      <div
+                        class="c149"
+                        data-testid="color-swapping"
+                      >
+                        <svg>
+                          typescript.svg
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c150"
+                  data-testid="horizontal-movement"
+                >
+                  <div
+                    class="c151"
+                    data-testid="vertical-movement"
+                  >
+                    <div
+                      class="c152"
+                      data-testid="rotation-movement"
+                    >
+                      <div
+                        class="c153"
+                        data-testid="color-swapping"
+                      >
+                        <svg>
+                          nextjs.svg
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c154"
+                  data-testid="horizontal-movement"
+                >
+                  <div
+                    class="c155"
+                    data-testid="vertical-movement"
+                  >
+                    <div
+                      class="c156"
+                      data-testid="rotation-movement"
+                    >
+                      <div
+                        class="c157"
+                        data-testid="color-swapping"
+                      >
+                        <svg>
+                          reactjs.svg
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c158"
+                  data-testid="horizontal-movement"
+                >
+                  <div
+                    class="c159"
+                    data-testid="vertical-movement"
+                  >
+                    <div
+                      class="c160"
+                      data-testid="rotation-movement"
+                    >
+                      <div
+                        class="c161"
+                        data-testid="color-swapping"
+                      >
+                        <svg>
+                          mongodb.svg
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c162"
+                  data-testid="horizontal-movement"
+                >
+                  <div
+                    class="c163"
+                    data-testid="vertical-movement"
+                  >
+                    <div
+                      class="c164"
+                      data-testid="rotation-movement"
+                    >
+                      <div
+                        class="c165"
+                        data-testid="color-swapping"
+                      >
+                        <svg>
+                          reactQuery.svg
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c166"
+                  data-testid="horizontal-movement"
+                >
+                  <div
+                    class="c167"
+                    data-testid="vertical-movement"
+                  >
+                    <div
+                      class="c168"
+                      data-testid="rotation-movement"
+                    >
+                      <div
+                        class="c169"
+                        data-testid="color-swapping"
+                      >
+                        <svg>
+                          jest.svg
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c170"
+                  data-testid="horizontal-movement"
+                >
+                  <div
+                    class="c171"
+                    data-testid="vertical-movement"
+                  >
+                    <div
+                      class="c172"
+                      data-testid="rotation-movement"
+                    >
+                      <div
+                        class="c173"
+                        data-testid="color-swapping"
+                      >
+                        <svg>
+                          nx.svg
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c174"
+                  data-testid="horizontal-movement"
+                >
+                  <div
+                    class="c175"
+                    data-testid="vertical-movement"
+                  >
+                    <div
+                      class="c176"
+                      data-testid="rotation-movement"
+                    >
+                      <div
+                        class="c177"
+                        data-testid="color-swapping"
+                      >
+                        <svg>
+                          yarn.svg
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c178"
+                  data-testid="horizontal-movement"
+                >
+                  <div
+                    class="c179"
+                    data-testid="vertical-movement"
+                  >
+                    <div
+                      class="c180"
+                      data-testid="rotation-movement"
+                    >
+                      <div
+                        class="c165"
+                        data-testid="color-swapping"
+                      >
+                        <svg>
+                          xataIO.svg
                         </svg>
                       </div>
                     </div>
@@ -2531,16 +3169,16 @@ exports[`[lng] route - Page should render successfully 1`] = `
             </div>
           </div>
           <div
-            class="c138"
+            class="c181"
           />
         </div>
         <h2
-          class="c18 c139"
+          class="c18 c182"
         >
           About me
         </h2>
         <section
-          class="c140"
+          class="c183"
         >
           <p
             class="c7 c8"
@@ -2588,27 +3226,27 @@ exports[`[lng] route - Page should render successfully 1`] = `
         </a>
       </div>
       <footer
-        class="c141"
+        class="c184"
         tabindex="-1"
       >
         <div
-          class="c142"
+          class="c185"
         >
           <div
-            class="c143"
+            class="c186"
           />
           <div
-            class="c143"
+            class="c186"
           />
           <div
-            class="c143"
+            class="c186"
           />
         </div>
         <div
-          class="c144"
+          class="c187"
         >
           <svg
-            class="c145"
+            class="c188"
             height="64"
             width="120"
           >
@@ -2616,14 +3254,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
           </svg>
           <nav
             aria-label="Site map"
-            class="c146"
+            class="c189"
           >
             <ul
-              class="c147"
+              class="c190"
             >
               <li>
                 <a
-                  class="c148"
+                  class="c191"
                   href="/experience"
                 >
                   <p
@@ -2635,7 +3273,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               </li>
               <li>
                 <a
-                  class="c148"
+                  class="c191"
                   href="/contact"
                 >
                   <p
@@ -2647,7 +3285,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               </li>
               <li>
                 <a
-                  class="c148"
+                  class="c191"
                   href="/portfolio"
                 >
                   <p
@@ -2659,7 +3297,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               </li>
               <li>
                 <a
-                  class="c148"
+                  class="c191"
                   href="#"
                 >
                   <svg
@@ -2678,7 +3316,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               </li>
               <li>
                 <a
-                  class="c148"
+                  class="c191"
                   href="#"
                 >
                   <svg
@@ -2698,7 +3336,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
             </ul>
           </nav>
           <div
-            class="c149"
+            class="c192"
           >
             <a
               aria-label="Telegram"
