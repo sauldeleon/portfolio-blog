@@ -1,0 +1,240 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`/[lng]/(home) - HomeLayout should render 1`] = `
+.c0 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 1.5rem;
+  line-height: normal;
+  margin: 0;
+}
+
+.c5 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  white-space: pre-line;
+}
+
+.c5 ul,
+.c5 ol {
+  margin-left: 40px;
+  margin-bottom: 10px;
+}
+
+.c5 ul {
+  list-style: outside disc;
+}
+
+.c5 ol {
+  list-style: decimal;
+}
+
+.c5 li {
+  padding-left: 10px;
+}
+
+.c12 {
+  margin-left: 8px;
+  position: relative;
+}
+
+.c12:hover,
+.c12:focus {
+  text-decoration: none;
+}
+
+.c12::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #FBFBFB;
+  transform-origin: bottom right;
+  transition: transform 0.5s ease-out;
+}
+
+.c6 {
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  max-height: 42px;
+}
+
+.c6:hover,
+.c6:focus {
+  text-decoration: none;
+}
+
+.c6:hover circle.loading {
+  stroke: white;
+  stroke-width: 6px;
+  stroke-dasharray: 110;
+  stroke-dashoffset: 82;
+  animation: clock-loading 0.5s steps(4, jump-none) forwards;
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+.c6:hover .c11::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c8 {
+  position: relative;
+  width: 42px;
+  height: 42px;
+}
+
+.c9 {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+}
+
+.c10 {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  display: flex;
+}
+
+.c1 {
+  text-align: center;
+}
+
+.c2 {
+  margin-top: 30px;
+}
+
+.c7 {
+  margin-top: 40px;
+  margin-bottom: 30px;
+}
+
+.c3 {
+  text-align: center;
+  max-width: 1180px;
+  padding: 0 34px;
+}
+
+.c3 .c4 {
+  margin-top: 20px;
+}
+
+@media (min-width: 768px) {
+  .c1 {
+    font-family: 'Roboto mono',monospace;
+    font-weight: 400;
+    color: #FBFBFB;
+    font-size: 3rem;
+    line-height: normal;
+  }
+}
+
+@media (min-width: 1024px) {
+  .c1 {
+    margin-bottom: 10px;
+  }
+}
+
+@media (min-width: 768px) {
+  .c2 {
+    margin-bottom: 40px;
+    font-family: 'Roboto mono',monospace;
+    font-weight: 400;
+    color: #FBFBFB;
+    font-size: 3rem;
+    line-height: normal;
+  }
+}
+
+@media (min-width: 768px) {
+  .c7 {
+    margin-bottom: 50px;
+  }
+}
+
+@media (min-width: 768px) {
+  .c3 .c4 {
+    font-family: 'Roboto mono',monospace;
+    font-weight: 400;
+    color: #FBFBFB;
+    font-size: 1rem;
+    line-height: normal;
+  }
+}
+
+<body>
+  <div>
+    <h1
+      class="c0 c1"
+    >
+      Saúl de León Guerrero
+    </h1>
+    test
+    <h2
+      class="c0 c2"
+    >
+      About me
+    </h2>
+    <section
+      class="c3"
+    >
+      <p
+        class="c4 c5"
+      >
+        Experienced Front-End Developer with a strong foundation in web technologies and a passion for creating visually appealing and user-friendly interfaces. Proficient in a variety of front-end frameworks and libraries, more focused in React.JS, with a solid understanding of HTML5, CSS3, and JavaScript. Skilled at translating design concepts into responsive and interactive web experiences.
+      </p>
+      <p
+        class="c4 c5"
+      >
+        Additionally, I have experience in backend development using technologies such as Node.js and Java, which enables me to create comprehensive and robust solutions.
+      </p>
+      <p
+        class="c4 c5"
+      >
+        Committed to staying up-to-date with the latest industry trends and consistently enhancing skills to deliver seamless digital solutions.
+      </p>
+    </section>
+    <a
+      class="c6 c7"
+      href="/experience"
+    >
+      <div
+        class="c8"
+      >
+        <svg
+          class="c9"
+          height="42"
+          width="42"
+        >
+          circleButton.svg
+        </svg>
+        <div
+          class="c10"
+        >
+          <svg>
+            arrowRight.svg
+          </svg>
+        </div>
+      </div>
+      <p
+        class="c4 c11 c5 c12"
+      >
+        Experience
+      </p>
+    </a>
+  </div>
+</body>
+`;

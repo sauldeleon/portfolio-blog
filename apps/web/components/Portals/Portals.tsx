@@ -1,5 +1,6 @@
 import { mainTheme } from '@sdlgr/main-theme'
 
+import { AnimatedItem, AnimatedItemProps } from '../AnimatedItem/AnimatedItem'
 import {
   PortalFirst,
   PortalFirstGlow,
@@ -10,10 +11,6 @@ import {
   StyledPortalIcon,
   StyledPortals,
 } from './Portals.styles'
-import {
-  AnimatedItem,
-  AnimatedItemProps,
-} from './components/AnimatedItem/AnimatedItem'
 import { Particles } from './components/Particles/Particles'
 
 export type AnimatedItem = AnimatedItemProps & {
@@ -21,15 +18,15 @@ export type AnimatedItem = AnimatedItemProps & {
 }
 
 interface PortalsProps {
-  items: AnimatedItem[]
   enableParticles?: boolean
   enableCylinder?: boolean
+  children?: React.ReactNode
 }
 
 export function Portals({
-  items,
-  enableParticles = false,
   enableCylinder = false,
+  children,
+  enableParticles,
 }: PortalsProps) {
   return (
     <StyledPortals role="presentation">
@@ -43,11 +40,7 @@ export function Portals({
         <PortalFirstGlow />
         <PortalLastGlow />
         {enableParticles && <Particles />}
-        {items
-          .filter(({ isHidden }) => !isHidden)
-          .map((props, index) => (
-            <AnimatedItem key={index} {...props} />
-          ))}
+        {children}
         {enableCylinder && (
           <StyledCylinderShape data-testid="cylinder-wrapper" />
         )}

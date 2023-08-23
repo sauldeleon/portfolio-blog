@@ -37,7 +37,7 @@ export default function RootLayout({
   params: { lng },
 }: RootLayoutProps) {
   return (
-    <html lang={lng} dir={dir(lng)}>
+    <html lang={lng} dir={dir(lng)} data-testid="root-html">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link

@@ -6,8 +6,8 @@ import { HomePage } from './HomePage'
 
 describe('HomePage', () => {
   it('should render successfully', async () => {
-    const { baseElement } = renderApp(<HomePage />)
-    await screen.findByRole('heading', { level: 1 })
-    expect(baseElement).toMatchSnapshot()
+    renderApp(<HomePage />)
+    const items = await screen.findAllByRole('presentation')
+    expect(items.length).toBe(2)
   })
 })

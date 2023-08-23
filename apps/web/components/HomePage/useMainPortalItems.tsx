@@ -36,16 +36,9 @@ import {
   YarnIcon,
 } from '@sdlgr/assets'
 
-import { AnimatedItem, Portals } from '@web/components/Portals/Portals'
+import { AnimatedItem } from '@web/components/Portals/Portals'
 
-import {
-  FirstWall,
-  LastWall,
-  MiddleWall,
-  PortalContainer,
-} from './MainPortal.styles'
-
-export function MainPortal() {
+export function useMainPortalItems() {
   const items: AnimatedItem[] = useMemo(
     () => [
       {
@@ -222,13 +215,5 @@ export function MainPortal() {
     []
   )
 
-  return (
-    <PortalContainer>
-      <FirstWall />
-      <MiddleWall>
-        <Portals items={items} enableParticles />
-      </MiddleWall>
-      <LastWall />
-    </PortalContainer>
-  )
+  return items
 }

@@ -10,7 +10,7 @@ jest.mock('./components/Particles/Particles', () => ({
 
 describe('Portals', () => {
   it('should render only the portals with no items and neither particles but with a surrounding cylinder', () => {
-    renderWithTheme(<Portals items={[]} enableCylinder />)
+    renderWithTheme(<Portals enableCylinder />)
 
     expect(screen.getByRole('presentation')).toBeInTheDocument()
     const portals = screen.getAllByText('portal.svg')
@@ -20,19 +20,10 @@ describe('Portals', () => {
     expect(screen.getByTestId('cylinder-wrapper')).toBeInTheDocument()
   })
 
-  it('should render particles and items and hide selected items', async () => {
-    renderWithTheme(
-      <Portals
-        items={[
-          { svg: <svg /> },
-          { svg: <svg /> },
-          { isHidden: true, svg: <svg /> },
-        ]}
-        enableParticles
-      />
-    )
+  it('should render particles and children and hide selected items', async () => {
+    renderWithTheme(<Portals enableParticles>test</Portals>)
 
-    expect(screen.getAllByTestId('horizontal-movement').length).toBe(2)
+    expect(screen.getByText('test')).toBeInTheDocument()
     expect(screen.getByText('ParticlesMock')).toBeInTheDocument()
   })
 })

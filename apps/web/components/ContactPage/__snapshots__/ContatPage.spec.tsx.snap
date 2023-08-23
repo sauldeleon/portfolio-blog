@@ -1,0 +1,312 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ContactPage should render 1`] = `
+.c11 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  white-space: pre-line;
+}
+
+.c11 ul,
+.c11 ol {
+  margin-left: 40px;
+  margin-bottom: 10px;
+}
+
+.c11 ul {
+  list-style: outside disc;
+}
+
+.c11 ol {
+  list-style: decimal;
+}
+
+.c11 li {
+  padding-left: 10px;
+}
+
+.c4 {
+  z-index: 2;
+  width: 147%;
+  top: -34%;
+  left: -24%;
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  transform: rotate(90deg);
+}
+
+.c6 {
+  width: 130px;
+  height: 249px;
+}
+
+.c5 {
+  background-color: #000000;
+  border-top-right-radius: 42px 50%;
+  border-bottom-right-radius: 44px 50%;
+  border-top-left-radius: 44px 50%;
+  border-bottom-left-radius: 44px 50%;
+  margin-bottom: 5px;
+  line-height: 0px;
+}
+
+.c9 {
+  position: absolute;
+  height: 212px;
+  width: 62px;
+  left: -43px;
+  top: 2px;
+  border-top-left-radius: 35px 50%;
+  border-top-right-radius: 32px 50%;
+  border-bottom-left-radius: 32px 50%;
+  border-bottom-right-radius: 32px 50%;
+  animation: 3s portal-first-glow ease-in-out infinite;
+}
+
+.c10 {
+  position: absolute;
+  height: 213px;
+  width: 62px;
+  right: -41px;
+  top: -3px;
+  border-top-left-radius: 34px 50%;
+  border-top-right-radius: 29px 50%;
+  border-bottom-left-radius: 28px 49%;
+  border-bottom-right-radius: 28px 50%;
+  animation: 3s portal-last-glow ease-in-out infinite;
+}
+
+.c7 {
+  border-top-right-radius: 41px 50%;
+  border-bottom-right-radius: 44px 50%;
+  border-top-left-radius: 43px 50%;
+  border-bottom-left-radius: 45px 50%;
+  background-color: #000000;
+  margin-bottom: 5px;
+  line-height: 0px;
+  transform: scaleX(-1);
+}
+
+.c8 {
+  --height: 212px;
+  position: absolute;
+  overflow: hidden;
+  margin: 30px auto;
+  height: 212px;
+  border-top-left-radius: 30px 50%;
+  border-bottom-left-radius: 30px 50%;
+  border-top-right-radius: 31px 50%;
+  border-bottom-right-radius: 32px 50%;
+  top: -12px;
+  left: 62px;
+  right: 61px;
+}
+
+.c0 {
+  --transform-origin-first: bottom;
+  --transform-origin-last: top;
+  --rotate3D-first: 1,0,0,-45deg;
+  --rotate3D-last: 1,0,0,45deg;
+  --height-middle: 30%;
+  --width-middle: unset;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 1/1.7;
+  align-items: stretch;
+  gap: 15px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.c2 {
+  flex-grow: 1;
+  border: 1px solid #FFDD83;
+  transform-origin: var(--transform-origin-first);
+  transform: perspective(600px) rotate3D(var(--rotate3D-first));
+  background-color: #000000;
+}
+
+.c3 {
+  position: relative;
+  border: 1px solid;
+  border-image-slice: 1;
+  border-width: 1px;
+  border-image-source: linear-gradient(       to bottom,       #FFDD83,       #98DFD6     );
+  height: var(--height-middle);
+  width: var(--width-middle);
+  background-color: #000000;
+}
+
+.c12 {
+  flex-grow: 1;
+  border: 1px solid #98DFD6;
+  transform-origin: var(--transform-origin-last);
+  transform: perspective(600px) rotate3D(var(--rotate3D-last));
+  background-color: #000000;
+}
+
+.c1 {
+  margin-top: 166px;
+}
+
+@media (min-width: 768px) {
+  .c4 {
+    width: 152%;
+    top: unset;
+    left: -26%;
+    margin: 18px auto;
+    transform: unset;
+  }
+}
+
+@media (min-width: 768px) {
+  .c6 {
+    width: unset;
+    height: unset;
+  }
+}
+
+@media (min-width: 768px) {
+  .c5 {
+    background-color: #000000;
+    border-top-right-radius: 59px 50%;
+    border-bottom-right-radius: 61px 50%;
+    border-top-left-radius: 62px 50%;
+    border-bottom-left-radius: 62px 50%;
+  }
+}
+
+@media (min-width: 768px) {
+  .c9 {
+    height: 309px;
+    width: 92px;
+    left: -65px;
+    top: -2px;
+    border-top-left-radius: 44px 50%;
+    border-top-right-radius: 45px 50%;
+    border-bottom-left-radius: 42px 50%;
+    border-bottom-right-radius: 43px 50%;
+  }
+}
+
+@media (min-width: 768px) {
+  .c10 {
+    height: 308px;
+    width: 89px;
+    right: -63px;
+    top: -1px;
+    border-top-left-radius: 46px 50%;
+    border-top-right-radius: 51px 50%;
+    border-bottom-left-radius: 51px 50%;
+    border-bottom-right-radius: 51px 50%;
+  }
+}
+
+@media (min-width: 768px) {
+  .c7 {
+    border-top-right-radius: 59px 50%;
+    border-bottom-right-radius: 62px 50%;
+    border-top-left-radius: 61px 50%;
+    border-bottom-left-radius: 63px 50%;
+  }
+}
+
+@media (min-width: 768px) {
+  .c8 {
+    height: 305px;
+    border-top-left-radius: 45px 50%;
+    border-bottom-left-radius: 45px 50%;
+    border-top-right-radius: 40px 50%;
+    border-bottom-right-radius: 40px 50%;
+    top: -4px;
+    left: 91px;
+    right: 91px;
+  }
+}
+
+@media (min-width: 768px) {
+  .c0 {
+    --transform-origin-first: right;
+    --transform-origin-last: left;
+    --rotate3D-first: 0,1,0,45deg;
+    --rotate3D-last: 0,1,0,-45deg;
+    --height-middle: unset;
+    --width-middle: clamp(0px, 60%, 830px);
+    flex-direction: row;
+    aspect-ratio: unset;
+    height: 395px;
+    overflow-x: clip;
+    max-width: unset;
+  }
+}
+
+@media (min-width: 768px) {
+  .c3 {
+    border-image-source: linear-gradient(         to right,         #FFDD83,         #98DFD6       );
+  }
+}
+
+<body>
+  <div>
+    <div
+      class="c0 c1"
+    >
+      <div
+        class="c2"
+      />
+      <div
+        class="c3"
+      >
+        <div
+          class="c4"
+          role="presentation"
+        >
+          <div
+            class="c5"
+          >
+            <svg
+              class="c6"
+              color="#FFDD83"
+            >
+              portal.svg
+            </svg>
+          </div>
+          <div
+            class="c7"
+          >
+            <svg
+              class="c6"
+              color="#98DFD6"
+            >
+              portal.svg
+            </svg>
+          </div>
+          <div
+            class="c8"
+          >
+            <div
+              class="c9"
+            />
+            <div
+              class="c10"
+            />
+            <p
+              class="c11"
+            >
+              Contact me
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        class="c12"
+      />
+    </div>
+  </div>
+</body>
+`;

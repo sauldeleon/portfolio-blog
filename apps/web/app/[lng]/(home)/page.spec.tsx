@@ -7,8 +7,8 @@ import Page from './page.next'
 describe('[lng] route - Page', () => {
   it('should render successfully', async () => {
     const { baseElement } = renderApp(<Page />)
-    const heading = await screen.findByRole('heading', { level: 1 })
-    expect(heading).toHaveTextContent('Saúl de León Guerrero')
+    const items = await screen.findAllByRole('presentation')
+    expect(items).toHaveLength(2)
     expect(baseElement).toMatchSnapshot()
   })
 })

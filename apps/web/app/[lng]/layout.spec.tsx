@@ -1,5 +1,7 @@
+import { screen } from '@testing-library/react'
 import React from 'react'
-import { renderToString } from 'react-dom/server'
+
+import { renderApp } from '@sdlgr/test-utils'
 
 import RootLayout, {
   generateMetadata,
@@ -12,29 +14,21 @@ jest.mock('next/headers', () => ({
   }),
 }))
 
-jest.mock('@web/components/MainLayout/MainLayout', () => ({
-  MainLayout: ({ children }: { children: React.ReactNode }) => (
-    <div>{children}</div>
-  ),
-}))
-
 describe('[lng] route - layout', () => {
   it('should render successfully in English', async () => {
-    const view = renderToString(
-      <RootLayout params={{ lng: 'en' }}>test</RootLayout>
-    )
+    renderApp(<RootLayout params={{ lng: 'en' }}>test</RootLayout>)
 
-    expect(view).toContain('test')
-    expect(view).toContain(`<html lang="en" dir="ltr"`)
+    const text = await screen.findByText('test')
+    expect(text).toBeInTheDocument()
+    expect(screen.getByTestId('root-html')).toHaveAttribute('lang', 'en')
   })
 
   it('should render successfully in Spanish', async () => {
-    const view = renderToString(
-      <RootLayout params={{ lng: 'es' }}>test</RootLayout>
-    )
+    renderApp(<RootLayout params={{ lng: 'es' }}>test</RootLayout>)
 
-    expect(view).toContain('test')
-    expect(view).toContain(`<html lang="es" dir="ltr"`)
+    const text = await screen.findByText('test')
+    expect(text).toBeInTheDocument()
+    expect(screen.getByTestId('root-html')).toHaveAttribute('lang', 'es')
   })
 })
 
