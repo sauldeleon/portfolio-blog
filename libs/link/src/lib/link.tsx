@@ -4,7 +4,7 @@ import { AnchorHTMLAttributes, DetailedHTMLProps, forwardRef } from 'react'
 import { StyledLink, StyledNextLink } from './link.styles'
 
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
-  ({ href, forceAnchor, prefetch, children, ...props }, ref) => {
+  ({ href, forceAnchor, prefetch, children, ...props }, forwardedRef) => {
     const isExternalLink =
       href?.startsWith('http') ||
       href?.startsWith('tel') ||
@@ -12,11 +12,21 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
       href?.startsWith('mailto')
 
     return isExternalLink || Boolean(forceAnchor) ? (
-      <StyledLink {...props} href={href} data-testid="plain-anchor" ref={ref}>
+      <StyledLink
+        {...props}
+        href={href}
+        data-testid="plain-anchor"
+        ref={forwardedRef}
+      >
         {children}
       </StyledLink>
     ) : (
-      <StyledNextLink href={href} prefetch={prefetch} {...props} ref={ref}>
+      <StyledNextLink
+        href={href}
+        prefetch={prefetch}
+        {...props}
+        ref={forwardedRef}
+      >
         {children}
       </StyledNextLink>
     )

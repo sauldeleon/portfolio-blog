@@ -32,11 +32,6 @@ export const GlobalTypography = createGlobalStyle`
       a {
         color: ${colors.white};
         text-decoration: none;
-
-        &:focus,
-        &:hover {
-          text-decoration: underline;
-        }
       }
 
       button {

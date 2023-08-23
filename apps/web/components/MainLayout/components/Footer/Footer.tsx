@@ -39,7 +39,10 @@ export function Footer() {
         {
           label: t('darkMode'),
           ariaLabel: t('darkModeAria'),
-          href: '#',
+          onClick: (e) => {
+            e.preventDefault()
+            console.log('dark mode')
+          },
           icon: (
             <MoonIcon color={mainTheme.colors.white} height={14} width={14} />
           ),
@@ -47,7 +50,10 @@ export function Footer() {
         {
           label: t('painMode'),
           ariaLabel: t('painModeAria'),
-          href: '#',
+          onClick: (e) => {
+            e.preventDefault()
+            console.log('pain mode')
+          },
           icon: (
             <CactusIcon color={mainTheme.colors.white} height={14} width={14} />
           ),

@@ -62,14 +62,19 @@ describe('mainTheme', () => {
             "&:hover,&:active,&:focus{text-decoration:none;}",
           ],
           "textBottomBorder": {
-            "after": [Function],
-            "hoverAfter": [
-              "&:hover::after{transform:scaleX(1);transform-origin:bottom left;}",
+            "afterIncrease": [
+              "&::after{",
+              "transform:scaleX(1);transform-origin:bottom left;",
+              "}",
             ],
-            "shared": [
-              "&::after{content:'';position:absolute;width:100%;height:2px;bottom:0;left:0;background-color:",
+            "afterInitial": [Function],
+            "afterShared": [
+              "position:relative;&::after{content:'';position:absolute;width:100%;height:2px;bottom:0;left:0;background-color:",
               [Function],
               ";}",
+            ],
+            "removeBorder": [
+              "&::after{content:none;}",
             ],
             "transform": [Function],
           },
@@ -206,7 +211,7 @@ describe('mainTheme', () => {
 
   it('should create the correct textBottomBorder helpers', () => {
     const StyledTestItem = styled.div`
-      ${mainTheme.helpers.textBottomBorder.shared}
+      ${mainTheme.helpers.textBottomBorder.afterShared}
       ${mainTheme.helpers.textBottomBorder.transform(0.5)}
     `
     const { baseElement } = render(
@@ -216,6 +221,10 @@ describe('mainTheme', () => {
     )
 
     expect(baseElement).toMatchInlineSnapshot(`
+      .c0 {
+        position: relative;
+      }
+
       .c0::after {
         content: '';
         position: absolute;
@@ -226,15 +235,15 @@ describe('mainTheme', () => {
         background-color: #FBFBFB;
       }
 
-      .c0:hover::after {
-        transform: scaleX(1);
-        transform-origin: bottom left;
-      }
-
       .c0::after {
         transform: scaleX(0);
         transform-origin: bottom right;
         transition: transform 0.5s ease-out;
+      }
+
+      .c0:hover::after {
+        transform: scaleX(1);
+        transform-origin: bottom left;
       }
 
       <body>
@@ -246,7 +255,8 @@ describe('mainTheme', () => {
       </body>
     `)
 
-    expect(mainTheme.helpers.textBottomBorder.after()).toMatchInlineSnapshot(`
+    expect(mainTheme.helpers.textBottomBorder.afterInitial())
+      .toMatchInlineSnapshot(`
       [
         "&::after{transform:scaleX(0);transform-origin:bottom right;transition:transform ",
         "0.25",
@@ -254,7 +264,7 @@ describe('mainTheme', () => {
       ]
     `)
 
-    expect(mainTheme.helpers.textBottomBorder.after(0.5))
+    expect(mainTheme.helpers.textBottomBorder.afterInitial(0.5))
       .toMatchInlineSnapshot(`
       [
         "&::after{transform:scaleX(0);transform-origin:bottom right;transition:transform ",
@@ -263,22 +273,10 @@ describe('mainTheme', () => {
       ]
     `)
 
-    expect(mainTheme.helpers.textBottomBorder.hoverAfter)
+    expect(mainTheme.helpers.textBottomBorder.afterShared)
       .toMatchInlineSnapshot(`
       [
-        "&:hover::after{transform:scaleX(1);transform-origin:bottom left;}",
-      ]
-    `)
-
-    expect(mainTheme.helpers.textBottomBorder.hoverAfter)
-      .toMatchInlineSnapshot(`
-          [
-            "&:hover::after{transform:scaleX(1);transform-origin:bottom left;}",
-          ]
-      `)
-    expect(mainTheme.helpers.textBottomBorder.shared).toMatchInlineSnapshot(`
-      [
-        "&::after{content:'';position:absolute;width:100%;height:2px;bottom:0;left:0;background-color:",
+        "position:relative;&::after{content:'';position:absolute;width:100%;height:2px;bottom:0;left:0;background-color:",
         [Function],
         ";}",
       ]
@@ -286,11 +284,12 @@ describe('mainTheme', () => {
     expect(mainTheme.helpers.textBottomBorder.transform())
       .toMatchInlineSnapshot(`
       [
-        "&:hover::after{transform:scaleX(1);transform-origin:bottom left;}",
-        " ",
         "&::after{transform:scaleX(0);transform-origin:bottom right;transition:transform ",
         "0.25",
         "s ease-out;}",
+        " &:hover::after{",
+        "transform:scaleX(1);transform-origin:bottom left;",
+        "}",
       ]
     `)
   })

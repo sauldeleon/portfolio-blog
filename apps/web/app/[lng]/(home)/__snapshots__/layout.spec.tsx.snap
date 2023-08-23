@@ -37,17 +37,12 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
   padding-left: 10px;
 }
 
-.c12 {
-  margin-left: 8px;
+.c6 {
+  position: relative;
   position: relative;
 }
 
-.c12:hover,
-.c12:focus {
-  text-decoration: none;
-}
-
-.c12::after {
+.c6::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -57,13 +52,45 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
   background-color: #FBFBFB;
 }
 
-.c12::after {
+.c6::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.c6:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c6:hover,
+.c6:active,
+.c6:focus {
+  text-decoration: none;
+}
+
+.c13 {
+  margin-left: 8px;
+  position: relative;
+}
+
+.c13::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #FBFBFB;
+}
+
+.c13::after {
   transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.5s ease-out;
 }
 
-.c6 {
+.c7 {
   outline: none;
   cursor: pointer;
   display: flex;
@@ -71,12 +98,11 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
   max-height: 42px;
 }
 
-.c6:hover,
-.c6:focus {
-  text-decoration: none;
+.c7::after {
+  content: none;
 }
 
-.c6:hover circle.loading {
+.c7:hover circle.loading {
   stroke: white;
   stroke-width: 6px;
   stroke-dasharray: 110;
@@ -86,25 +112,25 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
   transform-origin: center;
 }
 
-.c6:hover .c11:hover::after {
+.c7:hover .c12::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
 
-.c8 {
+.c9 {
   position: relative;
   width: 42px;
   height: 42px;
 }
 
-.c9 {
+.c10 {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
   left: 50%;
 }
 
-.c10 {
+.c11 {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
@@ -120,7 +146,7 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
   margin-top: 30px;
 }
 
-.c7 {
+.c8 {
   margin-top: 40px;
   margin-bottom: 30px;
 }
@@ -163,7 +189,7 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c7 {
+  .c8 {
     margin-bottom: 50px;
   }
 }
@@ -211,21 +237,21 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
       </p>
     </section>
     <a
-      class="c6 c7"
+      class="c6 c7 c8"
       href="/experience"
     >
       <div
-        class="c8"
+        class="c9"
       >
         <svg
-          class="c9"
+          class="c10"
           height="42"
           width="42"
         >
           circleButton.svg
         </svg>
         <div
-          class="c10"
+          class="c11"
         >
           <svg>
             arrowRight.svg
@@ -233,7 +259,7 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
         </div>
       </div>
       <p
-        class="c4 c11 c5 c12"
+        class="c4 c12 c5 c13"
       >
         Experience
       </p>

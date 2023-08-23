@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@sdlgr/assets": ["libs/assets/src/index.ts"],
+      "@sdlgr/button": ["libs/button/src/index.ts"],
       "@sdlgr/circle-link": ["libs/circle-link/src/index.ts"],
       "@sdlgr/footer": ["libs/footer/src/index.ts"],
       "@sdlgr/header": ["libs/header/src/index.ts"],

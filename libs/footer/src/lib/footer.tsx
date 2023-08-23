@@ -1,5 +1,6 @@
 import React, { DetailedHTMLProps, HTMLAttributes } from 'react'
 
+import { Button } from '@sdlgr/button'
 import { Body } from '@sdlgr/typography'
 
 import {
@@ -15,14 +16,22 @@ import {
   StyledTopLines,
 } from './footer.styles'
 
+type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> & U[keyof U]
+
+type NavItemShared = {
+  label: string
+  ariaLabel: string
+  icon?: React.ReactNode
+}
+type NavItemPartial = {
+  href: string
+  onClick: React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>
+}
+type NavItem = AtLeastOne<NavItemPartial> & NavItemShared
+
 interface FooterProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> {
-  navItems?: {
-    label: string
-    ariaLabel: string
-    href: string
-    icon?: React.ReactNode
-  }[]
+  navItems?: NavItem[]
   socialMediaItems?: {
     href: string
     ariaLabel: string
@@ -51,14 +60,27 @@ export function Footer({
         <StyledNav {...navProps}>
           {navItems?.length && (
             <StyledList>
-              {navItems.map(({ label, ariaLabel, href, icon }, index) => (
-                <li key={index}>
-                  <StyledNavLink href={href} aria-label={ariaLabel}>
-                    {icon}
-                    <Body>{label}</Body>
-                  </StyledNavLink>
-                </li>
-              ))}
+              {navItems.map(
+                ({ label, ariaLabel, href, icon, onClick }, index) => (
+                  <li key={index}>
+                    {href ? (
+                      <StyledNavLink
+                        href={href}
+                        aria-label={ariaLabel}
+                        onClick={onClick}
+                      >
+                        {icon}
+                        <Body>{label}</Body>
+                      </StyledNavLink>
+                    ) : (
+                      <Button aria-label={ariaLabel} onClick={onClick}>
+                        {icon}
+                        <Body>{label}</Body>
+                      </Button>
+                    )}
+                  </li>
+                )
+              )}
             </StyledList>
           )}
         </StyledNav>

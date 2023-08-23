@@ -38,7 +38,7 @@ export const StyledNavLink = styled(Link)<{ $isActive: boolean }>`
   ${({ theme }) => theme.media.up.md} {
     position: relative;
 
-    ${({ theme }) => theme.helpers.textBottomBorder.shared}
+    ${({ theme }) => theme.helpers.textBottomBorder.afterShared}
     ${({ $isActive, theme }) =>
       !$isActive && theme.helpers.textBottomBorder.transform()}
   }
@@ -113,7 +113,7 @@ export const StyledListItem = styled.li<{
       transform: unset;
 
       ${({ $isActive, theme }) =>
-        $isActive && theme.helpers.textBottomBorder.shared}
+        $isActive && theme.helpers.textBottomBorder.afterShared}
     }
   }
 `

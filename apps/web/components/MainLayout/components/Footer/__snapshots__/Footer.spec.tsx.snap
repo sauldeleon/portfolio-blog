@@ -1,6 +1,43 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Footer should render successfully 1`] = `
+.c9 {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  outline: none;
+  box-shadow: none;
+  color: white;
+  padding-block: 0;
+  padding-inline: 0;
+  border: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.c9::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #FBFBFB;
+}
+
+.c9::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.c9:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
 .c8 {
   font-family: 'Roboto mono',monospace;
   font-weight: 400;
@@ -26,6 +63,70 @@ exports[`Footer should render successfully 1`] = `
 
 .c8 li {
   padding-left: 10px;
+}
+
+.c11 {
+  position: relative;
+  position: relative;
+}
+
+.c11::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #FBFBFB;
+}
+
+.c11::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.c11:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c11:hover,
+.c11:active,
+.c11:focus {
+  text-decoration: none;
+}
+
+.c7 {
+  position: relative;
+  position: relative;
+}
+
+.c7::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #FBFBFB;
+}
+
+.c7::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.c7:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c7:hover,
+.c7:active,
+.c7:focus {
+  text-decoration: none;
 }
 
 .c0 {
@@ -78,7 +179,6 @@ exports[`Footer should render successfully 1`] = `
 .c5 {
   display: flex;
   align-items: center;
-  position: relative;
 }
 
 .c6 {
@@ -91,23 +191,16 @@ exports[`Footer should render successfully 1`] = `
   flex-wrap: wrap;
 }
 
-.c7 {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.c7:hover,
-.c7:focus {
-  text-decoration: none;
-}
-
-.c9 {
+.c10 {
   height: 20px;
   display: flex;
   gap: 20px;
   justify-self: end;
   padding: 30px 0;
+}
+
+.c12::after {
+  content: none;
 }
 
 @media (min-width: 1024px) {
@@ -117,36 +210,8 @@ exports[`Footer should render successfully 1`] = `
   }
 }
 
-@media (min-width: 768px) {
-  .c7 {
-    display: flex;
-    position: relative;
-  }
-
-  .c7::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    bottom: 0;
-    left: 0;
-    background-color: #FBFBFB;
-  }
-
-  .c7:hover::after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
-  }
-
-  .c7::after {
-    transform: scaleX(0);
-    transform-origin: bottom right;
-    transition: transform 0.25s ease-out;
-  }
-}
-
 @media (min-width: 1024px) {
-  .c9 {
+  .c10 {
     justify-self: end;
     padding: 0;
   }
@@ -191,7 +256,7 @@ exports[`Footer should render successfully 1`] = `
             <li>
               <a
                 aria-label="Go to Experience page"
-                class="c7"
+                class="c7 "
                 href="/en/experience"
               >
                 <p
@@ -204,7 +269,7 @@ exports[`Footer should render successfully 1`] = `
             <li>
               <a
                 aria-label="Go to Contact page"
-                class="c7"
+                class="c7 "
                 href="/en/contact"
               >
                 <p
@@ -217,7 +282,7 @@ exports[`Footer should render successfully 1`] = `
             <li>
               <a
                 aria-label="Go to Portfolio page"
-                class="c7"
+                class="c7 "
                 href="/en/portfolio"
               >
                 <p
@@ -228,10 +293,9 @@ exports[`Footer should render successfully 1`] = `
               </a>
             </li>
             <li>
-              <a
+              <button
                 aria-label="Set Dark mode styled theme"
-                class="c7"
-                href="#"
+                class="c9"
               >
                 <svg
                   color="#FBFBFB"
@@ -245,13 +309,12 @@ exports[`Footer should render successfully 1`] = `
                 >
                   Dark mode
                 </p>
-              </a>
+              </button>
             </li>
             <li>
-              <a
+              <button
                 aria-label="Set Pain mode styled theme"
-                class="c7"
-                href="#"
+                class="c9"
               >
                 <svg
                   color="#FBFBFB"
@@ -265,16 +328,16 @@ exports[`Footer should render successfully 1`] = `
                 >
                   Pain mode
                 </p>
-              </a>
+              </button>
             </li>
           </ul>
         </nav>
         <div
-          class="c9"
+          class="c10"
         >
           <a
             aria-label="My Telegram username"
-            class=""
+            class="c11 c12"
             data-testid="plain-anchor"
             href="https://t.me/Sdlgr"
           >
@@ -286,7 +349,7 @@ exports[`Footer should render successfully 1`] = `
           </a>
           <a
             aria-label="My GitHub account"
-            class=""
+            class="c11 c12"
             data-testid="plain-anchor"
             href="https://github.com/sauldeleon"
           >
@@ -298,7 +361,7 @@ exports[`Footer should render successfully 1`] = `
           </a>
           <a
             aria-label="My LinkedIn profile"
-            class=""
+            class="c11 c12"
             data-testid="plain-anchor"
             href="https://www.linkedin.com/in/sauldeleonguerrero"
           >

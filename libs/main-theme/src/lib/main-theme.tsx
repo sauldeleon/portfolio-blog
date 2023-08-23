@@ -111,14 +111,12 @@ const typography: MainTheme['typography'] = {
   },
 }
 
-const bottomBorderTransformHoverAfter = css`
-  &:hover::after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
-  }
+const bottomBorderIncrease = css`
+  transform: scaleX(1);
+  transform-origin: bottom left;
 `
 
-const bottomBorderTransformAfter = (duration: number) => css`
+const bottomBorderAfterInitial = (duration: number) => css`
   &::after {
     transform: scaleX(0);
     transform-origin: bottom right;
@@ -168,7 +166,13 @@ export const mainTheme: MainTheme = {
       }
     `,
     textBottomBorder: {
-      shared: css`
+      removeBorder: css`
+        &::after {
+          content: none;
+        }
+      `,
+      afterShared: css`
+        position: relative;
         &::after {
           content: '';
           position: absolute;
@@ -179,11 +183,17 @@ export const mainTheme: MainTheme = {
           background-color: ${({ theme }) => theme.colors.white};
         }
       `,
-      after: (duration = 0.25) => bottomBorderTransformAfter(duration),
-      hoverAfter: bottomBorderTransformHoverAfter,
+      afterInitial: (duration = 0.25) => bottomBorderAfterInitial(duration),
+      afterIncrease: css`
+        &::after {
+          ${bottomBorderIncrease}
+        }
+      `,
       transform: (duration = 0.25) => css`
-        ${bottomBorderTransformHoverAfter}
-        ${bottomBorderTransformAfter(duration)}
+        ${bottomBorderAfterInitial(duration)}
+        &:hover::after {
+          ${bottomBorderIncrease}
+        }
       `,
     },
   },
@@ -240,9 +250,10 @@ export interface MainTheme {
   helpers: {
     noLinkUnderline: ReturnType<typeof css>
     textBottomBorder: {
-      shared: ReturnType<typeof css>
-      after: (duration?: number) => ReturnType<typeof css>
-      hoverAfter: ReturnType<typeof css>
+      removeBorder: ReturnType<typeof css>
+      afterShared: ReturnType<typeof css>
+      afterInitial: (duration?: number) => ReturnType<typeof css>
+      afterIncrease: ReturnType<typeof css>
       transform: (duration?: number) => ReturnType<typeof css>
     }
   }

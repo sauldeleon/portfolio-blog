@@ -7,7 +7,7 @@ exports[`MainLayout should render successfully 1`] = `
   flex-direction: column;
 }
 
-.c17 {
+.c18 {
   display: flex;
   min-height: calc(100vh - 115px - 300px);
   padding-top: 80px;
@@ -16,7 +16,44 @@ exports[`MainLayout should render successfully 1`] = `
   overflow: hidden;
 }
 
-.c8 {
+.c26 {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  outline: none;
+  box-shadow: none;
+  color: white;
+  padding-block: 0;
+  padding-inline: 0;
+  border: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.c26::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #FBFBFB;
+}
+
+.c26::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.c26:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c9 {
   font-family: 'Roboto mono',monospace;
   font-weight: 400;
   color: #FBFBFB;
@@ -25,25 +62,89 @@ exports[`MainLayout should render successfully 1`] = `
   white-space: pre-line;
 }
 
-.c8 ul,
-.c8 ol {
+.c9 ul,
+.c9 ol {
   margin-left: 40px;
   margin-bottom: 10px;
 }
 
-.c8 ul {
+.c9 ul {
   list-style: outside disc;
 }
 
-.c8 ol {
+.c9 ol {
   list-style: decimal;
 }
 
-.c8 li {
+.c9 li {
   padding-left: 10px;
 }
 
-.c18 {
+.c28 {
+  position: relative;
+  position: relative;
+}
+
+.c28::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #FBFBFB;
+}
+
+.c28::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.c28:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c28:hover,
+.c28:active,
+.c28:focus {
+  text-decoration: none;
+}
+
+.c6 {
+  position: relative;
+  position: relative;
+}
+
+.c6::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #FBFBFB;
+}
+
+.c6::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.c6:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c6:hover,
+.c6:active,
+.c6:focus {
+  text-decoration: none;
+}
+
+.c19 {
   position: relative;
   width: 100%;
   display: flex;
@@ -53,25 +154,25 @@ exports[`MainLayout should render successfully 1`] = `
   margin-top: 50px;
 }
 
-.c19 {
+.c20 {
   position: relative;
   width: 100%;
   height: 15px;
 }
 
-.c22 {
+.c23 {
   position: absolute;
   top: -61px;
   left: 30px;
 }
 
-.c20 {
+.c21 {
   height: 7px;
   width: 100%;
   position: relative;
 }
 
-.c20:before {
+.c21:before {
   content: '';
   position: absolute;
   width: 100%;
@@ -79,7 +180,7 @@ exports[`MainLayout should render successfully 1`] = `
   background: linear-gradient(         to bottom,         rgba(0,0,0,0.3),         rgba(152,223,214,0.3)       );
 }
 
-.c21 {
+.c22 {
   position: relative;
   max-width: 1440px;
   min-height: 120px;
@@ -90,13 +191,12 @@ exports[`MainLayout should render successfully 1`] = `
   padding: 30px;
 }
 
-.c23 {
+.c24 {
   display: flex;
   align-items: center;
-  position: relative;
 }
 
-.c24 {
+.c25 {
   display: flex;
   align-items: center;
   flex-grow: 1;
@@ -106,23 +206,16 @@ exports[`MainLayout should render successfully 1`] = `
   flex-wrap: wrap;
 }
 
-.c25 {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.c25:hover,
-.c25:focus {
-  text-decoration: none;
-}
-
-.c26 {
+.c27 {
   height: 20px;
   display: flex;
   gap: 20px;
   justify-self: end;
   padding: 30px 0;
+}
+
+.c29::after {
+  content: none;
 }
 
 .c1 {
@@ -138,12 +231,12 @@ exports[`MainLayout should render successfully 1`] = `
   align-items: end;
 }
 
-.c6 {
+.c7 {
   display: flex;
 }
 
-.c6:hover,
-.c6:focus {
+.c7:hover,
+.c7:focus {
   text-decoration: none;
 }
 
@@ -163,7 +256,7 @@ exports[`MainLayout should render successfully 1`] = `
   padding-bottom: 25px;
 }
 
-.c5 .c7 {
+.c5 .c8 {
   font-family: 'Roboto mono',monospace;
   font-weight: 500;
   color: #FBFBFB;
@@ -179,11 +272,11 @@ exports[`MainLayout should render successfully 1`] = `
   cursor: pointer;
 }
 
-.c5:hover .c7 {
+.c5:hover .c8 {
   color: #FBFBFB;
 }
 
-.c9 {
+.c10 {
   width: 59px;
   display: flex;
   justify-content: center;
@@ -191,7 +284,7 @@ exports[`MainLayout should render successfully 1`] = `
   padding-bottom: 25px;
 }
 
-.c9 .c7 {
+.c10 .c8 {
   font-family: 'Roboto mono',monospace;
   font-weight: 500;
   color: #FBFBFB;
@@ -202,26 +295,21 @@ exports[`MainLayout should render successfully 1`] = `
   transform: rotate(-180deg);
 }
 
-.c9:hover {
+.c10:hover {
   background-color: #000000;
   cursor: pointer;
 }
 
-.c9:hover .c7 {
+.c10:hover .c8 {
   color: #FBFBFB;
 }
 
-.c16 {
+.c17 {
   margin-left: 8px;
   position: relative;
 }
 
-.c16:hover,
-.c16:focus {
-  text-decoration: none;
-}
-
-.c16::after {
+.c17::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -231,13 +319,13 @@ exports[`MainLayout should render successfully 1`] = `
   background-color: #FBFBFB;
 }
 
-.c16::after {
+.c17::after {
   transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.5s ease-out;
 }
 
-.c10 {
+.c11 {
   outline: none;
   cursor: pointer;
   display: flex;
@@ -245,12 +333,11 @@ exports[`MainLayout should render successfully 1`] = `
   max-height: 42px;
 }
 
-.c10:hover,
-.c10:focus {
-  text-decoration: none;
+.c11::after {
+  content: none;
 }
 
-.c10:hover circle.loading {
+.c11:hover circle.loading {
   stroke: white;
   stroke-width: 6px;
   stroke-dasharray: 110;
@@ -260,25 +347,25 @@ exports[`MainLayout should render successfully 1`] = `
   transform-origin: center;
 }
 
-.c10:hover .c15:hover::after {
+.c11:hover .c16::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
 
-.c12 {
+.c13 {
   position: relative;
   width: 42px;
   height: 42px;
 }
 
-.c13 {
+.c14 {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
   left: 50%;
 }
 
-.c14 {
+.c15 {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
@@ -295,59 +382,31 @@ exports[`MainLayout should render successfully 1`] = `
   margin-bottom: 25px;
 }
 
-.c11 {
+.c12 {
   display: none;
 }
 
 @media (min-width: 768px) {
-  .c17 {
+  .c18 {
     min-height: calc(100vh - 115px - 210px);
   }
 }
 
 @media (min-width: 1024px) {
-  .c17 {
+  .c18 {
     min-height: calc(100vh - 115px - 185px);
   }
 }
 
 @media (min-width: 1024px) {
-  .c21 {
+  .c22 {
     justify-content: space-between;
     grid-template-columns: 1fr 100px;
   }
 }
 
-@media (min-width: 768px) {
-  .c25 {
-    display: flex;
-    position: relative;
-  }
-
-  .c25::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    bottom: 0;
-    left: 0;
-    background-color: #FBFBFB;
-  }
-
-  .c25:hover::after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
-  }
-
-  .c25::after {
-    transform: scaleX(0);
-    transform-origin: bottom right;
-    transition: transform 0.25s ease-out;
-  }
-}
-
 @media (min-width: 1024px) {
-  .c26 {
+  .c27 {
     justify-self: end;
     padding: 0;
   }
@@ -369,11 +428,12 @@ exports[`MainLayout should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c6 {
+  .c7 {
+    position: relative;
     position: relative;
   }
 
-  .c6::after {
+  .c7::after {
     content: '';
     position: absolute;
     width: 100%;
@@ -383,15 +443,15 @@ exports[`MainLayout should render successfully 1`] = `
     background-color: #FBFBFB;
   }
 
-  .c6:hover::after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
-  }
-
-  .c6::after {
+  .c7::after {
     transform: scaleX(0);
     transform-origin: bottom right;
     transition: transform 0.25s ease-out;
+  }
+
+  .c7:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
   }
 }
 
@@ -410,7 +470,7 @@ exports[`MainLayout should render successfully 1`] = `
     padding-bottom: 0;
   }
 
-  .c5 .c7 {
+  .c5 .c8 {
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
     color: #FBFBFB;
@@ -423,13 +483,13 @@ exports[`MainLayout should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c9 {
+  .c10 {
     display: none;
     width: auto;
     padding-bottom: 0;
   }
 
-  .c9 .c7 {
+  .c10 .c8 {
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
     color: #FBFBFB;
@@ -449,7 +509,7 @@ exports[`MainLayout should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c11 {
+  .c12 {
     display: flex;
   }
 }
@@ -484,11 +544,11 @@ exports[`MainLayout should render successfully 1`] = `
           >
             <a
               aria-label="Go to Experience page"
-              class="c6"
+              class="c6 c7"
               href="/en/experience"
             >
               <p
-                class="c7 c8"
+                class="c8 c9"
               >
                 Experience
               </p>
@@ -499,11 +559,11 @@ exports[`MainLayout should render successfully 1`] = `
           >
             <a
               aria-label="Go to Contact page"
-              class="c6"
+              class="c6 c7"
               href="/en/contact"
             >
               <p
-                class="c7 c8"
+                class="c8 c9"
               >
                 Contact
               </p>
@@ -514,26 +574,26 @@ exports[`MainLayout should render successfully 1`] = `
           >
             <a
               aria-label="Go to Portfolio page"
-              class="c6"
+              class="c6 c7"
               href="/en/portfolio"
             >
               <p
-                class="c7 c8"
+                class="c8 c9"
               >
                 CV/Portfolio
               </p>
             </a>
           </li>
           <li
-            class="c9"
+            class="c10"
           >
             <a
               aria-label="Go to Portfolio page"
-              class="c6"
+              class="c6 c7"
               href="/en/portfolio"
             >
               <p
-                class="c7 c8"
+                class="c8 c9"
               >
                 Get in touch
               </p>
@@ -542,21 +602,21 @@ exports[`MainLayout should render successfully 1`] = `
         </ul>
         <a
           aria-label="Go to Portfolio page"
-          class="c10 c11"
+          class="c6 c11 c12"
           href="/en/portfolio"
         >
           <div
-            class="c12"
+            class="c13"
           >
             <svg
-              class="c13"
+              class="c14"
               height="42"
               width="42"
             >
               circleButton.svg
             </svg>
             <div
-              class="c14"
+              class="c15"
             >
               <svg>
                 arrowRight.svg
@@ -564,39 +624,39 @@ exports[`MainLayout should render successfully 1`] = `
             </div>
           </div>
           <p
-            class="c7 c15 c8 c16"
+            class="c8 c16 c9 c17"
           >
             Get in touch
           </p>
         </a>
       </nav>
       <div
-        class="c17"
+        class="c18"
       >
         test
       </div>
       <footer
-        class="c18"
+        class="c19"
         tabindex="-1"
       >
         <div
-          class="c19"
+          class="c20"
         >
           <div
-            class="c20"
+            class="c21"
           />
           <div
-            class="c20"
+            class="c21"
           />
           <div
-            class="c20"
+            class="c21"
           />
         </div>
         <div
-          class="c21"
+          class="c22"
         >
           <svg
-            class="c22"
+            class="c23"
             height="64"
             width="120"
           >
@@ -604,19 +664,19 @@ exports[`MainLayout should render successfully 1`] = `
           </svg>
           <nav
             aria-label="Site map"
-            class="c23"
+            class="c24"
           >
             <ul
-              class="c24"
+              class="c25"
             >
               <li>
                 <a
                   aria-label="Go to Experience page"
-                  class="c25"
+                  class="c6 "
                   href="/en/experience"
                 >
                   <p
-                    class="c7 c8"
+                    class="c8 c9"
                   >
                     Experience
                   </p>
@@ -625,11 +685,11 @@ exports[`MainLayout should render successfully 1`] = `
               <li>
                 <a
                   aria-label="Go to Contact page"
-                  class="c25"
+                  class="c6 "
                   href="/en/contact"
                 >
                   <p
-                    class="c7 c8"
+                    class="c8 c9"
                   >
                     Contact
                   </p>
@@ -638,21 +698,20 @@ exports[`MainLayout should render successfully 1`] = `
               <li>
                 <a
                   aria-label="Go to Portfolio page"
-                  class="c25"
+                  class="c6 "
                   href="/en/portfolio"
                 >
                   <p
-                    class="c7 c8"
+                    class="c8 c9"
                   >
                     CV/Portfolio
                   </p>
                 </a>
               </li>
               <li>
-                <a
+                <button
                   aria-label="Set Dark mode styled theme"
-                  class="c25"
-                  href="#"
+                  class="c26"
                 >
                   <svg
                     color="#FBFBFB"
@@ -662,17 +721,16 @@ exports[`MainLayout should render successfully 1`] = `
                     moon.svg
                   </svg>
                   <p
-                    class="c7 c8"
+                    class="c8 c9"
                   >
                     Dark mode
                   </p>
-                </a>
+                </button>
               </li>
               <li>
-                <a
+                <button
                   aria-label="Set Pain mode styled theme"
-                  class="c25"
-                  href="#"
+                  class="c26"
                 >
                   <svg
                     color="#FBFBFB"
@@ -682,20 +740,20 @@ exports[`MainLayout should render successfully 1`] = `
                     cactus.svg
                   </svg>
                   <p
-                    class="c7 c8"
+                    class="c8 c9"
                   >
                     Pain mode
                   </p>
-                </a>
+                </button>
               </li>
             </ul>
           </nav>
           <div
-            class="c26"
+            class="c27"
           >
             <a
               aria-label="My Telegram username"
-              class=""
+              class="c28 c29"
               data-testid="plain-anchor"
               href="https://t.me/Sdlgr"
             >
@@ -707,7 +765,7 @@ exports[`MainLayout should render successfully 1`] = `
             </a>
             <a
               aria-label="My GitHub account"
-              class=""
+              class="c28 c29"
               data-testid="plain-anchor"
               href="https://github.com/sauldeleon"
             >
@@ -719,7 +777,7 @@ exports[`MainLayout should render successfully 1`] = `
             </a>
             <a
               aria-label="My LinkedIn profile"
-              class=""
+              class="c28 c29"
               data-testid="plain-anchor"
               href="https://www.linkedin.com/in/sauldeleonguerrero"
             >

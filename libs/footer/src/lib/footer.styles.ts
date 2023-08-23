@@ -69,7 +69,6 @@ export const StyledInteractiveSection = styled.div<{
 export const StyledNav = styled.nav`
   display: flex;
   align-items: center;
-  position: relative;
 `
 
 export const StyledList = styled.ul`
@@ -82,24 +81,7 @@ export const StyledList = styled.ul`
   flex-wrap: wrap;
 `
 
-export const StyledNavLink = styled(Link)`
-  display: flex;
-  align-items: center;
-  gap: 4px;
-
-  &:hover,
-  &:focus {
-    text-decoration: none;
-  }
-
-  ${({ theme }) => theme.media.up.md} {
-    display: flex;
-    position: relative;
-
-    ${({ theme }) => theme.helpers.textBottomBorder.shared}
-    ${({ theme }) => theme.helpers.textBottomBorder.transform()}
-  }
-`
+export const StyledNavLink = styled(Link)``
 
 export const StyledSocialMediaIcons = styled.div`
   height: 20px;
@@ -114,4 +96,6 @@ export const StyledSocialMediaIcons = styled.div`
   }
 `
 
-export const StyledSocialMediaLink = styled(Link)``
+export const StyledSocialMediaLink = styled(Link)`
+  ${({ theme }) => theme.helpers.textBottomBorder.removeBorder}
+`

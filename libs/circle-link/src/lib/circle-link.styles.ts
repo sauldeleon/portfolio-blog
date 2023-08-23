@@ -8,16 +8,10 @@ const underlineAnimationDuration = 0.5
 
 export const StyledBody = styled(Body)`
   margin-left: 8px;
-  position: relative;
 
-  &:hover,
-  &:focus {
-    text-decoration: none;
-  }
-
-  ${({ theme }) => theme.helpers.textBottomBorder.shared}
+  ${({ theme }) => theme.helpers.textBottomBorder.afterShared}
   ${({ theme }) =>
-    theme.helpers.textBottomBorder.after(underlineAnimationDuration)}
+    theme.helpers.textBottomBorder.afterInitial(underlineAnimationDuration)}
 `
 
 export const StyledCircleLink = styled(Link)<{ $size: number }>`
@@ -26,11 +20,7 @@ export const StyledCircleLink = styled(Link)<{ $size: number }>`
   display: flex;
   align-items: center;
   max-height: ${({ $size }) => `${$size}px`};
-
-  &:hover,
-  &:focus {
-    text-decoration: none;
-  }
+  ${({ theme }) => theme.helpers.textBottomBorder.removeBorder}
 
   &:hover {
     circle.loading {
@@ -45,7 +35,7 @@ export const StyledCircleLink = styled(Link)<{ $size: number }>`
     }
 
     ${StyledBody} {
-      ${({ theme }) => theme.helpers.textBottomBorder.hoverAfter}
+      ${({ theme }) => theme.helpers.textBottomBorder.afterIncrease}
     }
   }
 `

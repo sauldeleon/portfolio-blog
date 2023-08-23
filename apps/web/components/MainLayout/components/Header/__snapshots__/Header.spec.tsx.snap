@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Header should render successfully 1`] = `
-.c7 {
+.c8 {
   font-family: 'Roboto mono',monospace;
   font-weight: 400;
   color: #FBFBFB;
@@ -10,22 +10,54 @@ exports[`Header should render successfully 1`] = `
   white-space: pre-line;
 }
 
-.c7 ul,
-.c7 ol {
+.c8 ul,
+.c8 ol {
   margin-left: 40px;
   margin-bottom: 10px;
 }
 
-.c7 ul {
+.c8 ul {
   list-style: outside disc;
 }
 
-.c7 ol {
+.c8 ol {
   list-style: decimal;
 }
 
-.c7 li {
+.c8 li {
   padding-left: 10px;
+}
+
+.c5 {
+  position: relative;
+  position: relative;
+}
+
+.c5::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #FBFBFB;
+}
+
+.c5::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.c5:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c5:hover,
+.c5:active,
+.c5:focus {
+  text-decoration: none;
 }
 
 .c0 {
@@ -41,21 +73,21 @@ exports[`Header should render successfully 1`] = `
   align-items: end;
 }
 
-.c5 {
+.c6 {
   display: flex;
 }
 
-.c5:hover,
-.c5:focus {
+.c6:hover,
+.c6:focus {
   text-decoration: none;
 }
 
-.c9 {
+.c10 {
   display: flex;
 }
 
-.c9:hover,
-.c9:focus {
+.c10:hover,
+.c10:focus {
   text-decoration: none;
 }
 
@@ -75,7 +107,7 @@ exports[`Header should render successfully 1`] = `
   padding-bottom: 25px;
 }
 
-.c4 .c6 {
+.c4 .c7 {
   font-family: 'Roboto mono',monospace;
   font-weight: 500;
   color: #FBFBFB;
@@ -91,11 +123,11 @@ exports[`Header should render successfully 1`] = `
   cursor: pointer;
 }
 
-.c4:hover .c6 {
+.c4:hover .c7 {
   color: #FBFBFB;
 }
 
-.c8 {
+.c9 {
   width: 59px;
   display: flex;
   justify-content: center;
@@ -104,7 +136,7 @@ exports[`Header should render successfully 1`] = `
   background-color: #000000;
 }
 
-.c8 .c6 {
+.c9 .c7 {
   font-family: 'Roboto mono',monospace;
   font-weight: 500;
   color: #FBFBFB;
@@ -116,16 +148,16 @@ exports[`Header should render successfully 1`] = `
   color: #FBFBFB;
 }
 
-.c8:hover {
+.c9:hover {
   background-color: #000000;
   cursor: pointer;
 }
 
-.c8:hover .c6 {
+.c9:hover .c7 {
   color: #FBFBFB;
 }
 
-.c10 {
+.c11 {
   width: 59px;
   display: flex;
   justify-content: center;
@@ -133,7 +165,7 @@ exports[`Header should render successfully 1`] = `
   padding-bottom: 25px;
 }
 
-.c10 .c6 {
+.c11 .c7 {
   font-family: 'Roboto mono',monospace;
   font-weight: 500;
   color: #FBFBFB;
@@ -144,26 +176,21 @@ exports[`Header should render successfully 1`] = `
   transform: rotate(-180deg);
 }
 
-.c10:hover {
+.c11:hover {
   background-color: #000000;
   cursor: pointer;
 }
 
-.c10:hover .c6 {
+.c11:hover .c7 {
   color: #FBFBFB;
 }
 
-.c17 {
+.c18 {
   margin-left: 8px;
   position: relative;
 }
 
-.c17:hover,
-.c17:focus {
-  text-decoration: none;
-}
-
-.c17::after {
+.c18::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -173,13 +200,13 @@ exports[`Header should render successfully 1`] = `
   background-color: #FBFBFB;
 }
 
-.c17::after {
+.c18::after {
   transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.5s ease-out;
 }
 
-.c11 {
+.c12 {
   outline: none;
   cursor: pointer;
   display: flex;
@@ -187,12 +214,11 @@ exports[`Header should render successfully 1`] = `
   max-height: 42px;
 }
 
-.c11:hover,
-.c11:focus {
-  text-decoration: none;
+.c12::after {
+  content: none;
 }
 
-.c11:hover circle.loading {
+.c12:hover circle.loading {
   stroke: white;
   stroke-width: 6px;
   stroke-dasharray: 110;
@@ -202,25 +228,25 @@ exports[`Header should render successfully 1`] = `
   transform-origin: center;
 }
 
-.c11:hover .c16:hover::after {
+.c12:hover .c17::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
 
-.c13 {
+.c14 {
   position: relative;
   width: 42px;
   height: 42px;
 }
 
-.c14 {
+.c15 {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
   left: 50%;
 }
 
-.c15 {
+.c16 {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
@@ -237,7 +263,7 @@ exports[`Header should render successfully 1`] = `
   margin-bottom: 25px;
 }
 
-.c12 {
+.c13 {
   display: none;
 }
 
@@ -257,11 +283,12 @@ exports[`Header should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c5 {
+  .c6 {
+    position: relative;
     position: relative;
   }
 
-  .c5::after {
+  .c6::after {
     content: '';
     position: absolute;
     width: 100%;
@@ -271,24 +298,25 @@ exports[`Header should render successfully 1`] = `
     background-color: #FBFBFB;
   }
 
-  .c5:hover::after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
-  }
-
-  .c5::after {
+  .c6::after {
     transform: scaleX(0);
     transform-origin: bottom right;
     transition: transform 0.25s ease-out;
   }
+
+  .c6:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
 }
 
 @media (min-width: 768px) {
-  .c9 {
+  .c10 {
+    position: relative;
     position: relative;
   }
 
-  .c9::after {
+  .c10::after {
     content: '';
     position: absolute;
     width: 100%;
@@ -314,7 +342,7 @@ exports[`Header should render successfully 1`] = `
     padding-bottom: 0;
   }
 
-  .c4 .c6 {
+  .c4 .c7 {
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
     color: #FBFBFB;
@@ -327,12 +355,12 @@ exports[`Header should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c8 {
+  .c9 {
     width: auto;
     padding-bottom: 0;
   }
 
-  .c8 .c6 {
+  .c9 .c7 {
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
     color: #FBFBFB;
@@ -341,9 +369,10 @@ exports[`Header should render successfully 1`] = `
     color: #FBFBFB;
     writing-mode: unset;
     transform: unset;
+    position: relative;
   }
 
-  .c8 .c6::after {
+  .c9 .c7::after {
     content: '';
     position: absolute;
     width: 100%;
@@ -355,13 +384,13 @@ exports[`Header should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c10 {
+  .c11 {
     display: none;
     width: auto;
     padding-bottom: 0;
   }
 
-  .c10 .c6 {
+  .c11 .c7 {
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
     color: #FBFBFB;
@@ -381,7 +410,7 @@ exports[`Header should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c12 {
+  .c13 {
     display: flex;
   }
 }
@@ -414,11 +443,11 @@ exports[`Header should render successfully 1`] = `
         >
           <a
             aria-label="Go to Experience page"
-            class="c5"
+            class="c5 c6"
             href="/en/experience"
           >
             <p
-              class="c6 c7"
+              class="c7 c8"
             >
               Experience
             </p>
@@ -426,15 +455,15 @@ exports[`Header should render successfully 1`] = `
         </li>
         <li
           aria-current="page"
-          class="c8"
+          class="c9"
         >
           <a
             aria-label="Go to Contact page"
-            class="c9"
+            class="c5 c10"
             href="/en/contact"
           >
             <p
-              class="c6 c7"
+              class="c7 c8"
             >
               Contact
             </p>
@@ -446,11 +475,11 @@ exports[`Header should render successfully 1`] = `
         >
           <a
             aria-label="Go to Portfolio page"
-            class="c5"
+            class="c5 c6"
             href="/en/portfolio"
           >
             <p
-              class="c6 c7"
+              class="c7 c8"
             >
               CV/Portfolio
             </p>
@@ -458,15 +487,15 @@ exports[`Header should render successfully 1`] = `
         </li>
         <li
           aria-current="false"
-          class="c10"
+          class="c11"
         >
           <a
             aria-label="Go to Portfolio page"
-            class="c5"
+            class="c5 c6"
             href="/en/portfolio"
           >
             <p
-              class="c6 c7"
+              class="c7 c8"
             >
               Get in touch
             </p>
@@ -475,21 +504,21 @@ exports[`Header should render successfully 1`] = `
       </ul>
       <a
         aria-label="Go to Portfolio page"
-        class="c11 c12"
+        class="c5 c12 c13"
         href="/en/portfolio"
       >
         <div
-          class="c13"
+          class="c14"
         >
           <svg
-            class="c14"
+            class="c15"
             height="42"
             width="42"
           >
             circleButton.svg
           </svg>
           <div
-            class="c15"
+            class="c16"
           >
             <svg>
               arrowRight.svg
@@ -497,7 +526,7 @@ exports[`Header should render successfully 1`] = `
           </div>
         </div>
         <p
-          class="c6 c16 c7 c17"
+          class="c7 c17 c8 c18"
         >
           Get in touch
         </p>
