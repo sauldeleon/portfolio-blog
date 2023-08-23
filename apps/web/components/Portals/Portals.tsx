@@ -20,6 +20,7 @@ export type AnimatedItem = AnimatedItemProps & {
 interface PortalsProps {
   enableParticles?: boolean
   enableCylinder?: boolean
+  enableGlow?: boolean
   children?: React.ReactNode
 }
 
@@ -27,6 +28,7 @@ export function Portals({
   enableCylinder = false,
   children,
   enableParticles,
+  enableGlow,
 }: PortalsProps) {
   return (
     <StyledPortals role="presentation">
@@ -37,8 +39,12 @@ export function Portals({
         <StyledPortalIcon color={mainTheme.colors.green} />
       </PortalLast>
       <PortalPath>
-        <PortalFirstGlow />
-        <PortalLastGlow />
+        {enableGlow && (
+          <>
+            <PortalFirstGlow />
+            <PortalLastGlow />
+          </>
+        )}
         {enableParticles && <Particles />}
         {children}
         {enableCylinder && (

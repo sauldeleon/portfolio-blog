@@ -12,18 +12,22 @@ import {
 interface MainPortalProps {
   children?: React.ReactNode
   enableParticles?: boolean
+  enableGlow?: boolean
 }
 
 export function MainPortal({
   children,
   enableParticles,
+  enableGlow,
   ...rest
 }: MainPortalProps) {
   return (
     <PortalContainer {...rest}>
       <FirstWall />
       <MiddleWall>
-        <Portals enableParticles={enableParticles}>{children}</Portals>
+        <Portals enableGlow={enableGlow} enableParticles={enableParticles}>
+          {children}
+        </Portals>
       </MiddleWall>
       <LastWall />
     </PortalContainer>

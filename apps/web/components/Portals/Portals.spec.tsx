@@ -21,7 +21,11 @@ describe('Portals', () => {
   })
 
   it('should render particles and children and hide selected items', async () => {
-    renderWithTheme(<Portals enableParticles>test</Portals>)
+    renderWithTheme(
+      <Portals enableParticles enableGlow>
+        test
+      </Portals>
+    )
 
     expect(screen.getByText('test')).toBeInTheDocument()
     expect(screen.getByText('ParticlesMock')).toBeInTheDocument()

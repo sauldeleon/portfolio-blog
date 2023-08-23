@@ -17,7 +17,7 @@ export function HomePage() {
         iconContent={<Label $level="XS">{t('explore')}</Label>}
         iconSize={76}
       />
-      <MainPortal enableParticles>
+      <MainPortal enableParticles enableGlow>
         {items
           .filter(({ isHidden }) => !isHidden)
           .map((props, index) => (
