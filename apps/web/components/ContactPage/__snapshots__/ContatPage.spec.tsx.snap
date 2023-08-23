@@ -1,30 +1,39 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ContactPage should render 1`] = `
-.c9 {
+.c12 {
   font-family: 'Roboto mono',monospace;
   font-weight: 400;
   color: #FBFBFB;
-  font-size: 0.9rem;
+  font-size: 1.5rem;
+  line-height: normal;
+  margin: 0;
+}
+
+.c14 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 1rem;
   line-height: normal;
   white-space: pre-line;
 }
 
-.c9 ul,
-.c9 ol {
+.c14 ul,
+.c14 ol {
   margin-left: 40px;
   margin-bottom: 10px;
 }
 
-.c9 ul {
+.c14 ul {
   list-style: outside disc;
 }
 
-.c9 ol {
+.c14 ol {
   list-style: decimal;
 }
 
-.c9 li {
+.c14 li {
   padding-left: 10px;
 }
 
@@ -116,7 +125,7 @@ exports[`ContactPage should render 1`] = `
   background-color: #000000;
 }
 
-.c10 {
+.c17 {
   flex-grow: 1;
   border: 1px solid #98DFD6;
   transform-origin: var(--transform-origin-last);
@@ -125,7 +134,48 @@ exports[`ContactPage should render 1`] = `
 }
 
 .c1 {
-  margin-top: 166px;
+  margin-top: 30px;
+}
+
+.c9 {
+  width: 100%;
+  height: 100%;
+}
+
+.c10 {
+  display: grid;
+  place-items: center;
+  rotate: 270deg;
+  position: absolute;
+  top: 36px;
+  left: 65px;
+}
+
+.c13 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+}
+
+.c16 {
+  display: inline-block;
+}
+
+.c15 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 500;
+  color: #FBFBFB;
+  font-size: 0.55rem;
+  line-height: normal;
+}
+
+.c11 {
+  overflow: hidden;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
 }
 
 @media (min-width: 768px) {
@@ -199,6 +249,55 @@ exports[`ContactPage should render 1`] = `
   }
 }
 
+@media (min-width: 768px) {
+  .c1 {
+    margin-top: 166px;
+  }
+}
+
+@media (min-width: 768px) {
+  .c10 {
+    position: unset;
+    top: unset;
+    left: unset;
+    rotate: 0deg;
+    row-gap: 13px;
+  }
+}
+
+@media (min-width: 768px) {
+  .c13 {
+    font-family: 'Roboto mono',monospace;
+    font-weight: 400;
+    color: #FBFBFB;
+    font-size: 1.5rem;
+    line-height: normal;
+  }
+}
+
+@media (max-width: 767px) {
+  .c16 {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .c15 {
+    font-family: 'Roboto mono',monospace;
+    font-weight: 400;
+    color: #FBFBFB;
+    font-size: 0.9rem;
+    line-height: normal;
+  }
+}
+
+@media (min-width: 768px) {
+  .c11 {
+    width: 140px;
+    height: 140px;
+  }
+}
+
 <body>
   <div>
     <div
@@ -237,16 +336,81 @@ exports[`ContactPage should render 1`] = `
           <div
             class="c8"
           >
-            <p
+            <div
               class="c9"
             >
-              Contact me
-            </p>
+              <div
+                class="c10"
+              >
+                <img
+                  alt="Portrait"
+                  class="c11"
+                  data-nimg="1"
+                  decoding="async"
+                  height="140"
+                  loading="lazy"
+                  src="/_next/image?url=%2Fassets%2Fportrait.jpg&w=384&q=75"
+                  srcset="/_next/image?url=%2Fassets%2Fportrait.jpg&w=256&q=75 1x, /_next/image?url=%2Fassets%2Fportrait.jpg&w=384&q=75 2x"
+                  style="color: transparent;"
+                  width="140"
+                />
+                <h1
+                  class="c12 c13"
+                >
+                  Software Engineer
+                </h1>
+                <p
+                  class="c14 c15"
+                >
+                  <span
+                    class="c16"
+                  >
+                    Phone:
+                  </span>
+                   
+                  <a
+                    class=""
+                    data-testid="plain-anchor"
+                    href="tel:+34661030038"
+                  >
+                    (+34) 661030038
+                  </a>
+                </p>
+                <p
+                  class="c14 c15"
+                >
+                  <span
+                    class="c16"
+                  >
+                    E-mail:
+                  </span>
+                   
+                  <a
+                    class=""
+                    data-testid="plain-anchor"
+                    href="mailto:sauldeleonguerrero@gmail.com"
+                  >
+                    sauldeleonguerrero@gmail.com
+                  </a>
+                </p>
+                <a
+                  class=""
+                  data-testid="plain-anchor"
+                  href="https://www.linkedin.com/in/sauldeleonguerrero"
+                >
+                  <p
+                    class="c14 c15"
+                  >
+                    Linked in
+                  </p>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <div
-        class="c10"
+        class="c17"
       />
     </div>
   </div>
