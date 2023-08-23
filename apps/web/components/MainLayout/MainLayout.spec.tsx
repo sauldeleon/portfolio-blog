@@ -2,11 +2,11 @@ import { screen } from '@testing-library/react'
 
 import { renderApp } from '@sdlgr/test-utils'
 
-import { Layout } from './Layout'
+import { MainLayout } from './MainLayout'
 
-describe('Layout', () => {
+describe('MainLayout', () => {
   it('should render successfully', async () => {
-    const { baseElement } = renderApp(<Layout>test</Layout>)
+    const { baseElement } = renderApp(<MainLayout>test</MainLayout>)
     await screen.findByText('test')
     expect(baseElement).toMatchSnapshot()
   })

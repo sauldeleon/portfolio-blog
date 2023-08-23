@@ -4,7 +4,7 @@ import { Metadata, ResolvingMetadata } from 'next/types'
 
 import { LanguageContextProvider } from '@sdlgr/i18n-config'
 
-import { Layout } from '@web/components/Layout/Layout'
+import { MainLayout } from '@web/components/MainLayout/MainLayout'
 import StyledComponentsRegistry from '@web/components/StyledComponentsRegistry/StyledComponentsRegistry'
 import { getServerTranslation } from '@web/i18n/server'
 import { languages } from '@web/i18n/settings'
@@ -54,7 +54,7 @@ export default function RootLayout({
       <body>
         <StyledComponentsRegistry>
           <LanguageContextProvider value={{ language: lng }}>
-            <Layout>{children}</Layout>
+            <MainLayout>{children}</MainLayout>
           </LanguageContextProvider>
         </StyledComponentsRegistry>
       </body>

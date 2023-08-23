@@ -12,8 +12,8 @@ jest.mock('next/headers', () => ({
   }),
 }))
 
-jest.mock('@web/components/Layout/Layout', () => ({
-  Layout: ({ children }: { children: React.ReactNode }) => (
+jest.mock('@web/components/MainLayout/MainLayout', () => ({
+  MainLayout: ({ children }: { children: React.ReactNode }) => (
     <div>{children}</div>
   ),
 }))
