@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { styled } from 'styled-components'
+import styled from 'styled-components'
 
 import { SLLogo } from '@sdlgr/assets'
 import { CircleLink } from '@sdlgr/circle-link'

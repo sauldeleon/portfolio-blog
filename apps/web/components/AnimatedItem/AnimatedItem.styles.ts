@@ -1,4 +1,4 @@
-import { RuleSet, css, styled } from 'styled-components'
+import styled, { RuleSet, css } from 'styled-components'
 
 import {
   randomDecimalFromInterval,
