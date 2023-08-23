@@ -17,8 +17,17 @@ import {
 
 interface FooterProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> {
-  navItems?: { label: string; href: string; icon?: React.ReactNode }[]
-  socialMediaItems?: { href: string; label: string; icon: React.ReactNode }[]
+  navItems?: {
+    label: string
+    ariaLabel: string
+    href: string
+    icon?: React.ReactNode
+  }[]
+  socialMediaItems?: {
+    href: string
+    ariaLabel: string
+    icon: React.ReactNode
+  }[]
   navProps?: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>
 }
 
@@ -42,9 +51,9 @@ export function Footer({
         <StyledNav {...navProps}>
           {navItems?.length && (
             <StyledList>
-              {navItems.map(({ label, href, icon }, index) => (
+              {navItems.map(({ label, ariaLabel, href, icon }, index) => (
                 <li key={index}>
-                  <StyledNavLink href={href}>
+                  <StyledNavLink href={href} aria-label={ariaLabel}>
                     {icon}
                     <Body>{label}</Body>
                   </StyledNavLink>
@@ -55,8 +64,12 @@ export function Footer({
         </StyledNav>
         {socialMediaItems?.length && (
           <StyledSocialMediaIcons>
-            {socialMediaItems.map(({ icon, href, label }, index) => (
-              <StyledSocialMediaLink key={index} href={href} aria-label={label}>
+            {socialMediaItems.map(({ icon, href, ariaLabel }, index) => (
+              <StyledSocialMediaLink
+                key={index}
+                href={href}
+                aria-label={ariaLabel}
+              >
                 {icon}
               </StyledSocialMediaLink>
             ))}

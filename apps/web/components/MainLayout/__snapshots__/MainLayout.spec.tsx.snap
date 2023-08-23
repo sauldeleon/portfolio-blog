@@ -478,11 +478,9 @@ exports[`MainLayout should render successfully 1`] = `
         </a>
         <ul
           class="c4"
-          role="list"
         >
           <li
             class="c5"
-            role="listitem"
           >
             <a
               aria-label="Go to Experience page"
@@ -498,7 +496,6 @@ exports[`MainLayout should render successfully 1`] = `
           </li>
           <li
             class="c5"
-            role="listitem"
           >
             <a
               aria-label="Go to Contact page"
@@ -514,7 +511,6 @@ exports[`MainLayout should render successfully 1`] = `
           </li>
           <li
             class="c5"
-            role="listitem"
           >
             <a
               aria-label="Go to Portfolio page"
@@ -530,7 +526,6 @@ exports[`MainLayout should render successfully 1`] = `
           </li>
           <li
             class="c9"
-            role="listitem"
           >
             <a
               aria-label="Go to Portfolio page"
@@ -616,8 +611,9 @@ exports[`MainLayout should render successfully 1`] = `
             >
               <li>
                 <a
+                  aria-label="Go to Experience page"
                   class="c25"
-                  href="/experience"
+                  href="/en/experience"
                 >
                   <p
                     class="c7 c8"
@@ -628,8 +624,9 @@ exports[`MainLayout should render successfully 1`] = `
               </li>
               <li>
                 <a
+                  aria-label="Go to Contact page"
                   class="c25"
-                  href="/contact"
+                  href="/en/contact"
                 >
                   <p
                     class="c7 c8"
@@ -640,8 +637,9 @@ exports[`MainLayout should render successfully 1`] = `
               </li>
               <li>
                 <a
+                  aria-label="Go to Portfolio page"
                   class="c25"
-                  href="/portfolio"
+                  href="/en/portfolio"
                 >
                   <p
                     class="c7 c8"
@@ -652,6 +650,7 @@ exports[`MainLayout should render successfully 1`] = `
               </li>
               <li>
                 <a
+                  aria-label="Set Dark mode styled theme"
                   class="c25"
                   href="#"
                 >
@@ -671,6 +670,7 @@ exports[`MainLayout should render successfully 1`] = `
               </li>
               <li>
                 <a
+                  aria-label="Set Pain mode styled theme"
                   class="c25"
                   href="#"
                 >
@@ -694,7 +694,7 @@ exports[`MainLayout should render successfully 1`] = `
             class="c26"
           >
             <a
-              aria-label="Telegram"
+              aria-label="My Telegram username"
               class=""
               data-testid="plain-anchor"
               href="https://t.me/Sdlgr"
@@ -706,7 +706,7 @@ exports[`MainLayout should render successfully 1`] = `
               </svg>
             </a>
             <a
-              aria-label="Github"
+              aria-label="My GitHub account"
               class=""
               data-testid="plain-anchor"
               href="https://github.com/sauldeleon"
@@ -718,7 +718,7 @@ exports[`MainLayout should render successfully 1`] = `
               </svg>
             </a>
             <a
-              aria-label="LinkedIn"
+              aria-label="My LinkedIn profile"
               class=""
               data-testid="plain-anchor"
               href="https://www.linkedin.com/in/sauldeleonguerrero"

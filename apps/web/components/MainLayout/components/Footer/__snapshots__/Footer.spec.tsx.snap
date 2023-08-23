@@ -190,8 +190,9 @@ exports[`Footer should render successfully 1`] = `
           >
             <li>
               <a
+                aria-label="Go to Experience page"
                 class="c7"
-                href="/experience"
+                href="/en/experience"
               >
                 <p
                   class="c8"
@@ -202,8 +203,9 @@ exports[`Footer should render successfully 1`] = `
             </li>
             <li>
               <a
+                aria-label="Go to Contact page"
                 class="c7"
-                href="/contact"
+                href="/en/contact"
               >
                 <p
                   class="c8"
@@ -214,8 +216,9 @@ exports[`Footer should render successfully 1`] = `
             </li>
             <li>
               <a
+                aria-label="Go to Portfolio page"
                 class="c7"
-                href="/portfolio"
+                href="/en/portfolio"
               >
                 <p
                   class="c8"
@@ -226,6 +229,7 @@ exports[`Footer should render successfully 1`] = `
             </li>
             <li>
               <a
+                aria-label="Set Dark mode styled theme"
                 class="c7"
                 href="#"
               >
@@ -245,6 +249,7 @@ exports[`Footer should render successfully 1`] = `
             </li>
             <li>
               <a
+                aria-label="Set Pain mode styled theme"
                 class="c7"
                 href="#"
               >
@@ -268,7 +273,7 @@ exports[`Footer should render successfully 1`] = `
           class="c9"
         >
           <a
-            aria-label="Telegram"
+            aria-label="My Telegram username"
             class=""
             data-testid="plain-anchor"
             href="https://t.me/Sdlgr"
@@ -280,7 +285,7 @@ exports[`Footer should render successfully 1`] = `
             </svg>
           </a>
           <a
-            aria-label="Github"
+            aria-label="My GitHub account"
             class=""
             data-testid="plain-anchor"
             href="https://github.com/sauldeleon"
@@ -292,7 +297,7 @@ exports[`Footer should render successfully 1`] = `
             </svg>
           </a>
           <a
-            aria-label="LinkedIn"
+            aria-label="My LinkedIn profile"
             class=""
             data-testid="plain-anchor"
             href="https://www.linkedin.com/in/sauldeleonguerrero"

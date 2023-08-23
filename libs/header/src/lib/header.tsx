@@ -27,12 +27,11 @@ export function Header({ logo, navItems, actionItem, ...rest }: HeaderProps) {
     <StyledNav {...rest}>
       {logo}
       {navItems?.length && (
-        <StyledList role="list">
+        <StyledList>
           {navItems.map(
             ({ href, label, ariaLabel, hideOnDesktop, isActive }, index) => (
               <StyledListItem
                 key={index}
-                role="listitem"
                 $hideOnDesktop={hideOnDesktop}
                 $isActive={isActive}
                 aria-current={isActive && 'page'}

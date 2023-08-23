@@ -15,9 +15,10 @@ describe('Footer', () => {
     renderWithTheme(
       <Footer
         navItems={[
-          { label: 'test', href: '/test' },
+          { label: 'test', ariaLabel: 'Go to test', href: '/test' },
           {
             label: 'dark',
+            ariaLabel: 'Be dark',
             href: '#',
             icon: <MoonIcon />,
           },
@@ -25,7 +26,7 @@ describe('Footer', () => {
         socialMediaItems={[
           {
             icon: <TelegramIcon />,
-            label: 'Telegram',
+            ariaLabel: 'My Telegram user id',
             href: '/telegram',
           },
         ]}

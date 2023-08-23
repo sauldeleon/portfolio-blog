@@ -1,3 +1,5 @@
+import { useContext } from 'react'
+
 import {
   CactusIcon,
   GithubIcon,
@@ -6,23 +8,37 @@ import {
   TelegramIcon,
 } from '@sdlgr/assets'
 import { Footer as FooterLib } from '@sdlgr/footer'
+import { LanguageContext } from '@sdlgr/i18n-config'
 import { mainTheme } from '@sdlgr/main-theme'
 
 import { useClientTranslation } from '@web/i18n/client'
 
 export function Footer() {
   const { t } = useClientTranslation('footer')
-
+  const { language } = useContext(LanguageContext)
   return (
     <FooterLib
       tabIndex={-1}
       navProps={{ 'aria-label': t('siteMap') }}
       navItems={[
-        { label: t('experience'), href: '/experience' },
-        { label: t('contact'), href: '/contact' },
-        { label: t('portfolio'), href: '/portfolio' },
+        {
+          label: t('experience'),
+          ariaLabel: t('experienceAria'),
+          href: `/${language}/experience`,
+        },
+        {
+          label: t('contact'),
+          ariaLabel: t('contactAria'),
+          href: `/${language}/contact`,
+        },
+        {
+          label: t('portfolio'),
+          ariaLabel: t('portfolioAria'),
+          href: `/${language}/portfolio`,
+        },
         {
           label: t('darkMode'),
+          ariaLabel: t('darkModeAria'),
           href: '#',
           icon: (
             <MoonIcon color={mainTheme.colors.white} height={14} width={14} />
@@ -30,6 +46,7 @@ export function Footer() {
         },
         {
           label: t('painMode'),
+          ariaLabel: t('painModeAria'),
           href: '#',
           icon: (
             <CactusIcon color={mainTheme.colors.white} height={14} width={14} />
@@ -39,17 +56,17 @@ export function Footer() {
       socialMediaItems={[
         {
           icon: <TelegramIcon color={mainTheme.colors.white} />,
-          label: 'Telegram',
+          ariaLabel: t('telegramAria'),
           href: 'https://t.me/Sdlgr',
         },
         {
           icon: <GithubIcon color={mainTheme.colors.white} />,
-          label: 'Github',
+          ariaLabel: t('githubAria'),
           href: 'https://github.com/sauldeleon',
         },
         {
           icon: <LinkedinIcon color={mainTheme.colors.white} />,
-          label: 'LinkedIn',
+          ariaLabel: t('linkedInAria'),
           href: 'https://www.linkedin.com/in/sauldeleonguerrero',
         },
       ]}
