@@ -19,6 +19,7 @@
       "@sdlgr/button": ["libs/button/src/index.ts"],
       "@sdlgr/circle-link": ["libs/circle-link/src/index.ts"],
       "@sdlgr/footer": ["libs/footer/src/index.ts"],
+      "@sdlgr/global-types": ["libs/global-types/src/index.ts"],
       "@sdlgr/header": ["libs/header/src/index.ts"],
       "@sdlgr/i18n-client": ["libs/i18n-client/src/index.ts"],
       "@sdlgr/i18n-config": ["libs/i18n-config/src/index.ts"],

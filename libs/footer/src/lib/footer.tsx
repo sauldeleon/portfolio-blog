@@ -1,6 +1,7 @@
 import React, { DetailedHTMLProps, HTMLAttributes } from 'react'
 
 import { Button } from '@sdlgr/button'
+import { AtLeastOne } from '@sdlgr/global-types'
 import { Body } from '@sdlgr/typography'
 
 import {
@@ -15,8 +16,6 @@ import {
   StyledSocialMediaLink,
   StyledTopLines,
 } from './footer.styles'
-
-type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> & U[keyof U]
 
 type NavItemShared = {
   label: string
