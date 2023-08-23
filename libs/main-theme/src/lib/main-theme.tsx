@@ -111,6 +111,21 @@ const typography: MainTheme['typography'] = {
   },
 }
 
+const bottomBorderTransformHoverAfter = css`
+  &:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+`
+
+const bottomBorderTransformAfter = (duration: number) => css`
+  &::after {
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform ${duration}s ease-out;
+  }
+`
+
 export const mainTheme: MainTheme = {
   breakpoints,
   fontStyles,
@@ -152,14 +167,33 @@ export const mainTheme: MainTheme = {
         text-decoration: none;
       }
     `,
+    textBottomBorder: {
+      shared: css`
+        &::after {
+          content: '';
+          position: absolute;
+          width: 100%;
+          height: 2px;
+          bottom: 0;
+          left: 0;
+          background-color: ${({ theme }) => theme.colors.white};
+        }
+      `,
+      after: (duration = 0.25) => bottomBorderTransformAfter(duration),
+      hoverAfter: bottomBorderTransformHoverAfter,
+      transform: (duration = 0.25) => css`
+        ${bottomBorderTransformHoverAfter}
+        ${bottomBorderTransformAfter(duration)}
+      `,
+    },
   },
   animation: {
-    rotate360: keyframes`
+    'clock-loading': keyframes`
       0% {
-        transform: rotate(0deg)
+        stroke-dashoffset: 82;
       }
       100% {
-        transform: rotate(360deg)
+        stroke-dashoffset: 0;
       }
     `,
   },
@@ -205,8 +239,14 @@ export interface MainTheme {
   zIndex: Record<'modal', number>
   helpers: {
     noLinkUnderline: ReturnType<typeof css>
+    textBottomBorder: {
+      shared: ReturnType<typeof css>
+      after: (duration?: number) => ReturnType<typeof css>
+      hoverAfter: ReturnType<typeof css>
+      transform: (duration?: number) => ReturnType<typeof css>
+    }
   }
   animation: {
-    rotate360: Keyframes
+    'clock-loading': Keyframes
   }
 }

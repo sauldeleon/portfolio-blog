@@ -1,3 +1,6 @@
+import { render } from '@testing-library/react'
+import styled, { ThemeProvider } from 'styled-components'
+
 import { mainTheme } from './main-theme'
 
 describe('mainTheme', () => {
@@ -5,11 +8,11 @@ describe('mainTheme', () => {
     expect(mainTheme).toMatchInlineSnapshot(`
       {
         "animation": {
-          "rotate360": e {
-            "id": "sc-keyframes-bqrFYP",
+          "clock-loading": e {
+            "id": "sc-keyframes-jbxmNs",
             "inject": [Function],
-            "name": "bqrFYP",
-            "rules": "0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}",
+            "name": "jbxmNs",
+            "rules": "0%{stroke-dashoffset:82;}100%{stroke-dashoffset:0;}",
           },
         },
         "breakpoints": {
@@ -58,6 +61,18 @@ describe('mainTheme', () => {
           "noLinkUnderline": [
             "&:hover,&:active,&:focus{text-decoration:none;}",
           ],
+          "textBottomBorder": {
+            "after": [Function],
+            "hoverAfter": [
+              "&:hover::after{transform:scaleX(1);transform-origin:bottom left;}",
+            ],
+            "shared": [
+              "&::after{content:'';position:absolute;width:100%;height:2px;bottom:0;left:0;background-color:",
+              [Function],
+              ";}",
+            ],
+            "transform": [Function],
+          },
         },
         "logo": {
           "component": {
@@ -185,6 +200,97 @@ describe('mainTheme', () => {
     expect(mainTheme.helpers.noLinkUnderline).toMatchInlineSnapshot(`
       [
         "&:hover,&:active,&:focus{text-decoration:none;}",
+      ]
+    `)
+  })
+
+  it('should create the correct textBottomBorder helpers', () => {
+    const StyledTestItem = styled.div`
+      ${mainTheme.helpers.textBottomBorder.shared}
+      ${mainTheme.helpers.textBottomBorder.transform(0.5)}
+    `
+    const { baseElement } = render(
+      <ThemeProvider theme={mainTheme}>
+        <StyledTestItem />
+      </ThemeProvider>
+    )
+
+    expect(baseElement).toMatchInlineSnapshot(`
+      .c0::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: #FBFBFB;
+      }
+
+      .c0:hover::after {
+        transform: scaleX(1);
+        transform-origin: bottom left;
+      }
+
+      .c0::after {
+        transform: scaleX(0);
+        transform-origin: bottom right;
+        transition: transform 0.5s ease-out;
+      }
+
+      <body>
+        <div>
+          <div
+            class="c0"
+          />
+        </div>
+      </body>
+    `)
+
+    expect(mainTheme.helpers.textBottomBorder.after()).toMatchInlineSnapshot(`
+      [
+        "&::after{transform:scaleX(0);transform-origin:bottom right;transition:transform ",
+        "0.25",
+        "s ease-out;}",
+      ]
+    `)
+
+    expect(mainTheme.helpers.textBottomBorder.after(0.5))
+      .toMatchInlineSnapshot(`
+      [
+        "&::after{transform:scaleX(0);transform-origin:bottom right;transition:transform ",
+        "0.5",
+        "s ease-out;}",
+      ]
+    `)
+
+    expect(mainTheme.helpers.textBottomBorder.hoverAfter)
+      .toMatchInlineSnapshot(`
+      [
+        "&:hover::after{transform:scaleX(1);transform-origin:bottom left;}",
+      ]
+    `)
+
+    expect(mainTheme.helpers.textBottomBorder.hoverAfter)
+      .toMatchInlineSnapshot(`
+          [
+            "&:hover::after{transform:scaleX(1);transform-origin:bottom left;}",
+          ]
+      `)
+    expect(mainTheme.helpers.textBottomBorder.shared).toMatchInlineSnapshot(`
+      [
+        "&::after{content:'';position:absolute;width:100%;height:2px;bottom:0;left:0;background-color:",
+        [Function],
+        ";}",
+      ]
+    `)
+    expect(mainTheme.helpers.textBottomBorder.transform())
+      .toMatchInlineSnapshot(`
+      [
+        "&:hover::after{transform:scaleX(1);transform-origin:bottom left;}",
+        " ",
+        "&::after{transform:scaleX(0);transform-origin:bottom right;transition:transform ",
+        "0.25",
+        "s ease-out;}",
       ]
     `)
   })

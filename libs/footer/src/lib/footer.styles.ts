@@ -96,22 +96,8 @@ export const StyledNavLink = styled(Link)`
     display: flex;
     position: relative;
 
-    &::after {
-      content: '';
-      position: absolute;
-      width: 100%;
-      transform: scaleX(0);
-      height: 2px;
-      bottom: 0;
-      left: 0;
-      background-color: ${({ theme }) => theme.colors.white};
-      transform-origin: bottom right;
-      transition: transform 0.25s ease-out;
-    }
-    &:hover::after {
-      transform: scaleX(1);
-      transform-origin: bottom left;
-    }
+    ${({ theme }) => theme.helpers.textBottomBorder.shared}
+    ${({ theme }) => theme.helpers.textBottomBorder.transform()}
   }
 `
 

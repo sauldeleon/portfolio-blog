@@ -2479,7 +2479,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   stroke-width: 6px;
   stroke-dasharray: 110;
   stroke-dashoffset: 82;
-  animation: clock-loading 0.5s steps(4, jump-none) forwards;
+  animation: kVEmCK 0.5s steps(4, jump-none) forwards;
   transform: rotate(-90deg);
   transform-origin: center;
 }

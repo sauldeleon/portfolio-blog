@@ -42,11 +42,14 @@ exports[`CircleLink should render with a different size 1`] = `
   content: '';
   position: absolute;
   width: 100%;
-  transform: scaleX(0);
   height: 2px;
   bottom: 0;
   left: 0;
   background-color: #FBFBFB;
+}
+
+.c6::after {
+  transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.5s ease-out;
 }
@@ -69,12 +72,12 @@ exports[`CircleLink should render with a different size 1`] = `
   stroke-width: 6px;
   stroke-dasharray: 110;
   stroke-dashoffset: 82;
-  animation: clock-loading 0.5s steps(4,jump-none) forwards;
+  animation: kVEmCK 0.5s steps(4,jump-none) forwards;
   transform: rotate(-90deg);
   transform-origin: center;
 }
 
-.c0:hover .c4::after {
+.c0:hover .c4:hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }

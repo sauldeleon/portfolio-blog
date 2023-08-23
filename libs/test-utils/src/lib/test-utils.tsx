@@ -14,6 +14,7 @@ import Router, { NextRouter } from 'next/router'
 import { ReactNode, useEffect, useState } from 'react'
 import { ThemeProvider } from 'styled-components'
 
+import { LanguageContextProvider } from '@sdlgr/i18n-config'
 import { mainTheme } from '@sdlgr/main-theme'
 
 export type MatcherCustomFnParams = {
@@ -38,7 +39,9 @@ export function RenderProviders({ children }: { children: ReactNode }) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={mainTheme}>{children}</ThemeProvider>
+      <LanguageContextProvider value={{ language: 'en' }}>
+        <ThemeProvider theme={mainTheme}>{children}</ThemeProvider>
+      </LanguageContextProvider>
     </QueryClientProvider>
   )
 }

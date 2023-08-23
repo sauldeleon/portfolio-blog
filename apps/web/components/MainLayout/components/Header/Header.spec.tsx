@@ -4,6 +4,11 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { Header } from './Header'
 
+jest.mock('next/navigation', () => ({
+  ...jest.requireActual('next/navigation'),
+  usePathname: () => '/en/contact',
+}))
+
 describe('Header', () => {
   it('should render successfully', async () => {
     const { baseElement } = renderApp(<Header />)

@@ -15,13 +15,21 @@ describe('Header', () => {
     renderWithTheme(
       <Header
         navItems={[
-          { href: 'a', label: 'a' },
-          { href: 'b', label: 'b', hideOnDesktop: true },
+          { href: 'a', label: 'a', ariaLabel: 'go to a', isActive: true },
+          { href: 'b', label: 'b', ariaLabel: 'go to b', isActive: false },
+          {
+            href: 'c',
+            label: 'c',
+            ariaLabel: 'go to c',
+            isActive: false,
+            hideOnDesktop: true,
+          },
         ]}
         actionItem="wadus"
       />
     )
-    expect(screen.getAllByRole('link')).toHaveLength(2)
+    expect(screen.getAllByRole('link')).toHaveLength(3)
+    expect(screen.getAllByRole('listitem', { current: 'page' })).toHaveLength(1)
     expect(screen.getByText('wadus')).toBeInTheDocument()
     expect(screen.getByText('b')).toHaveStyle('display:block')
   })

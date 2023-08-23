@@ -225,11 +225,14 @@ exports[`MainLayout should render successfully 1`] = `
   content: '';
   position: absolute;
   width: 100%;
-  transform: scaleX(0);
   height: 2px;
   bottom: 0;
   left: 0;
   background-color: #FBFBFB;
+}
+
+.c16::after {
+  transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.5s ease-out;
 }
@@ -252,12 +255,12 @@ exports[`MainLayout should render successfully 1`] = `
   stroke-width: 6px;
   stroke-dasharray: 110;
   stroke-dashoffset: 82;
-  animation: clock-loading 0.5s steps(4, jump-none) forwards;
+  animation: kVEmCK 0.5s steps(4, jump-none) forwards;
   transform: rotate(-90deg);
   transform-origin: center;
 }
 
-.c10:hover .c15::after {
+.c10:hover .c15:hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
@@ -325,18 +328,21 @@ exports[`MainLayout should render successfully 1`] = `
     content: '';
     position: absolute;
     width: 100%;
-    transform: scaleX(0);
     height: 2px;
     bottom: 0;
     left: 0;
     background-color: #FBFBFB;
-    transform-origin: bottom right;
-    transition: transform 0.25s ease-out;
   }
 
   .c25:hover::after {
     transform: scaleX(1);
     transform-origin: bottom left;
+  }
+
+  .c25::after {
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
   }
 }
 
@@ -364,7 +370,6 @@ exports[`MainLayout should render successfully 1`] = `
 
 @media (min-width: 768px) {
   .c6 {
-    display: flex;
     position: relative;
   }
 
@@ -372,18 +377,21 @@ exports[`MainLayout should render successfully 1`] = `
     content: '';
     position: absolute;
     width: 100%;
-    transform: scaleX(0);
     height: 2px;
     bottom: 0;
     left: 0;
     background-color: #FBFBFB;
-    transform-origin: bottom right;
-    transition: transform 0.25s ease-out;
   }
 
   .c6:hover::after {
     transform: scaleX(1);
     transform-origin: bottom left;
+  }
+
+  .c6::after {
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
   }
 }
 
@@ -458,7 +466,7 @@ exports[`MainLayout should render successfully 1`] = `
         <a
           aria-label="Header Logo"
           class="c2"
-          href="/"
+          href="/en"
         >
           <svg
             class="c3"
@@ -470,14 +478,16 @@ exports[`MainLayout should render successfully 1`] = `
         </a>
         <ul
           class="c4"
+          role="list"
         >
           <li
             class="c5"
+            role="listitem"
           >
             <a
-              aria-label="Experience"
+              aria-label="Go to Experience page"
               class="c6"
-              href="/experience"
+              href="/en/experience"
             >
               <p
                 class="c7 c8"
@@ -488,11 +498,12 @@ exports[`MainLayout should render successfully 1`] = `
           </li>
           <li
             class="c5"
+            role="listitem"
           >
             <a
-              aria-label="Contact"
+              aria-label="Go to Contact page"
               class="c6"
-              href="/contact"
+              href="/en/contact"
             >
               <p
                 class="c7 c8"
@@ -503,11 +514,12 @@ exports[`MainLayout should render successfully 1`] = `
           </li>
           <li
             class="c5"
+            role="listitem"
           >
             <a
-              aria-label="CV/Portfolio"
+              aria-label="Go to Portfolio page"
               class="c6"
-              href="/portfolio"
+              href="/en/portfolio"
             >
               <p
                 class="c7 c8"
@@ -518,11 +530,12 @@ exports[`MainLayout should render successfully 1`] = `
           </li>
           <li
             class="c9"
+            role="listitem"
           >
             <a
-              aria-label="Get in touch"
+              aria-label="Go to Portfolio page"
               class="c6"
-              href="/portfolio"
+              href="/en/portfolio"
             >
               <p
                 class="c7 c8"
@@ -533,8 +546,9 @@ exports[`MainLayout should render successfully 1`] = `
           </li>
         </ul>
         <a
+          aria-label="Go to Portfolio page"
           class="c10 c11"
-          href="/portfolio"
+          href="/en/portfolio"
         >
           <div
             class="c12"

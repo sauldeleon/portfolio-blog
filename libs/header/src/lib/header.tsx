@@ -12,7 +12,13 @@ import {
 interface HeaderProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> {
   logo?: React.ReactNode
-  navItems?: { href: string; label: string; hideOnDesktop?: boolean }[]
+  navItems?: {
+    href: string
+    label: string
+    ariaLabel: string
+    isActive: boolean
+    hideOnDesktop?: boolean
+  }[]
   actionItem?: React.ReactNode
 }
 
@@ -21,14 +27,26 @@ export function Header({ logo, navItems, actionItem, ...rest }: HeaderProps) {
     <StyledNav {...rest}>
       {logo}
       {navItems?.length && (
-        <StyledList>
-          {navItems.map(({ href, label, hideOnDesktop }, index) => (
-            <StyledListItem key={index} $hideOnDesktop={hideOnDesktop}>
-              <StyledNavLink href={href} aria-label={label}>
-                <Body>{label}</Body>
-              </StyledNavLink>
-            </StyledListItem>
-          ))}
+        <StyledList role="list">
+          {navItems.map(
+            ({ href, label, ariaLabel, hideOnDesktop, isActive }, index) => (
+              <StyledListItem
+                key={index}
+                role="listitem"
+                $hideOnDesktop={hideOnDesktop}
+                $isActive={isActive}
+                aria-current={isActive && 'page'}
+              >
+                <StyledNavLink
+                  href={href}
+                  aria-label={ariaLabel}
+                  $isActive={isActive}
+                >
+                  <Body>{label}</Body>
+                </StyledNavLink>
+              </StyledListItem>
+            )
+          )}
         </StyledList>
       )}
       {actionItem}

@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { Link } from '@sdlgr/link'
 import { Body } from '@sdlgr/typography'
@@ -27,7 +27,7 @@ export const StyledNav = styled.nav`
   }
 `
 
-export const StyledNavLink = styled(Link)`
+export const StyledNavLink = styled(Link)<{ $isActive: boolean }>`
   display: flex;
 
   &:hover,
@@ -36,25 +36,11 @@ export const StyledNavLink = styled(Link)`
   }
 
   ${({ theme }) => theme.media.up.md} {
-    display: flex;
     position: relative;
 
-    &::after {
-      content: '';
-      position: absolute;
-      width: 100%;
-      transform: scaleX(0);
-      height: 2px;
-      bottom: 0;
-      left: 0;
-      background-color: ${({ theme }) => theme.colors.white};
-      transform-origin: bottom right;
-      transition: transform 0.25s ease-out;
-    }
-    &:hover::after {
-      transform: scaleX(1);
-      transform-origin: bottom left;
-    }
+    ${({ theme }) => theme.helpers.textBottomBorder.shared}
+    ${({ $isActive, theme }) =>
+      !$isActive && theme.helpers.textBottomBorder.transform()}
   }
 `
 
@@ -73,18 +59,33 @@ export const StyledList = styled.ul`
   }
 `
 
-export const StyledListItem = styled.li<{ $hideOnDesktop?: boolean }>`
+export const StyledListItem = styled.li<{
+  $hideOnDesktop?: boolean
+  $isActive: boolean
+}>`
   width: 59px;
   display: flex;
   justify-content: center;
   height: 100%;
   padding-bottom: 25px;
 
+  ${({ $isActive }) =>
+    $isActive &&
+    css`
+      background-color: ${({ theme }) => theme.colors.black};
+    `}
+
   ${Body} {
     ${({ theme }) => theme.typography.body.XS}
     color: ${({ theme }) => theme.colors.black};
     writing-mode: tb-rl;
     transform: rotate(-180deg);
+
+    ${({ $isActive }) =>
+      $isActive &&
+      css`
+        color: ${({ theme }) => theme.colors.white};
+      `}
   }
 
   &:hover {
@@ -97,7 +98,11 @@ export const StyledListItem = styled.li<{ $hideOnDesktop?: boolean }>`
   }
 
   ${({ theme }) => theme.media.up.md} {
-    ${({ $hideOnDesktop }) => $hideOnDesktop && `display: none`};
+    ${({ $hideOnDesktop }) =>
+      $hideOnDesktop &&
+      css`
+        display: none;
+      `};
     width: auto;
     padding-bottom: 0;
 
@@ -106,6 +111,9 @@ export const StyledListItem = styled.li<{ $hideOnDesktop?: boolean }>`
       color: ${({ theme }) => theme.colors.white};
       writing-mode: unset;
       transform: unset;
+
+      ${({ $isActive, theme }) =>
+        $isActive && theme.helpers.textBottomBorder.shared}
     }
   }
 `

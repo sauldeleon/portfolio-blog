@@ -50,6 +50,15 @@ exports[`Header should render successfully 1`] = `
   text-decoration: none;
 }
 
+.c9 {
+  display: flex;
+}
+
+.c9:hover,
+.c9:focus {
+  text-decoration: none;
+}
+
 .c3 {
   display: flex;
   align-items: end;
@@ -92,6 +101,7 @@ exports[`Header should render successfully 1`] = `
   justify-content: center;
   height: 100%;
   padding-bottom: 25px;
+  background-color: #000000;
 }
 
 .c8 .c6 {
@@ -103,6 +113,7 @@ exports[`Header should render successfully 1`] = `
   color: #000000;
   writing-mode: tb-rl;
   transform: rotate(-180deg);
+  color: #FBFBFB;
 }
 
 .c8:hover {
@@ -114,30 +125,61 @@ exports[`Header should render successfully 1`] = `
   color: #FBFBFB;
 }
 
-.c15 {
+.c10 {
+  width: 59px;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  padding-bottom: 25px;
+}
+
+.c10 .c6 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 500;
+  color: #FBFBFB;
+  font-size: 0.55rem;
+  line-height: normal;
+  color: #000000;
+  writing-mode: tb-rl;
+  transform: rotate(-180deg);
+}
+
+.c10:hover {
+  background-color: #000000;
+  cursor: pointer;
+}
+
+.c10:hover .c6 {
+  color: #FBFBFB;
+}
+
+.c17 {
   margin-left: 8px;
   position: relative;
 }
 
-.c15:hover,
-.c15:focus {
+.c17:hover,
+.c17:focus {
   text-decoration: none;
 }
 
-.c15::after {
+.c17::after {
   content: '';
   position: absolute;
   width: 100%;
-  transform: scaleX(0);
   height: 2px;
   bottom: 0;
   left: 0;
   background-color: #FBFBFB;
+}
+
+.c17::after {
+  transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.5s ease-out;
 }
 
-.c9 {
+.c11 {
   outline: none;
   cursor: pointer;
   display: flex;
@@ -145,40 +187,40 @@ exports[`Header should render successfully 1`] = `
   max-height: 42px;
 }
 
-.c9:hover,
-.c9:focus {
+.c11:hover,
+.c11:focus {
   text-decoration: none;
 }
 
-.c9:hover circle.loading {
+.c11:hover circle.loading {
   stroke: white;
   stroke-width: 6px;
   stroke-dasharray: 110;
   stroke-dashoffset: 82;
-  animation: clock-loading 0.5s steps(4, jump-none) forwards;
+  animation: kVEmCK 0.5s steps(4, jump-none) forwards;
   transform: rotate(-90deg);
   transform-origin: center;
 }
 
-.c9:hover .c14::after {
+.c11:hover .c16:hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
 
-.c11 {
+.c13 {
   position: relative;
   width: 42px;
   height: 42px;
 }
 
-.c12 {
+.c14 {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
   left: 50%;
 }
 
-.c13 {
+.c15 {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
@@ -195,7 +237,7 @@ exports[`Header should render successfully 1`] = `
   margin-bottom: 25px;
 }
 
-.c10 {
+.c12 {
   display: none;
 }
 
@@ -216,7 +258,6 @@ exports[`Header should render successfully 1`] = `
 
 @media (min-width: 768px) {
   .c5 {
-    display: flex;
     position: relative;
   }
 
@@ -224,18 +265,37 @@ exports[`Header should render successfully 1`] = `
     content: '';
     position: absolute;
     width: 100%;
-    transform: scaleX(0);
     height: 2px;
     bottom: 0;
     left: 0;
     background-color: #FBFBFB;
-    transform-origin: bottom right;
-    transition: transform 0.25s ease-out;
   }
 
   .c5:hover::after {
     transform: scaleX(1);
     transform-origin: bottom left;
+  }
+
+  .c5::after {
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+  }
+}
+
+@media (min-width: 768px) {
+  .c9 {
+    position: relative;
+  }
+
+  .c9::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #FBFBFB;
   }
 }
 
@@ -268,12 +328,40 @@ exports[`Header should render successfully 1`] = `
 
 @media (min-width: 768px) {
   .c8 {
-    display: none;
     width: auto;
     padding-bottom: 0;
   }
 
   .c8 .c6 {
+    font-family: 'Roboto mono',monospace;
+    font-weight: 400;
+    color: #FBFBFB;
+    font-size: 0.9rem;
+    line-height: normal;
+    color: #FBFBFB;
+    writing-mode: unset;
+    transform: unset;
+  }
+
+  .c8 .c6::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #FBFBFB;
+  }
+}
+
+@media (min-width: 768px) {
+  .c10 {
+    display: none;
+    width: auto;
+    padding-bottom: 0;
+  }
+
+  .c10 .c6 {
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
     color: #FBFBFB;
@@ -293,7 +381,7 @@ exports[`Header should render successfully 1`] = `
 }
 
 @media (min-width: 768px) {
-  .c10 {
+  .c12 {
     display: flex;
   }
 }
@@ -307,7 +395,7 @@ exports[`Header should render successfully 1`] = `
       <a
         aria-label="Header Logo"
         class="c1"
-        href="/"
+        href="/en"
       >
         <svg
           class="c2"
@@ -319,14 +407,17 @@ exports[`Header should render successfully 1`] = `
       </a>
       <ul
         class="c3"
+        role="list"
       >
         <li
+          aria-current="false"
           class="c4"
+          role="listitem"
         >
           <a
-            aria-label="Experience"
+            aria-label="Go to Experience page"
             class="c5"
-            href="/experience"
+            href="/en/experience"
           >
             <p
               class="c6 c7"
@@ -336,12 +427,14 @@ exports[`Header should render successfully 1`] = `
           </a>
         </li>
         <li
-          class="c4"
+          aria-current="page"
+          class="c8"
+          role="listitem"
         >
           <a
-            aria-label="Contact"
-            class="c5"
-            href="/contact"
+            aria-label="Go to Contact page"
+            class="c9"
+            href="/en/contact"
           >
             <p
               class="c6 c7"
@@ -351,12 +444,14 @@ exports[`Header should render successfully 1`] = `
           </a>
         </li>
         <li
+          aria-current="false"
           class="c4"
+          role="listitem"
         >
           <a
-            aria-label="CV/Portfolio"
+            aria-label="Go to Portfolio page"
             class="c5"
-            href="/portfolio"
+            href="/en/portfolio"
           >
             <p
               class="c6 c7"
@@ -366,12 +461,14 @@ exports[`Header should render successfully 1`] = `
           </a>
         </li>
         <li
-          class="c8"
+          aria-current="false"
+          class="c10"
+          role="listitem"
         >
           <a
-            aria-label="Get in touch"
+            aria-label="Go to Portfolio page"
             class="c5"
-            href="/portfolio"
+            href="/en/portfolio"
           >
             <p
               class="c6 c7"
@@ -382,21 +479,22 @@ exports[`Header should render successfully 1`] = `
         </li>
       </ul>
       <a
-        class="c9 c10"
-        href="/portfolio"
+        aria-label="Go to Portfolio page"
+        class="c11 c12"
+        href="/en/portfolio"
       >
         <div
-          class="c11"
+          class="c13"
         >
           <svg
-            class="c12"
+            class="c14"
             height="42"
             width="42"
           >
             circleButton.svg
           </svg>
           <div
-            class="c13"
+            class="c15"
           >
             <svg>
               arrowRight.svg
@@ -404,7 +502,7 @@ exports[`Header should render successfully 1`] = `
           </div>
         </div>
         <p
-          class="c6 c14 c7 c15"
+          class="c6 c16 c7 c17"
         >
           Get in touch
         </p>

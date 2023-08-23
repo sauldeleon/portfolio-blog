@@ -4,6 +4,8 @@ import { CircleButtonIcon } from '@sdlgr/assets'
 import { Link } from '@sdlgr/link'
 import { Body } from '@sdlgr/typography'
 
+const underlineAnimationDuration = 0.5
+
 export const StyledBody = styled(Body)`
   margin-left: 8px;
   position: relative;
@@ -13,18 +15,9 @@ export const StyledBody = styled(Body)`
     text-decoration: none;
   }
 
-  &::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    transform: scaleX(0);
-    height: 2px;
-    bottom: 0;
-    left: 0;
-    background-color: ${({ theme }) => theme.colors.white};
-    transform-origin: bottom right;
-    transition: transform 0.5s ease-out;
-  }
+  ${({ theme }) => theme.helpers.textBottomBorder.shared}
+  ${({ theme }) =>
+    theme.helpers.textBottomBorder.after(underlineAnimationDuration)}
 `
 
 export const StyledCircleLink = styled(Link)<{ $size: number }>`
@@ -45,25 +38,14 @@ export const StyledCircleLink = styled(Link)<{ $size: number }>`
       stroke-width: 6px;
       stroke-dasharray: 110;
       stroke-dashoffset: 82;
-      animation: clock-loading 0.5s steps(4, jump-none) forwards;
+      animation: ${({ theme }) => theme.animation['clock-loading']}
+        ${underlineAnimationDuration}s steps(4, jump-none) forwards;
       transform: rotate(-90deg);
       transform-origin: center;
     }
 
-    @keyframes clock-loading {
-      0% {
-        stroke-dashoffset: 82;
-      }
-      100% {
-        stroke-dashoffset: 0;
-      }
-    }
-
     ${StyledBody} {
-      &::after {
-        transform: scaleX(1);
-        transform-origin: bottom left;
-      }
+      ${({ theme }) => theme.helpers.textBottomBorder.hoverAfter}
     }
   }
 `

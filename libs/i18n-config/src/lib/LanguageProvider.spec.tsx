@@ -1,7 +1,5 @@
-import { waitFor } from '@testing-library/react'
+import { render, waitFor } from '@testing-library/react'
 import Cookies from 'js-cookie'
-
-import { renderApp } from '@sdlgr/test-utils'
 
 import { LanguageContextProvider } from './LanguageProvider'
 
@@ -22,14 +20,14 @@ describe('LanguageProvider', () => {
   })
 
   it('should render successfully', () => {
-    const { baseElement } = renderApp(
+    const { baseElement } = render(
       <LanguageContextProvider value={undefined}>test</LanguageContextProvider>
     )
     expect(baseElement).toHaveTextContent('test')
   })
 
   it('should render successfully store the language in a cookie', async () => {
-    const { baseElement } = renderApp(
+    const { baseElement } = render(
       <LanguageContextProvider value={{ language: 'en' }}>
         test
       </LanguageContextProvider>
