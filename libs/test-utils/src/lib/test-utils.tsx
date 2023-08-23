@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Matcher } from '@testing-library/dom/types/matches'
 import {
+  RenderOptions,
   RenderResult,
   queryAllByAttribute as _queryAllByAttribute,
   queryByAttribute as _queryByAttribute,
@@ -43,8 +44,11 @@ export function RenderProviders({ children }: { children: ReactNode }) {
 }
 
 /* istanbul ignore next */
-export const renderApp = (children: ReactNode) => {
-  return render(<RenderProviders>{children}</RenderProviders>)
+export const renderApp = (
+  children: ReactNode,
+  options?: Omit<RenderOptions, 'queries'>
+) => {
+  return render(<RenderProviders>{children}</RenderProviders>, options)
 }
 
 /**

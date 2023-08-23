@@ -1,3 +1,5 @@
+'use client'
+
 import { StyledContent, StyledPage } from './Layout.styles'
 import { Footer } from './components/Footer/Footer'
 import { Header } from './components/Header/Header'

@@ -1,3 +1,4 @@
+import React from 'react'
 import { renderToString } from 'react-dom/server'
 
 import RootLayout, {
@@ -11,8 +12,14 @@ jest.mock('next/headers', () => ({
   }),
 }))
 
+jest.mock('@web/components/Layout/Layout', () => ({
+  Layout: ({ children }: { children: React.ReactNode }) => (
+    <div>{children}</div>
+  ),
+}))
+
 describe('[lng] route - layout', () => {
-  it('should render successfully in English', () => {
+  it('should render successfully in English', async () => {
     const view = renderToString(
       <RootLayout params={{ lng: 'en' }}>test</RootLayout>
     )
@@ -21,7 +28,7 @@ describe('[lng] route - layout', () => {
     expect(view).toContain(`<html lang="en" dir="ltr"`)
   })
 
-  it('should render successfully in Spanish', () => {
+  it('should render successfully in Spanish', async () => {
     const view = renderToString(
       <RootLayout params={{ lng: 'es' }}>test</RootLayout>
     )

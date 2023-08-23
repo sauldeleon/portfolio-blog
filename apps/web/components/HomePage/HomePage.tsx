@@ -3,7 +3,6 @@
 import { ArrowRightIcon } from '@sdlgr/assets'
 import { Body, Label } from '@sdlgr/typography'
 
-import { Layout } from '@web/components/Layout/Layout'
 import { useClientTranslation } from '@web/i18n/client'
 
 import {
@@ -22,7 +21,7 @@ export function HomePage() {
     t('summary.p3'),
   ]
   return (
-    <Layout>
+    <>
       <StyledHeading $level={2}>Saúl de León Guerrero</StyledHeading>
       <StyledCircleLink
         href="/"
@@ -43,6 +42,6 @@ export function HomePage() {
         iconContent={<ArrowRightIcon />}
         label={t('experience')}
       />
-    </Layout>
+    </>
   )
 }

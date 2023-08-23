@@ -371,7 +371,7 @@ exports[`Header should render successfully 1`] = `
           <a
             aria-label="Get in touch"
             class="c5"
-            href="/contact"
+            href="/portfolio"
           >
             <p
               class="c6 c7"
@@ -383,7 +383,7 @@ exports[`Header should render successfully 1`] = `
       </ul>
       <a
         class="c9 c10"
-        href="/contact"
+        href="/portfolio"
       >
         <div
           class="c11"

@@ -19,11 +19,11 @@ export function Header() {
         { href: '/experience', label: t('experience') },
         { href: '/contact', label: t('contact') },
         { href: '/portfolio', label: t('portfolio') },
-        { href: '/contact', label: t('getInTouch'), hideOnDesktop: true },
+        { href: '/portfolio', label: t('getInTouch'), hideOnDesktop: true },
       ]}
       actionItem={
         <StyledCircleLink
-          href="/contact"
+          href="/portfolio"
           label={t('getInTouch')}
           iconContent={<ArrowRightIcon />}
         />

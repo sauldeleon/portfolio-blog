@@ -9,7 +9,7 @@ exports[`Layout should render successfully 1`] = `
 
 .c17 {
   display: flex;
-  min-height: calc(100vh - 115px);
+  min-height: calc(100vh - 115px - 300px);
   padding-top: 80px;
   align-items: center;
   flex-direction: column;
@@ -296,6 +296,18 @@ exports[`Layout should render successfully 1`] = `
   display: none;
 }
 
+@media (min-width: 768px) {
+  .c17 {
+    min-height: calc(100vh - 115px - 210px);
+  }
+}
+
+@media (min-width: 1024px) {
+  .c17 {
+    min-height: calc(100vh - 115px - 185px);
+  }
+}
+
 @media (min-width: 1024px) {
   .c21 {
     justify-content: space-between;
@@ -510,7 +522,7 @@ exports[`Layout should render successfully 1`] = `
             <a
               aria-label="Get in touch"
               class="c6"
-              href="/contact"
+              href="/portfolio"
             >
               <p
                 class="c7 c8"
@@ -522,7 +534,7 @@ exports[`Layout should render successfully 1`] = `
         </ul>
         <a
           class="c10 c11"
-          href="/contact"
+          href="/portfolio"
         >
           <div
             class="c12"
