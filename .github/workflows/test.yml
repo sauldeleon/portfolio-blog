@@ -18,5 +18,4 @@ jobs:
       - name: Run tests
         run: |
           yarn
-          yarn test:web --coverage
-          yarn test:libs --coverage
+          yarn test:all --coverage
