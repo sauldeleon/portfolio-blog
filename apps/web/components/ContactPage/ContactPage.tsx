@@ -1,9 +1,11 @@
+'use client'
+
 import { Link } from '@sdlgr/link'
 import { useIsBot } from '@sdlgr/use-is-bot'
 
+import { NoSSR } from '@web/components/NoSSR/NoSSR'
 import { useClientTranslation } from '@web/i18n/client'
 
-import { NoSSR } from '../NoSSR/NoSSR'
 import {
   StyledBody,
   StyledContactInfo,
