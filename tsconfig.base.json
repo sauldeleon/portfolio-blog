@@ -32,6 +32,7 @@
         "libs/use-container-dimensions/src/index.ts"
       ],
       "@sdlgr/use-debounce": ["libs/use-debounce/src/index.ts"],
+      "@sdlgr/use-is-bot": ["libs/use-is-bot/src/index.ts"],
       "@sdlgr/visually-hidden": ["libs/visually-hidden/src/index.ts"],
       "@web/*": ["apps/web/*"]
     }

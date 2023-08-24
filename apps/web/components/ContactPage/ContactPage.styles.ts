@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { Body, Heading } from '@sdlgr/typography'
 
@@ -18,13 +18,20 @@ export const StyledContactInfoWrapper = styled.div`
   height: 100%;
 `
 
-export const StyledContactInfo = styled.div`
+export const StyledContactInfo = styled.div<{ $isVisible: boolean }>`
   display: grid;
   place-items: center;
   rotate: 270deg;
   position: absolute;
   top: 36px;
   left: 65px;
+  opacity: 0;
+  transition: opacity 2s ease-in;
+  ${({ $isVisible }) =>
+    $isVisible &&
+    css`
+      opacity: 1;
+    `}
 
   ${({ theme }) => theme.media.up.md} {
     position: unset;

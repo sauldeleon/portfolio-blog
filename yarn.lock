@@ -2340,6 +2340,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fingerprintjs/botd@npm:1.6.2":
+  version: 1.6.2
+  resolution: "@fingerprintjs/botd@npm:1.6.2"
+  dependencies:
+    tslib: ^2.4.0
+  checksum: b01ac6611ff0c3f51cf04a0d742bdebf31c4752a0d7f8d364db8258b87bd8d21225c35992d3ed659d6a93a3acfd97aee7c2a02ed7799f211a440b2143562856f
+  languageName: node
+  linkType: hard
+
 "@humanwhocodes/config-array@npm:^0.11.10":
   version: 0.11.10
   resolution: "@humanwhocodes/config-array@npm:0.11.10"
@@ -3544,6 +3553,7 @@ __metadata:
     "@babel/preset-react": ^7.14.5
     "@commitlint/cli": 17.6.7
     "@commitlint/config-conventional": 17.6.7
+    "@fingerprintjs/botd": 1.6.2
     "@nx-go/nx-go": 2.7.0
     "@nx/cypress": 16.6.0
     "@nx/eslint-plugin": 16.6.0
