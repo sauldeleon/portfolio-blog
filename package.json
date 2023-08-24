@@ -11,7 +11,6 @@
     "build:web": "NODE_ENV=production yarn build web --prod",
     "build": "nx build",
     "build:api": "nx build api",
-    "export:web": "nx export web",
     "lint:api": "nx lint api",
     "test:web": "nx test web",
     "test:api": "nx test api",
