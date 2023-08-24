@@ -3,7 +3,7 @@
 const { composePlugins, withNx } = require('@nx/next')
 
 const locales = ['en', 'es']
-const baseUrl = process.env.BASE_URL ?? 'https://sawl.dev'
+const baseUrl = process.env.BASE_URL ?? 'https://preprod.sawl.dev'
 
 /**
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}

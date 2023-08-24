@@ -4,6 +4,6 @@ setConfig({
   publicRuntimeConfig: {
     NODE_ENV: 'test',
     DEPLOY_ENV: 'preprod',
-    BASE_URL: 'https://sawl.dev',
+    BASE_URL: 'https://preprod.sawl.dev',
   },
 })
