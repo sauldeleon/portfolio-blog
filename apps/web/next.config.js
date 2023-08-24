@@ -36,19 +36,6 @@ const nextConfig = {
     domains: ['localhost'],
     disableStaticImages: true,
   },
-  async rewrites() {
-    return {
-      beforeFiles: [
-        {
-          // Cloudflare issues with Vary header using Accept for non-supported image formats (webp) https://github.com/vercel/next.js/discussions/39510
-          source: '/_next/image.jpg',
-          destination: '/_next/image',
-        },
-      ],
-      afterFiles: [],
-      fallback: [],
-    }
-  },
   productionBrowserSourceMaps: true,
   webpack: (config, { webpack, isServer }) => {
     const CircularDependency = require('circular-dependency-plugin')
