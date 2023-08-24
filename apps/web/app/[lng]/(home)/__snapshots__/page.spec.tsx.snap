@@ -971,49 +971,49 @@ exports[`[lng] route - Page should render successfully 1`] = `
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 15.985405340373202s eJiAHj 4.154928852620791s linear infinite;
+  animation: 15.985405340373202s lhbgW 4.154928852620791s linear infinite;
 }
 
 .c124 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 14.321792766717916s eJiAHj 5.2508059741068145s linear infinite;
+  animation: 14.321792766717916s lhbgW 5.2508059741068145s linear infinite;
 }
 
 .c128 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 8.863313964128423s eJiAHj 4.8922122575852445s linear infinite;
+  animation: 8.863313964128423s lhbgW 4.8922122575852445s linear infinite;
 }
 
 .c132 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 13.786750058896462s eJiAHj 5.334379753725999s linear infinite;
+  animation: 13.786750058896462s lhbgW 5.334379753725999s linear infinite;
 }
 
 .c136 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 19.892571930205534s eJiAHj 4.749795729144008s linear infinite;
+  animation: 19.892571930205534s lhbgW 4.749795729144008s linear infinite;
 }
 
 .c140 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 18.412964603232417s eJiAHj 1.8955389919147587s linear infinite;
+  animation: 18.412964603232417s lhbgW 1.8955389919147587s linear infinite;
 }
 
 .c144 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 7.601709352407495s eJiAHj 5.736074638827477s linear infinite;
+  animation: 7.601709352407495s lhbgW 5.736074638827477s linear infinite;
 }
 
 .c148 svg {
@@ -1025,168 +1025,168 @@ exports[`[lng] route - Page should render successfully 1`] = `
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 13.963351823705295s eJiAHj 5.835444599966921s linear infinite;
+  animation: 13.963351823705295s lhbgW 5.835444599966921s linear infinite;
 }
 
 .c156 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 8.852800132621072s eJiAHj 1.524956209179353s linear infinite;
+  animation: 8.852800132621072s lhbgW 1.524956209179353s linear infinite;
 }
 
 .c160 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 11.217878381555153s eJiAHj 5.730714666808121s linear infinite;
+  animation: 11.217878381555153s lhbgW 5.730714666808121s linear infinite;
 }
 
 .c167 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 6.140394548449443s eJiAHj 5.11272627856131s linear infinite;
+  animation: 6.140394548449443s lhbgW 5.11272627856131s linear infinite;
 }
 
 .c171 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 18.380772518842353s eJiAHj 5.133172700295292s linear infinite;
+  animation: 18.380772518842353s lhbgW 5.133172700295292s linear infinite;
 }
 
 .c175 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 16.328130561642666s eJiAHj 2.4835541883701s linear infinite;
+  animation: 16.328130561642666s lhbgW 2.4835541883701s linear infinite;
 }
 
 .c179 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 17.271344348475175s eJiAHj 2.7641899754515844s linear infinite;
+  animation: 17.271344348475175s lhbgW 2.7641899754515844s linear infinite;
 }
 
 .c183 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 18.381619673625828s eJiAHj 2.526048742783293s linear infinite;
+  animation: 18.381619673625828s lhbgW 2.526048742783293s linear infinite;
 }
 
 .c187 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 16.157087671041783s eJiAHj 3.8802256416862857s linear infinite;
+  animation: 16.157087671041783s lhbgW 3.8802256416862857s linear infinite;
 }
 
 .c191 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 14.587389009524479s eJiAHj 5.375062596455593s linear infinite;
+  animation: 14.587389009524479s lhbgW 5.375062596455593s linear infinite;
 }
 
 .c195 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 14.54153333523598s eJiAHj 1.4477526682333328s linear infinite;
+  animation: 14.54153333523598s lhbgW 1.4477526682333328s linear infinite;
 }
 
 .c199 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 8.294339875663672s eJiAHj 3.280501988266019s linear infinite;
+  animation: 8.294339875663672s lhbgW 3.280501988266019s linear infinite;
 }
 
 .c203 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 19.266980102366603s eJiAHj 2.319357800306969s linear infinite;
+  animation: 19.266980102366603s lhbgW 2.319357800306969s linear infinite;
 }
 
 .c207 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 14.715448840651458s eJiAHj 3.2627536152731533s linear infinite;
+  animation: 14.715448840651458s lhbgW 3.2627536152731533s linear infinite;
 }
 
 .c211 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 17.685194910444892s eJiAHj 5.259665339414542s linear infinite;
+  animation: 17.685194910444892s lhbgW 5.259665339414542s linear infinite;
 }
 
 .c215 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 8.337109494430436s eJiAHj 2.7888875554767707s linear infinite;
+  animation: 8.337109494430436s lhbgW 2.7888875554767707s linear infinite;
 }
 
 .c219 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 8.136088621999374s eJiAHj 2.9405703691113927s linear infinite;
+  animation: 8.136088621999374s lhbgW 2.9405703691113927s linear infinite;
 }
 
 .c223 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 8.367296304582151s eJiAHj 5.683181991154481s linear infinite;
+  animation: 8.367296304582151s lhbgW 5.683181991154481s linear infinite;
 }
 
 .c227 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 7.423394359927529s eJiAHj 4.132246888151599s linear infinite;
+  animation: 7.423394359927529s lhbgW 4.132246888151599s linear infinite;
 }
 
 .c231 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 9.981661135911185s eJiAHj 4.439531883484101s linear infinite;
+  animation: 9.981661135911185s lhbgW 4.439531883484101s linear infinite;
 }
 
 .c235 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 7.63128276624017s eJiAHj 1.6423151485286942s linear infinite;
+  animation: 7.63128276624017s lhbgW 1.6423151485286942s linear infinite;
 }
 
 .c239 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 8.224715389235337s eJiAHj 3.10951820295664s linear infinite;
+  animation: 8.224715389235337s lhbgW 3.10951820295664s linear infinite;
 }
 
 .c243 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 7.347436450909249s eJiAHj 5.8001463578172405s linear infinite;
+  animation: 7.347436450909249s lhbgW 5.8001463578172405s linear infinite;
 }
 
 .c247 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
-  animation: 13.47835889276898s eJiAHj 4.844649055289707s linear infinite;
+  animation: 13.47835889276898s lhbgW 4.844649055289707s linear infinite;
 }
 
 .c10 {
