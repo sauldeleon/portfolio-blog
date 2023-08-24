@@ -49,6 +49,7 @@ export const PortalFirst = styled.div`
   }
 `
 export const PortalFirstGlow = styled.div`
+  --portal-glow-color: ${({ theme }) => theme.colors.yellow};
   position: absolute;
   height: 212px;
   width: 62px;
@@ -58,19 +59,8 @@ export const PortalFirstGlow = styled.div`
   border-top-right-radius: 32px 50%;
   border-bottom-left-radius: 32px 50%;
   border-bottom-right-radius: 32px 50%;
-  animation: 3s portal-first-glow ease-in-out infinite;
-
-  @keyframes portal-first-glow {
-    0% {
-      box-shadow: inset 0px 0px 13px 1px ${({ theme }) => theme.colors.yellow};
-    }
-    50% {
-      box-shadow: inset 0px 0px 20px 1px ${({ theme }) => theme.colors.yellow};
-    }
-    100% {
-      box-shadow: inset 0px 0px 13px 1px ${({ theme }) => theme.colors.yellow};
-    }
-  }
+  animation: 3s ${({ theme }) => theme.animation.portalGlow} ease-in-out
+    infinite;
 
   ${({ theme }) => theme.media.up.md} {
     height: 309px;
@@ -84,6 +74,7 @@ export const PortalFirstGlow = styled.div`
   }
 `
 export const PortalLastGlow = styled.div`
+  --portal-glow-color: ${({ theme }) => theme.colors.green};
   position: absolute;
   height: 213px;
   width: 62px;
@@ -93,20 +84,8 @@ export const PortalLastGlow = styled.div`
   border-top-right-radius: 29px 50%;
   border-bottom-left-radius: 28px 49%;
   border-bottom-right-radius: 28px 50%;
-
-  animation: 3s portal-last-glow ease-in-out infinite;
-
-  @keyframes portal-last-glow {
-    0% {
-      box-shadow: inset 0px 0px 13px 1px ${({ theme }) => theme.colors.green};
-    }
-    50% {
-      box-shadow: inset 0px 0px 20px 1px ${({ theme }) => theme.colors.green};
-    }
-    100% {
-      box-shadow: inset 0px 0px 13px 1px ${({ theme }) => theme.colors.green};
-    }
-  }
+  animation: 3s ${({ theme }) => theme.animation.portalGlow} ease-in-out
+    infinite;
 
   ${({ theme }) => theme.media.up.md} {
     height: 308px;
@@ -206,42 +185,6 @@ export const PortalPath = styled.div`
       top: -4px;
       left: 91px;
       right: 91px;
-    }
-
-    @keyframes color-swap {
-      from {
-        color: ${theme.colors.yellow};
-      }
-      to {
-        color: ${theme.colors.green};
-      }
-    }
-
-    @keyframes horizontal-movement {
-      0% {
-        transform: translateX(calc(-50% - var(--itemSize)));
-      }
-      100% {
-        transform: translateX(calc(50% + var(--itemSize)));
-      }
-    }
-
-    @keyframes vertical-movement {
-      0% {
-        transform: translateY(var(--translateY-begin));
-      }
-      100% {
-        transform: translateY(var(--translateY-end));
-      }
-    }
-
-    @keyframes rotate-movement {
-      from {
-        rotate: 0deg;
-      }
-      to {
-        rotate: var(--rotation);
-      }
     }
   `}
 `

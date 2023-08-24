@@ -16,7 +16,7 @@ export const StyledParticleContainer = styled.div<{ $seed: string }>`
     --end-y: ${randomIntFromInterval(-46, 46, `${$seed}-translate-end-y`)}%;
     animation: ${3000 +
       randomIntFromInterval(0, 4000, `${$seed}-particle-movement-duration`)}ms
-      particle-movement
+      ${({ theme }) => theme.animation.particleMovement}
       ${randomIntFromInterval(0, 11000, `${$seed}-particle-movement-delay`)}ms
       infinite linear;
   `}
@@ -34,10 +34,10 @@ export const StyledParticle = styled.div<{ $seed: string }>`
   );
 
   ${({ $seed }) => css`
-    animation: particle-fade
+    animation: ${({ theme }) => theme.animation.particleFade}
         ${randomIntFromInterval(500, 1000, `${$seed}-particle-fade-frames`)}ms
         infinite,
-      particle-scale
+      ${({ theme }) => theme.animation.particleScale}
         ${randomIntFromInterval(1000, 2000, `${$seed}-particle-scale-frames`)}ms
         infinite;
 

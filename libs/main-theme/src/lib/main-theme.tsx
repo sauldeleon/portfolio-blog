@@ -180,7 +180,7 @@ export const mainTheme: MainTheme = {
           height: 2px;
           bottom: 0;
           left: 0;
-          background-color: ${({ theme }) => theme.colors.white};
+          background-color: ${colors.white};
         }
       `,
       afterInitial: (duration = 0.25) => bottomBorderAfterInitial(duration),
@@ -198,12 +198,89 @@ export const mainTheme: MainTheme = {
     },
   },
   animation: {
-    'clock-loading': keyframes`
+    clockLoading: keyframes`
       0% {
         stroke-dashoffset: 82;
       }
       100% {
         stroke-dashoffset: 0;
+      }
+    `,
+    particleMovement: keyframes`
+      from {
+        transform: translate(-50%, var(--begin-y));
+      }
+      to {
+        transform: translate(50%, var(--end-y));
+      }
+    `,
+    particleFade: keyframes`
+      0% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.7;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    `,
+    particleScale: keyframes`
+      0% {
+        transform: scale3d(0.4, 0.4, 1);
+      }
+
+      50% {
+        transform: scale3d(1, 1, 1);
+      }
+
+      100% {
+        transform: scale3d(0.4, 0.4, 1);
+      }
+    `,
+    portalGlow: keyframes`
+      0% {
+        box-shadow: inset 0px 0px 13px 1px var(--portal-glow-color);
+      }
+      50% {
+        box-shadow: inset 0px 0px 20px 1px var(--portal-glow-color);
+      }
+      100% {
+        box-shadow: inset 0px 0px 13px 1px var(--portal-glow-color);
+      }
+    `,
+    colorSwap: keyframes`
+      from {
+        color: ${colors.yellow};
+      }
+      to {
+        color: ${colors.green};
+      }
+    `,
+    horizontalMovement: keyframes`
+      0% {
+        transform: translateX(calc(-50% - var(--itemSize)));
+      }
+      100% {
+        transform: translateX(calc(50% + var(--itemSize)));
+      }
+    `,
+    verticalMovement: keyframes`
+      0% {
+        transform: translateY(var(--translateY-begin));
+      }
+      100% {
+        transform: translateY(var(--translateY-end));
+      }
+    `,
+    rotateMovement: keyframes`
+      from {
+        rotate: 0deg;
+      }
+      to {
+        rotate: var(--rotation);
       }
     `,
   },
@@ -258,6 +335,14 @@ export interface MainTheme {
     }
   }
   animation: {
-    'clock-loading': Keyframes
+    clockLoading: Keyframes
+    particleMovement: Keyframes
+    particleFade: Keyframes
+    particleScale: Keyframes
+    portalGlow: Keyframes
+    colorSwap: Keyframes
+    horizontalMovement: Keyframes
+    verticalMovement: Keyframes
+    rotateMovement: Keyframes
   }
 }

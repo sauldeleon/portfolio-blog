@@ -25,7 +25,7 @@ export const HorizontalMovement = styled.div<{
               20,
               `${$seed}-item-horizontal-duration`
             )}s
-            horizontal-movement
+            ${({ theme }) => theme.animation.horizontalMovement}
             ${randomDecimalFromInterval(
               1,
               5,
@@ -63,7 +63,8 @@ export const VerticalMovement = styled.div<{
               10,
               `${$seed}-item-vertical-duration`
             )}s
-            vertical-movement ease-in-out alternate infinite;
+            ${({ theme }) => theme.animation.verticalMovement} ease-in-out
+            alternate infinite;
         `};
 `
 
@@ -92,7 +93,7 @@ export const RotationMovement = styled.div<{
                 6,
                 `${$seed}-item-rotation-duration`
               )}s
-              rotate-movement linear infinite;
+              ${({ theme }) => theme.animation.rotateMovement} linear infinite;
           `
       : css``}
 `
@@ -114,7 +115,7 @@ export const StyledSVGWrapper = styled.div<{
             20,
             `${$seed}-item-horizontal-duration`
           )}s
-          color-swap
+          ${({ theme }) => theme.animation.colorSwap}
           ${randomDecimalFromInterval(1, 5, `${$seed}-item-horizontal-delay`)}s
           linear infinite;
       `}

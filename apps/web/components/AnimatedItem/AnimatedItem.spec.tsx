@@ -27,13 +27,13 @@ describe('AnimatedItem', () => {
 
     expect(screen.getByTestId('rotation-movement')).toHaveStyleRule(
       'animation',
-      expect.stringMatching(/(\d+)s rotate-movement linear infinite/)
+      expect.stringMatching(/(\d+)s ([a-zA-Z]+) linear infinite/)
     )
 
     expect(screen.getByTestId('color-swapping')).toHaveStyleRule(
       'animation',
       expect.stringMatching(
-        /(\d+\.?\d*)s color-swap (\d+\.?\d*)s linear infinite/
+        /(\d+\.?\d*)s ([a-zA-Z]+) (\d+\.?\d*)s linear infinite/
       ),
       { modifier: ' svg' }
     )

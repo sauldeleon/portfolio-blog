@@ -28,7 +28,7 @@ export const StyledCircleLink = styled(Link)<{ $size: number }>`
       stroke-width: 6px;
       stroke-dasharray: 110;
       stroke-dashoffset: 82;
-      animation: ${({ theme }) => theme.animation['clock-loading']}
+      animation: ${({ theme }) => theme.animation.clockLoading}
         ${underlineAnimationDuration}s steps(4, jump-none) forwards;
       transform: rotate(-90deg);
       transform-origin: center;

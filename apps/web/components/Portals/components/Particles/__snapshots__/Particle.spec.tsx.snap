@@ -11,7 +11,7 @@ exports[`Particles should render successfully 1`] = `
   --particleSize: 8px;
   --begin-y: 29%;
   --end-y: -12%;
-  animation: 4289ms particle-movement 8505ms infinite linear;
+  animation: 4289ms gJWpix 8505ms infinite linear;
 }
 
 .c1 {
@@ -20,7 +20,7 @@ exports[`Particles should render successfully 1`] = `
   border-radius: 50%;
   mix-blend-mode: screen;
   background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: particle-fade 515ms infinite,particle-scale 1294ms infinite;
+  animation: ggsnFx 515ms infinite,fzajMi 1294ms infinite;
   animation-delay: 30ms;
 }
 

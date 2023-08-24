@@ -1,6 +1,3 @@
-import { render } from '@testing-library/react'
-import styled, { ThemeProvider } from 'styled-components'
-
 import { mainTheme } from './main-theme'
 
 describe('mainTheme', () => {
@@ -8,11 +5,59 @@ describe('mainTheme', () => {
     expect(mainTheme).toMatchInlineSnapshot(`
       {
         "animation": {
-          "clock-loading": e {
+          "clockLoading": e {
             "id": "sc-keyframes-jbxmNs",
             "inject": [Function],
             "name": "jbxmNs",
             "rules": "0%{stroke-dashoffset:82;}100%{stroke-dashoffset:0;}",
+          },
+          "colorSwap": e {
+            "id": "sc-keyframes-jQopbU",
+            "inject": [Function],
+            "name": "jQopbU",
+            "rules": "from{color:#FFDD83;}to{color:#98DFD6;}",
+          },
+          "horizontalMovement": e {
+            "id": "sc-keyframes-ehQbNZ",
+            "inject": [Function],
+            "name": "ehQbNZ",
+            "rules": "0%{transform:translateX(calc(-50% - var(--itemSize)));}100%{transform:translateX(calc(50% + var(--itemSize)));}",
+          },
+          "particleFade": e {
+            "id": "sc-keyframes-itzSVh",
+            "inject": [Function],
+            "name": "itzSVh",
+            "rules": "0%{opacity:1;}50%{opacity:0.7;}100%{opacity:1;}",
+          },
+          "particleMovement": e {
+            "id": "sc-keyframes-iWWfjj",
+            "inject": [Function],
+            "name": "iWWfjj",
+            "rules": "from{transform:translate(-50%,var(--begin-y));}to{transform:translate(50%,var(--end-y));}",
+          },
+          "particleScale": e {
+            "id": "sc-keyframes-defYgy",
+            "inject": [Function],
+            "name": "defYgy",
+            "rules": "0%{transform:scale3d(0.4,0.4,1);}50%{transform:scale3d(1,1,1);}100%{transform:scale3d(0.4,0.4,1);}",
+          },
+          "portalGlow": e {
+            "id": "sc-keyframes-iDgGpj",
+            "inject": [Function],
+            "name": "iDgGpj",
+            "rules": "0%{box-shadow:inset 0px 0px 13px 1px var(--portal-glow-color);}50%{box-shadow:inset 0px 0px 20px 1px var(--portal-glow-color);}100%{box-shadow:inset 0px 0px 13px 1px var(--portal-glow-color);}",
+          },
+          "rotateMovement": e {
+            "id": "sc-keyframes-dOlMFI",
+            "inject": [Function],
+            "name": "dOlMFI",
+            "rules": "from{rotate:0deg;}to{rotate:var(--rotation);}",
+          },
+          "verticalMovement": e {
+            "id": "sc-keyframes-dPpvJG",
+            "inject": [Function],
+            "name": "dPpvJG",
+            "rules": "0%{transform:translateY(var(--translateY-begin));}100%{transform:translateY(var(--translateY-end));}",
           },
         },
         "breakpoints": {
@@ -70,7 +115,7 @@ describe('mainTheme', () => {
             "afterInitial": [Function],
             "afterShared": [
               "position:relative;&::after{content:'';position:absolute;width:100%;height:2px;bottom:0;left:0;background-color:",
-              [Function],
+              "#FBFBFB",
               ";}",
             ],
             "removeBorder": [
@@ -210,51 +255,6 @@ describe('mainTheme', () => {
   })
 
   it('should create the correct textBottomBorder helpers', () => {
-    const StyledTestItem = styled.div`
-      ${mainTheme.helpers.textBottomBorder.afterShared}
-      ${mainTheme.helpers.textBottomBorder.transform(0.5)}
-    `
-    const { baseElement } = render(
-      <ThemeProvider theme={mainTheme}>
-        <StyledTestItem />
-      </ThemeProvider>
-    )
-
-    expect(baseElement).toMatchInlineSnapshot(`
-      .c0 {
-        position: relative;
-      }
-
-      .c0::after {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 2px;
-        bottom: 0;
-        left: 0;
-        background-color: #FBFBFB;
-      }
-
-      .c0::after {
-        transform: scaleX(0);
-        transform-origin: bottom right;
-        transition: transform 0.5s ease-out;
-      }
-
-      .c0:hover::after {
-        transform: scaleX(1);
-        transform-origin: bottom left;
-      }
-
-      <body>
-        <div>
-          <div
-            class="c0"
-          />
-        </div>
-      </body>
-    `)
-
     expect(mainTheme.helpers.textBottomBorder.afterInitial())
       .toMatchInlineSnapshot(`
       [
@@ -277,7 +277,7 @@ describe('mainTheme', () => {
       .toMatchInlineSnapshot(`
       [
         "position:relative;&::after{content:'';position:absolute;width:100%;height:2px;bottom:0;left:0;background-color:",
-        [Function],
+        "#FBFBFB",
         ";}",
       ]
     `)
