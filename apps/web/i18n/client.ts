@@ -1,5 +1,3 @@
-'use client'
-
 import { FlatNamespace, KeyPrefix } from 'i18next'
 import resourcesToBackend from 'i18next-resources-to-backend'
 import {

@@ -30,8 +30,6 @@ const nextConfig = {
     // @see https://nextjs.org/docs/api-reference/next/image#caching-behavior
     // This value is set by default to 3600 seconds because our images don't change too often.
     deviceSizes: [576, 768, 1200, 2400],
-    // Cloudflare issues with Vary header using Accept for non-supported image formats (webp) https://github.com/vercel/next.js/discussions/39510
-    path: '/_next/image.jpg',
     minimumCacheTTL: 3600,
     domains: ['localhost'],
     disableStaticImages: true,
