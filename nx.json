@@ -3,9 +3,6 @@
   "affected": {
     "defaultBase": "origin/main"
   },
-  "implicitDependencies": {
-    "go.mod": "*"
-  },
   "plugins": ["@nx-go/nx-go"],
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
@@ -17,7 +14,7 @@
       "!{projectRoot}/src/test-setup.[jt]s",
       "!{projectRoot}/.eslintrc.json"
     ],
-    "sharedGlobals": []
+    "sharedGlobals": ["{workspaceRoot}/go.mod"]
   },
   "defaultProject": "web",
   "targetDefaults": {
