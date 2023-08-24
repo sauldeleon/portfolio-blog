@@ -1,3 +1,5 @@
+'use client'
+
 import { Label } from '@sdlgr/typography'
 
 import { AnimatedItem } from '@web/components/AnimatedItem/AnimatedItem'
