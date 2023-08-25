@@ -1,0 +1,29 @@
+diff --git a/node_modules/@nx-go/nx-go/src/go-package-graph/index.js b/node_modules/@nx-go/nx-go/src/go-package-graph/index.js
+index e9d281b..65cb91d 100644
+--- a/node_modules/@nx-go/nx-go/src/go-package-graph/index.js
++++ b/node_modules/@nx-go/nx-go/src/go-package-graph/index.js
+@@ -62,14 +62,16 @@ const getGoDependencies = (workspaceRootPath, goModules, projectRootLookup, file
+  * @param workspaceRootPath
+  */
+ const getGoModules = (workspaceRootPath) => {
+-    const goModuleJSON = (0, child_process_1.execSync)('go list -m -json', { encoding: 'utf-8', cwd: workspaceRootPath });
+-    return (goModuleJSON
+-        .split('}')
+-        .filter((block) => block.trim().length > 0)
+-        .map((toParse) => JSON.parse(toParse + '}'))
+-        // Sort and reverse the modules so when looking up a go import we will encounter the most specific path first
+-        .sort((a, b) => a.Path.localeCompare(b.Path))
+-        .reverse());
++    try {
++        const goModuleJSON = (0, child_process_1.execSync)('go list -m -json', { encoding: 'utf-8', cwd: workspaceRootPath });
++        return (goModuleJSON
++            .split('}')
++            .filter((block) => block.trim().length > 0)
++            .map((toParse) => JSON.parse(toParse + '}'))
++            // Sort and reverse the modules so when looking up a go import we will encounter the most specific path first
++            .sort((a, b) => a.Path.localeCompare(b.Path))
++            .reverse());
++    } catch(e){}
+ };
+ /**
+  * Gets the project name for the go import by getting the relative path for the import with in the go module system
