@@ -1,4 +1,5 @@
 import { dir } from 'i18next'
+import { Metadata } from 'next'
 
 import { LanguageContextProvider } from '@sdlgr/i18n-config'
 
@@ -11,6 +12,20 @@ interface RootLayoutProps {
   params: {
     lng: string
   }
+}
+
+export const metadata: Metadata = {
+  title: 'Saúl de León Guerrero',
+  description: 'Developer portfolio',
+  colorScheme: 'dark',
+  metadataBase: new URL('https://www.sawl.dev'),
+  alternates: {
+    canonical: '/es',
+    languages: {
+      'es-ES': '/es',
+      'en-US': '/en',
+    },
+  },
 }
 
 export async function generateStaticParams() {

@@ -3,7 +3,7 @@ import React from 'react'
 
 import { renderApp } from '@sdlgr/test-utils'
 
-import RootLayout, { generateStaticParams } from './layout.next'
+import RootLayout, { generateStaticParams, metadata } from './layout.next'
 
 describe('[lng] route - layout', () => {
   it('should render successfully in English', async () => {
@@ -34,5 +34,23 @@ describe('[lng] route - static params', () => {
         lng: 'es',
       },
     ])
+  })
+})
+
+describe('[lng] route - metadata', () => {
+  it('should generate static params successfully', async () => {
+    expect(metadata).toEqual({
+      title: 'Saúl de León Guerrero',
+      description: 'Developer portfolio',
+      colorScheme: 'dark',
+      metadataBase: expect.any(Object),
+      alternates: {
+        canonical: '/es',
+        languages: {
+          'es-ES': '/es',
+          'en-US': '/en',
+        },
+      },
+    })
   })
 })
