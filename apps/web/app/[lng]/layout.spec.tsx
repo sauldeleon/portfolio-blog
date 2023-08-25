@@ -3,7 +3,7 @@ import React from 'react'
 
 import { renderApp } from '@sdlgr/test-utils'
 
-import RootLayout from './layout.next'
+import RootLayout, { generateStaticParams } from './layout.next'
 
 describe('[lng] route - layout', () => {
   it('should render successfully in English', async () => {
@@ -20,5 +20,19 @@ describe('[lng] route - layout', () => {
     const text = await screen.findByText('test')
     expect(text).toBeInTheDocument()
     expect(screen.getByTestId('root-html')).toHaveAttribute('lang', 'es')
+  })
+})
+
+describe('[lng] route - static params', () => {
+  it('should generate static params successfully', async () => {
+    const params = await generateStaticParams()
+    expect(params).toEqual([
+      {
+        lng: 'en',
+      },
+      {
+        lng: 'es',
+      },
+    ])
   })
 })

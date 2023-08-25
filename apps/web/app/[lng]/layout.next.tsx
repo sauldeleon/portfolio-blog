@@ -4,12 +4,17 @@ import { LanguageContextProvider } from '@sdlgr/i18n-config'
 
 import { MainLayout } from '@web/components/MainLayout/MainLayout'
 import StyledComponentsRegistry from '@web/components/StyledComponentsRegistry/StyledComponentsRegistry'
+import { languages } from '@web/i18n/settings'
 
 interface RootLayoutProps {
   children: React.ReactNode
   params: {
     lng: string
   }
+}
+
+export async function generateStaticParams() {
+  return languages.map((lng) => ({ lng }))
 }
 
 export default function RootLayout({
