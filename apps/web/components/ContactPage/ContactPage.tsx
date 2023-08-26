@@ -1,5 +1,6 @@
 'use client'
 
+import { Tooth } from '@sdlgr/assets'
 import { Link } from '@sdlgr/link'
 import { useIsBot } from '@sdlgr/use-is-bot'
 
@@ -7,6 +8,8 @@ import { NoSSR } from '@web/components/NoSSR/NoSSR'
 import { useClientTranslation } from '@web/i18n/client'
 
 import {
+  PortraitContainer,
+  RotateTooth,
   StyledBody,
   StyledContactInfo,
   StyledContactInfoWrapper,
@@ -14,6 +17,9 @@ import {
   StyledLabel,
   StyledMainPortal,
   StyledPortrait,
+  StyledPortraitContainer,
+  StyledTooth,
+  ToothHoleImage,
 } from './ContactPage.styles'
 
 export function ContactPage() {
@@ -23,16 +29,40 @@ export function ContactPage() {
 
   const mail = 'sauldeleonguerrero@gmail.com'
 
+  const toothImages = [
+    '/assets/toothPlace-1.png',
+    '/assets/toothPlace-2.png',
+    '/assets/toothPlace-3.png',
+    '/assets/toothPlace-4.png',
+    '/assets/toothPlace-5.png',
+    '/assets/toothPlace-6.png',
+    '/assets/toothPlace-7.png',
+    '/assets/toothPlace-8.png',
+  ]
+
   return (
     <StyledMainPortal>
       <StyledContactInfoWrapper>
         <StyledContactInfo $isVisible={!isLoading}>
-          <StyledPortrait
-            src="/assets/portrait.jpg"
-            alt={t('profilePicture')}
-            width={140}
-            height={140}
-          />
+          <PortraitContainer>
+            {toothImages.map((_, index) => (
+              <StyledTooth key={index} $index={index}>
+                <RotateTooth>
+                  <Tooth width={10} height={10} />
+                </RotateTooth>
+              </StyledTooth>
+            ))}
+
+            <StyledPortraitContainer>
+              <StyledPortrait
+                src="/assets/portrait.jpg"
+                alt={t('profilePicture')}
+                width={140}
+                height={140}
+              />
+              <ToothHoleImage $images={toothImages} />
+            </StyledPortraitContainer>
+          </PortraitContainer>
           <StyledHeading $level={2}>Software Engineer</StyledHeading>
           <Link
             href="https://www.linkedin.com/in/sauldeleonguerrero"

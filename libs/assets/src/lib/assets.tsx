@@ -7,3 +7,4 @@ export {
   ReactComponent as Portal,
   default as PortalSVG,
 } from './svg/portal.svg'
+export { ReactComponent as Tooth, default as ToothSVG } from './svg/tooth.svg'

@@ -283,6 +283,40 @@ export const mainTheme: MainTheme = {
         rotate: var(--rotation);
       }
     `,
+    moveToothFall: keyframes`
+      0% {
+      	top: -30px;
+      }
+      100% {
+        top: 200%;
+      }
+    `,
+    moveToothHorizontal: keyframes`
+      0% {
+        left: 0;
+      }
+      100% {
+        left: -65%;
+      }
+    `,
+    moveToothVertical: keyframes`
+      100% {
+        top: var(--final-tooth-top);
+      }
+    `,
+    moveToothRotate: keyframes`
+      0% {
+        transform: rotate(180deg);
+      }
+      100% {
+        transform: rotate(${2 * 360 + 180}deg);
+      }
+    `,
+    toothRemove: keyframes`
+      100% {
+        opacity: 1;
+      }
+    `,
   },
 }
 
@@ -344,5 +378,10 @@ export interface MainTheme {
     horizontalMovement: Keyframes
     verticalMovement: Keyframes
     rotateMovement: Keyframes
+    moveToothFall: Keyframes
+    moveToothHorizontal: Keyframes
+    moveToothVertical: Keyframes
+    moveToothRotate: Keyframes
+    toothRemove: Keyframes
   }
 }

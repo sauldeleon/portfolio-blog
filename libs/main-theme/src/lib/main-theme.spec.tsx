@@ -23,6 +23,30 @@ describe('mainTheme', () => {
             "name": "ehQbNZ",
             "rules": "0%{transform:translateX(calc(-50% - var(--itemSize)));}100%{transform:translateX(calc(50% + var(--itemSize)));}",
           },
+          "moveToothFall": e {
+            "id": "sc-keyframes-cpZUNP",
+            "inject": [Function],
+            "name": "cpZUNP",
+            "rules": "0%{top:-30px;}100%{top:200%;}",
+          },
+          "moveToothHorizontal": e {
+            "id": "sc-keyframes-ivkSzl",
+            "inject": [Function],
+            "name": "ivkSzl",
+            "rules": "0%{left:0;}100%{left:-65%;}",
+          },
+          "moveToothRotate": e {
+            "id": "sc-keyframes-beQuxy",
+            "inject": [Function],
+            "name": "beQuxy",
+            "rules": "0%{transform:rotate(180deg);}100%{transform:rotate(900deg);}",
+          },
+          "moveToothVertical": e {
+            "id": "sc-keyframes-iPepDc",
+            "inject": [Function],
+            "name": "iPepDc",
+            "rules": "100%{top:var(--final-tooth-top);}",
+          },
           "particleFade": e {
             "id": "sc-keyframes-itzSVh",
             "inject": [Function],
@@ -52,6 +76,12 @@ describe('mainTheme', () => {
             "inject": [Function],
             "name": "dOlMFI",
             "rules": "from{rotate:0deg;}to{rotate:var(--rotation);}",
+          },
+          "toothRemove": e {
+            "id": "sc-keyframes-jTSpTQ",
+            "inject": [Function],
+            "name": "jTSpTQ",
+            "rules": "100%{opacity:1;}",
           },
           "verticalMovement": e {
             "id": "sc-keyframes-dPpvJG",
