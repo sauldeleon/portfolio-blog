@@ -1,5 +1,7 @@
 'use client'
 
+import { useId } from 'react'
+
 import { Label } from '@sdlgr/typography'
 
 import { AnimatedItem } from '@web/components/AnimatedItem/AnimatedItem'
@@ -11,6 +13,7 @@ import { useMainPortalItems } from './useMainPortalItems'
 
 export function HomePage() {
   const { t } = useClientTranslation('homepage')
+  const id = useId()
   const items = useMainPortalItems()
   return (
     <>
@@ -23,7 +26,7 @@ export function HomePage() {
         {items
           .filter(({ isHidden }) => !isHidden)
           .map((props, index) => (
-            <AnimatedItem key={index} {...props} />
+            <AnimatedItem key={`${id}-${index}`} {...props} />
           ))}
       </MainPortal>
     </>

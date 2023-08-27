@@ -22,6 +22,7 @@ export interface AnimatedItemProps {
   rotate?: boolean
   colorSwap?: boolean
   customAnimation?: CustomAnimation
+  isHidden?: boolean
 }
 
 export function AnimatedItem({

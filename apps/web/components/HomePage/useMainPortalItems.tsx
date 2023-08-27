@@ -36,10 +36,10 @@ import {
   YarnIcon,
 } from '@sdlgr/assets'
 
-import { AnimatedItem } from '@web/components/Portals/Portals'
+import { AnimatedItemProps } from '@web/components/AnimatedItem/AnimatedItem'
 
 export function useMainPortalItems() {
-  const items: AnimatedItem[] = useMemo(
+  const items: AnimatedItemProps[] = useMemo(
     () => [
       {
         svg: <NodeJSIcon />,

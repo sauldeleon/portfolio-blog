@@ -1,6 +1,5 @@
 import { mainTheme } from '@sdlgr/main-theme'
 
-import { AnimatedItem, AnimatedItemProps } from '../AnimatedItem/AnimatedItem'
 import {
   PortalFirst,
   PortalFirstGlow,
@@ -12,10 +11,6 @@ import {
   StyledPortals,
 } from './Portals.styles'
 import { Particles } from './components/Particles/Particles'
-
-export type AnimatedItem = AnimatedItemProps & {
-  isHidden?: boolean
-}
 
 interface PortalsProps {
   enableParticles?: boolean

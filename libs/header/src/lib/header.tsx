@@ -1,4 +1,4 @@
-import React, { DetailedHTMLProps, HTMLAttributes } from 'react'
+import React, { DetailedHTMLProps, HTMLAttributes, useId } from 'react'
 
 import { Body } from '@sdlgr/typography'
 
@@ -23,6 +23,7 @@ interface HeaderProps
 }
 
 export function Header({ logo, navItems, actionItem, ...rest }: HeaderProps) {
+  const id = useId()
   return (
     <StyledNav {...rest}>
       {logo}
@@ -31,7 +32,7 @@ export function Header({ logo, navItems, actionItem, ...rest }: HeaderProps) {
           {navItems.map(
             ({ href, label, ariaLabel, hideOnDesktop, isActive }, index) => (
               <StyledListItem
-                key={index}
+                key={`${id}-${index}`}
                 $hideOnDesktop={hideOnDesktop}
                 $isActive={isActive}
                 aria-current={isActive && 'page'}

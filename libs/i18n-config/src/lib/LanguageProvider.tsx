@@ -1,7 +1,13 @@
 'use client'
 
 import Cookies from 'js-cookie'
-import { Dispatch, SetStateAction, createContext, useState } from 'react'
+import {
+  Dispatch,
+  SetStateAction,
+  createContext,
+  useMemo,
+  useState,
+} from 'react'
 
 import { LANGUAGE_COOKIE } from './i18n-config'
 
@@ -28,8 +34,10 @@ export function LanguageContextProvider({
     Cookies.set(LANGUAGE_COOKIE, language)
   }
 
+  const valueMemoized = useMemo(() => ({ language, setLanguage }), [language])
+
   return (
-    <LanguageContext.Provider value={{ language, setLanguage }}>
+    <LanguageContext.Provider value={valueMemoized}>
       {children}
     </LanguageContext.Provider>
   )

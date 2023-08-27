@@ -320,6 +320,8 @@ export const mainTheme: MainTheme = {
   },
 }
 
+type MediaSize = 'sm' | 'md' | 'lg' | 'xl'
+
 export interface MainTheme {
   colors: {
     black: string
@@ -333,16 +335,16 @@ export interface MainTheme {
     component: React.FunctionComponent<
       React.PropsWithChildren<
         React.SVGProps<SVGSVGElement> & {
-          title?: string | undefined
+          title?: string
         }
       >
     >
     svg: string
   }
-  breakpoints: Record<'sm' | 'md' | 'lg' | 'xl', number>
+  breakpoints: Record<MediaSize, number>
   media: {
-    down: Record<'sm' | 'md' | 'lg' | 'xl', string>
-    up: Record<'sm' | 'md' | 'lg' | 'xl', string>
+    down: Record<MediaSize, string>
+    up: Record<MediaSize, string>
   }
   fontStyles: {
     robotoMono: Record<'thin' | 'light' | 'regular' | 'medium', RuleSet<object>>

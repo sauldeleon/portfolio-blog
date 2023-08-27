@@ -22,10 +22,10 @@ export function getOptions({
     supportedLngs: languages,
     preload: languages,
     fallbackLng,
-    lng: lng || fallbackLng,
+    lng: lng ?? fallbackLng,
     fallbackNS: defaultNS,
     defaultNS,
-    ns: ns || defaultNS,
+    ns: ns ?? defaultNS,
     // backend: {
     //   projectId: '01b2e5e8-6243-47d1-b36f-963dbb8bcae3'
     // }

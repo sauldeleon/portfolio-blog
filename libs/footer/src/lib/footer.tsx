@@ -1,4 +1,4 @@
-import React, { DetailedHTMLProps, HTMLAttributes } from 'react'
+import React, { DetailedHTMLProps, HTMLAttributes, useId } from 'react'
 
 import { Button } from '@sdlgr/button'
 import { AtLeastOne } from '@sdlgr/global-types'
@@ -45,6 +45,7 @@ export function Footer({
   socialMediaItems,
   ...rest
 }: FooterProps) {
+  const id = useId()
   return (
     <StyledFooter {...rest}>
       <StyledTopLines>
@@ -61,7 +62,7 @@ export function Footer({
             <StyledList>
               {navItems.map(
                 ({ label, ariaLabel, href, icon, onClick }, index) => (
-                  <li key={index}>
+                  <li key={`${id}-${index}-nav`}>
                     {href ? (
                       <StyledNavLink
                         href={href}
@@ -87,7 +88,7 @@ export function Footer({
           <StyledSocialMediaIcons>
             {socialMediaItems.map(({ icon, href, ariaLabel }, index) => (
               <StyledSocialMediaLink
-                key={index}
+                key={`${id}-${index}-socialMedia`}
                 href={href}
                 aria-label={ariaLabel}
               >

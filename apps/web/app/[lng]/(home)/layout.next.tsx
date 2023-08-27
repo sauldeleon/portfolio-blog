@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useId } from 'react'
 
 import { ArrowRightIcon } from '@sdlgr/assets'
 import { Body } from '@sdlgr/typography'
@@ -25,6 +25,7 @@ export default function HomeLayout({ children }: HomeLayoutProps) {
     t('summary.p2'),
     t('summary.p3'),
   ]
+  const id = useId()
   return (
     <>
       <StyledHeading $level={2}>Saúl de León Guerrero</StyledHeading>
@@ -34,7 +35,7 @@ export default function HomeLayout({ children }: HomeLayoutProps) {
       </StyledSubHeading>
       <StyledSummary>
         {summaryParagraphs.map((text, index) => (
-          <Body key={index}>{text}</Body>
+          <Body key={`${id}-${index}`}>{text}</Body>
         ))}
       </StyledSummary>
       <StyledCircleLink

@@ -1,5 +1,7 @@
 'use client'
 
+import { useId } from 'react'
+
 import { Tooth } from '@sdlgr/assets'
 import { Link } from '@sdlgr/link'
 import { useIsBot } from '@sdlgr/use-is-bot'
@@ -24,6 +26,7 @@ import {
 
 export function ContactPage() {
   const { t } = useClientTranslation('contactPage')
+  const id = useId()
 
   const { isBot, isLoading } = useIsBot()
 
@@ -46,7 +49,7 @@ export function ContactPage() {
         <StyledContactInfo $isVisible={!isLoading}>
           <PortraitContainer>
             {toothImages.map((_, index) => (
-              <StyledTooth key={index} $index={index}>
+              <StyledTooth key={`${id}-${index}`} $index={index}>
                 <RotateTooth>
                   <Tooth width={10} height={10} />
                 </RotateTooth>

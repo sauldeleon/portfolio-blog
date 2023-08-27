@@ -17,22 +17,17 @@ export const HorizontalMovement = styled.div<{
   height: 100%;
 
   ${({ $customAnimation, $seed }) =>
-    $customAnimation
-      ? $customAnimation
-      : css`
-          animation: ${randomDecimalFromInterval(
-              6,
-              20,
-              `${$seed}-item-horizontal-duration`
-            )}s
-            ${({ theme }) => theme.animation.horizontalMovement}
-            ${randomDecimalFromInterval(
-              1,
-              5,
-              `${$seed}-item-horizontal-delay`
-            )}s
-            linear infinite;
-        `}
+    $customAnimation ||
+    css`
+      animation: ${randomDecimalFromInterval(
+          6,
+          20,
+          `${$seed}-item-horizontal-duration`
+        )}s
+        ${({ theme }) => theme.animation.horizontalMovement}
+        ${randomDecimalFromInterval(1, 5, `${$seed}-item-horizontal-delay`)}s
+        linear infinite;
+    `}
 `
 
 export const VerticalMovement = styled.div<{
@@ -45,27 +40,22 @@ export const VerticalMovement = styled.div<{
   display: grid;
   place-items: center;
   ${({ $customAnimation, $seed }) =>
-    $customAnimation
-      ? $customAnimation
-      : css`
-          --translateY-begin: ${randomIntFromInterval(
-            -37,
-            20,
-            `${$seed}-y-begin`
-          )}%;
-          --translateY-end: ${randomIntFromInterval(
-            -20,
-            37,
-            `${$seed}-y-end`
-          )}%;
-          animation: ${randomDecimalFromInterval(
-              2,
-              10,
-              `${$seed}-item-vertical-duration`
-            )}s
-            ${({ theme }) => theme.animation.verticalMovement} ease-in-out
-            alternate infinite;
-        `};
+    $customAnimation ||
+    css`
+      --translateY-begin: ${randomIntFromInterval(
+        -37,
+        20,
+        `${$seed}-y-begin`
+      )}%;
+      --translateY-end: ${randomIntFromInterval(-20, 37, `${$seed}-y-end`)}%;
+      animation: ${randomDecimalFromInterval(
+          2,
+          10,
+          `${$seed}-item-vertical-duration`
+        )}s
+        ${({ theme }) => theme.animation.verticalMovement} ease-in-out alternate
+        infinite;
+    `};
 `
 
 export const RotationMovement = styled.div<{
@@ -81,20 +71,18 @@ export const RotationMovement = styled.div<{
 
   ${({ $rotate, $customAnimation, $seed }) =>
     $rotate
-      ? $customAnimation
-        ? $customAnimation
-        : css`
-            --rotation: calc(
-              ${randomIntFromInterval(1, 2, `${$seed}-rotation-amount`)} *
-                360deg
-            );
-            animation: ${randomDecimalFromInterval(
-                4,
-                6,
-                `${$seed}-item-rotation-duration`
-              )}s
-              ${({ theme }) => theme.animation.rotateMovement} linear infinite;
-          `
+      ? $customAnimation ||
+        css`
+          --rotation: calc(
+            ${randomIntFromInterval(1, 2, `${$seed}-rotation-amount`)} * 360deg
+          );
+          animation: ${randomDecimalFromInterval(
+              4,
+              6,
+              `${$seed}-item-rotation-duration`
+            )}s
+            ${({ theme }) => theme.animation.rotateMovement} linear infinite;
+        `
       : css``}
 `
 
