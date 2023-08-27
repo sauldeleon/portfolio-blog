@@ -4,7 +4,7 @@ const path = require('path')
 const isCI = !!process.env.CI
 
 /** @type {import('@nx/jest/preset').nxPreset['coverageReporters']} */
-let coverageReporters = ['text', isCI ? 'cobertura' : 'html']
+let coverageReporters = ['text', 'json', isCI ? 'cobertura' : 'html']
 const reporters = ['default']
 if (isCI) {
   reporters.push([

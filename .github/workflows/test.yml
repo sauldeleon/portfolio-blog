@@ -19,3 +19,7 @@ jobs:
         run: |
           yarn
           yarn test:all --coverage
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
