@@ -1,10 +1,10 @@
 import { dir } from 'i18next'
-import { Metadata } from 'next'
 
 import { LanguageContextProvider } from '@sdlgr/i18n-config'
 
 import { MainLayout } from '@web/components/MainLayout/MainLayout'
 import StyledComponentsRegistry from '@web/components/StyledComponentsRegistry/StyledComponentsRegistry'
+import { getServerTranslation } from '@web/i18n/server'
 import { languages } from '@web/i18n/settings'
 
 interface RootLayoutProps {
@@ -14,18 +14,22 @@ interface RootLayoutProps {
   }
 }
 
-export const metadata: Metadata = {
-  title: 'Saúl de León Guerrero',
-  description: 'Developer portfolio',
-  colorScheme: 'dark',
-  metadataBase: new URL('https://www.sawl.dev'),
-  alternates: {
-    canonical: '/es',
-    languages: {
-      'es-ES': '/es',
-      'en-US': '/en',
+export async function generateMetadata() {
+  const { t } = await getServerTranslation()
+  return {
+    title: 'Saúl de León Guerrero',
+    description: t('metadata.description'),
+    colorScheme: 'dark',
+    metadataBase: new URL('https://www.sawl.dev'),
+    alternates: {
+      canonical: '/es',
+      languages: {
+        'es-ES': '/es',
+        'en-US': '/en',
+        'en-UK': '/en',
+      },
     },
-  },
+  }
 }
 
 export async function generateStaticParams() {

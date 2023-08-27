@@ -4,5 +4,8 @@
   "phone": "Phone",
   "mail": "E-mail",
   "emailAria": "My electronic mail address",
-  "linkedInAria": "My LinkedIn profile"
+  "linkedInAria": "My LinkedIn profile",
+  "metadata": {
+    "description": "Contact information"
+  }
 }

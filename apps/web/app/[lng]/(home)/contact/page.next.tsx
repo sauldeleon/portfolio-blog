@@ -1,9 +1,11 @@
-import { Metadata } from 'next'
-
 import { ContactPage } from '@web/components/ContactPage/ContactPage'
+import { getServerTranslation } from '@web/i18n/server'
 
-export const metadata: Metadata = {
-  description: 'Contact information',
+export async function generateMetadata() {
+  const { t } = await getServerTranslation('contactPage')
+  return {
+    description: t('metadata.description'),
+  }
 }
 
 export default function Page() {

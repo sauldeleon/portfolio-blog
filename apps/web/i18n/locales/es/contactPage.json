@@ -4,5 +4,8 @@
   "phone": "Tel",
   "mail": "E-mail",
   "emailAria": "Mi dirección de correo electrónico",
-  "linkedInAria": "Mi perfil de LinkedIn"
+  "linkedInAria": "Mi perfil de LinkedIn",
+  "metadata": {
+    "description": "Información de contacto"
+  }
 }
