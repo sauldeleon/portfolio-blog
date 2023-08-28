@@ -7,7 +7,9 @@ import { AnimatedItem } from './AnimatedItem'
 
 describe('AnimatedItem', () => {
   it('should render successfully', () => {
-    const { baseElement } = renderWithTheme(<AnimatedItem svg={<svg />} />)
+    const { baseElement } = renderWithTheme(
+      <AnimatedItem svg={<svg />} rotate={false} />
+    )
     expect(baseElement).toMatchSnapshot()
   })
 

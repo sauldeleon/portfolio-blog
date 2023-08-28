@@ -31,6 +31,8 @@ exports[`AnimatedItem should render successfully 1`] = `
 .c3 svg {
   width: 100%;
   height: 100%;
+  color: #FFDD83;
+  animation: 14.013358467316657s lhbgW 4.7038491055429414s linear infinite;
 }
 
 <body>

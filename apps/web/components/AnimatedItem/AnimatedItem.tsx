@@ -27,8 +27,8 @@ export interface AnimatedItemProps {
 
 export function AnimatedItem({
   svg,
-  rotate,
-  colorSwap,
+  rotate = true,
+  colorSwap = true,
   customAnimation,
   size = 'M',
 }: AnimatedItemProps) {
