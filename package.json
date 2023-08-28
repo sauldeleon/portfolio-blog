@@ -83,6 +83,7 @@
     "babel-plugin-styled-components": "2.1.4",
     "circular-dependency-plugin": "5.2.2",
     "cypress": "12.17.4",
+    "dotenv": "16.3.1",
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.19",
     "eslint-config-prettier": "9.0.0",

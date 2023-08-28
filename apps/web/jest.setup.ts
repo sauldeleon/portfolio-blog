@@ -1,9 +1,3 @@
-import { setConfig } from 'next/config'
+import * as dotenv from 'dotenv'
 
-setConfig({
-  publicRuntimeConfig: {
-    NODE_ENV: 'test',
-    DEPLOY_ENV: 'preprod',
-    BASE_URL: 'https://preprod.sawl.dev',
-  },
-})
+dotenv.config({ path: './apps/web/.env.test' })

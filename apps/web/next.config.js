@@ -3,7 +3,6 @@
 const { composePlugins, withNx } = require('@nx/next')
 
 const locales = ['en', 'es']
-const baseUrl = process.env.BASE_URL ?? 'https://preprod.sawl.dev'
 
 /**
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
@@ -18,13 +17,7 @@ const nextConfig = {
     // For other options, see https://styled-components.com/docs/tooling#babel-plugin
     styledComponents: true,
   },
-  publicRuntimeConfig: {
-    // Will be available on both server and client
-    NODE_ENV: process.env.NODE_ENV ?? 'test',
-    DEPLOY_ENV: process.env.DEPLOY_ENV ?? 'preprod',
-    BASE_URL: baseUrl,
-  },
-  pageExtensions: ['next.tsx', 'next.ts', 'next.jsx', 'next.js'],
+  pageExtensions: ['next.tsx', 'next.ts', 'next.jsx', 'next.js', 'ts'],
   trailingSlash: true,
   images: {
     // @see https://nextjs.org/docs/api-reference/next/image#caching-behavior
