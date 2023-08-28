@@ -195,7 +195,7 @@ export const StyledPortraitContainer = styled.div`
 const getWeightedDelay = (delay: number, totalDelay: number) =>
   (delay * 100) / totalDelay
 
-const getBackgroundUrl = (images: string[], index: number) =>
+const getAdditiveBackgroundUrl = (images: string[], index: number) =>
   images
     .slice(0, index + 1)
     .map((image) => `url(${image})`)
@@ -216,12 +216,12 @@ const swapImageAnimation = (
         return css`
           ${weightedDelay - 0.0001}% {
             background-image: ${index > 0
-              ? getBackgroundUrl(images, index - 1)
+              ? getAdditiveBackgroundUrl(images, index - 1)
               : 'none'};
           }
 
           ${weightedDelay}% {
-            background-image: ${getBackgroundUrl(images, index)};
+            background-image: ${getAdditiveBackgroundUrl(images, index)};
           }
         `
       })}
