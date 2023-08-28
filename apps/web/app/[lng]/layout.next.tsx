@@ -1,4 +1,5 @@
 import { dir } from 'i18next'
+import Script from 'next/script'
 
 import { LanguageContextProvider } from '@sdlgr/i18n-config'
 
@@ -40,6 +41,7 @@ export default function RootLayout({
   children,
   params: { lng },
 }: RootLayoutProps) {
+  const googleAnalyticsId = process.env.GOOGLE_ANALYTICS_ID
   return (
     <html lang={lng} dir={dir(lng)} data-testid="root-html">
       <head>
@@ -53,6 +55,20 @@ export default function RootLayout({
         <link
           href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100;300;400;500&display=swap"
           rel="stylesheet"
+        />
+        <Script
+          async
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}
+        />
+        <Script
+          id={googleAnalyticsId}
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `window.dataLayer = window.dataLayer || []
+              function gtag(){window.dataLayer.push(arguments)}
+              gtag('js', new Date()); gtag('config', '${googleAnalyticsId}')`,
+          }}
         />
       </head>
       <body>
