@@ -8,8 +8,8 @@
         y2="85.2281246%"
         id="linearGradient-1"
       >
-        <stop stop-color="#98DFD6" offset="0%"></stop>
-        <stop stop-color="#FFDD83" offset="100%"></stop>
+        <stop stop-color="currentColor" offset="0%"></stop>
+        <stop stop-color="currentColor" offset="100%"></stop>
       </linearGradient>
       <linearGradient
         x1="82.1356665%"
@@ -18,8 +18,8 @@
         y2="14.7900497%"
         id="linearGradient-2"
       >
-        <stop stop-color="#98DFD6" offset="0%"></stop>
-        <stop stop-color="#FFDD83" offset="100%"></stop>
+        <stop stop-color="currentColor" offset="0%"></stop>
+        <stop stop-color="currentColor" offset="100%"></stop>
       </linearGradient>
     </defs>
     <g>

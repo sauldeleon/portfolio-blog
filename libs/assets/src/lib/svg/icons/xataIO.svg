@@ -7,8 +7,8 @@
       y1="0"
       y2="1.01"
     >
-      <stop stop-color="#98DFD6" />
-      <stop offset="1" stop-color="#FFDD83" />
+      <stop stop-color="currentColor" />
+      <stop offset="1" stop-color="currentColor" />
     </linearGradient>
     <linearGradient
       id="paint1_linear_48_446"
@@ -17,8 +17,8 @@
       y1="0"
       y2="1.01"
     >
-      <stop stop-color="#98DFD6" />
-      <stop offset="1" stop-color="#FFDD83" />
+      <stop stop-color="currentColor" />
+      <stop offset="1" stop-color="currentColor" />
     </linearGradient>
     <linearGradient
       id="paint2_linear_48_446"
@@ -27,8 +27,8 @@
       y1="-0.02"
       y2="1"
     >
-      <stop stop-color="#FFDD83" />
-      <stop offset="1" stop-color="#FFDD83" />
+      <stop stop-color="currentColor" />
+      <stop offset="1" stop-color="currentColor" />
     </linearGradient>
     <linearGradient
       id="paint3_linear_48_446"
@@ -37,8 +37,8 @@
       y1="-0.02"
       y2="1"
     >
-      <stop stop-color="#FFDD83" />
-      <stop offset="1" stop-color="#FFDD83" />
+      <stop stop-color="currentColor" />
+      <stop offset="1" stop-color="currentColor" />
     </linearGradient>
   </defs>
   <path

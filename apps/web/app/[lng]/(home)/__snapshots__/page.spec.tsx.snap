@@ -118,7 +118,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 6.140394548449443s iRmgpz 5.11272627856131s linear infinite;
 }
 
-.c164 {
+.c165 {
   --itemSize: 20%;
   position: absolute;
   transform: translateX(-60%);
@@ -127,7 +127,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 18.380772518842353s iRmgpz 5.133172700295292s linear infinite;
 }
 
-.c168 {
+.c169 {
   --itemSize: 20%;
   position: absolute;
   transform: translateX(-60%);
@@ -136,7 +136,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 16.328130561642666s iRmgpz 2.4835541883701s linear infinite;
 }
 
-.c172 {
+.c173 {
   --itemSize: 20%;
   position: absolute;
   transform: translateX(-60%);
@@ -145,7 +145,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 17.271344348475175s iRmgpz 2.7641899754515844s linear infinite;
 }
 
-.c176 {
+.c177 {
   --itemSize: 20%;
   position: absolute;
   transform: translateX(-60%);
@@ -154,7 +154,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 18.381619673625828s iRmgpz 2.526048742783293s linear infinite;
 }
 
-.c180 {
+.c181 {
   --itemSize: 20%;
   position: absolute;
   transform: translateX(-60%);
@@ -163,7 +163,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 16.157087671041783s iRmgpz 3.8802256416862857s linear infinite;
 }
 
-.c184 {
+.c185 {
   --itemSize: 20%;
   position: absolute;
   transform: translateX(-60%);
@@ -172,7 +172,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 14.587389009524479s iRmgpz 5.375062596455593s linear infinite;
 }
 
-.c188 {
+.c189 {
   --itemSize: 20%;
   position: absolute;
   transform: translateX(-60%);
@@ -181,7 +181,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 14.54153333523598s iRmgpz 1.4477526682333328s linear infinite;
 }
 
-.c192 {
+.c193 {
   --itemSize: 20%;
   position: absolute;
   transform: translateX(-60%);
@@ -190,7 +190,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 8.294339875663672s iRmgpz 3.280501988266019s linear infinite;
 }
 
-.c196 {
+.c197 {
   --itemSize: 20%;
   position: absolute;
   transform: translateX(-60%);
@@ -199,7 +199,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 19.266980102366603s iRmgpz 2.319357800306969s linear infinite;
 }
 
-.c200 {
+.c201 {
   --itemSize: 20%;
   position: absolute;
   transform: translateX(-60%);
@@ -208,7 +208,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 14.715448840651458s iRmgpz 3.2627536152731533s linear infinite;
 }
 
-.c204 {
+.c205 {
   --itemSize: 20%;
   position: absolute;
   transform: translateX(-60%);
@@ -217,7 +217,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 17.685194910444892s iRmgpz 5.259665339414542s linear infinite;
 }
 
-.c208 {
+.c209 {
   --itemSize: 20%;
   position: absolute;
   transform: translateX(-60%);
@@ -226,7 +226,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 8.337109494430436s iRmgpz 2.7888875554767707s linear infinite;
 }
 
-.c212 {
+.c213 {
   --itemSize: 20%;
   position: absolute;
   transform: translateX(-60%);
@@ -235,7 +235,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 8.136088621999374s iRmgpz 2.9405703691113927s linear infinite;
 }
 
-.c216 {
+.c217 {
   --itemSize: 20%;
   position: absolute;
   transform: translateX(-60%);
@@ -244,7 +244,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 8.367296304582151s iRmgpz 5.683181991154481s linear infinite;
 }
 
-.c220 {
+.c221 {
   --itemSize: 20%;
   position: absolute;
   transform: translateX(-60%);
@@ -253,7 +253,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 7.423394359927529s iRmgpz 4.132246888151599s linear infinite;
 }
 
-.c224 {
+.c225 {
   --itemSize: 20%;
   position: absolute;
   transform: translateX(-60%);
@@ -262,7 +262,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 9.981661135911185s iRmgpz 4.439531883484101s linear infinite;
 }
 
-.c228 {
+.c229 {
   --itemSize: 20%;
   position: absolute;
   transform: translateX(-60%);
@@ -271,7 +271,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 7.63128276624017s iRmgpz 1.6423151485286942s linear infinite;
 }
 
-.c232 {
+.c233 {
   --itemSize: 20%;
   position: absolute;
   transform: translateX(-60%);
@@ -280,7 +280,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 8.224715389235337s iRmgpz 3.10951820295664s linear infinite;
 }
 
-.c236 {
+.c237 {
   --itemSize: 20%;
   position: absolute;
   transform: translateX(-60%);
@@ -289,7 +289,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 7.347436450909249s iRmgpz 5.8001463578172405s linear infinite;
 }
 
-.c240 {
+.c241 {
   --itemSize: 20%;
   position: absolute;
   transform: translateX(-60%);
@@ -298,7 +298,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 13.47835889276898s iRmgpz 4.844649055289707s linear infinite;
 }
 
-.c244 {
+.c245 {
   --itemSize: 20%;
   position: absolute;
   transform: translateX(-60%);
@@ -439,7 +439,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 5.806813673152439s TpVAo ease-in-out alternate infinite;
 }
 
-.c165 {
+.c166 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -450,7 +450,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 9.276495255443937s TpVAo ease-in-out alternate infinite;
 }
 
-.c169 {
+.c170 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -461,7 +461,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 7.956435550677551s TpVAo ease-in-out alternate infinite;
 }
 
-.c173 {
+.c174 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -472,7 +472,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 2.9972948936737707s TpVAo ease-in-out alternate infinite;
 }
 
-.c177 {
+.c178 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -483,7 +483,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 2.5764987695767707s TpVAo ease-in-out alternate infinite;
 }
 
-.c181 {
+.c182 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -494,7 +494,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 6.630245442915703s TpVAo ease-in-out alternate infinite;
 }
 
-.c185 {
+.c186 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -505,7 +505,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 6.31983544761413s TpVAo ease-in-out alternate infinite;
 }
 
-.c189 {
+.c190 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -516,7 +516,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 5.049184051332398s TpVAo ease-in-out alternate infinite;
 }
 
-.c193 {
+.c194 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -527,7 +527,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 5.01079194488918s TpVAo ease-in-out alternate infinite;
 }
 
-.c197 {
+.c198 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -538,7 +538,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 8.327624498442017s TpVAo ease-in-out alternate infinite;
 }
 
-.c201 {
+.c202 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -549,7 +549,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 10.612376686686511s TpVAo ease-in-out alternate infinite;
 }
 
-.c205 {
+.c206 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -560,7 +560,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 5.941591534592026s TpVAo ease-in-out alternate infinite;
 }
 
-.c209 {
+.c210 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -571,7 +571,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 5.348215418425745s TpVAo ease-in-out alternate infinite;
 }
 
-.c213 {
+.c214 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -582,7 +582,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 2.7840087240155853s TpVAo ease-in-out alternate infinite;
 }
 
-.c217 {
+.c218 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -593,7 +593,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 5.917546680749599s TpVAo ease-in-out alternate infinite;
 }
 
-.c221 {
+.c222 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -604,7 +604,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 2.668802304895613s TpVAo ease-in-out alternate infinite;
 }
 
-.c225 {
+.c226 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -615,7 +615,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 5.821522329342946s TpVAo ease-in-out alternate infinite;
 }
 
-.c229 {
+.c230 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -626,7 +626,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 10.129135820445677s TpVAo ease-in-out alternate infinite;
 }
 
-.c233 {
+.c234 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -637,7 +637,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 5.156207567472572s TpVAo ease-in-out alternate infinite;
 }
 
-.c237 {
+.c238 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -648,7 +648,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 5.977738051756907s TpVAo ease-in-out alternate infinite;
 }
 
-.c241 {
+.c242 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -659,7 +659,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 8.174575314832182s TpVAo ease-in-out alternate infinite;
 }
 
-.c245 {
+.c246 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -778,7 +778,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 4.360061928153607s cABewS linear infinite;
 }
 
-.c166 {
+.c167 {
   z-index: 3;
   height: var(--itemSize);
   aspect-ratio: 1/1;
@@ -787,7 +787,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 4.157312560720967s cABewS linear infinite;
 }
 
-.c170 {
+.c171 {
   z-index: 2;
   height: var(--itemSize);
   aspect-ratio: 1/1;
@@ -796,7 +796,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 6.668365095917251s cABewS linear infinite;
 }
 
-.c174 {
+.c175 {
   z-index: 3;
   height: var(--itemSize);
   aspect-ratio: 1/1;
@@ -805,7 +805,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 4.144148034787797s cABewS linear infinite;
 }
 
-.c178 {
+.c179 {
   z-index: 5;
   height: var(--itemSize);
   aspect-ratio: 1/1;
@@ -814,7 +814,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 5.767556093246887s cABewS linear infinite;
 }
 
-.c182 {
+.c183 {
   z-index: 4;
   height: var(--itemSize);
   aspect-ratio: 1/1;
@@ -823,7 +823,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 4.340475769349846s cABewS linear infinite;
 }
 
-.c186 {
+.c187 {
   z-index: 2;
   height: var(--itemSize);
   aspect-ratio: 1/1;
@@ -832,7 +832,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 6.64080313186948s cABewS linear infinite;
 }
 
-.c190 {
+.c191 {
   z-index: 5;
   height: var(--itemSize);
   aspect-ratio: 1/1;
@@ -841,7 +841,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 6.490050749992952s cABewS linear infinite;
 }
 
-.c194 {
+.c195 {
   z-index: 3;
   height: var(--itemSize);
   aspect-ratio: 1/1;
@@ -850,7 +850,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 4.179385351249394s cABewS linear infinite;
 }
 
-.c198 {
+.c199 {
   z-index: 3;
   height: var(--itemSize);
   aspect-ratio: 1/1;
@@ -859,7 +859,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 4.838190436027354s cABewS linear infinite;
 }
 
-.c202 {
+.c203 {
   z-index: 2;
   height: var(--itemSize);
   aspect-ratio: 1/1;
@@ -868,7 +868,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 6.606028726515981s cABewS linear infinite;
 }
 
-.c206 {
+.c207 {
   z-index: 4;
   height: var(--itemSize);
   aspect-ratio: 1/1;
@@ -877,7 +877,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 5.327759359487322s cABewS linear infinite;
 }
 
-.c210 {
+.c211 {
   z-index: 2;
   height: var(--itemSize);
   aspect-ratio: 1/1;
@@ -886,7 +886,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 4.869104206716336s cABewS linear infinite;
 }
 
-.c214 {
+.c215 {
   z-index: 5;
   height: var(--itemSize);
   aspect-ratio: 1/1;
@@ -895,7 +895,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 6.087797405783441s cABewS linear infinite;
 }
 
-.c218 {
+.c219 {
   z-index: 4;
   height: var(--itemSize);
   aspect-ratio: 1/1;
@@ -904,7 +904,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 4.709883503494252s cABewS linear infinite;
 }
 
-.c222 {
+.c223 {
   z-index: 4;
   height: var(--itemSize);
   aspect-ratio: 1/1;
@@ -913,7 +913,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 5.883140276087264s cABewS linear infinite;
 }
 
-.c226 {
+.c227 {
   z-index: 5;
   height: var(--itemSize);
   aspect-ratio: 1/1;
@@ -922,7 +922,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 6.545100624124975s cABewS linear infinite;
 }
 
-.c230 {
+.c231 {
   z-index: 4;
   height: var(--itemSize);
   aspect-ratio: 1/1;
@@ -931,7 +931,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 6.951183584911503s cABewS linear infinite;
 }
 
-.c234 {
+.c235 {
   z-index: 5;
   height: var(--itemSize);
   aspect-ratio: 1/1;
@@ -940,7 +940,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 4.0719217655972235s cABewS linear infinite;
 }
 
-.c238 {
+.c239 {
   z-index: 3;
   height: var(--itemSize);
   aspect-ratio: 1/1;
@@ -949,7 +949,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 5.478851605244715s cABewS linear infinite;
 }
 
-.c242 {
+.c243 {
   z-index: 3;
   height: var(--itemSize);
   aspect-ratio: 1/1;
@@ -958,7 +958,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 5.803764581534673s cABewS linear infinite;
 }
 
-.c246 {
+.c247 {
   z-index: 4;
   height: var(--itemSize);
   aspect-ratio: 1/1;
@@ -1019,6 +1019,8 @@ exports[`[lng] route - Page should render successfully 1`] = `
 .c148 svg {
   width: 100%;
   height: 100%;
+  color: #FFDD83;
+  animation: 13.963351823705295s lhbgW 5.835444599966921s linear infinite;
 }
 
 .c152 svg {
@@ -1042,147 +1044,154 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation: 13.285594132025308s lhbgW 1.7056133991259492s linear infinite;
 }
 
-.c167 svg {
+.c164 svg {
+  width: 100%;
+  height: 100%;
+  color: #FFDD83;
+  animation: 6.140394548449443s lhbgW 5.11272627856131s linear infinite;
+}
+
+.c168 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
   animation: 18.380772518842353s lhbgW 5.133172700295292s linear infinite;
 }
 
-.c171 svg {
+.c172 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
   animation: 16.328130561642666s lhbgW 2.4835541883701s linear infinite;
 }
 
-.c175 svg {
+.c176 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
   animation: 17.271344348475175s lhbgW 2.7641899754515844s linear infinite;
 }
 
-.c179 svg {
+.c180 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
   animation: 18.381619673625828s lhbgW 2.526048742783293s linear infinite;
 }
 
-.c183 svg {
+.c184 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
   animation: 16.157087671041783s lhbgW 3.8802256416862857s linear infinite;
 }
 
-.c187 svg {
+.c188 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
   animation: 14.587389009524479s lhbgW 5.375062596455593s linear infinite;
 }
 
-.c191 svg {
+.c192 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
   animation: 14.54153333523598s lhbgW 1.4477526682333328s linear infinite;
 }
 
-.c195 svg {
+.c196 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
   animation: 8.294339875663672s lhbgW 3.280501988266019s linear infinite;
 }
 
-.c199 svg {
+.c200 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
   animation: 19.266980102366603s lhbgW 2.319357800306969s linear infinite;
 }
 
-.c203 svg {
+.c204 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
   animation: 14.715448840651458s lhbgW 3.2627536152731533s linear infinite;
 }
 
-.c207 svg {
+.c208 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
   animation: 17.685194910444892s lhbgW 5.259665339414542s linear infinite;
 }
 
-.c211 svg {
+.c212 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
   animation: 8.337109494430436s lhbgW 2.7888875554767707s linear infinite;
 }
 
-.c215 svg {
+.c216 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
   animation: 8.136088621999374s lhbgW 2.9405703691113927s linear infinite;
 }
 
-.c219 svg {
+.c220 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
   animation: 8.367296304582151s lhbgW 5.683181991154481s linear infinite;
 }
 
-.c223 svg {
+.c224 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
   animation: 7.423394359927529s lhbgW 4.132246888151599s linear infinite;
 }
 
-.c227 svg {
+.c228 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
   animation: 9.981661135911185s lhbgW 4.439531883484101s linear infinite;
 }
 
-.c231 svg {
+.c232 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
   animation: 7.63128276624017s lhbgW 1.6423151485286942s linear infinite;
 }
 
-.c235 svg {
+.c236 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
   animation: 8.224715389235337s lhbgW 3.10951820295664s linear infinite;
 }
 
-.c239 svg {
+.c240 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
   animation: 7.347436450909249s lhbgW 5.8001463578172405s linear infinite;
 }
 
-.c243 svg {
+.c244 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
   animation: 13.47835889276898s lhbgW 4.844649055289707s linear infinite;
 }
 
-.c247 svg {
+.c248 svg {
   width: 100%;
   height: 100%;
   color: #FFDD83;
@@ -2455,7 +2464,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   background-color: #000000;
 }
 
-.c248 {
+.c249 {
   flex-grow: 1;
   border: 1px solid #98DFD6;
   transform-origin: var(--transform-origin-last);
@@ -2650,7 +2659,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   <div>
     <a
       class="c0 c1 c2"
-      href="/explore"
+      href="/experience"
     >
       <div
         class="c3"
@@ -3335,7 +3344,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                 >
                   <div
-                    class="c148"
+                    class="c164"
                     data-testid="color-swapping"
                   >
                     <svg>
@@ -3346,19 +3355,19 @@ exports[`[lng] route - Page should render successfully 1`] = `
               </div>
             </div>
             <div
-              class="c164"
+              class="c165"
               data-testid="horizontal-movement"
             >
               <div
-                class="c165"
+                class="c166"
                 data-testid="vertical-movement"
               >
                 <div
-                  class="c166"
+                  class="c167"
                   data-testid="rotation-movement"
                 >
                   <div
-                    class="c167"
+                    class="c168"
                     data-testid="color-swapping"
                   >
                     <svg>
@@ -3369,19 +3378,19 @@ exports[`[lng] route - Page should render successfully 1`] = `
               </div>
             </div>
             <div
-              class="c168"
+              class="c169"
               data-testid="horizontal-movement"
             >
               <div
-                class="c169"
+                class="c170"
                 data-testid="vertical-movement"
               >
                 <div
-                  class="c170"
+                  class="c171"
                   data-testid="rotation-movement"
                 >
                   <div
-                    class="c171"
+                    class="c172"
                     data-testid="color-swapping"
                   >
                     <svg>
@@ -3392,19 +3401,19 @@ exports[`[lng] route - Page should render successfully 1`] = `
               </div>
             </div>
             <div
-              class="c172"
+              class="c173"
               data-testid="horizontal-movement"
             >
               <div
-                class="c173"
+                class="c174"
                 data-testid="vertical-movement"
               >
                 <div
-                  class="c174"
+                  class="c175"
                   data-testid="rotation-movement"
                 >
                   <div
-                    class="c175"
+                    class="c176"
                     data-testid="color-swapping"
                   >
                     <svg>
@@ -3415,19 +3424,19 @@ exports[`[lng] route - Page should render successfully 1`] = `
               </div>
             </div>
             <div
-              class="c176"
+              class="c177"
               data-testid="horizontal-movement"
             >
               <div
-                class="c177"
+                class="c178"
                 data-testid="vertical-movement"
               >
                 <div
-                  class="c178"
+                  class="c179"
                   data-testid="rotation-movement"
                 >
                   <div
-                    class="c179"
+                    class="c180"
                     data-testid="color-swapping"
                   >
                     <svg>
@@ -3438,19 +3447,19 @@ exports[`[lng] route - Page should render successfully 1`] = `
               </div>
             </div>
             <div
-              class="c180"
+              class="c181"
               data-testid="horizontal-movement"
             >
               <div
-                class="c181"
+                class="c182"
                 data-testid="vertical-movement"
               >
                 <div
-                  class="c182"
+                  class="c183"
                   data-testid="rotation-movement"
                 >
                   <div
-                    class="c183"
+                    class="c184"
                     data-testid="color-swapping"
                   >
                     <svg>
@@ -3461,19 +3470,19 @@ exports[`[lng] route - Page should render successfully 1`] = `
               </div>
             </div>
             <div
-              class="c184"
+              class="c185"
               data-testid="horizontal-movement"
             >
               <div
-                class="c185"
+                class="c186"
                 data-testid="vertical-movement"
               >
                 <div
-                  class="c186"
+                  class="c187"
                   data-testid="rotation-movement"
                 >
                   <div
-                    class="c187"
+                    class="c188"
                     data-testid="color-swapping"
                   >
                     <svg>
@@ -3484,19 +3493,19 @@ exports[`[lng] route - Page should render successfully 1`] = `
               </div>
             </div>
             <div
-              class="c188"
+              class="c189"
               data-testid="horizontal-movement"
             >
               <div
-                class="c189"
+                class="c190"
                 data-testid="vertical-movement"
               >
                 <div
-                  class="c190"
+                  class="c191"
                   data-testid="rotation-movement"
                 >
                   <div
-                    class="c191"
+                    class="c192"
                     data-testid="color-swapping"
                   >
                     <svg>
@@ -3507,19 +3516,19 @@ exports[`[lng] route - Page should render successfully 1`] = `
               </div>
             </div>
             <div
-              class="c192"
+              class="c193"
               data-testid="horizontal-movement"
             >
               <div
-                class="c193"
+                class="c194"
                 data-testid="vertical-movement"
               >
                 <div
-                  class="c194"
+                  class="c195"
                   data-testid="rotation-movement"
                 >
                   <div
-                    class="c195"
+                    class="c196"
                     data-testid="color-swapping"
                   >
                     <svg>
@@ -3530,19 +3539,19 @@ exports[`[lng] route - Page should render successfully 1`] = `
               </div>
             </div>
             <div
-              class="c196"
+              class="c197"
               data-testid="horizontal-movement"
             >
               <div
-                class="c197"
+                class="c198"
                 data-testid="vertical-movement"
               >
                 <div
-                  class="c198"
+                  class="c199"
                   data-testid="rotation-movement"
                 >
                   <div
-                    class="c199"
+                    class="c200"
                     data-testid="color-swapping"
                   >
                     <svg>
@@ -3553,19 +3562,19 @@ exports[`[lng] route - Page should render successfully 1`] = `
               </div>
             </div>
             <div
-              class="c200"
+              class="c201"
               data-testid="horizontal-movement"
             >
               <div
-                class="c201"
+                class="c202"
                 data-testid="vertical-movement"
               >
                 <div
-                  class="c202"
+                  class="c203"
                   data-testid="rotation-movement"
                 >
                   <div
-                    class="c203"
+                    class="c204"
                     data-testid="color-swapping"
                   >
                     <svg>
@@ -3576,19 +3585,19 @@ exports[`[lng] route - Page should render successfully 1`] = `
               </div>
             </div>
             <div
-              class="c204"
+              class="c205"
               data-testid="horizontal-movement"
             >
               <div
-                class="c205"
+                class="c206"
                 data-testid="vertical-movement"
               >
                 <div
-                  class="c206"
+                  class="c207"
                   data-testid="rotation-movement"
                 >
                   <div
-                    class="c207"
+                    class="c208"
                     data-testid="color-swapping"
                   >
                     <svg>
@@ -3599,19 +3608,19 @@ exports[`[lng] route - Page should render successfully 1`] = `
               </div>
             </div>
             <div
-              class="c208"
+              class="c209"
               data-testid="horizontal-movement"
             >
               <div
-                class="c209"
+                class="c210"
                 data-testid="vertical-movement"
               >
                 <div
-                  class="c210"
+                  class="c211"
                   data-testid="rotation-movement"
                 >
                   <div
-                    class="c211"
+                    class="c212"
                     data-testid="color-swapping"
                   >
                     <svg>
@@ -3622,19 +3631,19 @@ exports[`[lng] route - Page should render successfully 1`] = `
               </div>
             </div>
             <div
-              class="c212"
+              class="c213"
               data-testid="horizontal-movement"
             >
               <div
-                class="c213"
+                class="c214"
                 data-testid="vertical-movement"
               >
                 <div
-                  class="c214"
+                  class="c215"
                   data-testid="rotation-movement"
                 >
                   <div
-                    class="c215"
+                    class="c216"
                     data-testid="color-swapping"
                   >
                     <svg>
@@ -3645,19 +3654,19 @@ exports[`[lng] route - Page should render successfully 1`] = `
               </div>
             </div>
             <div
-              class="c216"
+              class="c217"
               data-testid="horizontal-movement"
             >
               <div
-                class="c217"
+                class="c218"
                 data-testid="vertical-movement"
               >
                 <div
-                  class="c218"
+                  class="c219"
                   data-testid="rotation-movement"
                 >
                   <div
-                    class="c219"
+                    class="c220"
                     data-testid="color-swapping"
                   >
                     <svg>
@@ -3668,19 +3677,19 @@ exports[`[lng] route - Page should render successfully 1`] = `
               </div>
             </div>
             <div
-              class="c220"
+              class="c221"
               data-testid="horizontal-movement"
             >
               <div
-                class="c221"
+                class="c222"
                 data-testid="vertical-movement"
               >
                 <div
-                  class="c222"
+                  class="c223"
                   data-testid="rotation-movement"
                 >
                   <div
-                    class="c223"
+                    class="c224"
                     data-testid="color-swapping"
                   >
                     <svg>
@@ -3691,19 +3700,19 @@ exports[`[lng] route - Page should render successfully 1`] = `
               </div>
             </div>
             <div
-              class="c224"
+              class="c225"
               data-testid="horizontal-movement"
             >
               <div
-                class="c225"
+                class="c226"
                 data-testid="vertical-movement"
               >
                 <div
-                  class="c226"
+                  class="c227"
                   data-testid="rotation-movement"
                 >
                   <div
-                    class="c227"
+                    class="c228"
                     data-testid="color-swapping"
                   >
                     <svg>
@@ -3714,19 +3723,19 @@ exports[`[lng] route - Page should render successfully 1`] = `
               </div>
             </div>
             <div
-              class="c228"
+              class="c229"
               data-testid="horizontal-movement"
             >
               <div
-                class="c229"
+                class="c230"
                 data-testid="vertical-movement"
               >
                 <div
-                  class="c230"
+                  class="c231"
                   data-testid="rotation-movement"
                 >
                   <div
-                    class="c231"
+                    class="c232"
                     data-testid="color-swapping"
                   >
                     <svg>
@@ -3737,19 +3746,19 @@ exports[`[lng] route - Page should render successfully 1`] = `
               </div>
             </div>
             <div
-              class="c232"
+              class="c233"
               data-testid="horizontal-movement"
             >
               <div
-                class="c233"
+                class="c234"
                 data-testid="vertical-movement"
               >
                 <div
-                  class="c234"
+                  class="c235"
                   data-testid="rotation-movement"
                 >
                   <div
-                    class="c235"
+                    class="c236"
                     data-testid="color-swapping"
                   >
                     <svg>
@@ -3760,19 +3769,19 @@ exports[`[lng] route - Page should render successfully 1`] = `
               </div>
             </div>
             <div
-              class="c236"
+              class="c237"
               data-testid="horizontal-movement"
             >
               <div
-                class="c237"
+                class="c238"
                 data-testid="vertical-movement"
               >
                 <div
-                  class="c238"
+                  class="c239"
                   data-testid="rotation-movement"
                 >
                   <div
-                    class="c239"
+                    class="c240"
                     data-testid="color-swapping"
                   >
                     <svg>
@@ -3783,19 +3792,19 @@ exports[`[lng] route - Page should render successfully 1`] = `
               </div>
             </div>
             <div
-              class="c240"
+              class="c241"
               data-testid="horizontal-movement"
             >
               <div
-                class="c241"
+                class="c242"
                 data-testid="vertical-movement"
               >
                 <div
-                  class="c242"
+                  class="c243"
                   data-testid="rotation-movement"
                 >
                   <div
-                    class="c243"
+                    class="c244"
                     data-testid="color-swapping"
                   >
                     <svg>
@@ -3806,19 +3815,19 @@ exports[`[lng] route - Page should render successfully 1`] = `
               </div>
             </div>
             <div
-              class="c244"
+              class="c245"
               data-testid="horizontal-movement"
             >
               <div
-                class="c245"
+                class="c246"
                 data-testid="vertical-movement"
               >
                 <div
-                  class="c246"
+                  class="c247"
                   data-testid="rotation-movement"
                 >
                   <div
-                    class="c247"
+                    class="c248"
                     data-testid="color-swapping"
                   >
                     <svg>
@@ -3832,7 +3841,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
         </div>
       </div>
       <div
-        class="c248"
+        class="c249"
       />
     </div>
   </div>

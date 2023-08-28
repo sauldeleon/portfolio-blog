@@ -18,7 +18,7 @@ export function HomePage() {
   return (
     <>
       <StyledCircleLink
-        href="/explore"
+        href="/experience"
         iconContent={<Label $level="XS">{t('explore')}</Label>}
         iconSize={76}
       />

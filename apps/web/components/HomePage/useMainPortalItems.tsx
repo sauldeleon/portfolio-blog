@@ -83,6 +83,7 @@ export function useMainPortalItems() {
       {
         svg: <ReactQueryIcon />,
         rotate: true,
+        colorSwap: true,
       },
       {
         svg: <JestIcon />,
@@ -105,6 +106,7 @@ export function useMainPortalItems() {
         svg: <XataIOIcon />,
         rotate: true,
         size: 'S',
+        colorSwap: true,
       },
       {
         svg: <StyledComponentsIcon />,
