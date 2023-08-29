@@ -1,7 +1,459 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ContactPage should render 1`] = `
+exports[`ContactPage should render successfully 1`] = `
+.c14 {
+  position: relative;
+  position: relative;
+}
+
+.c14::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #FBFBFB;
+}
+
+.c14::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.c14:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c14:hover,
+.c14:active,
+.c14:focus {
+  text-decoration: none;
+}
+
+.c12 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 1.5rem;
+  line-height: normal;
+  margin: 0;
+}
+
+.c15 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 1rem;
+  line-height: normal;
+  white-space: pre-line;
+}
+
+.c15 ul,
+.c15 ol {
+  margin-left: 40px;
+  margin-bottom: 10px;
+}
+
+.c15 ul {
+  list-style: outside disc;
+}
+
+.c15 ol {
+  list-style: decimal;
+}
+
+.c15 li {
+  padding-left: 10px;
+}
+
+.c4 {
+  z-index: 2;
+  width: 147%;
+  top: -34%;
+  left: -24%;
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  transform: rotate(90deg);
+}
+
+.c6 {
+  width: 130px;
+  height: 249px;
+}
+
+.c5 {
+  background-color: #000000;
+  border-top-right-radius: 42px 50%;
+  border-bottom-right-radius: 44px 50%;
+  border-top-left-radius: 44px 50%;
+  border-bottom-left-radius: 44px 50%;
+  margin-bottom: 5px;
+  line-height: 0px;
+}
+
+.c7 {
+  border-top-right-radius: 41px 50%;
+  border-bottom-right-radius: 44px 50%;
+  border-top-left-radius: 43px 50%;
+  border-bottom-left-radius: 45px 50%;
+  background-color: #000000;
+  margin-bottom: 5px;
+  line-height: 0px;
+  transform: scaleX(-1);
+}
+
+.c8 {
+  --height: 212px;
+  position: absolute;
+  overflow: hidden;
+  margin: 30px auto;
+  height: 212px;
+  border-top-left-radius: 30px 50%;
+  border-bottom-left-radius: 30px 50%;
+  border-top-right-radius: 31px 50%;
+  border-bottom-right-radius: 32px 50%;
+  top: -12px;
+  left: 62px;
+  right: 61px;
+}
+
+.c0 {
+  --transform-origin-first: bottom;
+  --transform-origin-last: top;
+  --rotate3D-first: 1,0,0,-45deg;
+  --rotate3D-last: 1,0,0,45deg;
+  --height-middle: 30%;
+  --width-middle: unset;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 1/1.7;
+  align-items: stretch;
+  gap: 15px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.c2 {
+  flex-grow: 1;
+  border: 1px solid #FFDD83;
+  transform-origin: var(--transform-origin-first);
+  transform: perspective(600px) rotate3D(var(--rotate3D-first));
+  background-color: #000000;
+}
+
+.c3 {
+  position: relative;
+  border: 1px solid;
+  border-image-slice: 1;
+  border-width: 1px;
+  border-image-source: linear-gradient(       to bottom,       #FFDD83,       #98DFD6     );
+  height: var(--height-middle);
+  width: var(--width-middle);
+  background-color: #000000;
+}
+
+.c18 {
+  flex-grow: 1;
+  border: 1px solid #98DFD6;
+  transform-origin: var(--transform-origin-last);
+  transform: perspective(600px) rotate3D(var(--rotate3D-last));
+  background-color: #000000;
+}
+
+.c1 {
+  margin-top: 30px;
+}
+
+.c9 {
+  width: 100%;
+  height: 100%;
+}
+
+.c10 {
+  display: grid;
+  place-items: center;
+  rotate: 270deg;
+  position: absolute;
+  top: 36px;
+  left: 65px;
+  opacity: 0;
+  transition: opacity 2s ease-in;
+  transform-origin: 50% 51%;
+  opacity: 1;
+}
+
+.c13 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+}
+
+.c17 {
+  display: inline-block;
+}
+
+.c16 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 500;
+  color: #FBFBFB;
+  font-size: 0.55rem;
+  line-height: normal;
+}
+
+.c11 {
+  overflow: hidden;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+}
+
+@media (min-width: 768px) {
+  .c4 {
+    width: 152%;
+    top: unset;
+    left: -26%;
+    margin: 18px auto;
+    transform: unset;
+  }
+}
+
+@media (min-width: 768px) {
+  .c6 {
+    width: unset;
+    height: unset;
+  }
+}
+
+@media (min-width: 768px) {
+  .c5 {
+    background-color: #000000;
+    border-top-right-radius: 59px 50%;
+    border-bottom-right-radius: 61px 50%;
+    border-top-left-radius: 62px 50%;
+    border-bottom-left-radius: 62px 50%;
+  }
+}
+
+@media (min-width: 768px) {
+  .c7 {
+    border-top-right-radius: 59px 50%;
+    border-bottom-right-radius: 62px 50%;
+    border-top-left-radius: 61px 50%;
+    border-bottom-left-radius: 63px 50%;
+  }
+}
+
+@media (min-width: 768px) {
+  .c8 {
+    height: 305px;
+    border-top-left-radius: 45px 50%;
+    border-bottom-left-radius: 45px 50%;
+    border-top-right-radius: 40px 50%;
+    border-bottom-right-radius: 40px 50%;
+    top: -4px;
+    left: 91px;
+    right: 91px;
+  }
+}
+
+@media (min-width: 768px) {
+  .c0 {
+    --transform-origin-first: right;
+    --transform-origin-last: left;
+    --rotate3D-first: 0,1,0,45deg;
+    --rotate3D-last: 0,1,0,-45deg;
+    --height-middle: unset;
+    --width-middle: clamp(0px, 60%, 830px);
+    flex-direction: row;
+    aspect-ratio: unset;
+    height: 395px;
+    overflow-x: clip;
+    max-width: unset;
+  }
+}
+
+@media (min-width: 768px) {
+  .c3 {
+    border-image-source: linear-gradient(         to right,         #FFDD83,         #98DFD6       );
+  }
+}
+
+@media (min-width: 768px) {
+  .c1 {
+    margin-top: 166px;
+  }
+}
+
+@media (min-width: 768px) {
+  .c10 {
+    position: unset;
+    top: unset;
+    left: unset;
+    rotate: 0deg;
+    row-gap: 10px;
+  }
+}
+
+@media (min-width: 768px) {
+  .c13 {
+    font-family: 'Roboto mono',monospace;
+    font-weight: 400;
+    color: #FBFBFB;
+    font-size: 1.5rem;
+    line-height: normal;
+  }
+}
+
+@media (max-width: 767px) {
+  .c17 {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .c16 {
+    font-family: 'Roboto mono',monospace;
+    font-weight: 400;
+    color: #FBFBFB;
+    font-size: 0.9rem;
+    line-height: normal;
+  }
+}
+
+@media (min-width: 768px) {
+  .c11 {
+    width: 140px;
+    height: 140px;
+  }
+}
+
 <body>
-  <div />
+  <div>
+    <div
+      class="c0 c1"
+    >
+      <div
+        class="c2"
+      />
+      <div
+        class="c3"
+      >
+        <div
+          class="c4"
+          role="presentation"
+        >
+          <div
+            class="c5"
+          >
+            <svg
+              class="c6"
+              color="#FFDD83"
+            >
+              portal.svg
+            </svg>
+          </div>
+          <div
+            class="c7"
+          >
+            <svg
+              class="c6"
+              color="#98DFD6"
+            >
+              portal.svg
+            </svg>
+          </div>
+          <div
+            class="c8"
+          >
+            <div
+              class="c9"
+            >
+              <div
+                class="c10"
+              >
+                <img
+                  alt="My profile picture"
+                  class="c11"
+                  data-nimg="1"
+                  decoding="async"
+                  height="140"
+                  loading="lazy"
+                  src="/_next/image?url=%2Fassets%2Fportrait-1.png&w=384&q=75"
+                  srcset="/_next/image?url=%2Fassets%2Fportrait-1.png&w=256&q=75 1x, /_next/image?url=%2Fassets%2Fportrait-1.png&w=384&q=75 2x"
+                  style="color: transparent;"
+                  width="140"
+                />
+                <h1
+                  class="c12 c13"
+                >
+                  Software Engineer
+                </h1>
+                <a
+                  aria-label="My LinkedIn profile"
+                  class="c14"
+                  data-testid="plain-anchor"
+                  href="https://www.linkedin.com/in/sauldeleonguerrero"
+                >
+                  <p
+                    class="c15 c16"
+                  >
+                    Linked in
+                  </p>
+                </a>
+                <p
+                  class="c15 c16"
+                >
+                  <span
+                    class="c17"
+                  >
+                    Phone
+                    :
+                  </span>
+                   
+                  <a
+                    aria-label="My phone number"
+                    class="c14"
+                    data-testid="plain-anchor"
+                    href="tel:+34661030038"
+                  >
+                    (+34) 661 03 00 38
+                  </a>
+                </p>
+                <p
+                  class="c15 c16"
+                >
+                  <span
+                    class="c17"
+                  >
+                    E-mail
+                    :
+                  </span>
+                   
+                  <a
+                    aria-label="My electronic mail address"
+                    class="c14"
+                    data-testid="plain-anchor"
+                    href="mailto:sauldeleonguerrero@gmail.com"
+                  >
+                    sauldeleonguerrero@gmail.com
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="c18"
+      />
+    </div>
+  </div>
 </body>
 `;
