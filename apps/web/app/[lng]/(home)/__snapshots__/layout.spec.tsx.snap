@@ -228,7 +228,7 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
       <p
         class="c4 c5"
       >
-        I'm not just a one-trick pony. While I'm more focused on FrontEnd, I also have a blast developing primarily with Node.js, but I'm learning GoLang and have experience with other technologies too.
+        I'm not just a one-trick pony. While I'm more focused on FrontEnd, I also have a blast developing primarily with Node.js, but I'm learning new technologies and having experience with other technologies too.
       </p>
       <p
         class="c4 c5"
