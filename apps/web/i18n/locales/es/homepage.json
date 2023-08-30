@@ -4,8 +4,8 @@
   "aboutMe": "Acerca de mí",
   "experience": "Experiencia",
   "summary": {
-    "p1": "Desarrollador Front-End con experiencia, sólidos conocimientos en tecnologías web y una pasión por crear interfaces visualmente atractivas y amigables para el usuario. Competente en una variedad de frameworks y bibliotecas front-end, poniendo el foco en React.JS, con una sólida comprensión de HTML5, CSS3 y JavaScript. Hábil en transformar conceptos de diseño en experiencias web responsivas e interactivas.",
-    "p2": "Además, cuento con experiencia en el desarrollo backend utilizando tecnologías como Node.js y Java, lo que me permite crear soluciones completas y robustas.",
-    "p3": "Comprometido a estar al día con las últimas tendencias de la industria y mejorar continuamente las habilidades para ofrecer soluciones digitales fluidas."
+    "p1": "Transformador de bebidas de cafeína y música en aplicaciones web, con una predilección por el stack xMERN, convirtiendo diseños en webs responsive. Hablo fluidamente HTML5, CSS3 y (Java|Type)Script.",
+    "p2": "No soy solo un perro de un solo truco, aunque estoy más enfocado en FrontEnd, también me lo paso pipa desarrollando principalmente con Node.js, pero aprendiendo GoLang y con experiencia en otras tecnologías.",
+    "p3": "Me encanta estar al día con las últimas novedades, y mi compromiso es entregar soluciones que se puedan mejorar y mantener sin tener que sufrir (demasiado)."
   }
 }
