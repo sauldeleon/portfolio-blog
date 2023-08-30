@@ -1,4 +1,5 @@
-import { useId } from 'react'
+import { ImageProps } from 'next/image'
+import { MouseEventHandler, useId } from 'react'
 
 import { Tooth } from '@sdlgr/assets'
 
@@ -12,8 +13,9 @@ import {
   ToothHoleImage,
 } from './ToothLessPortrait.styles'
 
-interface ToothLessPortraitProps {
-  onClick: () => void
+interface ToothLessPortraitProps
+  extends Omit<ImageProps, 'onClick' | 'alt' | 'src'> {
+  onClick?: MouseEventHandler<HTMLElement>
 }
 
 export function ToothLessPortrait({ onClick }: ToothLessPortraitProps) {

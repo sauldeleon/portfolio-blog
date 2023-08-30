@@ -1,8 +1,9 @@
+import Image from 'next/image'
 import { css, keyframes, styled } from 'styled-components'
 
 import { randomIntFromInterval } from '@web/utils/random'
 
-import { StyledPortrait } from '../Portrait/Portrait.styles'
+import { portraitStyles } from '../Portrait/Portrait.styles'
 
 const TEETH_DELAY_FACTOR = 15
 
@@ -69,7 +70,9 @@ export const StyledPortraitContainer = styled.div`
   z-index: -1;
 `
 
-export const StyledToothLessPortrait = styled(StyledPortrait)``
+export const StyledToothLessPortrait = styled(Image)`
+  ${portraitStyles};
+`
 
 export const RotateTooth = styled.div`
   position: absolute;

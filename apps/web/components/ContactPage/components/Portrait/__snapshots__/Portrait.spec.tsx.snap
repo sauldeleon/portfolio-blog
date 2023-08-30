@@ -2,10 +2,68 @@
 
 exports[`Portrait should render successfully 1`] = `
 .c0 {
+  position: relative;
+  width: 70px;
+  height: 70px;
+}
+
+.c1 {
   overflow: hidden;
   border-radius: 50%;
   width: 70px;
   height: 70px;
+  position: absolute;
+  opacity: 1;
+}
+
+.c2 {
+  overflow: hidden;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  opacity: 0;
+  animation: cgzFdQ 25s infinite;
+}
+
+.c3 {
+  overflow: hidden;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  opacity: 0;
+  animation: jGA-DsB 25s infinite;
+}
+
+.c4 {
+  overflow: hidden;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  opacity: 0;
+  animation: hisaOC 25s infinite;
+}
+
+.c5 {
+  overflow: hidden;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  opacity: 0;
+  animation: cLUxYQ 25s infinite;
+}
+
+.c6 {
+  overflow: hidden;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  opacity: 0;
+  animation: rmUOo 25s infinite;
 }
 
 @media (min-width: 768px) {
@@ -15,20 +73,126 @@ exports[`Portrait should render successfully 1`] = `
   }
 }
 
+@media (min-width: 768px) {
+  .c1 {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+@media (min-width: 768px) {
+  .c2 {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+@media (min-width: 768px) {
+  .c3 {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+@media (min-width: 768px) {
+  .c4 {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+@media (min-width: 768px) {
+  .c5 {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+@media (min-width: 768px) {
+  .c6 {
+    width: 140px;
+    height: 140px;
+  }
+}
+
 <body>
   <div>
-    <img
-      alt="My profile picture"
+    <div
       class="c0"
-      data-nimg="1"
-      decoding="async"
-      height="140"
-      loading="lazy"
-      src="/_next/image?url=%2Fassets%2Fportrait-1.png&w=384&q=75"
-      srcset="/_next/image?url=%2Fassets%2Fportrait-1.png&w=256&q=75 1x, /_next/image?url=%2Fassets%2Fportrait-1.png&w=384&q=75 2x"
-      style="color: transparent;"
-      width="140"
-    />
+    >
+      <img
+        alt="My profile picture"
+        class="c1"
+        data-nimg="1"
+        decoding="async"
+        height="140"
+        loading="lazy"
+        src="/_next/image?url=%2Fassets%2Fportrait-1.png&w=384&q=75"
+        srcset="/_next/image?url=%2Fassets%2Fportrait-1.png&w=256&q=75 1x, /_next/image?url=%2Fassets%2Fportrait-1.png&w=384&q=75 2x"
+        style="color: transparent;"
+        width="140"
+      />
+      <img
+        alt="My profile picture"
+        class="c2"
+        data-nimg="1"
+        decoding="async"
+        height="140"
+        loading="lazy"
+        src="/_next/image?url=%2Fassets%2Fportrait-2.png&w=384&q=75"
+        srcset="/_next/image?url=%2Fassets%2Fportrait-2.png&w=256&q=75 1x, /_next/image?url=%2Fassets%2Fportrait-2.png&w=384&q=75 2x"
+        style="color: transparent;"
+        width="140"
+      />
+      <img
+        alt="My profile picture"
+        class="c3"
+        data-nimg="1"
+        decoding="async"
+        height="140"
+        loading="lazy"
+        src="/_next/image?url=%2Fassets%2Fportrait-3.png&w=384&q=75"
+        srcset="/_next/image?url=%2Fassets%2Fportrait-3.png&w=256&q=75 1x, /_next/image?url=%2Fassets%2Fportrait-3.png&w=384&q=75 2x"
+        style="color: transparent;"
+        width="140"
+      />
+      <img
+        alt="My profile picture"
+        class="c4"
+        data-nimg="1"
+        decoding="async"
+        height="140"
+        loading="lazy"
+        src="/_next/image?url=%2Fassets%2Fportrait-4.png&w=384&q=75"
+        srcset="/_next/image?url=%2Fassets%2Fportrait-4.png&w=256&q=75 1x, /_next/image?url=%2Fassets%2Fportrait-4.png&w=384&q=75 2x"
+        style="color: transparent;"
+        width="140"
+      />
+      <img
+        alt="My profile picture"
+        class="c5"
+        data-nimg="1"
+        decoding="async"
+        height="140"
+        loading="lazy"
+        src="/_next/image?url=%2Fassets%2Fportrait-5.png&w=384&q=75"
+        srcset="/_next/image?url=%2Fassets%2Fportrait-5.png&w=256&q=75 1x, /_next/image?url=%2Fassets%2Fportrait-5.png&w=384&q=75 2x"
+        style="color: transparent;"
+        width="140"
+      />
+      <img
+        alt="My profile picture"
+        class="c6"
+        data-nimg="1"
+        decoding="async"
+        height="140"
+        loading="lazy"
+        src="/_next/image?url=%2Fassets%2Fportrait-6.png&w=384&q=75"
+        srcset="/_next/image?url=%2Fassets%2Fportrait-6.png&w=256&q=75 1x, /_next/image?url=%2Fassets%2Fportrait-6.png&w=384&q=75 2x"
+        style="color: transparent;"
+        width="140"
+      />
+    </div>
   </div>
 </body>
 `;
