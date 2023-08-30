@@ -37,6 +37,7 @@ const generateAnimation = (index: number, total: number) =>
      
   `
 
+const TIME_PER_IMAGE = 10
 export const StyledPortrait = styled(Image)<{
   $index: number
   $totalImages: number
@@ -48,7 +49,7 @@ export const StyledPortrait = styled(Image)<{
   ${({ $index, $totalImages }) =>
     $index > 0 &&
     css`
-      animation: ${generateAnimation($index, $totalImages + 1)}
-        ${($totalImages - 1) * 5}s infinite;
+      animation: ${generateAnimation($index - 1, $totalImages)}
+        ${$totalImages * TIME_PER_IMAGE}s ${TIME_PER_IMAGE}s infinite;
     `}
 `

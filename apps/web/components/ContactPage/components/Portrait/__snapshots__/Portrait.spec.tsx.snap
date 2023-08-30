@@ -23,7 +23,7 @@ exports[`Portrait should render successfully 1`] = `
   height: 70px;
   position: absolute;
   opacity: 0;
-  animation: cgzFdQ 25s infinite;
+  animation: BLSUr 60s 10s infinite;
 }
 
 .c3 {
@@ -33,7 +33,7 @@ exports[`Portrait should render successfully 1`] = `
   height: 70px;
   position: absolute;
   opacity: 0;
-  animation: jGA-DsB 25s infinite;
+  animation: feYcwF 60s 10s infinite;
 }
 
 .c4 {
@@ -43,7 +43,7 @@ exports[`Portrait should render successfully 1`] = `
   height: 70px;
   position: absolute;
   opacity: 0;
-  animation: hisaOC 25s infinite;
+  animation: gBIqQN 60s 10s infinite;
 }
 
 .c5 {
@@ -53,7 +53,7 @@ exports[`Portrait should render successfully 1`] = `
   height: 70px;
   position: absolute;
   opacity: 0;
-  animation: cLUxYQ 25s infinite;
+  animation: jCGkWp 60s 10s infinite;
 }
 
 .c6 {
@@ -63,7 +63,7 @@ exports[`Portrait should render successfully 1`] = `
   height: 70px;
   position: absolute;
   opacity: 0;
-  animation: rmUOo 25s infinite;
+  animation: cJztmO 60s 10s infinite;
 }
 
 @media (min-width: 768px) {
