@@ -233,7 +233,7 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
       <p
         class="c4 c5"
       >
-        I do love staying up-to-date with the latest trends, and my commitment is to deliver solutions that can be improved and maintained without suffering pain (if possible).
+        I do love staying up-to-date with the latest trends, and my commitment is to deliver work that can be easily maintained and evolved without too much suffering (if possible).
       </p>
     </section>
     <a
