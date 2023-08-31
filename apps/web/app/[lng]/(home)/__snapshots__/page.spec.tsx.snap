@@ -2422,6 +2422,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
 .c0 {
   --transform-origin-first: bottom;
   --transform-origin-last: top;
+  --perspective: 300px;
   --rotate3D-first: 1,0,0,-45deg;
   --rotate3D-last: 1,0,0,45deg;
   --height-middle: 30%;
@@ -2438,9 +2439,11 @@ exports[`[lng] route - Page should render successfully 1`] = `
 
 .c1 {
   flex-grow: 1;
+  z-index: -1;
   border: 1px solid #FFDD83;
+  border-top: none;
   transform-origin: var(--transform-origin-first);
-  transform: perspective(600px) rotate3D(var(--rotate3D-first));
+  transform: perspective(var(--perspective)) rotate3D(var(--rotate3D-first));
   background-color: #000000;
 }
 
@@ -2456,10 +2459,12 @@ exports[`[lng] route - Page should render successfully 1`] = `
 }
 
 .c242 {
+  z-index: -1;
   flex-grow: 1;
   border: 1px solid #98DFD6;
+  border-bottom: none;
   transform-origin: var(--transform-origin-last);
-  transform: perspective(600px) rotate3D(var(--rotate3D-last));
+  transform: perspective(var(--perspective)) rotate3D(var(--rotate3D-last));
   background-color: #000000;
 }
 
@@ -2542,6 +2547,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   .c0 {
     --transform-origin-first: right;
     --transform-origin-last: left;
+    --perspective: 300px;
     --rotate3D-first: 0,1,0,45deg;
     --rotate3D-last: 0,1,0,-45deg;
     --height-middle: unset;
@@ -2554,9 +2560,35 @@ exports[`[lng] route - Page should render successfully 1`] = `
   }
 }
 
+@media (min-width: 1024px) {
+  .c0 {
+    --perspective: 400px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .c0 {
+    --perspective: 600px;
+  }
+}
+
+@media (min-width: 768px) {
+  .c1 {
+    border-top: 1px solid #FFDD83;
+    border-left: none;
+  }
+}
+
 @media (min-width: 768px) {
   .c2 {
     border-image-source: linear-gradient(         to right,         #FFDD83,         #98DFD6       );
+  }
+}
+
+@media (min-width: 768px) {
+  .c242 {
+    border-bottom: 1px solid #98DFD6;
+    border-right: none;
   }
 }
 
