@@ -3,7 +3,7 @@
 import React, { useId } from 'react'
 
 import { ArrowRightIcon } from '@sdlgr/assets'
-import { Body } from '@sdlgr/typography'
+import { Body, Label } from '@sdlgr/typography'
 
 import { useClientTranslation } from '@web/i18n/client'
 
@@ -30,6 +30,11 @@ export default function HomeLayout({ children }: HomeLayoutProps) {
   return (
     <>
       <StyledHeading $level={2}>Saúl de León Guerrero</StyledHeading>
+      <StyledCircleLink
+        href="/experience"
+        iconContent={<Label $level="XS">{t('explore')}</Label>}
+        iconSize={76}
+      />
       {children}
       <StyledSubHeading as="h2" $level={2}>
         {t('aboutMe')}

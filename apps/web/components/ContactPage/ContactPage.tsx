@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { Link } from '@sdlgr/link'
 import { useIsBot } from '@sdlgr/use-is-bot'
 
+import { MainPortal } from '@web/components/MainPortal/MainPortal'
 import { NoSSR } from '@web/components/NoSSR/NoSSR'
 import { useClientTranslation } from '@web/i18n/client'
 
@@ -14,7 +15,6 @@ import {
   StyledContactInfoWrapper,
   StyledHeading,
   StyledLabel,
-  StyledMainPortal,
 } from './ContactPage.styles'
 import { Portrait } from './components/Portrait/Portrait'
 import { ToothLessPortrait } from './components/ToothLessPortrait/ToothLessPortrait'
@@ -28,7 +28,7 @@ export function ContactPage() {
   const mail = 'sauldeleonguerrero@gmail.com'
 
   return (
-    <StyledMainPortal>
+    <MainPortal>
       <StyledContactInfoWrapper>
         <StyledContactInfo $isVisible={!isLoading} data-testid="contact-info">
           {painMode ? (
@@ -61,6 +61,6 @@ export function ContactPage() {
           )}
         </StyledContactInfo>
       </StyledContactInfoWrapper>
-    </StyledMainPortal>
+    </MainPortal>
   )
 }

@@ -2,16 +2,6 @@ import styled from 'styled-components'
 
 import { Body, Heading } from '@sdlgr/typography'
 
-import { MainPortal } from '@web/components/MainPortal/MainPortal'
-
-export const StyledMainPortal = styled(MainPortal)`
-  margin-top: 30px;
-
-  ${({ theme }) => theme.media.up.md} {
-    margin-top: 166px;
-  }
-`
-
 export const StyledContactInfoWrapper = styled.div`
   width: 100%;
   height: 100%;
