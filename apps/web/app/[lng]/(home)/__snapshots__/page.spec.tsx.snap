@@ -842,7 +842,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 <div
                   class="c14"
                   data-testid="rotation-movement"
-                  style="--rotation: calc(2 * 360deg); z-index: 4}; animation-duration: 4.240967516423843s;"
+                  style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 4.240967516423843s;"
                 >
                   <div
                     class="c15"
@@ -869,7 +869,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 <div
                   class="c14"
                   data-testid="rotation-movement"
-                  style="--rotation: calc(1 * 360deg); z-index: 4}; animation-duration: 6.6131899808432095s;"
+                  style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 6.6131899808432095s;"
                 >
                   <div
                     class="c15"
@@ -896,7 +896,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 <div
                   class="c14"
                   data-testid="rotation-movement"
-                  style="--rotation: calc(1 * 360deg); z-index: 2}; animation-duration: 4.677947235348267s;"
+                  style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 4.677947235348267s;"
                 >
                   <div
                     class="c15"
@@ -923,7 +923,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 <div
                   class="c14"
                   data-testid="rotation-movement"
-                  style="--rotation: calc(1 * 360deg); z-index: 4}; animation-duration: 4.867310464426373s;"
+                  style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 4.867310464426373s;"
                 >
                   <div
                     class="c15"
@@ -950,7 +950,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 <div
                   class="c14"
                   data-testid="rotation-movement"
-                  style="--rotation: calc(1 * 360deg); z-index: 2}; animation-duration: 6.008588049848845s;"
+                  style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.008588049848845s;"
                 >
                   <div
                     class="c15"
@@ -977,7 +977,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 <div
                   class="c14"
                   data-testid="rotation-movement"
-                  style="--rotation: calc(1 * 360deg); z-index: 3}; animation-duration: 6.427921889901393s;"
+                  style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 6.427921889901393s;"
                 >
                   <div
                     class="c15"
@@ -1004,7 +1004,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 <div
                   class="c14"
                   data-testid="rotation-movement"
-                  style="--rotation: calc(2 * 360deg); z-index: 2}; animation-duration: 5.182829993408179s;"
+                  style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 5.182829993408179s;"
                 >
                   <div
                     class="c15"
@@ -1031,7 +1031,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 <div
                   class="c14"
                   data-testid="rotation-movement"
-                  style="--rotation: calc(2 * 360deg); z-index: 5}; animation-duration: 6.772619699382583s;"
+                  style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 6.772619699382583s;"
                 >
                   <div
                     class="c15"
@@ -1058,7 +1058,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 <div
                   class="c14"
                   data-testid="rotation-movement"
-                  style="--rotation: calc(2 * 360deg); z-index: 5}; animation-duration: 5.3656892087593935s;"
+                  style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 5.3656892087593935s;"
                 >
                   <div
                     class="c15"
@@ -1085,7 +1085,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 <div
                   class="c14"
                   data-testid="rotation-movement"
-                  style="--rotation: calc(2 * 360deg); z-index: 3}; animation-duration: 4.987608102926577s;"
+                  style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 4.987608102926577s;"
                 >
                   <div
                     class="c15"
@@ -1112,7 +1112,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 <div
                   class="c14"
                   data-testid="rotation-movement"
-                  style="--rotation: calc(2 * 360deg); z-index: 2}; animation-duration: 6.067972895041349s;"
+                  style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 6.067972895041349s;"
                 >
                   <div
                     class="c15"
@@ -1139,7 +1139,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 <div
                   class="c14"
                   data-testid="rotation-movement"
-                  style="--rotation: calc(2 * 360deg); z-index: 5}; animation-duration: 4.360061928153607s;"
+                  style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 4.360061928153607s;"
                 >
                   <div
                     class="c15"
@@ -1166,7 +1166,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 <div
                   class="c14"
                   data-testid="rotation-movement"
-                  style="--rotation: calc(1 * 360deg); z-index: 3}; animation-duration: 4.157312560720967s;"
+                  style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 4.157312560720967s;"
                 >
                   <div
                     class="c15"
@@ -1193,7 +1193,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 <div
                   class="c14"
                   data-testid="rotation-movement"
-                  style="--rotation: calc(2 * 360deg); z-index: 2}; animation-duration: 6.668365095917251s;"
+                  style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 6.668365095917251s;"
                 >
                   <div
                     class="c15"
@@ -1220,7 +1220,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 <div
                   class="c14"
                   data-testid="rotation-movement"
-                  style="--rotation: calc(2 * 360deg); z-index: 3}; animation-duration: 4.144148034787797s;"
+                  style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 4.144148034787797s;"
                 >
                   <div
                     class="c15"
@@ -1247,7 +1247,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 <div
                   class="c14"
                   data-testid="rotation-movement"
-                  style="--rotation: calc(1 * 360deg); z-index: 5}; animation-duration: 5.767556093246887s;"
+                  style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 5.767556093246887s;"
                 >
                   <div
                     class="c15"
@@ -1274,7 +1274,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 <div
                   class="c14"
                   data-testid="rotation-movement"
-                  style="--rotation: calc(2 * 360deg); z-index: 4}; animation-duration: 4.340475769349846s;"
+                  style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 4.340475769349846s;"
                 >
                   <div
                     class="c15"
@@ -1301,7 +1301,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 <div
                   class="c14"
                   data-testid="rotation-movement"
-                  style="--rotation: calc(1 * 360deg); z-index: 2}; animation-duration: 6.64080313186948s;"
+                  style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.64080313186948s;"
                 >
                   <div
                     class="c15"
@@ -1328,7 +1328,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 <div
                   class="c14"
                   data-testid="rotation-movement"
-                  style="--rotation: calc(1 * 360deg); z-index: 5}; animation-duration: 6.490050749992952s;"
+                  style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 6.490050749992952s;"
                 >
                   <div
                     class="c15"
@@ -1355,7 +1355,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 <div
                   class="c14"
                   data-testid="rotation-movement"
-                  style="--rotation: calc(2 * 360deg); z-index: 3}; animation-duration: 4.179385351249394s;"
+                  style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 4.179385351249394s;"
                 >
                   <div
                     class="c15"
@@ -1382,7 +1382,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 <div
                   class="c14"
                   data-testid="rotation-movement"
-                  style="--rotation: calc(1 * 360deg); z-index: 3}; animation-duration: 4.838190436027354s;"
+                  style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 4.838190436027354s;"
                 >
                   <div
                     class="c15"
@@ -1409,7 +1409,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 <div
                   class="c14"
                   data-testid="rotation-movement"
-                  style="--rotation: calc(1 * 360deg); z-index: 2}; animation-duration: 6.606028726515981s;"
+                  style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.606028726515981s;"
                 >
                   <div
                     class="c15"
@@ -1436,7 +1436,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 <div
                   class="c14"
                   data-testid="rotation-movement"
-                  style="--rotation: calc(1 * 360deg); z-index: 4}; animation-duration: 5.327759359487322s;"
+                  style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 5.327759359487322s;"
                 >
                   <div
                     class="c15"
@@ -1463,7 +1463,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 <div
                   class="c14"
                   data-testid="rotation-movement"
-                  style="--rotation: calc(2 * 360deg); z-index: 2}; animation-duration: 4.869104206716336s;"
+                  style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 4.869104206716336s;"
                 >
                   <div
                     class="c15"
@@ -1490,7 +1490,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 <div
                   class="c14"
                   data-testid="rotation-movement"
-                  style="--rotation: calc(2 * 360deg); z-index: 5}; animation-duration: 6.087797405783441s;"
+                  style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 6.087797405783441s;"
                 >
                   <div
                     class="c15"
@@ -1517,7 +1517,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 <div
                   class="c14"
                   data-testid="rotation-movement"
-                  style="--rotation: calc(1 * 360deg); z-index: 4}; animation-duration: 4.709883503494252s;"
+                  style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 4.709883503494252s;"
                 >
                   <div
                     class="c15"
@@ -1544,7 +1544,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 <div
                   class="c14"
                   data-testid="rotation-movement"
-                  style="--rotation: calc(2 * 360deg); z-index: 4}; animation-duration: 5.883140276087264s;"
+                  style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 5.883140276087264s;"
                 >
                   <div
                     class="c15"
@@ -1571,7 +1571,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 <div
                   class="c14"
                   data-testid="rotation-movement"
-                  style="--rotation: calc(1 * 360deg); z-index: 5}; animation-duration: 6.545100624124975s;"
+                  style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 6.545100624124975s;"
                 >
                   <div
                     class="c15"
@@ -1598,7 +1598,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 <div
                   class="c14"
                   data-testid="rotation-movement"
-                  style="--rotation: calc(2 * 360deg); z-index: 4}; animation-duration: 6.951183584911503s;"
+                  style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 6.951183584911503s;"
                 >
                   <div
                     class="c15"
@@ -1625,7 +1625,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 <div
                   class="c14"
                   data-testid="rotation-movement"
-                  style="--rotation: calc(1 * 360deg); z-index: 5}; animation-duration: 4.0719217655972235s;"
+                  style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 4.0719217655972235s;"
                 >
                   <div
                     class="c15"
@@ -1652,7 +1652,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 <div
                   class="c14"
                   data-testid="rotation-movement"
-                  style="--rotation: calc(1 * 360deg); z-index: 3}; animation-duration: 5.478851605244715s;"
+                  style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 5.478851605244715s;"
                 >
                   <div
                     class="c15"
@@ -1679,7 +1679,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 <div
                   class="c14"
                   data-testid="rotation-movement"
-                  style="--rotation: calc(1 * 360deg); z-index: 3}; animation-duration: 5.803764581534673s;"
+                  style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 5.803764581534673s;"
                 >
                   <div
                     class="c15"
@@ -1706,7 +1706,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 <div
                   class="c14"
                   data-testid="rotation-movement"
-                  style="--rotation: calc(2 * 360deg); z-index: 4}; animation-duration: 4.035503396734544s;"
+                  style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 4.035503396734544s;"
                 >
                   <div
                     class="c15"

@@ -5,26 +5,18 @@ import { randomIntFromInterval } from '@web/utils/random'
 export const StyledParticleContainer = styled.div.attrs<{ $seed: string }>(
   ({ $seed }) => ({
     style: {
-      '--particleSize': `${randomIntFromInterval(1, 10, `${$seed}-size`)}px`,
-      '--begin-y': `${randomIntFromInterval(
-        -46,
-        46,
-        `${$seed}-translate-begin-y`
-      )}%`,
-      '--end-y': `${randomIntFromInterval(
-        -46,
-        46,
-        `${$seed}-translate-end-y`
-      )}%`,
-      animationDuration: `${
+      '--particleSize': randomIntFromInterval(1, 10, `${$seed}-size`) + 'px',
+      '--begin-y':
+        randomIntFromInterval(-46, 46, `${$seed}-translate-begin-y`) + '%',
+      '--end-y':
+        randomIntFromInterval(-46, 46, `${$seed}-translate-end-y`) + '%',
+      animationDuration:
         3000 +
-        randomIntFromInterval(0, 4000, `${$seed}-particle-movement-duration`)
-      }ms`,
-      animationDelay: `${randomIntFromInterval(
-        0,
-        11000,
-        `${$seed}-particle-movement-delay`
-      )}ms`,
+        randomIntFromInterval(0, 4000, `${$seed}-particle-movement-duration`) +
+        'ms',
+      animationDelay:
+        randomIntFromInterval(0, 11000, `${$seed}-particle-movement-delay`) +
+        'ms',
     },
   })
 )`
@@ -42,20 +34,14 @@ export const StyledParticleContainer = styled.div.attrs<{ $seed: string }>(
 export const StyledParticle = styled.div.attrs<{ $seed: string }>(
   ({ $seed }) => ({
     style: {
-      animationDuration: `${randomIntFromInterval(
-        500,
-        1000,
-        `${$seed}-particle-fade-frames`
-      )}ms, ${randomIntFromInterval(
-        1000,
-        2000,
-        `${$seed}-particle-scale-frames`
-      )}ms`,
-      animationDelay: `${randomIntFromInterval(
-        0,
-        100,
-        `${$seed}-particle-animation-delay`
-      )}ms`,
+      animationDuration:
+        randomIntFromInterval(500, 1000, `${$seed}-particle-fade-frames`) +
+        'ms, ' +
+        randomIntFromInterval(1000, 2000, `${$seed}-particle-scale-frames`) +
+        'ms',
+      animationDelay:
+        randomIntFromInterval(0, 100, `${$seed}-particle-animation-delay`) +
+        'ms',
     },
   })
 )`
