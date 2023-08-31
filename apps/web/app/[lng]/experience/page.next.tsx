@@ -1,3 +1,5 @@
+import { ExperiencePage } from '@web/components/ExperiencePage/ExperiencePage'
+
 export default function Page() {
-  return <div>Experience - In progress</div>
+  return <ExperiencePage />
 }

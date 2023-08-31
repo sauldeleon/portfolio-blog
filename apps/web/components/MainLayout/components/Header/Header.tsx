@@ -31,7 +31,7 @@ export function Header() {
       ariaLabel: t('portfolioAria'),
     },
     {
-      href: `/${language}/portfolio`,
+      href: `/${language}/get-in-touch`,
       label: t('getInTouch'),
       ariaLabel: t('getInTouchAria'),
       hideOnDesktop: true,
@@ -52,7 +52,7 @@ export function Header() {
       navItems={navItems}
       actionItem={
         <StyledCircleLink
-          href={`/${language}/portfolio`}
+          href={`/${language}/get-in-touch`}
           label={t('getInTouch')}
           aria-label={t('getInTouchAria')}
           iconContent={<ArrowRightIcon />}

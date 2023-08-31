@@ -665,7 +665,7 @@ exports[`MainLayout should render successfully 1`] = `
             <a
               aria-label="Go to Portfolio page"
               class="c6 c7"
-              href="/en/portfolio"
+              href="/en/get-in-touch"
             >
               <p
                 class="c8 c9"
@@ -678,7 +678,7 @@ exports[`MainLayout should render successfully 1`] = `
         <a
           aria-label="Go to Portfolio page"
           class="c6 c11 c12"
-          href="/en/portfolio"
+          href="/en/get-in-touch"
         >
           <div
             class="c13"

@@ -490,7 +490,7 @@ exports[`Header should render successfully 1`] = `
           <a
             aria-label="Go to Portfolio page"
             class="c5 c6"
-            href="/en/portfolio"
+            href="/en/get-in-touch"
           >
             <p
               class="c7 c8"
@@ -503,7 +503,7 @@ exports[`Header should render successfully 1`] = `
       <a
         aria-label="Go to Portfolio page"
         class="c5 c12 c13"
-        href="/en/portfolio"
+        href="/en/get-in-touch"
       >
         <div
           class="c14"
