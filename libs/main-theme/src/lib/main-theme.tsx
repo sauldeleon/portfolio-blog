@@ -8,8 +8,8 @@ const baseFontSize = 20
 
 const rounded = (calc: number) => (calc >> 0 === calc ? calc : +calc.toFixed(5))
 const fontSize = (px: number) => `${rounded(px / baseFontSize)}rem`
-const getDownMedia = (size: number) => `@media (max-width: ${size - 1}px)`
-const getUpMedia = (size: number) => `@media (min-width: ${size}px)`
+const getDownMedia = (size: number) => `@media (width <= ${size - 1}px)`
+const getUpMedia = (size: number) => `@media (width >= ${size}px)`
 
 const breakpoints = {
   sm: 375,

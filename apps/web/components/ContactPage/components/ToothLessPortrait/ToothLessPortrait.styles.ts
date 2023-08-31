@@ -22,7 +22,7 @@ const TEETH_DELAY_FACTOR = 5
   t(0) = 5
   t(n) = t(n - 1) + 5 * 2^(n // 2)
 */
-const getDelay = (n: number): number => {
+export const getDelay = (n: number): number => {
   if (n === 0) {
     return TEETH_DELAY_FACTOR
   } else {
@@ -30,14 +30,37 @@ const getDelay = (n: number): number => {
   }
 }
 
-const getWeightedDelay = (delay: number, totalDelay: number) =>
+export const getWeightedDelay = (delay: number, totalDelay: number) =>
   (delay * 100) / totalDelay
 
-const getAdditiveBackgroundUrl = (images: string[], index: number) =>
+export const getAdditiveBackgroundUrl = (images: string[], index: number) =>
   images
     .slice(0, index + 1)
     .map((image) => `url(${image})`)
     .join(', ')
+
+export const generateKeyframeStep = ({
+  images,
+  totalImagesDelay,
+  index,
+}: {
+  images: string[]
+  totalImagesDelay: number
+  index: number
+}) => {
+  const weightedDelay = getWeightedDelay(getDelay(index), totalImagesDelay)
+  return css`
+    ${weightedDelay - 0.0001}% {
+      background-image: ${index > 0
+        ? getAdditiveBackgroundUrl(images, index - 1)
+        : 'none'};
+    }
+
+    ${weightedDelay}% {
+      background-image: ${getAdditiveBackgroundUrl(images, index)};
+    }
+  `
+}
 
 const swapImageAnimation = (
   images: string[],
@@ -46,28 +69,22 @@ const swapImageAnimation = (
       0% {
         background-image: none;
       }
-      ${images.map((_, index) => {
-        const weightedDelay = getWeightedDelay(
-          getDelay(index),
-          totalImagesDelay
-        )
-        return css`
-          ${weightedDelay - 0.0001}% {
-            background-image: ${index > 0
-              ? getAdditiveBackgroundUrl(images, index - 1)
-              : 'none'};
-          }
-
-          ${weightedDelay}% {
-            background-image: ${getAdditiveBackgroundUrl(images, index)};
-          }
-        `
-      })}
+      ${images.map((_, index) =>
+        generateKeyframeStep({ images, totalImagesDelay, index })
+      )}
 `
 
 export const StyledPortraitContainer = styled.div`
   position: relative;
   z-index: -1;
+  height: 70px;
+  width: 70px;
+  overflow: hidden;
+
+  ${({ theme }) => theme.media.up.md} {
+    height: 140px;
+    width: 140px;
+  }
 `
 
 export const StyledToothLessPortrait = styled(Image)`

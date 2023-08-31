@@ -163,16 +163,16 @@ describe('mainTheme', () => {
         },
         "media": {
           "down": {
-            "lg": "@media (max-width: 1023px)",
-            "md": "@media (max-width: 767px)",
-            "sm": "@media (max-width: 374px)",
-            "xl": "@media (max-width: 1439px)",
+            "lg": "@media (width <= 1023px)",
+            "md": "@media (width <= 767px)",
+            "sm": "@media (width <= 374px)",
+            "xl": "@media (width <= 1439px)",
           },
           "up": {
-            "lg": "@media (min-width: 1024px)",
-            "md": "@media (min-width: 768px)",
-            "sm": "@media (min-width: 375px)",
-            "xl": "@media (min-width: 1440px)",
+            "lg": "@media (width >= 1024px)",
+            "md": "@media (width >= 768px)",
+            "sm": "@media (width >= 375px)",
+            "xl": "@media (width >= 1440px)",
           },
         },
         "spacing": {

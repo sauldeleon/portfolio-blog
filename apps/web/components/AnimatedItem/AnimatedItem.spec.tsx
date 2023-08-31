@@ -23,21 +23,25 @@ describe('AnimatedItem', () => {
       '26%'
     )
 
-    expect(screen.getByTestId('rotation-movement')).toHaveStyleRule(
+    const rotationMovement = screen.getByTestId('rotation-movement')
+    expect(rotationMovement).toHaveStyleRule(
       'background-image: url(/path/to/image.jpg)'
     )
-
-    expect(screen.getByTestId('rotation-movement')).toHaveStyleRule(
-      'animation',
-      expect.stringMatching(/(\d+)s ([a-zA-Z]+) linear infinite/)
+    expect(rotationMovement).toHaveStyleRule(
+      'animation-name',
+      expect.stringMatching(/([a-zA-Z]+)/)
+    )
+    expect((rotationMovement.style as any)['animation-duration']).toMatch(
+      /(\d{1,2}\.\d{14,16})s/
     )
 
-    expect(screen.getByTestId('color-swapping')).toHaveStyleRule(
-      'animation',
-      expect.stringMatching(
-        /(\d+\.?\d*)s ([a-zA-Z]+) (\d+\.?\d*)s linear infinite/
-      ),
-      { modifier: ' svg' }
+    const colorSwapping = screen.getByTestId('color-swapping')
+    expect(colorSwapping).toHaveStyleRule(
+      'animation-name',
+      expect.stringMatching(/([a-zA-Z]+)/)
+    )
+    expect((colorSwapping.style as any)['animation-duration']).toMatch(
+      /(\d{1,2}\.\d{14,16})s/
     )
   })
 

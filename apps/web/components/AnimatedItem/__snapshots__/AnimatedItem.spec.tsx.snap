@@ -7,7 +7,9 @@ exports[`AnimatedItem should render successfully 1`] = `
   transform: translateX(-60%);
   width: 100%;
   height: 100%;
-  animation: 14.013358467316657s iRmgpz 15.815396422171766s linear infinite;
+  animation-name: iRmgpz;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }
 
 .c1 {
@@ -16,23 +18,28 @@ exports[`AnimatedItem should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
-  --translateY-begin: -3%;
-  --translateY-end: 31%;
-  animation: 7.388991085926664s TpVAo ease-in-out alternate infinite;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-name: TpVAo;
 }
 
 .c2 {
-  z-index: 5;
   height: var(--itemSize);
   aspect-ratio: 1/1;
   position: absolute;
 }
 
+.c3 {
+  color: #FFDD83;
+  animation-name: lhbgW;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
 .c3 svg {
   width: 100%;
   height: 100%;
-  color: #FFDD83;
-  animation: 14.013358467316657s lhbgW 15.815396422171766s linear infinite;
 }
 
 <body>
@@ -40,10 +47,12 @@ exports[`AnimatedItem should render successfully 1`] = `
     <div
       class="c0"
       data-testid="horizontal-movement"
+      style="animation-duration: 14.013358467316657s; animation-delay: 15.815396422171766s;"
     >
       <div
         class="c1"
         data-testid="vertical-movement"
+        style="--translateY-begin: -3%; --translateY-end: 31%; animation-duration: 7.388991085926664s;"
       >
         <div
           class="c2"
@@ -52,6 +61,7 @@ exports[`AnimatedItem should render successfully 1`] = `
           <div
             class="c3"
             data-testid="color-swapping"
+            style="animation-duration: 14.013358467316657s; animation-delay: 15.815396422171766s;"
           >
             <svg />
           </div>

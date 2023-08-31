@@ -202,7 +202,7 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
   margin-top: 20px;
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c1 {
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
@@ -212,13 +212,13 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
   }
 }
 
-@media (min-width: 1024px) {
+@media (width >= 1024px) {
   .c1 {
     margin-bottom: 10px;
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c9 {
     margin-bottom: 40px;
     font-family: 'Roboto mono',monospace;
@@ -229,13 +229,13 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c4 {
     margin-bottom: 50px;
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c10 .c11 {
     font-family: 'Roboto mono',monospace;
     font-weight: 400;

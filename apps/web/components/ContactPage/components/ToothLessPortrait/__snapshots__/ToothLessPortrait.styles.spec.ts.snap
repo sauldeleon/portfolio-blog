@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ToothLessPortraitStyles generate keyframe snapshot for image 0 1`] = `
+"
+    24.9999% {
+      background-image: none;
+    }
+
+    25% {
+      background-image: url(1);
+    }
+  "
+`;
+
+exports[`ToothLessPortraitStyles generate keyframe snapshot for image 1 1`] = `
+"
+    49.9999% {
+      background-image: url(1);
+    }
+
+    50% {
+      background-image: url(1), url(2);
+    }
+  "
+`;
+
+exports[`ToothLessPortraitStyles generate keyframe snapshot for image 2 1`] = `
+"
+    99.9999% {
+      background-image: url(1), url(2);
+    }
+
+    100% {
+      background-image: url(1), url(2), url(3);
+    }
+  "
+`;

@@ -203,14 +203,14 @@ exports[`Footer should render successfully 1`] = `
   content: none;
 }
 
-@media (min-width: 1024px) {
+@media (width >= 1024px) {
   .c3 {
     justify-content: space-between;
     grid-template-columns: 1fr 100px;
   }
 }
 
-@media (min-width: 1024px) {
+@media (width >= 1024px) {
   .c10 {
     justify-self: end;
     padding: 0;

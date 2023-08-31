@@ -66,49 +66,49 @@ exports[`Portrait should render successfully 1`] = `
   animation: cJztmO 60s 10s infinite;
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c0 {
     width: 140px;
     height: 140px;
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c1 {
     width: 140px;
     height: 140px;
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c2 {
     width: 140px;
     height: 140px;
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c3 {
     width: 140px;
     height: 140px;
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c4 {
     width: 140px;
     height: 140px;
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c5 {
     width: 140px;
     height: 140px;
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c6 {
     width: 140px;
     height: 140px;

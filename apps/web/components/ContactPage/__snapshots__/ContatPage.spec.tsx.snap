@@ -272,7 +272,7 @@ exports[`ContactPage should render successfully 1`] = `
   animation: cJztmO 60s 10s infinite;
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c3 {
     width: 152%;
     top: unset;
@@ -282,14 +282,14 @@ exports[`ContactPage should render successfully 1`] = `
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c5 {
     width: unset;
     height: unset;
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c4 {
     background-color: #000000;
     border-top-right-radius: 59px 50%;
@@ -299,7 +299,7 @@ exports[`ContactPage should render successfully 1`] = `
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c6 {
     border-top-right-radius: 59px 50%;
     border-bottom-right-radius: 62px 50%;
@@ -308,7 +308,7 @@ exports[`ContactPage should render successfully 1`] = `
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c7 {
     height: 305px;
     border-top-left-radius: 45px 50%;
@@ -321,7 +321,7 @@ exports[`ContactPage should render successfully 1`] = `
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c0 {
     --transform-origin-first: right;
     --transform-origin-last: left;
@@ -338,39 +338,39 @@ exports[`ContactPage should render successfully 1`] = `
   }
 }
 
-@media (min-width: 1024px) {
+@media (width >= 1024px) {
   .c0 {
     --perspective: 400px;
   }
 }
 
-@media (min-width: 1440px) {
+@media (width >= 1440px) {
   .c0 {
     --perspective: 600px;
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c1 {
     border-top: 1px solid #FFDD83;
     border-left: none;
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c2 {
     border-image-source: linear-gradient(         to right,         #FFDD83,         #98DFD6       );
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c23 {
     border-bottom: 1px solid #98DFD6;
     border-right: none;
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c9 {
     position: unset;
     top: unset;
@@ -380,7 +380,7 @@ exports[`ContactPage should render successfully 1`] = `
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c18 {
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
@@ -390,13 +390,13 @@ exports[`ContactPage should render successfully 1`] = `
   }
 }
 
-@media (max-width: 767px) {
+@media (width <= 767px) {
   .c22 {
     display: none;
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c21 {
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
@@ -406,49 +406,49 @@ exports[`ContactPage should render successfully 1`] = `
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c10 {
     width: 140px;
     height: 140px;
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c11 {
     width: 140px;
     height: 140px;
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c12 {
     width: 140px;
     height: 140px;
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c13 {
     width: 140px;
     height: 140px;
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c14 {
     width: 140px;
     height: 140px;
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c15 {
     width: 140px;
     height: 140px;
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c16 {
     width: 140px;
     height: 140px;

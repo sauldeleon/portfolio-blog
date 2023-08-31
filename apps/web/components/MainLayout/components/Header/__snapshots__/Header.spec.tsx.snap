@@ -265,7 +265,7 @@ exports[`Header should render successfully 1`] = `
   display: none;
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c0 {
     align-items: center;
     background-color: transparent;
@@ -274,13 +274,13 @@ exports[`Header should render successfully 1`] = `
   }
 }
 
-@media (min-width: 1440px) {
+@media (width >= 1440px) {
   .c0 {
     padding: 0;
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c6 {
     position: relative;
     position: relative;
@@ -308,7 +308,7 @@ exports[`Header should render successfully 1`] = `
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c10 {
     position: relative;
     position: relative;
@@ -325,7 +325,7 @@ exports[`Header should render successfully 1`] = `
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c3 {
     gap: 30px;
     align-items: center;
@@ -334,7 +334,7 @@ exports[`Header should render successfully 1`] = `
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c4 {
     width: auto;
     padding-bottom: 0;
@@ -352,7 +352,7 @@ exports[`Header should render successfully 1`] = `
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c9 {
     width: auto;
     padding-bottom: 0;
@@ -381,7 +381,7 @@ exports[`Header should render successfully 1`] = `
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c11 {
     display: none;
     width: auto;
@@ -400,14 +400,14 @@ exports[`Header should render successfully 1`] = `
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c2 {
     color: #FBFBFB;
     margin-bottom: 0;
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c13 {
     display: flex;
   }

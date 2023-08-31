@@ -8,10 +8,9 @@ exports[`Particles should render successfully 1`] = `
   transform: translateX(-60%);
   display: grid;
   place-items: center;
-  --particleSize: 8px;
-  --begin-y: 29%;
-  --end-y: -12%;
-  animation: 4289ms gJWpix 8505ms infinite linear;
+  animation-name: gJWpix;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 }
 
 .c1 {
@@ -20,17 +19,19 @@ exports[`Particles should render successfully 1`] = `
   border-radius: 50%;
   mix-blend-mode: screen;
   background-image: radial-gradient(     hsl(180, 100%, 80%),     hsl(180, 100%, 80%) 10%,     hsla(180, 100%, 80%, 0) 56%   );
-  animation: ggsnFx 515ms infinite,fzajMi 1294ms infinite;
-  animation-delay: 30ms;
+  animation-name: ggsnFx,fzajMi;
+  animation-iteration-count: infinite;
 }
 
 <body>
   <div>
     <div
       class="c0"
+      style="--particleSize: 8px; --begin-y: 29%; --end-y: -12%; animation-duration: 4289ms; animation-delay: 8505ms;"
     >
       <div
         class="c1"
+        style="animation-duration: 515ms, 1294ms; animation-delay: 30ms;"
       />
     </div>
   </div>

@@ -5,11 +5,24 @@ import {
   randomIntFromInterval,
 } from '@web/utils/random'
 
-export const HorizontalMovement = styled.div<{
+export const HorizontalMovement = styled.div.attrs<{
   $size: number
   $seed: string
   $customAnimation?: RuleSet<object>
-}>`
+}>(({ $seed }) => ({
+  style: {
+    animationDuration: `${randomDecimalFromInterval(
+      6,
+      20,
+      `${$seed}-item-horizontal-duration`
+    )}s`,
+    animationDelay: `${randomDecimalFromInterval(
+      1,
+      20,
+      `${$seed}-item-horizontal-delay`
+    )}s`,
+  },
+}))`
   --itemSize: ${({ $size }) => `${$size}%`};
   position: absolute;
   transform: translateX(-60%);
@@ -19,94 +32,110 @@ export const HorizontalMovement = styled.div<{
   ${({ $customAnimation, $seed }) =>
     $customAnimation ||
     css`
-      animation: ${randomDecimalFromInterval(
-          6,
-          20,
-          `${$seed}-item-horizontal-duration`
-        )}s
-        ${({ theme }) => theme.animation.horizontalMovement}
-        ${randomDecimalFromInterval(1, 20, `${$seed}-item-horizontal-delay`)}s
-        linear infinite;
+      animation-name: ${({ theme }) => theme.animation.horizontalMovement};
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
     `}
 `
 
-export const VerticalMovement = styled.div<{
+export const VerticalMovement = styled.div.attrs<{
   $seed: string
   $customAnimation?: RuleSet<object>
-}>`
+}>(({ $seed }) => ({
+  style: {
+    '--translateY-begin': `${randomIntFromInterval(
+      -37,
+      20,
+      `${$seed}-y-begin`
+    )}%`,
+    '--translateY-end': `${randomIntFromInterval(-20, 37, `${$seed}-y-end`)}%`,
+    animationDuration: `${randomDecimalFromInterval(
+      2,
+      10,
+      `${$seed}-item-vertical-duration`
+    )}s`,
+  },
+}))`
   position: absolute;
   width: 100%;
   height: 100%;
   display: grid;
   place-items: center;
-  ${({ $customAnimation, $seed }) =>
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  ${({ $customAnimation, theme }) =>
     $customAnimation ||
     css`
-      --translateY-begin: ${randomIntFromInterval(
-        -37,
-        20,
-        `${$seed}-y-begin`
-      )}%;
-      --translateY-end: ${randomIntFromInterval(-20, 37, `${$seed}-y-end`)}%;
-      animation: ${randomDecimalFromInterval(
-          2,
-          10,
-          `${$seed}-item-vertical-duration`
-        )}s
-        ${({ theme }) => theme.animation.verticalMovement} ease-in-out alternate
-        infinite;
+      animation-name: ${theme.animation.verticalMovement};
     `};
 `
 
-export const RotationMovement = styled.div<{
+export const RotationMovement = styled.div.attrs<{
   $customAnimation?: RuleSet<object>
   $seed: string
   $rotate?: boolean
-}>`
-  z-index: ${({ $seed }) =>
-    randomIntFromInterval(2, 5, `${$seed}-item-z-index`)};
+}>(({ $rotate, $seed }) => ({
+  style: $rotate
+    ? {
+        '--rotation': `calc(${randomIntFromInterval(
+          1,
+          2,
+          `${$seed}-rotation-amount`
+        )} * 360deg)`,
+        zIndex: `${randomIntFromInterval(2, 5, `${$seed}-item-z-index`)}}`,
+        animationDuration: `${randomDecimalFromInterval(
+          4,
+          6,
+          `${$seed}-item-rotation-duration`
+        )}s`,
+      }
+    : undefined,
+}))`
   height: var(--itemSize);
   aspect-ratio: 1/1;
   position: absolute;
 
-  ${({ $rotate, $customAnimation, $seed }) =>
+  ${({ $rotate, $customAnimation, theme }) =>
     $rotate
       ? $customAnimation ||
         css`
-          --rotation: calc(
-            ${randomIntFromInterval(1, 2, `${$seed}-rotation-amount`)} * 360deg
-          );
-          animation: ${randomDecimalFromInterval(
-              4,
-              6,
-              `${$seed}-item-rotation-duration`
-            )}s
-            ${({ theme }) => theme.animation.rotateMovement} linear infinite;
+          animation-name: ${theme.animation.rotateMovement};
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
         `
-      : css``}
+      : null}
 `
 
-export const StyledSVGWrapper = styled.div<{
+export const StyledSVGWrapper = styled.div.attrs<{
   $seed: string
   $colorSwap?: boolean
-}>`
-  ${({ theme, $seed, $colorSwap }) => css`
+}>(({ $seed }) => ({
+  style: {
+    animationDuration: `${randomDecimalFromInterval(
+      6,
+      20,
+      `${$seed}-item-horizontal-duration`
+    )}s`,
+    animationDelay: `${randomDecimalFromInterval(
+      1,
+      20,
+      `${$seed}-item-horizontal-delay`
+    )}s`,
+  },
+}))`
+  ${({ theme, $colorSwap }) => css`
+    color: ${theme.colors.yellow};
+    ${$colorSwap &&
+    css`
+      animation-name: ${theme.animation.colorSwap};
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+    `}
+
     svg {
       width: 100%;
       height: 100%;
-
-      ${$colorSwap &&
-      css`
-        color: ${theme.colors.yellow};
-        animation: ${randomDecimalFromInterval(
-            6,
-            20,
-            `${$seed}-item-horizontal-duration`
-          )}s
-          ${({ theme }) => theme.animation.colorSwap}
-          ${randomDecimalFromInterval(1, 20, `${$seed}-item-horizontal-delay`)}s
-          linear infinite;
-      `}
     }
   `}
 `

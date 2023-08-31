@@ -385,33 +385,33 @@ exports[`MainLayout should render successfully 1`] = `
   display: none;
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c18 {
     min-height: calc(100vh - 115px - 210px);
   }
 }
 
-@media (min-width: 1024px) {
+@media (width >= 1024px) {
   .c18 {
     min-height: calc(100vh - 115px - 185px);
   }
 }
 
-@media (min-width: 1024px) {
+@media (width >= 1024px) {
   .c22 {
     justify-content: space-between;
     grid-template-columns: 1fr 100px;
   }
 }
 
-@media (min-width: 1024px) {
+@media (width >= 1024px) {
   .c27 {
     justify-self: end;
     padding: 0;
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c1 {
     align-items: center;
     background-color: transparent;
@@ -420,13 +420,13 @@ exports[`MainLayout should render successfully 1`] = `
   }
 }
 
-@media (min-width: 1440px) {
+@media (width >= 1440px) {
   .c1 {
     padding: 0;
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c7 {
     position: relative;
     position: relative;
@@ -454,7 +454,7 @@ exports[`MainLayout should render successfully 1`] = `
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c4 {
     gap: 30px;
     align-items: center;
@@ -463,7 +463,7 @@ exports[`MainLayout should render successfully 1`] = `
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c5 {
     width: auto;
     padding-bottom: 0;
@@ -481,7 +481,7 @@ exports[`MainLayout should render successfully 1`] = `
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c10 {
     display: none;
     width: auto;
@@ -500,14 +500,14 @@ exports[`MainLayout should render successfully 1`] = `
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c3 {
     color: #FBFBFB;
     margin-bottom: 0;
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .c12 {
     display: flex;
   }
