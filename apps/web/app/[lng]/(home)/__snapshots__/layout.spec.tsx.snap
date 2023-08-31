@@ -294,7 +294,7 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
       <p
         class="c11 c12"
       >
-        Despite I am more focused on FrontEnd development, I have a blast developing BackEnd primarily with Node.js while learning new technologies and I have experience with other technologies too.
+        I am currently more interested on FrontEnd development, but I have a blast developing BackEnd mainly with Node.js while learning new technologies and already having experience in many others.
       </p>
       <p
         class="c11 c12"
