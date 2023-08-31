@@ -31,7 +31,7 @@ export const getDelay = (n: number): number => {
 }
 
 export const getWeightedDelay = (delay: number, totalDelay: number) =>
-  (delay * 100) / totalDelay
+  totalDelay === 0 ? 0 : (Math.abs(delay) * 100) / Math.abs(totalDelay)
 
 export const getAdditiveBackgroundUrl = (images: string[], index: number) =>
   images
@@ -62,10 +62,13 @@ export const generateKeyframeStep = ({
   `
 }
 
-const swapImageAnimation = (
-  images: string[],
+export const swapImageAnimation = ({
+  images,
+  totalImagesDelay,
+}: {
+  images: string[]
   totalImagesDelay: number
-) => keyframes`
+}) => keyframes`
       0% {
         background-image: none;
       }
@@ -186,7 +189,8 @@ export const ToothHoleImage = styled.div<{
 
     return css`
       animation: ${totalImagesDelay}s
-        ${swapImageAnimation($images, totalImagesDelay)} linear forwards;
+        ${swapImageAnimation({ images: $images, totalImagesDelay })} linear
+        forwards;
     `
   }}
 `
