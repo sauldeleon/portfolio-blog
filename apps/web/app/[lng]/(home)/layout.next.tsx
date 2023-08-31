@@ -24,6 +24,7 @@ export default function HomeLayout({ children }: HomeLayoutProps) {
     t('summary.p1'),
     t('summary.p2'),
     t('summary.p3'),
+    t('summary.p4'),
   ]
   const id = useId()
   return (

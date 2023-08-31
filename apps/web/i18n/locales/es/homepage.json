@@ -4,8 +4,9 @@
   "aboutMe": "Acerca de mí",
   "experience": "Experiencia",
   "summary": {
-    "p1": "Transformador de bebidas de cafeína y música en aplicaciones web, con una predilección por el stack xMERN, convirtiendo diseños en webs responsive. Hablo fluidamente HTML5, CSS3 y (Java|Type)Script.",
-    "p2": "No soy solo un perro de un solo truco, aunque estoy más enfocado en FrontEnd, también me lo paso pipa desarrollando principalmente con Node.js, pero aprendiendo nuevas tecnologías y con experiencia en otras tantas.",
-    "p3": "Me encanta estar al día con las últimas novedades, y mi compromiso es que mi trabajo se pueda mantener y evolucionar sin tener que sufrir (demasiado)."
+    "p1": "Predilección por el stack (x)ERN, convirtiendo diseños en webs responsive. Hablo fluidamente HTML5, CSS3 y (Java|Type)Script.",
+    "p2": "Más enfocado en desarrollo FrontEnd, aunque también disfruto desarrollando principalmente con Node.js mientras aprendo nuevas tecnologías y teniendo experiencia en otras tantas.",
+    "p3": "Me encanta estar al día con las últimas novedades y mi compromiso es que mi trabajo se pueda mantener y evolucionar sin tener que sufrir (demasiado).",
+    "p4": "Montañero ⛰️, acariciador de gatos 🐱, gamer inagotable 🎮 y desastroso fotógrafo 📷."
   }
 }
