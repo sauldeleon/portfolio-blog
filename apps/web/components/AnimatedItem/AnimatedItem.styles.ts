@@ -23,11 +23,12 @@ export const HorizontalMovement = styled.div.attrs<{
   transform: translateX(-60%);
   width: 100%;
   height: 100%;
+  pointer-events: none;
 
-  ${({ $customAnimation }) =>
+  ${({ $customAnimation, theme }) =>
     $customAnimation ||
     css`
-      animation-name: ${({ theme }) => theme.animation.horizontalMovement};
+      animation-name: ${theme.animation.horizontalMovement};
       animation-timing-function: linear;
       animation-iteration-count: infinite;
     `}
@@ -50,6 +51,7 @@ export const VerticalMovement = styled.div.attrs<{
   height: 100%;
   display: grid;
   place-items: center;
+  pointer-events: none;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
   animation-direction: alternate;
@@ -81,6 +83,7 @@ export const RotationMovement = styled.div.attrs<{
   height: var(--itemSize);
   aspect-ratio: 1/1;
   position: absolute;
+  pointer-events: none;
 
   ${({ $rotate, $customAnimation, theme }) =>
     $rotate
@@ -91,6 +94,10 @@ export const RotationMovement = styled.div.attrs<{
           animation-iteration-count: infinite;
         `
       : null}
+`
+export const StyledExternalLink = styled.a`
+  pointer-events: all;
+  cursor: pointer;
 `
 
 export const StyledSVGWrapper = styled.div.attrs<{

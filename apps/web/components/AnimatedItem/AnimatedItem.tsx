@@ -4,6 +4,7 @@ import { RuleSet } from 'styled-components'
 import {
   HorizontalMovement,
   RotationMovement,
+  StyledExternalLink,
   StyledSVGWrapper,
   VerticalMovement,
 } from './AnimatedItem.styles'
@@ -23,6 +24,8 @@ export interface AnimatedItemProps {
   colorSwap?: boolean
   customAnimation?: CustomAnimation
   isHidden?: boolean
+  path?: string
+  ariaLabel?: string
 }
 
 export function AnimatedItem({
@@ -31,6 +34,8 @@ export function AnimatedItem({
   colorSwap = true,
   customAnimation,
   size = 'M',
+  path,
+  ariaLabel,
 }: AnimatedItemProps) {
   const seed = useId()
 
@@ -45,6 +50,16 @@ export function AnimatedItem({
     default:
       itemSize = 20
   }
+
+  const StyledSvg = (
+    <StyledSVGWrapper
+      data-testid="color-swapping"
+      $seed={seed}
+      $colorSwap={colorSwap}
+    >
+      {svg}
+    </StyledSVGWrapper>
+  )
 
   return (
     <HorizontalMovement
@@ -64,13 +79,18 @@ export function AnimatedItem({
           $seed={seed}
           $customAnimation={customAnimation?.rotate}
         >
-          <StyledSVGWrapper
-            data-testid="color-swapping"
-            $seed={seed}
-            $colorSwap={colorSwap}
-          >
-            {svg}
-          </StyledSVGWrapper>
+          {path ? (
+            <StyledExternalLink
+              href={path}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={ariaLabel}
+            >
+              {StyledSvg}
+            </StyledExternalLink>
+          ) : (
+            StyledSvg
+          )}
         </RotationMovement>
       </VerticalMovement>
     </HorizontalMovement>

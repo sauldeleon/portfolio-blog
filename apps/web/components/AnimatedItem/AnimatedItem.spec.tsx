@@ -8,8 +8,14 @@ import { AnimatedItem } from './AnimatedItem'
 describe('AnimatedItem', () => {
   it('should render successfully', () => {
     const { baseElement } = renderWithTheme(
-      <AnimatedItem svg={<svg />} rotate={false} />
+      <AnimatedItem
+        svg={<svg />}
+        rotate={false}
+        path="https://google.com"
+        ariaLabel="Google Chrome"
+      />
     )
+    expect(screen.getByRole('link')).toBeInTheDocument()
     expect(baseElement).toMatchSnapshot()
   })
 

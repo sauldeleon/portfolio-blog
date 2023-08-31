@@ -7,6 +7,7 @@ exports[`AnimatedItem should render successfully 1`] = `
   transform: translateX(-60%);
   width: 100%;
   height: 100%;
+  pointer-events: none;
   animation-name: iRmgpz;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
@@ -18,6 +19,7 @@ exports[`AnimatedItem should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
+  pointer-events: none;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
   animation-direction: alternate;
@@ -28,16 +30,22 @@ exports[`AnimatedItem should render successfully 1`] = `
   height: var(--itemSize);
   aspect-ratio: 1/1;
   position: absolute;
+  pointer-events: none;
 }
 
 .c3 {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+.c4 {
   color: #FFDD83;
   animation-name: lhbgW;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
 
-.c3 svg {
+.c4 svg {
   width: 100%;
   height: 100%;
 }
@@ -58,13 +66,21 @@ exports[`AnimatedItem should render successfully 1`] = `
           class="c2"
           data-testid="rotation-movement"
         >
-          <div
+          <a
+            aria-label="Google Chrome"
             class="c3"
-            data-testid="color-swapping"
-            style="animation-duration: 14.013358467316657s; animation-delay: 15.815396422171766s;"
+            href="https://google.com"
+            rel="noreferrer"
+            target="_blank"
           >
-            <svg />
-          </div>
+            <div
+              class="c4"
+              data-testid="color-swapping"
+              style="animation-duration: 14.013358467316657s; animation-delay: 15.815396422171766s;"
+            >
+              <svg />
+            </div>
+          </a>
         </div>
       </div>
     </div>

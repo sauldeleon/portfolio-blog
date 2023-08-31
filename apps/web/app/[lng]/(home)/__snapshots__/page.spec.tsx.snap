@@ -7,17 +7,19 @@ exports[`[lng] route - Page should render successfully 1`] = `
   transform: translateX(-60%);
   width: 100%;
   height: 100%;
+  pointer-events: none;
   animation-name: iRmgpz;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
 
-.c16 {
+.c17 {
   --itemSize: 16%;
   position: absolute;
   transform: translateX(-60%);
   width: 100%;
   height: 100%;
+  pointer-events: none;
   animation-name: iRmgpz;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
@@ -29,6 +31,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   height: 100%;
   display: grid;
   place-items: center;
+  pointer-events: none;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
   animation-direction: alternate;
@@ -39,19 +42,25 @@ exports[`[lng] route - Page should render successfully 1`] = `
   height: var(--itemSize);
   aspect-ratio: 1/1;
   position: absolute;
+  pointer-events: none;
   animation-name: cABewS;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
 
 .c15 {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+.c16 {
   color: #FFDD83;
   animation-name: lhbgW;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
 
-.c15 svg {
+.c16 svg {
   width: 100%;
   height: 100%;
 }
@@ -197,7 +206,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   background-color: #000000;
 }
 
-.c17 {
+.c18 {
   z-index: -1;
   flex-grow: 1;
   border: 1px solid #98DFD6;
@@ -325,7 +334,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
 }
 
 @media (width >= 768px) {
-  .c17 {
+  .c18 {
     border-bottom: 1px solid #98DFD6;
     border-right: none;
   }
@@ -844,20 +853,28 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                   style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 4.240967516423843s;"
                 >
-                  <div
+                  <a
+                    aria-label="NodeJS"
                     class="c15"
-                    data-testid="color-swapping"
-                    style="animation-duration: 14.321792766717916s; animation-delay: 18.003223896427258s;"
+                    href="https://nodejs.org/en/"
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    <svg>
-                      nodejs.svg
-                    </svg>
-                  </div>
+                    <div
+                      class="c16"
+                      data-testid="color-swapping"
+                      style="animation-duration: 14.321792766717916s; animation-delay: 18.003223896427258s;"
+                    >
+                      <svg>
+                        nodejs.svg
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
             <div
-              class="c16"
+              class="c17"
               data-testid="horizontal-movement"
               style="animation-duration: 8.863313964128423s; animation-delay: 16.568849030340978s;"
             >
@@ -871,20 +888,28 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                   style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 6.6131899808432095s;"
                 >
-                  <div
+                  <a
+                    aria-label="CSS3"
                     class="c15"
-                    data-testid="color-swapping"
-                    style="animation-duration: 8.863313964128423s; animation-delay: 16.568849030340978s;"
+                    href="https://www.w3.org/Style/CSS/"
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    <svg>
-                      css3.svg
-                    </svg>
-                  </div>
+                    <div
+                      class="c16"
+                      data-testid="color-swapping"
+                      style="animation-duration: 8.863313964128423s; animation-delay: 16.568849030340978s;"
+                    >
+                      <svg>
+                        css3.svg
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
             <div
-              class="c16"
+              class="c17"
               data-testid="horizontal-movement"
               style="animation-duration: 13.786750058896462s; animation-delay: 18.337519014903997s;"
             >
@@ -898,20 +923,28 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                   style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 4.677947235348267s;"
                 >
-                  <div
+                  <a
+                    aria-label="Github"
                     class="c15"
-                    data-testid="color-swapping"
-                    style="animation-duration: 13.786750058896462s; animation-delay: 18.337519014903997s;"
+                    href="https://github.com"
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    <svg>
-                      github.svg
-                    </svg>
-                  </div>
+                    <div
+                      class="c16"
+                      data-testid="color-swapping"
+                      style="animation-duration: 13.786750058896462s; animation-delay: 18.337519014903997s;"
+                    >
+                      <svg>
+                        github.svg
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
             <div
-              class="c16"
+              class="c17"
               data-testid="horizontal-movement"
               style="animation-duration: 19.892571930205534s; animation-delay: 15.999182916576032s;"
             >
@@ -925,15 +958,23 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                   style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 4.867310464426373s;"
                 >
-                  <div
+                  <a
+                    aria-label="Typescript"
                     class="c15"
-                    data-testid="color-swapping"
-                    style="animation-duration: 19.892571930205534s; animation-delay: 15.999182916576032s;"
+                    href="https://www.typescriptlang.org/"
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    <svg>
-                      typescript.svg
-                    </svg>
-                  </div>
+                    <div
+                      class="c16"
+                      data-testid="color-swapping"
+                      style="animation-duration: 19.892571930205534s; animation-delay: 15.999182916576032s;"
+                    >
+                      <svg>
+                        typescript.svg
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -952,15 +993,23 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                   style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.008588049848845s;"
                 >
-                  <div
+                  <a
+                    aria-label="NextJS"
                     class="c15"
-                    data-testid="color-swapping"
-                    style="animation-duration: 18.412964603232417s; animation-delay: 4.582155967659035s;"
+                    href="https://nextjs.org"
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    <svg>
-                      nextjs.svg
-                    </svg>
-                  </div>
+                    <div
+                      class="c16"
+                      data-testid="color-swapping"
+                      style="animation-duration: 18.412964603232417s; animation-delay: 4.582155967659035s;"
+                    >
+                      <svg>
+                        nextjs.svg
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -979,20 +1028,28 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                   style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 6.427921889901393s;"
                 >
-                  <div
+                  <a
+                    aria-label="ReactJS"
                     class="c15"
-                    data-testid="color-swapping"
-                    style="animation-duration: 7.601709352407495s; animation-delay: 19.944298555309906s;"
+                    href="https://reactjs.org"
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    <svg>
-                      reactjs.svg
-                    </svg>
-                  </div>
+                    <div
+                      class="c16"
+                      data-testid="color-swapping"
+                      style="animation-duration: 7.601709352407495s; animation-delay: 19.944298555309906s;"
+                    >
+                      <svg>
+                        reactjs.svg
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
             <div
-              class="c16"
+              class="c17"
               data-testid="horizontal-movement"
               style="animation-duration: 7.973007547148972s; animation-delay: 2.6852191865478408s;"
             >
@@ -1006,15 +1063,23 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                   style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 5.182829993408179s;"
                 >
-                  <div
+                  <a
+                    aria-label="MongoDB"
                     class="c15"
-                    data-testid="color-swapping"
-                    style="animation-duration: 7.973007547148972s; animation-delay: 2.6852191865478408s;"
+                    href="https://www.mongodb.com"
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    <svg>
-                      mongodb.svg
-                    </svg>
-                  </div>
+                    <div
+                      class="c16"
+                      data-testid="color-swapping"
+                      style="animation-duration: 7.973007547148972s; animation-delay: 2.6852191865478408s;"
+                    >
+                      <svg>
+                        mongodb.svg
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -1033,15 +1098,23 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                   style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 6.772619699382583s;"
                 >
-                  <div
+                  <a
+                    aria-label="Tanstack React Query"
                     class="c15"
-                    data-testid="color-swapping"
-                    style="animation-duration: 13.963351823705295s; animation-delay: 20.341778399867685s;"
+                    href="https://react-query.tanstack.com/"
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    <svg>
-                      reactQuery.svg
-                    </svg>
-                  </div>
+                    <div
+                      class="c16"
+                      data-testid="color-swapping"
+                      style="animation-duration: 13.963351823705295s; animation-delay: 20.341778399867685s;"
+                    >
+                      <svg>
+                        reactQuery.svg
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -1060,20 +1133,28 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                   style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 5.3656892087593935s;"
                 >
-                  <div
+                  <a
+                    aria-label="Jest"
                     class="c15"
-                    data-testid="color-swapping"
-                    style="animation-duration: 8.852800132621072s; animation-delay: 3.099824836717412s;"
+                    href="https://jestjs.io"
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    <svg>
-                      jest.svg
-                    </svg>
-                  </div>
+                    <div
+                      class="c16"
+                      data-testid="color-swapping"
+                      style="animation-duration: 8.852800132621072s; animation-delay: 3.099824836717412s;"
+                    >
+                      <svg>
+                        jest.svg
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
             <div
-              class="c16"
+              class="c17"
               data-testid="horizontal-movement"
               style="animation-duration: 11.217878381555153s; animation-delay: 19.922858667232482s;"
             >
@@ -1087,20 +1168,28 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                   style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 4.987608102926577s;"
                 >
-                  <div
+                  <a
+                    aria-label="Nx"
                     class="c15"
-                    data-testid="color-swapping"
-                    style="animation-duration: 11.217878381555153s; animation-delay: 19.922858667232482s;"
+                    href="https://nx.dev"
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    <svg>
-                      nx.svg
-                    </svg>
-                  </div>
+                    <div
+                      class="c16"
+                      data-testid="color-swapping"
+                      style="animation-duration: 11.217878381555153s; animation-delay: 19.922858667232482s;"
+                    >
+                      <svg>
+                        nx.svg
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
             <div
-              class="c16"
+              class="c17"
               data-testid="horizontal-movement"
               style="animation-duration: 13.285594132025308s; animation-delay: 3.822453596503797s;"
             >
@@ -1114,20 +1203,28 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                   style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 6.067972895041349s;"
                 >
-                  <div
+                  <a
+                    aria-label="Yarn"
                     class="c15"
-                    data-testid="color-swapping"
-                    style="animation-duration: 13.285594132025308s; animation-delay: 3.822453596503797s;"
+                    href="https://yarnpkg.com"
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    <svg>
-                      yarn.svg
-                    </svg>
-                  </div>
+                    <div
+                      class="c16"
+                      data-testid="color-swapping"
+                      style="animation-duration: 13.285594132025308s; animation-delay: 3.822453596503797s;"
+                    >
+                      <svg>
+                        yarn.svg
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
             <div
-              class="c16"
+              class="c17"
               data-testid="horizontal-movement"
               style="animation-duration: 6.140394548449443s; animation-delay: 17.45090511424524s;"
             >
@@ -1141,15 +1238,23 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                   style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 4.360061928153607s;"
                 >
-                  <div
+                  <a
+                    aria-label="Xata IO"
                     class="c15"
-                    data-testid="color-swapping"
-                    style="animation-duration: 6.140394548449443s; animation-delay: 17.45090511424524s;"
+                    href="https://xata.io"
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    <svg>
-                      xataIO.svg
-                    </svg>
-                  </div>
+                    <div
+                      class="c16"
+                      data-testid="color-swapping"
+                      style="animation-duration: 6.140394548449443s; animation-delay: 17.45090511424524s;"
+                    >
+                      <svg>
+                        xataIO.svg
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -1168,15 +1273,23 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                   style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 4.157312560720967s;"
                 >
-                  <div
+                  <a
+                    aria-label="Styled Components"
                     class="c15"
-                    data-testid="color-swapping"
-                    style="animation-duration: 18.380772518842353s; animation-delay: 17.532690801181168s;"
+                    href="https://styled-components.com"
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    <svg>
-                      styledComponents.svg
-                    </svg>
-                  </div>
+                    <div
+                      class="c16"
+                      data-testid="color-swapping"
+                      style="animation-duration: 18.380772518842353s; animation-delay: 17.532690801181168s;"
+                    >
+                      <svg>
+                        styledComponents.svg
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -1195,15 +1308,23 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                   style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 6.668365095917251s;"
                 >
-                  <div
+                  <a
+                    aria-label="ESLint"
                     class="c15"
-                    data-testid="color-swapping"
-                    style="animation-duration: 16.328130561642666s; animation-delay: 6.9342167534804s;"
+                    href="https://eslint.org"
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    <svg>
-                      eslint.svg
-                    </svg>
-                  </div>
+                    <div
+                      class="c16"
+                      data-testid="color-swapping"
+                      style="animation-duration: 16.328130561642666s; animation-delay: 6.9342167534804s;"
+                    >
+                      <svg>
+                        eslint.svg
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -1222,15 +1343,23 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                   style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 4.144148034787797s;"
                 >
-                  <div
+                  <a
+                    aria-label="Cypress"
                     class="c15"
-                    data-testid="color-swapping"
-                    style="animation-duration: 17.271344348475175s; animation-delay: 8.056759901806338s;"
+                    href="https://www.cypress.io"
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    <svg>
-                      cypress.svg
-                    </svg>
-                  </div>
+                    <div
+                      class="c16"
+                      data-testid="color-swapping"
+                      style="animation-duration: 17.271344348475175s; animation-delay: 8.056759901806338s;"
+                    >
+                      <svg>
+                        cypress.svg
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -1249,15 +1378,23 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                   style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 5.767556093246887s;"
                 >
-                  <div
+                  <a
+                    aria-label="Prettier"
                     class="c15"
-                    data-testid="color-swapping"
-                    style="animation-duration: 18.381619673625828s; animation-delay: 7.104194971133172s;"
+                    href="https://prettier.io"
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    <svg>
-                      prettier.svg
-                    </svg>
-                  </div>
+                    <div
+                      class="c16"
+                      data-testid="color-swapping"
+                      style="animation-duration: 18.381619673625828s; animation-delay: 7.104194971133172s;"
+                    >
+                      <svg>
+                        prettier.svg
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -1276,15 +1413,23 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                   style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 4.340475769349846s;"
                 >
-                  <div
+                  <a
+                    aria-label="Docker"
                     class="c15"
-                    data-testid="color-swapping"
-                    style="animation-duration: 16.157087671041783s; animation-delay: 12.520902566745143s;"
+                    href="https://www.docker.com"
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    <svg>
-                      docker.svg
-                    </svg>
-                  </div>
+                    <div
+                      class="c16"
+                      data-testid="color-swapping"
+                      style="animation-duration: 16.157087671041783s; animation-delay: 12.520902566745143s;"
+                    >
+                      <svg>
+                        docker.svg
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -1303,15 +1448,23 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                   style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.64080313186948s;"
                 >
-                  <div
+                  <a
+                    aria-label="HTML5"
                     class="c15"
-                    data-testid="color-swapping"
-                    style="animation-duration: 14.587389009524479s; animation-delay: 18.500250385822373s;"
+                    href="https://www.w3.org/html/"
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    <svg>
-                      html5.svg
-                    </svg>
-                  </div>
+                    <div
+                      class="c16"
+                      data-testid="color-swapping"
+                      style="animation-duration: 14.587389009524479s; animation-delay: 18.500250385822373s;"
+                    >
+                      <svg>
+                        html5.svg
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -1330,15 +1483,23 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                   style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 6.490050749992952s;"
                 >
-                  <div
+                  <a
+                    aria-label="JavaScript"
                     class="c15"
-                    data-testid="color-swapping"
-                    style="animation-duration: 14.54153333523598s; animation-delay: 2.7910106729333313s;"
+                    href="https://developer.mozilla.org/en/JavaScript"
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    <svg>
-                      javascript.svg
-                    </svg>
-                  </div>
+                    <div
+                      class="c16"
+                      data-testid="color-swapping"
+                      style="animation-duration: 14.54153333523598s; animation-delay: 2.7910106729333313s;"
+                    >
+                      <svg>
+                        javascript.svg
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -1357,15 +1518,23 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                   style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 4.179385351249394s;"
                 >
-                  <div
+                  <a
+                    aria-label="Node Package Manager"
                     class="c15"
-                    data-testid="color-swapping"
-                    style="animation-duration: 8.294339875663672s; animation-delay: 10.122007953064076s;"
+                    href="https://www.npmjs.com"
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    <svg>
-                      npm.svg
-                    </svg>
-                  </div>
+                    <div
+                      class="c16"
+                      data-testid="color-swapping"
+                      style="animation-duration: 8.294339875663672s; animation-delay: 10.122007953064076s;"
+                    >
+                      <svg>
+                        npm.svg
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -1384,15 +1553,23 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                   style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 4.838190436027354s;"
                 >
-                  <div
+                  <a
+                    aria-label="Git"
                     class="c15"
-                    data-testid="color-swapping"
-                    style="animation-duration: 19.266980102366603s; animation-delay: 6.277431201227875s;"
+                    href="https://git-scm.com"
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    <svg>
-                      git.svg
-                    </svg>
-                  </div>
+                    <div
+                      class="c16"
+                      data-testid="color-swapping"
+                      style="animation-duration: 19.266980102366603s; animation-delay: 6.277431201227875s;"
+                    >
+                      <svg>
+                        git.svg
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -1411,15 +1588,23 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                   style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.606028726515981s;"
                 >
-                  <div
+                  <a
+                    aria-label="Google Chrome"
                     class="c15"
-                    data-testid="color-swapping"
-                    style="animation-duration: 14.715448840651458s; animation-delay: 10.051014461092613s;"
+                    href="https://www.google.com/chrome"
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    <svg>
-                      chrome.svg
-                    </svg>
-                  </div>
+                    <div
+                      class="c16"
+                      data-testid="color-swapping"
+                      style="animation-duration: 14.715448840651458s; animation-delay: 10.051014461092613s;"
+                    >
+                      <svg>
+                        chrome.svg
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -1438,15 +1623,23 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                   style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 5.327759359487322s;"
                 >
-                  <div
+                  <a
+                    aria-label="Visual Studio Code"
                     class="c15"
-                    data-testid="color-swapping"
-                    style="animation-duration: 17.685194910444892s; animation-delay: 18.038661357658167s;"
+                    href="https://code.visualstudio.com"
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    <svg>
-                      vscode.svg
-                    </svg>
-                  </div>
+                    <div
+                      class="c16"
+                      data-testid="color-swapping"
+                      style="animation-duration: 17.685194910444892s; animation-delay: 18.038661357658167s;"
+                    >
+                      <svg>
+                        vscode.svg
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -1465,15 +1658,23 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                   style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 4.869104206716336s;"
                 >
-                  <div
+                  <a
+                    aria-label="Material UI"
                     class="c15"
-                    data-testid="color-swapping"
-                    style="animation-duration: 8.337109494430436s; animation-delay: 8.155550221907083s;"
+                    href="https://material-ui.com"
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    <svg>
-                      materialui.svg
-                    </svg>
-                  </div>
+                    <div
+                      class="c16"
+                      data-testid="color-swapping"
+                      style="animation-duration: 8.337109494430436s; animation-delay: 8.155550221907083s;"
+                    >
+                      <svg>
+                        materialui.svg
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -1492,15 +1693,23 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                   style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 6.087797405783441s;"
                 >
-                  <div
+                  <a
+                    aria-label="PostgreSQL"
                     class="c15"
-                    data-testid="color-swapping"
-                    style="animation-duration: 8.136088621999374s; animation-delay: 8.76228147644557s;"
+                    href="https://www.postgresql.org"
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    <svg>
-                      postgresql.svg
-                    </svg>
-                  </div>
+                    <div
+                      class="c16"
+                      data-testid="color-swapping"
+                      style="animation-duration: 8.136088621999374s; animation-delay: 8.76228147644557s;"
+                    >
+                      <svg>
+                        postgresql.svg
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -1519,15 +1728,23 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                   style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 4.709883503494252s;"
                 >
-                  <div
+                  <a
+                    aria-label="Sentry"
                     class="c15"
-                    data-testid="color-swapping"
-                    style="animation-duration: 8.367296304582151s; animation-delay: 19.732727964617926s;"
+                    href="https://sentry.io"
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    <svg>
-                      sentry.svg
-                    </svg>
-                  </div>
+                    <div
+                      class="c16"
+                      data-testid="color-swapping"
+                      style="animation-duration: 8.367296304582151s; animation-delay: 19.732727964617926s;"
+                    >
+                      <svg>
+                        sentry.svg
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -1546,15 +1763,23 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                   style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 5.883140276087264s;"
                 >
-                  <div
+                  <a
+                    aria-label="Storybook"
                     class="c15"
-                    data-testid="color-swapping"
-                    style="animation-duration: 7.423394359927529s; animation-delay: 13.528987552606395s;"
+                    href="https://storybook.js.org"
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    <svg>
-                      storybook.svg
-                    </svg>
-                  </div>
+                    <div
+                      class="c16"
+                      data-testid="color-swapping"
+                      style="animation-duration: 7.423394359927529s; animation-delay: 13.528987552606395s;"
+                    >
+                      <svg>
+                        storybook.svg
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -1573,15 +1798,23 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                   style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 6.545100624124975s;"
                 >
-                  <div
+                  <a
+                    aria-label="Webpack"
                     class="c15"
-                    data-testid="color-swapping"
-                    style="animation-duration: 9.981661135911185s; animation-delay: 14.758127533936404s;"
+                    href="https://webpack.js.org"
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    <svg>
-                      webpack.svg
-                    </svg>
-                  </div>
+                    <div
+                      class="c16"
+                      data-testid="color-swapping"
+                      style="animation-duration: 9.981661135911185s; animation-delay: 14.758127533936404s;"
+                    >
+                      <svg>
+                        webpack.svg
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -1600,15 +1833,23 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                   style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 6.951183584911503s;"
                 >
-                  <div
+                  <a
+                    aria-label="GitLab"
                     class="c15"
-                    data-testid="color-swapping"
-                    style="animation-duration: 7.63128276624017s; animation-delay: 3.5692605941147773s;"
+                    href="https://gitlab.com"
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    <svg>
-                      gitlab.svg
-                    </svg>
-                  </div>
+                    <div
+                      class="c16"
+                      data-testid="color-swapping"
+                      style="animation-duration: 7.63128276624017s; animation-delay: 3.5692605941147773s;"
+                    >
+                      <svg>
+                        gitlab.svg
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -1627,15 +1868,23 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                   style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 4.0719217655972235s;"
                 >
-                  <div
+                  <a
+                    aria-label="JSON"
                     class="c15"
-                    data-testid="color-swapping"
-                    style="animation-duration: 8.224715389235337s; animation-delay: 9.43807281182656s;"
+                    href="https://json.org"
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    <svg>
-                      json.svg
-                    </svg>
-                  </div>
+                    <div
+                      class="c16"
+                      data-testid="color-swapping"
+                      style="animation-duration: 8.224715389235337s; animation-delay: 9.43807281182656s;"
+                    >
+                      <svg>
+                        json.svg
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -1654,15 +1903,23 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                   style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 5.478851605244715s;"
                 >
-                  <div
+                  <a
+                    aria-label="Vercel"
                     class="c15"
-                    data-testid="color-swapping"
-                    style="animation-duration: 7.347436450909249s; animation-delay: 20.200585431268962s;"
+                    href="https://vercel.com"
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    <svg>
-                      vercel.svg
-                    </svg>
-                  </div>
+                    <div
+                      class="c16"
+                      data-testid="color-swapping"
+                      style="animation-duration: 7.347436450909249s; animation-delay: 20.200585431268962s;"
+                    >
+                      <svg>
+                        vercel.svg
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -1681,15 +1938,23 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                   style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 5.803764581534673s;"
                 >
-                  <div
+                  <a
+                    aria-label="Auth0"
                     class="c15"
-                    data-testid="color-swapping"
-                    style="animation-duration: 13.47835889276898s; animation-delay: 16.378596221158826s;"
+                    href="  https://auth0.com"
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    <svg>
-                      auth0.svg
-                    </svg>
-                  </div>
+                    <div
+                      class="c16"
+                      data-testid="color-swapping"
+                      style="animation-duration: 13.47835889276898s; animation-delay: 16.378596221158826s;"
+                    >
+                      <svg>
+                        auth0.svg
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -1708,15 +1973,23 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   data-testid="rotation-movement"
                   style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 4.035503396734544s;"
                 >
-                  <div
+                  <a
+                    aria-label="Spider Man"
                     class="c15"
-                    data-testid="color-swapping"
-                    style="animation-duration: 19.93296761408395s; animation-delay: 11.821549919105154s;"
+                    href="https://wikipedia.org/wiki/Spider-Man"
+                    rel="noreferrer"
+                    target="_blank"
                   >
-                    <svg>
-                      spidermask.svg
-                    </svg>
-                  </div>
+                    <div
+                      class="c16"
+                      data-testid="color-swapping"
+                      style="animation-duration: 19.93296761408395s; animation-delay: 11.821549919105154s;"
+                    >
+                      <svg>
+                        spidermask.svg
+                      </svg>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -1724,7 +1997,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
         </div>
       </div>
       <div
-        class="c17"
+        class="c18"
       />
     </div>
   </div>
