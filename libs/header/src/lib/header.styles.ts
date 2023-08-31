@@ -30,9 +30,8 @@ export const StyledNav = styled.nav`
 export const StyledNavLink = styled(Link)<{ $isActive: boolean }>`
   display: flex;
 
-  &:hover,
-  &:focus {
-    text-decoration: none;
+  &::after {
+    content: none;
   }
 
   ${({ theme }) => theme.media.up.md} {

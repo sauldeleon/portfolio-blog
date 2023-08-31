@@ -181,10 +181,9 @@ exports[`ContactPage should render successfully 1`] = `
   position: absolute;
   top: 36px;
   left: 65px;
-  opacity: 0;
+  opacity: 1;
   transition: opacity 2s ease-in;
   transform-origin: 50% 51%;
-  opacity: 1;
 }
 
 .c19 {
@@ -477,6 +476,7 @@ exports[`ContactPage should render successfully 1`] = `
             >
               <div
                 class="c10"
+                data-testid="contact-info"
               >
                 <div
                   class="c11"

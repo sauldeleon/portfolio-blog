@@ -5,7 +5,7 @@ import { randomIntFromInterval } from '@web/utils/random'
 
 import { portraitStyles } from '../Portrait/Portrait.styles'
 
-const TEETH_DELAY_FACTOR = 15
+const TEETH_DELAY_FACTOR = 5
 
 /**                           
  *   

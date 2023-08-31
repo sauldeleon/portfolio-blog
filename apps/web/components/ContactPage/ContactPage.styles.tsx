@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 import { Body, Heading } from '@sdlgr/typography'
 
@@ -24,15 +24,9 @@ export const StyledContactInfo = styled.div<{ $isVisible: boolean }>`
   position: absolute;
   top: 36px;
   left: 65px;
-  opacity: 0;
+  opacity: ${({ $isVisible }) => ($isVisible ? 1 : 0)};
   transition: opacity 2s ease-in;
   transform-origin: 50% 51%;
-
-  ${({ $isVisible }) =>
-    $isVisible &&
-    css`
-      opacity: 1;
-    `}
 
   ${({ theme }) => theme.media.up.md} {
     position: unset;

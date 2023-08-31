@@ -235,9 +235,8 @@ exports[`MainLayout should render successfully 1`] = `
   display: flex;
 }
 
-.c7:hover,
-.c7:focus {
-  text-decoration: none;
+.c7::after {
+  content: none;
 }
 
 .c4 {

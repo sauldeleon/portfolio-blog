@@ -77,18 +77,16 @@ exports[`Header should render successfully 1`] = `
   display: flex;
 }
 
-.c6:hover,
-.c6:focus {
-  text-decoration: none;
+.c6::after {
+  content: none;
 }
 
 .c10 {
   display: flex;
 }
 
-.c10:hover,
-.c10:focus {
-  text-decoration: none;
+.c10::after {
+  content: none;
 }
 
 .c3 {

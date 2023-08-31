@@ -30,7 +30,7 @@ export function ContactPage() {
   return (
     <StyledMainPortal>
       <StyledContactInfoWrapper>
-        <StyledContactInfo $isVisible={!isLoading}>
+        <StyledContactInfo $isVisible={!isLoading} data-testid="contact-info">
           {painMode ? (
             <ToothLessPortrait onClick={() => setPainMode(false)} />
           ) : (

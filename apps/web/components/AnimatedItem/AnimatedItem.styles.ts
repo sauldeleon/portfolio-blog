@@ -25,7 +25,7 @@ export const HorizontalMovement = styled.div<{
           `${$seed}-item-horizontal-duration`
         )}s
         ${({ theme }) => theme.animation.horizontalMovement}
-        ${randomDecimalFromInterval(1, 5, `${$seed}-item-horizontal-delay`)}s
+        ${randomDecimalFromInterval(1, 20, `${$seed}-item-horizontal-delay`)}s
         linear infinite;
     `}
 `
@@ -104,7 +104,7 @@ export const StyledSVGWrapper = styled.div<{
             `${$seed}-item-horizontal-duration`
           )}s
           ${({ theme }) => theme.animation.colorSwap}
-          ${randomDecimalFromInterval(1, 5, `${$seed}-item-horizontal-delay`)}s
+          ${randomDecimalFromInterval(1, 20, `${$seed}-item-horizontal-delay`)}s
           linear infinite;
       `}
     }
