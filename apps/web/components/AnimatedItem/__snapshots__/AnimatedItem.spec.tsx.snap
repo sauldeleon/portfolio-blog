@@ -1,19 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AnimatedItem should render successfully 1`] = `
-.c0 {
-  --itemSize: 20%;
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  animation-name: iRmgpz;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
-.c1 {
+.c2 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -26,28 +14,50 @@ exports[`AnimatedItem should render successfully 1`] = `
   animation-name: TpVAo;
 }
 
-.c2 {
+.c4 {
   height: var(--itemSize);
   aspect-ratio: 1/1;
   position: absolute;
   pointer-events: none;
 }
 
-.c3 {
+.c5 {
   pointer-events: all;
   cursor: pointer;
 }
 
-.c4 {
+.c7 {
   color: #FFDD83;
   animation-name: lhbgW;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
 
-.c4 svg {
+.c7 svg {
   width: 100%;
   height: 100%;
+}
+
+.c0 {
+  --itemSize: 20%;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  animation-name: iRmgpz;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.c0:hover {
+  animation-play-state: paused;
+}
+
+.c0:hover .c1,
+.c0:hover .c3,
+.c0:hover .c6 {
+  animation-play-state: paused;
 }
 
 <body>
@@ -58,23 +68,23 @@ exports[`AnimatedItem should render successfully 1`] = `
       style="animation-duration: 14.013358467316657s; animation-delay: 15.815396422171766s;"
     >
       <div
-        class="c1"
+        class="c1 c2"
         data-testid="vertical-movement"
         style="--translateY-begin: -3%; --translateY-end: 31%; animation-duration: 7.388991085926664s;"
       >
         <div
-          class="c2"
+          class="c3 c4"
           data-testid="rotation-movement"
         >
           <a
             aria-label="Google Chrome"
-            class="c3"
+            class="c5"
             href="https://google.com"
             rel="noreferrer"
             target="_blank"
           >
             <div
-              class="c4"
+              class="c6 c7"
               data-testid="color-swapping"
               style="animation-duration: 14.013358467316657s; animation-delay: 15.815396422171766s;"
             >

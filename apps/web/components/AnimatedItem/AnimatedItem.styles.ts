@@ -5,35 +5,6 @@ import {
   randomIntFromInterval,
 } from '@web/utils/random'
 
-export const HorizontalMovement = styled.div.attrs<{
-  $size: number
-  $seed: string
-  $customAnimation?: RuleSet<object>
-}>(({ $seed }) => ({
-  style: {
-    animationDuration:
-      randomDecimalFromInterval(6, 20, `${$seed}-item-horizontal-duration`) +
-      's',
-    animationDelay:
-      randomDecimalFromInterval(1, 20, `${$seed}-item-horizontal-delay`) + 's',
-  },
-}))`
-  --itemSize: ${({ $size }) => `${$size}%`};
-  position: absolute;
-  transform: translateX(-60%);
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-
-  ${({ $customAnimation, theme }) =>
-    $customAnimation ||
-    css`
-      animation-name: ${theme.animation.horizontalMovement};
-      animation-timing-function: linear;
-      animation-iteration-count: infinite;
-    `}
-`
-
 export const VerticalMovement = styled.div.attrs<{
   $seed: string
   $customAnimation?: RuleSet<object>
@@ -100,7 +71,7 @@ export const StyledExternalLink = styled.a`
   cursor: pointer;
 `
 
-export const StyledSVGWrapper = styled.div.attrs<{
+export const ColorSwapping = styled.div.attrs<{
   $seed: string
   $colorSwap?: boolean
 }>(({ $seed }) => ({
@@ -126,4 +97,39 @@ export const StyledSVGWrapper = styled.div.attrs<{
       height: 100%;
     }
   `}
+`
+
+export const HorizontalMovement = styled.div.attrs<{
+  $size: number
+  $seed: string
+  $customAnimation?: RuleSet<object>
+}>(({ $seed }) => ({
+  style: {
+    animationDuration:
+      randomDecimalFromInterval(6, 20, `${$seed}-item-horizontal-duration`) +
+      's',
+    animationDelay:
+      randomDecimalFromInterval(1, 20, `${$seed}-item-horizontal-delay`) + 's',
+  },
+}))`
+  --itemSize: ${({ $size }) => `${$size}%`};
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+
+  ${({ $customAnimation, theme }) =>
+    $customAnimation ||
+    css`
+      animation-name: ${theme.animation.horizontalMovement};
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+    `}
+  &:hover {
+    animation-play-state: paused;
+    ${VerticalMovement},${RotationMovement},${ColorSwapping} {
+      animation-play-state: paused;
+    }
+  }
 `

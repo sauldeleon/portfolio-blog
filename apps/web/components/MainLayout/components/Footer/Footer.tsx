@@ -23,7 +23,7 @@ export function Footer() {
 
   const toggleLanguage = () => {
     const newLanguage = getNextLanguage(language)
-    const noLangPath = pathname.replace(/^\/[\w\d]+/, '')
+    const noLangPath = pathname.replace(/^\/[\w]+/, '')
     push(`/${newLanguage}${noLangPath}`)
   }
 

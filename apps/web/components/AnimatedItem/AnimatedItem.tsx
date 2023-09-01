@@ -2,10 +2,10 @@ import React, { useId } from 'react'
 import { RuleSet } from 'styled-components'
 
 import {
+  ColorSwapping,
   HorizontalMovement,
   RotationMovement,
   StyledExternalLink,
-  StyledSVGWrapper,
   VerticalMovement,
 } from './AnimatedItem.styles'
 
@@ -51,14 +51,14 @@ export function AnimatedItem({
       itemSize = 20
   }
 
-  const StyledSvg = (
-    <StyledSVGWrapper
+  const ColorSwappingItem = (
+    <ColorSwapping
       data-testid="color-swapping"
       $seed={seed}
       $colorSwap={colorSwap}
     >
       {svg}
-    </StyledSVGWrapper>
+    </ColorSwapping>
   )
 
   return (
@@ -86,10 +86,10 @@ export function AnimatedItem({
               rel="noreferrer"
               aria-label={ariaLabel}
             >
-              {StyledSvg}
+              {ColorSwappingItem}
             </StyledExternalLink>
           ) : (
-            StyledSvg
+            ColorSwappingItem
           )}
         </RotationMovement>
       </VerticalMovement>
