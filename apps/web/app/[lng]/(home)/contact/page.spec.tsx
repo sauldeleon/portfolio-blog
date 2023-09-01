@@ -8,12 +8,6 @@ jest.mock('@sdlgr/use-is-bot', () => ({
   useIsBot: () => jest.fn().mockReturnValue({ isBot: false, isLoading: false }),
 }))
 
-jest.mock('next/headers', () => ({
-  cookies: () => ({
-    get: jest.fn(),
-  }),
-}))
-
 describe('[lng]/contact - Page', () => {
   it('should render successfully', async () => {
     renderApp(<Page />)
@@ -26,7 +20,7 @@ describe('[lng]/contact - Page', () => {
 
 describe('[lng]/contact - Metadata', () => {
   it('should set the correct metadata', async () => {
-    expect(await generateMetadata()).toEqual({
+    expect(await generateMetadata({ params: { lng: 'en' } })).toEqual({
       description: 'Contact information',
     })
   })

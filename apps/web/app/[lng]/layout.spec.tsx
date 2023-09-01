@@ -8,11 +8,6 @@ import RootLayout, {
   generateStaticParams,
 } from './layout.next'
 
-jest.mock('next/headers', () => ({
-  cookies: () => ({
-    get: jest.fn(),
-  }),
-}))
 jest.mock('next/navigation', () => ({
   ...jest.requireActual('next/navigation'),
   usePathname: jest.fn(),
@@ -54,8 +49,8 @@ describe('[lng] route - static params', () => {
 })
 
 describe('[lng] route - metadata', () => {
-  it('should generate static params successfully', async () => {
-    expect(await generateMetadata()).toEqual({
+  it('should generate metadata successfully', async () => {
+    expect(await generateMetadata({ params: { lng: 'en' } })).toEqual({
       title: 'Saúl de León Guerrero',
       description: 'My personal Portfolio',
       colorScheme: 'dark',

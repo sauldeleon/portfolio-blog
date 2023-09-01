@@ -10,6 +10,7 @@ import { initReactI18next } from 'react-i18next/initReactI18next'
 import { getOptions } from '@sdlgr/i18n-config'
 
 type TranslationPreferences = {
+  language?: string
   fallbackLng: string
   defaultNS: string | string[]
   languages: string[]
@@ -38,14 +39,14 @@ export async function useServerTranslation<
   ns?: Ns,
   options: { keyPrefix?: KPrefix } = {}
 ) {
-  const language = preferences.fallbackLng
+  const finalLanguage = preferences.language ?? preferences.fallbackLng
   const i18nextInstance = await initI18next(
     preferences,
-    language,
+    finalLanguage,
     Array.isArray(ns) ? (ns as string[]) : (ns as string)
   )
   return {
-    t: i18nextInstance.getFixedT(language, ns, options.keyPrefix),
+    t: i18nextInstance.getFixedT(finalLanguage, ns, options.keyPrefix),
     i18n: i18nextInstance,
   }
 }
