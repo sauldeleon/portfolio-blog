@@ -246,7 +246,7 @@ exports[`MainLayout should render successfully 1`] = `
   flex-grow: 1;
   justify-content: space-around;
   height: 100%;
-  overflow-x: visible;
+  overflow-x: auto;
 }
 
 .c5 {
