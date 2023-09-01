@@ -16,43 +16,6 @@ exports[`MainLayout should render successfully 1`] = `
   overflow: hidden;
 }
 
-.c26 {
-  padding: 0;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  background: transparent;
-  outline: none;
-  box-shadow: none;
-  color: white;
-  padding-block: 0;
-  padding-inline: 0;
-  border: none;
-  cursor: pointer;
-  position: relative;
-}
-
-.c26::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 2px;
-  bottom: 0;
-  left: 0;
-  background-color: #FBFBFB;
-}
-
-.c26::after {
-  transform: scaleX(0);
-  transform-origin: bottom right;
-  transition: transform 0.25s ease-out;
-}
-
-.c26:hover::after {
-  transform: scaleX(1);
-  transform-origin: bottom left;
-}
-
 .c9 {
   font-family: 'Roboto mono',monospace;
   font-weight: 400;
@@ -80,12 +43,23 @@ exports[`MainLayout should render successfully 1`] = `
   padding-left: 10px;
 }
 
-.c28 {
-  position: relative;
+.c19 {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  outline: none;
+  box-shadow: none;
+  color: white;
+  padding-block: 0;
+  padding-inline: 0;
+  border: none;
+  cursor: pointer;
   position: relative;
 }
 
-.c28::after {
+.c19::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -95,20 +69,50 @@ exports[`MainLayout should render successfully 1`] = `
   background-color: #FBFBFB;
 }
 
-.c28::after {
+.c19::after {
   transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.25s ease-out;
 }
 
-.c28:hover::after {
+.c19:hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
 
-.c28:hover,
-.c28:active,
-.c28:focus {
+.c20 {
+  margin-right: 25px;
+}
+
+.c29 {
+  position: relative;
+  position: relative;
+}
+
+.c29::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #FBFBFB;
+}
+
+.c29::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.c29:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c29:hover,
+.c29:active,
+.c29:focus {
   text-decoration: none;
 }
 
@@ -144,7 +148,7 @@ exports[`MainLayout should render successfully 1`] = `
   text-decoration: none;
 }
 
-.c19 {
+.c21 {
   position: relative;
   width: 100%;
   display: flex;
@@ -154,25 +158,25 @@ exports[`MainLayout should render successfully 1`] = `
   margin-top: 50px;
 }
 
-.c20 {
+.c22 {
   position: relative;
   width: 100%;
   height: 15px;
 }
 
-.c23 {
+.c25 {
   position: absolute;
   top: -61px;
   left: 30px;
 }
 
-.c21 {
+.c23 {
   height: 7px;
   width: 100%;
   position: relative;
 }
 
-.c21:before {
+.c23:before {
   content: '';
   position: absolute;
   width: 100%;
@@ -180,7 +184,7 @@ exports[`MainLayout should render successfully 1`] = `
   background: linear-gradient(         to bottom,         rgba(0,0,0,0.3),         rgba(152,223,214,0.3)       );
 }
 
-.c22 {
+.c24 {
   position: relative;
   max-width: 1440px;
   min-height: 120px;
@@ -191,12 +195,12 @@ exports[`MainLayout should render successfully 1`] = `
   padding: 30px;
 }
 
-.c24 {
+.c26 {
   display: flex;
   align-items: center;
 }
 
-.c25 {
+.c27 {
   display: flex;
   align-items: center;
   flex-grow: 1;
@@ -206,7 +210,7 @@ exports[`MainLayout should render successfully 1`] = `
   flex-wrap: wrap;
 }
 
-.c27 {
+.c28 {
   height: 20px;
   display: flex;
   gap: 20px;
@@ -214,7 +218,7 @@ exports[`MainLayout should render successfully 1`] = `
   padding: 30px 0;
 }
 
-.c29::after {
+.c30::after {
   content: none;
 }
 
@@ -402,14 +406,14 @@ exports[`MainLayout should render successfully 1`] = `
 }
 
 @media (width >= 1024px) {
-  .c22 {
+  .c24 {
     justify-content: space-between;
     grid-template-columns: 1fr 100px;
   }
 }
 
 @media (width >= 1024px) {
-  .c27 {
+  .c28 {
     justify-self: end;
     padding: 0;
   }
@@ -715,28 +719,57 @@ exports[`MainLayout should render successfully 1`] = `
       >
         test
       </div>
+      <div
+        class="CookieConsent"
+        style="align-items: center; background: rgb(0, 0, 0); color: white; display: flex; flex-wrap: wrap; justify-content: space-between; left: 0px; position: fixed; width: 100%; z-index: 999; font-family: 'Roboto mono', monospace; border-top: 1px solid #FBFBFB; bottom: 0px;"
+      >
+        <div
+          class=""
+          style="flex: 1 0 300px; margin: 15px;"
+        >
+          <p
+            class="c8 c9"
+          >
+            This website uses cookies to ensure you get the best experience.
+          </p>
+        </div>
+        <div
+          class=""
+        >
+          <button
+            aria-label="Accept Cookies"
+            class="c19 c20"
+          >
+            <p
+              class="c8 c9"
+            >
+              Accept
+            </p>
+          </button>
+        </div>
+      </div>
       <footer
-        class="c19"
+        class="c21"
         tabindex="-1"
       >
         <div
-          class="c20"
+          class="c22"
         >
           <div
-            class="c21"
+            class="c23"
           />
           <div
-            class="c21"
+            class="c23"
           />
           <div
-            class="c21"
+            class="c23"
           />
         </div>
         <div
-          class="c22"
+          class="c24"
         >
           <svg
-            class="c23"
+            class="c25"
             height="64"
             width="120"
           >
@@ -744,10 +777,10 @@ exports[`MainLayout should render successfully 1`] = `
           </svg>
           <nav
             aria-label="Site map"
-            class="c24"
+            class="c26"
           >
             <ul
-              class="c25"
+              class="c27"
             >
               <li>
                 <a
@@ -791,7 +824,7 @@ exports[`MainLayout should render successfully 1`] = `
               <li>
                 <button
                   aria-label="Set Dark mode styled theme"
-                  class="c26"
+                  class="c19"
                 >
                   <svg
                     color="#FBFBFB"
@@ -810,7 +843,7 @@ exports[`MainLayout should render successfully 1`] = `
               <li>
                 <button
                   aria-label="Set Pain mode styled theme"
-                  class="c26"
+                  class="c19"
                 >
                   <svg
                     color="#FBFBFB"
@@ -829,7 +862,7 @@ exports[`MainLayout should render successfully 1`] = `
               <li>
                 <button
                   aria-label="Toggle language. Current language is English."
-                  class="c26"
+                  class="c19"
                 >
                   <svg
                     color="#FBFBFB"
@@ -848,11 +881,11 @@ exports[`MainLayout should render successfully 1`] = `
             </ul>
           </nav>
           <div
-            class="c27"
+            class="c28"
           >
             <a
               aria-label="My Telegram username"
-              class="c28 c29"
+              class="c29 c30"
               data-testid="plain-anchor"
               href="https://t.me/Sdlgr"
             >
@@ -864,7 +897,7 @@ exports[`MainLayout should render successfully 1`] = `
             </a>
             <a
               aria-label="My GitHub account"
-              class="c28 c29"
+              class="c29 c30"
               data-testid="plain-anchor"
               href="https://github.com/sauldeleon"
             >
@@ -876,7 +909,7 @@ exports[`MainLayout should render successfully 1`] = `
             </a>
             <a
               aria-label="My LinkedIn profile"
-              class="c28 c29"
+              class="c29 c30"
               data-testid="plain-anchor"
               href="https://www.linkedin.com/in/sauldeleonguerrero"
             >

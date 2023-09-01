@@ -1,5 +1,10 @@
 {
   "metadata": {
     "description": "My personal Portfolio"
+  },
+  "cookieBanner": {
+    "acceptAria": "Accept Cookies",
+    "accept": "Accept",
+    "message": "This website uses cookies to ensure you get the best experience."
   }
 }
