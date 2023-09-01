@@ -1,8 +1,15 @@
 'use client'
 
 import React, { useId } from 'react'
+import { Trans } from 'react-i18next'
 
-import { ArrowRightIcon } from '@sdlgr/assets'
+import {
+  ArrowRightIcon,
+  CameraIcon,
+  CatIcon,
+  GameControllerIcon,
+  HikeIcon,
+} from '@sdlgr/assets'
 import { Body, Label } from '@sdlgr/typography'
 
 import { useClientTranslation } from '@web/i18n/client'
@@ -20,11 +27,21 @@ interface HomeLayoutProps {
 
 export default function HomeLayout({ children }: HomeLayoutProps) {
   const { t } = useClientTranslation('homepage')
-  const summaryParagraphs: string[] = [
+  const summaryParagraphs: React.ReactNode[] = [
     t('summary.p1'),
     t('summary.p2'),
     t('summary.p3'),
-    t('summary.p4'),
+    <Trans
+      key="summaryP4"
+      t={t}
+      i18nKey="summary.p4"
+      components={{
+        hiker: <HikeIcon width={22} height={22} />,
+        cat: <CatIcon width={22} height={22} />,
+        gameController: <GameControllerIcon width={22} height={22} />,
+        camera: <CameraIcon width={22} height={22} />,
+      }}
+    />,
   ]
   const id = useId()
   return (

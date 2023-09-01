@@ -295,7 +295,7 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
       <p
         class="c11 c12"
       >
-        I am currently more interested on FrontEnd development, but I have a blast developing BackEnd mainly with Node.js while learning new technologies and already having experience in many others.
+        Fullstack experience but specialized in FrontEnd development.
       </p>
       <p
         class="c11 c12"
@@ -305,7 +305,35 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
       <p
         class="c11 c12"
       >
-        Mountaineer ⛰️, cat petter 🐱, tireless gamer 🎮 and disastrous photographer 📷.
+        Mountaineer 
+        <svg
+          height="22"
+          width="22"
+        >
+          hike.svg
+        </svg>
+        , cat petter 
+        <svg
+          height="22"
+          width="22"
+        >
+          cat.svg
+        </svg>
+        , tireless gamer 
+        <svg
+          height="22"
+          width="22"
+        >
+          game-controller.svg
+        </svg>
+         and disastrous photographer 
+        <svg
+          height="22"
+          width="22"
+        >
+          camera.svg
+        </svg>
+        .
       </p>
     </section>
     <a
