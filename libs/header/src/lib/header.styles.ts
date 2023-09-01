@@ -29,7 +29,11 @@ export const StyledNav = styled.nav`
 `
 
 export const StyledNavLink = styled(Link)<{ $isActive: boolean }>`
+  width: 100%;
+  height: 100%;
   display: flex;
+  justify-content: center;
+  padding-bottom: 25px;
 
   &::after {
     content: none;
@@ -37,6 +41,7 @@ export const StyledNavLink = styled(Link)<{ $isActive: boolean }>`
 
   ${({ theme }) => theme.media.up.md} {
     position: relative;
+    padding-bottom: 0;
 
     ${({ theme }) => theme.helpers.textBottomBorder.afterShared}
     ${({ $isActive, theme }) =>
@@ -68,7 +73,6 @@ export const StyledListItem = styled.li<{
   display: flex;
   justify-content: center;
   height: 100%;
-  padding-bottom: 25px;
 
   ${({ $isActive }) =>
     $isActive &&
