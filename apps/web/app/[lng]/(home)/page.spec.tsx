@@ -4,12 +4,6 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import Page from './page.next'
 
-jest.mock('next/headers', () => ({
-  cookies: () => ({
-    get: jest.fn(),
-  }),
-}))
-
 describe('[lng] route - Page', () => {
   it('should render successfully', async () => {
     const { baseElement } = renderApp(<Page />)

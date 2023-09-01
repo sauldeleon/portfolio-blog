@@ -8,15 +8,20 @@ import StyledComponentsRegistry from '@web/components/StyledComponentsRegistry/S
 import { getServerTranslation } from '@web/i18n/server'
 import { languages } from '@web/i18n/settings'
 
-interface RootLayoutProps {
-  children: React.ReactNode
+interface RouteProps {
   params: {
     lng: string
   }
 }
 
-export async function generateMetadata() {
-  const { t } = await getServerTranslation()
+interface RootLayoutProps extends RouteProps {
+  children: React.ReactNode
+}
+
+type GenerateMetadataProps = RouteProps
+
+export async function generateMetadata({ params }: GenerateMetadataProps) {
+  const { t } = await getServerTranslation({ language: params.lng })
   return {
     title: 'Saúl de León Guerrero',
     description: t('metadata.description'),

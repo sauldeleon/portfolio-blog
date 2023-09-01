@@ -6,12 +6,20 @@ import { useServerTranslation as useServerTranslationLib } from '@sdlgr/i18n-ser
 
 import { defaultNS, fallbackLng, languages } from './settings'
 
+interface UseServerTranslationProps<Ns, KPrefix> {
+  ns?: Ns
+  language?: string
+  options?: { keyPrefix?: KPrefix }
+}
+
 export function useServerTranslation<
   Ns extends FlatNamespace,
   KPrefix extends KeyPrefix<FallbackNs<Ns>> = undefined
->(ns?: Ns, options: { keyPrefix?: KPrefix } = {}) {
+>(props?: UseServerTranslationProps<Ns, KPrefix>) {
+  const { ns, language, options = {} } = props ?? {}
   return useServerTranslationLib(
     {
+      language,
       fallbackLng,
       defaultNS,
       languages,
