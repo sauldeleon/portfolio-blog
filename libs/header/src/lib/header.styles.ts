@@ -14,7 +14,7 @@ export const StyledNav = styled.nav`
   display: flex;
   justify-items: center;
   align-items: end;
-  overflow-x: scroll;
+  overflow-x: auto;
 
   ${({ theme }) => theme.media.up.md} {
     align-items: center;
@@ -29,7 +29,11 @@ export const StyledNav = styled.nav`
 `
 
 export const StyledNavLink = styled(Link)<{ $isActive: boolean }>`
+  width: 100%;
+  height: 100%;
   display: flex;
+  justify-content: center;
+  padding-bottom: 25px;
 
   &::after {
     content: none;
@@ -37,6 +41,7 @@ export const StyledNavLink = styled(Link)<{ $isActive: boolean }>`
 
   ${({ theme }) => theme.media.up.md} {
     position: relative;
+    padding-bottom: 0;
 
     ${({ theme }) => theme.helpers.textBottomBorder.afterShared}
     ${({ $isActive, theme }) =>
@@ -50,7 +55,7 @@ export const StyledList = styled.ul`
   flex-grow: 1;
   justify-content: space-around;
   height: 100%;
-  overflow-x: auto;
+  overflow-x: visible;
 
   ${({ theme }) => theme.media.up.md} {
     gap: 30px;
@@ -68,7 +73,6 @@ export const StyledListItem = styled.li<{
   display: flex;
   justify-content: center;
   height: 100%;
-  padding-bottom: 25px;
 
   ${({ $isActive }) =>
     $isActive &&

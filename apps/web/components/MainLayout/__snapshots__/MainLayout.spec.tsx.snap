@@ -229,11 +229,15 @@ exports[`MainLayout should render successfully 1`] = `
   display: flex;
   justify-items: center;
   align-items: end;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 
 .c7 {
+  width: 100%;
+  height: 100%;
   display: flex;
+  justify-content: center;
+  padding-bottom: 25px;
 }
 
 .c7::after {
@@ -246,7 +250,7 @@ exports[`MainLayout should render successfully 1`] = `
   flex-grow: 1;
   justify-content: space-around;
   height: 100%;
-  overflow-x: auto;
+  overflow-x: visible;
 }
 
 .c5 {
@@ -254,7 +258,6 @@ exports[`MainLayout should render successfully 1`] = `
   display: flex;
   justify-content: center;
   height: 100%;
-  padding-bottom: 25px;
 }
 
 .c5 .c8 {
@@ -282,7 +285,6 @@ exports[`MainLayout should render successfully 1`] = `
   display: flex;
   justify-content: center;
   height: 100%;
-  padding-bottom: 25px;
 }
 
 .c10 .c8 {
@@ -431,6 +433,7 @@ exports[`MainLayout should render successfully 1`] = `
 @media (width >= 768px) {
   .c7 {
     position: relative;
+    padding-bottom: 0;
     position: relative;
   }
 
