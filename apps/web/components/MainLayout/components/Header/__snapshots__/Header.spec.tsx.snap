@@ -71,6 +71,7 @@ exports[`Header should render successfully 1`] = `
   display: flex;
   justify-items: center;
   align-items: end;
+  overflow-x: scroll;
 }
 
 .c6 {
@@ -95,6 +96,7 @@ exports[`Header should render successfully 1`] = `
   flex-grow: 1;
   justify-content: space-around;
   height: 100%;
+  overflow-x: visible;
 }
 
 .c4 {
