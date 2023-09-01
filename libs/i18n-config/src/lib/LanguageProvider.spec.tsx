@@ -1,5 +1,4 @@
-import { render, waitFor } from '@testing-library/react'
-import Cookies from 'js-cookie'
+import { render } from '@testing-library/react'
 
 import { LanguageContextProvider } from './LanguageProvider'
 
@@ -24,18 +23,5 @@ describe('LanguageProvider', () => {
       <LanguageContextProvider value={undefined}>test</LanguageContextProvider>
     )
     expect(baseElement).toHaveTextContent('test')
-  })
-
-  it('should render successfully store the language in a cookie', async () => {
-    const { baseElement } = render(
-      <LanguageContextProvider value={{ language: 'en' }}>
-        test
-      </LanguageContextProvider>
-    )
-    expect(baseElement).toHaveTextContent('test')
-
-    await waitFor(() =>
-      expect(Cookies.set).toHaveBeenNthCalledWith(1, 'i18nextLng', 'en')
-    )
   })
 })

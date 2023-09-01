@@ -4,11 +4,10 @@ import {
   KeyPrefix,
   createInstance,
 } from 'i18next'
-import { cookies } from 'next/headers'
 import { FallbackNs } from 'react-i18next'
 import { initReactI18next } from 'react-i18next/initReactI18next'
 
-import { LANGUAGE_COOKIE, getOptions } from '@sdlgr/i18n-config'
+import { getOptions } from '@sdlgr/i18n-config'
 
 type TranslationPreferences = {
   fallbackLng: string
@@ -39,8 +38,7 @@ export async function useServerTranslation<
   ns?: Ns,
   options: { keyPrefix?: KPrefix } = {}
 ) {
-  const language =
-    cookies().get(LANGUAGE_COOKIE)?.value || preferences.fallbackLng
+  const language = preferences.fallbackLng
   const i18nextInstance = await initI18next(
     preferences,
     language,

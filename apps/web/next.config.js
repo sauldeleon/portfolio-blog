@@ -13,7 +13,7 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: true,
   },
-  // output: 'export',
+  output: process.env.EXPORT_STATIC_FILES === 'true' ? 'export' : undefined,
   compiler: {
     // For other options, see https://styled-components.com/docs/tooling#babel-plugin
     styledComponents: true,

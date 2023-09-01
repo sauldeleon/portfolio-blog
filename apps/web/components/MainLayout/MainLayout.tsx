@@ -1,6 +1,7 @@
 'use client'
 
 import { AppProgressBar as ProgressBar } from 'next-nprogress-bar'
+import { Suspense } from 'react'
 
 import { mainTheme } from '@sdlgr/main-theme'
 
@@ -15,15 +16,18 @@ interface LayoutProps {
 export function MainLayout({ children }: LayoutProps) {
   return (
     <StyledPage>
-      <ProgressBar
-        color={mainTheme.colors.white}
-        height="1px"
-        options={{
-          showSpinner: false,
-          template: '<div class="bar" role="bar"><div class="peg"></div></div>',
-        }}
-        shallowRouting
-      />
+      <Suspense fallback={null}>
+        <ProgressBar
+          color={mainTheme.colors.white}
+          height="1px"
+          options={{
+            showSpinner: false,
+            template:
+              '<div class="bar" role="bar"><div class="peg"></div></div>',
+          }}
+          shallowRouting
+        />
+      </Suspense>
       <Header />
       <StyledContent>{children}</StyledContent>
       <Footer />

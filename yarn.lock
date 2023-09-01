@@ -3648,7 +3648,6 @@ __metadata:
     jest-environment-jsdom: 29.6.4
     jest-junit: 16.0.0
     jest-styled-components: 7.1.1
-    js-cookie: 3.0.5
     lint-staged: 14.0.1
     next: 13.4.19
     next-nprogress-bar: 2.1.2
@@ -10800,13 +10799,6 @@ __metadata:
   version: 1.4.0
   resolution: "jju@npm:1.4.0"
   checksum: 3790481bd2b7827dd6336e6e3dc2dcc6d425679ba7ebde7b679f61dceb4457ea0cda330972494de608571f4973c6dfb5f70fab6f3c5037dbab19ac449a60424f
-  languageName: node
-  linkType: hard
-
-"js-cookie@npm:3.0.5":
-  version: 3.0.5
-  resolution: "js-cookie@npm:3.0.5"
-  checksum: 2dbd2809c6180fbcf060c6957cb82dbb47edae0ead6bd71cbeedf448aa6b6923115003b995f7d3e3077bfe2cb76295ea6b584eb7196cca8ba0a09f389f64967a
   languageName: node
   linkType: hard
 

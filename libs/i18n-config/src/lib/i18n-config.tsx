@@ -1,7 +1,5 @@
 import { InitOptions } from 'i18next'
 
-export const LANGUAGE_COOKIE = 'i18nextLng'
-
 export type GetOptionsProps = {
   lng?: string
   ns?: string | string[]
