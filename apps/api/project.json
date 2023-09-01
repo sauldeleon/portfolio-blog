@@ -4,6 +4,15 @@
   "projectType": "application",
   "sourceRoot": "apps/api",
   "targets": {
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "changelogHeader": "# Changelog Saúl's Portfolio API \n",
+        "baseBranch": "main",
+        "commitMessageFormat": "chore(${projectName}): release: v${version}",
+        "push": false
+      }
+    },
     "build": {
       "executor": "@nx-go/nx-go:build",
       "options": {

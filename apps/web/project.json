@@ -4,6 +4,15 @@
   "sourceRoot": "apps/web",
   "projectType": "application",
   "targets": {
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "changelogHeader": "# Changelog Saúl's Portfolio \n",
+        "baseBranch": "main",
+        "commitMessageFormat": "chore(${projectName}): release: v${version}",
+        "push": false
+      }
+    },
     "build": {
       "executor": "@nx/next:build",
       "outputs": ["{options.outputPath}"],

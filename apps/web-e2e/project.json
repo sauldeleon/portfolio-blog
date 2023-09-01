@@ -4,6 +4,15 @@
   "sourceRoot": "apps/web-e2e/src",
   "projectType": "application",
   "targets": {
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "changelogHeader": "# Changelog web E2E tests \n",
+        "baseBranch": "main",
+        "commitMessageFormat": "chore(${projectName}): release: v${version}",
+        "push": false
+      }
+    },
     "e2e": {
       "executor": "@nx/cypress:cypress",
       "options": {

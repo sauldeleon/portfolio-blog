@@ -3,6 +3,13 @@
   "version": "0.0.0",
   "license": "MIT",
   "private": true,
+  "contributors": [
+    {
+      "name": "Saúl de León Guerrero",
+      "email": "sauldeleonguerrero@gmail.com",
+      "url": "https://github.com/sauldeleon"
+    }
+  ],
   "scripts": {
     "nx": "nx",
     "start:web": "nx serve web",
@@ -26,7 +33,8 @@
     "dep-graph": "nx dep-graph",
     "prepare": "husky install",
     "postInstall": "patch-package",
-    "afterInstall": "patch-package & husky install"
+    "afterInstall": "patch-package & husky install",
+    "release": "nx run version"
   },
   "dependencies": {
     "@fingerprintjs/botd": "1.6.2",
@@ -53,6 +61,7 @@
     "@babel/preset-react": "^7.22.5",
     "@commitlint/cli": "17.7.1",
     "@commitlint/config-conventional": "17.7.0",
+    "@jscutlery/semver": "3.1.0",
     "@nx-go/nx-go": "2.7.0",
     "@nx/cypress": "16.7.4",
     "@nx/eslint-plugin": "16.7.4",
