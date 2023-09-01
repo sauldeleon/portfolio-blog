@@ -13,7 +13,7 @@ import { Footer as FooterLib, NavItem, SocialMediaItem } from '@sdlgr/footer'
 import { LanguageContext } from '@sdlgr/i18n-config'
 import { mainTheme } from '@sdlgr/main-theme'
 
-import { useClientTranslation } from '@web/i18n/client'
+import { getNextLanguage, useClientTranslation } from '@web/i18n/client'
 
 export function Footer() {
   const { t } = useClientTranslation('footer')
@@ -21,9 +21,9 @@ export function Footer() {
   const pathname = usePathname()
   const { push } = useRouter()
 
-  const toggleLanguage = (path: string) => {
-    const noLangPath = path.replace(/^\/[\w\d]+/, '')
-    const newLanguage = language === 'en' ? 'es' : 'en'
+  const toggleLanguage = () => {
+    const newLanguage = getNextLanguage(language)
+    const noLangPath = pathname.replace(/^\/[\w\d]+/, '')
     push(`/${newLanguage}${noLangPath}`)
   }
 
@@ -64,11 +64,9 @@ export function Footer() {
       ),
     },
     {
-      label: language === 'en' ? 'EN' : 'ES',
-      ariaLabel: t('toggleLanguage', {
-        language: language === 'en' ? 'English' : 'Español',
-      }),
-      onClick: () => toggleLanguage(pathname),
+      label: t('languageLabel'),
+      ariaLabel: t('toggleLanguageAria'),
+      onClick: toggleLanguage,
       icon: (
         <LanguageIcon color={mainTheme.colors.white} height={22} width={22} />
       ),

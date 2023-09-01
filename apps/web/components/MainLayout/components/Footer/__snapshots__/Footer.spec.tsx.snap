@@ -332,7 +332,7 @@ exports[`Footer should render successfully 1`] = `
             </li>
             <li>
               <button
-                aria-label="Toggle language. Current language is {language}."
+                aria-label="Toggle language. Current language is English."
                 class="c9"
               >
                 <svg

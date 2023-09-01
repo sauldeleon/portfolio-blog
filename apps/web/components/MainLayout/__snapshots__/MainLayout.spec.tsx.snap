@@ -823,7 +823,7 @@ exports[`MainLayout should render successfully 1`] = `
               </li>
               <li>
                 <button
-                  aria-label="Toggle language. Current language is {language}."
+                  aria-label="Toggle language. Current language is English."
                   class="c26"
                 >
                   <svg

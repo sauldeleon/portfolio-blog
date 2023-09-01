@@ -34,3 +34,12 @@ export function useClientTranslation<
 ): UseTranslationResponse<FallbackNs<Ns>, KPrefix> {
   return useClientTranslationLib(ns, options, fallbackLng)
 }
+
+export function getNextLanguage(currentLanguage?: string) {
+  if (!currentLanguage) {
+    return fallbackLng
+  }
+  const languageIndex = languages.indexOf(currentLanguage)
+  const newLanguageIndex = (languageIndex + 1) % languages.length
+  return languages[newLanguageIndex]
+}

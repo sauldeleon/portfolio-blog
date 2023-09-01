@@ -13,5 +13,6 @@
   "telegramAria": "My Telegram username",
   "githubAria": "My GitHub account",
   "linkedInAria": "My LinkedIn profile",
-  "toggleLanguage": "Toggle language. Current language is {language}."
+  "languageLabel": "EN",
+  "toggleLanguageAria": "Toggle language. Current language is English."
 }

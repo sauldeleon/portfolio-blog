@@ -13,5 +13,6 @@
   "githubAria": "Mi cuenta de GitHub",
   "linkedInAria": "My perfil de LinkedIn",
   "telegramAria": "Mi usuario de Telegram",
-  "toggleLanguage": "Alternar idioma. El idioma actual es Español."
+  "languageLabel": "ES",
+  "toggleLanguageAria": "Alternar idioma. El idioma actual es Español."
 }

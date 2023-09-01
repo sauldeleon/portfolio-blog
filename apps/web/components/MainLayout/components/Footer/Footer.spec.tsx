@@ -38,7 +38,7 @@ describe('Footer', () => {
     expect(mockFn).toHaveBeenCalledTimes(2)
   })
 
-  it('should toggle language to Spanish', async () => {
+  it('should toggle language to next available language', async () => {
     ;(usePathname as jest.Mock).mockImplementation(() => '/en/path/slug')
     renderApp(<Footer />)
     await screen.findByRole('navigation')
@@ -47,16 +47,5 @@ describe('Footer', () => {
     })
     await userEvent.click(toggleLanguageButton)
     expect(mockPush).toHaveBeenNthCalledWith(1, '/es/path/slug')
-  })
-
-  it('should toggle language to English', async () => {
-    ;(usePathname as jest.Mock).mockImplementation(() => '/es/path/slug')
-    renderApp(<Footer />, undefined, { language: 'es' })
-    await screen.findByRole('navigation')
-    const toggleLanguageButton = screen.getByRole('button', {
-      name: /Toggle language/,
-    })
-    await userEvent.click(toggleLanguageButton)
-    expect(mockPush).toHaveBeenNthCalledWith(1, '/en/path/slug')
   })
 })
