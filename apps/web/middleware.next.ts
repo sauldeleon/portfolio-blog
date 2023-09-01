@@ -1,6 +1,8 @@
 import acceptLanguage from 'accept-language'
 import { NextRequest, NextResponse } from 'next/server'
 
+import { LANGUAGE_COOKIE } from '@sdlgr/i18n-config'
+
 import { fallbackLng, languages } from './i18n/settings'
 
 acceptLanguage.languages(languages)
@@ -12,12 +14,10 @@ export const config = {
   ],
 }
 
-const cookieName = 'i18next'
-
 export function middleware(req: NextRequest) {
   let lng: string | null = null
-  if (req.cookies.has(cookieName)) {
-    lng = acceptLanguage.get(req.cookies.get(cookieName)?.value)
+  if (req.cookies.has(LANGUAGE_COOKIE)) {
+    lng = acceptLanguage.get(req.cookies.get(LANGUAGE_COOKIE)?.value)
   }
   if (!lng) {
     lng = acceptLanguage.get(req.headers.get('Accept-Language'))
@@ -43,7 +43,7 @@ export function middleware(req: NextRequest) {
     )
     const response = NextResponse.next()
     if (lngInReferer) {
-      response.cookies.set(cookieName, lngInReferer)
+      response.cookies.set(LANGUAGE_COOKIE, lngInReferer)
     }
     return response
   }

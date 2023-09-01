@@ -13,6 +13,13 @@ jest.mock('next/headers', () => ({
     get: jest.fn(),
   }),
 }))
+jest.mock('next/navigation', () => ({
+  ...jest.requireActual('next/navigation'),
+  usePathname: jest.fn(),
+  useRouter: () => ({
+    push: jest.fn(),
+  }),
+}))
 
 describe('[lng] route - layout', () => {
   it('should render successfully in English', async () => {

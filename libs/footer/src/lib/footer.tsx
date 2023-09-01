@@ -26,16 +26,18 @@ type NavItemPartial = {
   href: string
   onClick: React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>
 }
-type NavItem = AtLeastOne<NavItemPartial> & NavItemShared
+export type NavItem = AtLeastOne<NavItemPartial> & NavItemShared
+
+export type SocialMediaItem = {
+  href: string
+  ariaLabel: string
+  icon: React.ReactNode
+}
 
 interface FooterProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> {
   navItems?: NavItem[]
-  socialMediaItems?: {
-    href: string
-    ariaLabel: string
-    icon: React.ReactNode
-  }[]
+  socialMediaItems?: SocialMediaItem[]
   navProps?: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>
 }
 

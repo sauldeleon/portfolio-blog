@@ -12,5 +12,6 @@
   "siteMap": "Site map",
   "telegramAria": "My Telegram username",
   "githubAria": "My GitHub account",
-  "linkedInAria": "My LinkedIn profile"
+  "linkedInAria": "My LinkedIn profile",
+  "toggleLanguage": "Toggle language. Current language is {language}."
 }

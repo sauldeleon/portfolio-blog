@@ -821,6 +821,25 @@ exports[`MainLayout should render successfully 1`] = `
                   </p>
                 </button>
               </li>
+              <li>
+                <button
+                  aria-label="Toggle language. Current language is {language}."
+                  class="c26"
+                >
+                  <svg
+                    color="#FBFBFB"
+                    height="22"
+                    width="22"
+                  >
+                    language.svg
+                  </svg>
+                  <p
+                    class="c8 c9"
+                  >
+                    EN
+                  </p>
+                </button>
+              </li>
             </ul>
           </nav>
           <div

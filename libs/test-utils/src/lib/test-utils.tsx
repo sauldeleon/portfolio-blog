@@ -27,8 +27,17 @@ export const renderWithTheme = (children: ReactNode): RenderResult => {
   return render(<ThemeProvider theme={mainTheme}>{children}</ThemeProvider>)
 }
 
+interface RenderProviderOptions {
+  language?: string
+}
 /* istanbul ignore next */
-export function RenderProviders({ children }: { children: ReactNode }) {
+export function RenderProviders({
+  children,
+  options,
+}: {
+  children: ReactNode
+  options?: RenderProviderOptions
+}) {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -39,7 +48,7 @@ export function RenderProviders({ children }: { children: ReactNode }) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <LanguageContextProvider value={{ language: 'en' }}>
+      <LanguageContextProvider value={{ language: options?.language ?? 'en' }}>
         <ThemeProvider theme={mainTheme}>{children}</ThemeProvider>
       </LanguageContextProvider>
     </QueryClientProvider>
@@ -49,9 +58,13 @@ export function RenderProviders({ children }: { children: ReactNode }) {
 /* istanbul ignore next */
 export const renderApp = (
   children: ReactNode,
-  options?: Omit<RenderOptions, 'queries'>
+  options?: Omit<RenderOptions, 'queries'>,
+  providerOptions?: RenderProviderOptions
 ) => {
-  return render(<RenderProviders>{children}</RenderProviders>, options)
+  return render(
+    <RenderProviders options={providerOptions}>{children}</RenderProviders>,
+    options
+  )
 }
 
 /**
