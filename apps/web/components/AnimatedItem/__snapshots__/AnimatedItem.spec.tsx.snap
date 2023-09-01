@@ -51,6 +51,7 @@ exports[`AnimatedItem should render successfully 1`] = `
 }
 
 .c0:hover {
+  z-index: 200;
   animation-play-state: paused;
 }
 

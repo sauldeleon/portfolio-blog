@@ -54,6 +54,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
 }
 
 .c12:hover {
+  z-index: 200;
   animation-play-state: paused;
 }
 
@@ -76,6 +77,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
 }
 
 .c20:hover {
+  z-index: 200;
   animation-play-state: paused;
 }
 

@@ -1,5 +1,10 @@
 {
   "metadata": {
     "description": "Mi Portfolio personal"
+  },
+  "cookieBanner": {
+    "acceptCookies": "Aceptar cookies",
+    "accept": "Aceptar",
+    "message": "Este sitio web utiliza cookies para asegurarse de que obtenga la mejor experiencia."
   }
 }
