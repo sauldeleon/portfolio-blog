@@ -50,7 +50,7 @@ export const StyledList = styled.ul`
   flex-grow: 1;
   justify-content: space-around;
   height: 100%;
-  overflow-x: visible;
+  overflow-x: auto;
 
   ${({ theme }) => theme.media.up.md} {
     gap: 30px;
