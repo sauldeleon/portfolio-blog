@@ -34,7 +34,7 @@
     "prepare": "husky install",
     "postInstall": "patch-package",
     "afterInstall": "patch-package & husky install",
-    "release": "nx run version"
+    "release": "nx affected --target version"
   },
   "dependencies": {
     "@fingerprintjs/botd": "1.6.2",
