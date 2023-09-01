@@ -126,7 +126,9 @@ export const HorizontalMovement = styled.div.attrs<{
       animation-timing-function: linear;
       animation-iteration-count: infinite;
     `}
+
   &:hover {
+    z-index: 200;
     animation-play-state: paused;
     ${VerticalMovement},${RotationMovement},${ColorSwapping} {
       animation-play-state: paused;
