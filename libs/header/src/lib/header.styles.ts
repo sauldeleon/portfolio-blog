@@ -14,7 +14,7 @@ export const StyledNav = styled.nav`
   display: flex;
   justify-items: center;
   align-items: end;
-  overflow-x: scroll;
+  overflow-x: auto;
 
   ${({ theme }) => theme.media.up.md} {
     align-items: center;
@@ -50,7 +50,7 @@ export const StyledList = styled.ul`
   flex-grow: 1;
   justify-content: space-around;
   height: 100%;
-  overflow-x: auto;
+  overflow-x: visible;
 
   ${({ theme }) => theme.media.up.md} {
     gap: 30px;
