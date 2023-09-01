@@ -1,0 +1,25 @@
+{
+  "name": "global-types",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/global-types/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "changelogHeader": "# Changelog Global types \n",
+        "baseBranch": "main",
+        "commitMessageFormat": "chore(${projectName}): release: v${version}",
+        "push": false
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/global-types/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "explore": "Explore",
+  "underConstruction": "Under construction",
+  "aboutMe": "About me",
+  "experience": "Experience",
+  "summary": {
+    "p1": "Preference for the (x)ERN stack, transforming designs into responsive webs. I'm fluent in HTML5, CSS3, and (Java|Type)Script.",
+    "p2": "I've got Fullstack experience, but I'm most enthusiastic about FrontEnd development.",
+    "p3": "I do love staying up-to-date with the latest trends, and my commitment is to deliver work that can be easily maintained and evolved without too much suffering (if possible).",
+    "p4": "Mountaineer <hiker/>, cat petter <cat/>, tireless gamer <gameController/> and disastrous photographer <camera/>."
+  }
+}

@@ -1,0 +1,162 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CircleLink should render with a different size 1`] = `
+.c0 {
+  position: relative;
+  position: relative;
+}
+
+.c0::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #FBFBFB;
+}
+
+.c0::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.c0:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c0:hover,
+.c0:active,
+.c0:focus {
+  text-decoration: none;
+}
+
+.c6 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  white-space: pre-line;
+}
+
+.c6 ul,
+.c6 ol {
+  margin-left: 40px;
+  margin-bottom: 10px;
+}
+
+.c6 ul {
+  list-style: outside disc;
+}
+
+.c6 ol {
+  list-style: decimal;
+}
+
+.c6 li {
+  padding-left: 10px;
+}
+
+.c7 {
+  margin-left: 8px;
+  position: relative;
+}
+
+.c7::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #FBFBFB;
+}
+
+.c7::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.5s ease-out;
+}
+
+.c1 {
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  max-height: 50px;
+}
+
+.c1::after {
+  content: none;
+}
+
+.c1:hover circle.loading {
+  stroke: white;
+  stroke-width: 6px;
+  stroke-dasharray: 110;
+  stroke-dashoffset: 82;
+  animation: kVEmCK 0.5s steps(4,jump-none) forwards;
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+.c1:hover .c5::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c2 {
+  position: relative;
+  width: 50px;
+  height: 50px;
+}
+
+.c3 {
+  position: absolute;
+  transform: translate(-50%,-50%);
+  top: 50%;
+  left: 50%;
+}
+
+.c4 {
+  position: absolute;
+  transform: translate(-50%,-50%);
+  top: 50%;
+  left: 50%;
+  display: flex;
+}
+
+<body>
+  <div>
+    <a
+      class="c0 c1"
+      href=""
+    >
+      <div
+        class="c2"
+      >
+        <svg
+          class="c3"
+          height="50"
+          width="50"
+        >
+          circleButton.svg
+        </svg>
+        <div
+          class="c4"
+        >
+          wadus
+        </div>
+      </div>
+      <p
+        class="c5 c6 c7"
+      >
+        test
+      </p>
+    </a>
+  </div>
+</body>
+`;

@@ -1,0 +1,18 @@
+{
+  "experience": "Experience",
+  "experienceAria": "Go to Experience page",
+  "contact": "Contact",
+  "contactAria": "Go to Contact page",
+  "portfolio": "CV/Portfolio",
+  "portfolioAria": "Go to Portfolio page",
+  "darkMode": "Dark mode",
+  "darkModeAria": "Set Dark mode styled theme",
+  "painMode": "Pain mode",
+  "painModeAria": "Set Pain mode styled theme",
+  "siteMap": "Site map",
+  "telegramAria": "My Telegram username",
+  "githubAria": "My GitHub account",
+  "linkedInAria": "My LinkedIn profile",
+  "languageLabel": "EN",
+  "toggleLanguageAria": "Toggle language. Current language is English."
+}

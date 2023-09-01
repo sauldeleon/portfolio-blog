@@ -1,0 +1,369 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`/[lng]/(home) - HomeLayout should render 1`] = `
+.c0 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 1.5rem;
+  line-height: normal;
+  margin: 0;
+}
+
+.c12 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  white-space: pre-line;
+}
+
+.c12 ul,
+.c12 ol {
+  margin-left: 40px;
+  margin-bottom: 10px;
+}
+
+.c12 ul {
+  list-style: outside disc;
+}
+
+.c12 ol {
+  list-style: decimal;
+}
+
+.c12 li {
+  padding-left: 10px;
+}
+
+.c8 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 500;
+  color: #FBFBFB;
+  font-size: 0.5rem;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.c2 {
+  position: relative;
+  position: relative;
+}
+
+.c2::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #FBFBFB;
+}
+
+.c2::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.c2:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c2:hover,
+.c2:active,
+.c2:focus {
+  text-decoration: none;
+}
+
+.c16 {
+  margin-left: 8px;
+  position: relative;
+}
+
+.c16::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #FBFBFB;
+}
+
+.c16::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.5s ease-out;
+}
+
+.c3 {
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  max-height: 76px;
+}
+
+.c3::after {
+  content: none;
+}
+
+.c3:hover circle.loading {
+  stroke: white;
+  stroke-width: 6px;
+  stroke-dasharray: 110;
+  stroke-dashoffset: 82;
+  animation: kVEmCK 0.5s steps(4, jump-none) forwards;
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+.c3:hover .c15::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c13 {
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  max-height: 42px;
+}
+
+.c13::after {
+  content: none;
+}
+
+.c13:hover circle.loading {
+  stroke: white;
+  stroke-width: 6px;
+  stroke-dasharray: 110;
+  stroke-dashoffset: 82;
+  animation: kVEmCK 0.5s steps(4, jump-none) forwards;
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+.c13:hover .c15::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c5 {
+  position: relative;
+  width: 76px;
+  height: 76px;
+}
+
+.c14 {
+  position: relative;
+  width: 42px;
+  height: 42px;
+}
+
+.c6 {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+}
+
+.c7 {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  display: flex;
+}
+
+.c1 {
+  text-align: center;
+}
+
+.c9 {
+  margin-top: 30px;
+}
+
+.c4 {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.c10 {
+  text-align: center;
+  max-width: 1180px;
+  padding: 0 34px;
+}
+
+.c10 .c11 {
+  margin-top: 20px;
+}
+
+@media (width >= 768px) {
+  .c1 {
+    font-family: 'Roboto mono',monospace;
+    font-weight: 400;
+    color: #FBFBFB;
+    font-size: 3rem;
+    line-height: normal;
+  }
+}
+
+@media (width >= 1024px) {
+  .c1 {
+    margin-bottom: 10px;
+  }
+}
+
+@media (width >= 768px) {
+  .c9 {
+    margin-bottom: 40px;
+    font-family: 'Roboto mono',monospace;
+    font-weight: 400;
+    color: #FBFBFB;
+    font-size: 3rem;
+    line-height: normal;
+  }
+}
+
+@media (width >= 768px) {
+  .c4 {
+    margin-bottom: 50px;
+  }
+}
+
+@media (width >= 768px) {
+  .c10 .c11 {
+    font-family: 'Roboto mono',monospace;
+    font-weight: 400;
+    color: #FBFBFB;
+    font-size: 1rem;
+    line-height: normal;
+  }
+}
+
+<body>
+  <div>
+    <h1
+      class="c0 c1"
+    >
+      Saúl de León Guerrero
+    </h1>
+    <a
+      class="c2 c3 c4"
+      href="/experience"
+    >
+      <div
+        class="c5"
+      >
+        <svg
+          class="c6"
+          height="76"
+          width="76"
+        >
+          circleButton.svg
+        </svg>
+        <div
+          class="c7"
+        >
+          <div
+            class="c8"
+          >
+            Explore
+          </div>
+        </div>
+      </div>
+    </a>
+    test
+    <h2
+      class="c0 c9"
+    >
+      About me
+    </h2>
+    <section
+      class="c10"
+    >
+      <p
+        class="c11 c12"
+      >
+        Preference for the (x)ERN stack, transforming designs into responsive webs. I'm fluent in HTML5, CSS3, and (Java|Type)Script.
+      </p>
+      <p
+        class="c11 c12"
+      >
+        I've got Fullstack experience, but I'm most enthusiastic about FrontEnd development.
+      </p>
+      <p
+        class="c11 c12"
+      >
+        I do love staying up-to-date with the latest trends, and my commitment is to deliver work that can be easily maintained and evolved without too much suffering (if possible).
+      </p>
+      <p
+        class="c11 c12"
+      >
+        Mountaineer 
+        <svg
+          height="22"
+          width="22"
+        >
+          hike.svg
+        </svg>
+        , cat petter 
+        <svg
+          height="22"
+          width="22"
+        >
+          cat.svg
+        </svg>
+        , tireless gamer 
+        <svg
+          height="22"
+          width="22"
+        >
+          game-controller.svg
+        </svg>
+         and disastrous photographer 
+        <svg
+          height="22"
+          width="22"
+        >
+          camera.svg
+        </svg>
+        .
+      </p>
+    </section>
+    <a
+      class="c2 c13 c4"
+      href="/experience"
+    >
+      <div
+        class="c14"
+      >
+        <svg
+          class="c6"
+          height="42"
+          width="42"
+        >
+          circleButton.svg
+        </svg>
+        <div
+          class="c7"
+        >
+          <svg>
+            arrowRight.svg
+          </svg>
+        </div>
+      </div>
+      <p
+        class="c11 c15 c12 c16"
+      >
+        Experience
+      </p>
+    </a>
+  </div>
+</body>
+`;

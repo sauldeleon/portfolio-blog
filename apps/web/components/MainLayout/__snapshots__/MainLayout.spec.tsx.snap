@@ -1,0 +1,892 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainLayout should render successfully 1`] = `
+.c0 {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.c18 {
+  display: flex;
+  min-height: calc(100vh - 115px - 300px);
+  padding-top: 80px;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.c26 {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  outline: none;
+  box-shadow: none;
+  color: white;
+  padding-block: 0;
+  padding-inline: 0;
+  border: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.c26::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #FBFBFB;
+}
+
+.c26::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.c26:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c9 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  white-space: pre-line;
+}
+
+.c9 ul,
+.c9 ol {
+  margin-left: 40px;
+  margin-bottom: 10px;
+}
+
+.c9 ul {
+  list-style: outside disc;
+}
+
+.c9 ol {
+  list-style: decimal;
+}
+
+.c9 li {
+  padding-left: 10px;
+}
+
+.c28 {
+  position: relative;
+  position: relative;
+}
+
+.c28::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #FBFBFB;
+}
+
+.c28::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.c28:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c28:hover,
+.c28:active,
+.c28:focus {
+  text-decoration: none;
+}
+
+.c6 {
+  position: relative;
+  position: relative;
+}
+
+.c6::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #FBFBFB;
+}
+
+.c6::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.c6:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c6:hover,
+.c6:active,
+.c6:focus {
+  text-decoration: none;
+}
+
+.c19 {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 120px;
+  margin-top: 50px;
+}
+
+.c20 {
+  position: relative;
+  width: 100%;
+  height: 15px;
+}
+
+.c23 {
+  position: absolute;
+  top: -61px;
+  left: 30px;
+}
+
+.c21 {
+  height: 7px;
+  width: 100%;
+  position: relative;
+}
+
+.c21:before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(         to bottom,         rgba(0,0,0,0.3),         rgba(152,223,214,0.3)       );
+}
+
+.c22 {
+  position: relative;
+  max-width: 1440px;
+  min-height: 120px;
+  align-items: center;
+  justify-content: unset;
+  width: 100%;
+  display: grid;
+  padding: 30px;
+}
+
+.c24 {
+  display: flex;
+  align-items: center;
+}
+
+.c25 {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  flex-direction: row;
+  width: 100%;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.c27 {
+  height: 20px;
+  display: flex;
+  gap: 20px;
+  justify-self: end;
+  padding: 30px 0;
+}
+
+.c29::after {
+  content: none;
+}
+
+.c1 {
+  background-color: #FBFBFB;
+  color: #000000;
+  height: 130px;
+  max-width: 1440px;
+  width: 100%;
+  padding: 0 30px;
+  margin: 0 auto;
+  display: flex;
+  justify-items: center;
+  align-items: end;
+  overflow-x: scroll;
+}
+
+.c7 {
+  display: flex;
+}
+
+.c7::after {
+  content: none;
+}
+
+.c4 {
+  display: flex;
+  align-items: end;
+  flex-grow: 1;
+  justify-content: space-around;
+  height: 100%;
+  overflow-x: visible;
+}
+
+.c5 {
+  width: 59px;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  padding-bottom: 25px;
+}
+
+.c5 .c8 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 500;
+  color: #FBFBFB;
+  font-size: 0.55rem;
+  line-height: normal;
+  color: #000000;
+  writing-mode: tb-rl;
+  transform: rotate(-180deg);
+}
+
+.c5:hover {
+  background-color: #000000;
+  cursor: pointer;
+}
+
+.c5:hover .c8 {
+  color: #FBFBFB;
+}
+
+.c10 {
+  width: 59px;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  padding-bottom: 25px;
+}
+
+.c10 .c8 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 500;
+  color: #FBFBFB;
+  font-size: 0.55rem;
+  line-height: normal;
+  color: #000000;
+  writing-mode: tb-rl;
+  transform: rotate(-180deg);
+}
+
+.c10:hover {
+  background-color: #000000;
+  cursor: pointer;
+}
+
+.c10:hover .c8 {
+  color: #FBFBFB;
+}
+
+.c17 {
+  margin-left: 8px;
+  position: relative;
+}
+
+.c17::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #FBFBFB;
+}
+
+.c17::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.5s ease-out;
+}
+
+.c11 {
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  max-height: 42px;
+}
+
+.c11::after {
+  content: none;
+}
+
+.c11:hover circle.loading {
+  stroke: white;
+  stroke-width: 6px;
+  stroke-dasharray: 110;
+  stroke-dashoffset: 82;
+  animation: kVEmCK 0.5s steps(4, jump-none) forwards;
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+.c11:hover .c16::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c13 {
+  position: relative;
+  width: 42px;
+  height: 42px;
+}
+
+.c14 {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+}
+
+.c15 {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  display: flex;
+}
+
+.c2 {
+  display: flex;
+}
+
+.c3 {
+  color: #000000;
+  margin-bottom: 25px;
+}
+
+.c12 {
+  display: none;
+}
+
+@media (width >= 768px) {
+  .c18 {
+    min-height: calc(100vh - 115px - 210px);
+  }
+}
+
+@media (width >= 1024px) {
+  .c18 {
+    min-height: calc(100vh - 115px - 185px);
+  }
+}
+
+@media (width >= 1024px) {
+  .c22 {
+    justify-content: space-between;
+    grid-template-columns: 1fr 100px;
+  }
+}
+
+@media (width >= 1024px) {
+  .c27 {
+    justify-self: end;
+    padding: 0;
+  }
+}
+
+@media (width >= 768px) {
+  .c1 {
+    align-items: center;
+    background-color: transparent;
+    color: #FBFBFB;
+    height: 115px;
+  }
+}
+
+@media (width >= 1440px) {
+  .c1 {
+    padding: 0;
+  }
+}
+
+@media (width >= 768px) {
+  .c7 {
+    position: relative;
+    position: relative;
+  }
+
+  .c7::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #FBFBFB;
+  }
+
+  .c7::after {
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+  }
+
+  .c7:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+}
+
+@media (width >= 768px) {
+  .c4 {
+    gap: 30px;
+    align-items: center;
+    justify-content: center;
+    height: unset;
+  }
+}
+
+@media (width >= 768px) {
+  .c5 {
+    width: auto;
+    padding-bottom: 0;
+  }
+
+  .c5 .c8 {
+    font-family: 'Roboto mono',monospace;
+    font-weight: 400;
+    color: #FBFBFB;
+    font-size: 0.9rem;
+    line-height: normal;
+    color: #FBFBFB;
+    writing-mode: unset;
+    transform: unset;
+  }
+}
+
+@media (width >= 768px) {
+  .c10 {
+    display: none;
+    width: auto;
+    padding-bottom: 0;
+  }
+
+  .c10 .c8 {
+    font-family: 'Roboto mono',monospace;
+    font-weight: 400;
+    color: #FBFBFB;
+    font-size: 0.9rem;
+    line-height: normal;
+    color: #FBFBFB;
+    writing-mode: unset;
+    transform: unset;
+  }
+}
+
+@media (width >= 768px) {
+  .c3 {
+    color: #FBFBFB;
+    margin-bottom: 0;
+  }
+}
+
+@media (width >= 768px) {
+  .c12 {
+    display: flex;
+  }
+}
+
+<body>
+  <div>
+    <div
+      class="c0"
+    >
+      <style>
+        
+          #nprogress {
+            pointer-events: none;
+          }
+
+          #nprogress .bar {
+            background: #FBFBFB;
+
+            position: fixed;
+            z-index: 1031;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 1px;
+          }
+
+          /* Fancy blur effect */
+          #nprogress .peg {
+            display: block;
+            position: absolute;
+            right: 0px;
+            width: 100px;
+            height: 100%;
+            box-shadow: 0 0 10px #FBFBFB, 0 0 5px #FBFBFB;
+            opacity: 1.0;
+
+            -webkit-transform: rotate(3deg) translate(0px, -4px);
+                -ms-transform: rotate(3deg) translate(0px, -4px);
+                    transform: rotate(3deg) translate(0px, -4px);
+          }
+
+          /* Remove these to get rid of the spinner */
+          #nprogress .spinner {
+            display: block;
+            position: fixed;
+            z-index: 1031;
+            top: 15px;
+            right: 15px;
+          }
+
+          #nprogress .spinner-icon {
+            width: 18px;
+            height: 18px;
+            box-sizing: border-box;
+
+            border: solid 2px transparent;
+            border-top-color: #FBFBFB;
+            border-left-color: #FBFBFB;
+            border-radius: 50%;
+
+            -webkit-animation: nprogress-spinner 400ms linear infinite;
+                    animation: nprogress-spinner 400ms linear infinite;
+          }
+
+          .nprogress-custom-parent {
+            overflow: hidden;
+            position: relative;
+          }
+
+          .nprogress-custom-parent #nprogress .spinner,
+          .nprogress-custom-parent #nprogress .bar {
+            position: absolute;
+          }
+
+          @-webkit-keyframes nprogress-spinner {
+            0%   { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+          }
+          @keyframes nprogress-spinner {
+            0%   { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        
+      </style>
+      <nav
+        aria-label="Main menu"
+        class="c1"
+      >
+        <a
+          aria-label="Header Logo"
+          class="c2"
+          href="/en"
+        >
+          <svg
+            class="c3"
+            height="55"
+            width="106"
+          >
+            slLogo.svg
+          </svg>
+        </a>
+        <ul
+          class="c4"
+        >
+          <li
+            class="c5"
+          >
+            <a
+              aria-label="Go to Experience page"
+              class="c6 c7"
+              href="/en/experience"
+            >
+              <p
+                class="c8 c9"
+              >
+                Experience
+              </p>
+            </a>
+          </li>
+          <li
+            class="c5"
+          >
+            <a
+              aria-label="Go to Contact page"
+              class="c6 c7"
+              href="/en/contact"
+            >
+              <p
+                class="c8 c9"
+              >
+                Contact
+              </p>
+            </a>
+          </li>
+          <li
+            class="c5"
+          >
+            <a
+              aria-label="Go to Portfolio page"
+              class="c6 c7"
+              href="/en/portfolio"
+            >
+              <p
+                class="c8 c9"
+              >
+                CV/Portfolio
+              </p>
+            </a>
+          </li>
+          <li
+            class="c10"
+          >
+            <a
+              aria-label="Go to Portfolio page"
+              class="c6 c7"
+              href="/en/get-in-touch"
+            >
+              <p
+                class="c8 c9"
+              >
+                Get in touch
+              </p>
+            </a>
+          </li>
+        </ul>
+        <a
+          aria-label="Go to Portfolio page"
+          class="c6 c11 c12"
+          href="/en/get-in-touch"
+        >
+          <div
+            class="c13"
+          >
+            <svg
+              class="c14"
+              height="42"
+              width="42"
+            >
+              circleButton.svg
+            </svg>
+            <div
+              class="c15"
+            >
+              <svg>
+                arrowRight.svg
+              </svg>
+            </div>
+          </div>
+          <p
+            class="c8 c16 c9 c17"
+          >
+            Get in touch
+          </p>
+        </a>
+      </nav>
+      <div
+        class="c18"
+      >
+        test
+      </div>
+      <footer
+        class="c19"
+        tabindex="-1"
+      >
+        <div
+          class="c20"
+        >
+          <div
+            class="c21"
+          />
+          <div
+            class="c21"
+          />
+          <div
+            class="c21"
+          />
+        </div>
+        <div
+          class="c22"
+        >
+          <svg
+            class="c23"
+            height="64"
+            width="120"
+          >
+            slLogo.svg
+          </svg>
+          <nav
+            aria-label="Site map"
+            class="c24"
+          >
+            <ul
+              class="c25"
+            >
+              <li>
+                <a
+                  aria-label="Go to Experience page"
+                  class="c6 "
+                  href="/en/experience"
+                >
+                  <p
+                    class="c8 c9"
+                  >
+                    Experience
+                  </p>
+                </a>
+              </li>
+              <li>
+                <a
+                  aria-label="Go to Contact page"
+                  class="c6 "
+                  href="/en/contact"
+                >
+                  <p
+                    class="c8 c9"
+                  >
+                    Contact
+                  </p>
+                </a>
+              </li>
+              <li>
+                <a
+                  aria-label="Go to Portfolio page"
+                  class="c6 "
+                  href="/en/portfolio"
+                >
+                  <p
+                    class="c8 c9"
+                  >
+                    CV/Portfolio
+                  </p>
+                </a>
+              </li>
+              <li>
+                <button
+                  aria-label="Set Dark mode styled theme"
+                  class="c26"
+                >
+                  <svg
+                    color="#FBFBFB"
+                    height="14"
+                    width="14"
+                  >
+                    moon.svg
+                  </svg>
+                  <p
+                    class="c8 c9"
+                  >
+                    Dark mode
+                  </p>
+                </button>
+              </li>
+              <li>
+                <button
+                  aria-label="Set Pain mode styled theme"
+                  class="c26"
+                >
+                  <svg
+                    color="#FBFBFB"
+                    height="14"
+                    width="14"
+                  >
+                    cactus.svg
+                  </svg>
+                  <p
+                    class="c8 c9"
+                  >
+                    Pain mode
+                  </p>
+                </button>
+              </li>
+              <li>
+                <button
+                  aria-label="Toggle language. Current language is English."
+                  class="c26"
+                >
+                  <svg
+                    color="#FBFBFB"
+                    height="22"
+                    width="22"
+                  >
+                    language.svg
+                  </svg>
+                  <p
+                    class="c8 c9"
+                  >
+                    EN
+                  </p>
+                </button>
+              </li>
+            </ul>
+          </nav>
+          <div
+            class="c27"
+          >
+            <a
+              aria-label="My Telegram username"
+              class="c28 c29"
+              data-testid="plain-anchor"
+              href="https://t.me/Sdlgr"
+            >
+              <svg
+                color="#FBFBFB"
+              >
+                telegram.svg
+              </svg>
+            </a>
+            <a
+              aria-label="My GitHub account"
+              class="c28 c29"
+              data-testid="plain-anchor"
+              href="https://github.com/sauldeleon"
+            >
+              <svg
+                color="#FBFBFB"
+              >
+                github.svg
+              </svg>
+            </a>
+            <a
+              aria-label="My LinkedIn profile"
+              class="c28 c29"
+              data-testid="plain-anchor"
+              href="https://www.linkedin.com/in/sauldeleonguerrero"
+            >
+              <svg
+                color="#FBFBFB"
+              >
+                linkedin.svg
+              </svg>
+            </a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+</body>
+`;

@@ -1,0 +1,18 @@
+{
+  "experience": "Experiencia",
+  "experienceAria": "Ir a la página de Experiencia",
+  "contact": "Contacto",
+  "contactAria": "Ir a la página de contacto",
+  "portfolio": "CV/Portfolio",
+  "portfolioAria": "Ir a la página del Portfolio",
+  "darkMode": "Modo oscuro",
+  "darkModeAria": "Cambiar a tema oscuro",
+  "painMode": "Modo dolor",
+  "painModeAria": "Cambiar a tema de locura",
+  "siteMap": "Mapa web",
+  "githubAria": "Mi cuenta de GitHub",
+  "linkedInAria": "My perfil de LinkedIn",
+  "telegramAria": "Mi usuario de Telegram",
+  "languageLabel": "ES",
+  "toggleLanguageAria": "Alternar idioma. El idioma actual es Español."
+}

@@ -1,0 +1,398 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footer should render successfully 1`] = `
+.c9 {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  outline: none;
+  box-shadow: none;
+  color: white;
+  padding-block: 0;
+  padding-inline: 0;
+  border: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.c9::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #FBFBFB;
+}
+
+.c9::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.c9:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c8 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  white-space: pre-line;
+}
+
+.c8 ul,
+.c8 ol {
+  margin-left: 40px;
+  margin-bottom: 10px;
+}
+
+.c8 ul {
+  list-style: outside disc;
+}
+
+.c8 ol {
+  list-style: decimal;
+}
+
+.c8 li {
+  padding-left: 10px;
+}
+
+.c11 {
+  position: relative;
+  position: relative;
+}
+
+.c11::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #FBFBFB;
+}
+
+.c11::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.c11:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c11:hover,
+.c11:active,
+.c11:focus {
+  text-decoration: none;
+}
+
+.c7 {
+  position: relative;
+  position: relative;
+}
+
+.c7::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #FBFBFB;
+}
+
+.c7::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.c7:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c7:hover,
+.c7:active,
+.c7:focus {
+  text-decoration: none;
+}
+
+.c0 {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 120px;
+  margin-top: 50px;
+}
+
+.c1 {
+  position: relative;
+  width: 100%;
+  height: 15px;
+}
+
+.c4 {
+  position: absolute;
+  top: -61px;
+  left: 30px;
+}
+
+.c2 {
+  height: 7px;
+  width: 100%;
+  position: relative;
+}
+
+.c2:before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(         to bottom,         rgba(0,0,0,0.3),         rgba(152,223,214,0.3)       );
+}
+
+.c3 {
+  position: relative;
+  max-width: 1440px;
+  min-height: 120px;
+  align-items: center;
+  justify-content: unset;
+  width: 100%;
+  display: grid;
+  padding: 30px;
+}
+
+.c5 {
+  display: flex;
+  align-items: center;
+}
+
+.c6 {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  flex-direction: row;
+  width: 100%;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.c10 {
+  height: 20px;
+  display: flex;
+  gap: 20px;
+  justify-self: end;
+  padding: 30px 0;
+}
+
+.c12::after {
+  content: none;
+}
+
+@media (width >= 1024px) {
+  .c3 {
+    justify-content: space-between;
+    grid-template-columns: 1fr 100px;
+  }
+}
+
+@media (width >= 1024px) {
+  .c10 {
+    justify-self: end;
+    padding: 0;
+  }
+}
+
+<body>
+  <div>
+    <footer
+      class="c0"
+      tabindex="-1"
+    >
+      <div
+        class="c1"
+      >
+        <div
+          class="c2"
+        />
+        <div
+          class="c2"
+        />
+        <div
+          class="c2"
+        />
+      </div>
+      <div
+        class="c3"
+      >
+        <svg
+          class="c4"
+          height="64"
+          width="120"
+        >
+          slLogo.svg
+        </svg>
+        <nav
+          aria-label="Site map"
+          class="c5"
+        >
+          <ul
+            class="c6"
+          >
+            <li>
+              <a
+                aria-label="Go to Experience page"
+                class="c7 "
+                href="/en/experience"
+              >
+                <p
+                  class="c8"
+                >
+                  Experience
+                </p>
+              </a>
+            </li>
+            <li>
+              <a
+                aria-label="Go to Contact page"
+                class="c7 "
+                href="/en/contact"
+              >
+                <p
+                  class="c8"
+                >
+                  Contact
+                </p>
+              </a>
+            </li>
+            <li>
+              <a
+                aria-label="Go to Portfolio page"
+                class="c7 "
+                href="/en/portfolio"
+              >
+                <p
+                  class="c8"
+                >
+                  CV/Portfolio
+                </p>
+              </a>
+            </li>
+            <li>
+              <button
+                aria-label="Set Dark mode styled theme"
+                class="c9"
+              >
+                <svg
+                  color="#FBFBFB"
+                  height="14"
+                  width="14"
+                >
+                  moon.svg
+                </svg>
+                <p
+                  class="c8"
+                >
+                  Dark mode
+                </p>
+              </button>
+            </li>
+            <li>
+              <button
+                aria-label="Set Pain mode styled theme"
+                class="c9"
+              >
+                <svg
+                  color="#FBFBFB"
+                  height="14"
+                  width="14"
+                >
+                  cactus.svg
+                </svg>
+                <p
+                  class="c8"
+                >
+                  Pain mode
+                </p>
+              </button>
+            </li>
+            <li>
+              <button
+                aria-label="Toggle language. Current language is English."
+                class="c9"
+              >
+                <svg
+                  color="#FBFBFB"
+                  height="22"
+                  width="22"
+                >
+                  language.svg
+                </svg>
+                <p
+                  class="c8"
+                >
+                  EN
+                </p>
+              </button>
+            </li>
+          </ul>
+        </nav>
+        <div
+          class="c10"
+        >
+          <a
+            aria-label="My Telegram username"
+            class="c11 c12"
+            data-testid="plain-anchor"
+            href="https://t.me/Sdlgr"
+          >
+            <svg
+              color="#FBFBFB"
+            >
+              telegram.svg
+            </svg>
+          </a>
+          <a
+            aria-label="My GitHub account"
+            class="c11 c12"
+            data-testid="plain-anchor"
+            href="https://github.com/sauldeleon"
+          >
+            <svg
+              color="#FBFBFB"
+            >
+              github.svg
+            </svg>
+          </a>
+          <a
+            aria-label="My LinkedIn profile"
+            class="c11 c12"
+            data-testid="plain-anchor"
+            href="https://www.linkedin.com/in/sauldeleonguerrero"
+          >
+            <svg
+              color="#FBFBFB"
+            >
+              linkedin.svg
+            </svg>
+          </a>
+        </div>
+      </div>
+    </footer>
+  </div>
+</body>
+`;

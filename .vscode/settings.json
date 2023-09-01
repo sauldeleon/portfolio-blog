@@ -1,0 +1,21 @@
+{
+  "cSpell.words": [
+    "botd",
+    "lcov",
+    "León",
+    "materialui",
+    "nprogress",
+    "reactjs",
+    "roboto",
+    "romeovs",
+    "sawl",
+    "sdlgr",
+    "seedrandom",
+    "spidermask",
+    "Xata"
+  ],
+  "i18n-ally.autoDetection": true,
+  "i18n-ally.localesPaths": ["apps/web/i18n/locales"],
+  "i18n-ally.fullReloadOnChanged": false,
+  "i18n-ally.keystyle": "nested"
+}

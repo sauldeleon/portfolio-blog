@@ -1,0 +1,15 @@
+diff --git a/node_modules/patch-package/dist/makePatch.js b/node_modules/patch-package/dist/makePatch.js
+index d8d0925..8aff058 100644
+--- a/node_modules/patch-package/dist/makePatch.js
++++ b/node_modules/patch-package/dist/makePatch.js
+@@ -118,6 +118,10 @@ function makePatch({ packagePathSpecifier, appPath, packageManager, includePaths
+         if (packageManager === "yarn") {
+             console_1.default.info(chalk_1.default.grey("•"), `Installing ${packageDetails.name}@${packageVersion} with yarn`);
+             try {
++                spawnSafe_1.spawnSafeSync(`yarn`, ["set", "version", "classic"], {
++                    cwd: tmpRepoNpmRoot,
++                    logStdErrOnError: false,
++                });
+                 // try first without ignoring scripts in case they are required
+                 // this works in 99.99% of cases
+                 spawnSafe_1.spawnSafeSync(`yarn`, ["install", "--ignore-engines"], {

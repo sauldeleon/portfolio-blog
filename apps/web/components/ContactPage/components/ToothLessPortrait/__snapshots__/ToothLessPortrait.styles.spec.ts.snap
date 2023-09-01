@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generateKeyframeStep generate keyframe step snapshot for image 0 1`] = `
+"
+    24.9999% {
+      background-image: none;
+    }
+
+    25% {
+      background-image: url(1);
+    }
+  "
+`;
+
+exports[`generateKeyframeStep generate keyframe step snapshot for image 1 1`] = `
+"
+    49.9999% {
+      background-image: url(1);
+    }
+
+    50% {
+      background-image: url(1), url(2);
+    }
+  "
+`;
+
+exports[`generateKeyframeStep generate keyframe step snapshot for image 2 1`] = `
+"
+    99.9999% {
+      background-image: url(1), url(2);
+    }
+
+    100% {
+      background-image: url(1), url(2), url(3);
+    }
+  "
+`;
+
+exports[`swapImageAnimation generate keyframe snapshot for images 1`] = `
+e {
+  "id": "sc-keyframes-kzvgWv",
+  "inject": [Function],
+  "name": "kzvgWv",
+  "rules": "
+      0% {
+        background-image: none;
+      }
+      
+    24.9999% {
+      background-image: none;
+    }
+
+    25% {
+      background-image: url(1);
+    }
+  
+    49.9999% {
+      background-image: url(1);
+    }
+
+    50% {
+      background-image: url(1), url(2);
+    }
+  
+    99.9999% {
+      background-image: url(1), url(2);
+    }
+
+    100% {
+      background-image: url(1), url(2), url(3);
+    }
+  
+",
+}
+`;

@@ -1,6 +1,7 @@
 {
-  "implicitDependencies": {
-    "go.mod": "*"
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "affected": {
+    "defaultBase": "origin/main"
   },
   "plugins": ["@nx-go/nx-go"],
   "namedInputs": {
@@ -13,8 +14,9 @@
       "!{projectRoot}/src/test-setup.[jt]s",
       "!{projectRoot}/.eslintrc.json"
     ],
-    "sharedGlobals": []
+    "sharedGlobals": ["{workspaceRoot}/go.mod"]
   },
+  "defaultProject": "web",
   "targetDefaults": {
     "build": {
       "dependsOn": ["^build"],
@@ -47,6 +49,9 @@
     "@nx/react": {
       "application": {
         "babel": true
+      },
+      "library": {
+        "unitTestRunner": "jest"
       }
     },
     "@nx/next": {

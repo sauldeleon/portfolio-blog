@@ -2,7 +2,7 @@
 module.exports = {
   singleQuote: true,
   semi: false,
-  importOrder: ['<THIRD_PARTY_MODULES>', '^@nx/(.*)$', '^[./]'],
+  importOrder: ['<THIRD_PARTY_MODULES>', '^@sdlgr/(.*)$', '^[./]'],
   importOrderSeparation: true,
   importOrderSortSpecifiers: true,
 }

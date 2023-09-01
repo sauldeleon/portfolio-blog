@@ -1,0 +1,12 @@
+{
+  "profilePicture": "My profile picture",
+  "toothlessProfilePicture": "My toothless profile picture",
+  "phoneAria": "My phone number",
+  "phone": "Phone",
+  "mail": "E-mail",
+  "emailAria": "My electronic mail address",
+  "linkedInAria": "My LinkedIn profile",
+  "metadata": {
+    "description": "Contact information"
+  }
+}
