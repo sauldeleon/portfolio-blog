@@ -15,7 +15,7 @@ export function useStorage<T>({
 }: UseStorageProps<T>) {
   const [value, setValue] = useState<T | undefined>(() => {
     const value = storage.getItem(key)
-    return value || initialValue
+    return value ?? initialValue
   })
 
   useEffect(() => {
