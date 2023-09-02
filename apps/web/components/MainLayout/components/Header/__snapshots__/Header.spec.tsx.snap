@@ -40,7 +40,7 @@ exports[`Header should render successfully 1`] = `
   height: 2px;
   bottom: 0;
   left: 0;
-  background-color: #FBFBFB;
+  background-color: currentColor;
 }
 
 .c5::after {
@@ -202,7 +202,7 @@ exports[`Header should render successfully 1`] = `
   height: 2px;
   bottom: 0;
   left: 0;
-  background-color: #FBFBFB;
+  background-color: currentColor;
 }
 
 .c18::after {
@@ -301,7 +301,7 @@ exports[`Header should render successfully 1`] = `
     height: 2px;
     bottom: 0;
     left: 0;
-    background-color: #FBFBFB;
+    background-color: currentColor;
   }
 
   .c6::after {
@@ -330,7 +330,7 @@ exports[`Header should render successfully 1`] = `
     height: 2px;
     bottom: 0;
     left: 0;
-    background-color: #FBFBFB;
+    background-color: currentColor;
   }
 }
 
@@ -386,7 +386,7 @@ exports[`Header should render successfully 1`] = `
     height: 2px;
     bottom: 0;
     left: 0;
-    background-color: #FBFBFB;
+    background-color: currentColor;
   }
 }
 

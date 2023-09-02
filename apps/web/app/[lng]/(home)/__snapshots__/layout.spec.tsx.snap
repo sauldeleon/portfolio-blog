@@ -58,7 +58,7 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
   height: 2px;
   bottom: 0;
   left: 0;
-  background-color: #FBFBFB;
+  background-color: currentColor;
 }
 
 .c2::after {
@@ -90,7 +90,7 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
   height: 2px;
   bottom: 0;
   left: 0;
-  background-color: #FBFBFB;
+  background-color: currentColor;
 }
 
 .c16::after {

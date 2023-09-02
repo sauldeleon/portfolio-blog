@@ -24,7 +24,7 @@ exports[`Footer should render successfully 1`] = `
   height: 2px;
   bottom: 0;
   left: 0;
-  background-color: #FBFBFB;
+  background-color: currentColor;
 }
 
 .c9::after {
@@ -77,7 +77,7 @@ exports[`Footer should render successfully 1`] = `
   height: 2px;
   bottom: 0;
   left: 0;
-  background-color: #FBFBFB;
+  background-color: currentColor;
 }
 
 .c11::after {
@@ -109,7 +109,7 @@ exports[`Footer should render successfully 1`] = `
   height: 2px;
   bottom: 0;
   left: 0;
-  background-color: #FBFBFB;
+  background-color: currentColor;
 }
 
 .c7::after {
