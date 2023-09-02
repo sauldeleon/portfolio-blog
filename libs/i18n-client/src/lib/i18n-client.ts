@@ -21,6 +21,8 @@ type InitializeProps = GetOptionsProps & {
   resourcesToBackend: BackendModule<object>
 }
 
+export const STORAGE_I18N_KEY = 'webLng'
+
 export function initialize({ resourcesToBackend, ...rest }: InitializeProps) {
   // on client side the normal singleton is ok
   i18next
@@ -31,7 +33,9 @@ export function initialize({ resourcesToBackend, ...rest }: InitializeProps) {
       ...getOptions(rest),
       lng: undefined, // let detect the language on client side
       detection: {
-        order: ['path', 'htmlTag', 'cookie', 'navigator'],
+        lookupLocalStorage: STORAGE_I18N_KEY,
+        order: ['path', 'htmlTag', 'navigator'],
+        caches: ['localStorage'],
       },
       preload: runsOnServerSide ? rest.languages : [],
     })

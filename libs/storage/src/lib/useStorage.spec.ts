@@ -83,15 +83,34 @@ describe('useStorage', () => {
   })
 
   it('LocalStorage - should modify value', () => {
+    window.localStorage.setItem('key', 'initialValue')
     const storage = new LocalStorage<string>()
     const { result } = renderHook(() =>
-      useStorage<string>({ storage, key: 'key', initialValue: 'initialValue' })
+      useStorage<string>({ storage, key: 'key' })
     )
 
     const [, setValue] = result.current
     act(() => {
       setValue('newValue')
     })
-    expect(window.localStorage.getItem('key')).toBe(JSON.stringify('newValue'))
+    expect(window.localStorage.getItem('key')).toBe('newValue')
+  })
+
+  it('LocalStorage - should store an object correctly', () => {
+    window.localStorage.setItem('key', 'initialValue')
+    const storage = new LocalStorage<Record<string, string>>()
+    const { result } = renderHook(() =>
+      useStorage<Record<string, string>>({
+        storage,
+        key: 'object',
+        initialValue: { key: 'value' },
+      })
+    )
+
+    const [, setValue] = result.current
+    act(() => {
+      setValue({ key: 'value2' })
+    })
+    expect(window.localStorage.getItem('object')).toBe('{"key":"value2"}')
   })
 })

@@ -10,7 +10,10 @@ export class LocalStorage<T> implements Storage<T> {
     if (value === undefined) {
       localStorage.removeItem(key)
     } else {
-      localStorage.setItem(key, JSON.stringify(value))
+      localStorage.setItem(
+        key,
+        typeof value === 'string' ? value : JSON.stringify(value)
+      )
     }
   }
 }
