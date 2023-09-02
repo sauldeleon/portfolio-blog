@@ -10,7 +10,7 @@
       "options": {
         "changelogHeader": "# Changelog Footer component \n",
         "baseBranch": "main",
-        "commitMessageFormat": "chore(${projectName}): release: v${version}",
+        "commitMessageFormat": "chore({projectName}): release: v{version}",
         "push": false
       }
     },
