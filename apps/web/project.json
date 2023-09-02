@@ -7,9 +7,9 @@
     "version": {
       "executor": "@jscutlery/semver:version",
       "options": {
-        "changelogHeader": "# Changelog Saúl's Portfolio \n",
+        "changelogHeader": "# Changelog web app \n",
         "baseBranch": "main",
-        "commitMessageFormat": "chore(${projectName}): release: v${version}",
+        "commitMessageFormat": "chore({projectName}): release: v{version}",
         "push": false
       }
     },

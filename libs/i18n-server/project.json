@@ -10,7 +10,7 @@
       "options": {
         "changelogHeader": "# Changelog i18n server util \n",
         "baseBranch": "main",
-        "commitMessageFormat": "chore(${projectName}): release: v${version}",
+        "commitMessageFormat": "chore({projectName}): release: v{version}",
         "push": false
       }
     },

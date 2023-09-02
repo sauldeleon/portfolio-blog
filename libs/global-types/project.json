@@ -10,7 +10,7 @@
       "options": {
         "changelogHeader": "# Changelog Global types \n",
         "baseBranch": "main",
-        "commitMessageFormat": "chore(${projectName}): release: v${version}",
+        "commitMessageFormat": "chore({projectName}): release: v{version}",
         "push": false
       }
     },
