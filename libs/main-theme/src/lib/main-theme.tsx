@@ -180,7 +180,7 @@ export const mainTheme: MainTheme = {
           height: 2px;
           bottom: 0;
           left: 0;
-          background-color: ${colors.white};
+          background-color: currentColor;
         }
       `,
       afterInitial: (duration = 0.25) => bottomBorderAfterInitial(duration),

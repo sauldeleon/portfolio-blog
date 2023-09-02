@@ -4,11 +4,10 @@ import { useRef } from 'react'
 import CookieConsent from 'react-cookie-consent'
 
 import { mainTheme } from '@sdlgr/main-theme'
-import { Body } from '@sdlgr/typography'
 
 import { useClientTranslation } from '@web/i18n/client'
 
-import { StyledButton } from './CookieBanner.styles'
+import { StyledBody, StyledButton } from './CookieBanner.styles'
 
 export function CookieBanner() {
   const { t } = useClientTranslation()
@@ -19,9 +18,8 @@ export function CookieBanner() {
       cookieName="cookie-consent"
       ref={cookieConsentRef}
       style={{
-        background: mainTheme.colors.black,
+        background: mainTheme.colors.white,
         fontFamily: mainTheme.fonts.bodyFont,
-        borderTop: `1px solid ${mainTheme.colors.white}`,
         alignItems: 'center',
       }}
       acceptOnScroll
@@ -31,11 +29,11 @@ export function CookieBanner() {
           aria-label={t('cookieBanner.acceptAria')}
           onClick={() => cookieConsentRef?.current?.accept()}
         >
-          <Body>{t('cookieBanner.accept')}</Body>
+          <StyledBody>{t('cookieBanner.accept')}</StyledBody>
         </StyledButton>
       )}
     >
-      <Body>{t('cookieBanner.message')}</Body>
+      <StyledBody>{t('cookieBanner.message')}</StyledBody>
     </CookieConsent>
   )
 }

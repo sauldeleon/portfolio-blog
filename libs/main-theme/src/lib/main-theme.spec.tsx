@@ -144,9 +144,7 @@ describe('mainTheme', () => {
             ],
             "afterInitial": [Function],
             "afterShared": [
-              "position:relative;&::after{content:'';position:absolute;width:100%;height:2px;bottom:0;left:0;background-color:",
-              "#FBFBFB",
-              ";}",
+              "position:relative;&::after{content:'';position:absolute;width:100%;height:2px;bottom:0;left:0;background-color:currentColor;}",
             ],
             "removeBorder": [
               "&::after{content:none;}",
@@ -306,9 +304,7 @@ describe('mainTheme', () => {
     expect(mainTheme.helpers.textBottomBorder.afterShared)
       .toMatchInlineSnapshot(`
       [
-        "position:relative;&::after{content:'';position:absolute;width:100%;height:2px;bottom:0;left:0;background-color:",
-        "#FBFBFB",
-        ";}",
+        "position:relative;&::after{content:'';position:absolute;width:100%;height:2px;bottom:0;left:0;background-color:currentColor;}",
       ]
     `)
     expect(mainTheme.helpers.textBottomBorder.transform())

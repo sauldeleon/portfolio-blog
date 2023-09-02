@@ -26,6 +26,7 @@
       "@sdlgr/i18n-server": ["libs/i18n-server/src/index.ts"],
       "@sdlgr/link": ["libs/link/src/index.ts"],
       "@sdlgr/main-theme": ["libs/main-theme/src/index.ts"],
+      "@sdlgr/storage": ["libs/storage/src/index.ts"],
       "@sdlgr/test-utils": ["libs/test-utils/src/index.ts"],
       "@sdlgr/typography": ["libs/typography/src/index.ts"],
       "@sdlgr/use-container-dimensions": [
