@@ -2,10 +2,10 @@ import { parseJSON } from './utils'
 
 describe('parseJSON', () => {
   it('should return undefined on null', () => {
-    expect(parseJSON(null)).toBeUndefined()
+    expect(parseJSON('null')).toBeNull()
   })
   it('should return correct parsed undefined', () => {
-    expect(parseJSON('undefined')).toBeUndefined()
+    expect(parseJSON('undefined')).toBeNull()
   })
 
   it('should return correct parsed object', () => {

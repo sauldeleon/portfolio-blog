@@ -1,6 +1,6 @@
-export function parseJSON<T>(value: string | null): T | undefined {
-  if (value === 'undefined' || value === null) {
-    return undefined
+export function parseJSON<T>(value: string): T | null {
+  if (value === 'undefined' || value === 'null') {
+    return null
   }
   try {
     return JSON.parse(value) as T

@@ -1,4 +1,8 @@
-export interface Storage<T> {
-  getItem(key: string): T | undefined
-  setItem(key: string, value: T | undefined): void
+export interface Storage {
+  getItem<T>(key: string): T | null
+  getItem<T>(key: string, defaultValue?: T | null): T | null
+
+  setItem(key: string, value: unknown): void
+
+  removeItem(key: string): void
 }

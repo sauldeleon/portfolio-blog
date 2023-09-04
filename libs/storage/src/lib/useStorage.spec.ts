@@ -43,74 +43,88 @@ describe('useStorage', () => {
 
   it('MockStorage - should return initial value correctly', () => {
     const storage = new MockStorage()
-    const { result } = renderHook(() =>
-      useStorage<string>({ storage, key: 'key', initialValue: 'initialValue' })
-    )
-    const [value] = result.current
-    expect(value).toEqual('initialValue')
+    const { result } = renderHook(() => useStorage(storage))
+    const [getItem] = result.current
+    getItem('key', 'initialValue')
+    expect(getItem('key', 'initialValue')).toEqual('initialValue')
   })
 
   it('MockStorage - should not modify value', () => {
     const storage = new MockStorage()
-    const { result, rerender } = renderHook(() =>
-      useStorage<string>({ storage, key: 'key', initialValue: 'initialValue' })
-    )
+    const { result } = renderHook(() => useStorage(storage))
 
-    const [value, setValue] = result.current
-    act(() => setValue('newValue'))
-    rerender()
-    expect(value).toEqual('initialValue')
+    const [getItem, setItem] = result.current
+    act(() => setItem('key1', { a: 1 }))
+    act(() => setItem('key2', 'newValue2'))
+    expect(getItem<object>('key1')).toEqual({ a: 1 })
+    expect(getItem<string>('key2')).toEqual('newValue2')
+  })
+
+  it('MockStorage - should remove an item', () => {
+    const storage = new MockStorage()
+    const { result } = renderHook(() => useStorage(storage))
+
+    const [getItem, setItem, removeItem] = result.current
+    act(() => setItem('key1', { a: 1 }))
+    act(() => removeItem('key1'))
+    expect(getItem<object>('key1')).toBeNull()
   })
 
   it('LocalStorage - should return a initial value correctly', () => {
-    const storage = new LocalStorage<string>()
-    const { result } = renderHook(() =>
-      useStorage<string>({ storage, key: 'key', initialValue: 'initialValue' })
-    )
-    const [value] = result.current
+    const storage = new LocalStorage()
+    const { result } = renderHook(() => useStorage(storage))
+    const [getItem] = result.current
 
-    expect(value).toEqual('initialValue')
+    expect(getItem('key', 'initialValue')).toEqual('initialValue')
   })
 
-  it('LocalStorage - should return a undefined value correctly', () => {
-    const storage = new LocalStorage<string>()
-    const { result } = renderHook(() =>
-      useStorage<string>({ storage, key: 'key' })
-    )
-    const [value] = result.current
+  it('LocalStorage - should return an item correctly', () => {
+    const storage = new LocalStorage()
+    const { result } = renderHook(() => useStorage(storage))
+    const [getItem, setItem] = result.current
+    setItem('key', 'newValue')
+    expect(getItem('key', 'initialValue')).toEqual('newValue')
+  })
 
-    expect(value).toEqual(undefined)
+  it('LocalStorage - should return a null value correctly', () => {
+    const storage = new LocalStorage()
+    const { result } = renderHook(() => useStorage(storage))
+    const [getItem] = result.current
+
+    expect(getItem('key')).toBeNull()
   })
 
   it('LocalStorage - should modify value', () => {
     window.localStorage.setItem('key', 'initialValue')
-    const storage = new LocalStorage<string>()
-    const { result } = renderHook(() =>
-      useStorage<string>({ storage, key: 'key' })
-    )
+    const storage = new LocalStorage()
+    const { result } = renderHook(() => useStorage(storage))
 
-    const [, setValue] = result.current
+    const [, setItem] = result.current
     act(() => {
-      setValue('newValue')
+      setItem('key', 'newValue')
     })
     expect(window.localStorage.getItem('key')).toBe('newValue')
   })
 
   it('LocalStorage - should store an object correctly', () => {
     window.localStorage.setItem('key', 'initialValue')
-    const storage = new LocalStorage<Record<string, string>>()
-    const { result } = renderHook(() =>
-      useStorage<Record<string, string>>({
-        storage,
-        key: 'object',
-        initialValue: { key: 'value' },
-      })
-    )
+    const storage = new LocalStorage()
+    const { result } = renderHook(() => useStorage(storage))
 
     const [, setValue] = result.current
     act(() => {
-      setValue({ key: 'value2' })
+      setValue('object', { key: 'value2' })
     })
     expect(window.localStorage.getItem('object')).toBe('{"key":"value2"}')
+  })
+
+  it('LocalStorage - should remove an item', () => {
+    const storage = new LocalStorage()
+    const { result } = renderHook(() => useStorage(storage))
+
+    const [getItem, setItem, removeItem] = result.current
+    act(() => setItem('key1', { a: 1 }))
+    act(() => removeItem('key1'))
+    expect(getItem<object>('key1')).toBeNull()
   })
 })
