@@ -1,7 +1,8 @@
 import { renderHook } from '@testing-library/react'
 import { renderHook as renderHookSSR } from '@testing-library/react-hooks/server'
 
-import { STORAGE_I18N_KEY } from '../i18n-client'
+import { STORAGE_I18N_KEY } from '@sdlgr/i18n-config'
+
 import { useDefaultLanguage } from './useDefaultLanguage'
 
 const mockData = { fallbackLng: 'en', languages: ['en', 'es'] }

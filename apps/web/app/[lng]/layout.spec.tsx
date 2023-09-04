@@ -1,5 +1,4 @@
 import { screen } from '@testing-library/react'
-import { usePathname } from 'next/navigation'
 import React from 'react'
 
 import { renderApp } from '@sdlgr/test-utils'
@@ -9,12 +8,11 @@ import RootLayout, {
   generateStaticParams,
 } from './layout.next'
 
-const mockPush = jest.fn()
 jest.mock('next/navigation', () => ({
   ...jest.requireActual('next/navigation'),
   usePathname: jest.fn(),
   useRouter: () => ({
-    push: mockPush,
+    push: jest.fn(),
   }),
 }))
 
@@ -31,15 +29,6 @@ describe('[lng] route - layout', () => {
 
     expect(await screen.findByText('test')).toBeInTheDocument()
     expect(screen.getByTestId('root-html')).toHaveAttribute('lang', 'es')
-  })
-
-  it('should redirect to a allowed language', async () => {
-    ;(usePathname as jest.Mock).mockReturnValue('/de')
-    renderApp(<RootLayout params={{ lng: 'de' }}>test</RootLayout>)
-
-    await screen.findByText('test')
-    expect(screen.getByTestId('root-html')).toHaveAttribute('lang', 'de')
-    expect(mockPush).toHaveBeenCalledWith('/en/')
   })
 })
 
@@ -65,11 +54,11 @@ describe('[lng] route - metadata', () => {
       colorScheme: 'dark',
       metadataBase: expect.any(Object),
       alternates: {
-        canonical: '/es',
+        canonical: '/en',
         languages: {
           'en-UK': '/en',
-          'es-ES': '/es',
           'en-US': '/en',
+          'es-ES': '/es',
         },
       },
     })

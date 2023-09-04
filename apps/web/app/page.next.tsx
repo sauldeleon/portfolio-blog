@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import styled from 'styled-components'
 
-import { useDefaultLanguage } from '@sdlgr/i18n-client'
+import { useDefaultLanguage } from '@sdlgr/i18n-tools'
 
 import StyledComponentsRegistry from '@web/components/StyledComponentsRegistry/StyledComponentsRegistry'
 import { fallbackLng, languages } from '@web/i18n/settings'

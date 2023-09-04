@@ -10,17 +10,18 @@ import {
   useTranslation as useTranslationOrg,
 } from 'react-i18next'
 
-import { GetOptionsProps, getOptions } from '@sdlgr/i18n-config'
-
-import { LanguageContext } from './LanguageProvider/LanguageProvider'
+import {
+  GetOptionsProps,
+  STORAGE_I18N_KEY,
+  getOptions,
+} from '@sdlgr/i18n-config'
+import { LanguageContext } from '@sdlgr/i18n-tools'
 
 const runsOnServerSide = typeof window === 'undefined'
 
 type InitializeProps = GetOptionsProps & {
   resourcesToBackend: BackendModule<object>
 }
-
-export const STORAGE_I18N_KEY = 'webLng'
 
 export function initialize({ resourcesToBackend, ...rest }: InitializeProps) {
   // on client side the normal singleton is ok

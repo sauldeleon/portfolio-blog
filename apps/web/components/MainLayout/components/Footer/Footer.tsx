@@ -10,7 +10,8 @@ import {
   TelegramIcon,
 } from '@sdlgr/assets'
 import { Footer as FooterLib, NavItem, SocialMediaItem } from '@sdlgr/footer'
-import { LanguageContext, STORAGE_I18N_KEY } from '@sdlgr/i18n-client'
+import { STORAGE_I18N_KEY } from '@sdlgr/i18n-config'
+import { LanguageContext } from '@sdlgr/i18n-tools'
 import { mainTheme } from '@sdlgr/main-theme'
 import { LocalStorage, useStorage } from '@sdlgr/storage'
 

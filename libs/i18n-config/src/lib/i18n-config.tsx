@@ -8,6 +8,8 @@ export type GetOptionsProps = {
   defaultNS: string | string[]
 }
 
+export const STORAGE_I18N_KEY = 'webLng'
+
 export function getOptions({
   lng,
   ns,

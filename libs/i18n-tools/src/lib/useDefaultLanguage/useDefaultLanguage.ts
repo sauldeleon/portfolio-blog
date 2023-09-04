@@ -2,9 +2,8 @@
 
 import { useMemo } from 'react'
 
+import { STORAGE_I18N_KEY } from '@sdlgr/i18n-config'
 import { LocalStorage, MockStorage, useStorage } from '@sdlgr/storage'
-
-import { STORAGE_I18N_KEY } from '../i18n-client'
 
 interface UseDefaultLanguageProps {
   languages: string[]

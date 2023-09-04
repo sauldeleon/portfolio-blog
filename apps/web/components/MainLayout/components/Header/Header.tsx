@@ -3,7 +3,7 @@ import { useContext } from 'react'
 
 import { ArrowRightIcon } from '@sdlgr/assets'
 import { Header as HeaderLib } from '@sdlgr/header'
-import { LanguageContext } from '@sdlgr/i18n-client'
+import { LanguageContext } from '@sdlgr/i18n-tools'
 
 import { useClientTranslation } from '@web/i18n/client'
 
