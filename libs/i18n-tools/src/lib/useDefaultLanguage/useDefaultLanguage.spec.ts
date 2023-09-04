@@ -66,7 +66,7 @@ describe('useDefaultLanguage', () => {
     expect(result.current).toEqual('ru')
   })
 
-  it('should return default language to fallback on SSR', () => {
+  it('should return default language to fallback on SSR with no navigator', () => {
     Object.defineProperty(window, 'navigator', {
       value: undefined,
       writable: true,
@@ -78,7 +78,7 @@ describe('useDefaultLanguage', () => {
 })
 
 describe('useDefaultLanguage SSR', () => {
-  it('should return default language to fallback on SSR', () => {
+  it('should return default language to fallback on SSR with no window', () => {
     Object.defineProperty(global, 'window', {
       value: undefined,
     })
