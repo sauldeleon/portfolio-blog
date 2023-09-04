@@ -2,34 +2,11 @@ import { renderHook } from '@testing-library/react'
 import { renderHook as renderHookSSR } from '@testing-library/react-hooks/server'
 
 import { STORAGE_I18N_KEY } from '@sdlgr/i18n-config'
+import { LocalStorageMock } from '@sdlgr/mocks'
 
 import { useDefaultLanguage } from './useDefaultLanguage'
 
 const mockData = { fallbackLng: 'en', languages: ['en', 'es'] }
-
-class LocalStorageMock {
-  store: Record<string, unknown> = {}
-
-  constructor(initialState = {}) {
-    this.store = initialState
-  }
-
-  clear() {
-    this.store = {}
-  }
-
-  getItem(key: string) {
-    return this.store[key] || null
-  }
-
-  setItem(key: string, value: unknown) {
-    this.store[key] = value + ''
-  }
-
-  removeItem(key: string) {
-    delete this.store[key]
-  }
-}
 
 describe('useDefaultLanguage', () => {
   let languageGetter: any
