@@ -1,5 +1,5 @@
 import { usePathname, useRouter } from 'next/navigation'
-import { useContext } from 'react'
+import { useContext, useMemo } from 'react'
 
 import {
   CactusIcon,
@@ -10,8 +10,10 @@ import {
   TelegramIcon,
 } from '@sdlgr/assets'
 import { Footer as FooterLib, NavItem, SocialMediaItem } from '@sdlgr/footer'
-import { LanguageContext } from '@sdlgr/i18n-config'
+import { STORAGE_I18N_KEY } from '@sdlgr/i18n-config'
+import { LanguageContext } from '@sdlgr/i18n-tools'
 import { mainTheme } from '@sdlgr/main-theme'
+import { LocalStorage, useStorage } from '@sdlgr/storage'
 
 import { getNextLanguage, useClientTranslation } from '@web/i18n/client'
 
@@ -20,10 +22,13 @@ export function Footer() {
   const { language } = useContext(LanguageContext)
   const pathname = usePathname()
   const { push } = useRouter()
+  const storage = useMemo(() => new LocalStorage(), [])
+  const [, setItem] = useStorage(storage)
 
   const toggleLanguage = () => {
     const newLanguage = getNextLanguage(language)
     const noLangPath = pathname.replace(/^\/[\w]+/, '')
+    setItem(STORAGE_I18N_KEY, newLanguage)
     push(`/${newLanguage}${noLangPath}`)
   }
 

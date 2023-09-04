@@ -20,16 +20,14 @@ describe('[lng] route - layout', () => {
   it('should render successfully in English', async () => {
     renderApp(<RootLayout params={{ lng: 'en' }}>test</RootLayout>)
 
-    const text = await screen.findByText('test')
-    expect(text).toBeInTheDocument()
+    expect(await screen.findByText('test')).toBeInTheDocument()
     expect(screen.getByTestId('root-html')).toHaveAttribute('lang', 'en')
   })
 
   it('should render successfully in Spanish', async () => {
     renderApp(<RootLayout params={{ lng: 'es' }}>test</RootLayout>)
 
-    const text = await screen.findByText('test')
-    expect(text).toBeInTheDocument()
+    expect(await screen.findByText('test')).toBeInTheDocument()
     expect(screen.getByTestId('root-html')).toHaveAttribute('lang', 'es')
   })
 })
@@ -56,11 +54,11 @@ describe('[lng] route - metadata', () => {
       colorScheme: 'dark',
       metadataBase: expect.any(Object),
       alternates: {
-        canonical: '/es',
+        canonical: '/en',
         languages: {
           'en-UK': '/en',
-          'es-ES': '/es',
           'en-US': '/en',
+          'es-ES': '/es',
         },
       },
     })

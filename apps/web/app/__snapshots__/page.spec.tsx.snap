@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RootPage should redirect to fallback language 1`] = `
+.c0 {
+  background-color: #000000;
+  height: 100vh;
+  width: 100%;
+}
+
+<body>
+  <div>
+    <html>
+      <body
+        class="c0"
+      />
+    </html>
+  </div>
+</body>
+`;

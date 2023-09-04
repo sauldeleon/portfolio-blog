@@ -76,6 +76,7 @@
     "@swc/plugin-styled-components": "1.5.72",
     "@testing-library/jest-dom": "6.1.2",
     "@testing-library/react": "14.0.0",
+    "@testing-library/react-hooks": "8.0.1",
     "@total-typescript/ts-reset": "0.5.1",
     "@trivago/prettier-plugin-sort-imports": "4.2.0",
     "@types/circular-dependency-plugin": "^5",

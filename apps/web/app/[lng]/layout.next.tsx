@@ -1,7 +1,7 @@
 import { dir } from 'i18next'
 import Script from 'next/script'
 
-import { LanguageContextProvider } from '@sdlgr/i18n-config'
+import { LanguageContextProvider } from '@sdlgr/i18n-tools'
 
 import { MainLayout } from '@web/components/MainLayout/MainLayout'
 import StyledComponentsRegistry from '@web/components/StyledComponentsRegistry/StyledComponentsRegistry'
@@ -28,11 +28,11 @@ export async function generateMetadata({ params }: GenerateMetadataProps) {
     colorScheme: 'dark',
     metadataBase: new URL('https://www.sawl.dev'),
     alternates: {
-      canonical: '/es',
+      canonical: '/en',
       languages: {
-        'es-ES': '/es',
         'en-US': '/en',
         'en-UK': '/en',
+        'es-ES': '/es',
       },
     },
   }

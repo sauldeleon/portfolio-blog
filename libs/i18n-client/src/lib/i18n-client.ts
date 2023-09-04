@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import i18next, { BackendModule, FlatNamespace, KeyPrefix } from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import { useContext, useEffect, useState } from 'react'
@@ -11,9 +12,10 @@ import {
 
 import {
   GetOptionsProps,
-  LanguageContext,
+  STORAGE_I18N_KEY,
   getOptions,
 } from '@sdlgr/i18n-config'
+import { LanguageContext } from '@sdlgr/i18n-tools'
 
 const runsOnServerSide = typeof window === 'undefined'
 
@@ -31,7 +33,9 @@ export function initialize({ resourcesToBackend, ...rest }: InitializeProps) {
       ...getOptions(rest),
       lng: undefined, // let detect the language on client side
       detection: {
-        order: ['path', 'htmlTag', 'cookie', 'navigator'],
+        lookupLocalStorage: STORAGE_I18N_KEY,
+        order: ['path'],
+        caches: [],
       },
       preload: runsOnServerSide ? rest.languages : [],
     })

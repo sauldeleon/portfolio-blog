@@ -1,8 +1,10 @@
-export function parseJSON<T>(value: string | null): T | undefined {
+export function parseJSON<T>(value: string): T | null {
+  if (value === 'undefined' || value === 'null') {
+    return null
+  }
   try {
-    return value === 'undefined' ? undefined : (JSON.parse(value ?? '') as T)
+    return JSON.parse(value) as T
   } catch {
-    console.log('parsing error on', { value })
-    return undefined
+    return value as T
   }
 }
