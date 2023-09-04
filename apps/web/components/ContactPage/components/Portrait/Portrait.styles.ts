@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { css, keyframes, styled } from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
 
 export const StyledPortraitContainer = styled.div`
   position: relative;

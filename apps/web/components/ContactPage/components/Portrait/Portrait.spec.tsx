@@ -7,7 +7,8 @@ import { Portrait } from './Portrait'
 describe('Portrait', () => {
   it('should render successfully', async () => {
     const { baseElement } = renderApp(<Portrait onClick={() => void 0} />)
-    await screen.findAllByAltText('My profile picture')
+    const alternateImages = await screen.findAllByAltText(/My profile picture/)
+    expect(alternateImages).toHaveLength(6)
     expect(baseElement).toMatchSnapshot()
   })
 })
