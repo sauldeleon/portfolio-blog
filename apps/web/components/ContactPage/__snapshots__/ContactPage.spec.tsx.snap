@@ -504,7 +504,7 @@ exports[`ContactPage should render successfully 1`] = `
                   class="c10"
                 >
                   <img
-                    alt="My profile picture"
+                    alt="My profile picture 1"
                     class="c11"
                     data-nimg="1"
                     decoding="async"
@@ -516,7 +516,7 @@ exports[`ContactPage should render successfully 1`] = `
                     width="140"
                   />
                   <img
-                    alt="My profile picture"
+                    alt="My profile picture 2"
                     class="c12"
                     data-nimg="1"
                     decoding="async"
@@ -528,7 +528,7 @@ exports[`ContactPage should render successfully 1`] = `
                     width="140"
                   />
                   <img
-                    alt="My profile picture"
+                    alt="My profile picture 3"
                     class="c13"
                     data-nimg="1"
                     decoding="async"
@@ -540,7 +540,7 @@ exports[`ContactPage should render successfully 1`] = `
                     width="140"
                   />
                   <img
-                    alt="My profile picture"
+                    alt="My profile picture 4"
                     class="c14"
                     data-nimg="1"
                     decoding="async"
@@ -552,7 +552,7 @@ exports[`ContactPage should render successfully 1`] = `
                     width="140"
                   />
                   <img
-                    alt="My profile picture"
+                    alt="My profile picture 5"
                     class="c15"
                     data-nimg="1"
                     decoding="async"
@@ -564,7 +564,7 @@ exports[`ContactPage should render successfully 1`] = `
                     width="140"
                   />
                   <img
-                    alt="My profile picture"
+                    alt="My profile picture 6"
                     class="c16"
                     data-nimg="1"
                     decoding="async"

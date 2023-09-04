@@ -1,5 +1,5 @@
 {
-  "profilePicture": "My profile picture",
+  "profilePicture": "My profile picture {{count}}",
   "toothlessProfilePicture": "My toothless profile picture",
   "phoneAria": "My phone number",
   "phone": "Phone",
