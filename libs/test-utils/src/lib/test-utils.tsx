@@ -14,7 +14,7 @@ import Router, { NextRouter } from 'next/router'
 import { ReactNode, useEffect, useState } from 'react'
 import { ThemeProvider } from 'styled-components'
 
-import { LanguageContextProvider } from '@sdlgr/i18n-config'
+import { LanguageContextProvider } from '@sdlgr/i18n-client'
 import { mainTheme } from '@sdlgr/main-theme'
 
 export type MatcherCustomFnParams = {

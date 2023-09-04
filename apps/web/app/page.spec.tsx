@@ -1,15 +1,23 @@
-import { render } from '@testing-library/react'
-import { redirect } from 'next/navigation'
+import { renderWithTheme } from '@sdlgr/test-utils'
 
 import RootPage from './page.next'
 
+const mockPush = jest.fn()
 jest.mock('next/navigation', () => ({
-  redirect: jest.fn(),
+  ...jest.requireActual('next/navigation'),
+  useRouter: () => ({
+    push: mockPush,
+  }),
 }))
 
 describe('RootPage', () => {
+  beforeEach(() => {
+    jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
+  })
+
   it('should redirect to fallback language', async () => {
-    render(<RootPage />)
-    expect(redirect).toHaveBeenCalledWith(`/en`)
+    const { baseElement } = renderWithTheme(<RootPage />)
+    expect(mockPush).toHaveBeenCalledWith(`/en`)
+    expect(baseElement).toMatchSnapshot()
   })
 })

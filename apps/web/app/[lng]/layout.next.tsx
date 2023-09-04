@@ -1,12 +1,16 @@
-import { dir } from 'i18next'
-import Script from 'next/script'
+'use client'
 
-import { LanguageContextProvider } from '@sdlgr/i18n-config'
+import { dir } from 'i18next'
+import { usePathname, useRouter } from 'next/navigation'
+import Script from 'next/script'
+import { useEffect } from 'react'
+
+import { LanguageContextProvider, useDefaultLanguage } from '@sdlgr/i18n-client'
 
 import { MainLayout } from '@web/components/MainLayout/MainLayout'
 import StyledComponentsRegistry from '@web/components/StyledComponentsRegistry/StyledComponentsRegistry'
 import { getServerTranslation } from '@web/i18n/server'
-import { languages } from '@web/i18n/settings'
+import { fallbackLng, languages } from '@web/i18n/settings'
 
 interface RouteProps {
   params: {
@@ -46,6 +50,22 @@ export default function RootLayout({
   children,
   params: { lng },
 }: RootLayoutProps) {
+  const pathname = usePathname()
+  const router = useRouter()
+  const defaultLanguage = useDefaultLanguage({ languages, fallbackLng })
+
+  // if (!languages.some((loc) => lng === loc)) {
+  //   redirect(`/${defaultLanguage}/${differencePath}`)
+  // }
+
+  useEffect(() => {
+    if (!languages.some((loc) => lng === loc)) {
+      const urlParts = pathname.split('/').filter(Boolean)
+      const differencePath = urlParts.slice(1, urlParts.length).join('/')
+      router.push(`/${defaultLanguage}/${differencePath}`)
+    }
+  }, [defaultLanguage, lng, pathname, router])
+
   const googleAnalyticsId = process.env.GOOGLE_ANALYTICS_ID
   return (
     <html lang={lng} dir={dir(lng)} data-testid="root-html">
