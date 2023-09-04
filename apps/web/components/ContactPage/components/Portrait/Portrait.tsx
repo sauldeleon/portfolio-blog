@@ -1,14 +1,13 @@
-import { ImageProps } from 'next/image'
 import { useId } from 'react'
 
 import { useClientTranslation } from '@web/i18n/client'
 
 import { StyledPortrait, StyledPortraitContainer } from './Portrait.styles'
 
-interface PortraitProps extends Omit<ImageProps, 'src' | 'alt'> {
+interface PortraitProps {
   onClick: () => void
 }
-export function Portrait({ onClick, width, height }: PortraitProps) {
+export function Portrait({ onClick }: PortraitProps) {
   const { t } = useClientTranslation('contactPage')
   const id = useId()
   const portraitsSrc = [
@@ -27,7 +26,7 @@ export function Portrait({ onClick, width, height }: PortraitProps) {
           $totalImages={portraitsSrc.length}
           key={`${id}-${index}`}
           src={portraitSrc}
-          alt={t('profilePicture')}
+          alt={t('profilePicture', { count: index + 1 })}
           width={140}
           height={140}
           onClick={onClick}

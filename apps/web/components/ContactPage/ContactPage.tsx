@@ -31,11 +31,13 @@ export function ContactPage() {
     <MainPortal>
       <StyledContactInfoWrapper>
         <StyledContactInfo $isVisible={!isLoading} data-testid="contact-info">
-          {painMode ? (
-            <ToothLessPortrait onClick={() => setPainMode(false)} />
-          ) : (
-            <Portrait onClick={() => setPainMode(true)} />
-          )}
+          <NoSSR>
+            {painMode ? (
+              <ToothLessPortrait onClick={() => setPainMode(false)} />
+            ) : (
+              <Portrait onClick={() => setPainMode(true)} />
+            )}
+          </NoSSR>
           <StyledHeading $level={2}>Software Engineer</StyledHeading>
           <Link
             href="https://www.linkedin.com/in/sauldeleonguerrero"

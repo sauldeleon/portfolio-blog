@@ -34,7 +34,7 @@ describe('ContactPage', () => {
       await screen.findByAltText('My toothless profile picture')
     ).toBeInTheDocument()
     await userEvent.click(screen.getByAltText(/My toothless profile picture/))
-    expect(await screen.findAllByAltText('My profile picture')).toHaveLength(6)
+    expect(await screen.findAllByAltText(/My profile picture/)).toHaveLength(6)
   })
 
   it('should hide contact info if bot info is loading', async () => {

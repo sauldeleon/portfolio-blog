@@ -1,5 +1,5 @@
 {
-  "profilePicture": "Mi foto de perfil",
+  "profilePicture": "Mi foto de perfil {{count}}",
   "toothlessProfilePicture": "My desdentada foto de perfil",
   "phoneAria": "Mi número de teléfono",
   "phone": "Tel",
