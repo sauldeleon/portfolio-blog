@@ -1,5 +1,4 @@
 import { screen } from '@testing-library/react'
-import { usePathname } from 'next/navigation'
 
 import { renderApp } from '@sdlgr/test-utils'
 
@@ -19,13 +18,5 @@ describe('MainLayout', () => {
     const { baseElement } = renderApp(<MainLayout>test</MainLayout>)
     await screen.findByText('test')
     expect(baseElement).toMatchSnapshot()
-  })
-
-  it('should redirect to a allowed language', async () => {
-    ;(usePathname as jest.Mock).mockReturnValue('/de')
-    renderApp(<MainLayout>test</MainLayout>, undefined, { language: 'de' })
-
-    await screen.findByText('test')
-    expect(mockPush).toHaveBeenCalledWith('/en/')
   })
 })

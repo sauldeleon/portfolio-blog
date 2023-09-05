@@ -3,6 +3,7 @@ import Script from 'next/script'
 
 import { LanguageContextProvider } from '@sdlgr/i18n-tools'
 
+import { LanguageGuard } from '@web/components/LanguageGuard/LanguageGuard'
 import { MainLayout } from '@web/components/MainLayout/MainLayout'
 import StyledComponentsRegistry from '@web/components/StyledComponentsRegistry/StyledComponentsRegistry'
 import { getServerTranslation } from '@web/i18n/server'
@@ -79,7 +80,9 @@ export default function RootLayout({
       <body>
         <StyledComponentsRegistry>
           <LanguageContextProvider value={{ language: lng }}>
-            <MainLayout>{children}</MainLayout>
+            <LanguageGuard>
+              <MainLayout>{children}</MainLayout>
+            </LanguageGuard>
           </LanguageContextProvider>
         </StyledComponentsRegistry>
       </body>
