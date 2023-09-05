@@ -8,6 +8,7 @@ import { MainLayout } from '@web/components/MainLayout/MainLayout'
 import StyledComponentsRegistry from '@web/components/StyledComponentsRegistry/StyledComponentsRegistry'
 import { getServerTranslation } from '@web/i18n/server'
 import { languages } from '@web/i18n/settings'
+import { sharedRootMetadata } from '@web/utils/metadata/metadata'
 
 interface RouteProps {
   params: {
@@ -24,18 +25,8 @@ type GenerateMetadataProps = RouteProps
 export async function generateMetadata({ params }: GenerateMetadataProps) {
   const { t } = await getServerTranslation({ language: params.lng })
   return {
-    title: 'Saúl de León Guerrero',
+    ...sharedRootMetadata,
     description: t('metadata.description'),
-    colorScheme: 'dark',
-    metadataBase: new URL('https://www.sawl.dev'),
-    alternates: {
-      canonical: '/en',
-      languages: {
-        'en-US': '/en',
-        'en-UK': '/en',
-        'es-ES': '/es',
-      },
-    },
   }
 }
 
