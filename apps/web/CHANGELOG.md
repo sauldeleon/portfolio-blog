@@ -1,5 +1,11 @@
 # Changelog web app
 
+## [0.3.2](https://github.com/sauldeleon/portfolio-blog/compare/web-0.3.1...web-0.3.2) (2023-09-05)
+
+### Bug Fixes
+
+- added metadata in root index page ([243fe2c](https://github.com/sauldeleon/portfolio-blog/commit/243fe2c1e7826ca10a6282bcfa3cde2a3f6e49cf))
+
 ## [0.3.1](https://github.com/sauldeleon/portfolio-blog/compare/web-0.3.0...web-0.3.1) (2023-09-05)
 
 ### Bug Fixes
