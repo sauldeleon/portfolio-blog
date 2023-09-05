@@ -14,7 +14,6 @@ describe('[lng]/contact - Page', () => {
     const text = await screen.findByText('Software Engineer')
     expect(text).toBeInTheDocument()
     expect(screen.getByText(/E-mail/)).toBeInTheDocument()
-    expect(screen.getByText(/Phone/)).toBeInTheDocument()
   })
 })
 

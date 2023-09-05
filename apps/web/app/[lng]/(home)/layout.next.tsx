@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useId } from 'react'
+import React, { useContext, useId } from 'react'
 import { Trans } from 'react-i18next'
 
 import {
@@ -10,6 +10,7 @@ import {
   GameControllerIcon,
   HikeIcon,
 } from '@sdlgr/assets'
+import { LanguageContext } from '@sdlgr/i18n-tools'
 import { Body, Label } from '@sdlgr/typography'
 
 import { useClientTranslation } from '@web/i18n/client'
@@ -27,6 +28,7 @@ interface HomeLayoutProps {
 
 export default function HomeLayout({ children }: HomeLayoutProps) {
   const { t } = useClientTranslation('homepage')
+  const { language } = useContext(LanguageContext)
   const summaryParagraphs: React.ReactNode[] = [
     t('summary.p1'),
     t('summary.p2'),
@@ -48,7 +50,7 @@ export default function HomeLayout({ children }: HomeLayoutProps) {
     <>
       <StyledHeading $level={2}>Saúl de León Guerrero</StyledHeading>
       <StyledCircleLink
-        href="/experience"
+        href={`/${language}/experience`}
         iconContent={<Label $level="XS">{t('explore')}</Label>}
         iconSize={76}
       />
@@ -62,7 +64,7 @@ export default function HomeLayout({ children }: HomeLayoutProps) {
         ))}
       </StyledSummary>
       <StyledCircleLink
-        href="/experience"
+        href={`/${language}/experience`}
         iconContent={<ArrowRightIcon />}
         label={t('experience')}
       />

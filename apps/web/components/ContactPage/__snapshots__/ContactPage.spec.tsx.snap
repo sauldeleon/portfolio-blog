@@ -599,25 +599,6 @@ exports[`ContactPage should render successfully 1`] = `
                   <span
                     class="c22"
                   >
-                    Phone
-                    :
-                  </span>
-                   
-                  <a
-                    aria-label="My phone number"
-                    class="c19"
-                    data-testid="plain-anchor"
-                    href="tel:+34661030038"
-                  >
-                    (+34) 661 03 00 38
-                  </a>
-                </p>
-                <p
-                  class="c20 c21"
-                >
-                  <span
-                    class="c22"
-                  >
                     E-mail
                     :
                   </span>

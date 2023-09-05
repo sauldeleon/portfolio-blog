@@ -46,12 +46,6 @@ export function ContactPage() {
           {!isBot && (
             <NoSSR>
               <StyledBody $level="L">
-                <StyledLabel>{t('phone')}:</StyledLabel>{' '}
-                <Link href="tel:+34661030038" aria-label={t('phoneAria')}>
-                  (+34) 661 03 00 38
-                </Link>
-              </StyledBody>
-              <StyledBody $level="L">
                 <StyledLabel>{t('mail')}:</StyledLabel>{' '}
                 <Link href={`mailto:${mail}`} aria-label={t('emailAria')}>
                   {mail}
