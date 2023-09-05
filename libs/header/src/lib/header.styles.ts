@@ -24,7 +24,7 @@ export const StyledNav = styled.nav`
   }
 
   ${({ theme }) => theme.media.up.xl} {
-    padding: 0;
+    padding: 0 20px;
   }
 `
 

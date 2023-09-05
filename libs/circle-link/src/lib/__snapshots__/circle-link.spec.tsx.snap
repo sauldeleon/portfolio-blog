@@ -33,7 +33,7 @@ exports[`CircleLink should render with a different size 1`] = `
   text-decoration: none;
 }
 
-.c6 {
+.c5 {
   font-family: 'Roboto mono',monospace;
   font-weight: 400;
   color: #FBFBFB;
@@ -42,30 +42,30 @@ exports[`CircleLink should render with a different size 1`] = `
   white-space: pre-line;
 }
 
-.c6 ul,
-.c6 ol {
+.c5 ul,
+.c5 ol {
   margin-left: 40px;
   margin-bottom: 10px;
 }
 
-.c6 ul {
+.c5 ul {
   list-style: outside disc;
 }
 
-.c6 ol {
+.c5 ol {
   list-style: decimal;
 }
 
-.c6 li {
+.c5 li {
   padding-left: 10px;
 }
 
-.c7 {
+.c6 {
   margin-left: 8px;
   position: relative;
 }
 
-.c7::after {
+.c6::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -75,7 +75,7 @@ exports[`CircleLink should render with a different size 1`] = `
   background-color: currentColor;
 }
 
-.c7::after {
+.c6::after {
   transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.5s ease-out;
@@ -103,7 +103,7 @@ exports[`CircleLink should render with a different size 1`] = `
   transform-origin: center;
 }
 
-.c1:hover .c5::after {
+.c1:hover .c4::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
@@ -115,13 +115,6 @@ exports[`CircleLink should render with a different size 1`] = `
 }
 
 .c3 {
-  position: absolute;
-  transform: translate(-50%,-50%);
-  top: 50%;
-  left: 50%;
-}
-
-.c4 {
   position: absolute;
   transform: translate(-50%,-50%);
   top: 50%;
@@ -139,20 +132,19 @@ exports[`CircleLink should render with a different size 1`] = `
         class="c2"
       >
         <svg
-          class="c3"
           height="50"
           width="50"
         >
           circleButton.svg
         </svg>
         <div
-          class="c4"
+          class="c3"
         >
           wadus
         </div>
       </div>
       <p
-        class="c5 c6 c7"
+        class="c4 c5 c6"
       >
         test
       </p>

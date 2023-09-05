@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components'
 
-import { CircleButtonIcon } from '@sdlgr/assets'
 import { Link } from '@sdlgr/link'
 import { Body } from '@sdlgr/typography'
 
@@ -45,13 +44,6 @@ export const StyledIconWrapper = styled.div<{ $size: number }>`
     width: ${$size}px;
     height: ${$size}px;
   `}
-`
-
-export const StyledCircleButtonIcon = styled(CircleButtonIcon)`
-  position: absolute;
-  transform: translate(-50%, -50%);
-  top: 50%;
-  left: 50%;
 `
 
 export const StyledIconContent = styled.div`
