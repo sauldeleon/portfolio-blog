@@ -13,7 +13,7 @@ describe('[lng]/contact - Page', () => {
     renderApp(<Page />)
     const text = await screen.findByText('Software Engineer')
     expect(text).toBeInTheDocument()
-    expect(screen.getByText(/E-mail/)).toBeInTheDocument()
+    expect(screen.getByText(/email.svg/)).toBeInTheDocument()
   })
 })
 

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-import { Link } from '@sdlgr/link'
+import { EmailIcon, LinkedinIcon } from '@sdlgr/assets'
 import { useIsBot } from '@sdlgr/use-is-bot'
 
 import { MainPortal } from '@web/components/MainPortal/MainPortal'
@@ -14,7 +14,8 @@ import {
   StyledContactInfo,
   StyledContactInfoWrapper,
   StyledHeading,
-  StyledLabel,
+  StyledIconWrapper,
+  StyledLink,
 } from './ContactPage.styles'
 import { Portrait } from './components/Portrait/Portrait'
 import { ToothLessPortrait } from './components/ToothLessPortrait/ToothLessPortrait'
@@ -37,19 +38,26 @@ export function ContactPage() {
             <Portrait onClick={() => setPainMode(true)} />
           )}
           <StyledHeading $level={2}>Software Engineer</StyledHeading>
-          <Link
-            href="https://www.linkedin.com/in/sauldeleonguerrero"
-            aria-label={t('linkedInAria')}
-          >
-            <StyledBody $level="L">Linked in</StyledBody>
-          </Link>
+          <StyledBody $level="L">
+            <StyledIconWrapper>
+              <LinkedinIcon />
+            </StyledIconWrapper>
+            <StyledLink
+              href="https://www.linkedin.com/in/sauldeleonguerrero"
+              aria-label={t('linkedInAria')}
+            >
+              LinkedIn
+            </StyledLink>
+          </StyledBody>
           {!isBot && (
             <NoSSR>
               <StyledBody $level="L">
-                <StyledLabel>{t('mail')}:</StyledLabel>{' '}
-                <Link href={`mailto:${mail}`} aria-label={t('emailAria')}>
+                <StyledIconWrapper>
+                  <EmailIcon />
+                </StyledIconWrapper>
+                <StyledLink href={`mailto:${mail}`} aria-label={t('emailAria')}>
                   {mail}
-                </Link>
+                </StyledLink>
               </StyledBody>
             </NoSSR>
           )}
