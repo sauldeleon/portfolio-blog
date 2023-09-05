@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LanguageGuard should render successfully 1`] = `
+.c0 {
+  opacity: 0;
+  animation: cJoqxJ 0.5s 1s linear forwards;
+}
+
+<body>
+  <div>
+    <div
+      class="c0"
+    >
+      test
+    </div>
+  </div>
+</body>
+`;
