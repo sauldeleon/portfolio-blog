@@ -1,5 +1,11 @@
 # Changelog web app
 
+# [0.3.0](https://github.com/sauldeleon/portfolio-blog/compare/web-0.2.0...web-0.3.0) (2023-09-05)
+
+### Features
+
+- add language guard component to avoid bouncing translate swaps ([7500021](https://github.com/sauldeleon/portfolio-blog/commit/75000212ec883aeb91558417e301879606916305))
+
 # [0.2.0](https://github.com/sauldeleon/portfolio-blog/compare/web-0.1.1...web-0.2.0) (2023-09-05)
 
 ### Bug Fixes
