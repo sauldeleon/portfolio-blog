@@ -1,4 +1,15 @@
-# Changelog Saúl's Portfolio
+# Changelog web app
+
+# [0.2.0](https://github.com/sauldeleon/portfolio-blog/compare/web-0.1.1...web-0.2.0) (2023-09-05)
+
+### Bug Fixes
+
+- disable SSR portrait on server ([624542b](https://github.com/sauldeleon/portfolio-blog/commit/624542b76b2fabfe71c6bd7eadaed2a1b91da136))
+- reenable SSR and fix import styled ([f351721](https://github.com/sauldeleon/portfolio-blog/commit/f351721a652c53d100b94433035e9815ada03d4f))
+
+### Features
+
+- useStorage to keep track of language ([d5353a7](https://github.com/sauldeleon/portfolio-blog/commit/d5353a7607a0744d8910b961bc7fb4d348b14614))
 
 ## [0.1.1](https://github.com/sauldeleon/portfolio-blog/compare/web-0.1.0...web-0.1.1) (2023-09-02)
 
