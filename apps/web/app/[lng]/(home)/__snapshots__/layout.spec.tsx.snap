@@ -10,7 +10,7 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
   margin: 0;
 }
 
-.c12 {
+.c11 {
   font-family: 'Roboto mono',monospace;
   font-weight: 400;
   color: #FBFBFB;
@@ -19,25 +19,25 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
   white-space: pre-line;
 }
 
-.c12 ul,
-.c12 ol {
+.c11 ul,
+.c11 ol {
   margin-left: 40px;
   margin-bottom: 10px;
 }
 
-.c12 ul {
+.c11 ul {
   list-style: outside disc;
 }
 
-.c12 ol {
+.c11 ol {
   list-style: decimal;
 }
 
-.c12 li {
+.c11 li {
   padding-left: 10px;
 }
 
-.c8 {
+.c7 {
   font-family: 'Roboto mono',monospace;
   font-weight: 500;
   color: #FBFBFB;
@@ -78,12 +78,12 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
   text-decoration: none;
 }
 
-.c16 {
+.c15 {
   margin-left: 8px;
   position: relative;
 }
 
-.c16::after {
+.c15::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -93,7 +93,7 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
   background-color: currentColor;
 }
 
-.c16::after {
+.c15::after {
   transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.5s ease-out;
@@ -121,12 +121,12 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
   transform-origin: center;
 }
 
-.c3:hover .c15::after {
+.c3:hover .c14::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
 
-.c13 {
+.c12 {
   outline: none;
   cursor: pointer;
   display: flex;
@@ -134,11 +134,11 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
   max-height: 42px;
 }
 
-.c13::after {
+.c12::after {
   content: none;
 }
 
-.c13:hover circle.loading {
+.c12:hover circle.loading {
   stroke: white;
   stroke-width: 6px;
   stroke-dasharray: 110;
@@ -148,7 +148,7 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
   transform-origin: center;
 }
 
-.c13:hover .c15::after {
+.c12:hover .c14::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
@@ -159,20 +159,13 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
   height: 76px;
 }
 
-.c14 {
+.c13 {
   position: relative;
   width: 42px;
   height: 42px;
 }
 
 .c6 {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  top: 50%;
-  left: 50%;
-}
-
-.c7 {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
@@ -184,7 +177,7 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
   text-align: center;
 }
 
-.c9 {
+.c8 {
   margin-top: 30px;
 }
 
@@ -193,13 +186,13 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
   margin-bottom: 40px;
 }
 
-.c10 {
+.c9 {
   text-align: center;
   max-width: 1180px;
   padding: 0 34px;
 }
 
-.c10 .c11 {
+.c9 .c10 {
   margin-top: 20px;
 }
 
@@ -220,7 +213,7 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
 }
 
 @media (width >= 768px) {
-  .c9 {
+  .c8 {
     margin-bottom: 40px;
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
@@ -237,7 +230,7 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
 }
 
 @media (width >= 768px) {
-  .c10 .c11 {
+  .c9 .c10 {
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
     color: #FBFBFB;
@@ -261,17 +254,16 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
         class="c5"
       >
         <svg
-          class="c6"
           height="76"
           width="76"
         >
           circleButton.svg
         </svg>
         <div
-          class="c7"
+          class="c6"
         >
           <div
-            class="c8"
+            class="c7"
           >
             Explore
           </div>
@@ -280,30 +272,30 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
     </a>
     test
     <h2
-      class="c0 c9"
+      class="c0 c8"
     >
       About me
     </h2>
     <section
-      class="c10"
+      class="c9"
     >
       <p
-        class="c11 c12"
+        class="c10 c11"
       >
         Preference for the (x)ERN stack, transforming designs into responsive webs. I'm fluent in HTML5, CSS3, and (Java|Type)Script.
       </p>
       <p
-        class="c11 c12"
+        class="c10 c11"
       >
         I've got Fullstack experience, but I'm most enthusiastic about FrontEnd development.
       </p>
       <p
-        class="c11 c12"
+        class="c10 c11"
       >
         I do love staying up-to-date with the latest trends, and my commitment is to deliver work that can be easily maintained and evolved without too much suffering (if possible).
       </p>
       <p
-        class="c11 c12"
+        class="c10 c11"
       >
         Mountaineer 
         <svg
@@ -337,21 +329,20 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
       </p>
     </section>
     <a
-      class="c2 c13 c4"
+      class="c2 c12 c4"
       href="/experience"
     >
       <div
-        class="c14"
+        class="c13"
       >
         <svg
-          class="c6"
           height="42"
           width="42"
         >
           circleButton.svg
         </svg>
         <div
-          class="c7"
+          class="c6"
         >
           <svg>
             arrowRight.svg
@@ -359,7 +350,7 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
         </div>
       </div>
       <p
-        class="c11 c15 c12 c16"
+        class="c10 c14 c11 c15"
       >
         Experience
       </p>

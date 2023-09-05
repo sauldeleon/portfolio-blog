@@ -6,6 +6,7 @@ import { CircleLink } from '@sdlgr/circle-link'
 
 export const StyledLogoLink = styled(Link)`
   display: flex;
+  margin-right: 15px;
 `
 
 export const StyledSLLogo = styled(SLLogo)`
@@ -22,6 +23,7 @@ export const StyledCircleLink = styled(CircleLink)`
   display: none;
 
   ${({ theme }) => theme.media.up.md} {
+    margin: 0 20px;
     display: flex;
   }
 `

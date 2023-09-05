@@ -5,6 +5,15 @@
   "projectType": "library",
   "tags": [],
   "targets": {
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "changelogHeader": "# Changelog i18n tools library \n",
+        "baseBranch": "main",
+        "commitMessageFormat": "chore({projectName}): release: v{version}",
+        "push": false
+      }
+    },
     "lint": {
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
