@@ -1,5 +1,7 @@
 # Changelog Circle Link component
 
+## [0.1.1](https://github.com/sauldeleon/portfolio-blog/compare/circle-link-0.1.0...circle-link-0.1.1) (2023-09-05)
+
 # 0.1.0 (2023-09-02)
 
 ### Bug Fixes
