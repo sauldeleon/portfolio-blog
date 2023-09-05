@@ -1,38 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ContactPage should render successfully 1`] = `
-.c19 {
-  position: relative;
-  position: relative;
-}
-
-.c19::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 2px;
-  bottom: 0;
-  left: 0;
-  background-color: currentColor;
-}
-
-.c19::after {
-  transform: scaleX(0);
-  transform-origin: bottom right;
-  transition: transform 0.25s ease-out;
-}
-
-.c19:hover::after {
-  transform: scaleX(1);
-  transform-origin: bottom left;
-}
-
-.c19:hover,
-.c19:active,
-.c19:focus {
-  text-decoration: none;
-}
-
 .c3 {
   z-index: 2;
   width: 147%;
@@ -134,6 +102,38 @@ exports[`ContactPage should render successfully 1`] = `
   background-color: #000000;
 }
 
+.c22 {
+  position: relative;
+  position: relative;
+}
+
+.c22::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: currentColor;
+}
+
+.c22::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.c22:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c22:hover,
+.c22:active,
+.c22:focus {
+  text-decoration: none;
+}
+
 .c17 {
   font-family: 'Roboto mono',monospace;
   font-weight: 400;
@@ -143,7 +143,7 @@ exports[`ContactPage should render successfully 1`] = `
   margin: 0;
 }
 
-.c20 {
+.c19 {
   font-family: 'Roboto mono',monospace;
   font-weight: 400;
   color: #FBFBFB;
@@ -152,39 +152,39 @@ exports[`ContactPage should render successfully 1`] = `
   white-space: pre-line;
 }
 
-.c20 ul,
-.c20 ol {
+.c19 ul,
+.c19 ol {
   margin-left: 40px;
   margin-bottom: 10px;
 }
 
-.c20 ul {
+.c19 ul {
   list-style: outside disc;
 }
 
-.c20 ol {
+.c19 ol {
   list-style: decimal;
 }
 
-.c20 li {
+.c19 li {
   padding-left: 10px;
 }
 
 .c8 {
   width: 100%;
   height: 100%;
+  display: grid;
+  place-items: center;
 }
 
 .c9 {
   display: grid;
   place-items: center;
   rotate: 270deg;
-  position: absolute;
-  top: 36px;
-  left: 65px;
   opacity: 1;
   transition: opacity 2s ease-in;
   transform-origin: 50% 51%;
+  row-gap: 4px;
 }
 
 .c18 {
@@ -195,16 +195,25 @@ exports[`ContactPage should render successfully 1`] = `
   line-height: normal;
 }
 
-.c22 {
-  display: inline-block;
-}
-
-.c21 {
+.c20 {
+  display: flex;
+  align-items: center;
   font-family: 'Roboto mono',monospace;
   font-weight: 500;
   color: #FBFBFB;
   font-size: 0.55rem;
   line-height: normal;
+}
+
+.c21 {
+  display: grid;
+  place-items: center;
+  margin-right: 4px;
+}
+
+.c21 svg {
+  width: 12px;
+  height: 12px;
 }
 
 .c10 {
@@ -390,19 +399,24 @@ exports[`ContactPage should render successfully 1`] = `
   }
 }
 
-@media (width <= 767px) {
-  .c22 {
-    display: none;
-  }
-}
-
 @media (width >= 768px) {
-  .c21 {
+  .c20 {
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
     color: #FBFBFB;
     font-size: 0.9rem;
     line-height: normal;
+  }
+}
+
+@media (width >= 768px) {
+  .c21 {
+    margin-right: 8px;
+  }
+
+  .c21 svg {
+    width: 16px;
+    height: 16px;
   }
 }
 
@@ -581,50 +595,38 @@ exports[`ContactPage should render successfully 1`] = `
                 >
                   Software Engineer
                 </h1>
-                <a
-                  aria-label="My LinkedIn profile"
-                  class="c19"
-                  data-testid="plain-anchor"
-                  href="https://www.linkedin.com/in/sauldeleonguerrero"
-                >
-                  <p
-                    class="c20 c21"
-                  >
-                    Linked in
-                  </p>
-                </a>
                 <p
-                  class="c20 c21"
+                  class="c19 c20"
                 >
                   <span
-                    class="c22"
+                    class="c21"
                   >
-                    Phone
-                    :
+                    <svg>
+                      linkedin.svg
+                    </svg>
                   </span>
-                   
                   <a
-                    aria-label="My phone number"
-                    class="c19"
+                    aria-label="My LinkedIn profile"
+                    class="c22 "
                     data-testid="plain-anchor"
-                    href="tel:+34661030038"
+                    href="https://www.linkedin.com/in/sauldeleonguerrero"
                   >
-                    (+34) 661 03 00 38
+                    LinkedIn
                   </a>
                 </p>
                 <p
-                  class="c20 c21"
+                  class="c19 c20"
                 >
                   <span
-                    class="c22"
+                    class="c21"
                   >
-                    E-mail
-                    :
+                    <svg>
+                      email.svg
+                    </svg>
                   </span>
-                   
                   <a
                     aria-label="My electronic mail address"
-                    class="c19"
+                    class="c22 "
                     data-testid="plain-anchor"
                     href="mailto:sauldeleonguerrero@gmail.com"
                   >

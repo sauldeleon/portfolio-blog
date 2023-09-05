@@ -1,5 +1,17 @@
 # Changelog Assets library
 
+# [0.2.0](https://github.com/sauldeleon/portfolio-blog/compare/assets-0.1.0...assets-0.2.0) (2023-09-05)
+
+### Bug Fixes
+
+- removed phone and added icons ([d322496](https://github.com/sauldeleon/portfolio-blog/commit/d3224963f5e5b1eaf9c7d802738b41e79db0b19d))
+- rename commit message format ([e1e2ab4](https://github.com/sauldeleon/portfolio-blog/commit/e1e2ab404bbd2c32f3508d1ed8197b3fbff93cb9))
+
+### Features
+
+- add summary icons ([7c8c0ab](https://github.com/sauldeleon/portfolio-blog/commit/7c8c0ab1112683bf6a55fd30ae8fe4d9946e03ed))
+- deleted changelogs ([e9be338](https://github.com/sauldeleon/portfolio-blog/commit/e9be33836ee47b6505ad94d21f4be21855a7fa0d))
+
 # 0.1.0 (2023-09-02)
 
 ### Bug Fixes

@@ -248,7 +248,7 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
     </h1>
     <a
       class="c2 c3 c4"
-      href="/experience"
+      href="/en/experience"
     >
       <div
         class="c5"
@@ -330,7 +330,7 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
     </section>
     <a
       class="c2 c12 c4"
-      href="/experience"
+      href="/en/experience"
     >
       <div
         class="c13"

@@ -1,5 +1,12 @@
 # Changelog web app
 
+## [0.3.1](https://github.com/sauldeleon/portfolio-blog/compare/web-0.3.0...web-0.3.1) (2023-09-05)
+
+### Bug Fixes
+
+- experience link not showing language ([dce6452](https://github.com/sauldeleon/portfolio-blog/commit/dce64525d3cf793d4d85073cd4d2da4f8bf8dc98))
+- removed phone and added icons ([d322496](https://github.com/sauldeleon/portfolio-blog/commit/d3224963f5e5b1eaf9c7d802738b41e79db0b19d))
+
 # [0.3.0](https://github.com/sauldeleon/portfolio-blog/compare/web-0.2.0...web-0.3.0) (2023-09-05)
 
 ### Features
