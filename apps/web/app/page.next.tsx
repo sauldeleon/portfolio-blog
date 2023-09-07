@@ -2,18 +2,13 @@
 
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
-import styled from 'styled-components'
 
 import { useDefaultLanguage } from '@sdlgr/i18n-tools'
 
 import StyledComponentsRegistry from '@web/components/StyledComponentsRegistry/StyledComponentsRegistry'
 import { fallbackLng, languages } from '@web/i18n/settings'
 
-const StyledBody = styled.body`
-  background-color: ${({ theme }) => theme.colors.black};
-  height: 100vh;
-  width: 100%;
-`
+import { StyledBody } from './page.styles'
 
 export default function RootPage() {
   const lang = useDefaultLanguage({ languages, fallbackLng })

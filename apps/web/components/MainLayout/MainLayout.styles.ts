@@ -5,7 +5,7 @@ export const StyledPage = styled.div`
   display: flex;
   flex-direction: column;
   min-width: 300px;
-  overflow-x: scroll;
+  overflow-x: auto;
 `
 
 export const StyledContent = styled.div`

@@ -10,13 +10,32 @@ import RootLayout, {
 
 jest.mock('next/navigation', () => ({
   ...jest.requireActual('next/navigation'),
-  usePathname: jest.fn(),
+  usePathname: jest.fn().mockImplementation(() => '/en'),
+  useParams: jest.fn().mockImplementation(() => ({ lng: 'en' })),
   useRouter: () => ({
     push: jest.fn(),
   }),
 }))
 
+jest.mock(
+  '@web/components/MainLayout/components/ProgressBar/ProgressBar',
+  () => ({
+    ProgressBar: () => 'ProgressBar',
+  })
+)
+
 describe('[lng] route - layout', () => {
+  beforeEach(() => {
+    jest.spyOn(console, 'error').mockImplementation((err, attr1) => {
+      if (
+        typeof err === 'string' &&
+        err.includes('validateDOMNesting') &&
+        attr1?.includes('html')
+      ) {
+        return
+      }
+    })
+  })
   it('should render successfully in English', async () => {
     renderApp(<RootLayout params={{ lng: 'en' }}>test</RootLayout>)
 
