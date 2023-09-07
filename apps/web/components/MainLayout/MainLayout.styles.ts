@@ -11,7 +11,6 @@ export const StyledPage = styled.div`
 export const StyledContent = styled.div`
   display: flex;
   min-height: calc(100vh - 115px - 300px);
-  padding-top: 80px;
   align-items: center;
   flex-direction: column;
   overflow: hidden;

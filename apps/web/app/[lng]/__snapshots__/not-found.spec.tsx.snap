@@ -58,10 +58,11 @@ exports[`NotFound should render successfully 1`] = `
 }
 
 .c0 {
+  width: 100%;
+  min-height: calc(100vh - 115px - 300px);
   display: grid;
   place-items: center;
-  width: 100%;
-  height: 100%;
+  place-content: center;
 }
 
 @media (width >= 768px) {

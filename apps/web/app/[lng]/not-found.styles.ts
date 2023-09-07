@@ -72,8 +72,9 @@ export const Styled404Wrapper = styled.div`
 `
 
 export const StyledPage = styled.div`
+  width: 100%;
+  min-height: calc(100vh - 115px - 300px);
   display: grid;
   place-items: center;
-  width: 100%;
-  height: 100%;
+  place-content: center;
 `
