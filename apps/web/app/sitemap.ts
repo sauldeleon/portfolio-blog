@@ -6,13 +6,7 @@ import { publicUrl } from '@web/utils/url/generateUrl'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const languagePaths = languages.map((lng) => `/${lng}`)
-  const appPaths = [
-    '/',
-    '/contact',
-    '/experience',
-    '/portfolio',
-    '/get-in-touch',
-  ]
+  const appPaths = ['/', '/contact', '/experience', '/portfolio', '/blog']
   const availableRoutes = cartesianMerge(languagePaths, appPaths)
   const routes = availableRoutes.map((route) => ({
     url: `${publicUrl(route)}`,

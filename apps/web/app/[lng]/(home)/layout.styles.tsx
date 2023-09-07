@@ -49,3 +49,28 @@ export const StyledSummary = styled.section`
     }
   }
 `
+
+export const StyledAttributes = styled.span`
+  display: inline-block;
+`
+
+export const StyledAttribute = styled.span`
+  display: inline;
+
+  &:after {
+    content: ' ';
+    word-spacing: 1em;
+    background-image: linear-gradient(
+      0.25turn,
+      transparent 0 calc(50% - 0.03em),
+      currentcolor 0 calc(50% + 0.03em),
+      transparent 0
+    );
+  }
+`
+
+export const StyledAttributeContent = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+`

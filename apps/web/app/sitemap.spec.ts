@@ -24,7 +24,7 @@ describe('sitemap', () => {
         },
         {
           "lastModified": "2020-01-01T00:00:00.000Z",
-          "url": "https://test.url/en/get-in-touch",
+          "url": "https://test.url/en/blog",
         },
         {
           "lastModified": "2020-01-01T00:00:00.000Z",
@@ -44,7 +44,7 @@ describe('sitemap', () => {
         },
         {
           "lastModified": "2020-01-01T00:00:00.000Z",
-          "url": "https://test.url/es/get-in-touch",
+          "url": "https://test.url/es/blog",
         },
       ]
     `)

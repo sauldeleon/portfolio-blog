@@ -12,6 +12,7 @@ jest.mock('next/navigation', () => ({
   ...jest.requireActual('next/navigation'),
   usePathname: jest.fn().mockImplementation(() => '/en'),
   useParams: jest.fn().mockImplementation(() => ({ lng: 'en' })),
+  useSelectedLayoutSegments: () => ['(home)'],
   useRouter: () => ({
     push: jest.fn(),
   }),
