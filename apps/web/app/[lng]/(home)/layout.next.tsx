@@ -96,7 +96,7 @@ export default function HomeLayout({ children }: HomeLayoutProps) {
     t('summary.p2'),
     t('summary.p3'),
     <StyledAttributes key="attributes">
-      {attributes.map(({ key, element }, index) => (
+      {attributes.map(({ key, element }) => (
         <StyledAttribute key={`${key}-attribute`}>
           <StyledAttributeContent>{element}</StyledAttributeContent>
         </StyledAttribute>
