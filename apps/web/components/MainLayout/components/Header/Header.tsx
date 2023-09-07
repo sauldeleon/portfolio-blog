@@ -2,7 +2,7 @@ import { usePathname, useSelectedLayoutSegments } from 'next/navigation'
 import { useContext } from 'react'
 
 import { ArrowRightIcon } from '@sdlgr/assets'
-import { Header as HeaderLib } from '@sdlgr/header'
+import { Header as HeaderLib, NavItem } from '@sdlgr/header'
 import { LanguageContext } from '@sdlgr/i18n-tools'
 
 import { useClientTranslation } from '@web/i18n/client'
@@ -17,13 +17,7 @@ export function Header() {
 
   const isValidPath = !segments.some((segment) => segment.includes('/'))
 
-  const navItems: {
-    href: string
-    label: string
-    ariaLabel: string
-    isActive: boolean
-    hideOnDesktop?: boolean
-  }[] = [
+  const navItems: NavItem[] = [
     {
       href: `/${language}/experience/`,
       label: t('experience'),

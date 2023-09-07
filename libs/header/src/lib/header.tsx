@@ -9,16 +9,18 @@ import {
   StyledNavLink,
 } from './header.styles'
 
+export type NavItem = {
+  href: string
+  label: string
+  ariaLabel: string
+  isActive: boolean
+  hideOnDesktop?: boolean
+}
+
 interface HeaderProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> {
   logo?: React.ReactNode
-  navItems?: {
-    href: string
-    label: string
-    ariaLabel: string
-    isActive: boolean
-    hideOnDesktop?: boolean
-  }[]
+  navItems?: NavItem[]
   actionItem?: React.ReactNode
 }
 
