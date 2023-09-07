@@ -1,11 +1,19 @@
-import Link from 'next/link'
+'use client'
 
-export default function NotFound() {
+import { Link } from '@sdlgr/link'
+
+import { useClientTranslation } from '@web/i18n/client'
+
+import { Styled404Wrapper, StyledPage } from './not-found.styles'
+
+export function NotFound() {
+  const { t } = useClientTranslation('notFound')
   return (
-    <div>
-      <h2>Not Found</h2>
-      <p>Could not find requested resource</p>
-      <Link href="/">Return Home</Link>
-    </div>
+    <StyledPage>
+      <Styled404Wrapper title="404">404</Styled404Wrapper>
+      <Link href="/">{t('returnHome')}</Link>
+    </StyledPage>
   )
 }
+
+export default NotFound

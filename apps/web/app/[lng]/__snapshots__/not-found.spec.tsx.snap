@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NotFound should render successfully 1`] = `
+.c2 {
+  position: relative;
+  position: relative;
+}
+
+.c2::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: currentColor;
+}
+
+.c2::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.c2:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c2:hover,
+.c2:active,
+.c2:focus {
+  text-decoration: none;
+}
+
+.c1 {
+  animation: jaBFZh 1s linear infinite;
+  font-size: 5rem;
+}
+
+.c1:before,
+.c1:after {
+  content: attr(title);
+  position: absolute;
+  left: 0;
+}
+
+.c1:before {
+  animation: iseZJo 1s linear infinite;
+  clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+}
+
+.c1:after {
+  animation: eYIaZu 1.5s linear infinite;
+  clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+  -webkit-clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+}
+
+.c0 {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+@media (width >= 768px) {
+  .c1 {
+    font-size: 10rem;
+  }
+}
+
+@media (width >= 1024px) {
+  .c1 {
+    font-size: 15rem;
+  }
+}
+
+@media (width >= 1440px) {
+  .c1 {
+    font-size: 20rem;
+  }
+}
+
+<body>
+  <div>
+    <div
+      class="c0"
+    >
+      <div
+        class="c1"
+        title="404"
+      >
+        404
+      </div>
+      <a
+        class="c2"
+        href="/"
+      >
+        Return Home
+      </a>
+    </div>
+  </div>
+</body>
+`;

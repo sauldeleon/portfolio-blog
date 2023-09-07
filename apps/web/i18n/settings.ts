@@ -3,6 +3,7 @@ import contactPage from './locales/en/contactPage.json'
 import footer from './locales/en/footer.json'
 import header from './locales/en/header.json'
 import homepage from './locales/en/homepage.json'
+import notFound from './locales/en/notFound.json'
 
 export const fallbackLng = 'en'
 export const languages = [fallbackLng, 'es']
@@ -15,5 +16,6 @@ export const resources = {
     footer,
     homepage,
     contactPage,
+    notFound,
   },
 } as const
