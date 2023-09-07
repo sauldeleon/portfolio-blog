@@ -1,5 +1,17 @@
 # Changelog web app
 
+# [0.4.0](https://github.com/sauldeleon/portfolio-blog/compare/web-0.3.2...web-0.4.0) (2023-09-07)
+
+### Bug Fixes
+
+- toothles portrait broken styles ([7d43ab0](https://github.com/sauldeleon/portfolio-blog/commit/7d43ab06447bf93d4622fbbd376e1d15b9825db3))
+- toothles portrait broken styles ([962a625](https://github.com/sauldeleon/portfolio-blog/commit/962a6255457dbb1e9771f7a802577942e2bfdde0))
+
+### Features
+
+- add 404 custom error page and fix redirections ([11c0495](https://github.com/sauldeleon/portfolio-blog/commit/11c049524a81363fc3e5b88990fc2dbbcac34b29))
+- add base 404 page ([498c6a3](https://github.com/sauldeleon/portfolio-blog/commit/498c6a36b07a78252d18ad9eabb7d2c2ba676fee))
+
 ## [0.3.2](https://github.com/sauldeleon/portfolio-blog/compare/web-0.3.1...web-0.3.2) (2023-09-05)
 
 ### Bug Fixes
