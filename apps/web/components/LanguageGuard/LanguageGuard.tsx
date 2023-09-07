@@ -1,11 +1,12 @@
 'use client'
 
-import { usePathname, useRouter } from 'next/navigation'
-import React, { useContext, useEffect, useState } from 'react'
+import { useParams, usePathname, useRouter } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
 
-import { LanguageContext, useDefaultLanguage } from '@sdlgr/i18n-tools'
+import { useDefaultLanguage } from '@sdlgr/i18n-tools'
 
 import { fallbackLng, languages } from '@web/i18n/settings'
+import { removeFirstPart } from '@web/utils/url/removeFirstPart'
 
 import { StyledGuardWrapper } from './LanguageGuard.styles'
 
@@ -15,16 +16,21 @@ interface LanguageGuardProps {
 
 export function LanguageGuard({ children }: LanguageGuardProps) {
   const [isReady, setIsReady] = useState(false)
-  const { language } = useContext(LanguageContext)
   const pathname = usePathname()
+  const params = useParams()
+  const language = params.lng
   const router = useRouter()
   const defaultLanguage = useDefaultLanguage({ languages, fallbackLng })
 
   useEffect(() => {
-    if (!languages.some((loc) => language === loc)) {
-      const urlParts = pathname.split('/').filter(Boolean)
-      const differencePath = urlParts.slice(1, urlParts.length).join('/')
-      router.push(`/${defaultLanguage}/${differencePath}`)
+    const isAllowedLanguage = languages.some((loc) => language === loc)
+    const isLanguagePathParam = language && language?.length === 2
+
+    if (!isLanguagePathParam) {
+      router.push(`/${defaultLanguage}${pathname}`)
+    } else if (isLanguagePathParam && !isAllowedLanguage) {
+      const differencePath = removeFirstPart(pathname)
+      router.push(`/${defaultLanguage}${differencePath}`)
     } else {
       setIsReady(true)
     }

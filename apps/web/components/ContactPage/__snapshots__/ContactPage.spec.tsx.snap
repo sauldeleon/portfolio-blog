@@ -183,7 +183,8 @@ exports[`ContactPage should render successfully 1`] = `
   rotate: 270deg;
   opacity: 1;
   transition: opacity 2s ease-in;
-  transform-origin: 50% 51%;
+  transform-origin: 50% 51.7%;
+  margin-bottom: 5px;
   row-gap: 4px;
 }
 
@@ -381,6 +382,9 @@ exports[`ContactPage should render successfully 1`] = `
 
 @media (width >= 768px) {
   .c9 {
+    width: 100%;
+    height: 100%;
+    margin-bottom: 0px;
     position: unset;
     top: unset;
     left: unset;
