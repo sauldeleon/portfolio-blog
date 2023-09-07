@@ -10,5 +10,5 @@ const fadeIn = keyframes`
 `
 export const StyledGuardWrapper = styled.div`
   opacity: 0;
-  animation: ${fadeIn} 0.5s 1s linear forwards;
+  animation: ${fadeIn} 0.2s 0.1s linear forwards;
 `

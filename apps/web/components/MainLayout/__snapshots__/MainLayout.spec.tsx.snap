@@ -90,12 +90,12 @@ exports[`MainLayout should render successfully 1`] = `
   color: #000000;
 }
 
-.c29 {
+.c30 {
   position: relative;
   position: relative;
 }
 
-.c29::after {
+.c30::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -105,20 +105,20 @@ exports[`MainLayout should render successfully 1`] = `
   background-color: currentColor;
 }
 
-.c29::after {
+.c30::after {
   transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.25s ease-out;
 }
 
-.c29:hover::after {
+.c30:hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
 
-.c29:hover,
-.c29:active,
-.c29:focus {
+.c30:hover,
+.c30:active,
+.c30:focus {
   text-decoration: none;
 }
 
@@ -217,6 +217,12 @@ exports[`MainLayout should render successfully 1`] = `
 }
 
 .c28 {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.c29 {
   height: 20px;
   display: flex;
   gap: 20px;
@@ -224,7 +230,7 @@ exports[`MainLayout should render successfully 1`] = `
   padding: 30px 0;
 }
 
-.c30::after {
+.c31::after {
   content: none;
 }
 
@@ -413,7 +419,7 @@ exports[`MainLayout should render successfully 1`] = `
 }
 
 @media (width >= 1024px) {
-  .c28 {
+  .c29 {
     justify-self: end;
     padding: 0;
   }
@@ -692,7 +698,7 @@ exports[`MainLayout should render successfully 1`] = `
         <a
           aria-label="Go to Blog page"
           class="c6 c11 c12"
-          href="/en/get-in-touch"
+          href="/en/blog"
         >
           <div
             class="c13"
@@ -789,7 +795,7 @@ exports[`MainLayout should render successfully 1`] = `
               <li>
                 <a
                   aria-label="Go to Experience page"
-                  class="c6 "
+                  class="c6 c28"
                   href="/en/experience"
                 >
                   <p
@@ -802,7 +808,7 @@ exports[`MainLayout should render successfully 1`] = `
               <li>
                 <a
                   aria-label="Go to Contact page"
-                  class="c6 "
+                  class="c6 c28"
                   href="/en/contact"
                 >
                   <p
@@ -815,13 +821,26 @@ exports[`MainLayout should render successfully 1`] = `
               <li>
                 <a
                   aria-label="Go to Portfolio page"
-                  class="c6 "
+                  class="c6 c28"
                   href="/en/portfolio"
                 >
                   <p
                     class="c8 c9"
                   >
                     CV/Portfolio
+                  </p>
+                </a>
+              </li>
+              <li>
+                <a
+                  aria-label="Go to Blog page"
+                  class="c6 c28"
+                  href="/en/blog"
+                >
+                  <p
+                    class="c8 c9"
+                  >
+                    Blog
                   </p>
                 </a>
               </li>
@@ -864,9 +883,10 @@ exports[`MainLayout should render successfully 1`] = `
                 </button>
               </li>
               <li>
-                <button
+                <a
                   aria-label="Toggle language. Current language is English."
-                  class="c19"
+                  class="c6 c28"
+                  href="/es"
                 >
                   <svg
                     color="#FBFBFB"
@@ -880,16 +900,16 @@ exports[`MainLayout should render successfully 1`] = `
                   >
                     EN
                   </p>
-                </button>
+                </a>
               </li>
             </ul>
           </nav>
           <div
-            class="c28"
+            class="c29"
           >
             <a
               aria-label="My Telegram username"
-              class="c29 c30"
+              class="c30 c31"
               data-testid="plain-anchor"
               href="https://t.me/Sdlgr"
             >
@@ -901,7 +921,7 @@ exports[`MainLayout should render successfully 1`] = `
             </a>
             <a
               aria-label="My GitHub account"
-              class="c29 c30"
+              class="c30 c31"
               data-testid="plain-anchor"
               href="https://github.com/sauldeleon"
             >
@@ -913,14 +933,14 @@ exports[`MainLayout should render successfully 1`] = `
             </a>
             <a
               aria-label="My LinkedIn profile"
-              class="c29 c30"
+              class="c30 c31"
               data-testid="plain-anchor"
               href="https://www.linkedin.com/in/sauldeleonguerrero"
             >
               <svg
                 color="#FBFBFB"
               >
-                linkedin.svg
+                linkedIn.svg
               </svg>
             </a>
           </div>

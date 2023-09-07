@@ -32,6 +32,7 @@ interface HomeLayoutProps {
 export default function HomeLayout({ children }: HomeLayoutProps) {
   const { t } = useClientTranslation('homepage')
   const { language } = useContext(LanguageContext)
+  const id = useId()
 
   const attributes = [
     {
@@ -100,7 +101,7 @@ export default function HomeLayout({ children }: HomeLayoutProps) {
       ))}
     </StyledAttributes>,
   ]
-  const id = useId()
+
   return (
     <>
       <StyledHeading $level={2}>Saúl de León Guerrero</StyledHeading>

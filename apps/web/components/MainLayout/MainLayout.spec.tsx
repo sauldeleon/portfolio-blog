@@ -7,7 +7,7 @@ import { MainLayout } from './MainLayout'
 const mockPush = jest.fn()
 jest.mock('next/navigation', () => ({
   ...jest.requireActual('next/navigation'),
-  usePathname: jest.fn(),
+  usePathname: jest.fn().mockImplementation(() => '/en'),
   useSelectedLayoutSegments: () => ['(home)'],
   useRouter: () => ({
     push: mockPush,

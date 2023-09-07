@@ -419,7 +419,7 @@ exports[`Header should render successfully 1`] = `
       <a
         aria-label="Go to Blog page"
         class="c5 c10 c11"
-        href="/en/get-in-touch"
+        href="/en/blog"
       >
         <div
           class="c12"
