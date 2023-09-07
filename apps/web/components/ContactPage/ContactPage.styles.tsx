@@ -11,6 +11,8 @@ export const StyledContactInfoWrapper = styled.div`
 `
 
 export const StyledContactInfo = styled.div<{ $isVisible: boolean }>`
+  width: 100%;
+  height: 100%;
   display: grid;
   place-items: center;
   rotate: 270deg;
