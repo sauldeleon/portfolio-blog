@@ -175,6 +175,7 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
 
 .c1 {
   text-align: center;
+  margin-top: 80px;
 }
 
 .c8 {

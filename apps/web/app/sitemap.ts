@@ -1,9 +1,20 @@
 import { MetadataRoute } from 'next'
 
+import { languages } from '@web/i18n/settings'
+import { cartesianMerge } from '@web/utils/array/cartesianMerge'
 import { publicUrl } from '@web/utils/url/generateUrl'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const routes = ['', '/contact', '/experience', '/portfolio'].map((route) => ({
+  const languagePaths = languages.map((lng) => `/${lng}`)
+  const appPaths = [
+    '/',
+    '/contact',
+    '/experience',
+    '/portfolio',
+    '/get-in-touch',
+  ]
+  const availableRoutes = cartesianMerge(languagePaths, appPaths)
+  const routes = availableRoutes.map((route) => ({
     url: `${publicUrl(route)}`,
     lastModified: new Date().toISOString(),
   }))
