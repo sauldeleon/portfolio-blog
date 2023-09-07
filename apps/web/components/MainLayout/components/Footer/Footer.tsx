@@ -5,7 +5,7 @@ import {
   CactusIcon,
   GithubIcon,
   LanguageIcon,
-  LinkedinIcon,
+  LinkedInIcon,
   MoonIcon,
   TelegramIcon,
 } from '@sdlgr/assets'
@@ -21,16 +21,11 @@ export function Footer() {
   const { t } = useClientTranslation('footer')
   const { language } = useContext(LanguageContext)
   const pathname = usePathname()
-  const { push } = useRouter()
+  const router = useRouter()
   const storage = useMemo(() => new LocalStorage(), [])
   const [, setItem] = useStorage(storage)
-
-  const toggleLanguage = () => {
-    const newLanguage = getNextLanguage(language)
-    const noLangPath = pathname.replace(/^\/[\w]+/, '')
-    setItem(STORAGE_I18N_KEY, newLanguage)
-    push(`/${newLanguage}${noLangPath}`)
-  }
+  const nextLanguage = getNextLanguage(language)
+  const nextLanguagePath = `/${nextLanguage}${pathname.replace(/^\/[\w]+/, '')}`
 
   const navItems: NavItem[] = [
     {
@@ -47,6 +42,11 @@ export function Footer() {
       label: t('portfolio'),
       ariaLabel: t('portfolioAria'),
       href: `/${language}/portfolio`,
+    },
+    {
+      label: t('blog'),
+      ariaLabel: t('blogAria'),
+      href: `/${language}/blog`,
     },
     {
       label: t('darkMode'),
@@ -71,7 +71,12 @@ export function Footer() {
     {
       label: t('languageLabel'),
       ariaLabel: t('toggleLanguageAria'),
-      onClick: toggleLanguage,
+      onClick: (e) => {
+        e.preventDefault()
+        setItem(STORAGE_I18N_KEY, nextLanguage)
+        router.push(nextLanguagePath)
+      },
+      href: nextLanguagePath,
       icon: (
         <LanguageIcon color={mainTheme.colors.white} height={22} width={22} />
       ),
@@ -90,7 +95,7 @@ export function Footer() {
       href: 'https://github.com/sauldeleon',
     },
     {
-      icon: <LinkedinIcon color={mainTheme.colors.white} />,
+      icon: <LinkedInIcon color={mainTheme.colors.white} />,
       ariaLabel: t('linkedInAria'),
       href: 'https://www.linkedin.com/in/sauldeleonguerrero',
     },

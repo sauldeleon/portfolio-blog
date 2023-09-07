@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-import { EmailIcon, LinkedinIcon } from '@sdlgr/assets'
+import { EmailIcon, LinkedInIcon } from '@sdlgr/assets'
 import { useIsBot } from '@sdlgr/use-is-bot'
 
 import { MainPortal } from '@web/components/MainPortal/MainPortal'
@@ -40,7 +40,7 @@ export function ContactPage() {
           <StyledHeading $level={2}>Software Engineer</StyledHeading>
           <StyledBody $level="L">
             <StyledIconWrapper>
-              <LinkedinIcon />
+              <LinkedInIcon />
             </StyledIconWrapper>
             <StyledLink
               href="https://www.linkedin.com/in/sauldeleonguerrero"

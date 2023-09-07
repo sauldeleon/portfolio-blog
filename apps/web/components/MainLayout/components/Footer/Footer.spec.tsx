@@ -8,10 +8,16 @@ import { Footer } from './Footer'
 
 const mockPush = jest.fn()
 jest.mock('next/navigation', () => ({
-  usePathname: jest.fn(),
+  usePathname: jest.fn().mockImplementation(() => '/en'),
   useRouter: () => ({
     push: mockPush,
   }),
+}))
+
+const mockSet = jest.fn()
+jest.mock('@sdlgr/storage', () => ({
+  ...jest.requireActual('@sdlgr/storage'),
+  useStorage: jest.fn().mockImplementation(() => [jest.fn(), mockSet]),
 }))
 
 describe('Footer', () => {
@@ -21,8 +27,8 @@ describe('Footer', () => {
   it('should render successfully', async () => {
     const { baseElement } = renderApp(<Footer />)
     await screen.findByRole('navigation')
-    expect(screen.getAllByRole('link')).toHaveLength(6)
-    expect(screen.getAllByRole('button')).toHaveLength(3)
+    expect(screen.getAllByRole('link')).toHaveLength(8)
+    expect(screen.getAllByRole('button')).toHaveLength(2)
     expect(baseElement).toMatchSnapshot()
   })
 
@@ -42,10 +48,12 @@ describe('Footer', () => {
     ;(usePathname as jest.Mock).mockImplementation(() => '/en/path/slug')
     renderApp(<Footer />)
     await screen.findByRole('navigation')
-    const toggleLanguageButton = screen.getByRole('button', {
+    const toggleLanguageButton = screen.getByRole('link', {
       name: /Toggle language/,
     })
+    expect(toggleLanguageButton).toHaveAttribute('href', '/es/path/slug')
     await userEvent.click(toggleLanguageButton)
+    expect(mockSet).toHaveBeenNthCalledWith(1, 'webLng', 'es')
     expect(mockPush).toHaveBeenNthCalledWith(1, '/es/path/slug')
   })
 })

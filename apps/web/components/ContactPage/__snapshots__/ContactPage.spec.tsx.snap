@@ -606,7 +606,7 @@ exports[`ContactPage should render successfully 1`] = `
                     class="c21"
                   >
                     <svg>
-                      linkedin.svg
+                      linkedIn.svg
                     </svg>
                   </span>
                   <a

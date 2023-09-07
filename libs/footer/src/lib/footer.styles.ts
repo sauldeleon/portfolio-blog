@@ -81,7 +81,11 @@ export const StyledList = styled.ul`
   flex-wrap: wrap;
 `
 
-export const StyledNavLink = styled(Link)``
+export const StyledNavLink = styled(Link)`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+`
 
 export const StyledSocialMediaIcons = styled.div`
   height: 20px;

@@ -1728,7 +1728,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       style="animation-duration: 8.136088621999374s; animation-delay: 8.76228147644557s;"
                     >
                       <svg>
-                        postgresql.svg
+                        postgresSQL.svg
                       </svg>
                     </div>
                   </a>
@@ -1868,7 +1868,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       style="animation-duration: 7.63128276624017s; animation-delay: 3.5692605941147773s;"
                     >
                       <svg>
-                        gitlab.svg
+                        gitLab.svg
                       </svg>
                     </div>
                   </a>

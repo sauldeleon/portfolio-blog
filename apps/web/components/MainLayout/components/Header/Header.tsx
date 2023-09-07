@@ -59,7 +59,7 @@ export function Header() {
       navItems={navItems}
       actionItem={
         <StyledCircleLink
-          href={`/${language}/get-in-touch`}
+          href={`/${language}/blog`}
           label={t('blog')}
           aria-label={t('blogAria')}
           iconContent={<ArrowRightIcon />}
