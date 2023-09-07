@@ -625,6 +625,7 @@ exports[`MainLayout should render successfully 1`] = `
           class="c4"
         >
           <li
+            aria-current="false"
             class="c5"
           >
             <a
@@ -640,6 +641,7 @@ exports[`MainLayout should render successfully 1`] = `
             </a>
           </li>
           <li
+            aria-current="false"
             class="c5"
           >
             <a
@@ -655,6 +657,7 @@ exports[`MainLayout should render successfully 1`] = `
             </a>
           </li>
           <li
+            aria-current="false"
             class="c5"
           >
             <a
@@ -670,23 +673,24 @@ exports[`MainLayout should render successfully 1`] = `
             </a>
           </li>
           <li
+            aria-current="false"
             class="c10"
           >
             <a
-              aria-label="Go to Portfolio page"
+              aria-label="Go to Blog page"
               class="c6 c7"
-              href="/en/get-in-touch"
+              href="/en/blog"
             >
               <p
                 class="c8 c9"
               >
-                Get in touch
+                Blog
               </p>
             </a>
           </li>
         </ul>
         <a
-          aria-label="Go to Portfolio page"
+          aria-label="Go to Blog page"
           class="c6 c11 c12"
           href="/en/get-in-touch"
         >
@@ -710,7 +714,7 @@ exports[`MainLayout should render successfully 1`] = `
           <p
             class="c8 c15 c9 c16"
           >
-            Get in touch
+            Blog
           </p>
         </a>
       </nav>

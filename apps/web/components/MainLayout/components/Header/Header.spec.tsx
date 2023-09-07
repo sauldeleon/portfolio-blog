@@ -6,6 +6,7 @@ import { Header } from './Header'
 
 jest.mock('next/navigation', () => ({
   ...jest.requireActual('next/navigation'),
+  useSelectedLayoutSegments: () => ['(home)', 'contact'],
   usePathname: () => '/en/contact',
 }))
 

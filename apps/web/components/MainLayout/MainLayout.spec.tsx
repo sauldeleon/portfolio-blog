@@ -8,6 +8,7 @@ const mockPush = jest.fn()
 jest.mock('next/navigation', () => ({
   ...jest.requireActual('next/navigation'),
   usePathname: jest.fn(),
+  useSelectedLayoutSegments: () => ['(home)'],
   useRouter: () => ({
     push: mockPush,
   }),
