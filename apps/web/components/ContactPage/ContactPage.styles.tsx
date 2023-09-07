@@ -11,17 +11,19 @@ export const StyledContactInfoWrapper = styled.div`
 `
 
 export const StyledContactInfo = styled.div<{ $isVisible: boolean }>`
-  width: 100%;
-  height: 100%;
   display: grid;
   place-items: center;
   rotate: 270deg;
   opacity: ${({ $isVisible }) => ($isVisible ? 1 : 0)};
   transition: opacity 2s ease-in;
-  transform-origin: 50% 51%;
+  transform-origin: 50% 51.7%;
+  margin-bottom: 5px;
   row-gap: 4px;
 
   ${({ theme }) => theme.media.up.md} {
+    width: 100%;
+    height: 100%;
+    margin-bottom: 0px;
     position: unset;
     top: unset;
     left: unset;
