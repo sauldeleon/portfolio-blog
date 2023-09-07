@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useContext, useId, useMemo } from 'react'
+import React, { useContext, useId } from 'react'
 import { Trans } from 'react-i18next'
 
 import {
@@ -33,63 +33,60 @@ export default function HomeLayout({ children }: HomeLayoutProps) {
   const { t } = useClientTranslation('homepage')
   const { language } = useContext(LanguageContext)
 
-  const attributes = useMemo(
-    () => [
-      {
-        key: 'mountaineer',
-        element: (
-          <Trans
-            key="mountaineer-translate"
-            t={t}
-            i18nKey="attributes.mountaineer"
-            components={{
-              icon: <HikeIcon width={22} height={22} />,
-            }}
-          />
-        ),
-      },
-      {
-        key: 'petter',
-        element: (
-          <Trans
-            key="petter-translate"
-            t={t}
-            i18nKey="attributes.petter"
-            components={{
-              icon: <CatIcon width={22} height={22} />,
-            }}
-          />
-        ),
-      },
-      {
-        key: 'gamer',
-        element: (
-          <Trans
-            key="gamer-translate"
-            t={t}
-            i18nKey="attributes.gamer"
-            components={{
-              icon: <GameControllerIcon width={22} height={22} />,
-            }}
-          />
-        ),
-      },
-      {
-        key: 'photographer',
-        element: (
-          <Trans
-            key="photographer-translate"
-            t={t}
-            i18nKey="attributes.photographer"
-            components={{
-              icon: <CameraIcon width={22} height={22} />,
-            }}
-          />
-        ),
-      },
-    ],
-    [t]
-  )
+  const attributes = [
+    {
+      key: 'mountaineer',
+      element: (
+        <Trans
+          key="mountaineer-translate"
+          t={t}
+          i18nKey="attributes.mountaineer"
+          components={{
+            icon: <HikeIcon width={22} height={22} />,
+          }}
+        />
+      ),
+    },
+    {
+      key: 'petter',
+      element: (
+        <Trans
+          key="petter-translate"
+          t={t}
+          i18nKey="attributes.petter"
+          components={{
+            icon: <CatIcon width={22} height={22} />,
+          }}
+        />
+      ),
+    },
+    {
+      key: 'gamer',
+      element: (
+        <Trans
+          key="gamer-translate"
+          t={t}
+          i18nKey="attributes.gamer"
+          components={{
+            icon: <GameControllerIcon width={22} height={22} />,
+          }}
+        />
+      ),
+    },
+    {
+      key: 'photographer',
+      element: (
+        <Trans
+          key="photographer-translate"
+          t={t}
+          i18nKey="attributes.photographer"
+          components={{
+            icon: <CameraIcon width={22} height={22} />,
+          }}
+        />
+      ),
+    },
+  ]
 
   const summaryParagraphs: React.ReactNode[] = [
     t('summary.p1'),
