@@ -22,7 +22,7 @@ export function Header() {
     label: string
     ariaLabel: string
     isActive: boolean
-    hideOnDesktop?: boolean | undefined
+    hideOnDesktop?: boolean
   }[] = [
     {
       href: `/${language}/experience/`,
