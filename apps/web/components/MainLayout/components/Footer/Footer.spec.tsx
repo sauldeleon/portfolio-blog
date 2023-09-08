@@ -28,7 +28,7 @@ describe('Footer', () => {
     const { baseElement } = renderApp(<Footer />)
     await screen.findByRole('navigation')
     expect(screen.getAllByRole('link')).toHaveLength(8)
-    expect(screen.getAllByRole('button')).toHaveLength(2)
+    expect(screen.getAllByRole('button')).toHaveLength(3)
     expect(baseElement).toMatchSnapshot()
   })
 
@@ -41,7 +41,8 @@ describe('Footer', () => {
     await screen.findByRole('navigation')
     await userEvent.click(screen.getByRole('button', { name: /Dark mode/ }))
     await userEvent.click(screen.getByRole('button', { name: /Pain mode/ }))
-    expect(mockFn).toHaveBeenCalledTimes(2)
+    await userEvent.click(screen.getByRole('button', { name: /About/ }))
+    expect(mockFn).toHaveBeenCalledTimes(3)
   })
 
   it('should toggle language to next available language', async () => {
