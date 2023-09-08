@@ -1,5 +1,7 @@
 # Changelog Main Theme
 
+## [0.2.1](https://github.com/sauldeleon/portfolio-blog/compare/main-theme-0.2.0...main-theme-0.2.1) (2023-09-08)
+
 # [0.2.0](https://github.com/sauldeleon/portfolio-blog/compare/main-theme-0.1.0...main-theme-0.2.0) (2023-09-05)
 
 ### Bug Fixes
