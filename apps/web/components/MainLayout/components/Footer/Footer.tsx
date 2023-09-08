@@ -2,6 +2,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { useContext, useMemo } from 'react'
 
 import {
+  AboutIcon,
   CactusIcon,
   GithubIcon,
   LanguageIcon,
@@ -80,6 +81,15 @@ export function Footer() {
       icon: (
         <LanguageIcon color={mainTheme.colors.white} height={22} width={22} />
       ),
+    },
+    {
+      label: t('aboutLabel'),
+      ariaLabel: t('aboutAria'),
+      onClick: (e) => {
+        e.preventDefault()
+        console.log('About button clicked')
+      },
+      icon: <AboutIcon color={mainTheme.colors.white} height={18} width={18} />,
     },
   ]
 

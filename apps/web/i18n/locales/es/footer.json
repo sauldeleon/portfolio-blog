@@ -14,5 +14,7 @@
   "linkedInAria": "My perfil de LinkedIn",
   "telegramAria": "Mi usuario de Telegram",
   "languageLabel": "ES",
-  "toggleLanguageAria": "Alternar idioma. El idioma actual es Español."
+  "toggleLanguageAria": "Alternar idioma. El idioma actual es Español.",
+  "aboutLabel": "Acerca de",
+  "aboutAria": "Modal de información sobre la página web"
 }

@@ -912,6 +912,25 @@ exports[`MainLayout should render successfully 1`] = `
                   </p>
                 </a>
               </li>
+              <li>
+                <button
+                  aria-label="About page information modal"
+                  class="c19"
+                >
+                  <svg
+                    color="#FBFBFB"
+                    height="18"
+                    width="18"
+                  >
+                    about.svg
+                  </svg>
+                  <p
+                    class="c8 c9"
+                  >
+                    About
+                  </p>
+                </button>
+              </li>
             </ul>
           </nav>
           <div

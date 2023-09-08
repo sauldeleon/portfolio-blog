@@ -16,5 +16,7 @@
   "githubAria": "My GitHub account",
   "linkedInAria": "My LinkedIn profile",
   "languageLabel": "EN",
-  "toggleLanguageAria": "Toggle language. Current language is English."
+  "toggleLanguageAria": "Toggle language. Current language is English.",
+  "aboutLabel": "About",
+  "aboutAria": "About page information modal"
 }
