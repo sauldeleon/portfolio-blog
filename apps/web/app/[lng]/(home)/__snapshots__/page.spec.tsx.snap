@@ -42,7 +42,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
 }
 
 .c12 {
-  --itemSize: 20%;
+  --itemSize: 55px;
   list-style: none;
   position: absolute;
   transform: translateX(-60%);
@@ -66,7 +66,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
 }
 
 .c20 {
-  --itemSize: 16%;
+  --itemSize: 40px;
   list-style: none;
   position: absolute;
   transform: translateX(-60%);

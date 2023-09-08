@@ -112,7 +112,7 @@ export const HorizontalMovement = styled.li.attrs<{
       randomDecimalFromInterval(1, 20, `${$seed}-item-horizontal-delay`) + 's',
   },
 }))`
-  --itemSize: ${({ $size }) => `${$size}%`};
+  --itemSize: ${({ $size }) => `${$size}px`};
   list-style: none;
   position: absolute;
   transform: translateX(-60%);
