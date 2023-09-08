@@ -1,5 +1,24 @@
 # Changelog web app
 
+# [0.5.0](https://github.com/sauldeleon/portfolio-blog/compare/web-0.4.0...web-0.5.0) (2023-09-08)
+
+### Bug Fixes
+
+- change language breaks trans with useMemo ([d627144](https://github.com/sauldeleon/portfolio-blog/commit/d6271447eb9bf919ea4d711924f627166031f1cf))
+- improve a11y of skill icons ([092b579](https://github.com/sauldeleon/portfolio-blog/commit/092b579c9b2adb616662a7018d1023fe01668662))
+- metadata generation ([#37](https://github.com/sauldeleon/portfolio-blog/issues/37)) ([72e6cf0](https://github.com/sauldeleon/portfolio-blog/commit/72e6cf05a6832647ab416562769558eee362eea8))
+- remove code smell ([6480fe9](https://github.com/sauldeleon/portfolio-blog/commit/6480fe929df08d721657f506cd65726768b20bc5))
+- remove unused prop ([bfb190e](https://github.com/sauldeleon/portfolio-blog/commit/bfb190ea2d2a138a595fb14c09badd4e3d6d885c))
+- tabbing issue caused by percentage ([5a0653d](https://github.com/sauldeleon/portfolio-blog/commit/5a0653d9f813d508854f5f5448edc507b18fb780))
+
+### Features
+
+- add improved attribues in about info ([fe8bf56](https://github.com/sauldeleon/portfolio-blog/commit/fe8bf5648bad0280bb0e469b491c3c06d85d3cac))
+- add metadata image ([d6ee91e](https://github.com/sauldeleon/portfolio-blog/commit/d6ee91ed68db6467d6352f130664c47899812631))
+- added bigger images ([629b9f1](https://github.com/sauldeleon/portfolio-blog/commit/629b9f1ce71e997f6604da11f190e85e52edf0ec))
+- generate robots.txt ([bd56a28](https://github.com/sauldeleon/portfolio-blog/commit/bd56a28fbca5217eee45ffe80187ad9e3932316c))
+- replace get in touch for blog ([3086050](https://github.com/sauldeleon/portfolio-blog/commit/30860506459ef715d049a8c64293e420ffdf0f5d))
+
 # [0.4.0](https://github.com/sauldeleon/portfolio-blog/compare/web-0.3.2...web-0.4.0) (2023-09-07)
 
 ### Bug Fixes

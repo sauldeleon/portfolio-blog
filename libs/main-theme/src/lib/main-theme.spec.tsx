@@ -18,10 +18,10 @@ describe('mainTheme', () => {
             "rules": "from{color:#FFDD83;}to{color:#98DFD6;}",
           },
           "horizontalMovement": e {
-            "id": "sc-keyframes-ehQbNZ",
+            "id": "sc-keyframes-crneTl",
             "inject": [Function],
-            "name": "ehQbNZ",
-            "rules": "0%{transform:translateX(calc(-50% - var(--itemSize)));}100%{transform:translateX(calc(50% + var(--itemSize)));}",
+            "name": "crneTl",
+            "rules": "0%{transform:translateX(calc(-50% - 25px));}100%{transform:translateX(calc(50% + 25px));}",
           },
           "moveToothFall": e {
             "id": "sc-keyframes-cpZUNP",

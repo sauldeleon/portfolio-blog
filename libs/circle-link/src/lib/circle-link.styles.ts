@@ -37,6 +37,11 @@ export const StyledCircleLink = styled(Link)<{ $size: number }>`
       ${({ theme }) => theme.helpers.textBottomBorder.afterIncrease}
     }
   }
+
+  &:focus-visible,
+  &:focus {
+    outline: ${({ theme }) => theme.colors.white} auto 1px;
+  }
 `
 export const StyledIconWrapper = styled.div<{ $size: number }>`
   ${({ $size }) => css`

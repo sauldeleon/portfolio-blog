@@ -126,6 +126,11 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
   transform-origin: bottom left;
 }
 
+.c3:focus-visible,
+.c3:focus {
+  outline: #FBFBFB auto 1px;
+}
+
 .c15 {
   outline: none;
   cursor: pointer;
@@ -151,6 +156,11 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
 .c15:hover .c17::after {
   transform: scaleX(1);
   transform-origin: bottom left;
+}
+
+.c15:focus-visible,
+.c15:focus {
+  outline: #FBFBFB auto 1px;
 }
 
 .c5 {

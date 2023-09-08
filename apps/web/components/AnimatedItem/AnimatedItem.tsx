@@ -42,13 +42,13 @@ export function AnimatedItem({
   let itemSize
   switch (size) {
     case 'S':
-      itemSize = 16
+      itemSize = 25
       break
     case 'L':
-      itemSize = 26
+      itemSize = 55
       break
     default:
-      itemSize = 20
+      itemSize = 40
   }
 
   const ColorSwappingItem = (

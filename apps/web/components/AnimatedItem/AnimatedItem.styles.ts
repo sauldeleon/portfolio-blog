@@ -99,7 +99,7 @@ export const ColorSwapping = styled.div.attrs<{
   `}
 `
 
-export const HorizontalMovement = styled.div.attrs<{
+export const HorizontalMovement = styled.li.attrs<{
   $size: number
   $seed: string
   $customAnimation?: RuleSet<object>
@@ -112,7 +112,8 @@ export const HorizontalMovement = styled.div.attrs<{
       randomDecimalFromInterval(1, 20, `${$seed}-item-horizontal-delay`) + 's',
   },
 }))`
-  --itemSize: ${({ $size }) => `${$size}%`};
+  --itemSize: ${({ $size }) => `${$size}px`};
+  list-style: none;
   position: absolute;
   transform: translateX(-60%);
   width: 100%;
@@ -133,5 +134,9 @@ export const HorizontalMovement = styled.div.attrs<{
     ${VerticalMovement},${RotationMovement},${ColorSwapping} {
       animation-play-state: paused;
     }
+  }
+
+  ${({ theme }) => theme.media.up.md} {
+    --itemSize: ${({ $size }) => `${$size + 15}px`};
   }
 `

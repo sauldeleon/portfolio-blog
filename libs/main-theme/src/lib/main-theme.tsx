@@ -261,10 +261,10 @@ export const mainTheme: MainTheme = {
     `,
     horizontalMovement: keyframes`
       0% {
-        transform: translateX(calc(-50% - var(--itemSize)));
+        transform: translateX(calc(-50% - 25px));
       }
       100% {
-        transform: translateX(calc(50% + var(--itemSize)));
+        transform: translateX(calc(50% + 25px));
       }
     `,
     verticalMovement: keyframes`

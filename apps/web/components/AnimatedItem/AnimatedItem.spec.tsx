@@ -26,7 +26,7 @@ describe('AnimatedItem', () => {
 
     expect(screen.getByTestId('horizontal-movement')).toHaveStyleRule(
       '--itemSize',
-      '26%'
+      '55px'
     )
 
     const rotationMovement = screen.getByTestId('rotation-movement')

@@ -197,6 +197,11 @@ exports[`Header should render successfully 1`] = `
   transform-origin: bottom left;
 }
 
+.c10:focus-visible,
+.c10:focus {
+  outline: #FBFBFB auto 1px;
+}
+
 .c12 {
   position: relative;
   width: 42px;

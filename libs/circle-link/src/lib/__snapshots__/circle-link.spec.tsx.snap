@@ -108,6 +108,11 @@ exports[`CircleLink should render with a different size 1`] = `
   transform-origin: bottom left;
 }
 
+.c1:focus-visible,
+.c1:focus {
+  outline: #FBFBFB auto 1px;
+}
+
 .c2 {
   position: relative;
   width: 50px;
