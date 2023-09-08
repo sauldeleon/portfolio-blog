@@ -1,5 +1,7 @@
 # Changelog Footer component
 
+## [0.2.1](https://github.com/sauldeleon/portfolio-blog/compare/footer-0.2.0...footer-0.2.1) (2023-09-08)
+
 # [0.2.0](https://github.com/sauldeleon/portfolio-blog/compare/footer-0.1.0...footer-0.2.0) (2023-09-05)
 
 ### Bug Fixes
