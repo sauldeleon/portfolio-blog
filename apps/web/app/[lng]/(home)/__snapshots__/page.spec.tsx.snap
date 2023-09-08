@@ -42,7 +42,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
 }
 
 .c12 {
-  --itemSize: 55px;
+  --itemSize: 40px;
   list-style: none;
   position: absolute;
   transform: translateX(-60%);
@@ -66,7 +66,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
 }
 
 .c20 {
-  --itemSize: 40px;
+  --itemSize: 25px;
   list-style: none;
   position: absolute;
   transform: translateX(-60%);
@@ -238,6 +238,18 @@ exports[`[lng] route - Page should render successfully 1`] = `
   transform-origin: var(--transform-origin-last);
   transform: perspective(var(--perspective)) rotate3D(var(--rotate3D-last));
   background-color: #000000;
+}
+
+@media (width >= 768px) {
+  .c12 {
+    --itemSize: 55px;
+  }
+}
+
+@media (width >= 768px) {
+  .c20 {
+    --itemSize: 40px;
+  }
 }
 
 @media (width >= 768px) {

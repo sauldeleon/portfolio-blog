@@ -135,4 +135,8 @@ export const HorizontalMovement = styled.li.attrs<{
       animation-play-state: paused;
     }
   }
+
+  ${({ theme }) => theme.media.up.md} {
+    --itemSize: ${({ $size }) => `${$size + 15}px`};
+  }
 `

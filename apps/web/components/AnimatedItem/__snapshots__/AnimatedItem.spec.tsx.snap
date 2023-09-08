@@ -39,7 +39,7 @@ exports[`AnimatedItem should render successfully 1`] = `
 }
 
 .c0 {
-  --itemSize: 55px;
+  --itemSize: 40px;
   list-style: none;
   position: absolute;
   transform: translateX(-60%);
@@ -60,6 +60,12 @@ exports[`AnimatedItem should render successfully 1`] = `
 .c0:hover .c3,
 .c0:hover .c6 {
   animation-play-state: paused;
+}
+
+@media (width >= 768px) {
+  .c0 {
+    --itemSize: 55px;
+  }
 }
 
 <body>
