@@ -25,7 +25,7 @@ exports[`MainLayout should render successfully 1`] = `
   background: transparent;
   outline: none;
   box-shadow: none;
-  color: white;
+  color: #FBFBFB;
   padding-block: 0;
   padding-inline: 0;
   border: none;
@@ -52,6 +52,11 @@ exports[`MainLayout should render successfully 1`] = `
 .c19:hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;
+}
+
+.c19:focus-visible,
+.c19:focus {
+  outline: #FBFBFB auto 1px;
 }
 
 .c9 {
@@ -369,6 +374,11 @@ exports[`MainLayout should render successfully 1`] = `
 .c11:hover .c15::after {
   transform: scaleX(1);
   transform-origin: bottom left;
+}
+
+.c11:focus-visible,
+.c11:focus {
+  outline: #FBFBFB auto 1px;
 }
 
 .c13 {

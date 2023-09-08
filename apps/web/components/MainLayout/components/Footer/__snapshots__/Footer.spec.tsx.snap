@@ -9,7 +9,7 @@ exports[`Footer should render successfully 1`] = `
   background: transparent;
   outline: none;
   box-shadow: none;
-  color: white;
+  color: #FBFBFB;
   padding-block: 0;
   padding-inline: 0;
   border: none;
@@ -36,6 +36,11 @@ exports[`Footer should render successfully 1`] = `
 .c10:hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;
+}
+
+.c10:focus-visible,
+.c10:focus {
+  outline: #FBFBFB auto 1px;
 }
 
 .c9 {

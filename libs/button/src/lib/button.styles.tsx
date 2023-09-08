@@ -8,12 +8,17 @@ export const StyledButton = styled.button`
   background: transparent;
   outline: none;
   box-shadow: none;
-  color: white;
+  color: ${({ theme }) => theme.colors.white};
   padding-block: 0;
   padding-inline: 0;
   border: none;
   cursor: pointer;
 
-  ${({ theme }) => theme.helpers.textBottomBorder.afterShared}
-  ${({ theme }) => theme.helpers.textBottomBorder.transform()}
+  ${({ theme }) => theme.helpers.textBottomBorder.afterShared};
+  ${({ theme }) => theme.helpers.textBottomBorder.transform()};
+
+  &:focus-visible,
+  &:focus {
+    outline: ${({ theme }) => theme.colors.white} auto 1px;
+  }
 `

@@ -99,7 +99,7 @@ export const ColorSwapping = styled.div.attrs<{
   `}
 `
 
-export const HorizontalMovement = styled.div.attrs<{
+export const HorizontalMovement = styled.li.attrs<{
   $size: number
   $seed: string
   $customAnimation?: RuleSet<object>
@@ -113,6 +113,7 @@ export const HorizontalMovement = styled.div.attrs<{
   },
 }))`
   --itemSize: ${({ $size }) => `${$size}%`};
+  list-style: none;
   position: absolute;
   transform: translateX(-60%);
   width: 100%;
