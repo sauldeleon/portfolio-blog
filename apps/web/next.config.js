@@ -18,7 +18,7 @@ const nextConfig = {
     // For other options, see https://styled-components.com/docs/tooling#babel-plugin
     styledComponents: true,
   },
-  pageExtensions: ['next.tsx', 'next.ts', 'next.jsx', 'next.js', 'ts'],
+  pageExtensions: ['next.tsx', 'next.ts', 'next.jsx', 'next.js'],
   trailingSlash: true,
   images: {
     // @see https://nextjs.org/docs/api-reference/next/image#caching-behavior
