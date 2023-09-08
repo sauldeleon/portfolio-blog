@@ -1,5 +1,11 @@
 # Changelog Circle Link component
 
+## [0.1.2](https://github.com/sauldeleon/portfolio-blog/compare/circle-link-0.1.1...circle-link-0.1.2) (2023-09-08)
+
+### Bug Fixes
+
+- improve a11y of skill icons ([092b579](https://github.com/sauldeleon/portfolio-blog/commit/092b579c9b2adb616662a7018d1023fe01668662))
+
 ## [0.1.1](https://github.com/sauldeleon/portfolio-blog/compare/circle-link-0.1.0...circle-link-0.1.1) (2023-09-05)
 
 # 0.1.0 (2023-09-02)
