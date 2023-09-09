@@ -41,7 +41,7 @@ exports[`ContactPage should render successfully 1`] = `
 .c7 {
   --height: 212px;
   position: absolute;
-  overflow: hidden;
+  overflow: clip;
   margin: 30px auto;
   height: 212px;
   border-top-left-radius: 30px 50%;
@@ -132,6 +132,10 @@ exports[`ContactPage should render successfully 1`] = `
 .c22:active,
 .c22:focus {
   text-decoration: none;
+}
+
+.c22:focus-visible {
+  outline: #FBFBFB auto 1px;
 }
 
 .c17 {

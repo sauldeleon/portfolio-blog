@@ -165,10 +165,20 @@ export const mainTheme: MainTheme = {
         text-decoration: none;
       }
     `,
+    focusVisible: css`
+      &:focus-visible {
+        outline: ${colors.white} auto 1px;
+      }
+    `,
     textBottomBorder: {
       removeBorder: css`
-        &::after {
+        &:after {
           content: none;
+        }
+        &:hover {
+          &:after {
+            content: none;
+          }
         }
       `,
       afterShared: css`
@@ -198,14 +208,6 @@ export const mainTheme: MainTheme = {
     },
   },
   animation: {
-    clockLoading: keyframes`
-      0% {
-        stroke-dashoffset: 82;
-      }
-      100% {
-        stroke-dashoffset: 0;
-      }
-    `,
     particleMovement: keyframes`
       from {
         transform: translate(-50%, var(--begin-y));
@@ -261,10 +263,10 @@ export const mainTheme: MainTheme = {
     `,
     horizontalMovement: keyframes`
       0% {
-        transform: translateX(calc(-50% - 25px));
+        transform: translateX(var(--translateX-begin));
       }
       100% {
-        transform: translateX(calc(50% + 25px));
+        transform: translateX(var(--translateX-end));
       }
     `,
     verticalMovement: keyframes`
@@ -362,6 +364,7 @@ export interface MainTheme {
   zIndex: Record<'modal', number>
   helpers: {
     noLinkUnderline: ReturnType<typeof css>
+    focusVisible: ReturnType<typeof css>
     textBottomBorder: {
       removeBorder: ReturnType<typeof css>
       afterShared: ReturnType<typeof css>
@@ -371,7 +374,6 @@ export interface MainTheme {
     }
   }
   animation: {
-    clockLoading: Keyframes
     particleMovement: Keyframes
     particleFade: Keyframes
     particleScale: Keyframes

@@ -1,6 +1,5 @@
 import React from 'react'
 
-import { CircleButtonIcon } from '@sdlgr/assets'
 import { LinkProps } from '@sdlgr/link'
 
 import {
@@ -8,6 +7,7 @@ import {
   StyledCircleLink,
   StyledIconContent,
   StyledIconWrapper,
+  StyledLoadingCircleIcon,
 } from './circle-link.styles'
 
 export interface CircleLinkProps extends LinkProps {
@@ -26,7 +26,7 @@ export function CircleLink({
   return (
     <StyledCircleLink $size={iconSize} {...rest}>
       <StyledIconWrapper $size={iconSize}>
-        <CircleButtonIcon width={iconSize} height={iconSize} />
+        <StyledLoadingCircleIcon width={iconSize} height={iconSize} />
         {iconContent && <StyledIconContent>{iconContent}</StyledIconContent>}
       </StyledIconWrapper>
       {label && <StyledBody>{label}</StyledBody>}

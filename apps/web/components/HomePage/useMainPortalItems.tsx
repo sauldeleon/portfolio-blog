@@ -64,11 +64,17 @@ export function useMainPortalItems() {
         path: 'https://www.typescriptlang.org/',
         ariaLabel: 'Typescript',
       },
-      { svg: <NextJSIcon />, path: 'https://nextjs.org', ariaLabel: 'NextJS' },
+      {
+        svg: <NextJSIcon />,
+        path: 'https://nextjs.org',
+        ariaLabel: 'NextJS',
+        size: 'L',
+      },
       {
         svg: <ReactJSIcon />,
         path: 'https://reactjs.org',
         ariaLabel: 'ReactJS',
+        size: 'L',
       },
       {
         svg: <MongoDBIcon />,

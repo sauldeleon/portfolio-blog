@@ -33,7 +33,11 @@ exports[`CircleLink should render with a different size 1`] = `
   text-decoration: none;
 }
 
-.c5 {
+.c0:focus-visible {
+  outline: #FBFBFB auto 1px;
+}
+
+.c7 {
   font-family: 'Roboto mono',monospace;
   font-weight: 400;
   color: #FBFBFB;
@@ -42,30 +46,30 @@ exports[`CircleLink should render with a different size 1`] = `
   white-space: pre-line;
 }
 
-.c5 ul,
-.c5 ol {
+.c7 ul,
+.c7 ol {
   margin-left: 40px;
   margin-bottom: 10px;
 }
 
-.c5 ul {
+.c7 ul {
   list-style: outside disc;
 }
 
-.c5 ol {
+.c7 ol {
   list-style: decimal;
 }
 
-.c5 li {
+.c7 li {
   padding-left: 10px;
 }
 
-.c6 {
+.c8 {
   margin-left: 8px;
   position: relative;
 }
 
-.c6::after {
+.c8::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -75,10 +79,20 @@ exports[`CircleLink should render with a different size 1`] = `
   background-color: currentColor;
 }
 
-.c6::after {
+.c8::after {
   transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.5s ease-out;
+}
+
+.c4 .loading {
+  transform: rotate(-90deg);
+  transform-origin: center;
+  stroke: #FBFBFB;
+  stroke-width: 6px;
+  stroke-dasharray: 110;
+  stroke-dashoffset: 110;
+  transition: stroke-dashoffset 0.5s steps(4,end);
 }
 
 .c1 {
@@ -89,28 +103,25 @@ exports[`CircleLink should render with a different size 1`] = `
   max-height: 50px;
 }
 
-.c1::after {
+.c1:after {
   content: none;
 }
 
-.c1:hover circle.loading {
-  stroke: white;
-  stroke-width: 6px;
-  stroke-dasharray: 110;
-  stroke-dashoffset: 82;
-  animation: kVEmCK 0.5s steps(4,jump-none) forwards;
-  transform: rotate(-90deg);
-  transform-origin: center;
+.c1:hover:after {
+  content: none;
 }
 
-.c1:hover .c4::after {
+.c1:focus-visible {
+  outline: #FBFBFB auto 1px;
+}
+
+.c1:hover .c3 .loading {
+  stroke-dashoffset: 0;
+}
+
+.c1:hover .c6::after {
   transform: scaleX(1);
   transform-origin: bottom left;
-}
-
-.c1:focus-visible,
-.c1:focus {
-  outline: #FBFBFB auto 1px;
 }
 
 .c2 {
@@ -119,7 +130,7 @@ exports[`CircleLink should render with a different size 1`] = `
   height: 50px;
 }
 
-.c3 {
+.c5 {
   position: absolute;
   transform: translate(-50%,-50%);
   top: 50%;
@@ -137,19 +148,20 @@ exports[`CircleLink should render with a different size 1`] = `
         class="c2"
       >
         <svg
+          class="c3 c4"
           height="50"
           width="50"
         >
           circleButton.svg
         </svg>
         <div
-          class="c3"
+          class="c5"
         >
           wadus
         </div>
       </div>
       <p
-        class="c4 c5 c6"
+        class="c6 c7 c8"
       >
         test
       </p>

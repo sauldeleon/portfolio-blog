@@ -165,7 +165,7 @@ export const PortalPath = styled.div`
   ${({ theme }) => css`
     --height: 212px;
     position: absolute;
-    overflow: hidden;
+    overflow: clip;
     margin: 30px auto;
     height: 212px;
     border-top-left-radius: 30px 50%;

@@ -33,6 +33,10 @@ exports[`Link should render successfully 1`] = `
   text-decoration: none;
 }
 
+.c0:focus-visible {
+  outline: #FBFBFB auto 1px;
+}
+
 <body>
   <div>
     <a

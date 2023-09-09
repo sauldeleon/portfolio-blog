@@ -1,6 +1,78 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`[lng] route - Page should render successfully 1`] = `
+.c17 {
+  position: relative;
+  position: relative;
+}
+
+.c17::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: currentColor;
+}
+
+.c17::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.c17:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c17:hover,
+.c17:active,
+.c17:focus {
+  text-decoration: none;
+}
+
+.c17:focus-visible {
+  outline: #FBFBFB auto 1px;
+}
+
+.c23 {
+  position: relative;
+  position: relative;
+}
+
+.c23::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: currentColor;
+}
+
+.c23::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.c23:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c23:hover,
+.c23:active,
+.c23:focus {
+  text-decoration: none;
+}
+
+.c23:focus-visible {
+  outline: #FBFBFB auto 1px;
+}
+
 .c14 {
   position: absolute;
   width: 100%;
@@ -24,32 +96,43 @@ exports[`[lng] route - Page should render successfully 1`] = `
   animation-iteration-count: infinite;
 }
 
-.c17 {
+.c18 {
   pointer-events: all;
   cursor: pointer;
 }
 
-.c19 {
+.c18:after {
+  content: none;
+}
+
+.c18:hover:after {
+  content: none;
+}
+
+.c20 {
   color: #FFDD83;
   animation-name: lhbgW;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
 
-.c19 svg {
+.c20 svg {
   width: 100%;
   height: 100%;
+  display: block;
 }
 
 .c12 {
   --itemSize: 40px;
+  --translateX-begin: calc(-50% - var(--itemSize));
+  --translateX-end: calc(50% + var(--itemSize));
   list-style: none;
   position: absolute;
   transform: translateX(-60%);
   width: 100%;
   height: 100%;
   pointer-events: none;
-  animation-name: gBgZDr;
+  animation-name: ciDIWM;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
@@ -61,31 +144,59 @@ exports[`[lng] route - Page should render successfully 1`] = `
 
 .c12:hover .c13,
 .c12:hover .c15,
-.c12:hover .c18 {
+.c12:hover .c19 {
   animation-play-state: paused;
 }
 
-.c20 {
+.c21 {
   --itemSize: 25px;
+  --translateX-begin: calc(-50% - var(--itemSize));
+  --translateX-end: calc(50% + var(--itemSize));
   list-style: none;
   position: absolute;
   transform: translateX(-60%);
   width: 100%;
   height: 100%;
   pointer-events: none;
-  animation-name: gBgZDr;
+  animation-name: ciDIWM;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
 
-.c20:hover {
+.c21:hover {
   z-index: 200;
   animation-play-state: paused;
 }
 
-.c20:hover .c13,
-.c20:hover .c15,
-.c20:hover .c18 {
+.c21:hover .c13,
+.c21:hover .c15,
+.c21:hover .c19 {
+  animation-play-state: paused;
+}
+
+.c22 {
+  --itemSize: 55px;
+  --translateX-begin: calc(-50% - var(--itemSize));
+  --translateX-end: calc(50% + var(--itemSize));
+  list-style: none;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  animation-name: ciDIWM;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.c22:hover {
+  z-index: 200;
+  animation-play-state: paused;
+}
+
+.c22:hover .c13,
+.c22:hover .c15,
+.c22:hover .c19 {
   animation-play-state: paused;
 }
 
@@ -157,7 +268,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
 .c7 {
   --height: 212px;
   position: absolute;
-  overflow: hidden;
+  overflow: clip;
   margin: 30px auto;
   height: 212px;
   border-top-left-radius: 30px 50%;
@@ -230,7 +341,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   background-color: #000000;
 }
 
-.c21 {
+.c24 {
   z-index: -1;
   flex-grow: 1;
   border: 1px solid #98DFD6;
@@ -247,8 +358,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
 }
 
 @media (width >= 768px) {
-  .c20 {
+  .c21 {
     --itemSize: 40px;
+  }
+}
+
+@media (width >= 768px) {
+  .c22 {
+    --itemSize: 70px;
   }
 }
 
@@ -370,7 +487,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
 }
 
 @media (width >= 768px) {
-  .c21 {
+  .c24 {
     border-bottom: 1px solid #98DFD6;
     border-right: none;
   }
@@ -894,13 +1011,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   >
                     <a
                       aria-label="NodeJS"
-                      class="c17"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
                       href="https://nodejs.org/en/"
                       rel="noreferrer"
                       target="_blank"
                     >
                       <div
-                        class="c18 c19"
+                        class="c19 c20"
                         data-testid="color-swapping"
                         style="animation-duration: 8.863313964128423s; animation-delay: 16.568849030340978s;"
                       >
@@ -913,7 +1031,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 </div>
               </li>
               <li
-                class="c20"
+                class="c21"
                 data-testid="horizontal-movement"
                 style="animation-duration: 13.786750058896462s; animation-delay: 18.337519014903997s;"
               >
@@ -929,13 +1047,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   >
                     <a
                       aria-label="CSS3"
-                      class="c17"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
                       href="https://www.w3.org/Style/CSS/"
                       rel="noreferrer"
                       target="_blank"
                     >
                       <div
-                        class="c18 c19"
+                        class="c19 c20"
                         data-testid="color-swapping"
                         style="animation-duration: 13.786750058896462s; animation-delay: 18.337519014903997s;"
                       >
@@ -948,7 +1067,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 </div>
               </li>
               <li
-                class="c20"
+                class="c21"
                 data-testid="horizontal-movement"
                 style="animation-duration: 19.892571930205534s; animation-delay: 15.999182916576032s;"
               >
@@ -964,13 +1083,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   >
                     <a
                       aria-label="Github"
-                      class="c17"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
                       href="https://github.com"
                       rel="noreferrer"
                       target="_blank"
                     >
                       <div
-                        class="c18 c19"
+                        class="c19 c20"
                         data-testid="color-swapping"
                         style="animation-duration: 19.892571930205534s; animation-delay: 15.999182916576032s;"
                       >
@@ -983,7 +1103,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 </div>
               </li>
               <li
-                class="c20"
+                class="c21"
                 data-testid="horizontal-movement"
                 style="animation-duration: 18.412964603232417s; animation-delay: 4.582155967659035s;"
               >
@@ -999,13 +1119,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   >
                     <a
                       aria-label="Typescript"
-                      class="c17"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
                       href="https://www.typescriptlang.org/"
                       rel="noreferrer"
                       target="_blank"
                     >
                       <div
-                        class="c18 c19"
+                        class="c19 c20"
                         data-testid="color-swapping"
                         style="animation-duration: 18.412964603232417s; animation-delay: 4.582155967659035s;"
                       >
@@ -1018,7 +1139,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 </div>
               </li>
               <li
-                class="c12"
+                class="c22"
                 data-testid="horizontal-movement"
                 style="animation-duration: 7.601709352407495s; animation-delay: 19.944298555309906s;"
               >
@@ -1034,13 +1155,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   >
                     <a
                       aria-label="NextJS"
-                      class="c17"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
                       href="https://nextjs.org"
                       rel="noreferrer"
                       target="_blank"
                     >
                       <div
-                        class="c18 c19"
+                        class="c19 c20"
                         data-testid="color-swapping"
                         style="animation-duration: 7.601709352407495s; animation-delay: 19.944298555309906s;"
                       >
@@ -1053,7 +1175,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 </div>
               </li>
               <li
-                class="c12"
+                class="c22"
                 data-testid="horizontal-movement"
                 style="animation-duration: 7.973007547148972s; animation-delay: 2.6852191865478408s;"
               >
@@ -1069,13 +1191,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   >
                     <a
                       aria-label="ReactJS"
-                      class="c17"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
                       href="https://reactjs.org"
                       rel="noreferrer"
                       target="_blank"
                     >
                       <div
-                        class="c18 c19"
+                        class="c19 c20"
                         data-testid="color-swapping"
                         style="animation-duration: 7.973007547148972s; animation-delay: 2.6852191865478408s;"
                       >
@@ -1088,7 +1211,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 </div>
               </li>
               <li
-                class="c20"
+                class="c21"
                 data-testid="horizontal-movement"
                 style="animation-duration: 13.963351823705295s; animation-delay: 20.341778399867685s;"
               >
@@ -1104,13 +1227,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   >
                     <a
                       aria-label="MongoDB"
-                      class="c17"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
                       href="https://www.mongodb.com"
                       rel="noreferrer"
                       target="_blank"
                     >
                       <div
-                        class="c18 c19"
+                        class="c19 c20"
                         data-testid="color-swapping"
                         style="animation-duration: 13.963351823705295s; animation-delay: 20.341778399867685s;"
                       >
@@ -1139,13 +1263,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   >
                     <a
                       aria-label="Tanstack React Query"
-                      class="c17"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
                       href="https://react-query.tanstack.com/"
                       rel="noreferrer"
                       target="_blank"
                     >
                       <div
-                        class="c18 c19"
+                        class="c19 c20"
                         data-testid="color-swapping"
                         style="animation-duration: 8.852800132621072s; animation-delay: 3.099824836717412s;"
                       >
@@ -1174,13 +1299,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   >
                     <a
                       aria-label="Jest"
-                      class="c17"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
                       href="https://jestjs.io"
                       rel="noreferrer"
                       target="_blank"
                     >
                       <div
-                        class="c18 c19"
+                        class="c19 c20"
                         data-testid="color-swapping"
                         style="animation-duration: 11.217878381555153s; animation-delay: 19.922858667232482s;"
                       >
@@ -1193,7 +1319,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 </div>
               </li>
               <li
-                class="c20"
+                class="c21"
                 data-testid="horizontal-movement"
                 style="animation-duration: 13.285594132025308s; animation-delay: 3.822453596503797s;"
               >
@@ -1209,13 +1335,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   >
                     <a
                       aria-label="Nx"
-                      class="c17"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
                       href="https://nx.dev"
                       rel="noreferrer"
                       target="_blank"
                     >
                       <div
-                        class="c18 c19"
+                        class="c19 c20"
                         data-testid="color-swapping"
                         style="animation-duration: 13.285594132025308s; animation-delay: 3.822453596503797s;"
                       >
@@ -1228,7 +1355,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 </div>
               </li>
               <li
-                class="c20"
+                class="c21"
                 data-testid="horizontal-movement"
                 style="animation-duration: 6.140394548449443s; animation-delay: 17.45090511424524s;"
               >
@@ -1244,13 +1371,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   >
                     <a
                       aria-label="Yarn"
-                      class="c17"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
                       href="https://yarnpkg.com"
                       rel="noreferrer"
                       target="_blank"
                     >
                       <div
-                        class="c18 c19"
+                        class="c19 c20"
                         data-testid="color-swapping"
                         style="animation-duration: 6.140394548449443s; animation-delay: 17.45090511424524s;"
                       >
@@ -1263,7 +1391,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 </div>
               </li>
               <li
-                class="c20"
+                class="c21"
                 data-testid="horizontal-movement"
                 style="animation-duration: 18.380772518842353s; animation-delay: 17.532690801181168s;"
               >
@@ -1279,13 +1407,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   >
                     <a
                       aria-label="Xata IO"
-                      class="c17"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
                       href="https://xata.io"
                       rel="noreferrer"
                       target="_blank"
                     >
                       <div
-                        class="c18 c19"
+                        class="c19 c20"
                         data-testid="color-swapping"
                         style="animation-duration: 18.380772518842353s; animation-delay: 17.532690801181168s;"
                       >
@@ -1314,13 +1443,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   >
                     <a
                       aria-label="Styled Components"
-                      class="c17"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
                       href="https://styled-components.com"
                       rel="noreferrer"
                       target="_blank"
                     >
                       <div
-                        class="c18 c19"
+                        class="c19 c20"
                         data-testid="color-swapping"
                         style="animation-duration: 16.328130561642666s; animation-delay: 6.9342167534804s;"
                       >
@@ -1349,13 +1479,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   >
                     <a
                       aria-label="ESLint"
-                      class="c17"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
                       href="https://eslint.org"
                       rel="noreferrer"
                       target="_blank"
                     >
                       <div
-                        class="c18 c19"
+                        class="c19 c20"
                         data-testid="color-swapping"
                         style="animation-duration: 17.271344348475175s; animation-delay: 8.056759901806338s;"
                       >
@@ -1384,13 +1515,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   >
                     <a
                       aria-label="Cypress"
-                      class="c17"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
                       href="https://www.cypress.io"
                       rel="noreferrer"
                       target="_blank"
                     >
                       <div
-                        class="c18 c19"
+                        class="c19 c20"
                         data-testid="color-swapping"
                         style="animation-duration: 18.381619673625828s; animation-delay: 7.104194971133172s;"
                       >
@@ -1419,13 +1551,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   >
                     <a
                       aria-label="Prettier"
-                      class="c17"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
                       href="https://prettier.io"
                       rel="noreferrer"
                       target="_blank"
                     >
                       <div
-                        class="c18 c19"
+                        class="c19 c20"
                         data-testid="color-swapping"
                         style="animation-duration: 16.157087671041783s; animation-delay: 12.520902566745143s;"
                       >
@@ -1454,13 +1587,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   >
                     <a
                       aria-label="Docker"
-                      class="c17"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
                       href="https://www.docker.com"
                       rel="noreferrer"
                       target="_blank"
                     >
                       <div
-                        class="c18 c19"
+                        class="c19 c20"
                         data-testid="color-swapping"
                         style="animation-duration: 14.587389009524479s; animation-delay: 18.500250385822373s;"
                       >
@@ -1489,13 +1623,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   >
                     <a
                       aria-label="HTML5"
-                      class="c17"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
                       href="https://www.w3.org/html/"
                       rel="noreferrer"
                       target="_blank"
                     >
                       <div
-                        class="c18 c19"
+                        class="c19 c20"
                         data-testid="color-swapping"
                         style="animation-duration: 14.54153333523598s; animation-delay: 2.7910106729333313s;"
                       >
@@ -1524,13 +1659,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   >
                     <a
                       aria-label="JavaScript"
-                      class="c17"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
                       href="https://developer.mozilla.org/en/JavaScript"
                       rel="noreferrer"
                       target="_blank"
                     >
                       <div
-                        class="c18 c19"
+                        class="c19 c20"
                         data-testid="color-swapping"
                         style="animation-duration: 8.294339875663672s; animation-delay: 10.122007953064076s;"
                       >
@@ -1559,13 +1695,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   >
                     <a
                       aria-label="Node Package Manager"
-                      class="c17"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
                       href="https://www.npmjs.com"
                       rel="noreferrer"
                       target="_blank"
                     >
                       <div
-                        class="c18 c19"
+                        class="c19 c20"
                         data-testid="color-swapping"
                         style="animation-duration: 19.266980102366603s; animation-delay: 6.277431201227875s;"
                       >
@@ -1594,13 +1731,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   >
                     <a
                       aria-label="Git"
-                      class="c17"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
                       href="https://git-scm.com"
                       rel="noreferrer"
                       target="_blank"
                     >
                       <div
-                        class="c18 c19"
+                        class="c19 c20"
                         data-testid="color-swapping"
                         style="animation-duration: 14.715448840651458s; animation-delay: 10.051014461092613s;"
                       >
@@ -1629,13 +1767,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   >
                     <a
                       aria-label="Google Chrome"
-                      class="c17"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
                       href="https://www.google.com/chrome"
                       rel="noreferrer"
                       target="_blank"
                     >
                       <div
-                        class="c18 c19"
+                        class="c19 c20"
                         data-testid="color-swapping"
                         style="animation-duration: 17.685194910444892s; animation-delay: 18.038661357658167s;"
                       >
@@ -1664,13 +1803,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   >
                     <a
                       aria-label="Visual Studio Code"
-                      class="c17"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
                       href="https://code.visualstudio.com"
                       rel="noreferrer"
                       target="_blank"
                     >
                       <div
-                        class="c18 c19"
+                        class="c19 c20"
                         data-testid="color-swapping"
                         style="animation-duration: 8.337109494430436s; animation-delay: 8.155550221907083s;"
                       >
@@ -1699,13 +1839,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   >
                     <a
                       aria-label="Material UI"
-                      class="c17"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
                       href="https://material-ui.com"
                       rel="noreferrer"
                       target="_blank"
                     >
                       <div
-                        class="c18 c19"
+                        class="c19 c20"
                         data-testid="color-swapping"
                         style="animation-duration: 8.136088621999374s; animation-delay: 8.76228147644557s;"
                       >
@@ -1734,13 +1875,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   >
                     <a
                       aria-label="PostgreSQL"
-                      class="c17"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
                       href="https://www.postgresql.org"
                       rel="noreferrer"
                       target="_blank"
                     >
                       <div
-                        class="c18 c19"
+                        class="c19 c20"
                         data-testid="color-swapping"
                         style="animation-duration: 8.367296304582151s; animation-delay: 19.732727964617926s;"
                       >
@@ -1769,13 +1911,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   >
                     <a
                       aria-label="Sentry"
-                      class="c17"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
                       href="https://sentry.io"
                       rel="noreferrer"
                       target="_blank"
                     >
                       <div
-                        class="c18 c19"
+                        class="c19 c20"
                         data-testid="color-swapping"
                         style="animation-duration: 7.423394359927529s; animation-delay: 13.528987552606395s;"
                       >
@@ -1804,13 +1947,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   >
                     <a
                       aria-label="Storybook"
-                      class="c17"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
                       href="https://storybook.js.org"
                       rel="noreferrer"
                       target="_blank"
                     >
                       <div
-                        class="c18 c19"
+                        class="c19 c20"
                         data-testid="color-swapping"
                         style="animation-duration: 9.981661135911185s; animation-delay: 14.758127533936404s;"
                       >
@@ -1839,13 +1983,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   >
                     <a
                       aria-label="Webpack"
-                      class="c17"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
                       href="https://webpack.js.org"
                       rel="noreferrer"
                       target="_blank"
                     >
                       <div
-                        class="c18 c19"
+                        class="c19 c20"
                         data-testid="color-swapping"
                         style="animation-duration: 7.63128276624017s; animation-delay: 3.5692605941147773s;"
                       >
@@ -1874,13 +2019,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   >
                     <a
                       aria-label="GitLab"
-                      class="c17"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
                       href="https://gitlab.com"
                       rel="noreferrer"
                       target="_blank"
                     >
                       <div
-                        class="c18 c19"
+                        class="c19 c20"
                         data-testid="color-swapping"
                         style="animation-duration: 8.224715389235337s; animation-delay: 9.43807281182656s;"
                       >
@@ -1909,13 +2055,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   >
                     <a
                       aria-label="JSON"
-                      class="c17"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
                       href="https://json.org"
                       rel="noreferrer"
                       target="_blank"
                     >
                       <div
-                        class="c18 c19"
+                        class="c19 c20"
                         data-testid="color-swapping"
                         style="animation-duration: 7.347436450909249s; animation-delay: 20.200585431268962s;"
                       >
@@ -1944,13 +2091,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   >
                     <a
                       aria-label="Vercel"
-                      class="c17"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
                       href="https://vercel.com"
                       rel="noreferrer"
                       target="_blank"
                     >
                       <div
-                        class="c18 c19"
+                        class="c19 c20"
                         data-testid="color-swapping"
                         style="animation-duration: 13.47835889276898s; animation-delay: 16.378596221158826s;"
                       >
@@ -1979,13 +2127,13 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   >
                     <a
                       aria-label="Auth0"
-                      class="c17"
+                      class="c23 c18"
                       href="  https://auth0.com"
                       rel="noreferrer"
                       target="_blank"
                     >
                       <div
-                        class="c18 c19"
+                        class="c19 c20"
                         data-testid="color-swapping"
                         style="animation-duration: 19.93296761408395s; animation-delay: 11.821549919105154s;"
                       >
@@ -2014,13 +2162,14 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   >
                     <a
                       aria-label="Spider Man"
-                      class="c17"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
                       href="https://wikipedia.org/wiki/Spider-Man"
                       rel="noreferrer"
                       target="_blank"
                     >
                       <div
-                        class="c18 c19"
+                        class="c19 c20"
                         data-testid="color-swapping"
                         style="animation-duration: 17.144149138157797s; animation-delay: 15.568898600596697s;"
                       >
@@ -2037,7 +2186,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
         </div>
       </div>
       <div
-        class="c21"
+        class="c24"
       />
     </div>
   </div>
