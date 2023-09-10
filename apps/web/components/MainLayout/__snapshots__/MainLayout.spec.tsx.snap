@@ -454,6 +454,10 @@ exports[`MainLayout should render successfully 1`] = `
 }
 
 @media (width >= 768px) {
+
+}
+
+@media (width >= 768px) {
   .c1 {
     align-items: center;
     background-color: transparent;

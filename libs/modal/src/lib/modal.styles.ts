@@ -15,17 +15,25 @@ export const StyledBackdrop = styled.div`
 `
 
 export const StyledModal = styled(ModalOverlays)`
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   position: fixed;
-  top: 30%;
-  left: 50%;
   z-index: 1040;
-  transform: translate(-51%, -40%);
-  width: 100%;
-  max-width: 800px;
   border: 1px solid ${({ theme }) => theme.colors.white};
   border-radius: 2px;
   background-color: ${({ theme }) => theme.colors.black};
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+
+  ${({ theme }) => theme.media.up.md} {
+    top: 30%;
+    left: 50%;
+    transform: translate(-51%, -40%);
+    width: 100%;
+    height: auto;
+    max-width: 800px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  }
 `
 
 export const StyledModalContent = styled.div`

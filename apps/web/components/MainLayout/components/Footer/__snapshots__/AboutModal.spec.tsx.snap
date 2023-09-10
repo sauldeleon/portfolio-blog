@@ -54,17 +54,15 @@ exports[`AboutModal should render 1`] = `
 }
 
 .c1 {
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   position: fixed;
-  top: 30%;
-  left: 50%;
   z-index: 1040;
-  transform: translate(-51%, -40%);
-  width: 100%;
-  max-width: 800px;
   border: 1px solid #FBFBFB;
   border-radius: 2px;
   background-color: #000000;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
 }
 
 .c2 {
@@ -158,6 +156,18 @@ exports[`AboutModal should render 1`] = `
   list-style: none;
   display: flex;
   gap: 1rem;
+}
+
+@media (width >= 768px) {
+  .c1 {
+    top: 30%;
+    left: 50%;
+    transform: translate(-51%, -40%);
+    width: 100%;
+    height: auto;
+    max-width: 800px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  }
 }
 
 <body
