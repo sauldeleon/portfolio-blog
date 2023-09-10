@@ -1,5 +1,7 @@
 # Changelog web app
 
+## [0.6.1](https://github.com/sauldeleon/portfolio-blog/compare/web-0.6.0...web-0.6.1) (2023-09-10)
+
 # [0.6.0](https://github.com/sauldeleon/portfolio-blog/compare/web-0.5.0...web-0.6.0) (2023-09-10)
 
 ### Bug Fixes
