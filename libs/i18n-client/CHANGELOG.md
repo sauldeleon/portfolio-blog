@@ -1,5 +1,11 @@
 # Changelog i18n client util
 
+# [0.2.0](https://github.com/sauldeleon/portfolio-blog/compare/i18n-client-0.1.0...i18n-client-0.2.0) (2023-09-10)
+
+### Features
+
+- useStorage to keep track of language ([d5353a7](https://github.com/sauldeleon/portfolio-blog/commit/d5353a7607a0744d8910b961bc7fb4d348b14614))
+
 # 0.1.0 (2023-09-02)
 
 ### Bug Fixes
