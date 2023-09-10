@@ -1,5 +1,11 @@
 # Changelog Link component
 
+## [0.2.2](https://github.com/sauldeleon/portfolio-blog/compare/link-0.2.1...link-0.2.2) (2023-09-10)
+
+### Bug Fixes
+
+- adding blank and noreferrer by default to external link ([7333c48](https://github.com/sauldeleon/portfolio-blog/commit/7333c48b92b4160cc91439308f0f39b4a360db65))
+
 ## [0.2.1](https://github.com/sauldeleon/portfolio-blog/compare/link-0.2.0...link-0.2.1) (2023-09-10)
 
 ### Bug Fixes
