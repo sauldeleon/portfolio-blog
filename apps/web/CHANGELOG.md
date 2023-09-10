@@ -1,5 +1,11 @@
 # Changelog web app
 
+## [0.6.2](https://github.com/sauldeleon/portfolio-blog/compare/web-0.6.1...web-0.6.2) (2023-09-10)
+
+### Bug Fixes
+
+- adding blank and noreferrer by default to external link ([7333c48](https://github.com/sauldeleon/portfolio-blog/commit/7333c48b92b4160cc91439308f0f39b4a360db65))
+
 ## [0.6.1](https://github.com/sauldeleon/portfolio-blog/compare/web-0.6.0...web-0.6.1) (2023-09-10)
 
 # [0.6.0](https://github.com/sauldeleon/portfolio-blog/compare/web-0.5.0...web-0.6.0) (2023-09-10)
