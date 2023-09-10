@@ -8,19 +8,15 @@ import {
   StyledComponentsIcon,
   YarnIcon,
 } from '@sdlgr/assets'
+import { Modal } from '@sdlgr/modal'
 import { Body } from '@sdlgr/typography'
 
 import { useClientTranslation } from '@web/i18n/client'
 
 import {
-  StyledAboutModal,
-  StyledBackdrop,
-  StyledCloseIcon,
   StyledIconLink,
   StyledLabel,
   StyledList,
-  StyledModalCloseButton,
-  StyledModalContent,
   StyledModalHeading,
   StyledPropertyWrapper,
 } from './AboutModal.styles'
@@ -71,68 +67,58 @@ export function AboutModal({ isOpen, setIsOpen }: AboutModalProps) {
   ]
 
   return (
-    <StyledAboutModal
-      show={isOpen}
-      onHide={() => setIsOpen(false)}
-      renderBackdrop={(props) => <StyledBackdrop {...props} />}
-      aria-labelledby="about-modal-label"
-    >
-      <StyledModalContent>
-        <StyledModalCloseButton onClick={() => setIsOpen(false)}>
-          <StyledCloseIcon width={24} height={24} />
-        </StyledModalCloseButton>
-        <section>
-          <StyledModalHeading $level={2} as="h4" id="about-modal-label">
-            {t('aboutModalTitle')}
-          </StyledModalHeading>
+    <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
+      <section>
+        <StyledModalHeading $level={2} as="h4" id="about-modal-label">
+          {t('aboutModalTitle')}
+        </StyledModalHeading>
 
-          <StyledLabel $level="L">{t('sourceCode')}</StyledLabel>
-          <StyledPropertyWrapper>
-            <Body>{t('usedTechs')}</Body>
-            <StyledList>
-              {usedTechs.map(({ key, href, icon, ariaLabel }) => (
-                <li key={key}>
-                  <StyledIconLink aria-label={ariaLabel} href={href}>
-                    {icon}
-                  </StyledIconLink>
-                </li>
-              ))}
-            </StyledList>
-          </StyledPropertyWrapper>
-          <StyledPropertyWrapper>
-            <Body>{t('repository')}</Body>
-            <StyledIconLink href="https://github.com/sauldeleon/portfolio-blog">
-              <GithubIcon width={20} height={20} />
-            </StyledIconLink>
-          </StyledPropertyWrapper>
+        <StyledLabel $level="L">{t('sourceCode')}</StyledLabel>
+        <StyledPropertyWrapper>
+          <Body>{t('usedTechs')}</Body>
+          <StyledList>
+            {usedTechs.map(({ key, href, icon, ariaLabel }) => (
+              <li key={key}>
+                <StyledIconLink aria-label={ariaLabel} href={href}>
+                  {icon}
+                </StyledIconLink>
+              </li>
+            ))}
+          </StyledList>
+        </StyledPropertyWrapper>
+        <StyledPropertyWrapper>
+          <Body>{t('repository')}</Body>
+          <StyledIconLink href="https://github.com/sauldeleon/portfolio-blog">
+            <GithubIcon width={20} height={20} />
+          </StyledIconLink>
+        </StyledPropertyWrapper>
 
-          <StyledLabel $level="L">{t('design')}</StyledLabel>
-          <StyledPropertyWrapper>
-            <Body>
-              {t('designedBy', {
-                name: 'Valentina Florentina Balta-Cojocaru-Stan',
-              })}
-            </Body>
-            <StyledIconLink
-              href="https://www.linkedin.com/in/valentina-florentina-balta-cojocaru-stan-83619014a/"
-              aria-label={t('checkDesignerHereAria', {
-                name: 'Valentina Florentina Balta-Cojocaru-Stan',
-              })}
-            >
-              <LinkedInIcon width={20} height={20} />
-            </StyledIconLink>
-          </StyledPropertyWrapper>
-          <StyledPropertyWrapper>
-            <Body>{t('designLink')}</Body>
-            <StyledIconLink
-              href="https://www.figma.com/file/ZgfaiU473XMQAWz9kbiMO6/Saul-portfolio-%2B-design-library"
-              aria-label={t('checkDesignHereAria')}
-            >
-              <FigmaIcon width={20} height={20} />
-            </StyledIconLink>
-          </StyledPropertyWrapper>
-        </section>
-      </StyledModalContent>
-    </StyledAboutModal>
+        <StyledLabel $level="L">{t('design')}</StyledLabel>
+        <StyledPropertyWrapper>
+          <Body>
+            {t('designedBy', {
+              name: 'Valentina Florentina Balta-Cojocaru-Stan',
+            })}
+          </Body>
+          <StyledIconLink
+            href="https://www.linkedin.com/in/valentina-florentina-balta-cojocaru-stan-83619014a/"
+            aria-label={t('checkDesignerHereAria', {
+              name: 'Valentina Florentina Balta-Cojocaru-Stan',
+            })}
+          >
+            <LinkedInIcon width={20} height={20} />
+          </StyledIconLink>
+        </StyledPropertyWrapper>
+        <StyledPropertyWrapper>
+          <Body>{t('designLink')}</Body>
+          <StyledIconLink
+            href="https://www.figma.com/file/ZgfaiU473XMQAWz9kbiMO6/Saul-portfolio-%2B-design-library"
+            aria-label={t('checkDesignHereAria')}
+          >
+            <FigmaIcon width={20} height={20} />
+          </StyledIconLink>
+        </StyledPropertyWrapper>
+      </section>
+    </Modal>
   )
 }

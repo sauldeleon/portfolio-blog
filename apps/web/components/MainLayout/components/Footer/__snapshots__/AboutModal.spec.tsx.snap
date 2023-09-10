@@ -1,51 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AboutModal should render 1`] = `
-.c5 {
-  font-family: 'Roboto mono',monospace;
-  font-weight: 400;
-  color: #FBFBFB;
-  font-size: 1.5rem;
-  line-height: normal;
-  margin: 0;
-}
-
-.c10 {
-  font-family: 'Roboto mono',monospace;
-  font-weight: 400;
-  color: #FBFBFB;
-  font-size: 0.9rem;
-  line-height: normal;
-  white-space: pre-line;
-}
-
-.c10 ul,
-.c10 ol {
-  margin-left: 40px;
-  margin-bottom: 10px;
-}
-
-.c10 ul {
-  list-style: outside disc;
-}
-
-.c10 ol {
-  list-style: decimal;
-}
-
-.c10 li {
-  padding-left: 10px;
-}
-
-.c7 {
-  font-family: 'Roboto mono',monospace;
-  font-weight: 500;
-  color: #FBFBFB;
-  font-size: 1rem;
-  line-height: normal;
-  text-transform: uppercase;
-}
-
 .c3 {
   padding: 0;
   display: flex;
@@ -95,7 +50,7 @@ exports[`AboutModal should render 1`] = `
   left: 0;
   right: 0;
   background-color: #000000;
-  opacity: 0.5;
+  opacity: 0.7;
 }
 
 .c1 {
@@ -117,14 +72,6 @@ exports[`AboutModal should render 1`] = `
   padding: 20px;
 }
 
-.c6 {
-  margin-bottom: 40px;
-}
-
-.c8 {
-  margin: 20px 0 10px;
-}
-
 .c4 {
   position: absolute;
   top: 20px;
@@ -138,6 +85,59 @@ exports[`AboutModal should render 1`] = `
 
 .c4:hover:after {
   content: none;
+}
+
+.c5 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 1.5rem;
+  line-height: normal;
+  margin: 0;
+}
+
+.c10 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  white-space: pre-line;
+}
+
+.c10 ul,
+.c10 ol {
+  margin-left: 40px;
+  margin-bottom: 10px;
+}
+
+.c10 ul {
+  list-style: outside disc;
+}
+
+.c10 ol {
+  list-style: decimal;
+}
+
+.c10 li {
+  padding-left: 10px;
+}
+
+.c7 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 500;
+  color: #FBFBFB;
+  font-size: 1rem;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.c6 {
+  margin-bottom: 40px;
+}
+
+.c8 {
+  margin: 20px 0 10px;
 }
 
 .c9 {
@@ -184,7 +184,6 @@ exports[`AboutModal should render 1`] = `
         class="c3 c4"
       >
         <svg
-          class=""
           height="24"
           width="24"
         >
