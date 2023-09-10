@@ -1,5 +1,11 @@
 # Changelog Footer component
 
+# [0.3.0](https://github.com/sauldeleon/portfolio-blog/compare/footer-0.2.1...footer-0.3.0) (2023-09-10)
+
+### Features
+
+- add first version of about modal ([c876e99](https://github.com/sauldeleon/portfolio-blog/commit/c876e99058a6167230f85c006d17624fe7a7c456))
+
 ## [0.2.1](https://github.com/sauldeleon/portfolio-blog/compare/footer-0.2.0...footer-0.2.1) (2023-09-08)
 
 # [0.2.0](https://github.com/sauldeleon/portfolio-blog/compare/footer-0.1.0...footer-0.2.0) (2023-09-05)
