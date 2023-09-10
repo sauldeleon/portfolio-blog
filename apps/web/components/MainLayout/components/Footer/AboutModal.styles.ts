@@ -1,6 +1,6 @@
-import Link from 'next/link'
 import styled from 'styled-components'
 
+import { Link } from '@sdlgr/link'
 import { Heading, Label } from '@sdlgr/typography'
 
 export const StyledModalHeading = styled(Heading)`

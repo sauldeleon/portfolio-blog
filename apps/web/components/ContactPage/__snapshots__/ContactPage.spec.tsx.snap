@@ -618,6 +618,8 @@ exports[`ContactPage should render successfully 1`] = `
                     class="c22 "
                     data-testid="plain-anchor"
                     href="https://www.linkedin.com/in/sauldeleonguerrero"
+                    rel="noreferrer"
+                    target="_blank"
                   >
                     LinkedIn
                   </a>
@@ -637,6 +639,8 @@ exports[`ContactPage should render successfully 1`] = `
                     class="c22 "
                     data-testid="plain-anchor"
                     href="mailto:sauldeleonguerrero@gmail.com"
+                    rel="noreferrer"
+                    target="_blank"
                   >
                     sauldeleonguerrero@gmail.com
                   </a>

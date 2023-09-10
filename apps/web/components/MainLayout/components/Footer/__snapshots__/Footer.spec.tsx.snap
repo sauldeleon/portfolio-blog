@@ -418,6 +418,8 @@ exports[`Footer should render successfully 1`] = `
             class="c12 c13"
             data-testid="plain-anchor"
             href="https://t.me/Sdlgr"
+            rel="noreferrer"
+            target="_blank"
           >
             <svg
               color="#FBFBFB"
@@ -430,6 +432,8 @@ exports[`Footer should render successfully 1`] = `
             class="c12 c13"
             data-testid="plain-anchor"
             href="https://github.com/sauldeleon"
+            rel="noreferrer"
+            target="_blank"
           >
             <svg
               color="#FBFBFB"
@@ -442,6 +446,8 @@ exports[`Footer should render successfully 1`] = `
             class="c12 c13"
             data-testid="plain-anchor"
             href="https://www.linkedin.com/in/sauldeleonguerrero"
+            rel="noreferrer"
+            target="_blank"
           >
             <svg
               color="#FBFBFB"

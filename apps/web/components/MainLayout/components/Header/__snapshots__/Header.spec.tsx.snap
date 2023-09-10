@@ -28,12 +28,12 @@ exports[`Header should render successfully 1`] = `
   padding-left: 10px;
 }
 
-.c5 {
+.c1 {
   position: relative;
   position: relative;
 }
 
-.c5::after {
+.c1::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -43,24 +43,24 @@ exports[`Header should render successfully 1`] = `
   background-color: currentColor;
 }
 
-.c5::after {
+.c1::after {
   transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.25s ease-out;
 }
 
-.c5:hover::after {
+.c1:hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
 
-.c5:hover,
-.c5:active,
-.c5:focus {
+.c1:hover,
+.c1:active,
+.c1:focus {
   text-decoration: none;
 }
 
-.c5:focus-visible {
+.c1:focus-visible {
   outline: #FBFBFB auto 1px;
 }
 
@@ -90,7 +90,7 @@ exports[`Header should render successfully 1`] = `
   content: none;
 }
 
-.c3 {
+.c4 {
   display: flex;
   align-items: end;
   flex-grow: 1;
@@ -99,14 +99,14 @@ exports[`Header should render successfully 1`] = `
   overflow-x: visible;
 }
 
-.c4 {
+.c5 {
   width: 59px;
   display: flex;
   justify-content: center;
   height: 100%;
 }
 
-.c4 .c7 {
+.c5 .c7 {
   font-family: 'Roboto mono',monospace;
   font-weight: 500;
   color: #FBFBFB;
@@ -117,12 +117,12 @@ exports[`Header should render successfully 1`] = `
   transform: rotate(-180deg);
 }
 
-.c4:hover {
+.c5:hover {
   background-color: #000000;
   cursor: pointer;
 }
 
-.c4:hover .c7 {
+.c5:hover .c7 {
   color: #FBFBFB;
 }
 
@@ -227,12 +227,12 @@ exports[`Header should render successfully 1`] = `
   display: flex;
 }
 
-.c1 {
+.c2 {
   display: flex;
   margin-right: 15px;
 }
 
-.c2 {
+.c3 {
   color: #000000;
   margin-bottom: 25px;
 }
@@ -286,7 +286,7 @@ exports[`Header should render successfully 1`] = `
 }
 
 @media (width >= 768px) {
-  .c3 {
+  .c4 {
     gap: 30px;
     align-items: center;
     justify-content: center;
@@ -295,12 +295,12 @@ exports[`Header should render successfully 1`] = `
 }
 
 @media (width >= 768px) {
-  .c4 {
+  .c5 {
     width: auto;
     padding-bottom: 0;
   }
 
-  .c4 .c7 {
+  .c5 .c7 {
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
     color: #FBFBFB;
@@ -332,7 +332,7 @@ exports[`Header should render successfully 1`] = `
 }
 
 @media (width >= 768px) {
-  .c2 {
+  .c3 {
     color: #FBFBFB;
     margin-bottom: 0;
   }
@@ -353,11 +353,11 @@ exports[`Header should render successfully 1`] = `
     >
       <a
         aria-label="Header Logo"
-        class="c1"
+        class="c1 c2"
         href="/en"
       >
         <svg
-          class="c2"
+          class="c3"
           height="55"
           width="106"
         >
@@ -365,15 +365,15 @@ exports[`Header should render successfully 1`] = `
         </svg>
       </a>
       <ul
-        class="c3"
+        class="c4"
       >
         <li
           aria-current="false"
-          class="c4"
+          class="c5"
         >
           <a
             aria-label="Go to Experience page"
-            class="c5 c6"
+            class="c1 c6"
             href="/en/experience"
           >
             <p
@@ -385,11 +385,11 @@ exports[`Header should render successfully 1`] = `
         </li>
         <li
           aria-current="false"
-          class="c4"
+          class="c5"
         >
           <a
             aria-label="Go to Contact page"
-            class="c5 c6"
+            class="c1 c6"
             href="/en/contact"
           >
             <p
@@ -401,11 +401,11 @@ exports[`Header should render successfully 1`] = `
         </li>
         <li
           aria-current="false"
-          class="c4"
+          class="c5"
         >
           <a
             aria-label="Go to Portfolio page"
-            class="c5 c6"
+            class="c1 c6"
             href="/en/portfolio"
           >
             <p
@@ -421,7 +421,7 @@ exports[`Header should render successfully 1`] = `
         >
           <a
             aria-label="Go to Blog page"
-            class="c5 c6"
+            class="c1 c6"
             href="/en/blog"
           >
             <p
@@ -434,7 +434,7 @@ exports[`Header should render successfully 1`] = `
       </ul>
       <a
         aria-label="Go to Blog page"
-        class="c5 c10 c11"
+        class="c1 c10 c11"
         href="/en/blog"
       >
         <div

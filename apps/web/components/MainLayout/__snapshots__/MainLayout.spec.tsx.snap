@@ -130,12 +130,12 @@ exports[`MainLayout should render successfully 1`] = `
   outline: #FBFBFB auto 1px;
 }
 
-.c6 {
+.c2 {
   position: relative;
   position: relative;
 }
 
-.c6::after {
+.c2::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -145,24 +145,24 @@ exports[`MainLayout should render successfully 1`] = `
   background-color: currentColor;
 }
 
-.c6::after {
+.c2::after {
   transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.25s ease-out;
 }
 
-.c6:hover::after {
+.c2:hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
 
-.c6:hover,
-.c6:active,
-.c6:focus {
+.c2:hover,
+.c2:active,
+.c2:focus {
   text-decoration: none;
 }
 
-.c6:focus-visible {
+.c2:focus-visible {
   outline: #FBFBFB auto 1px;
 }
 
@@ -276,7 +276,7 @@ exports[`MainLayout should render successfully 1`] = `
   content: none;
 }
 
-.c4 {
+.c5 {
   display: flex;
   align-items: end;
   flex-grow: 1;
@@ -285,14 +285,14 @@ exports[`MainLayout should render successfully 1`] = `
   overflow-x: visible;
 }
 
-.c5 {
+.c6 {
   width: 59px;
   display: flex;
   justify-content: center;
   height: 100%;
 }
 
-.c5 .c8 {
+.c6 .c8 {
   font-family: 'Roboto mono',monospace;
   font-weight: 500;
   color: #FBFBFB;
@@ -303,12 +303,12 @@ exports[`MainLayout should render successfully 1`] = `
   transform: rotate(-180deg);
 }
 
-.c5:hover {
+.c6:hover {
   background-color: #000000;
   cursor: pointer;
 }
 
-.c5:hover .c8 {
+.c6:hover .c8 {
   color: #FBFBFB;
 }
 
@@ -413,12 +413,12 @@ exports[`MainLayout should render successfully 1`] = `
   display: flex;
 }
 
-.c2 {
+.c3 {
   display: flex;
   margin-right: 15px;
 }
 
-.c3 {
+.c4 {
   color: #000000;
   margin-bottom: 25px;
 }
@@ -502,7 +502,7 @@ exports[`MainLayout should render successfully 1`] = `
 }
 
 @media (width >= 768px) {
-  .c4 {
+  .c5 {
     gap: 30px;
     align-items: center;
     justify-content: center;
@@ -511,12 +511,12 @@ exports[`MainLayout should render successfully 1`] = `
 }
 
 @media (width >= 768px) {
-  .c5 {
+  .c6 {
     width: auto;
     padding-bottom: 0;
   }
 
-  .c5 .c8 {
+  .c6 .c8 {
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
     color: #FBFBFB;
@@ -548,7 +548,7 @@ exports[`MainLayout should render successfully 1`] = `
 }
 
 @media (width >= 768px) {
-  .c3 {
+  .c4 {
     color: #FBFBFB;
     margin-bottom: 0;
   }
@@ -648,11 +648,11 @@ exports[`MainLayout should render successfully 1`] = `
       >
         <a
           aria-label="Header Logo"
-          class="c2"
+          class="c2 c3"
           href="/en"
         >
           <svg
-            class="c3"
+            class="c4"
             height="55"
             width="106"
           >
@@ -660,15 +660,15 @@ exports[`MainLayout should render successfully 1`] = `
           </svg>
         </a>
         <ul
-          class="c4"
+          class="c5"
         >
           <li
             aria-current="false"
-            class="c5"
+            class="c6"
           >
             <a
               aria-label="Go to Experience page"
-              class="c6 c7"
+              class="c2 c7"
               href="/en/experience"
             >
               <p
@@ -680,11 +680,11 @@ exports[`MainLayout should render successfully 1`] = `
           </li>
           <li
             aria-current="false"
-            class="c5"
+            class="c6"
           >
             <a
               aria-label="Go to Contact page"
-              class="c6 c7"
+              class="c2 c7"
               href="/en/contact"
             >
               <p
@@ -696,11 +696,11 @@ exports[`MainLayout should render successfully 1`] = `
           </li>
           <li
             aria-current="false"
-            class="c5"
+            class="c6"
           >
             <a
               aria-label="Go to Portfolio page"
-              class="c6 c7"
+              class="c2 c7"
               href="/en/portfolio"
             >
               <p
@@ -716,7 +716,7 @@ exports[`MainLayout should render successfully 1`] = `
           >
             <a
               aria-label="Go to Blog page"
-              class="c6 c7"
+              class="c2 c7"
               href="/en/blog"
             >
               <p
@@ -729,7 +729,7 @@ exports[`MainLayout should render successfully 1`] = `
         </ul>
         <a
           aria-label="Go to Blog page"
-          class="c6 c11 c12"
+          class="c2 c11 c12"
           href="/en/blog"
         >
           <div
@@ -828,7 +828,7 @@ exports[`MainLayout should render successfully 1`] = `
               <li>
                 <a
                   aria-label="Go to Experience page"
-                  class="c6 c30"
+                  class="c2 c30"
                   href="/en/experience"
                 >
                   <p
@@ -841,7 +841,7 @@ exports[`MainLayout should render successfully 1`] = `
               <li>
                 <a
                   aria-label="Go to Contact page"
-                  class="c6 c30"
+                  class="c2 c30"
                   href="/en/contact"
                 >
                   <p
@@ -854,7 +854,7 @@ exports[`MainLayout should render successfully 1`] = `
               <li>
                 <a
                   aria-label="Go to Portfolio page"
-                  class="c6 c30"
+                  class="c2 c30"
                   href="/en/portfolio"
                 >
                   <p
@@ -867,7 +867,7 @@ exports[`MainLayout should render successfully 1`] = `
               <li>
                 <a
                   aria-label="Go to Blog page"
-                  class="c6 c30"
+                  class="c2 c30"
                   href="/en/blog"
                 >
                   <p
@@ -918,7 +918,7 @@ exports[`MainLayout should render successfully 1`] = `
               <li>
                 <a
                   aria-label="Toggle language. Current language is English."
-                  class="c6 c30"
+                  class="c2 c30"
                   href="/es"
                 >
                   <svg
@@ -964,6 +964,8 @@ exports[`MainLayout should render successfully 1`] = `
               class="c32 c33"
               data-testid="plain-anchor"
               href="https://t.me/Sdlgr"
+              rel="noreferrer"
+              target="_blank"
             >
               <svg
                 color="#FBFBFB"
@@ -976,6 +978,8 @@ exports[`MainLayout should render successfully 1`] = `
               class="c32 c33"
               data-testid="plain-anchor"
               href="https://github.com/sauldeleon"
+              rel="noreferrer"
+              target="_blank"
             >
               <svg
                 color="#FBFBFB"
@@ -988,6 +992,8 @@ exports[`MainLayout should render successfully 1`] = `
               class="c32 c33"
               data-testid="plain-anchor"
               href="https://www.linkedin.com/in/sauldeleonguerrero"
+              rel="noreferrer"
+              target="_blank"
             >
               <svg
                 color="#FBFBFB"

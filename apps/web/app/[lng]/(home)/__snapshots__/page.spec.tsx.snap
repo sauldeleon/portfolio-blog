@@ -2129,8 +2129,6 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       aria-label="Auth0"
                       class="c23 c18"
                       href="  https://auth0.com"
-                      rel="noreferrer"
-                      target="_blank"
                     >
                       <div
                         class="c19 c20"

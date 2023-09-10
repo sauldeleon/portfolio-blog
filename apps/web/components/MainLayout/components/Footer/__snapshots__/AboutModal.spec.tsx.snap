@@ -130,6 +130,42 @@ exports[`AboutModal should render 1`] = `
   text-transform: uppercase;
 }
 
+.c12 {
+  position: relative;
+  position: relative;
+}
+
+.c12::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: currentColor;
+}
+
+.c12::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.c12:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c12:hover,
+.c12:active,
+.c12:focus {
+  text-decoration: none;
+}
+
+.c12:focus-visible {
+  outline: #FBFBFB auto 1px;
+}
+
 .c6 {
   margin-bottom: 40px;
 }
@@ -144,11 +180,11 @@ exports[`AboutModal should render 1`] = `
   gap: 8px;
 }
 
-.c12:after {
+.c13:after {
   content: none;
 }
 
-.c12:hover:after {
+.c13:hover:after {
   content: none;
 }
 
@@ -226,8 +262,11 @@ exports[`AboutModal should render 1`] = `
             <li>
               <a
                 aria-label="NextJS"
-                class="c12"
+                class="c12 c13"
+                data-testid="plain-anchor"
                 href="https://nextjs.org/"
+                rel="noreferrer"
+                target="_blank"
               >
                 <svg
                   height="20"
@@ -240,8 +279,11 @@ exports[`AboutModal should render 1`] = `
             <li>
               <a
                 aria-label="Styled-components"
-                class="c12"
+                class="c12 c13"
+                data-testid="plain-anchor"
                 href="https://styled-components.com/"
+                rel="noreferrer"
+                target="_blank"
               >
                 <svg
                   height="20"
@@ -254,8 +296,11 @@ exports[`AboutModal should render 1`] = `
             <li>
               <a
                 aria-label="Jest"
-                class="c12"
+                class="c12 c13"
+                data-testid="plain-anchor"
                 href="https://jestjs.io/"
+                rel="noreferrer"
+                target="_blank"
               >
                 <svg
                   height="20"
@@ -268,8 +313,11 @@ exports[`AboutModal should render 1`] = `
             <li>
               <a
                 aria-label="NX"
-                class="c12"
+                class="c12 c13"
+                data-testid="plain-anchor"
                 href="https://nx.dev/"
+                rel="noreferrer"
+                target="_blank"
               >
                 <svg
                   height="20"
@@ -282,8 +330,11 @@ exports[`AboutModal should render 1`] = `
             <li>
               <a
                 aria-label="Yarn"
-                class="c12"
+                class="c12 c13"
+                data-testid="plain-anchor"
                 href="https://yarnpkg.com/"
+                rel="noreferrer"
+                target="_blank"
               >
                 <svg
                   height="20"
@@ -304,8 +355,11 @@ exports[`AboutModal should render 1`] = `
             Repository:
           </p>
           <a
-            class="c12"
+            class="c12 c13"
+            data-testid="plain-anchor"
             href="https://github.com/sauldeleon/portfolio-blog"
+            rel="noreferrer"
+            target="_blank"
           >
             <svg
               height="20"
@@ -330,8 +384,11 @@ exports[`AboutModal should render 1`] = `
           </p>
           <a
             aria-label="Valentina Florentina Balta-Cojocaru-Stan LinkedIn profile"
-            class="c12"
+            class="c12 c13"
+            data-testid="plain-anchor"
             href="https://www.linkedin.com/in/valentina-florentina-balta-cojocaru-stan-83619014a/"
+            rel="noreferrer"
+            target="_blank"
           >
             <svg
               height="20"
@@ -351,8 +408,11 @@ exports[`AboutModal should render 1`] = `
           </p>
           <a
             aria-label="Figma design link"
-            class="c12"
+            class="c12 c13"
+            data-testid="plain-anchor"
             href="https://www.figma.com/file/ZgfaiU473XMQAWz9kbiMO6/Saul-portfolio-%2B-design-library"
+            rel="noreferrer"
+            target="_blank"
           >
             <svg
               height="20"

@@ -80,12 +80,7 @@ export function AnimatedItem({
           $customAnimation={customAnimation?.rotate}
         >
           {path ? (
-            <StyledExternalLink
-              href={path}
-              target="_blank"
-              rel="noreferrer"
-              aria-label={ariaLabel}
-            >
+            <StyledExternalLink href={path} aria-label={ariaLabel}>
               {ColorSwappingItem}
             </StyledExternalLink>
           ) : (
