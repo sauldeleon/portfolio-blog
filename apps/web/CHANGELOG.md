@@ -1,5 +1,17 @@
 # Changelog web app
 
+# [0.6.0](https://github.com/sauldeleon/portfolio-blog/compare/web-0.5.0...web-0.6.0) (2023-09-10)
+
+### Bug Fixes
+
+- enable sitemap again ([6bd3895](https://github.com/sauldeleon/portfolio-blog/commit/6bd38955dbece7b6b75ef9d43c82b6269d5d6ff5))
+- on icon focus bounce portals ([486a64a](https://github.com/sauldeleon/portfolio-blog/commit/486a64a0a6085ba6e987dee4cc20702c208cdf1b))
+
+### Features
+
+- add about button in the footer ([7ceb5bf](https://github.com/sauldeleon/portfolio-blog/commit/7ceb5bfb7fb7996f778b348bf5d78aed979300e4))
+- add first version of about modal ([c876e99](https://github.com/sauldeleon/portfolio-blog/commit/c876e99058a6167230f85c006d17624fe7a7c456))
+
 # [0.5.0](https://github.com/sauldeleon/portfolio-blog/compare/web-0.4.0...web-0.5.0) (2023-09-08)
 
 ### Bug Fixes
