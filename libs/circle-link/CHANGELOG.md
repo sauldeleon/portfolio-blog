@@ -1,5 +1,15 @@
 # Changelog Circle Link component
 
+# [0.2.0](https://github.com/sauldeleon/portfolio-blog/compare/circle-link-0.1.2...circle-link-0.2.0) (2023-09-10)
+
+### Bug Fixes
+
+- on icon focus bounce portals ([486a64a](https://github.com/sauldeleon/portfolio-blog/commit/486a64a0a6085ba6e987dee4cc20702c208cdf1b))
+
+### Features
+
+- add first version of about modal ([c876e99](https://github.com/sauldeleon/portfolio-blog/commit/c876e99058a6167230f85c006d17624fe7a7c456))
+
 ## [0.1.2](https://github.com/sauldeleon/portfolio-blog/compare/circle-link-0.1.1...circle-link-0.1.2) (2023-09-08)
 
 ### Bug Fixes
