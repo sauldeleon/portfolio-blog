@@ -145,7 +145,7 @@ describe('mainTheme', () => {
             "afterShared": [
               "position:relative;&::after{content:'';position:absolute;width:100%;height:2px;bottom:0;left:0;background-color:currentColor;}",
             ],
-            "removeBorder": [
+            "removeAfter": [
               "&:after{content:none;}&:hover{&:after{content:none;}}",
             ],
             "transform": [Function],

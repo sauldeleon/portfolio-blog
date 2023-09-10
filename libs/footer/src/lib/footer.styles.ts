@@ -101,5 +101,5 @@ export const StyledSocialMediaIcons = styled.div`
 `
 
 export const StyledSocialMediaLink = styled(Link)`
-  ${({ theme }) => theme.helpers.textBottomBorder.removeBorder}
+  ${({ theme }) => theme.helpers.textBottomBorder.removeAfter}
 `

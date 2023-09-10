@@ -16,5 +16,15 @@
   "languageLabel": "ES",
   "toggleLanguageAria": "Alternar idioma. El idioma actual es Español.",
   "aboutLabel": "Acerca de",
-  "aboutAria": "Modal de información sobre la página web"
+  "aboutAria": "Modal de información sobre la página web",
+  "aboutModalTitle": "Acerca de esta página",
+  "usedTechs": "Que he utilizado:",
+  "sourceCode": "Código fuente",
+  "repository": "Repositorio:",
+  "design": "Diseño",
+  "checkDesignHere": "Mira el diseño aquí",
+  "checkDesignHereAria": "Link al diseño en Figma",
+  "checkDesignerHereAria": "Perfil de {{name}} en LinkedIn",
+  "designedBy": "Diseñado por: {{name}}",
+  "designLink": "Diseño:"
 }

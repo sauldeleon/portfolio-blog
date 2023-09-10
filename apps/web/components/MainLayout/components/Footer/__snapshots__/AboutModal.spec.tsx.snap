@@ -1,0 +1,360 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AboutModal should render 1`] = `
+.c5 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 1.5rem;
+  line-height: normal;
+  margin: 0;
+}
+
+.c10 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  white-space: pre-line;
+}
+
+.c10 ul,
+.c10 ol {
+  margin-left: 40px;
+  margin-bottom: 10px;
+}
+
+.c10 ul {
+  list-style: outside disc;
+}
+
+.c10 ol {
+  list-style: decimal;
+}
+
+.c10 li {
+  padding-left: 10px;
+}
+
+.c7 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 500;
+  color: #FBFBFB;
+  font-size: 1rem;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.c3 {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  outline: none;
+  box-shadow: none;
+  color: #FBFBFB;
+  padding-block: 0;
+  padding-inline: 0;
+  border: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.c3::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: currentColor;
+}
+
+.c3::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.c3:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c3:focus-visible {
+  outline: #FBFBFB auto 1px;
+}
+
+.c0 {
+  position: fixed;
+  z-index: 1040;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #000000;
+  opacity: 0.5;
+}
+
+.c1 {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  z-index: 1040;
+  transform: translate(-51%, -40%);
+  width: 100%;
+  max-width: 800px;
+  border: 1px solid #FBFBFB;
+  border-radius: 2px;
+  background-color: #000000;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.c2 {
+  position: relative;
+  padding: 20px;
+}
+
+.c6 {
+  margin-bottom: 40px;
+}
+
+.c8 {
+  margin: 20px 0 10px;
+}
+
+.c4 {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: #FBFBFB;
+}
+
+.c4:after {
+  content: none;
+}
+
+.c4:hover:after {
+  content: none;
+}
+
+.c9 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.c12:after {
+  content: none;
+}
+
+.c12:hover:after {
+  content: none;
+}
+
+.c11 {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+
+<body
+  style="padding-right: 0px;"
+>
+  <div
+    aria-hidden="true"
+  />
+  <div
+    class="c0"
+  />
+  <div
+    aria-labelledby="about-modal-label"
+    aria-modal="true"
+    class="c1"
+    role="dialog"
+    tabindex="-1"
+  >
+    <div
+      class="c2"
+      role="document"
+    >
+      <button
+        class="c3 c4"
+      >
+        <svg
+          class=""
+          height="24"
+          width="24"
+        >
+          close.svg
+        </svg>
+      </button>
+      <section>
+        <h4
+          class="c5 c6"
+          id="about-modal-label"
+        >
+          About this page
+        </h4>
+        <div
+          class="c7 c8"
+        >
+          Source code
+        </div>
+        <div
+          class="c9"
+        >
+          <p
+            class="c10"
+          >
+            What I've used:
+          </p>
+          <ul
+            class="c11"
+          >
+            <li>
+              <a
+                aria-label="NextJS"
+                class="c12"
+                href="https://nextjs.org/"
+              >
+                <svg
+                  height="20"
+                  width="20"
+                >
+                  nextjs.svg
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a
+                aria-label="Styled-components"
+                class="c12"
+                href="https://styled-components.com/"
+              >
+                <svg
+                  height="20"
+                  width="20"
+                >
+                  styledComponents.svg
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a
+                aria-label="Jest"
+                class="c12"
+                href="https://jestjs.io/"
+              >
+                <svg
+                  height="20"
+                  width="20"
+                >
+                  jest.svg
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a
+                aria-label="NX"
+                class="c12"
+                href="https://nx.dev/"
+              >
+                <svg
+                  height="20"
+                  width="20"
+                >
+                  nx.svg
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a
+                aria-label="Yarn"
+                class="c12"
+                href="https://yarnpkg.com/"
+              >
+                <svg
+                  height="20"
+                  width="20"
+                >
+                  yarn.svg
+                </svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div
+          class="c9"
+        >
+          <p
+            class="c10"
+          >
+            Repository:
+          </p>
+          <a
+            class="c12"
+            href="https://github.com/sauldeleon/portfolio-blog"
+          >
+            <svg
+              height="20"
+              width="20"
+            >
+              github.svg
+            </svg>
+          </a>
+        </div>
+        <div
+          class="c7 c8"
+        >
+          Design
+        </div>
+        <div
+          class="c9"
+        >
+          <p
+            class="c10"
+          >
+            Designed by: Valentina Florentina Balta-Cojocaru-Stan
+          </p>
+          <a
+            aria-label="Valentina Florentina Balta-Cojocaru-Stan LinkedIn profile"
+            class="c12"
+            href="https://www.linkedin.com/in/valentina-florentina-balta-cojocaru-stan-83619014a/"
+          >
+            <svg
+              height="20"
+              width="20"
+            >
+              linkedIn.svg
+            </svg>
+          </a>
+        </div>
+        <div
+          class="c9"
+        >
+          <p
+            class="c10"
+          >
+            Design:
+          </p>
+          <a
+            aria-label="Figma design link"
+            class="c12"
+            href="https://www.figma.com/file/ZgfaiU473XMQAWz9kbiMO6/Saul-portfolio-%2B-design-library"
+          >
+            <svg
+              height="20"
+              width="20"
+            >
+              figma.svg
+            </svg>
+          </a>
+        </div>
+      </section>
+    </div>
+  </div>
+</body>
+`;

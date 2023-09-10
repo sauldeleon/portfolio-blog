@@ -1,5 +1,5 @@
 import { usePathname, useRouter } from 'next/navigation'
-import { useContext, useMemo } from 'react'
+import React, { useContext, useMemo, useState } from 'react'
 
 import {
   AboutIcon,
@@ -18,12 +18,15 @@ import { LocalStorage, useStorage } from '@sdlgr/storage'
 
 import { getNextLanguage, useClientTranslation } from '@web/i18n/client'
 
+import { AboutModal } from './AboutModal'
+
 export function Footer() {
   const { t } = useClientTranslation('footer')
   const { language } = useContext(LanguageContext)
   const pathname = usePathname()
   const router = useRouter()
   const storage = useMemo(() => new LocalStorage(), [])
+  const [aboutModalOpen, setAboutModalOpen] = useState(false)
   const [, setItem] = useStorage(storage)
   const nextLanguage = getNextLanguage(language)
   const nextLanguagePath = `/${nextLanguage}${pathname.replace(/^\/[\w]+/, '')}`
@@ -85,9 +88,8 @@ export function Footer() {
     {
       label: t('aboutLabel'),
       ariaLabel: t('aboutAria'),
-      onClick: (e) => {
-        e.preventDefault()
-        console.log('About button clicked')
+      onClick: () => {
+        setAboutModalOpen(true)
       },
       icon: <AboutIcon color={mainTheme.colors.white} height={18} width={18} />,
     },
@@ -112,11 +114,14 @@ export function Footer() {
   ]
 
   return (
-    <FooterLib
-      tabIndex={-1}
-      navProps={{ 'aria-label': t('siteMap') }}
-      navItems={navItems}
-      socialMediaItems={socialMediaItems}
-    />
+    <>
+      <AboutModal isOpen={aboutModalOpen} setIsOpen={setAboutModalOpen} />
+      <FooterLib
+        tabIndex={-1}
+        navProps={{ 'aria-label': t('siteMap') }}
+        navItems={navItems}
+        socialMediaItems={socialMediaItems}
+      />
+    </>
   )
 }

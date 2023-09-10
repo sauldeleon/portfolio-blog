@@ -71,7 +71,7 @@ export const RotationMovement = styled.div.attrs<{
 export const StyledExternalLink = styled(Link)`
   pointer-events: all;
   cursor: pointer;
-  ${({ theme }) => theme.helpers.textBottomBorder.removeBorder};
+  ${({ theme }) => theme.helpers.textBottomBorder.removeAfter};
 `
 
 export const ColorSwapping = styled.div.attrs<{

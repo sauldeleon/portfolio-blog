@@ -32,7 +32,7 @@ export const StyledCircleLink = styled(Link)<{ $size: number }>`
   display: flex;
   align-items: center;
   max-height: ${({ $size }) => `${$size}px`};
-  ${({ theme }) => theme.helpers.textBottomBorder.removeBorder};
+  ${({ theme }) => theme.helpers.textBottomBorder.removeAfter};
   ${({ theme }) => theme.helpers.focusVisible};
 
   &:hover {

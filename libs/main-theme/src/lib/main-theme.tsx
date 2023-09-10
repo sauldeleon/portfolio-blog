@@ -171,7 +171,7 @@ export const mainTheme: MainTheme = {
       }
     `,
     textBottomBorder: {
-      removeBorder: css`
+      removeAfter: css`
         &:after {
           content: none;
         }
@@ -366,7 +366,7 @@ export interface MainTheme {
     noLinkUnderline: ReturnType<typeof css>
     focusVisible: ReturnType<typeof css>
     textBottomBorder: {
-      removeBorder: ReturnType<typeof css>
+      removeAfter: ReturnType<typeof css>
       afterShared: ReturnType<typeof css>
       afterInitial: (duration?: number) => ReturnType<typeof css>
       afterIncrease: ReturnType<typeof css>
