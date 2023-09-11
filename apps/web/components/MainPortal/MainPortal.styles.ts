@@ -61,24 +61,14 @@ export const FirstWall = styled.div`
 export const MiddleWall = styled.div`
   ${({ theme }) => css`
     position: relative;
-    border: 1px solid;
-    border-image-slice: 1;
-    border-width: 1px;
-    border-image-source: linear-gradient(
-      to bottom,
-      ${theme.colors.yellow},
-      ${theme.colors.green}
-    );
+    ${({ theme }) => theme.helpers.border.gradientShared}
+    ${({ theme }) => theme.helpers.border.gradientBottom}
     height: var(--height-middle);
     width: var(--width-middle);
     background-color: ${theme.colors.black};
 
     ${theme.media.up.md} {
-      border-image-source: linear-gradient(
-        to right,
-        ${theme.colors.yellow},
-        ${theme.colors.green}
-      );
+      ${({ theme }) => theme.helpers.border.gradientRight}
     }
   `}
 `

@@ -127,6 +127,25 @@ describe('mainTheme', () => {
           "bodyFont": "'Roboto mono', monospace",
         },
         "helpers": {
+          "border": {
+            "gradientBottom": [
+              "border-image-source:linear-gradient( to bottom,",
+              "#FFDD83",
+              ",",
+              "#98DFD6",
+              " );",
+            ],
+            "gradientRight": [
+              "border-image-source:linear-gradient( to right,",
+              "#FFDD83",
+              ",",
+              "#98DFD6",
+              " );",
+            ],
+            "gradientShared": [
+              "border:1px solid;border-image-slice:1;",
+            ],
+          },
           "focusVisible": [
             "&:focus-visible{outline:",
             "#FBFBFB",

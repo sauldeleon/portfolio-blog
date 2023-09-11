@@ -124,6 +124,11 @@ const bottomBorderAfterInitial = (duration: number) => css`
   }
 `
 
+const gradientShared = css`
+  border: 1px solid;
+  border-image-slice: 1;
+`
+
 export const mainTheme: MainTheme = {
   breakpoints,
   fontStyles,
@@ -204,6 +209,23 @@ export const mainTheme: MainTheme = {
         &:hover::after {
           ${bottomBorderIncrease}
         }
+      `,
+    },
+    border: {
+      gradientShared,
+      gradientRight: css`
+        border-image-source: linear-gradient(
+          to right,
+          ${colors.yellow},
+          ${colors.green}
+        );
+      `,
+      gradientBottom: css`
+        border-image-source: linear-gradient(
+          to bottom,
+          ${colors.yellow},
+          ${colors.green}
+        );
       `,
     },
   },
@@ -371,6 +393,11 @@ export interface MainTheme {
       afterInitial: (duration?: number) => ReturnType<typeof css>
       afterIncrease: ReturnType<typeof css>
       transform: (duration?: number) => ReturnType<typeof css>
+    }
+    border: {
+      gradientShared: ReturnType<typeof css>
+      gradientRight: ReturnType<typeof css>
+      gradientBottom: ReturnType<typeof css>
     }
   }
   animation: {

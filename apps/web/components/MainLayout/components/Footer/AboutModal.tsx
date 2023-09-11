@@ -8,7 +8,6 @@ import {
   StyledComponentsIcon,
   YarnIcon,
 } from '@sdlgr/assets'
-import { Modal } from '@sdlgr/modal'
 import { Body } from '@sdlgr/typography'
 
 import { useClientTranslation } from '@web/i18n/client'
@@ -17,6 +16,7 @@ import {
   StyledIconLink,
   StyledLabel,
   StyledList,
+  StyledModal,
   StyledModalHeading,
   StyledPropertyWrapper,
 } from './AboutModal.styles'
@@ -67,7 +67,7 @@ export function AboutModal({ isOpen, setIsOpen }: AboutModalProps) {
   ]
 
   return (
-    <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
+    <StyledModal isOpen={isOpen} setIsOpen={setIsOpen}>
       <section>
         <StyledModalHeading $level={2} as="h4" id="about-modal-label">
           {t('aboutModalTitle')}
@@ -119,6 +119,6 @@ export function AboutModal({ isOpen, setIsOpen }: AboutModalProps) {
           </StyledIconLink>
         </StyledPropertyWrapper>
       </section>
-    </Modal>
+    </StyledModal>
   )
 }

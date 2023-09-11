@@ -15,13 +15,14 @@ export interface ModalProps {
   children: React.ReactElement
 }
 
-export function Modal({ isOpen, setIsOpen, children }: ModalProps) {
+export function Modal({ isOpen, setIsOpen, children, ...rest }: ModalProps) {
   return (
     <StyledModal
       show={isOpen}
       onHide={() => setIsOpen(false)}
       renderBackdrop={(props) => <StyledBackdrop {...props} />}
       aria-labelledby="about-modal-label"
+      {...rest}
     >
       <StyledModalContent>
         <StyledModalCloseButton onClick={() => setIsOpen(false)}>

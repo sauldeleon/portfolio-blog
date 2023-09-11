@@ -38,7 +38,7 @@ export const StyledModal = styled(ModalOverlays)`
 
 export const StyledModalContent = styled.div`
   position: relative;
-  padding: 20px;
+  padding: 40px;
 `
 
 export const StyledModalCloseButton = styled(Button)`

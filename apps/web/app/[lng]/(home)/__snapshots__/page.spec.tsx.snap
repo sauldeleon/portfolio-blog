@@ -334,8 +334,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   position: relative;
   border: 1px solid;
   border-image-slice: 1;
-  border-width: 1px;
-  border-image-source: linear-gradient(       to bottom,       #FFDD83,       #98DFD6     );
+  border-image-source: linear-gradient(           to bottom,           #FFDD83,           #98DFD6         );
   height: var(--height-middle);
   width: var(--width-middle);
   background-color: #000000;
@@ -482,7 +481,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
 
 @media (width >= 768px) {
   .c2 {
-    border-image-source: linear-gradient(         to right,         #FFDD83,         #98DFD6       );
+    border-image-source: linear-gradient(           to right,           #FFDD83,           #98DFD6         );
   }
 }
 
