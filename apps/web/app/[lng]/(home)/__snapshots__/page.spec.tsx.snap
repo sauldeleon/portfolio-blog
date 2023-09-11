@@ -1410,6 +1410,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       data-testid="plain-anchor"
                       href="https://onipress.com/collections/scott-pilgrim"
                       rel="noreferrer"
+                      tabindex="-1"
                       target="_blank"
                     >
                       <div
@@ -2199,6 +2200,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       data-testid="plain-anchor"
                       href="https://wikipedia.org/wiki/Spider-Man"
                       rel="noreferrer"
+                      tabindex="-1"
                       target="_blank"
                     >
                       <div

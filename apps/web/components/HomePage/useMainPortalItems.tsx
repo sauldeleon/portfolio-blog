@@ -101,6 +101,7 @@ export function useMainPortalItems() {
         size: 'M',
         path: 'https://onipress.com/collections/scott-pilgrim',
         ariaLabel: 'Scott Pilgrim',
+        focusable: false,
       },
       {
         svg: <XataIOIcon />,
@@ -188,6 +189,7 @@ export function useMainPortalItems() {
         svg: <SpiderManIcon />,
         path: 'https://wikipedia.org/wiki/Spider-Man',
         ariaLabel: 'Spider Man',
+        focusable: false,
       },
     ],
     []

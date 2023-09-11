@@ -26,6 +26,7 @@ export interface AnimatedItemProps {
   isHidden?: boolean
   path?: string
   ariaLabel?: string
+  focusable?: boolean
 }
 
 export function AnimatedItem({
@@ -36,6 +37,7 @@ export function AnimatedItem({
   size = 'M',
   path,
   ariaLabel,
+  focusable = true,
 }: AnimatedItemProps) {
   const seed = useId()
 
@@ -80,7 +82,11 @@ export function AnimatedItem({
           $customAnimation={customAnimation?.rotate}
         >
           {path ? (
-            <StyledExternalLink href={path} aria-label={ariaLabel}>
+            <StyledExternalLink
+              href={path}
+              aria-label={ariaLabel}
+              tabIndex={focusable ? undefined : -1}
+            >
               {ColorSwappingItem}
             </StyledExternalLink>
           ) : (
