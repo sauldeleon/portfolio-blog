@@ -20,7 +20,7 @@
   "aboutLabel": "About",
   "aboutAria": "About page information modal",
   "aboutModalTitle": "About this page",
-  "usedTechs": "What I've used:",
+  "usedTechs": "Techs:",
   "sourceCode": "Source code",
   "repository": "Repository:",
   "checkRepoHereAria": "Source code repository link",
@@ -28,6 +28,6 @@
   "checkDesignHere": "Check the design here",
   "checkDesignHereAria": "Figma design link",
   "checkDesignerHereAria": "{{name}} LinkedIn profile link",
-  "designedBy": "Designed by: {{name}}",
+  "designer": "Designer:",
   "designLink": "Design:"
 }

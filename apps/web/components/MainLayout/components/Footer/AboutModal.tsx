@@ -5,7 +5,10 @@ import {
   LinkedInIcon,
   NextJSIcon,
   NxIcon,
+  PaintIcon,
   StyledComponentsIcon,
+  TechIcon,
+  ValentinaIcon,
   YarnIcon,
 } from '@sdlgr/assets'
 import { Body } from '@sdlgr/typography'
@@ -73,7 +76,9 @@ export function AboutModal({ isOpen, setIsOpen }: AboutModalProps) {
           {t('aboutModalTitle')}
         </StyledModalHeading>
 
-        <StyledLabel $level="L">{t('sourceCode')}</StyledLabel>
+        <StyledLabel $level="L">
+          <TechIcon height={40} width={40} />
+        </StyledLabel>
         <StyledPropertyWrapper>
           <Body>{t('usedTechs')}</Body>
           <StyledList>
@@ -96,13 +101,12 @@ export function AboutModal({ isOpen, setIsOpen }: AboutModalProps) {
           </StyledIconLink>
         </StyledPropertyWrapper>
 
-        <StyledLabel $level="L">{t('design')}</StyledLabel>
+        <StyledLabel $level="L">
+          <PaintIcon width={40} height={40} />
+        </StyledLabel>
         <StyledPropertyWrapper>
-          <Body>
-            {t('designedBy', {
-              name: 'Valentina Florentina Balta-Cojocaru-Stan',
-            })}
-          </Body>
+          <Body>{t('designer')}</Body>
+          <ValentinaIcon width={20} height={20} />
           <StyledIconLink
             href="https://www.linkedin.com/in/valentina-florentina-balta-cojocaru-stan-83619014a/"
             aria-label={t('checkDesignerHereAria', {

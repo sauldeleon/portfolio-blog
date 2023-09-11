@@ -31,7 +31,7 @@ export const StyledModal = styled(ModalOverlays)`
     transform: translate(-51%, -40%);
     width: 100%;
     height: auto;
-    max-width: 800px;
+    max-width: 400px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
   }
 `

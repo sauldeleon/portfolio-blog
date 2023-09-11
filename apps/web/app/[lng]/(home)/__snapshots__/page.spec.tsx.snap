@@ -2216,6 +2216,43 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   </div>
                 </div>
               </li>
+              <li
+                class="c12"
+                data-testid="horizontal-movement"
+                style="animation-duration: 6.152773924806048s; animation-delay: 17.475741728505554s;"
+              >
+                <div
+                  class="c13 c14"
+                  data-testid="vertical-movement"
+                  style="--translateY-begin: 12%; --translateY-end: -20%; animation-duration: 9.902257035614433s;"
+                >
+                  <div
+                    class="c15 c16"
+                    data-testid="rotation-movement"
+                    style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 6.772864351575591s;"
+                  >
+                    <a
+                      aria-label="Half-Life"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
+                      href="https://half-life.com/"
+                      rel="noreferrer"
+                      tabindex="-1"
+                      target="_blank"
+                    >
+                      <div
+                        class="c19 c20"
+                        data-testid="color-swapping"
+                        style="animation-duration: 6.152773924806048s; animation-delay: 17.475741728505554s;"
+                      >
+                        <svg>
+                          halflife.svg
+                        </svg>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </li>
             </ul>
           </div>
         </div>

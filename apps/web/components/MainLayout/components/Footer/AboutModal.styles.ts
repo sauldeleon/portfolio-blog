@@ -9,17 +9,23 @@ export const StyledModalHeading = styled(Heading)`
 `
 
 export const StyledLabel = styled(Label)`
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin: 20px 0 10px;
 `
 
 export const StyledPropertyWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 1rem;
 `
 
 export const StyledIconLink = styled(Link)`
   ${({ theme }) => theme.helpers.textBottomBorder.removeAfter}
+  svg {
+    display: flex;
+  }
 `
 
 export const StyledList = styled.ul`

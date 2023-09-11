@@ -171,13 +171,16 @@ exports[`AboutModal should render 1`] = `
 }
 
 .c9 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin: 20px 0 10px;
 }
 
 .c10 {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 1rem;
 }
 
 .c14:after {
@@ -186,6 +189,10 @@ exports[`AboutModal should render 1`] = `
 
 .c14:hover:after {
   content: none;
+}
+
+.c14 svg {
+  display: flex;
 }
 
 .c12 {
@@ -207,7 +214,7 @@ exports[`AboutModal should render 1`] = `
     transform: translate(-51%, -40%);
     width: 100%;
     height: auto;
-    max-width: 800px;
+    max-width: 400px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
   }
 }
@@ -252,7 +259,12 @@ exports[`AboutModal should render 1`] = `
         <div
           class="c8 c9"
         >
-          Source code
+          <svg
+            height="40"
+            width="40"
+          >
+            tech.svg
+          </svg>
         </div>
         <div
           class="c10"
@@ -260,7 +272,7 @@ exports[`AboutModal should render 1`] = `
           <p
             class="c11"
           >
-            What I've used:
+            Techs:
           </p>
           <ul
             class="c12"
@@ -379,7 +391,12 @@ exports[`AboutModal should render 1`] = `
         <div
           class="c8 c9"
         >
-          Design
+          <svg
+            height="40"
+            width="40"
+          >
+            paint.svg
+          </svg>
         </div>
         <div
           class="c10"
@@ -387,8 +404,14 @@ exports[`AboutModal should render 1`] = `
           <p
             class="c11"
           >
-            Designed by: Valentina Florentina Balta-Cojocaru-Stan
+            Designer:
           </p>
+          <svg
+            height="20"
+            width="20"
+          >
+            valentina.svg
+          </svg>
           <a
             aria-label="Valentina Florentina Balta-Cojocaru-Stan LinkedIn profile link"
             class="c13 c14"
