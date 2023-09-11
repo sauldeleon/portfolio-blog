@@ -24,6 +24,7 @@ import {
   PrettierIcon,
   ReactJSIcon,
   ReactQueryIcon,
+  ScottPilgrimIcon,
   SentryIcon,
   SpiderManIcon,
   StorybookIcon,
@@ -94,6 +95,12 @@ export function useMainPortalItems() {
         size: 'S',
         path: 'https://yarnpkg.com',
         ariaLabel: 'Yarn',
+      },
+      {
+        svg: <ScottPilgrimIcon />,
+        size: 'M',
+        path: 'https://onipress.com/collections/scott-pilgrim',
+        ariaLabel: 'Scott Pilgrim',
       },
       {
         svg: <XataIOIcon />,

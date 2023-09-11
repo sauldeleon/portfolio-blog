@@ -1390,7 +1390,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 </div>
               </li>
               <li
-                class="c21"
+                class="c12"
                 data-testid="horizontal-movement"
                 style="animation-duration: 18.380772518842353s; animation-delay: 17.532690801181168s;"
               >
@@ -1405,10 +1405,10 @@ exports[`[lng] route - Page should render successfully 1`] = `
                     style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 4.157312560720967s;"
                   >
                     <a
-                      aria-label="Xata IO"
+                      aria-label="Scott Pilgrim"
                       class="c17 c18"
                       data-testid="plain-anchor"
-                      href="https://xata.io"
+                      href="https://onipress.com/collections/scott-pilgrim"
                       rel="noreferrer"
                       target="_blank"
                     >
@@ -1418,7 +1418,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                         style="animation-duration: 18.380772518842353s; animation-delay: 17.532690801181168s;"
                       >
                         <svg>
-                          xataIO.svg
+                          scottPilgrim.svg
                         </svg>
                       </div>
                     </a>
@@ -1426,7 +1426,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 </div>
               </li>
               <li
-                class="c12"
+                class="c21"
                 data-testid="horizontal-movement"
                 style="animation-duration: 16.328130561642666s; animation-delay: 6.9342167534804s;"
               >
@@ -1441,10 +1441,10 @@ exports[`[lng] route - Page should render successfully 1`] = `
                     style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 6.668365095917251s;"
                   >
                     <a
-                      aria-label="Styled Components"
+                      aria-label="Xata IO"
                       class="c17 c18"
                       data-testid="plain-anchor"
-                      href="https://styled-components.com"
+                      href="https://xata.io"
                       rel="noreferrer"
                       target="_blank"
                     >
@@ -1454,7 +1454,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                         style="animation-duration: 16.328130561642666s; animation-delay: 6.9342167534804s;"
                       >
                         <svg>
-                          styledComponents.svg
+                          xataIO.svg
                         </svg>
                       </div>
                     </a>
@@ -1477,10 +1477,10 @@ exports[`[lng] route - Page should render successfully 1`] = `
                     style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 4.144148034787797s;"
                   >
                     <a
-                      aria-label="ESLint"
+                      aria-label="Styled Components"
                       class="c17 c18"
                       data-testid="plain-anchor"
-                      href="https://eslint.org"
+                      href="https://styled-components.com"
                       rel="noreferrer"
                       target="_blank"
                     >
@@ -1490,7 +1490,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                         style="animation-duration: 17.271344348475175s; animation-delay: 8.056759901806338s;"
                       >
                         <svg>
-                          eslint.svg
+                          styledComponents.svg
                         </svg>
                       </div>
                     </a>
@@ -1513,10 +1513,10 @@ exports[`[lng] route - Page should render successfully 1`] = `
                     style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 5.767556093246887s;"
                   >
                     <a
-                      aria-label="Cypress"
+                      aria-label="ESLint"
                       class="c17 c18"
                       data-testid="plain-anchor"
-                      href="https://www.cypress.io"
+                      href="https://eslint.org"
                       rel="noreferrer"
                       target="_blank"
                     >
@@ -1526,7 +1526,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                         style="animation-duration: 18.381619673625828s; animation-delay: 7.104194971133172s;"
                       >
                         <svg>
-                          cypress.svg
+                          eslint.svg
                         </svg>
                       </div>
                     </a>
@@ -1549,10 +1549,10 @@ exports[`[lng] route - Page should render successfully 1`] = `
                     style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 4.340475769349846s;"
                   >
                     <a
-                      aria-label="Prettier"
+                      aria-label="Cypress"
                       class="c17 c18"
                       data-testid="plain-anchor"
-                      href="https://prettier.io"
+                      href="https://www.cypress.io"
                       rel="noreferrer"
                       target="_blank"
                     >
@@ -1562,7 +1562,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                         style="animation-duration: 16.157087671041783s; animation-delay: 12.520902566745143s;"
                       >
                         <svg>
-                          prettier.svg
+                          cypress.svg
                         </svg>
                       </div>
                     </a>
@@ -1585,10 +1585,10 @@ exports[`[lng] route - Page should render successfully 1`] = `
                     style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.64080313186948s;"
                   >
                     <a
-                      aria-label="Docker"
+                      aria-label="Prettier"
                       class="c17 c18"
                       data-testid="plain-anchor"
-                      href="https://www.docker.com"
+                      href="https://prettier.io"
                       rel="noreferrer"
                       target="_blank"
                     >
@@ -1598,7 +1598,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                         style="animation-duration: 14.587389009524479s; animation-delay: 18.500250385822373s;"
                       >
                         <svg>
-                          docker.svg
+                          prettier.svg
                         </svg>
                       </div>
                     </a>
@@ -1621,10 +1621,10 @@ exports[`[lng] route - Page should render successfully 1`] = `
                     style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 6.490050749992952s;"
                   >
                     <a
-                      aria-label="HTML5"
+                      aria-label="Docker"
                       class="c17 c18"
                       data-testid="plain-anchor"
-                      href="https://www.w3.org/html/"
+                      href="https://www.docker.com"
                       rel="noreferrer"
                       target="_blank"
                     >
@@ -1634,7 +1634,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                         style="animation-duration: 14.54153333523598s; animation-delay: 2.7910106729333313s;"
                       >
                         <svg>
-                          html5.svg
+                          docker.svg
                         </svg>
                       </div>
                     </a>
@@ -1657,10 +1657,10 @@ exports[`[lng] route - Page should render successfully 1`] = `
                     style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 4.179385351249394s;"
                   >
                     <a
-                      aria-label="JavaScript"
+                      aria-label="HTML5"
                       class="c17 c18"
                       data-testid="plain-anchor"
-                      href="https://developer.mozilla.org/en/JavaScript"
+                      href="https://www.w3.org/html/"
                       rel="noreferrer"
                       target="_blank"
                     >
@@ -1670,7 +1670,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                         style="animation-duration: 8.294339875663672s; animation-delay: 10.122007953064076s;"
                       >
                         <svg>
-                          javascript.svg
+                          html5.svg
                         </svg>
                       </div>
                     </a>
@@ -1693,10 +1693,10 @@ exports[`[lng] route - Page should render successfully 1`] = `
                     style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 4.838190436027354s;"
                   >
                     <a
-                      aria-label="Node Package Manager"
+                      aria-label="JavaScript"
                       class="c17 c18"
                       data-testid="plain-anchor"
-                      href="https://www.npmjs.com"
+                      href="https://developer.mozilla.org/en/JavaScript"
                       rel="noreferrer"
                       target="_blank"
                     >
@@ -1706,7 +1706,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                         style="animation-duration: 19.266980102366603s; animation-delay: 6.277431201227875s;"
                       >
                         <svg>
-                          npm.svg
+                          javascript.svg
                         </svg>
                       </div>
                     </a>
@@ -1729,10 +1729,10 @@ exports[`[lng] route - Page should render successfully 1`] = `
                     style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.606028726515981s;"
                   >
                     <a
-                      aria-label="Git"
+                      aria-label="Node Package Manager"
                       class="c17 c18"
                       data-testid="plain-anchor"
-                      href="https://git-scm.com"
+                      href="https://www.npmjs.com"
                       rel="noreferrer"
                       target="_blank"
                     >
@@ -1742,7 +1742,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                         style="animation-duration: 14.715448840651458s; animation-delay: 10.051014461092613s;"
                       >
                         <svg>
-                          git.svg
+                          npm.svg
                         </svg>
                       </div>
                     </a>
@@ -1765,10 +1765,10 @@ exports[`[lng] route - Page should render successfully 1`] = `
                     style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 5.327759359487322s;"
                   >
                     <a
-                      aria-label="Google Chrome"
+                      aria-label="Git"
                       class="c17 c18"
                       data-testid="plain-anchor"
-                      href="https://www.google.com/chrome"
+                      href="https://git-scm.com"
                       rel="noreferrer"
                       target="_blank"
                     >
@@ -1778,7 +1778,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                         style="animation-duration: 17.685194910444892s; animation-delay: 18.038661357658167s;"
                       >
                         <svg>
-                          chrome.svg
+                          git.svg
                         </svg>
                       </div>
                     </a>
@@ -1801,10 +1801,10 @@ exports[`[lng] route - Page should render successfully 1`] = `
                     style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 4.869104206716336s;"
                   >
                     <a
-                      aria-label="Visual Studio Code"
+                      aria-label="Google Chrome"
                       class="c17 c18"
                       data-testid="plain-anchor"
-                      href="https://code.visualstudio.com"
+                      href="https://www.google.com/chrome"
                       rel="noreferrer"
                       target="_blank"
                     >
@@ -1814,7 +1814,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                         style="animation-duration: 8.337109494430436s; animation-delay: 8.155550221907083s;"
                       >
                         <svg>
-                          vscode.svg
+                          chrome.svg
                         </svg>
                       </div>
                     </a>
@@ -1837,10 +1837,10 @@ exports[`[lng] route - Page should render successfully 1`] = `
                     style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 6.087797405783441s;"
                   >
                     <a
-                      aria-label="Material UI"
+                      aria-label="Visual Studio Code"
                       class="c17 c18"
                       data-testid="plain-anchor"
-                      href="https://material-ui.com"
+                      href="https://code.visualstudio.com"
                       rel="noreferrer"
                       target="_blank"
                     >
@@ -1850,7 +1850,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                         style="animation-duration: 8.136088621999374s; animation-delay: 8.76228147644557s;"
                       >
                         <svg>
-                          materialui.svg
+                          vscode.svg
                         </svg>
                       </div>
                     </a>
@@ -1873,10 +1873,10 @@ exports[`[lng] route - Page should render successfully 1`] = `
                     style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 4.709883503494252s;"
                   >
                     <a
-                      aria-label="PostgreSQL"
+                      aria-label="Material UI"
                       class="c17 c18"
                       data-testid="plain-anchor"
-                      href="https://www.postgresql.org"
+                      href="https://material-ui.com"
                       rel="noreferrer"
                       target="_blank"
                     >
@@ -1886,7 +1886,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                         style="animation-duration: 8.367296304582151s; animation-delay: 19.732727964617926s;"
                       >
                         <svg>
-                          postgresSQL.svg
+                          materialui.svg
                         </svg>
                       </div>
                     </a>
@@ -1909,10 +1909,10 @@ exports[`[lng] route - Page should render successfully 1`] = `
                     style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 5.883140276087264s;"
                   >
                     <a
-                      aria-label="Sentry"
+                      aria-label="PostgreSQL"
                       class="c17 c18"
                       data-testid="plain-anchor"
-                      href="https://sentry.io"
+                      href="https://www.postgresql.org"
                       rel="noreferrer"
                       target="_blank"
                     >
@@ -1922,7 +1922,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                         style="animation-duration: 7.423394359927529s; animation-delay: 13.528987552606395s;"
                       >
                         <svg>
-                          sentry.svg
+                          postgresSQL.svg
                         </svg>
                       </div>
                     </a>
@@ -1945,10 +1945,10 @@ exports[`[lng] route - Page should render successfully 1`] = `
                     style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 6.545100624124975s;"
                   >
                     <a
-                      aria-label="Storybook"
+                      aria-label="Sentry"
                       class="c17 c18"
                       data-testid="plain-anchor"
-                      href="https://storybook.js.org"
+                      href="https://sentry.io"
                       rel="noreferrer"
                       target="_blank"
                     >
@@ -1958,7 +1958,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                         style="animation-duration: 9.981661135911185s; animation-delay: 14.758127533936404s;"
                       >
                         <svg>
-                          storybook.svg
+                          sentry.svg
                         </svg>
                       </div>
                     </a>
@@ -1981,10 +1981,10 @@ exports[`[lng] route - Page should render successfully 1`] = `
                     style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 6.951183584911503s;"
                   >
                     <a
-                      aria-label="Webpack"
+                      aria-label="Storybook"
                       class="c17 c18"
                       data-testid="plain-anchor"
-                      href="https://webpack.js.org"
+                      href="https://storybook.js.org"
                       rel="noreferrer"
                       target="_blank"
                     >
@@ -1994,7 +1994,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                         style="animation-duration: 7.63128276624017s; animation-delay: 3.5692605941147773s;"
                       >
                         <svg>
-                          webpack.svg
+                          storybook.svg
                         </svg>
                       </div>
                     </a>
@@ -2017,10 +2017,10 @@ exports[`[lng] route - Page should render successfully 1`] = `
                     style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 4.0719217655972235s;"
                   >
                     <a
-                      aria-label="GitLab"
+                      aria-label="Webpack"
                       class="c17 c18"
                       data-testid="plain-anchor"
-                      href="https://gitlab.com"
+                      href="https://webpack.js.org"
                       rel="noreferrer"
                       target="_blank"
                     >
@@ -2030,7 +2030,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                         style="animation-duration: 8.224715389235337s; animation-delay: 9.43807281182656s;"
                       >
                         <svg>
-                          gitLab.svg
+                          webpack.svg
                         </svg>
                       </div>
                     </a>
@@ -2053,10 +2053,10 @@ exports[`[lng] route - Page should render successfully 1`] = `
                     style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 5.478851605244715s;"
                   >
                     <a
-                      aria-label="JSON"
+                      aria-label="GitLab"
                       class="c17 c18"
                       data-testid="plain-anchor"
-                      href="https://json.org"
+                      href="https://gitlab.com"
                       rel="noreferrer"
                       target="_blank"
                     >
@@ -2066,7 +2066,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                         style="animation-duration: 7.347436450909249s; animation-delay: 20.200585431268962s;"
                       >
                         <svg>
-                          json.svg
+                          gitLab.svg
                         </svg>
                       </div>
                     </a>
@@ -2089,10 +2089,10 @@ exports[`[lng] route - Page should render successfully 1`] = `
                     style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 5.803764581534673s;"
                   >
                     <a
-                      aria-label="Vercel"
+                      aria-label="JSON"
                       class="c17 c18"
                       data-testid="plain-anchor"
-                      href="https://vercel.com"
+                      href="https://json.org"
                       rel="noreferrer"
                       target="_blank"
                     >
@@ -2102,7 +2102,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                         style="animation-duration: 13.47835889276898s; animation-delay: 16.378596221158826s;"
                       >
                         <svg>
-                          vercel.svg
+                          json.svg
                         </svg>
                       </div>
                     </a>
@@ -2125,9 +2125,12 @@ exports[`[lng] route - Page should render successfully 1`] = `
                     style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 4.035503396734544s;"
                   >
                     <a
-                      aria-label="Auth0"
-                      class="c23 c18"
-                      href="  https://auth0.com"
+                      aria-label="Vercel"
+                      class="c17 c18"
+                      data-testid="plain-anchor"
+                      href="https://vercel.com"
+                      rel="noreferrer"
+                      target="_blank"
                     >
                       <div
                         class="c19 c20"
@@ -2135,7 +2138,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                         style="animation-duration: 19.93296761408395s; animation-delay: 11.821549919105154s;"
                       >
                         <svg>
-                          auth0.svg
+                          vercel.svg
                         </svg>
                       </div>
                     </a>
@@ -2158,6 +2161,39 @@ exports[`[lng] route - Page should render successfully 1`] = `
                     style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 4.088724684429169s;"
                   >
                     <a
+                      aria-label="Auth0"
+                      class="c23 c18"
+                      href="  https://auth0.com"
+                    >
+                      <div
+                        class="c19 c20"
+                        data-testid="color-swapping"
+                        style="animation-duration: 17.144149138157797s; animation-delay: 15.568898600596697s;"
+                      >
+                        <svg>
+                          auth0.svg
+                        </svg>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </li>
+              <li
+                class="c12"
+                data-testid="horizontal-movement"
+                style="animation-duration: 19.284600443743102s; animation-delay: 2.7892558767554902s;"
+              >
+                <div
+                  class="c13 c14"
+                  data-testid="vertical-movement"
+                  style="--translateY-begin: -37%; --translateY-end: 8%; animation-duration: 6.65087303546516s;"
+                >
+                  <div
+                    class="c15 c16"
+                    data-testid="rotation-movement"
+                    style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 4.754229162543799s;"
+                  >
+                    <a
                       aria-label="Spider Man"
                       class="c17 c18"
                       data-testid="plain-anchor"
@@ -2168,7 +2204,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c19 c20"
                         data-testid="color-swapping"
-                        style="animation-duration: 17.144149138157797s; animation-delay: 15.568898600596697s;"
+                        style="animation-duration: 19.284600443743102s; animation-delay: 2.7892558767554902s;"
                       >
                         <svg>
                           spidermask.svg
