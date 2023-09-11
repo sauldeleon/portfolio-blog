@@ -88,7 +88,10 @@ export function AboutModal({ isOpen, setIsOpen }: AboutModalProps) {
         </StyledPropertyWrapper>
         <StyledPropertyWrapper>
           <Body>{t('repository')}</Body>
-          <StyledIconLink href="https://github.com/sauldeleon/portfolio-blog">
+          <StyledIconLink
+            href="https://github.com/sauldeleon/portfolio-blog"
+            aria-label={t('checkRepoHereAria')}
+          >
             <GithubIcon width={20} height={20} />
           </StyledIconLink>
         </StyledPropertyWrapper>

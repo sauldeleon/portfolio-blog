@@ -23,10 +23,11 @@
   "usedTechs": "What I've used:",
   "sourceCode": "Source code",
   "repository": "Repository:",
+  "checkRepoHereAria": "Source code repository link",
   "design": "Design",
   "checkDesignHere": "Check the design here",
   "checkDesignHereAria": "Figma design link",
-  "checkDesignerHereAria": "{{name}} LinkedIn profile",
+  "checkDesignerHereAria": "{{name}} LinkedIn profile link",
   "designedBy": "Designed by: {{name}}",
   "designLink": "Design:"
 }

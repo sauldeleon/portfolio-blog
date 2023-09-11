@@ -361,6 +361,7 @@ exports[`AboutModal should render 1`] = `
             Repository:
           </p>
           <a
+            aria-label="Source code repository link"
             class="c13 c14"
             data-testid="plain-anchor"
             href="https://github.com/sauldeleon/portfolio-blog"
@@ -389,7 +390,7 @@ exports[`AboutModal should render 1`] = `
             Designed by: Valentina Florentina Balta-Cojocaru-Stan
           </p>
           <a
-            aria-label="Valentina Florentina Balta-Cojocaru-Stan LinkedIn profile"
+            aria-label="Valentina Florentina Balta-Cojocaru-Stan LinkedIn profile link"
             class="c13 c14"
             data-testid="plain-anchor"
             href="https://www.linkedin.com/in/valentina-florentina-balta-cojocaru-stan-83619014a/"

@@ -21,9 +21,10 @@
   "usedTechs": "Que he utilizado:",
   "sourceCode": "Código fuente",
   "repository": "Repositorio:",
+  "checkRepoHereAria": "Enlace al repositorio de código fuente",
   "design": "Diseño",
   "checkDesignHere": "Mira el diseño aquí",
-  "checkDesignHereAria": "Link al diseño en Figma",
+  "checkDesignHereAria": "Enlace al diseño en Figma",
   "checkDesignerHereAria": "Perfil de {{name}} en LinkedIn",
   "designedBy": "Diseñado por: {{name}}",
   "designLink": "Diseño:"
