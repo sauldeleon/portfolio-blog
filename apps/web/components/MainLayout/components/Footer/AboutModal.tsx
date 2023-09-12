@@ -1,5 +1,6 @@
 import {
   FigmaIcon,
+  GetTheIdeaIcon,
   GithubIcon,
   JestIcon,
   LinkedInIcon,
@@ -8,7 +9,6 @@ import {
   PaintIcon,
   StyledComponentsIcon,
   TechIcon,
-  ValentinaIcon,
   YarnIcon,
 } from '@sdlgr/assets'
 import { Body } from '@sdlgr/typography'
@@ -106,7 +106,7 @@ export function AboutModal({ isOpen, setIsOpen }: AboutModalProps) {
         </StyledLabel>
         <StyledPropertyWrapper>
           <Body>{t('designer')}</Body>
-          <ValentinaIcon width={20} height={20} />
+          <GetTheIdeaIcon width={20} />
           <StyledIconLink
             href="https://www.linkedin.com/in/valentina-florentina-balta-cojocaru-stan-83619014a/"
             aria-label={t('checkDesignerHereAria', {

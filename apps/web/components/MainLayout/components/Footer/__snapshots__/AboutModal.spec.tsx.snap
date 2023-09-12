@@ -407,10 +407,9 @@ exports[`AboutModal should render 1`] = `
             Designer:
           </p>
           <svg
-            height="20"
             width="20"
           >
-            valentina.svg
+            getTheIdea.svg
           </svg>
           <a
             aria-label="Valentina Florentina Balta-Cojocaru-Stan LinkedIn profile link"
