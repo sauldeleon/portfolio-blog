@@ -19,6 +19,7 @@ export const StyledPropertyWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+  align-items: center;
 `
 
 export const StyledIconLink = styled(Link)`

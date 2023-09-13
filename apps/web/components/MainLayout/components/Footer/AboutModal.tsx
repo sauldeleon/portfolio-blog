@@ -9,6 +9,7 @@ import {
   StyledComponentsIcon,
   YarnIcon,
 } from '@sdlgr/assets'
+import { Body } from '@sdlgr/typography'
 
 import { useClientTranslation } from '@web/i18n/client'
 
@@ -36,20 +37,6 @@ type IconListItemProps = {
 export function AboutModal({ isOpen, setIsOpen }: AboutModalProps) {
   const { t } = useClientTranslation('footer')
   const developmentIcons: IconListItemProps[] = [
-    {
-      key: 'github',
-      href: 'https://github.com/sauldeleon/portfolio-blog',
-      ariaLabel: t('checkRepoHereAria'),
-      icon: <GithubIcon width={20} />,
-    },
-    {
-      key: 'linkedIn',
-      href: 'https://www.linkedin.com/in/sauldeleonguerrero/',
-      ariaLabel: t('checkLinkedInProfileAria', {
-        name: 'Saúl de León Guerrero',
-      }),
-      icon: <LinkedInIcon width={20} height={20} />,
-    },
     {
       key: 'nextjs',
       href: 'https://nextjs.org/',
@@ -82,13 +69,16 @@ export function AboutModal({ isOpen, setIsOpen }: AboutModalProps) {
     },
   ]
 
-  const designIcons: IconListItemProps[] = [
+  const repositoryIcons: IconListItemProps[] = [
     {
-      key: 'figma',
-      href: 'https://www.figma.com/file/ZgfaiU473XMQAWz9kbiMO6/Saul-portfolio-%2B-design-library',
-      ariaLabel: t('checkDesignHereAria'),
-      icon: <FigmaIcon width={20} height={20} />,
+      key: 'github',
+      href: 'https://github.com/sauldeleon/portfolio-blog',
+      ariaLabel: t('checkRepoHereAria'),
+      icon: <GithubIcon width={20} />,
     },
+  ]
+
+  const designerIcons: IconListItemProps[] = [
     {
       key: 'linkedIn',
       href: 'https://www.linkedin.com/in/valentina-florentina-balta-cojocaru-stan-83619014a/',
@@ -107,6 +97,34 @@ export function AboutModal({ isOpen, setIsOpen }: AboutModalProps) {
     },
   ]
 
+  const designIcons: IconListItemProps[] = [
+    {
+      key: 'figma',
+      href: 'https://www.figma.com/file/ZgfaiU473XMQAWz9kbiMO6/Saul-portfolio-%2B-design-library',
+      ariaLabel: t('checkDesignHereAria'),
+      icon: <FigmaIcon width={20} height={20} />,
+    },
+  ]
+
+  const modalSections = [
+    {
+      label: t('development'),
+      key: 'development',
+      properties: [
+        { label: t('usedTechs'), key: 'usedTechs', icons: developmentIcons },
+        { label: t('repository'), key: 'repository', icons: repositoryIcons },
+      ],
+    },
+    {
+      label: t('design'),
+      key: 'design',
+      properties: [
+        { label: t('designer'), key: 'designer', icons: designerIcons },
+        { label: t('designLink'), key: 'designLink', icons: designIcons },
+      ],
+    },
+  ]
+
   return (
     <StyledModal isOpen={isOpen} setIsOpen={setIsOpen}>
       <section>
@@ -114,31 +132,25 @@ export function AboutModal({ isOpen, setIsOpen }: AboutModalProps) {
           {t('aboutModalTitle')}
         </StyledModalHeading>
 
-        <StyledLabel $level="L">{t('development')}</StyledLabel>
-        <StyledPropertyWrapper>
-          <StyledList>
-            {developmentIcons.map(({ key, href, icon, ariaLabel }) => (
-              <li key={key}>
-                <StyledIconLink aria-label={ariaLabel} href={href}>
-                  {icon}
-                </StyledIconLink>
-              </li>
+        {modalSections.map(({ label, key, properties }) => (
+          <div key={key}>
+            <StyledLabel $level="L">{label}</StyledLabel>
+            {properties.map(({ label, key, icons }) => (
+              <StyledPropertyWrapper key={key}>
+                <Body>{label}</Body>
+                <StyledList>
+                  {icons.map(({ key, href, icon, ariaLabel }) => (
+                    <li key={key}>
+                      <StyledIconLink aria-label={ariaLabel} href={href}>
+                        {icon}
+                      </StyledIconLink>
+                    </li>
+                  ))}
+                </StyledList>
+              </StyledPropertyWrapper>
             ))}
-          </StyledList>
-        </StyledPropertyWrapper>
-
-        <StyledLabel $level="L">{t('design')}</StyledLabel>
-        <StyledPropertyWrapper>
-          <StyledList>
-            {designIcons.map(({ key, href, icon, ariaLabel }) => (
-              <li key={key}>
-                <StyledIconLink aria-label={ariaLabel} href={href}>
-                  {icon}
-                </StyledIconLink>
-              </li>
-            ))}
-          </StyledList>
-        </StyledPropertyWrapper>
+          </div>
+        ))}
       </section>
     </StyledModal>
   )
