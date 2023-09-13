@@ -33,6 +33,10 @@ exports[`NotFound should render successfully 1`] = `
   text-decoration: none;
 }
 
+.c2:focus-visible {
+  outline: #FBFBFB auto 1px;
+}
+
 .c1 {
   animation: jaBFZh 1s linear infinite;
   font-size: 5rem;

@@ -32,7 +32,7 @@ describe('Footer', () => {
     expect(baseElement).toMatchSnapshot()
   })
 
-  it('should trigger actions in buttons successfully', async () => {
+  it('should trigger actions in todo buttons successfully', async () => {
     jest.spyOn(console, 'log')
     const mockFn = jest.fn()
     ;(console.log as jest.Mock).mockImplementation(mockFn)
@@ -41,8 +41,14 @@ describe('Footer', () => {
     await screen.findByRole('navigation')
     await userEvent.click(screen.getByRole('button', { name: /Dark mode/ }))
     await userEvent.click(screen.getByRole('button', { name: /Pain mode/ }))
+    expect(mockFn).toHaveBeenCalledTimes(2)
+  })
+
+  it('should trigger open about modal', async () => {
+    renderApp(<Footer />)
+    await screen.findByRole('navigation')
     await userEvent.click(screen.getByRole('button', { name: /About/ }))
-    expect(mockFn).toHaveBeenCalledTimes(3)
+    expect(await screen.findByText('About this page')).toBeInTheDocument()
   })
 
   it('should toggle language to next available language', async () => {

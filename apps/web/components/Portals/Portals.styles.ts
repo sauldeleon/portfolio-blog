@@ -4,9 +4,9 @@ import { Portal } from '@sdlgr/assets'
 
 export const StyledPortals = styled.div`
   z-index: 2;
-  width: 147%;
-  top: -34%;
-  left: -24%;
+  width: 180%;
+  top: 14%;
+  left: -41%;
   position: absolute;
   display: flex;
   justify-content: space-between;
@@ -165,7 +165,7 @@ export const PortalPath = styled.div`
   ${({ theme }) => css`
     --height: 212px;
     position: absolute;
-    overflow: hidden;
+    overflow: clip;
     margin: 30px auto;
     height: 212px;
     border-top-left-radius: 30px 50%;

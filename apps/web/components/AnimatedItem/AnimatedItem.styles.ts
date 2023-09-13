@@ -1,5 +1,7 @@
 import styled, { RuleSet, css } from 'styled-components'
 
+import { Link } from '@sdlgr/link'
+
 import {
   randomDecimalFromInterval,
   randomIntFromInterval,
@@ -66,9 +68,10 @@ export const RotationMovement = styled.div.attrs<{
         `
       : null}
 `
-export const StyledExternalLink = styled.a`
+export const StyledExternalLink = styled(Link)`
   pointer-events: all;
   cursor: pointer;
+  ${({ theme }) => theme.helpers.textBottomBorder.removeAfter};
 `
 
 export const ColorSwapping = styled.div.attrs<{
@@ -95,6 +98,7 @@ export const ColorSwapping = styled.div.attrs<{
     svg {
       width: 100%;
       height: 100%;
+      display: block;
     }
   `}
 `
@@ -113,6 +117,8 @@ export const HorizontalMovement = styled.li.attrs<{
   },
 }))`
   --itemSize: ${({ $size }) => `${$size}px`};
+  --translateX-begin: calc(-50% - var(--itemSize));
+  --translateX-end: calc(50% + var(--itemSize));
   list-style: none;
   position: absolute;
   transform: translateX(-60%);

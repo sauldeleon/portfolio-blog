@@ -38,8 +38,7 @@ exports[`Footer should render successfully 1`] = `
   transform-origin: bottom left;
 }
 
-.c10:focus-visible,
-.c10:focus {
+.c10:focus-visible {
   outline: #FBFBFB auto 1px;
 }
 
@@ -102,6 +101,10 @@ exports[`Footer should render successfully 1`] = `
   text-decoration: none;
 }
 
+.c12:focus-visible {
+  outline: #FBFBFB auto 1px;
+}
+
 .c7 {
   position: relative;
   position: relative;
@@ -132,6 +135,10 @@ exports[`Footer should render successfully 1`] = `
 .c7:active,
 .c7:focus {
   text-decoration: none;
+}
+
+.c7:focus-visible {
+  outline: #FBFBFB auto 1px;
 }
 
 .c0 {
@@ -210,7 +217,11 @@ exports[`Footer should render successfully 1`] = `
   padding: 30px 0;
 }
 
-.c13::after {
+.c13:after {
+  content: none;
+}
+
+.c13:hover:after {
   content: none;
 }
 
@@ -226,6 +237,10 @@ exports[`Footer should render successfully 1`] = `
     justify-self: end;
     padding: 0;
   }
+}
+
+@media (width >= 768px) {
+
 }
 
 <body>
@@ -403,6 +418,8 @@ exports[`Footer should render successfully 1`] = `
             class="c12 c13"
             data-testid="plain-anchor"
             href="https://t.me/Sdlgr"
+            rel="noreferrer"
+            target="_blank"
           >
             <svg
               color="#FBFBFB"
@@ -415,6 +432,8 @@ exports[`Footer should render successfully 1`] = `
             class="c12 c13"
             data-testid="plain-anchor"
             href="https://github.com/sauldeleon"
+            rel="noreferrer"
+            target="_blank"
           >
             <svg
               color="#FBFBFB"
@@ -427,6 +446,8 @@ exports[`Footer should render successfully 1`] = `
             class="c12 c13"
             data-testid="plain-anchor"
             href="https://www.linkedin.com/in/sauldeleonguerrero"
+            rel="noreferrer"
+            target="_blank"
           >
             <svg
               color="#FBFBFB"

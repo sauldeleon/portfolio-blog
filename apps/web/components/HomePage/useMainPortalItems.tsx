@@ -11,6 +11,7 @@ import {
   GitLabIcon,
   GithubIcon,
   HTML5Icon,
+  HalfLifeIcon,
   JavascriptIcon,
   JestIcon,
   JsonIcon,
@@ -24,6 +25,7 @@ import {
   PrettierIcon,
   ReactJSIcon,
   ReactQueryIcon,
+  ScottPilgrimIcon,
   SentryIcon,
   SpiderManIcon,
   StorybookIcon,
@@ -64,11 +66,17 @@ export function useMainPortalItems() {
         path: 'https://www.typescriptlang.org/',
         ariaLabel: 'Typescript',
       },
-      { svg: <NextJSIcon />, path: 'https://nextjs.org', ariaLabel: 'NextJS' },
+      {
+        svg: <NextJSIcon />,
+        path: 'https://nextjs.org',
+        ariaLabel: 'NextJS',
+        size: 'L',
+      },
       {
         svg: <ReactJSIcon />,
         path: 'https://reactjs.org',
         ariaLabel: 'ReactJS',
+        size: 'L',
       },
       {
         svg: <MongoDBIcon />,
@@ -88,6 +96,13 @@ export function useMainPortalItems() {
         size: 'S',
         path: 'https://yarnpkg.com',
         ariaLabel: 'Yarn',
+      },
+      {
+        svg: <ScottPilgrimIcon />,
+        size: 'M',
+        path: 'https://onipress.com/collections/scott-pilgrim',
+        ariaLabel: 'Scott Pilgrim',
+        focusable: false,
       },
       {
         svg: <XataIOIcon />,
@@ -175,6 +190,13 @@ export function useMainPortalItems() {
         svg: <SpiderManIcon />,
         path: 'https://wikipedia.org/wiki/Spider-Man',
         ariaLabel: 'Spider Man',
+        focusable: false,
+      },
+      {
+        svg: <HalfLifeIcon />,
+        path: 'https://half-life.com/',
+        ariaLabel: 'Half-Life',
+        focusable: false,
       },
     ],
     []

@@ -16,5 +16,18 @@
   "languageLabel": "ES",
   "toggleLanguageAria": "Alternar idioma. El idioma actual es Español.",
   "aboutLabel": "Acerca de",
-  "aboutAria": "Modal de información sobre la página web"
+  "aboutAria": "Modal de información sobre la página web",
+  "aboutModalTitle": "Acerca de esta página",
+  "usedTechs": "Tecnologías:",
+  "sourceCode": "Código fuente",
+  "repository": "Repositorio:",
+  "checkRepoHereAria": "Enlace al repositorio de código fuente",
+  "development": "Desarrollo",
+  "design": "Diseño",
+  "checkDesignHere": "Mira el diseño aquí",
+  "checkDesignHereAria": "Enlace al diseño en Figma",
+  "checkLinkedInProfileAria": "Perfil de {{name}} en LinkedIn",
+  "getTheIdeaAria": "{{}}'s portfolio link",
+  "designer": "Diseñadora:",
+  "designLink": "Diseño:"
 }

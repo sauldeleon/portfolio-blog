@@ -5,12 +5,6 @@ describe('mainTheme', () => {
     expect(mainTheme).toMatchInlineSnapshot(`
       {
         "animation": {
-          "clockLoading": e {
-            "id": "sc-keyframes-jbxmNs",
-            "inject": [Function],
-            "name": "jbxmNs",
-            "rules": "0%{stroke-dashoffset:82;}100%{stroke-dashoffset:0;}",
-          },
           "colorSwap": e {
             "id": "sc-keyframes-jQopbU",
             "inject": [Function],
@@ -18,10 +12,10 @@ describe('mainTheme', () => {
             "rules": "from{color:#FFDD83;}to{color:#98DFD6;}",
           },
           "horizontalMovement": e {
-            "id": "sc-keyframes-crneTl",
+            "id": "sc-keyframes-gkcxrO",
             "inject": [Function],
-            "name": "crneTl",
-            "rules": "0%{transform:translateX(calc(-50% - 25px));}100%{transform:translateX(calc(50% + 25px));}",
+            "name": "gkcxrO",
+            "rules": "0%{transform:translateX(var(--translateX-begin));}100%{transform:translateX(var(--translateX-end));}",
           },
           "moveToothFall": e {
             "id": "sc-keyframes-cpZUNP",
@@ -133,6 +127,30 @@ describe('mainTheme', () => {
           "bodyFont": "'Roboto mono', monospace",
         },
         "helpers": {
+          "border": {
+            "gradientBottom": [
+              "border-image-source:linear-gradient( to bottom,",
+              "#FFDD83",
+              ",",
+              "#98DFD6",
+              " );",
+            ],
+            "gradientRight": [
+              "border-image-source:linear-gradient( to right,",
+              "#FFDD83",
+              ",",
+              "#98DFD6",
+              " );",
+            ],
+            "gradientShared": [
+              "border:1px solid;border-image-slice:1;",
+            ],
+          },
+          "focusVisible": [
+            "&:focus-visible{outline:",
+            "#FBFBFB",
+            " auto 1px;}",
+          ],
           "noLinkUnderline": [
             "&:hover,&:active,&:focus{text-decoration:none;}",
           ],
@@ -146,8 +164,8 @@ describe('mainTheme', () => {
             "afterShared": [
               "position:relative;&::after{content:'';position:absolute;width:100%;height:2px;bottom:0;left:0;background-color:currentColor;}",
             ],
-            "removeBorder": [
-              "&::after{content:none;}",
+            "removeAfter": [
+              "&:after{content:none;}&:hover{&:after{content:none;}}",
             ],
             "transform": [Function],
           },

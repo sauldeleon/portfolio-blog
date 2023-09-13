@@ -1,5 +1,12 @@
 # Changelog Assets library
 
+# [0.3.0](https://github.com/sauldeleon/portfolio-blog/compare/assets-0.2.0...assets-0.3.0) (2023-09-10)
+
+### Features
+
+- add about button in the footer ([7ceb5bf](https://github.com/sauldeleon/portfolio-blog/commit/7ceb5bfb7fb7996f778b348bf5d78aed979300e4))
+- add first version of about modal ([c876e99](https://github.com/sauldeleon/portfolio-blog/commit/c876e99058a6167230f85c006d17624fe7a7c456))
+
 # [0.2.0](https://github.com/sauldeleon/portfolio-blog/compare/assets-0.1.0...assets-0.2.0) (2023-09-05)
 
 ### Bug Fixes

@@ -16,9 +16,5 @@ export const StyledButton = styled.button`
 
   ${({ theme }) => theme.helpers.textBottomBorder.afterShared};
   ${({ theme }) => theme.helpers.textBottomBorder.transform()};
-
-  &:focus-visible,
-  &:focus {
-    outline: ${({ theme }) => theme.colors.white} auto 1px;
-  }
+  ${({ theme }) => theme.helpers.focusVisible};
 `

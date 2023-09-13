@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components'
 
+import { CircleButtonIcon } from '@sdlgr/assets'
 import { Link } from '@sdlgr/link'
 import { Body } from '@sdlgr/typography'
 
@@ -13,34 +14,37 @@ export const StyledBody = styled(Body)`
     theme.helpers.textBottomBorder.afterInitial(underlineAnimationDuration)}
 `
 
+export const StyledLoadingCircleIcon = styled(CircleButtonIcon)`
+  .loading {
+    transform: rotate(-90deg);
+    transform-origin: center;
+    stroke: ${({ theme }) => theme.colors.white};
+    stroke-width: 6px;
+    stroke-dasharray: 110;
+    stroke-dashoffset: 110;
+    transition: stroke-dashoffset ${underlineAnimationDuration}s steps(4, end);
+  }
+`
+
 export const StyledCircleLink = styled(Link)<{ $size: number }>`
   outline: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   max-height: ${({ $size }) => `${$size}px`};
-  ${({ theme }) => theme.helpers.textBottomBorder.removeBorder}
+  ${({ theme }) => theme.helpers.textBottomBorder.removeAfter};
+  ${({ theme }) => theme.helpers.focusVisible};
 
   &:hover {
-    circle.loading {
-      stroke: white;
-      stroke-width: 6px;
-      stroke-dasharray: 110;
-      stroke-dashoffset: 82;
-      animation: ${({ theme }) => theme.animation.clockLoading}
-        ${underlineAnimationDuration}s steps(4, jump-none) forwards;
-      transform: rotate(-90deg);
-      transform-origin: center;
+    ${StyledLoadingCircleIcon} {
+      .loading {
+        stroke-dashoffset: 0;
+      }
     }
 
     ${StyledBody} {
       ${({ theme }) => theme.helpers.textBottomBorder.afterIncrease}
     }
-  }
-
-  &:focus-visible,
-  &:focus {
-    outline: ${({ theme }) => theme.colors.white} auto 1px;
   }
 `
 export const StyledIconWrapper = styled.div<{ $size: number }>`

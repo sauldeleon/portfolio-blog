@@ -1,0 +1,483 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AboutModal should render 1`] = `
+.c6 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 1.5rem;
+  line-height: normal;
+  margin: 0;
+}
+
+.c11 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  white-space: pre-line;
+}
+
+.c11 ul,
+.c11 ol {
+  margin-left: 40px;
+  margin-bottom: 10px;
+}
+
+.c11 ul {
+  list-style: outside disc;
+}
+
+.c11 ol {
+  list-style: decimal;
+}
+
+.c11 li {
+  padding-left: 10px;
+}
+
+.c8 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 500;
+  color: #FBFBFB;
+  font-size: 1rem;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.c13 {
+  position: relative;
+  position: relative;
+}
+
+.c13::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: currentColor;
+}
+
+.c13::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.c13:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c13:hover,
+.c13:active,
+.c13:focus {
+  text-decoration: none;
+}
+
+.c13:focus-visible {
+  outline: #FBFBFB auto 1px;
+}
+
+.c4 {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  outline: none;
+  box-shadow: none;
+  color: #FBFBFB;
+  padding-block: 0;
+  padding-inline: 0;
+  border: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.c4::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: currentColor;
+}
+
+.c4::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.c4:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c4:focus-visible {
+  outline: #FBFBFB auto 1px;
+}
+
+.c0 {
+  position: fixed;
+  z-index: 1040;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #000000;
+  opacity: 0.7;
+}
+
+.c1 {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 1040;
+  border: 1px solid #FBFBFB;
+  border-radius: 2px;
+  background-color: #000000;
+}
+
+.c3 {
+  position: relative;
+  padding: 40px;
+}
+
+.c5 {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: #FBFBFB;
+}
+
+.c5:after {
+  content: none;
+}
+
+.c5:hover:after {
+  content: none;
+}
+
+.c7 {
+  margin-bottom: 40px;
+}
+
+.c9 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 20px 0 10px;
+}
+
+.c10 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+.c14:after {
+  content: none;
+}
+
+.c14:hover:after {
+  content: none;
+}
+
+.c14 svg {
+  display: flex;
+}
+
+.c12 {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.c2 {
+  border: 1px solid;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(           to right,           #FFDD83,           #98DFD6         );
+}
+
+@media (width >= 768px) {
+  .c1 {
+    top: 30%;
+    left: 50%;
+    transform: translate(-51%, -40%);
+    width: 100%;
+    height: auto;
+    max-width: 400px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  }
+}
+
+<body
+  style="padding-right: 0px;"
+>
+  <div
+    aria-hidden="true"
+  />
+  <div
+    class="c0"
+  />
+  <div
+    aria-labelledby="about-modal-label"
+    aria-modal="true"
+    class="c1 c2"
+    role="dialog"
+    tabindex="-1"
+  >
+    <div
+      class="c3"
+      role="document"
+    >
+      <button
+        class="c4 c5"
+      >
+        <svg
+          height="24"
+          width="24"
+        >
+          close.svg
+        </svg>
+      </button>
+      <section>
+        <h4
+          class="c6 c7"
+          id="about-modal-label"
+        >
+          About this page
+        </h4>
+        <div>
+          <div
+            class="c8 c9"
+          >
+            Development
+          </div>
+          <div
+            class="c10"
+          >
+            <p
+              class="c11"
+            >
+              Techs:
+            </p>
+            <ul
+              class="c12"
+            >
+              <li>
+                <a
+                  aria-label="NextJS"
+                  class="c13 c14"
+                  data-testid="plain-anchor"
+                  href="https://nextjs.org/"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <svg
+                    height="20"
+                    width="20"
+                  >
+                    nextjs.svg
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a
+                  aria-label="Styled-components"
+                  class="c13 c14"
+                  data-testid="plain-anchor"
+                  href="https://styled-components.com/"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <svg
+                    height="20"
+                    width="20"
+                  >
+                    styledComponents.svg
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a
+                  aria-label="Jest"
+                  class="c13 c14"
+                  data-testid="plain-anchor"
+                  href="https://jestjs.io/"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <svg
+                    height="20"
+                    width="20"
+                  >
+                    jest.svg
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a
+                  aria-label="NX"
+                  class="c13 c14"
+                  data-testid="plain-anchor"
+                  href="https://nx.dev/"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <svg
+                    height="20"
+                    width="20"
+                  >
+                    nx.svg
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a
+                  aria-label="Yarn"
+                  class="c13 c14"
+                  data-testid="plain-anchor"
+                  href="https://yarnpkg.com/"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <svg
+                    height="20"
+                    width="20"
+                  >
+                    yarn.svg
+                  </svg>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div
+            class="c10"
+          >
+            <p
+              class="c11"
+            >
+              Repository:
+            </p>
+            <ul
+              class="c12"
+            >
+              <li>
+                <a
+                  aria-label="Source code repository link"
+                  class="c13 c14"
+                  data-testid="plain-anchor"
+                  href="https://github.com/sauldeleon/portfolio-blog"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <svg
+                    width="20"
+                  >
+                    github.svg
+                  </svg>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div
+            class="c8 c9"
+          >
+            Design
+          </div>
+          <div
+            class="c10"
+          >
+            <p
+              class="c11"
+            >
+              Designer:
+            </p>
+            <ul
+              class="c12"
+            >
+              <li>
+                <a
+                  aria-label="Valentina Florentina Balta-Cojocaru-Stan's LinkedIn profile link"
+                  class="c13 c14"
+                  data-testid="plain-anchor"
+                  href="https://www.linkedin.com/in/valentina-florentina-balta-cojocaru-stan-83619014a/"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <svg
+                    height="20"
+                    width="20"
+                  >
+                    linkedIn.svg
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a
+                  aria-label="{{}}'s portfolio link"
+                  class="c13 c14"
+                  data-testid="plain-anchor"
+                  href="http://valentina.pro/index.html"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <svg
+                    width="20"
+                  >
+                    getTheIdea.svg
+                  </svg>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div
+            class="c10"
+          >
+            <p
+              class="c11"
+            >
+              Design:
+            </p>
+            <ul
+              class="c12"
+            >
+              <li>
+                <a
+                  aria-label="Figma design link"
+                  class="c13 c14"
+                  data-testid="plain-anchor"
+                  href="https://www.figma.com/file/ZgfaiU473XMQAWz9kbiMO6/Saul-portfolio-%2B-design-library"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <svg
+                    height="20"
+                    width="20"
+                  >
+                    figma.svg
+                  </svg>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</body>
+`;

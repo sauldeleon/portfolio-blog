@@ -1,5 +1,11 @@
 # Changelog Button component
 
+## [0.2.2](https://github.com/sauldeleon/portfolio-blog/compare/button-0.2.1...button-0.2.2) (2023-09-10)
+
+### Bug Fixes
+
+- on icon focus bounce portals ([486a64a](https://github.com/sauldeleon/portfolio-blog/commit/486a64a0a6085ba6e987dee4cc20702c208cdf1b))
+
 ## [0.2.1](https://github.com/sauldeleon/portfolio-blog/compare/button-0.2.0...button-0.2.1) (2023-09-08)
 
 ### Bug Fixes

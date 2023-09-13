@@ -1,6 +1,42 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AnimatedItem should render successfully 1`] = `
+.c5 {
+  position: relative;
+  position: relative;
+}
+
+.c5::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: currentColor;
+}
+
+.c5::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.c5:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c5:hover,
+.c5:active,
+.c5:focus {
+  text-decoration: none;
+}
+
+.c5:focus-visible {
+  outline: #FBFBFB auto 1px;
+}
+
 .c2 {
   position: absolute;
   width: 100%;
@@ -21,32 +57,43 @@ exports[`AnimatedItem should render successfully 1`] = `
   pointer-events: none;
 }
 
-.c5 {
+.c6 {
   pointer-events: all;
   cursor: pointer;
 }
 
-.c7 {
+.c6:after {
+  content: none;
+}
+
+.c6:hover:after {
+  content: none;
+}
+
+.c8 {
   color: #FFDD83;
   animation-name: lhbgW;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
 
-.c7 svg {
+.c8 svg {
   width: 100%;
   height: 100%;
+  display: block;
 }
 
 .c0 {
   --itemSize: 40px;
+  --translateX-begin: calc(-50% - var(--itemSize));
+  --translateX-end: calc(50% + var(--itemSize));
   list-style: none;
   position: absolute;
   transform: translateX(-60%);
   width: 100%;
   height: 100%;
   pointer-events: none;
-  animation-name: gBgZDr;
+  animation-name: ciDIWM;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
@@ -58,7 +105,7 @@ exports[`AnimatedItem should render successfully 1`] = `
 
 .c0:hover .c1,
 .c0:hover .c3,
-.c0:hover .c6 {
+.c0:hover .c7 {
   animation-play-state: paused;
 }
 
@@ -86,13 +133,14 @@ exports[`AnimatedItem should render successfully 1`] = `
         >
           <a
             aria-label="Google Chrome"
-            class="c5"
+            class="c5 c6"
+            data-testid="plain-anchor"
             href="https://google.com"
             rel="noreferrer"
             target="_blank"
           >
             <div
-              class="c6 c7"
+              class="c7 c8"
               data-testid="color-swapping"
               style="animation-duration: 14.013358467316657s; animation-delay: 15.815396422171766s;"
             >

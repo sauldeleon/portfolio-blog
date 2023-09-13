@@ -18,5 +18,18 @@
   "languageLabel": "EN",
   "toggleLanguageAria": "Toggle language. Current language is English.",
   "aboutLabel": "About",
-  "aboutAria": "About page information modal"
+  "aboutAria": "About page information modal",
+  "aboutModalTitle": "About this page",
+  "usedTechs": "Techs:",
+  "sourceCode": "Source code",
+  "repository": "Repository:",
+  "checkRepoHereAria": "Source code repository link",
+  "development": "Development",
+  "design": "Design",
+  "checkDesignHere": "Check the design here",
+  "checkDesignHereAria": "Figma design link",
+  "checkLinkedInProfileAria": "{{name}}'s LinkedIn profile link",
+  "getTheIdeaAria": "{{}}'s portfolio link",
+  "designer": "Designer:",
+  "designLink": "Design:"
 }

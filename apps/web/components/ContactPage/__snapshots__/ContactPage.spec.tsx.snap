@@ -3,9 +3,9 @@
 exports[`ContactPage should render successfully 1`] = `
 .c3 {
   z-index: 2;
-  width: 147%;
-  top: -34%;
-  left: -24%;
+  width: 180%;
+  top: 14%;
+  left: -41%;
   position: absolute;
   display: flex;
   justify-content: space-between;
@@ -41,7 +41,7 @@ exports[`ContactPage should render successfully 1`] = `
 .c7 {
   --height: 212px;
   position: absolute;
-  overflow: hidden;
+  overflow: clip;
   margin: 30px auto;
   height: 212px;
   border-top-left-radius: 30px 50%;
@@ -56,15 +56,15 @@ exports[`ContactPage should render successfully 1`] = `
 .c0 {
   --transform-origin-first: bottom;
   --transform-origin-last: top;
-  --perspective: 300px;
+  --perspective: 100px;
   --rotate3D-first: 1,0,0,-45deg;
   --rotate3D-last: 1,0,0,45deg;
-  --height-middle: 30%;
+  --height-middle: 60%;
   --width-middle: unset;
   position: relative;
   display: flex;
   flex-direction: column;
-  aspect-ratio: 1/1.7;
+  aspect-ratio: 1/2;
   align-items: stretch;
   gap: 15px;
   width: 100%;
@@ -85,8 +85,7 @@ exports[`ContactPage should render successfully 1`] = `
   position: relative;
   border: 1px solid;
   border-image-slice: 1;
-  border-width: 1px;
-  border-image-source: linear-gradient(       to bottom,       #FFDD83,       #98DFD6     );
+  border-image-source: linear-gradient(           to bottom,           #FFDD83,           #98DFD6         );
   height: var(--height-middle);
   width: var(--width-middle);
   background-color: #000000;
@@ -132,6 +131,10 @@ exports[`ContactPage should render successfully 1`] = `
 .c22:active,
 .c22:focus {
   text-decoration: none;
+}
+
+.c22:focus-visible {
+  outline: #FBFBFB auto 1px;
 }
 
 .c17 {
@@ -369,7 +372,7 @@ exports[`ContactPage should render successfully 1`] = `
 
 @media (width >= 768px) {
   .c2 {
-    border-image-source: linear-gradient(         to right,         #FFDD83,         #98DFD6       );
+    border-image-source: linear-gradient(           to right,           #FFDD83,           #98DFD6         );
   }
 }
 
@@ -614,6 +617,8 @@ exports[`ContactPage should render successfully 1`] = `
                     class="c22 "
                     data-testid="plain-anchor"
                     href="https://www.linkedin.com/in/sauldeleonguerrero"
+                    rel="noreferrer"
+                    target="_blank"
                   >
                     LinkedIn
                   </a>
@@ -633,6 +638,8 @@ exports[`ContactPage should render successfully 1`] = `
                     class="c22 "
                     data-testid="plain-anchor"
                     href="mailto:sauldeleonguerrero@gmail.com"
+                    rel="noreferrer"
+                    target="_blank"
                   >
                     sauldeleonguerrero@gmail.com
                   </a>

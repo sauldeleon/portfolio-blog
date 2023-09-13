@@ -28,12 +28,12 @@ exports[`Header should render successfully 1`] = `
   padding-left: 10px;
 }
 
-.c5 {
+.c1 {
   position: relative;
   position: relative;
 }
 
-.c5::after {
+.c1::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -43,21 +43,25 @@ exports[`Header should render successfully 1`] = `
   background-color: currentColor;
 }
 
-.c5::after {
+.c1::after {
   transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.25s ease-out;
 }
 
-.c5:hover::after {
+.c1:hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
 
-.c5:hover,
-.c5:active,
-.c5:focus {
+.c1:hover,
+.c1:active,
+.c1:focus {
   text-decoration: none;
+}
+
+.c1:focus-visible {
+  outline: #FBFBFB auto 1px;
 }
 
 .c0 {
@@ -86,7 +90,7 @@ exports[`Header should render successfully 1`] = `
   content: none;
 }
 
-.c3 {
+.c4 {
   display: flex;
   align-items: end;
   flex-grow: 1;
@@ -95,14 +99,14 @@ exports[`Header should render successfully 1`] = `
   overflow-x: visible;
 }
 
-.c4 {
+.c5 {
   width: 59px;
   display: flex;
   justify-content: center;
   height: 100%;
 }
 
-.c4 .c7 {
+.c5 .c7 {
   font-family: 'Roboto mono',monospace;
   font-weight: 500;
   color: #FBFBFB;
@@ -113,12 +117,12 @@ exports[`Header should render successfully 1`] = `
   transform: rotate(-180deg);
 }
 
-.c4:hover {
+.c5:hover {
   background-color: #000000;
   cursor: pointer;
 }
 
-.c4:hover .c7 {
+.c5:hover .c7 {
   color: #FBFBFB;
 }
 
@@ -149,12 +153,12 @@ exports[`Header should render successfully 1`] = `
   color: #FBFBFB;
 }
 
-.c15 {
+.c17 {
   margin-left: 8px;
   position: relative;
 }
 
-.c15::after {
+.c17::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -164,10 +168,20 @@ exports[`Header should render successfully 1`] = `
   background-color: currentColor;
 }
 
-.c15::after {
+.c17::after {
   transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.5s ease-out;
+}
+
+.c14 .loading {
+  transform: rotate(-90deg);
+  transform-origin: center;
+  stroke: #FBFBFB;
+  stroke-width: 6px;
+  stroke-dasharray: 110;
+  stroke-dashoffset: 110;
+  transition: stroke-dashoffset 0.5s steps(4, end);
 }
 
 .c10 {
@@ -178,28 +192,25 @@ exports[`Header should render successfully 1`] = `
   max-height: 42px;
 }
 
-.c10::after {
+.c10:after {
   content: none;
 }
 
-.c10:hover circle.loading {
-  stroke: white;
-  stroke-width: 6px;
-  stroke-dasharray: 110;
-  stroke-dashoffset: 82;
-  animation: kVEmCK 0.5s steps(4, jump-none) forwards;
-  transform: rotate(-90deg);
-  transform-origin: center;
+.c10:hover:after {
+  content: none;
 }
 
-.c10:hover .c14::after {
+.c10:focus-visible {
+  outline: #FBFBFB auto 1px;
+}
+
+.c10:hover .c13 .loading {
+  stroke-dashoffset: 0;
+}
+
+.c10:hover .c16::after {
   transform: scaleX(1);
   transform-origin: bottom left;
-}
-
-.c10:focus-visible,
-.c10:focus {
-  outline: #FBFBFB auto 1px;
 }
 
 .c12 {
@@ -208,7 +219,7 @@ exports[`Header should render successfully 1`] = `
   height: 42px;
 }
 
-.c13 {
+.c15 {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
@@ -216,12 +227,12 @@ exports[`Header should render successfully 1`] = `
   display: flex;
 }
 
-.c1 {
+.c2 {
   display: flex;
   margin-right: 15px;
 }
 
-.c2 {
+.c3 {
   color: #000000;
   margin-bottom: 25px;
 }
@@ -275,7 +286,7 @@ exports[`Header should render successfully 1`] = `
 }
 
 @media (width >= 768px) {
-  .c3 {
+  .c4 {
     gap: 30px;
     align-items: center;
     justify-content: center;
@@ -284,12 +295,12 @@ exports[`Header should render successfully 1`] = `
 }
 
 @media (width >= 768px) {
-  .c4 {
+  .c5 {
     width: auto;
     padding-bottom: 0;
   }
 
-  .c4 .c7 {
+  .c5 .c7 {
     font-family: 'Roboto mono',monospace;
     font-weight: 400;
     color: #FBFBFB;
@@ -321,7 +332,7 @@ exports[`Header should render successfully 1`] = `
 }
 
 @media (width >= 768px) {
-  .c2 {
+  .c3 {
     color: #FBFBFB;
     margin-bottom: 0;
   }
@@ -342,11 +353,11 @@ exports[`Header should render successfully 1`] = `
     >
       <a
         aria-label="Header Logo"
-        class="c1"
+        class="c1 c2"
         href="/en"
       >
         <svg
-          class="c2"
+          class="c3"
           height="55"
           width="106"
         >
@@ -354,15 +365,15 @@ exports[`Header should render successfully 1`] = `
         </svg>
       </a>
       <ul
-        class="c3"
+        class="c4"
       >
         <li
           aria-current="false"
-          class="c4"
+          class="c5"
         >
           <a
             aria-label="Go to Experience page"
-            class="c5 c6"
+            class="c1 c6"
             href="/en/experience"
           >
             <p
@@ -374,11 +385,11 @@ exports[`Header should render successfully 1`] = `
         </li>
         <li
           aria-current="false"
-          class="c4"
+          class="c5"
         >
           <a
             aria-label="Go to Contact page"
-            class="c5 c6"
+            class="c1 c6"
             href="/en/contact"
           >
             <p
@@ -390,11 +401,11 @@ exports[`Header should render successfully 1`] = `
         </li>
         <li
           aria-current="false"
-          class="c4"
+          class="c5"
         >
           <a
             aria-label="Go to Portfolio page"
-            class="c5 c6"
+            class="c1 c6"
             href="/en/portfolio"
           >
             <p
@@ -410,7 +421,7 @@ exports[`Header should render successfully 1`] = `
         >
           <a
             aria-label="Go to Blog page"
-            class="c5 c6"
+            class="c1 c6"
             href="/en/blog"
           >
             <p
@@ -423,20 +434,21 @@ exports[`Header should render successfully 1`] = `
       </ul>
       <a
         aria-label="Go to Blog page"
-        class="c5 c10 c11"
+        class="c1 c10 c11"
         href="/en/blog"
       >
         <div
           class="c12"
         >
           <svg
+            class="c13 c14"
             height="42"
             width="42"
           >
             circleButton.svg
           </svg>
           <div
-            class="c13"
+            class="c15"
           >
             <svg>
               arrowRight.svg
@@ -444,7 +456,7 @@ exports[`Header should render successfully 1`] = `
           </div>
         </div>
         <p
-          class="c7 c14 c8 c15"
+          class="c7 c16 c8 c17"
         >
           Blog
         </p>

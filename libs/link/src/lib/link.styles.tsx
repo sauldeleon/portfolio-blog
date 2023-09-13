@@ -6,6 +6,7 @@ const linkStyles = css`
   ${({ theme }) => theme.helpers.textBottomBorder.afterShared}
   ${({ theme }) => theme.helpers.textBottomBorder.transform()}
   ${({ theme }) => theme.helpers.noLinkUnderline}
+  ${({ theme }) => theme.helpers.focusVisible};
 `
 
 export const StyledLink = styled.a`

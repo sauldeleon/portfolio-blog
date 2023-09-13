@@ -16,6 +16,8 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
         {...props}
         href={href}
         data-testid="plain-anchor"
+        target="_blank"
+        rel="noreferrer"
         ref={forwardedRef}
       >
         {children}

@@ -124,6 +124,11 @@ const bottomBorderAfterInitial = (duration: number) => css`
   }
 `
 
+const gradientShared = css`
+  border: 1px solid;
+  border-image-slice: 1;
+`
+
 export const mainTheme: MainTheme = {
   breakpoints,
   fontStyles,
@@ -165,10 +170,20 @@ export const mainTheme: MainTheme = {
         text-decoration: none;
       }
     `,
+    focusVisible: css`
+      &:focus-visible {
+        outline: ${colors.white} auto 1px;
+      }
+    `,
     textBottomBorder: {
-      removeBorder: css`
-        &::after {
+      removeAfter: css`
+        &:after {
           content: none;
+        }
+        &:hover {
+          &:after {
+            content: none;
+          }
         }
       `,
       afterShared: css`
@@ -196,16 +211,25 @@ export const mainTheme: MainTheme = {
         }
       `,
     },
+    border: {
+      gradientShared,
+      gradientRight: css`
+        border-image-source: linear-gradient(
+          to right,
+          ${colors.yellow},
+          ${colors.green}
+        );
+      `,
+      gradientBottom: css`
+        border-image-source: linear-gradient(
+          to bottom,
+          ${colors.yellow},
+          ${colors.green}
+        );
+      `,
+    },
   },
   animation: {
-    clockLoading: keyframes`
-      0% {
-        stroke-dashoffset: 82;
-      }
-      100% {
-        stroke-dashoffset: 0;
-      }
-    `,
     particleMovement: keyframes`
       from {
         transform: translate(-50%, var(--begin-y));
@@ -261,10 +285,10 @@ export const mainTheme: MainTheme = {
     `,
     horizontalMovement: keyframes`
       0% {
-        transform: translateX(calc(-50% - 25px));
+        transform: translateX(var(--translateX-begin));
       }
       100% {
-        transform: translateX(calc(50% + 25px));
+        transform: translateX(var(--translateX-end));
       }
     `,
     verticalMovement: keyframes`
@@ -362,16 +386,21 @@ export interface MainTheme {
   zIndex: Record<'modal', number>
   helpers: {
     noLinkUnderline: ReturnType<typeof css>
+    focusVisible: ReturnType<typeof css>
     textBottomBorder: {
-      removeBorder: ReturnType<typeof css>
+      removeAfter: ReturnType<typeof css>
       afterShared: ReturnType<typeof css>
       afterInitial: (duration?: number) => ReturnType<typeof css>
       afterIncrease: ReturnType<typeof css>
       transform: (duration?: number) => ReturnType<typeof css>
     }
+    border: {
+      gradientShared: ReturnType<typeof css>
+      gradientRight: ReturnType<typeof css>
+      gradientBottom: ReturnType<typeof css>
+    }
   }
   animation: {
-    clockLoading: Keyframes
     particleMovement: Keyframes
     particleFade: Keyframes
     particleScale: Keyframes
