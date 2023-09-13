@@ -3,16 +3,16 @@ import styled, { css } from 'styled-components'
 export const PortalContainer = styled.div`
   --transform-origin-first: bottom;
   --transform-origin-last: top;
-  --perspective: 300px;
+  --perspective: 100px;
   --rotate3D-first: 1, 0, 0, -45deg;
   --rotate3D-last: 1, 0, 0, 45deg;
-  --height-middle: 30%;
+  --height-middle: 60%;
   --width-middle: unset;
 
   position: relative;
   display: flex;
   flex-direction: column;
-  aspect-ratio: 1/1.7;
+  aspect-ratio: 1/2;
   align-items: stretch;
   gap: 15px;
   width: 100%;

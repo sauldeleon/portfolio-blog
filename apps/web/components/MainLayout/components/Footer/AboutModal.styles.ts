@@ -32,6 +32,8 @@ export const StyledList = styled.ul`
   list-style: none;
   display: flex;
   gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
 `
 
 export const StyledModal = styled(Modal)`

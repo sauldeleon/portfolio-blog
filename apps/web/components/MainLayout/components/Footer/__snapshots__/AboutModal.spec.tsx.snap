@@ -1,57 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AboutModal should render 1`] = `
-.c6 {
-  font-family: 'Roboto mono',monospace;
-  font-weight: 400;
-  color: #FBFBFB;
-  font-size: 1.5rem;
-  line-height: normal;
-  margin: 0;
-}
-
-.c11 {
-  font-family: 'Roboto mono',monospace;
-  font-weight: 400;
-  color: #FBFBFB;
-  font-size: 0.9rem;
-  line-height: normal;
-  white-space: pre-line;
-}
-
-.c11 ul,
-.c11 ol {
-  margin-left: 40px;
-  margin-bottom: 10px;
-}
-
-.c11 ul {
-  list-style: outside disc;
-}
-
-.c11 ol {
-  list-style: decimal;
-}
-
-.c11 li {
-  padding-left: 10px;
-}
-
-.c8 {
-  font-family: 'Roboto mono',monospace;
-  font-weight: 500;
-  color: #FBFBFB;
-  font-size: 1rem;
-  line-height: normal;
-  text-transform: uppercase;
-}
-
-.c13 {
+.c12 {
   position: relative;
   position: relative;
 }
 
-.c13::after {
+.c12::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -61,24 +16,24 @@ exports[`AboutModal should render 1`] = `
   background-color: currentColor;
 }
 
-.c13::after {
+.c12::after {
   transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.25s ease-out;
 }
 
-.c13:hover::after {
+.c12:hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
 
-.c13:hover,
-.c13:active,
-.c13:focus {
+.c12:hover,
+.c12:active,
+.c12:focus {
   text-decoration: none;
 }
 
-.c13:focus-visible {
+.c12:focus-visible {
   outline: #FBFBFB auto 1px;
 }
 
@@ -137,8 +92,8 @@ exports[`AboutModal should render 1`] = `
 .c1 {
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   position: fixed;
   z-index: 1040;
   border: 1px solid #FBFBFB;
@@ -166,6 +121,24 @@ exports[`AboutModal should render 1`] = `
   content: none;
 }
 
+.c6 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 1.5rem;
+  line-height: normal;
+  margin: 0;
+}
+
+.c8 {
+  font-family: 'Roboto mono',monospace;
+  font-weight: 500;
+  color: #FBFBFB;
+  font-size: 1rem;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
 .c7 {
   margin-bottom: 40px;
 }
@@ -183,22 +156,24 @@ exports[`AboutModal should render 1`] = `
   gap: 1rem;
 }
 
-.c14:after {
+.c13:after {
   content: none;
 }
 
-.c14:hover:after {
+.c13:hover:after {
   content: none;
 }
 
-.c14 svg {
+.c13 svg {
   display: flex;
 }
 
-.c12 {
+.c11 {
   list-style: none;
   display: flex;
   gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .c2 {
@@ -259,28 +234,51 @@ exports[`AboutModal should render 1`] = `
         <div
           class="c8 c9"
         >
-          <svg
-            height="40"
-            width="40"
-          >
-            tech.svg
-          </svg>
+          Development
         </div>
         <div
           class="c10"
         >
-          <p
-            class="c11"
-          >
-            Techs:
-          </p>
           <ul
-            class="c12"
+            class="c11"
           >
             <li>
               <a
+                aria-label="Source code repository link"
+                class="c12 c13"
+                data-testid="plain-anchor"
+                href="https://github.com/sauldeleon/portfolio-blog"
+                rel="noreferrer"
+                target="_blank"
+              >
+                <svg
+                  width="20"
+                >
+                  github.svg
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a
+                aria-label="Saúl de León Guerrero's LinkedIn profile link"
+                class="c12 c13"
+                data-testid="plain-anchor"
+                href="https://www.linkedin.com/in/sauldeleonguerrero/"
+                rel="noreferrer"
+                target="_blank"
+              >
+                <svg
+                  height="20"
+                  width="20"
+                >
+                  linkedIn.svg
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a
                 aria-label="NextJS"
-                class="c13 c14"
+                class="c12 c13"
                 data-testid="plain-anchor"
                 href="https://nextjs.org/"
                 rel="noreferrer"
@@ -297,7 +295,7 @@ exports[`AboutModal should render 1`] = `
             <li>
               <a
                 aria-label="Styled-components"
-                class="c13 c14"
+                class="c12 c13"
                 data-testid="plain-anchor"
                 href="https://styled-components.com/"
                 rel="noreferrer"
@@ -314,7 +312,7 @@ exports[`AboutModal should render 1`] = `
             <li>
               <a
                 aria-label="Jest"
-                class="c13 c14"
+                class="c12 c13"
                 data-testid="plain-anchor"
                 href="https://jestjs.io/"
                 rel="noreferrer"
@@ -331,7 +329,7 @@ exports[`AboutModal should render 1`] = `
             <li>
               <a
                 aria-label="NX"
-                class="c13 c14"
+                class="c12 c13"
                 data-testid="plain-anchor"
                 href="https://nx.dev/"
                 rel="noreferrer"
@@ -348,7 +346,7 @@ exports[`AboutModal should render 1`] = `
             <li>
               <a
                 aria-label="Yarn"
-                class="c13 c14"
+                class="c12 c13"
                 data-testid="plain-anchor"
                 href="https://yarnpkg.com/"
                 rel="noreferrer"
@@ -365,91 +363,67 @@ exports[`AboutModal should render 1`] = `
           </ul>
         </div>
         <div
-          class="c10"
-        >
-          <p
-            class="c11"
-          >
-            Repository:
-          </p>
-          <a
-            aria-label="Source code repository link"
-            class="c13 c14"
-            data-testid="plain-anchor"
-            href="https://github.com/sauldeleon/portfolio-blog"
-            rel="noreferrer"
-            target="_blank"
-          >
-            <svg
-              height="20"
-              width="20"
-            >
-              github.svg
-            </svg>
-          </a>
-        </div>
-        <div
           class="c8 c9"
         >
-          <svg
-            height="40"
-            width="40"
-          >
-            paint.svg
-          </svg>
+          Design
         </div>
         <div
           class="c10"
         >
-          <p
+          <ul
             class="c11"
           >
-            Designer:
-          </p>
-          <svg
-            width="20"
-          >
-            getTheIdea.svg
-          </svg>
-          <a
-            aria-label="Valentina Florentina Balta-Cojocaru-Stan LinkedIn profile link"
-            class="c13 c14"
-            data-testid="plain-anchor"
-            href="https://www.linkedin.com/in/valentina-florentina-balta-cojocaru-stan-83619014a/"
-            rel="noreferrer"
-            target="_blank"
-          >
-            <svg
-              height="20"
-              width="20"
-            >
-              linkedIn.svg
-            </svg>
-          </a>
-        </div>
-        <div
-          class="c10"
-        >
-          <p
-            class="c11"
-          >
-            Design:
-          </p>
-          <a
-            aria-label="Figma design link"
-            class="c13 c14"
-            data-testid="plain-anchor"
-            href="https://www.figma.com/file/ZgfaiU473XMQAWz9kbiMO6/Saul-portfolio-%2B-design-library"
-            rel="noreferrer"
-            target="_blank"
-          >
-            <svg
-              height="20"
-              width="20"
-            >
-              figma.svg
-            </svg>
-          </a>
+            <li>
+              <a
+                aria-label="Figma design link"
+                class="c12 c13"
+                data-testid="plain-anchor"
+                href="https://www.figma.com/file/ZgfaiU473XMQAWz9kbiMO6/Saul-portfolio-%2B-design-library"
+                rel="noreferrer"
+                target="_blank"
+              >
+                <svg
+                  height="20"
+                  width="20"
+                >
+                  figma.svg
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a
+                aria-label="Valentina Florentina Balta-Cojocaru-Stan's LinkedIn profile link"
+                class="c12 c13"
+                data-testid="plain-anchor"
+                href="https://www.linkedin.com/in/valentina-florentina-balta-cojocaru-stan-83619014a/"
+                rel="noreferrer"
+                target="_blank"
+              >
+                <svg
+                  height="20"
+                  width="20"
+                >
+                  linkedIn.svg
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a
+                aria-label="{{}}'s portfolio link"
+                class="c12 c13"
+                data-testid="plain-anchor"
+                href="http://valentina.pro/index.html"
+                rel="noreferrer"
+                target="_blank"
+              >
+                <svg
+                  width="20"
+                >
+                  getTheIdea.svg
+                </svg>
+              </a>
+            </li>
+          </ul>
         </div>
       </section>
     </div>

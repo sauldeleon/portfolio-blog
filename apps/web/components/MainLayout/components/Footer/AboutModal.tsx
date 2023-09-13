@@ -6,12 +6,9 @@ import {
   LinkedInIcon,
   NextJSIcon,
   NxIcon,
-  PaintIcon,
   StyledComponentsIcon,
-  TechIcon,
   YarnIcon,
 } from '@sdlgr/assets'
-import { Body } from '@sdlgr/typography'
 
 import { useClientTranslation } from '@web/i18n/client'
 
@@ -29,14 +26,30 @@ interface AboutModalProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
+type IconListItemProps = {
+  key: string
+  href: string
+  ariaLabel: string
+  icon: React.ReactNode
+}
+
 export function AboutModal({ isOpen, setIsOpen }: AboutModalProps) {
   const { t } = useClientTranslation('footer')
-  const usedTechs: {
-    key: string
-    href: string
-    ariaLabel: string
-    icon: React.ReactNode
-  }[] = [
+  const developmentIcons: IconListItemProps[] = [
+    {
+      key: 'github',
+      href: 'https://github.com/sauldeleon/portfolio-blog',
+      ariaLabel: t('checkRepoHereAria'),
+      icon: <GithubIcon width={20} />,
+    },
+    {
+      key: 'linkedIn',
+      href: 'https://www.linkedin.com/in/sauldeleonguerrero/',
+      ariaLabel: t('checkLinkedInProfileAria', {
+        name: 'Saúl de León Guerrero',
+      }),
+      icon: <LinkedInIcon width={20} height={20} />,
+    },
     {
       key: 'nextjs',
       href: 'https://nextjs.org/',
@@ -69,6 +82,31 @@ export function AboutModal({ isOpen, setIsOpen }: AboutModalProps) {
     },
   ]
 
+  const designIcons: IconListItemProps[] = [
+    {
+      key: 'figma',
+      href: 'https://www.figma.com/file/ZgfaiU473XMQAWz9kbiMO6/Saul-portfolio-%2B-design-library',
+      ariaLabel: t('checkDesignHereAria'),
+      icon: <FigmaIcon width={20} height={20} />,
+    },
+    {
+      key: 'linkedIn',
+      href: 'https://www.linkedin.com/in/valentina-florentina-balta-cojocaru-stan-83619014a/',
+      ariaLabel: t('checkLinkedInProfileAria', {
+        name: 'Valentina Florentina Balta-Cojocaru-Stan',
+      }),
+      icon: <LinkedInIcon width={20} height={20} />,
+    },
+    {
+      key: 'getTheIdea',
+      href: 'http://valentina.pro/index.html',
+      ariaLabel: t('getTheIdeaAria', {
+        name: 'Valentina Florentina Balta-Cojocaru-Stan',
+      }),
+      icon: <GetTheIdeaIcon width={20} />,
+    },
+  ]
+
   return (
     <StyledModal isOpen={isOpen} setIsOpen={setIsOpen}>
       <section>
@@ -76,13 +114,10 @@ export function AboutModal({ isOpen, setIsOpen }: AboutModalProps) {
           {t('aboutModalTitle')}
         </StyledModalHeading>
 
-        <StyledLabel $level="L">
-          <TechIcon height={40} width={40} />
-        </StyledLabel>
+        <StyledLabel $level="L">{t('development')}</StyledLabel>
         <StyledPropertyWrapper>
-          <Body>{t('usedTechs')}</Body>
           <StyledList>
-            {usedTechs.map(({ key, href, icon, ariaLabel }) => (
+            {developmentIcons.map(({ key, href, icon, ariaLabel }) => (
               <li key={key}>
                 <StyledIconLink aria-label={ariaLabel} href={href}>
                   {icon}
@@ -91,39 +126,18 @@ export function AboutModal({ isOpen, setIsOpen }: AboutModalProps) {
             ))}
           </StyledList>
         </StyledPropertyWrapper>
-        <StyledPropertyWrapper>
-          <Body>{t('repository')}</Body>
-          <StyledIconLink
-            href="https://github.com/sauldeleon/portfolio-blog"
-            aria-label={t('checkRepoHereAria')}
-          >
-            <GithubIcon width={20} height={20} />
-          </StyledIconLink>
-        </StyledPropertyWrapper>
 
-        <StyledLabel $level="L">
-          <PaintIcon width={40} height={40} />
-        </StyledLabel>
+        <StyledLabel $level="L">{t('design')}</StyledLabel>
         <StyledPropertyWrapper>
-          <Body>{t('designer')}</Body>
-          <GetTheIdeaIcon width={20} />
-          <StyledIconLink
-            href="https://www.linkedin.com/in/valentina-florentina-balta-cojocaru-stan-83619014a/"
-            aria-label={t('checkDesignerHereAria', {
-              name: 'Valentina Florentina Balta-Cojocaru-Stan',
-            })}
-          >
-            <LinkedInIcon width={20} height={20} />
-          </StyledIconLink>
-        </StyledPropertyWrapper>
-        <StyledPropertyWrapper>
-          <Body>{t('designLink')}</Body>
-          <StyledIconLink
-            href="https://www.figma.com/file/ZgfaiU473XMQAWz9kbiMO6/Saul-portfolio-%2B-design-library"
-            aria-label={t('checkDesignHereAria')}
-          >
-            <FigmaIcon width={20} height={20} />
-          </StyledIconLink>
+          <StyledList>
+            {designIcons.map(({ key, href, icon, ariaLabel }) => (
+              <li key={key}>
+                <StyledIconLink aria-label={ariaLabel} href={href}>
+                  {icon}
+                </StyledIconLink>
+              </li>
+            ))}
+          </StyledList>
         </StyledPropertyWrapper>
       </section>
     </StyledModal>

@@ -22,10 +22,12 @@
   "sourceCode": "Código fuente",
   "repository": "Repositorio:",
   "checkRepoHereAria": "Enlace al repositorio de código fuente",
-  "design": "Diseño",
+  "development": "Desarrollo",
+  "design": "Design",
   "checkDesignHere": "Mira el diseño aquí",
   "checkDesignHereAria": "Enlace al diseño en Figma",
-  "checkDesignerHereAria": "Perfil de {{name}} en LinkedIn",
+  "checkLinkedInProfileAria": "Perfil de {{name}} en LinkedIn",
+  "getTheIdeaAria": "{{}}'s portfolio link",
   "designer": "Diseñadora:",
   "designLink": "Diseño:"
 }
