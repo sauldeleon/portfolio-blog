@@ -25,7 +25,7 @@ type GenerateMetadataProps = RouteProps
 export async function generateMetadata({ params }: GenerateMetadataProps) {
   const { t } = await getServerTranslation({ language: params.lng })
   return {
-    ...sharedRootMetadata(params.lng),
+    ...sharedRootMetadata,
     description: t('metadata.description'),
   }
 }

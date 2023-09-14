@@ -17,7 +17,6 @@ describe('/ route - metadata', () => {
       colorScheme: 'dark',
       metadataBase: expect.any(Object),
       alternates: {
-        canonical: '/en',
         languages: {
           'en-UK': '/en',
           'en-US': '/en',

@@ -2,10 +2,9 @@ import { sharedRootMetadata } from './metadata'
 
 describe('sharedMetadata', () => {
   it('should match snapshot', () => {
-    expect(sharedRootMetadata('en')).toMatchInlineSnapshot(`
+    expect(sharedRootMetadata).toMatchInlineSnapshot(`
       {
         "alternates": {
-          "canonical": "/en",
           "languages": {
             "en-UK": "/en",
             "en-US": "/en",

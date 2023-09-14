@@ -11,7 +11,7 @@ type RootLayoutProps = {
 export async function generateMetadata() {
   const { t } = await getServerTranslation({ language: fallbackLng })
   return {
-    ...sharedRootMetadata(fallbackLng),
+    ...sharedRootMetadata,
     description: t('metadata.description'),
   }
 }
