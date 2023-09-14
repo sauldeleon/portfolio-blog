@@ -1,5 +1,19 @@
 # Changelog web app
 
+# [0.7.0](https://github.com/sauldeleon/portfolio-blog/compare/web-0.6.2...web-0.7.0) (2023-09-14)
+
+### Bug Fixes
+
+- bad usage of metadata tag ([8677002](https://github.com/sauldeleon/portfolio-blog/commit/8677002ad6768ab0648b7443722530fe525fcf04))
+
+### Features
+
+- add focusable property to animated items ([ddcbc1f](https://github.com/sauldeleon/portfolio-blog/commit/ddcbc1f99f924b21bab7a02dfc0826c123300d32))
+- add new icons ([302dac4](https://github.com/sauldeleon/portfolio-blog/commit/302dac4a70ffe81b3a70367328adccf2f9d33b35))
+- add the best icon in the world ([dce836b](https://github.com/sauldeleon/portfolio-blog/commit/dce836bee4f10dd82af8982b7a2c282134e95390))
+- improve a11y ([e6f8872](https://github.com/sauldeleon/portfolio-blog/commit/e6f8872f0a6a280fcb3ad07dbc02397a0c631949))
+- improve border styles ([eff76ec](https://github.com/sauldeleon/portfolio-blog/commit/eff76ecb4009d2a4755830f1cb4dc69ddbb62efe))
+
 ## [0.6.2](https://github.com/sauldeleon/portfolio-blog/compare/web-0.6.1...web-0.6.2) (2023-09-10)
 
 ### Bug Fixes

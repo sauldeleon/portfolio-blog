@@ -1,5 +1,7 @@
 # Changelog i18n server util
 
+## [0.1.1](https://github.com/sauldeleon/portfolio-blog/compare/i18n-server-0.1.0...i18n-server-0.1.1) (2023-09-14)
+
 # 0.1.0 (2023-09-02)
 
 ### Bug Fixes

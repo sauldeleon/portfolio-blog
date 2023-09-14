@@ -1,5 +1,7 @@
 # Changelog Link component
 
+## [0.2.3](https://github.com/sauldeleon/portfolio-blog/compare/link-0.2.2...link-0.2.3) (2023-09-14)
+
 ## [0.2.2](https://github.com/sauldeleon/portfolio-blog/compare/link-0.2.1...link-0.2.2) (2023-09-10)
 
 ### Bug Fixes

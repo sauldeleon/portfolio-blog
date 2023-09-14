@@ -73,7 +73,7 @@ export const swapImageAnimation = ({
         background-image: none;
       }
       ${images.map((_, index) =>
-        generateKeyframeStep({ images, totalImagesDelay, index })
+        generateKeyframeStep({ images, totalImagesDelay, index }),
       )}
 `
 
@@ -150,7 +150,7 @@ export const StyledTooth = styled.div<StyledToothProps>`
       --final-tooth-top: ${randomIntFromInterval(
         10,
         90,
-        `tooth-height-${$index}`
+        `tooth-height-${$index}`,
       )}%;
 
       top: 0;

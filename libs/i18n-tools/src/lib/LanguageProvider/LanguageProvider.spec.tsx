@@ -20,7 +20,7 @@ describe('LanguageProvider', () => {
 
   it('should render successfully', () => {
     const { baseElement } = render(
-      <LanguageContextProvider value={undefined}>test</LanguageContextProvider>
+      <LanguageContextProvider value={undefined}>test</LanguageContextProvider>,
     )
     expect(baseElement).toHaveTextContent('test')
   })

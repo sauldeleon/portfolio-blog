@@ -1,5 +1,7 @@
 # Changelog useIsBot hook
 
+## [0.1.1](https://github.com/sauldeleon/portfolio-blog/compare/use-is-bot-0.1.0...use-is-bot-0.1.1) (2023-09-14)
+
 # 0.1.0 (2023-09-02)
 
 ### Bug Fixes

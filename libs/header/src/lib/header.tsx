@@ -47,7 +47,7 @@ export function Header({ logo, navItems, actionItem, ...rest }: HeaderProps) {
                   <Body>{label}</Body>
                 </StyledNavLink>
               </StyledListItem>
-            )
+            ),
           )}
         </StyledList>
       )}

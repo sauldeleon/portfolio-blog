@@ -31,7 +31,7 @@ describe('ContactPage', () => {
 
     await userEvent.click(screen.getAllByAltText(/My profile picture/)[0])
     expect(
-      await screen.findByAltText('My toothless profile picture')
+      await screen.findByAltText('My toothless profile picture'),
     ).toBeInTheDocument()
     await userEvent.click(screen.getByAltText(/My toothless profile picture/))
     expect(await screen.findAllByAltText(/My profile picture/)).toHaveLength(6)

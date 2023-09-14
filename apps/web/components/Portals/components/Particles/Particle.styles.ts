@@ -18,7 +18,7 @@ export const StyledParticleContainer = styled.div.attrs<{ $seed: string }>(
         randomIntFromInterval(0, 11000, `${$seed}-particle-movement-delay`) +
         'ms',
     },
-  })
+  }),
 )`
   position: absolute;
   width: 100%;
@@ -43,7 +43,7 @@ export const StyledParticle = styled.div.attrs<{ $seed: string }>(
         randomIntFromInterval(0, 100, `${$seed}-particle-animation-delay`) +
         'ms',
     },
-  })
+  }),
 )`
   width: var(--particleSize);
   height: var(--particleSize);

@@ -20,14 +20,14 @@ describe('test-utils', () => {
     const { baseElement } = render(
       <div>
         <span data-target={true}>content</span>
-      </div>
+      </div>,
     )
 
     expect(
-      getByAttribute('data-target')(baseElement, 'true')
+      getByAttribute('data-target')(baseElement, 'true'),
     ).toBeInTheDocument()
     expect(
-      queryByAttribute('data-target')(baseElement, 'false')
+      queryByAttribute('data-target')(baseElement, 'false'),
     ).not.toBeInTheDocument()
   })
   it('queryAllByAttribute and getAllByAttribute', () => {
@@ -35,21 +35,21 @@ describe('test-utils', () => {
       <div>
         <span data-target={true}>content</span>
         <span data-target={true}>content2</span>
-      </div>
+      </div>,
     )
 
     expect(getAllByAttribute('data-target')(baseElement, 'true')).toHaveLength(
-      2
+      2,
     )
     expect(
-      queryAllByAttribute('data-target')(baseElement, 'false')
+      queryAllByAttribute('data-target')(baseElement, 'false'),
     ).toHaveLength(0)
   })
   it('getById', () => {
     const { baseElement } = render(
       <div>
         <span id="target">content</span>
-      </div>
+      </div>,
     )
 
     expect(getById(baseElement, 'target')).toBeInTheDocument()
@@ -58,7 +58,7 @@ describe('test-utils', () => {
     const { baseElement } = render(
       <div>
         <span className="target">content</span>
-      </div>
+      </div>,
     )
 
     expect(getByClassName(baseElement, 'target')).toBeInTheDocument()
@@ -70,7 +70,7 @@ describe('test-utils', () => {
         <div>content</div>
         <span>content</span>
         <div>content</div>
-      </div>
+      </div>,
     )
 
     expect(getByTagAndText('span', /content/)).toBeInTheDocument()
@@ -82,11 +82,11 @@ describe('test-utils', () => {
         <div>content</div>
         <span>content</span>
         <div>content</div>
-      </div>
+      </div>,
     )
 
     expect(
-      getByTagAndText('span', (content) => content.startsWith('cont'))
+      getByTagAndText('span', (content) => content.startsWith('cont')),
     ).toBeInTheDocument()
   })
   it('getAllByTagAndText', () => {
@@ -96,7 +96,7 @@ describe('test-utils', () => {
         <div>content</div>
         <span>content</span>
         <div>content</div>
-      </div>
+      </div>,
     )
 
     expect(getAllByTagAndText('div', /content/)).toHaveLength(3)

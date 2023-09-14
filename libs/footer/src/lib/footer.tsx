@@ -81,7 +81,7 @@ export function Footer({
                       </Button>
                     )}
                   </li>
-                )
+                ),
               )}
             </StyledList>
           )}

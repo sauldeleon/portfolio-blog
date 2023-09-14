@@ -22,7 +22,7 @@ jest.mock(
   '@web/components/MainLayout/components/ProgressBar/ProgressBar',
   () => ({
     ProgressBar: () => 'ProgressBar',
-  })
+  }),
 )
 
 describe('[lng] route - layout', () => {
@@ -74,7 +74,6 @@ describe('[lng] route - metadata', () => {
       colorScheme: 'dark',
       metadataBase: expect.any(Object),
       alternates: {
-        canonical: '/en',
         languages: {
           'en-UK': '/en',
           'en-US': '/en',

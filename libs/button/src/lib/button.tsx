@@ -14,5 +14,5 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {children}
       </StyledButton>
     )
-  }
+  },
 )

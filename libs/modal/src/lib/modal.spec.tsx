@@ -10,7 +10,7 @@ describe('Modal', () => {
     renderApp(
       <Modal isOpen setIsOpen={jest.fn()}>
         <div>test</div>
-      </Modal>
+      </Modal>,
     )
     expect(screen.getByText('test')).toBeTruthy()
   })
@@ -20,7 +20,7 @@ describe('Modal', () => {
     renderApp(
       <Modal isOpen setIsOpen={mockFn}>
         <div>test</div>
-      </Modal>
+      </Modal>,
     )
     const closeButton = await screen.findByText('close.svg')
     await userEvent.click(closeButton)
@@ -32,7 +32,7 @@ describe('Modal', () => {
     renderApp(
       <Modal isOpen setIsOpen={mockFn}>
         <div>test</div>
-      </Modal>
+      </Modal>,
     )
     const closeButton = await screen.findByText('close.svg')
     fireEvent.keyDown(closeButton, {

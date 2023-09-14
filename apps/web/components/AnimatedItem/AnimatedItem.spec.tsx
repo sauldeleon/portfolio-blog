@@ -13,7 +13,7 @@ describe('AnimatedItem', () => {
         rotate={false}
         path="https://google.com"
         ariaLabel="Google Chrome"
-      />
+      />,
     )
     expect(screen.getByRole('link')).toBeInTheDocument()
     expect(baseElement).toMatchSnapshot()
@@ -21,33 +21,33 @@ describe('AnimatedItem', () => {
 
   it('should render successfully image, colorSwap, rotation and custom size', () => {
     renderWithTheme(
-      <AnimatedItem svg={<svg />} rotate={true} size="L" colorSwap />
+      <AnimatedItem svg={<svg />} rotate={true} size="L" colorSwap />,
     )
 
     expect(screen.getByTestId('horizontal-movement')).toHaveStyleRule(
       '--itemSize',
-      '55px'
+      '55px',
     )
 
     const rotationMovement = screen.getByTestId('rotation-movement')
     expect(rotationMovement).toHaveStyleRule(
-      'background-image: url(/path/to/image.jpg)'
+      'background-image: url(/path/to/image.jpg)',
     )
     expect(rotationMovement).toHaveStyleRule(
       'animation-name',
-      expect.stringMatching(/([a-zA-Z]+)/)
+      expect.stringMatching(/([a-zA-Z]+)/),
     )
     expect((rotationMovement.style as any)['animation-duration']).toMatch(
-      /(\d{1,2}\.\d{14,16})s/
+      /(\d{1,2}\.\d{14,16})s/,
     )
 
     const colorSwapping = screen.getByTestId('color-swapping')
     expect(colorSwapping).toHaveStyleRule(
       'animation-name',
-      expect.stringMatching(/([a-zA-Z]+)/)
+      expect.stringMatching(/([a-zA-Z]+)/),
     )
     expect((colorSwapping.style as any)['animation-duration']).toMatch(
-      /(\d{1,2}\.\d{14,16})s/
+      /(\d{1,2}\.\d{14,16})s/,
     )
   })
 
@@ -70,21 +70,21 @@ describe('AnimatedItem', () => {
         rotate={true}
         size="S"
         customAnimation={customAnimation()}
-      />
+      />,
     )
 
     expect(screen.getByTestId('horizontal-movement')).toHaveStyleRule(
       'animation',
-      'customHorizontal 6s linear infinite'
+      'customHorizontal 6s linear infinite',
     )
 
     expect(screen.getByTestId('vertical-movement')).toHaveStyleRule(
       'animation',
-      'customVertical 6s linear infinite'
+      'customVertical 6s linear infinite',
     )
     expect(screen.getByTestId('rotation-movement')).toHaveStyleRule(
       'animation',
-      'customRotate 6s linear infinite'
+      'customRotate 6s linear infinite',
     )
   })
 })

@@ -22,14 +22,19 @@ describe('CircleLink', () => {
 
   it('should render with a different size', () => {
     const { baseElement } = renderWithTheme(
-      <CircleLink label="test" iconContent="wadus" iconSize={50} href="" />
+      <CircleLink label="test" iconContent="wadus" iconSize={50} href="" />,
     )
     expect(baseElement).toMatchSnapshot()
   })
 
   it('should render a link with given props', () => {
     renderWithTheme(
-      <CircleLink label="test" iconContent="wadus" iconSize={50} href="/path" />
+      <CircleLink
+        label="test"
+        iconContent="wadus"
+        iconSize={50}
+        href="/path"
+      />,
     )
 
     expect(screen.getByRole('link')).toHaveAttribute('href', '/path')

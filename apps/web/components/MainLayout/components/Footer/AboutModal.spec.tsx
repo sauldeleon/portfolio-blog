@@ -8,7 +8,7 @@ import { AboutModal } from './AboutModal'
 describe('AboutModal', () => {
   it('should render', async () => {
     const { baseElement } = renderApp(
-      <AboutModal isOpen setIsOpen={jest.fn()} />
+      <AboutModal isOpen setIsOpen={jest.fn()} />,
     )
     await screen.findByText('About this page')
     expect(baseElement).toMatchSnapshot()

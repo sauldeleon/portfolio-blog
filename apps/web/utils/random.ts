@@ -3,7 +3,7 @@ import seedrandom from 'seedrandom'
 export function randomDecimalFromInterval(
   min: number,
   max: number,
-  seed?: string
+  seed?: string,
 ) {
   const randomGenerator = seedrandom(seed)
   return randomGenerator() * (max - min + 1) + min

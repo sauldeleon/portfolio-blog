@@ -1,5 +1,11 @@
 # Changelog Main Theme
 
+# [0.4.0](https://github.com/sauldeleon/portfolio-blog/compare/main-theme-0.3.0...main-theme-0.4.0) (2023-09-14)
+
+### Features
+
+- improve border styles ([eff76ec](https://github.com/sauldeleon/portfolio-blog/commit/eff76ecb4009d2a4755830f1cb4dc69ddbb62efe))
+
 # [0.3.0](https://github.com/sauldeleon/portfolio-blog/compare/main-theme-0.2.1...main-theme-0.3.0) (2023-09-10)
 
 ### Bug Fixes

@@ -12,7 +12,7 @@ describe('UseIsBot', () => {
   it('should be initialized successfully', async () => {
     const { result } = renderHook(() => useIsBot())
     await waitFor(() =>
-      expect(result.current).toEqual({ isBot: true, isLoading: true })
+      expect(result.current).toEqual({ isBot: true, isLoading: true }),
     )
   })
 
@@ -20,10 +20,10 @@ describe('UseIsBot', () => {
     const { result } = renderHook(() => useIsBot())
 
     await waitFor(() =>
-      expect(result.current).toEqual({ isBot: true, isLoading: true })
+      expect(result.current).toEqual({ isBot: true, isLoading: true }),
     )
     await waitFor(() =>
-      expect(result.current).toEqual({ isBot: undefined, isLoading: false })
+      expect(result.current).toEqual({ isBot: undefined, isLoading: false }),
     )
   })
 
