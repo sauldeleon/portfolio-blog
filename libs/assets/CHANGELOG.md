@@ -1,5 +1,12 @@
 # Changelog Assets library
 
+# [0.4.0](https://github.com/sauldeleon/portfolio-blog/compare/assets-0.3.0...assets-0.4.0) (2023-09-14)
+
+### Features
+
+- add new icons ([302dac4](https://github.com/sauldeleon/portfolio-blog/commit/302dac4a70ffe81b3a70367328adccf2f9d33b35))
+- add the best icon in the world ([dce836b](https://github.com/sauldeleon/portfolio-blog/commit/dce836bee4f10dd82af8982b7a2c282134e95390))
+
 # [0.3.0](https://github.com/sauldeleon/portfolio-blog/compare/assets-0.2.0...assets-0.3.0) (2023-09-10)
 
 ### Features
