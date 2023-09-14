@@ -1,5 +1,7 @@
 # Changelog Test utils
 
+## [0.2.1](https://github.com/sauldeleon/portfolio-blog/compare/test-utils-0.2.0...test-utils-0.2.1) (2023-09-14)
+
 # [0.2.0](https://github.com/sauldeleon/portfolio-blog/compare/test-utils-0.1.0...test-utils-0.2.0) (2023-09-05)
 
 ### Bug Fixes
