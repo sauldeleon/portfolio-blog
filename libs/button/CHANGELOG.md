@@ -1,5 +1,7 @@
 # Changelog Button component
 
+## [0.2.3](https://github.com/sauldeleon/portfolio-blog/compare/button-0.2.2...button-0.2.3) (2023-09-14)
+
 ## [0.2.2](https://github.com/sauldeleon/portfolio-blog/compare/button-0.2.1...button-0.2.2) (2023-09-10)
 
 ### Bug Fixes
