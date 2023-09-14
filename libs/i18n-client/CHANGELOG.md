@@ -1,5 +1,7 @@
 # Changelog i18n client util
 
+## [0.2.1](https://github.com/sauldeleon/portfolio-blog/compare/i18n-client-0.2.0...i18n-client-0.2.1) (2023-09-14)
+
 # [0.2.0](https://github.com/sauldeleon/portfolio-blog/compare/i18n-client-0.1.0...i18n-client-0.2.0) (2023-09-10)
 
 ### Features
