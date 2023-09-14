@@ -22,7 +22,7 @@ jest.mock(
   '@web/components/MainLayout/components/ProgressBar/ProgressBar',
   () => ({
     ProgressBar: () => 'ProgressBar',
-  })
+  }),
 )
 
 describe('[lng] route - layout', () => {

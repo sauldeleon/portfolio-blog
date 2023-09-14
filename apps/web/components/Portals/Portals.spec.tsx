@@ -24,7 +24,7 @@ describe('Portals', () => {
     renderWithTheme(
       <Portals enableParticles enableGlow>
         test
-      </Portals>
+      </Portals>,
     )
 
     expect(screen.getByText('test')).toBeInTheDocument()

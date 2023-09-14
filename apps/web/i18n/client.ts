@@ -17,7 +17,7 @@ import { defaultNS, fallbackLng, languages } from './settings'
 initialize({
   resourcesToBackend: resourcesToBackend(
     (language: string, namespace: string) =>
-      import(`./locales/${language}/${namespace}.json`)
+      import(`./locales/${language}/${namespace}.json`),
   ),
   lng: undefined,
   languages,
@@ -27,10 +27,10 @@ initialize({
 
 export function useClientTranslation<
   Ns extends FlatNamespace,
-  KPrefix extends KeyPrefix<FallbackNs<Ns>> = undefined
+  KPrefix extends KeyPrefix<FallbackNs<Ns>> = undefined,
 >(
   ns?: Ns,
-  options?: UseTranslationOptions<KPrefix>
+  options?: UseTranslationOptions<KPrefix>,
 ): UseTranslationResponse<FallbackNs<Ns>, KPrefix> {
   return useClientTranslationLib(ns, options, fallbackLng)
 }

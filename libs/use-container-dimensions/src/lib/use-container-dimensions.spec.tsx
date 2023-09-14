@@ -41,7 +41,7 @@ describe('useContainerDimensions', () => {
     const ref = React.createRef<HTMLElement>()
 
     const { result, rerender } = renderHook(() =>
-      useContainerDimensions({ myRef: ref })
+      useContainerDimensions({ myRef: ref }),
     )
     act(() => {
       window.dispatchEvent(new Event('resize'))

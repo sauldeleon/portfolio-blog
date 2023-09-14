@@ -32,7 +32,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
         {children}
       </StyledNextLink>
     )
-  }
+  },
 )
 
 export type LinkProps = DetailedHTMLProps<

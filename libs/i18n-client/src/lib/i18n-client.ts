@@ -43,11 +43,11 @@ export function initialize({ resourcesToBackend, ...rest }: InitializeProps) {
 
 export function useClientTranslation<
   Ns extends FlatNamespace,
-  KPrefix extends KeyPrefix<FallbackNs<Ns>> = undefined
+  KPrefix extends KeyPrefix<FallbackNs<Ns>> = undefined,
 >(
   ns?: Ns,
   options?: UseTranslationOptions<KPrefix>,
-  fallbackLng?: string
+  fallbackLng?: string,
 ): UseTranslationResponse<FallbackNs<Ns>, KPrefix> {
   const { language } = useContext(LanguageContext)
   const lng = language || fallbackLng

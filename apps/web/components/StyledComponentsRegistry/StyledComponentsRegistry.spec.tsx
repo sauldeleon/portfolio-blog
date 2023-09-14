@@ -5,7 +5,7 @@ import StyledComponentsRegistry from './StyledComponentsRegistry'
 describe('StyledComponentsRegistry', () => {
   it('should render children successfully', async () => {
     const { baseElement } = render(
-      <StyledComponentsRegistry>test</StyledComponentsRegistry>
+      <StyledComponentsRegistry>test</StyledComponentsRegistry>,
     )
 
     await screen.findByText('test')

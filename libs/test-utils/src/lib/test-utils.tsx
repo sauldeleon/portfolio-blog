@@ -59,11 +59,11 @@ export function RenderProviders({
 export const renderApp = (
   children: ReactNode,
   options?: Omit<RenderOptions, 'queries'>,
-  providerOptions?: RenderProviderOptions
+  providerOptions?: RenderProviderOptions,
 ) => {
   return render(
     <RenderProviders options={providerOptions}>{children}</RenderProviders>,
-    options
+    options,
   )
 }
 
@@ -130,7 +130,7 @@ export function getByClassName(container: HTMLElement, className: string) {
 function matcherCustomFn(
   tag: string,
   matcher: Matcher,
-  { element, content }: MatcherCustomFnParams
+  { element, content }: MatcherCustomFnParams,
 ) {
   const isTag = element?.tagName.toUpperCase() === tag.toUpperCase()
   let matching = false
@@ -154,7 +154,7 @@ function matcherCustomFn(
  */
 export function getByTagAndText(tag: string, matcher: Matcher) {
   return screen.getByText((content, element) =>
-    matcherCustomFn(tag, matcher, { content, element })
+    matcherCustomFn(tag, matcher, { content, element }),
   )
 }
 
@@ -166,7 +166,7 @@ export function getByTagAndText(tag: string, matcher: Matcher) {
  */
 export function getAllByTagAndText(tag: string, matcher: Matcher) {
   return screen.getAllByText((content, element) =>
-    matcherCustomFn(tag, matcher, { content, element })
+    matcherCustomFn(tag, matcher, { content, element }),
   )
 }
 
@@ -203,11 +203,11 @@ export const awaitAllAsync = async () =>
 /* istanbul ignore next */
 export function renderWithNextRouter(
   children: ReactNode,
-  options?: Partial<NextRouter>
+  options?: Partial<NextRouter>,
 ) {
   return renderWithTheme(
     <RouterContext.Provider value={{ ...Router, ...options }}>
       {children}
-    </RouterContext.Provider>
+    </RouterContext.Provider>,
   )
 }

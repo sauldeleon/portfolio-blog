@@ -18,7 +18,7 @@ export function useDefaultLanguage({
   const storage = useMemo(
     () =>
       typeof window !== 'undefined' ? new LocalStorage() : new MockStorage(),
-    []
+    [],
   )
   const [getItem] = useStorage(storage)
   const storedLang = getItem(STORAGE_I18N_KEY)

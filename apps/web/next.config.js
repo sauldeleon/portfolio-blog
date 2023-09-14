@@ -35,8 +35,8 @@ const nextConfig = {
     config.plugins.push(
       new webpack.ContextReplacementPlugin(
         /^date-fns[/\\]locale$/,
-        new RegExp(`\\.[/\\\\](${locales.join('|')})[/\\\\]index\\.js$`, 'i')
-      )
+        new RegExp(`\\.[/\\\\](${locales.join('|')})[/\\\\]index\\.js$`, 'i'),
+      ),
     )
 
     config.plugins.push(
@@ -52,7 +52,7 @@ const nextConfig = {
         allowAsyncCycles: false,
         // set the current working directory for displaying module paths
         cwd: process.cwd(),
-      })
+      }),
     )
 
     if (!isServer) {

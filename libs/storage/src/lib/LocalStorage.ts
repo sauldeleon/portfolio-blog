@@ -9,7 +9,7 @@ export class LocalStorage implements Storage {
   setItem(key: string, value: unknown) {
     localStorage.setItem(
       key,
-      typeof value === 'string' ? value : JSON.stringify(value)
+      typeof value === 'string' ? value : JSON.stringify(value),
     )
   }
   removeItem(key: string) {

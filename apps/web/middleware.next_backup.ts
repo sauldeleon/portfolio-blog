@@ -27,7 +27,7 @@ export function middleware(req: NextRequest) {
     !req.nextUrl.pathname.startsWith('/_next')
   ) {
     return NextResponse.redirect(
-      new URL(`/${lng}${req.nextUrl.pathname}`, req.url)
+      new URL(`/${lng}${req.nextUrl.pathname}`, req.url),
     )
   }
 

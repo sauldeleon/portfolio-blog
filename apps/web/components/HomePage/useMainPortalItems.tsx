@@ -199,7 +199,7 @@ export function useMainPortalItems() {
         focusable: false,
       },
     ],
-    []
+    [],
   )
 
   return items

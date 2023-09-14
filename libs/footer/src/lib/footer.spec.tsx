@@ -37,7 +37,7 @@ describe('Footer', () => {
             href: '/telegram',
           },
         ]}
-      />
+      />,
     )
     expect(screen.getAllByRole('link')).toHaveLength(3)
     expect(screen.getByText('moon.svg')).toBeInTheDocument()

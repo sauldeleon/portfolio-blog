@@ -9,7 +9,7 @@ describe('i18n-config getOptions', () => {
         languages: ['en', 'es'],
         fallbackLng: 'en',
         defaultNS: 'common',
-      })
+      }),
     ).toEqual({
       defaultNS: 'common',
       fallbackLng: 'en',
@@ -27,7 +27,7 @@ describe('i18n-config getOptions', () => {
         languages: ['en', 'es'],
         fallbackLng: 'en',
         defaultNS: 'common',
-      })
+      }),
     ).toEqual({
       defaultNS: 'common',
       fallbackLng: 'en',

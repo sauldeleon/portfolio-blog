@@ -28,7 +28,7 @@ describe('swapImageAnimation', () => {
       swapImageAnimation({
         ...props,
         images: [],
-      })
+      }),
     )
   })
   it('generate keyframe snapshot for images', () => {
@@ -52,7 +52,7 @@ describe('getDelay', () => {
     'calculate delay based on recursive function for n=$index',
     ({ index, result }) => {
       expect(getDelay(index)).toEqual(result)
-    }
+    },
   )
 })
 
@@ -68,7 +68,7 @@ describe('getWeightedDelay', () => {
     'calculate weighted delay percentage for $delay delay with $totalDelay totalDelay',
     ({ delay, totalDelay, result }) => {
       expect(getWeightedDelay(delay, totalDelay)).toEqual(result)
-    }
+    },
   )
 })
 

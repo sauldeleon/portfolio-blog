@@ -14,7 +14,7 @@ interface UseServerTranslationProps<Ns, KPrefix> {
 
 export function useServerTranslation<
   Ns extends FlatNamespace,
-  KPrefix extends KeyPrefix<FallbackNs<Ns>> = undefined
+  KPrefix extends KeyPrefix<FallbackNs<Ns>> = undefined,
 >(props?: UseServerTranslationProps<Ns, KPrefix>) {
   const { ns, language, options = {} } = props ?? {}
   return useServerTranslationLib(
@@ -25,11 +25,11 @@ export function useServerTranslation<
       languages,
       resourcesToBackend: resourcesToBackend(
         (language: string, namespace: string) =>
-          import(`./locales/${language}/${namespace}.json`)
+          import(`./locales/${language}/${namespace}.json`),
       ),
     },
     ns,
-    options
+    options,
   )
 }
 

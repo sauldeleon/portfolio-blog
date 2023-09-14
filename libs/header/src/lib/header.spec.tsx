@@ -26,7 +26,7 @@ describe('Header', () => {
           },
         ]}
         actionItem="wadus"
-      />
+      />,
     )
     expect(screen.getAllByRole('link')).toHaveLength(3)
     expect(screen.getAllByRole('listitem', { current: 'page' })).toHaveLength(1)

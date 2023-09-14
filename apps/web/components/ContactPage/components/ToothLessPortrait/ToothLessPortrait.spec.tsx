@@ -7,7 +7,7 @@ import { ToothLessPortrait } from './ToothLessPortrait'
 describe('ToothLessPortrait', () => {
   it('should render', async () => {
     const { baseElement } = renderApp(
-      <ToothLessPortrait onClick={() => void 0} />
+      <ToothLessPortrait onClick={() => void 0} />,
     )
     await screen.findByAltText('My toothless profile picture')
     expect(baseElement).toMatchSnapshot()
