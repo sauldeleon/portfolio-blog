@@ -12,19 +12,6 @@ on:
       - main
 
 jobs:
-  preview_url:
-    runs-on: ubuntu-latest
-    environment: preview
-    steps:
-      - name: vercel-preview-url
-        uses: zentered/vercel-preview-url@v1.1.9
-        id: vercel_preview_url
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        with:
-          vercel_project_id: ${{ secrets.VERCEL_PROJECT_ID }}
-      - name: Get URL
-        run: echo "https://${{ steps.vercel_preview_url.outputs.preview_url }}"
   build:
     runs-on: ubuntu-latest
     environment: preview
@@ -44,3 +31,6 @@ jobs:
     uses: ./.github/workflows/test.yml
   tests-e2e:
     uses: ./.github/workflows/test-e2e.yml
+    secrets:
+      vercel-token: ${{ secrets.VERCEL_TOKEN }}
+      vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}

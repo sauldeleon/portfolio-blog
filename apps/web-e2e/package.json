@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "run": "cypress run",
-    "run:prod": "cypress run --config baseUrl=https://www.sawl.dev",
-    "watch:dev": "cypress open",
+    "e2e": "cypress run",
+    "e2e:prod": "cypress run --config baseUrl=https://www.sawl.dev",
     "watch": "cypress open",
     "watch:prod": "cypress open --config baseUrl=https://www.sawl.dev"
   },
