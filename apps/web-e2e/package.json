@@ -1,0 +1,21 @@
+{
+  "name": "web-e2e",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "run": "cypress run",
+    "run:prod": "cypress run --config baseUrl=https://www.sawl.dev",
+    "watch:dev": "cypress open",
+    "watch": "cypress open",
+    "watch:prod": "cypress open --config baseUrl=https://www.sawl.dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@testing-library/cypress": "10.0.1"
+  },
+  "devDependencies": {
+    "typescript": "5.2.2"
+  }
+}
