@@ -1,10 +1,31 @@
-import { getTitle } from '../support/common.po'
+import { checkLocalStorageValue, getTitle } from '../support/common.po'
 
-describe('homepage', () => {
+describe('Home page', () => {
   beforeEach(() => cy.visit('/'))
 
   it('should display my name', () => {
     getTitle({ timeout: 6000 }).contains('Saúl de León Guerrero')
+    cy.location('pathname').should('eq', '/en/')
+  })
+
+  it('should maintain the last selected language', () => {
+    cy.location('pathname').should('eq', '/en/')
+
+    cy.get('footer').within(() => {
+      cy.get(`[aria-label="Toggle language. Current language is English."]`)
+        .should('have.text', 'EN')
+        .click()
+    })
+    cy.location('pathname').should('eq', '/es/')
+
+    cy.visit('/')
+    cy.location('pathname').should('eq', '/es/')
+    checkLocalStorageValue('webLng', 'es')
+    cy.get('footer').within(() => {
+      cy.get(
+        `[aria-label="Alternar idioma. El idioma actual es Español."]`,
+      ).should('have.text', 'ES')
+    })
   })
 
   it('should show the cookie banner and close it on click', () => {
