@@ -38,7 +38,7 @@ exports[`CircleLink should render with a different size 1`] = `
 }
 
 .c7 {
-  font-family: 'Roboto mono',monospace;
+  font-family: fontFamily;
   font-weight: 400;
   color: #FBFBFB;
   font-size: 0.9rem;

@@ -2,7 +2,7 @@
 
 exports[`AboutModal should render 1`] = `
 .c6 {
-  font-family: 'Roboto mono',monospace;
+  font-family: fontFamily;
   font-weight: 400;
   color: #FBFBFB;
   font-size: 1.5rem;
@@ -11,7 +11,7 @@ exports[`AboutModal should render 1`] = `
 }
 
 .c11 {
-  font-family: 'Roboto mono',monospace;
+  font-family: fontFamily;
   font-weight: 400;
   color: #FBFBFB;
   font-size: 0.9rem;
@@ -38,7 +38,7 @@ exports[`AboutModal should render 1`] = `
 }
 
 .c8 {
-  font-family: 'Roboto mono',monospace;
+  font-family: fontFamily;
   font-weight: 500;
   color: #FBFBFB;
   font-size: 1rem;

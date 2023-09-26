@@ -2,7 +2,7 @@
 
 exports[`Header should render successfully 1`] = `
 .c8 {
-  font-family: 'Roboto mono',monospace;
+  font-family: fontFamily;
   font-weight: 400;
   color: #FBFBFB;
   font-size: 0.9rem;
@@ -107,7 +107,7 @@ exports[`Header should render successfully 1`] = `
 }
 
 .c5 .c7 {
-  font-family: 'Roboto mono',monospace;
+  font-family: fontFamily;
   font-weight: 500;
   color: #FBFBFB;
   font-size: 0.55rem;
@@ -134,7 +134,7 @@ exports[`Header should render successfully 1`] = `
 }
 
 .c9 .c7 {
-  font-family: 'Roboto mono',monospace;
+  font-family: fontFamily;
   font-weight: 500;
   color: #FBFBFB;
   font-size: 0.55rem;
@@ -301,7 +301,7 @@ exports[`Header should render successfully 1`] = `
   }
 
   .c5 .c7 {
-    font-family: 'Roboto mono',monospace;
+    font-family: fontFamily;
     font-weight: 400;
     color: #FBFBFB;
     font-size: 0.9rem;
@@ -320,7 +320,7 @@ exports[`Header should render successfully 1`] = `
   }
 
   .c9 .c7 {
-    font-family: 'Roboto mono',monospace;
+    font-family: fontFamily;
     font-weight: 400;
     color: #FBFBFB;
     font-size: 0.9rem;

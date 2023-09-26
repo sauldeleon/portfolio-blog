@@ -39,6 +39,11 @@ module.exports = {
     '!**/**.handlers.{ts,tsx}',
   ],
   modulePathIgnorePatterns: ['.next'],
+  moduleNameMapper: {
+    'next/font/(.*)': require.resolve(
+      'next/dist/build/jest/__mocks__/nextFontMock.js',
+    ),
+  },
   coverageReporters,
   reporters,
   collectCoverage: false,
