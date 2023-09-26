@@ -1,11 +1,6 @@
 name: End-to-end tests
 on:
   workflow_call:
-    secrets:
-      vercel-token:
-        required: true
-      vercel-project-id:
-        required: true
 
 jobs:
   cypress-run:
