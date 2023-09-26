@@ -9,7 +9,7 @@ import {
   render,
   screen,
 } from '@testing-library/react'
-import { RouterContext } from 'next/dist/shared/lib/router-context'
+import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime'
 import Router, { NextRouter } from 'next/router'
 import { ReactNode, useEffect, useState } from 'react'
 import { ThemeProvider } from 'styled-components'
