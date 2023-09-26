@@ -1,5 +1,11 @@
 # Changelog web E2E tests
 
+## [0.1.2](https://github.com/sauldeleon/portfolio-blog/compare/web-e2e-0.1.1...web-e2e-0.1.2) (2023-09-26)
+
+### Bug Fixes
+
+- add workflow parameters ([01fc2c4](https://github.com/sauldeleon/portfolio-blog/commit/01fc2c47f8c4a6b62c983384aa83cf915c8dd82e))
+
 ## [0.1.1](https://github.com/sauldeleon/portfolio-blog/compare/web-e2e-0.1.0...web-e2e-0.1.1) (2023-09-02)
 
 ### Bug Fixes

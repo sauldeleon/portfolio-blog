@@ -9,11 +9,9 @@ on:
   pull_request:
     types: [opened, synchronize, reopened, labeled]
     branches:
-      - '**'
+      - main
 
 jobs:
-  tests:
-    uses: ./.github/workflows/test.yml
   build:
     runs-on: ubuntu-latest
     environment: preview
@@ -29,3 +27,8 @@ jobs:
           cache: 'yarn'
       - run: yarn
       - run: yarn build
+  tests:
+    uses: ./.github/workflows/test.yml
+  tests-e2e:
+    uses: ./.github/workflows/test-e2e.yml
+    secrets: inherit

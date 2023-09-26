@@ -1,5 +1,7 @@
 # Changelog Main Theme
 
+## [0.4.1](https://github.com/sauldeleon/portfolio-blog/compare/main-theme-0.4.0...main-theme-0.4.1) (2023-09-26)
+
 # [0.4.0](https://github.com/sauldeleon/portfolio-blog/compare/main-theme-0.3.0...main-theme-0.4.0) (2023-09-14)
 
 ### Features

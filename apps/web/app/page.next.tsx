@@ -13,7 +13,6 @@ import { StyledBody } from './page.styles'
 export default function RootPage() {
   const lang = useDefaultLanguage({ languages, fallbackLng })
   const router = useRouter()
-
   useEffect(() => {
     router.push(`/${lang}`)
   }, [router, lang])

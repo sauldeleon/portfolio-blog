@@ -43,7 +43,7 @@ exports[`Footer should render successfully 1`] = `
 }
 
 .c9 {
-  font-family: 'Roboto mono',monospace;
+  font-family: fontFamily;
   font-weight: 400;
   color: #FBFBFB;
   font-size: 0.9rem;

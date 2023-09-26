@@ -1,7 +1,6 @@
 name: Test CI
 
 on:
-  workflow_dispatch:
   workflow_call:
 
 jobs:

@@ -2,6 +2,7 @@ import * as React from 'react'
 import { css, keyframes } from 'styled-components'
 import { Keyframes, RuleSet } from 'styled-components/dist/types'
 
+import { Roboto_Mono } from 'next/font/google'
 import { SLLogo, SLLogoSVG } from '@sdlgr/assets'
 
 const baseFontSize = 20
@@ -27,8 +28,15 @@ const colors: MainTheme['colors'] = {
   orange: '#B04B2F',
 }
 
+const robotoMono = Roboto_Mono({
+  subsets: ['latin'],
+  display: 'swap',
+  weight: ['100', '300', '400', '500'],
+  fallback: ['monospace'],
+})
+
 const fontFamilies: Record<'robotoMono', string> = {
-  robotoMono: "'Roboto mono', monospace",
+  robotoMono: robotoMono.style.fontFamily,
 }
 
 const fontStyles: MainTheme['fontStyles'] = {

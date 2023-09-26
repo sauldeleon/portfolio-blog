@@ -153,7 +153,7 @@ export const StyledTooth = styled.div<StyledToothProps>`
         `tooth-height-${$index}`,
       )}%;
 
-      top: 0;
+      top: 10px;
       left: -70%;
       animation-name: ${theme.animation.moveToothHorizontal},
         ${theme.animation.moveToothVertical};

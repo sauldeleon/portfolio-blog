@@ -39,20 +39,10 @@ export default function RootLayout({
   params: { lng },
 }: RootLayoutProps) {
   const googleAnalyticsId = process.env.GOOGLE_ANALYTICS_ID
+
   return (
     <html lang={lng} dir={dir(lng)} data-testid="root-html">
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin=""
-        />
-        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100;300;400;500&display=swap"
-          rel="stylesheet"
-        />
         <Script
           async
           strategy="afterInteractive"
