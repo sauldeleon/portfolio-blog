@@ -15,15 +15,15 @@ jobs:
         uses: zentered/vercel-preview-url@v1.1.9
         id: vercel_preview_url
         env:
-          VERCEL_TOKEN: ${{ secrets.vercel-token }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN  }}
         with:
-          vercel_project_id: ${{ secrets.vercel-project-id }}
+          vercel_project_id: ${{ secrets.VERCEL_PROJECT_ID }}
       - name: Output Vercel Preview URL
         run: echo "The preview url is -> https://${{ steps.vercel_preview_url.outputs.preview_url }}"
       - uses: UnlyEd/github-action-await-vercel@v1.2.42
         id: await-vercel-preview-ready
         env:
-          VERCEL_TOKEN: ${{ secrets.vercel-token }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         with:
           deployment-url: ${{ steps.vercel_preview_url.outputs.preview_url }}
           timeout: 300
