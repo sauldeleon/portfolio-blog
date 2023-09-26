@@ -597,11 +597,11 @@ exports[`ContactPage should render successfully 1`] = `
                     width="140"
                   />
                 </div>
-                <h1
+                <h3
                   class="c17 c18"
                 >
                   Software Engineer
-                </h1>
+                </h3>
                 <p
                   class="c19 c20"
                 >

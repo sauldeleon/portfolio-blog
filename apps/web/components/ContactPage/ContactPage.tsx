@@ -37,7 +37,9 @@ export function ContactPage() {
           ) : (
             <Portrait onClick={() => setPainMode(true)} />
           )}
-          <StyledHeading $level={2}>Software Engineer</StyledHeading>
+          <StyledHeading as="h3" $level={2}>
+            Software Engineer
+          </StyledHeading>
           <StyledBody $level="L">
             <StyledIconWrapper>
               <LinkedInIcon />
