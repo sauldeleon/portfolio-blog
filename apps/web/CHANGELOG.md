@@ -1,5 +1,7 @@
 # Changelog web app
 
+## [0.7.1](https://github.com/sauldeleon/portfolio-blog/compare/web-0.7.0...web-0.7.1) (2023-09-26)
+
 # [0.7.0](https://github.com/sauldeleon/portfolio-blog/compare/web-0.6.2...web-0.7.0) (2023-09-14)
 
 ### Bug Fixes
