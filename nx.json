@@ -20,29 +20,24 @@
   "targetDefaults": {
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["production", "^production"]
+      "inputs": ["production", "^production"],
+      "cache": true
     },
     "test": {
-      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]
+      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
+      "cache": true
     },
     "e2e": {
-      "inputs": ["default", "^production"]
+      "inputs": ["default", "^production"],
+      "cache": true
     },
     "lint": {
       "inputs": [
         "default",
         "{workspaceRoot}/.eslintrc.json",
         "{workspaceRoot}/.eslintignore"
-      ]
-    }
-  },
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "nx-cloud",
-      "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"],
-        "accessToken": "M2JjNmZlNzQtZmE3OC00ZTg5LWFlNTgtODUzMDMzMmIyMTY0fHJlYWQtd3JpdGU="
-      }
+      ],
+      "cache": true
     }
   },
   "generators": {
@@ -60,5 +55,6 @@
         "linter": "eslint"
       }
     }
-  }
+  },
+  "nxCloudAccessToken": "M2JjNmZlNzQtZmE3OC00ZTg5LWFlNTgtODUzMDMzMmIyMTY0fHJlYWQtd3JpdGU="
 }

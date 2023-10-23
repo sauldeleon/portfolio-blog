@@ -1,3 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`GlobalStyles should render successfully 1`] = `<head />`;
+exports[`GlobalStyles should render successfully 1`] = `
+<head>
+  <style
+    data-styled="active"
+    data-styled-version="6.1.0"
+  />
+</head>
+`;
