@@ -1,7 +1,8 @@
-import { Body } from '@sdlgr/typography'
-import { styled } from 'styled-components'
 import { rgba } from 'polished'
+import { styled } from 'styled-components'
+
 import { CircleLink } from '@sdlgr/circle-link'
+import { Body } from '@sdlgr/typography'
 
 export const StyledSection = styled.section`
   max-width: 1440px;

@@ -1,5 +1,6 @@
-import { StyledHeading } from './ExperiencePage.styles'
 import { useClientTranslation } from '@web/i18n/client'
+
+import { StyledHeading } from './ExperiencePage.styles'
 import { ExperienceItem } from './components/ExperienceItem/ExperienceItem'
 
 export type ExperienceItem = {

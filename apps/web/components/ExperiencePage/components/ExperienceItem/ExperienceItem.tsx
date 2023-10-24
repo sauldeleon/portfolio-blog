@@ -1,19 +1,21 @@
+import { ArrowRightIcon } from '@sdlgr/assets'
 import { Body } from '@sdlgr/typography'
+
+import { Portals } from '@web/components/Portals/Portals'
+
 import {
-  StyledSection,
-  StyledExperienceHeader,
+  StyledCircleLink,
   StyledCompanyInfo,
-  StyledOrder,
   StyledCompanyName,
   StyledCompanyPeriod,
+  StyledDescriptionParagraph,
+  StyledExperienceDescription,
+  StyledExperienceHeader,
   StyledExperienceInfo,
   StyledExperiencePortal,
-  StyledExperienceDescription,
-  StyledDescriptionParagraph,
-  StyledCircleLink,
+  StyledOrder,
+  StyledSection,
 } from './ExperienceItem.styles'
-import { ArrowRightIcon } from '@sdlgr/assets'
-import { Portals } from '@web/components/Portals/Portals'
 
 export interface ExperienceItemProps {
   order: number

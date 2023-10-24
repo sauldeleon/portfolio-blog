@@ -1,5 +1,6 @@
-import { Heading } from '@sdlgr/typography'
 import { styled } from 'styled-components'
+
+import { Heading } from '@sdlgr/typography'
 
 export const StyledHeading = styled(Heading)`
   text-align: center;
