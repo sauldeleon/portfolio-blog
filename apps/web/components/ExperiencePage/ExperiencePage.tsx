@@ -1,12 +1,14 @@
+import { AnimatedItemProps } from '@web/components/AnimatedItem/AnimatedItem'
 import { useClientTranslation } from '@web/i18n/client'
 
 import { StyledHeading } from './ExperiencePage.styles'
 import { ExperienceItem } from './components/ExperienceItem/ExperienceItem'
+import { useExperienceItems } from './useExperienceItems'
 
 export type ExperienceItem = {
   order: number
   company: string
-  technologies: string[]
+  technologies: AnimatedItemProps[]
   beginDate: string
   endDate?: string
   link: string
@@ -17,33 +19,7 @@ export type ExperienceItem = {
 export function ExperiencePage() {
   const { t } = useClientTranslation('experiencePage')
 
-  const experienceItems: ExperienceItem[] = [
-    {
-      order: 0,
-      company: 'Bonhams',
-      technologies: ['Next.js', 'TypeScript', 'React', 'Styled Components'],
-      beginDate: 'January 2022',
-      link: 'https://www.bonhams.com/',
-      linkLabel: 'Check the website',
-      descriptionParagraphs: [
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi non quam nec dui luctus faucibus. Nullam quis risus eget urna mollis ornare vel eu leo.',
-        'Nulla vitae elit libero, a pharetra augue. Donec ullamcorper nulla non metus auctor fringilla.',
-      ],
-    },
-    {
-      order: 1,
-      company: 'Smart Protection',
-      technologies: ['TypeScript', 'React', 'ANTd'],
-      beginDate: 'February 2021',
-      endDate: 'January 2022',
-      link: 'https://www.smartprotection.com/',
-      linkLabel: 'Check the website',
-      descriptionParagraphs: [
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi non quam nec dui luctus faucibus. Nullam quis risus eget urna mollis ornare vel eu leo.',
-        'Nulla vitae elit libero, a pharetra augue. Donec ullamcorper nulla non metus auctor fringilla.',
-      ],
-    },
-  ]
+  const experienceItems = useExperienceItems()
 
   return (
     <>

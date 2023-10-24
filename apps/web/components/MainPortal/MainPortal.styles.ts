@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components'
 
+import { Portals } from '@web/components/Portals/Portals'
+
 export const PortalContainer = styled.div`
   --transform-origin-first: bottom;
   --transform-origin-last: top;
@@ -88,4 +90,17 @@ export const LastWall = styled.div`
       border-right: none;
     }
   `}
+`
+
+export const StyledPortals = styled(Portals)`
+  position: absolute;
+  width: 180%;
+  top: 14%;
+  left: -41%;
+
+  ${({ theme }) => theme.media.up.md} {
+    width: 152%;
+    top: 5%;
+    left: -26%;
+  }
 `

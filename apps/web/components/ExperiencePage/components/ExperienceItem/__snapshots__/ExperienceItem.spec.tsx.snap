@@ -1,0 +1,1197 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExperienceItem should render successfully 1`] = `
+.c20 {
+  position: relative;
+  position: relative;
+}
+
+.c20::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: currentColor;
+}
+
+.c20::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.c20:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c20:hover,
+.c20:active,
+.c20:focus {
+  text-decoration: none;
+}
+
+.c20:focus-visible {
+  outline: #FBFBFB auto 1px;
+}
+
+.c17 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-name: TpVAo;
+}
+
+.c19 {
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  pointer-events: none;
+  animation-name: cABewS;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.c21 {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+.c21:after {
+  content: none;
+}
+
+.c21:hover:after {
+  content: none;
+}
+
+.c23 {
+  color: #FFDD83;
+  animation-name: lhbgW;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.c23 svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.c15 {
+  --itemSize: 40px;
+  --translateX-begin: calc(-50% - var(--itemSize));
+  --translateX-end: calc(50% + var(--itemSize));
+  list-style: none;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  animation-name: ciDIWM;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.c15:hover {
+  z-index: 200;
+  animation-play-state: paused;
+}
+
+.c15:hover .c16,
+.c15:hover .c18,
+.c15:hover .c22 {
+  animation-play-state: paused;
+}
+
+.c2 {
+  font-family: fontFamily;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  white-space: pre-line;
+}
+
+.c2 ul,
+.c2 ol {
+  margin-left: 40px;
+  margin-bottom: 10px;
+}
+
+.c2 ul {
+  list-style: outside disc;
+}
+
+.c2 ol {
+  list-style: decimal;
+}
+
+.c2 li {
+  padding-left: 10px;
+}
+
+.c33 {
+  margin-left: 8px;
+  position: relative;
+}
+
+.c33::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: currentColor;
+}
+
+.c33::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.5s ease-out;
+}
+
+.c30 .loading {
+  transform: rotate(-90deg);
+  transform-origin: center;
+  stroke: #FBFBFB;
+  stroke-width: 6px;
+  stroke-dasharray: 110;
+  stroke-dashoffset: 110;
+  transition: stroke-dashoffset 0.5s steps(4, end);
+}
+
+.c26 {
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  max-height: 42px;
+}
+
+.c26:after {
+  content: none;
+}
+
+.c26:hover:after {
+  content: none;
+}
+
+.c26:focus-visible {
+  outline: #FBFBFB auto 1px;
+}
+
+.c26:hover .c29 .loading {
+  stroke-dashoffset: 0;
+}
+
+.c26:hover .c32::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c28 {
+  position: relative;
+  width: 42px;
+  height: 42px;
+}
+
+.c31 {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  display: flex;
+}
+
+.c9 {
+  --iconHeight: 249px;
+  --iconWidth: 130px;
+  --pathHeight: 212px;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  transform: rotate(90deg);
+}
+
+.c14 {
+  position: absolute;
+  overflow: clip;
+  height: var(--pathHeight);
+  border-top-left-radius: 30px 50%;
+  border-bottom-left-radius: 30px 50%;
+  border-top-right-radius: 30px 50%;
+  border-bottom-right-radius: 30px 50%;
+  top: calc((var(--iconHeight) - var(--pathHeight)) / 2);
+  left: calc((var(--iconWidth) / 2) - 3px);
+  right: calc((var(--iconWidth) / 2) - 3px);
+}
+
+.c12 {
+  width: var(--iconWidth);
+  height: var(--iconHeight);
+}
+
+.c11 {
+  background-color: #000000;
+  line-height: 0px;
+  border-top-right-radius: 44px 50%;
+  border-bottom-right-radius: 44px 50%;
+  border-top-left-radius: 44px 50%;
+  border-bottom-left-radius: 44px 50%;
+}
+
+.c13 {
+  background-color: #000000;
+  line-height: 0px;
+  border-top-right-radius: 44px 50%;
+  border-bottom-right-radius: 44px 50%;
+  border-top-left-radius: 44px 50%;
+  border-bottom-left-radius: 44px 50%;
+  transform: scaleX(-1);
+}
+
+.c0 {
+  max-width: 1440px;
+  width: 100%;
+  padding: 0 20px;
+  margin-bottom: 90px;
+}
+
+.c1 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom: 1px solid rgba(251,251,251,0.5);
+  margin-bottom: 40px;
+  padding: 0 20px;
+}
+
+.c3 {
+  font-size: 30px;
+  font-family: fontFamily;
+  font-weight: 300;
+}
+
+.c4 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.c5 {
+  font-size: 30px;
+  font-family: fontFamily;
+  font-weight: 500;
+}
+
+.c6 {
+  font-size: 20px;
+  font-family: fontFamily;
+  font-weight: 100;
+}
+
+.c7 {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.c8 {
+  width: 120%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.c25 {
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+.c27 {
+  margin-top: 50px;
+  text-transform: uppercase;
+  width: max-content;
+}
+
+.c10 {
+  width: 100%;
+  transform: unset;
+  position: relative;
+}
+
+@media (width >= 768px) {
+  .c15 {
+    --itemSize: 55px;
+  }
+}
+
+@media (width >= 768px) {
+  .c9 {
+    --iconHeight: 358px;
+    --iconWidth: 188px;
+    --pathHeight: 305px;
+    transform: unset;
+  }
+}
+
+@media (width >= 768px) {
+  .c14 {
+    border-top-left-radius: 40px 50%;
+    border-bottom-left-radius: 40px 50%;
+    border-top-right-radius: 40px 50%;
+    border-bottom-right-radius: 40px 50%;
+  }
+}
+
+@media (width >= 768px) {
+  .c11 {
+    border-top-right-radius: 60px 50%;
+    border-bottom-right-radius: 60px 50%;
+    border-top-left-radius: 60px 50%;
+    border-bottom-left-radius: 60px 50%;
+  }
+}
+
+@media (width >= 768px) {
+  .c13 {
+    border-top-right-radius: 60px 50%;
+    border-bottom-right-radius: 60px 50%;
+    border-top-left-radius: 60px 50%;
+    border-bottom-left-radius: 60px 50%;
+  }
+}
+
+@media (width >= 768px) {
+  .c1 {
+    margin-bottom: 70px;
+  }
+}
+
+@media (width >= 1024px) {
+  .c3 {
+    font-size: 65px;
+  }
+}
+
+@media (width >= 1024px) {
+  .c5 {
+    font-size: 65px;
+    font-family: fontFamily;
+    font-weight: 300;
+    margin-bottom: 30px;
+  }
+}
+
+@media (width >= 1024px) {
+  .c6 {
+    font-size: 30px;
+  }
+}
+
+@media (width >= 768px) {
+  .c7 {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+@media (width >= 768px) {
+  .c8 {
+    width: 100%;
+    margin-bottom: 0px;
+    max-width: 45%;
+  }
+}
+
+@media (width >= 768px) {
+  .c24 {
+    padding: 0 20px;
+    max-width: 55%;
+    padding: 0;
+  }
+}
+
+@media (width >= 768px) {
+  .c25 {
+    font-size: 20px;
+  }
+}
+
+@media (width >= 768px) {
+  .c10 {
+    margin: 70px 0 40px;
+    min-width: 400px;
+    width: 400px;
+    --iconHeight: 249px;
+    --iconWidth: 130px;
+    --pathHeight: 212px;
+    transform: rotate(90deg);
+  }
+}
+
+<body>
+  <div>
+    <section
+      class="c0"
+    >
+      <div
+        class="c1"
+      >
+        <p
+          class="c2 c3"
+        >
+          01
+        </p>
+        <div
+          class="c4"
+        >
+          <p
+            class="c2 c5"
+          >
+            test
+          </p>
+          <p
+            class="c2 c6"
+          >
+            January 2022
+             - 
+            Present
+          </p>
+        </div>
+      </div>
+      <div
+        class="c7"
+      >
+        <div
+          class="c8"
+        >
+          <div
+            class="c9 c10"
+            role="presentation"
+          >
+            <div
+              class="c11"
+            >
+              <svg
+                class="c12"
+                color="#FFDD83"
+              >
+                portal.svg
+              </svg>
+            </div>
+            <div
+              class="c13"
+            >
+              <svg
+                class="c12"
+                color="#98DFD6"
+              >
+                portal.svg
+              </svg>
+            </div>
+            <div
+              class="c14"
+            >
+              <li
+                class="c15"
+                data-testid="horizontal-movement"
+                style="animation-duration: 14.03796670595332s; animation-delay: 1.8362914836770063s;"
+              >
+                <div
+                  class="c16 c17"
+                  data-testid="vertical-movement"
+                  style="--translateY-begin: -34%; --translateY-end: 4%; animation-duration: 9.410548820538102s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="rotation-movement"
+                    style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.969143762427998s;"
+                  >
+                    <a
+                      aria-label="NodeJS"
+                      class="c20 c21"
+                      data-testid="plain-anchor"
+                      href="https://nodejs.org/en/"
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      <div
+                        class="c22 c23"
+                        data-testid="color-swapping"
+                        style="animation-duration: 14.03796670595332s; animation-delay: 1.8362914836770063s;"
+                      >
+                        <svg>
+                          nodejs.svg
+                        </svg>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </li>
+            </div>
+          </div>
+        </div>
+        <div
+          class="c24"
+        >
+          <p
+            class="c2 c25"
+          >
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi non quam nec dui luctus faucibus. Nullam quis risus eget urna mollis ornare vel eu leo.
+          </p>
+          <p
+            class="c2 c25"
+          >
+            Nulla vitae elit libero, a pharetra augue. Donec ullamcorper nulla non metus auctor fringilla.
+          </p>
+          <a
+            class="c20 c26 c27"
+            data-testid="plain-anchor"
+            href="https://www.test.com/"
+            rel="noreferrer"
+            target="_blank"
+          >
+            <div
+              class="c28"
+            >
+              <svg
+                class="c29 c30"
+                height="42"
+                width="42"
+              >
+                circleButton.svg
+              </svg>
+              <div
+                class="c31"
+              >
+                <svg>
+                  arrowRight.svg
+                </svg>
+              </div>
+            </div>
+            <p
+              class="c32 c2 c33"
+            >
+              Check website
+            </p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+`;
+
+exports[`ExperienceItem should render with end date 1`] = `
+.c20 {
+  position: relative;
+  position: relative;
+}
+
+.c20::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: currentColor;
+}
+
+.c20::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.c20:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c20:hover,
+.c20:active,
+.c20:focus {
+  text-decoration: none;
+}
+
+.c20:focus-visible {
+  outline: #FBFBFB auto 1px;
+}
+
+.c17 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-name: TpVAo;
+}
+
+.c19 {
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  pointer-events: none;
+  animation-name: cABewS;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.c21 {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+.c21:after {
+  content: none;
+}
+
+.c21:hover:after {
+  content: none;
+}
+
+.c23 {
+  color: #FFDD83;
+  animation-name: lhbgW;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.c23 svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.c15 {
+  --itemSize: 40px;
+  --translateX-begin: calc(-50% - var(--itemSize));
+  --translateX-end: calc(50% + var(--itemSize));
+  list-style: none;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  animation-name: ciDIWM;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.c15:hover {
+  z-index: 200;
+  animation-play-state: paused;
+}
+
+.c15:hover .c16,
+.c15:hover .c18,
+.c15:hover .c22 {
+  animation-play-state: paused;
+}
+
+.c2 {
+  font-family: fontFamily;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  white-space: pre-line;
+}
+
+.c2 ul,
+.c2 ol {
+  margin-left: 40px;
+  margin-bottom: 10px;
+}
+
+.c2 ul {
+  list-style: outside disc;
+}
+
+.c2 ol {
+  list-style: decimal;
+}
+
+.c2 li {
+  padding-left: 10px;
+}
+
+.c33 {
+  margin-left: 8px;
+  position: relative;
+}
+
+.c33::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: currentColor;
+}
+
+.c33::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.5s ease-out;
+}
+
+.c30 .loading {
+  transform: rotate(-90deg);
+  transform-origin: center;
+  stroke: #FBFBFB;
+  stroke-width: 6px;
+  stroke-dasharray: 110;
+  stroke-dashoffset: 110;
+  transition: stroke-dashoffset 0.5s steps(4, end);
+}
+
+.c26 {
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  max-height: 42px;
+}
+
+.c26:after {
+  content: none;
+}
+
+.c26:hover:after {
+  content: none;
+}
+
+.c26:focus-visible {
+  outline: #FBFBFB auto 1px;
+}
+
+.c26:hover .c29 .loading {
+  stroke-dashoffset: 0;
+}
+
+.c26:hover .c32::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c28 {
+  position: relative;
+  width: 42px;
+  height: 42px;
+}
+
+.c31 {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  display: flex;
+}
+
+.c9 {
+  --iconHeight: 249px;
+  --iconWidth: 130px;
+  --pathHeight: 212px;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  transform: rotate(90deg);
+}
+
+.c14 {
+  position: absolute;
+  overflow: clip;
+  height: var(--pathHeight);
+  border-top-left-radius: 30px 50%;
+  border-bottom-left-radius: 30px 50%;
+  border-top-right-radius: 30px 50%;
+  border-bottom-right-radius: 30px 50%;
+  top: calc((var(--iconHeight) - var(--pathHeight)) / 2);
+  left: calc((var(--iconWidth) / 2) - 3px);
+  right: calc((var(--iconWidth) / 2) - 3px);
+}
+
+.c12 {
+  width: var(--iconWidth);
+  height: var(--iconHeight);
+}
+
+.c11 {
+  background-color: #000000;
+  line-height: 0px;
+  border-top-right-radius: 44px 50%;
+  border-bottom-right-radius: 44px 50%;
+  border-top-left-radius: 44px 50%;
+  border-bottom-left-radius: 44px 50%;
+}
+
+.c13 {
+  background-color: #000000;
+  line-height: 0px;
+  border-top-right-radius: 44px 50%;
+  border-bottom-right-radius: 44px 50%;
+  border-top-left-radius: 44px 50%;
+  border-bottom-left-radius: 44px 50%;
+  transform: scaleX(-1);
+}
+
+.c0 {
+  max-width: 1440px;
+  width: 100%;
+  padding: 0 20px;
+  margin-bottom: 90px;
+}
+
+.c1 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom: 1px solid rgba(251,251,251,0.5);
+  margin-bottom: 40px;
+  padding: 0 20px;
+}
+
+.c3 {
+  font-size: 30px;
+  font-family: fontFamily;
+  font-weight: 300;
+}
+
+.c4 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.c5 {
+  font-size: 30px;
+  font-family: fontFamily;
+  font-weight: 500;
+}
+
+.c6 {
+  font-size: 20px;
+  font-family: fontFamily;
+  font-weight: 100;
+}
+
+.c7 {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.c8 {
+  width: 120%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.c25 {
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+.c27 {
+  margin-top: 50px;
+  text-transform: uppercase;
+  width: max-content;
+}
+
+.c10 {
+  width: 100%;
+  transform: unset;
+  position: relative;
+}
+
+@media (width >= 768px) {
+  .c15 {
+    --itemSize: 55px;
+  }
+}
+
+@media (width >= 768px) {
+  .c9 {
+    --iconHeight: 358px;
+    --iconWidth: 188px;
+    --pathHeight: 305px;
+    transform: unset;
+  }
+}
+
+@media (width >= 768px) {
+  .c14 {
+    border-top-left-radius: 40px 50%;
+    border-bottom-left-radius: 40px 50%;
+    border-top-right-radius: 40px 50%;
+    border-bottom-right-radius: 40px 50%;
+  }
+}
+
+@media (width >= 768px) {
+  .c11 {
+    border-top-right-radius: 60px 50%;
+    border-bottom-right-radius: 60px 50%;
+    border-top-left-radius: 60px 50%;
+    border-bottom-left-radius: 60px 50%;
+  }
+}
+
+@media (width >= 768px) {
+  .c13 {
+    border-top-right-radius: 60px 50%;
+    border-bottom-right-radius: 60px 50%;
+    border-top-left-radius: 60px 50%;
+    border-bottom-left-radius: 60px 50%;
+  }
+}
+
+@media (width >= 768px) {
+  .c1 {
+    margin-bottom: 70px;
+  }
+}
+
+@media (width >= 1024px) {
+  .c3 {
+    font-size: 65px;
+  }
+}
+
+@media (width >= 1024px) {
+  .c5 {
+    font-size: 65px;
+    font-family: fontFamily;
+    font-weight: 300;
+    margin-bottom: 30px;
+  }
+}
+
+@media (width >= 1024px) {
+  .c6 {
+    font-size: 30px;
+  }
+}
+
+@media (width >= 768px) {
+  .c7 {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+@media (width >= 768px) {
+  .c8 {
+    width: 100%;
+    margin-bottom: 0px;
+    max-width: 45%;
+  }
+}
+
+@media (width >= 768px) {
+  .c24 {
+    padding: 0 20px;
+    max-width: 55%;
+    padding: 0;
+  }
+}
+
+@media (width >= 768px) {
+  .c25 {
+    font-size: 20px;
+  }
+}
+
+@media (width >= 768px) {
+  .c10 {
+    margin: 70px 0 40px;
+    min-width: 400px;
+    width: 400px;
+    --iconHeight: 249px;
+    --iconWidth: 130px;
+    --pathHeight: 212px;
+    transform: rotate(90deg);
+  }
+}
+
+<body>
+  <div>
+    <section
+      class="c0"
+    >
+      <div
+        class="c1"
+      >
+        <p
+          class="c2 c3"
+        >
+          01
+        </p>
+        <div
+          class="c4"
+        >
+          <p
+            class="c2 c5"
+          >
+            test
+          </p>
+          <p
+            class="c2 c6"
+          >
+            January 2022
+             - 
+            January 2023
+          </p>
+        </div>
+      </div>
+      <div
+        class="c7"
+      >
+        <div
+          class="c8"
+        >
+          <div
+            class="c9 c10"
+            role="presentation"
+          >
+            <div
+              class="c11"
+            >
+              <svg
+                class="c12"
+                color="#FFDD83"
+              >
+                portal.svg
+              </svg>
+            </div>
+            <div
+              class="c13"
+            >
+              <svg
+                class="c12"
+                color="#98DFD6"
+              >
+                portal.svg
+              </svg>
+            </div>
+            <div
+              class="c14"
+            >
+              <li
+                class="c15"
+                data-testid="horizontal-movement"
+                style="animation-duration: 19.418589292394458s; animation-delay: 15.754178610335014s;"
+              >
+                <div
+                  class="c16 c17"
+                  data-testid="vertical-movement"
+                  style="--translateY-begin: -22%; --translateY-end: 1%; animation-duration: 2.1750665840069803s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="rotation-movement"
+                    style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 6.759014200771513s;"
+                  >
+                    <a
+                      aria-label="NodeJS"
+                      class="c20 c21"
+                      data-testid="plain-anchor"
+                      href="https://nodejs.org/en/"
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      <div
+                        class="c22 c23"
+                        data-testid="color-swapping"
+                        style="animation-duration: 19.418589292394458s; animation-delay: 15.754178610335014s;"
+                      >
+                        <svg>
+                          nodejs.svg
+                        </svg>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </li>
+            </div>
+          </div>
+        </div>
+        <div
+          class="c24"
+        >
+          <p
+            class="c2 c25"
+          >
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi non quam nec dui luctus faucibus. Nullam quis risus eget urna mollis ornare vel eu leo.
+          </p>
+          <p
+            class="c2 c25"
+          >
+            Nulla vitae elit libero, a pharetra augue. Donec ullamcorper nulla non metus auctor fringilla.
+          </p>
+          <a
+            class="c20 c26 c27"
+            data-testid="plain-anchor"
+            href="https://www.test.com/"
+            rel="noreferrer"
+            target="_blank"
+          >
+            <div
+              class="c28"
+            >
+              <svg
+                class="c29 c30"
+                height="42"
+                width="42"
+              >
+                circleButton.svg
+              </svg>
+              <div
+                class="c31"
+              >
+                <svg>
+                  arrowRight.svg
+                </svg>
+              </div>
+            </div>
+            <p
+              class="c32 c2 c33"
+            >
+              Check website
+            </p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+`;

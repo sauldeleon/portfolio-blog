@@ -1,7 +1,11 @@
-import { ArrowRightIcon } from '@sdlgr/assets'
-import { Body } from '@sdlgr/typography'
+import { useId } from 'react'
 
-import { Portals } from '@web/components/Portals/Portals'
+import { ArrowRightIcon } from '@sdlgr/assets'
+
+import {
+  AnimatedItem,
+  AnimatedItemProps,
+} from '@web/components/AnimatedItem/AnimatedItem'
 
 import {
   StyledCircleLink,
@@ -14,13 +18,14 @@ import {
   StyledExperienceInfo,
   StyledExperiencePortal,
   StyledOrder,
+  StyledPortals,
   StyledSection,
 } from './ExperienceItem.styles'
 
 export interface ExperienceItemProps {
   order: number
   company: string
-  technologies: string[]
+  technologies: AnimatedItemProps[]
   beginDate: string
   endDate?: string
   link: string
@@ -41,6 +46,7 @@ export function ExperienceItem({
   linkLabel,
   descriptionParagraphs,
 }: ExperienceItemProps) {
+  const id = useId()
   return (
     <StyledSection>
       <StyledExperienceHeader>
@@ -54,11 +60,13 @@ export function ExperienceItem({
       </StyledExperienceHeader>
       <StyledExperienceInfo>
         <StyledExperiencePortal>
-          <Portals>
-            {technologies.map((tech) => (
-              <Body key={tech}>{tech.toUpperCase()}</Body>
-            ))}
-          </Portals>
+          <StyledPortals>
+            {technologies
+              .filter(({ isHidden }) => !isHidden)
+              .map((props, index) => (
+                <AnimatedItem key={`${id}-${index}`} {...props} />
+              ))}
+          </StyledPortals>
         </StyledExperiencePortal>
         <StyledExperienceDescription>
           {descriptionParagraphs.map((paragraph, index) => (

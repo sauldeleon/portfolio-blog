@@ -1,6 +1,7 @@
 export { ReactComponent as AboutIcon } from './about.svg'
 export { ReactComponent as ArrowRightIcon } from './arrowRight.svg'
 export { ReactComponent as Auth0Icon } from './auth0.svg'
+export { ReactComponent as BF2042Icon } from './bf2042.svg'
 export { ReactComponent as CactusIcon } from './cactus.svg'
 export { ReactComponent as CameraIcon } from './camera.svg'
 export { ReactComponent as CatIcon } from './cat.svg'

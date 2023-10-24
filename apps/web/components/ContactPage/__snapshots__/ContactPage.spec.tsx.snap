@@ -2,55 +2,50 @@
 
 exports[`ContactPage should render successfully 1`] = `
 .c3 {
+  --iconHeight: 249px;
+  --iconWidth: 130px;
+  --pathHeight: 212px;
   z-index: 2;
-  width: 180%;
-  top: 14%;
-  left: -41%;
-  position: absolute;
   display: flex;
   justify-content: space-between;
   transform: rotate(90deg);
 }
 
-.c5 {
-  width: 130px;
-  height: 249px;
-}
-
-.c4 {
-  background-color: #000000;
-  border-top-right-radius: 42px 50%;
-  border-bottom-right-radius: 44px 50%;
-  border-top-left-radius: 44px 50%;
-  border-bottom-left-radius: 44px 50%;
-  margin-bottom: 5px;
-  line-height: 0px;
+.c8 {
+  position: absolute;
+  overflow: clip;
+  height: var(--pathHeight);
+  border-top-left-radius: 30px 50%;
+  border-bottom-left-radius: 30px 50%;
+  border-top-right-radius: 30px 50%;
+  border-bottom-right-radius: 30px 50%;
+  top: calc((var(--iconHeight) - var(--pathHeight)) / 2);
+  left: calc((var(--iconWidth) / 2) - 3px);
+  right: calc((var(--iconWidth) / 2) - 3px);
 }
 
 .c6 {
-  border-top-right-radius: 41px 50%;
-  border-bottom-right-radius: 44px 50%;
-  border-top-left-radius: 43px 50%;
-  border-bottom-left-radius: 45px 50%;
+  width: var(--iconWidth);
+  height: var(--iconHeight);
+}
+
+.c5 {
   background-color: #000000;
-  margin-bottom: 5px;
   line-height: 0px;
-  transform: scaleX(-1);
+  border-top-right-radius: 44px 50%;
+  border-bottom-right-radius: 44px 50%;
+  border-top-left-radius: 44px 50%;
+  border-bottom-left-radius: 44px 50%;
 }
 
 .c7 {
-  --height: 212px;
-  position: absolute;
-  overflow: clip;
-  margin: 30px auto;
-  height: 212px;
-  border-top-left-radius: 30px 50%;
-  border-bottom-left-radius: 30px 50%;
-  border-top-right-radius: 31px 50%;
-  border-bottom-right-radius: 32px 50%;
-  top: -12px;
-  left: 62px;
-  right: 61px;
+  background-color: #000000;
+  line-height: 0px;
+  border-top-right-radius: 44px 50%;
+  border-bottom-right-radius: 44px 50%;
+  border-top-left-radius: 44px 50%;
+  border-bottom-left-radius: 44px 50%;
+  transform: scaleX(-1);
 }
 
 .c0 {
@@ -91,7 +86,7 @@ exports[`ContactPage should render successfully 1`] = `
   background-color: #000000;
 }
 
-.c23 {
+.c24 {
   z-index: -1;
   flex-grow: 1;
   border: 1px solid #98DFD6;
@@ -101,12 +96,19 @@ exports[`ContactPage should render successfully 1`] = `
   background-color: #000000;
 }
 
-.c22 {
+.c4 {
+  position: absolute;
+  width: 180%;
+  top: 14%;
+  left: -41%;
+}
+
+.c23 {
   position: relative;
   position: relative;
 }
 
-.c22::after {
+.c23::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -116,28 +118,28 @@ exports[`ContactPage should render successfully 1`] = `
   background-color: currentColor;
 }
 
-.c22::after {
+.c23::after {
   transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.25s ease-out;
 }
 
-.c22:hover::after {
+.c23:hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
 
-.c22:hover,
-.c22:active,
-.c22:focus {
+.c23:hover,
+.c23:active,
+.c23:focus {
   text-decoration: none;
 }
 
-.c22:focus-visible {
+.c23:focus-visible {
   outline: #FBFBFB auto 1px;
 }
 
-.c17 {
+.c18 {
   font-family: fontFamily;
   font-weight: 400;
   color: #FBFBFB;
@@ -146,7 +148,7 @@ exports[`ContactPage should render successfully 1`] = `
   margin: 0;
 }
 
-.c19 {
+.c20 {
   font-family: fontFamily;
   font-weight: 400;
   color: #FBFBFB;
@@ -155,32 +157,32 @@ exports[`ContactPage should render successfully 1`] = `
   white-space: pre-line;
 }
 
-.c19 ul,
-.c19 ol {
+.c20 ul,
+.c20 ol {
   margin-left: 40px;
   margin-bottom: 10px;
 }
 
-.c19 ul {
+.c20 ul {
   list-style: outside disc;
 }
 
-.c19 ol {
+.c20 ol {
   list-style: decimal;
 }
 
-.c19 li {
+.c20 li {
   padding-left: 10px;
 }
 
-.c8 {
+.c9 {
   width: 100%;
   height: 100%;
   display: grid;
   place-items: center;
 }
 
-.c9 {
+.c10 {
   display: grid;
   place-items: center;
   rotate: 270deg;
@@ -191,7 +193,7 @@ exports[`ContactPage should render successfully 1`] = `
   row-gap: 4px;
 }
 
-.c18 {
+.c19 {
   font-family: fontFamily;
   font-weight: 400;
   color: #FBFBFB;
@@ -199,7 +201,7 @@ exports[`ContactPage should render successfully 1`] = `
   line-height: normal;
 }
 
-.c20 {
+.c21 {
   display: flex;
   align-items: center;
   font-family: fontFamily;
@@ -209,30 +211,21 @@ exports[`ContactPage should render successfully 1`] = `
   line-height: normal;
 }
 
-.c21 {
+.c22 {
   display: grid;
   place-items: center;
   margin-right: 4px;
 }
 
-.c21 svg {
+.c22 svg {
   width: 12px;
   height: 12px;
 }
 
-.c10 {
+.c11 {
   position: relative;
   width: 70px;
   height: 70px;
-}
-
-.c11 {
-  overflow: hidden;
-  border-radius: 50%;
-  width: 70px;
-  height: 70px;
-  position: absolute;
-  opacity: 1;
 }
 
 .c12 {
@@ -241,8 +234,7 @@ exports[`ContactPage should render successfully 1`] = `
   width: 70px;
   height: 70px;
   position: absolute;
-  opacity: 0;
-  animation: BLSUr 60s 10s infinite;
+  opacity: 1;
 }
 
 .c13 {
@@ -252,7 +244,7 @@ exports[`ContactPage should render successfully 1`] = `
   height: 70px;
   position: absolute;
   opacity: 0;
-  animation: feYcwF 60s 10s infinite;
+  animation: BLSUr 60s 10s infinite;
 }
 
 .c14 {
@@ -262,7 +254,7 @@ exports[`ContactPage should render successfully 1`] = `
   height: 70px;
   position: absolute;
   opacity: 0;
-  animation: gBIqQN 60s 10s infinite;
+  animation: feYcwF 60s 10s infinite;
 }
 
 .c15 {
@@ -272,10 +264,20 @@ exports[`ContactPage should render successfully 1`] = `
   height: 70px;
   position: absolute;
   opacity: 0;
-  animation: jCGkWp 60s 10s infinite;
+  animation: gBIqQN 60s 10s infinite;
 }
 
 .c16 {
+  overflow: hidden;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  opacity: 0;
+  animation: jCGkWp 60s 10s infinite;
+}
+
+.c17 {
   overflow: hidden;
   border-radius: 50%;
   width: 70px;
@@ -287,50 +289,37 @@ exports[`ContactPage should render successfully 1`] = `
 
 @media (width >= 768px) {
   .c3 {
-    width: 152%;
-    top: unset;
-    left: -26%;
-    margin: 18px auto;
+    --iconHeight: 358px;
+    --iconWidth: 188px;
+    --pathHeight: 305px;
     transform: unset;
   }
 }
 
 @media (width >= 768px) {
+  .c8 {
+    border-top-left-radius: 40px 50%;
+    border-bottom-left-radius: 40px 50%;
+    border-top-right-radius: 40px 50%;
+    border-bottom-right-radius: 40px 50%;
+  }
+}
+
+@media (width >= 768px) {
   .c5 {
-    width: unset;
-    height: unset;
-  }
-}
-
-@media (width >= 768px) {
-  .c4 {
-    background-color: #000000;
-    border-top-right-radius: 59px 50%;
-    border-bottom-right-radius: 61px 50%;
-    border-top-left-radius: 62px 50%;
-    border-bottom-left-radius: 62px 50%;
-  }
-}
-
-@media (width >= 768px) {
-  .c6 {
-    border-top-right-radius: 59px 50%;
-    border-bottom-right-radius: 62px 50%;
-    border-top-left-radius: 61px 50%;
-    border-bottom-left-radius: 63px 50%;
+    border-top-right-radius: 60px 50%;
+    border-bottom-right-radius: 60px 50%;
+    border-top-left-radius: 60px 50%;
+    border-bottom-left-radius: 60px 50%;
   }
 }
 
 @media (width >= 768px) {
   .c7 {
-    height: 305px;
-    border-top-left-radius: 45px 50%;
-    border-bottom-left-radius: 45px 50%;
-    border-top-right-radius: 40px 50%;
-    border-bottom-right-radius: 40px 50%;
-    top: -4px;
-    left: 91px;
-    right: 91px;
+    border-top-right-radius: 60px 50%;
+    border-bottom-right-radius: 60px 50%;
+    border-top-left-radius: 60px 50%;
+    border-bottom-left-radius: 60px 50%;
   }
 }
 
@@ -377,14 +366,22 @@ exports[`ContactPage should render successfully 1`] = `
 }
 
 @media (width >= 768px) {
-  .c23 {
+  .c24 {
     border-bottom: 1px solid #98DFD6;
     border-right: none;
   }
 }
 
 @media (width >= 768px) {
-  .c9 {
+  .c4 {
+    width: 152%;
+    top: 5%;
+    left: -26%;
+  }
+}
+
+@media (width >= 768px) {
+  .c10 {
     width: 100%;
     height: 100%;
     margin-bottom: 0px;
@@ -397,7 +394,7 @@ exports[`ContactPage should render successfully 1`] = `
 }
 
 @media (width >= 768px) {
-  .c18 {
+  .c19 {
     font-family: fontFamily;
     font-weight: 400;
     color: #FBFBFB;
@@ -407,7 +404,7 @@ exports[`ContactPage should render successfully 1`] = `
 }
 
 @media (width >= 768px) {
-  .c20 {
+  .c21 {
     font-family: fontFamily;
     font-weight: 400;
     color: #FBFBFB;
@@ -417,20 +414,13 @@ exports[`ContactPage should render successfully 1`] = `
 }
 
 @media (width >= 768px) {
-  .c21 {
+  .c22 {
     margin-right: 8px;
   }
 
-  .c21 svg {
+  .c22 svg {
     width: 16px;
     height: 16px;
-  }
-}
-
-@media (width >= 768px) {
-  .c10 {
-    width: 140px;
-    height: 140px;
   }
 }
 
@@ -476,6 +466,13 @@ exports[`ContactPage should render successfully 1`] = `
   }
 }
 
+@media (width >= 768px) {
+  .c17 {
+    width: 140px;
+    height: 140px;
+  }
+}
+
 <body>
   <div>
     <div
@@ -488,25 +485,15 @@ exports[`ContactPage should render successfully 1`] = `
         class="c2"
       >
         <div
-          class="c3"
+          class="c3 c4"
           role="presentation"
         >
           <div
-            class="c4"
+            class="c5"
           >
             <svg
-              class="c5"
+              class="c6"
               color="#FFDD83"
-            >
-              portal.svg
-            </svg>
-          </div>
-          <div
-            class="c6"
-          >
-            <svg
-              class="c5"
-              color="#98DFD6"
             >
               portal.svg
             </svg>
@@ -514,19 +501,29 @@ exports[`ContactPage should render successfully 1`] = `
           <div
             class="c7"
           >
+            <svg
+              class="c6"
+              color="#98DFD6"
+            >
+              portal.svg
+            </svg>
+          </div>
+          <div
+            class="c8"
+          >
             <div
-              class="c8"
+              class="c9"
             >
               <div
-                class="c9"
+                class="c10"
                 data-testid="contact-info"
               >
                 <div
-                  class="c10"
+                  class="c11"
                 >
                   <img
                     alt="My profile picture 1"
-                    class="c11"
+                    class="c12"
                     data-nimg="1"
                     decoding="async"
                     height="140"
@@ -538,7 +535,7 @@ exports[`ContactPage should render successfully 1`] = `
                   />
                   <img
                     alt="My profile picture 2"
-                    class="c12"
+                    class="c13"
                     data-nimg="1"
                     decoding="async"
                     height="140"
@@ -550,7 +547,7 @@ exports[`ContactPage should render successfully 1`] = `
                   />
                   <img
                     alt="My profile picture 3"
-                    class="c13"
+                    class="c14"
                     data-nimg="1"
                     decoding="async"
                     height="140"
@@ -562,7 +559,7 @@ exports[`ContactPage should render successfully 1`] = `
                   />
                   <img
                     alt="My profile picture 4"
-                    class="c14"
+                    class="c15"
                     data-nimg="1"
                     decoding="async"
                     height="140"
@@ -574,7 +571,7 @@ exports[`ContactPage should render successfully 1`] = `
                   />
                   <img
                     alt="My profile picture 5"
-                    class="c15"
+                    class="c16"
                     data-nimg="1"
                     decoding="async"
                     height="140"
@@ -586,7 +583,7 @@ exports[`ContactPage should render successfully 1`] = `
                   />
                   <img
                     alt="My profile picture 6"
-                    class="c16"
+                    class="c17"
                     data-nimg="1"
                     decoding="async"
                     height="140"
@@ -598,15 +595,15 @@ exports[`ContactPage should render successfully 1`] = `
                   />
                 </div>
                 <h3
-                  class="c17 c18"
+                  class="c18 c19"
                 >
                   Software Engineer
                 </h3>
                 <p
-                  class="c19 c20"
+                  class="c20 c21"
                 >
                   <span
-                    class="c21"
+                    class="c22"
                   >
                     <svg>
                       linkedIn.svg
@@ -614,7 +611,7 @@ exports[`ContactPage should render successfully 1`] = `
                   </span>
                   <a
                     aria-label="My LinkedIn profile"
-                    class="c22 "
+                    class="c23 "
                     data-testid="plain-anchor"
                     href="https://www.linkedin.com/in/sauldeleonguerrero"
                     rel="noreferrer"
@@ -624,10 +621,10 @@ exports[`ContactPage should render successfully 1`] = `
                   </a>
                 </p>
                 <p
-                  class="c19 c20"
+                  class="c20 c21"
                 >
                   <span
-                    class="c21"
+                    class="c22"
                   >
                     <svg>
                       email.svg
@@ -635,7 +632,7 @@ exports[`ContactPage should render successfully 1`] = `
                   </span>
                   <a
                     aria-label="My electronic mail address"
-                    class="c22 "
+                    class="c23 "
                     data-testid="plain-anchor"
                     href="mailto:sauldeleonguerrero@gmail.com"
                     rel="noreferrer"
@@ -650,7 +647,7 @@ exports[`ContactPage should render successfully 1`] = `
         </div>
       </div>
       <div
-        class="c23"
+        class="c24"
       />
     </div>
   </div>

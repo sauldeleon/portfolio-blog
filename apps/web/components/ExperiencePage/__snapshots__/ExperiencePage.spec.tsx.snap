@@ -1,0 +1,778 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExperiencePage should render successfully 1`] = `
+.c0 {
+  font-family: fontFamily;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 1.5rem;
+  line-height: normal;
+  margin: 0;
+}
+
+.c4 {
+  font-family: fontFamily;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  white-space: pre-line;
+}
+
+.c4 ul,
+.c4 ol {
+  margin-left: 40px;
+  margin-bottom: 10px;
+}
+
+.c4 ul {
+  list-style: outside disc;
+}
+
+.c4 ol {
+  list-style: decimal;
+}
+
+.c4 li {
+  padding-left: 10px;
+}
+
+.c1 {
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.c22 {
+  position: relative;
+  position: relative;
+}
+
+.c22::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: currentColor;
+}
+
+.c22::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.c22:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c22:hover,
+.c22:active,
+.c22:focus {
+  text-decoration: none;
+}
+
+.c22:focus-visible {
+  outline: #FBFBFB auto 1px;
+}
+
+.c19 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-name: TpVAo;
+}
+
+.c21 {
+  height: var(--itemSize);
+  aspect-ratio: 1/1;
+  position: absolute;
+  pointer-events: none;
+  animation-name: cABewS;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.c23 {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+.c23:after {
+  content: none;
+}
+
+.c23:hover:after {
+  content: none;
+}
+
+.c25 {
+  color: #FFDD83;
+  animation-name: lhbgW;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.c25 svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.c17 {
+  --itemSize: 40px;
+  --translateX-begin: calc(-50% - var(--itemSize));
+  --translateX-end: calc(50% + var(--itemSize));
+  list-style: none;
+  position: absolute;
+  transform: translateX(-60%);
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  animation-name: ciDIWM;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.c17:hover {
+  z-index: 200;
+  animation-play-state: paused;
+}
+
+.c17:hover .c18,
+.c17:hover .c20,
+.c17:hover .c24 {
+  animation-play-state: paused;
+}
+
+.c35 {
+  margin-left: 8px;
+  position: relative;
+}
+
+.c35::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: currentColor;
+}
+
+.c35::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.5s ease-out;
+}
+
+.c32 .loading {
+  transform: rotate(-90deg);
+  transform-origin: center;
+  stroke: #FBFBFB;
+  stroke-width: 6px;
+  stroke-dasharray: 110;
+  stroke-dashoffset: 110;
+  transition: stroke-dashoffset 0.5s steps(4, end);
+}
+
+.c28 {
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  max-height: 42px;
+}
+
+.c28:after {
+  content: none;
+}
+
+.c28:hover:after {
+  content: none;
+}
+
+.c28:focus-visible {
+  outline: #FBFBFB auto 1px;
+}
+
+.c28:hover .c31 .loading {
+  stroke-dashoffset: 0;
+}
+
+.c28:hover .c34::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c30 {
+  position: relative;
+  width: 42px;
+  height: 42px;
+}
+
+.c33 {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  display: flex;
+}
+
+.c11 {
+  --iconHeight: 249px;
+  --iconWidth: 130px;
+  --pathHeight: 212px;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  transform: rotate(90deg);
+}
+
+.c16 {
+  position: absolute;
+  overflow: clip;
+  height: var(--pathHeight);
+  border-top-left-radius: 30px 50%;
+  border-bottom-left-radius: 30px 50%;
+  border-top-right-radius: 30px 50%;
+  border-bottom-right-radius: 30px 50%;
+  top: calc((var(--iconHeight) - var(--pathHeight)) / 2);
+  left: calc((var(--iconWidth) / 2) - 3px);
+  right: calc((var(--iconWidth) / 2) - 3px);
+}
+
+.c14 {
+  width: var(--iconWidth);
+  height: var(--iconHeight);
+}
+
+.c13 {
+  background-color: #000000;
+  line-height: 0px;
+  border-top-right-radius: 44px 50%;
+  border-bottom-right-radius: 44px 50%;
+  border-top-left-radius: 44px 50%;
+  border-bottom-left-radius: 44px 50%;
+}
+
+.c15 {
+  background-color: #000000;
+  line-height: 0px;
+  border-top-right-radius: 44px 50%;
+  border-bottom-right-radius: 44px 50%;
+  border-top-left-radius: 44px 50%;
+  border-bottom-left-radius: 44px 50%;
+  transform: scaleX(-1);
+}
+
+.c2 {
+  max-width: 1440px;
+  width: 100%;
+  padding: 0 20px;
+  margin-bottom: 90px;
+}
+
+.c3 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom: 1px solid rgba(251,251,251,0.5);
+  margin-bottom: 40px;
+  padding: 0 20px;
+}
+
+.c5 {
+  font-size: 30px;
+  font-family: fontFamily;
+  font-weight: 300;
+}
+
+.c6 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.c7 {
+  font-size: 30px;
+  font-family: fontFamily;
+  font-weight: 500;
+}
+
+.c8 {
+  font-size: 20px;
+  font-family: fontFamily;
+  font-weight: 100;
+}
+
+.c9 {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.c10 {
+  width: 120%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.c27 {
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+.c29 {
+  margin-top: 50px;
+  text-transform: uppercase;
+  width: max-content;
+}
+
+.c12 {
+  width: 100%;
+  transform: unset;
+  position: relative;
+}
+
+@media (width >= 1024px) {
+  .c1 {
+    font-family: fontFamily;
+    font-weight: 400;
+    color: #FBFBFB;
+    font-size: 3rem;
+    line-height: normal;
+    margin-top: 80px;
+    margin-bottom: 50px;
+  }
+}
+
+@media (width >= 768px) {
+  .c17 {
+    --itemSize: 55px;
+  }
+}
+
+@media (width >= 768px) {
+  .c11 {
+    --iconHeight: 358px;
+    --iconWidth: 188px;
+    --pathHeight: 305px;
+    transform: unset;
+  }
+}
+
+@media (width >= 768px) {
+  .c16 {
+    border-top-left-radius: 40px 50%;
+    border-bottom-left-radius: 40px 50%;
+    border-top-right-radius: 40px 50%;
+    border-bottom-right-radius: 40px 50%;
+  }
+}
+
+@media (width >= 768px) {
+  .c13 {
+    border-top-right-radius: 60px 50%;
+    border-bottom-right-radius: 60px 50%;
+    border-top-left-radius: 60px 50%;
+    border-bottom-left-radius: 60px 50%;
+  }
+}
+
+@media (width >= 768px) {
+  .c15 {
+    border-top-right-radius: 60px 50%;
+    border-bottom-right-radius: 60px 50%;
+    border-top-left-radius: 60px 50%;
+    border-bottom-left-radius: 60px 50%;
+  }
+}
+
+@media (width >= 768px) {
+  .c3 {
+    margin-bottom: 70px;
+  }
+}
+
+@media (width >= 1024px) {
+  .c5 {
+    font-size: 65px;
+  }
+}
+
+@media (width >= 1024px) {
+  .c7 {
+    font-size: 65px;
+    font-family: fontFamily;
+    font-weight: 300;
+    margin-bottom: 30px;
+  }
+}
+
+@media (width >= 1024px) {
+  .c8 {
+    font-size: 30px;
+  }
+}
+
+@media (width >= 768px) {
+  .c9 {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+@media (width >= 768px) {
+  .c10 {
+    width: 100%;
+    margin-bottom: 0px;
+    max-width: 45%;
+  }
+}
+
+@media (width >= 768px) {
+  .c26 {
+    padding: 0 20px;
+    max-width: 55%;
+    padding: 0;
+  }
+}
+
+@media (width >= 768px) {
+  .c27 {
+    font-size: 20px;
+  }
+}
+
+@media (width >= 768px) {
+  .c12 {
+    margin: 70px 0 40px;
+    min-width: 400px;
+    width: 400px;
+    --iconHeight: 249px;
+    --iconWidth: 130px;
+    --pathHeight: 212px;
+    transform: rotate(90deg);
+  }
+}
+
+<body>
+  <div>
+    <h1
+      class="c0 c1"
+    >
+      Experience
+    </h1>
+    <section
+      class="c2"
+    >
+      <div
+        class="c3"
+      >
+        <p
+          class="c4 c5"
+        >
+          01
+        </p>
+        <div
+          class="c6"
+        >
+          <p
+            class="c4 c7"
+          >
+            Bonhams
+          </p>
+          <p
+            class="c4 c8"
+          >
+            January 2022
+             - 
+            Present
+          </p>
+        </div>
+      </div>
+      <div
+        class="c9"
+      >
+        <div
+          class="c10"
+        >
+          <div
+            class="c11 c12"
+            role="presentation"
+          >
+            <div
+              class="c13"
+            >
+              <svg
+                class="c14"
+                color="#FFDD83"
+              >
+                portal.svg
+              </svg>
+            </div>
+            <div
+              class="c15"
+            >
+              <svg
+                class="c14"
+                color="#98DFD6"
+              >
+                portal.svg
+              </svg>
+            </div>
+            <div
+              class="c16"
+            >
+              <li
+                class="c17"
+                data-testid="horizontal-movement"
+                style="animation-duration: 14.03796670595332s; animation-delay: 1.8362914836770063s;"
+              >
+                <div
+                  class="c18 c19"
+                  data-testid="vertical-movement"
+                  style="--translateY-begin: -34%; --translateY-end: 4%; animation-duration: 9.410548820538102s;"
+                >
+                  <div
+                    class="c20 c21"
+                    data-testid="rotation-movement"
+                    style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.969143762427998s;"
+                  >
+                    <a
+                      aria-label="NodeJS"
+                      class="c22 c23"
+                      data-testid="plain-anchor"
+                      href="https://nodejs.org/en/"
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      <div
+                        class="c24 c25"
+                        data-testid="color-swapping"
+                        style="animation-duration: 14.03796670595332s; animation-delay: 1.8362914836770063s;"
+                      >
+                        <svg>
+                          nodejs.svg
+                        </svg>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </li>
+            </div>
+          </div>
+        </div>
+        <div
+          class="c26"
+        >
+          <p
+            class="c4 c27"
+          >
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi non quam nec dui luctus faucibus. Nullam quis risus eget urna mollis ornare vel eu leo.
+          </p>
+          <p
+            class="c4 c27"
+          >
+            Nulla vitae elit libero, a pharetra augue. Donec ullamcorper nulla non metus auctor fringilla.
+          </p>
+          <a
+            class="c22 c28 c29"
+            data-testid="plain-anchor"
+            href="https://www.bonhams.com/"
+            rel="noreferrer"
+            target="_blank"
+          >
+            <div
+              class="c30"
+            >
+              <svg
+                class="c31 c32"
+                height="42"
+                width="42"
+              >
+                circleButton.svg
+              </svg>
+              <div
+                class="c33"
+              >
+                <svg>
+                  arrowRight.svg
+                </svg>
+              </div>
+            </div>
+            <p
+              class="c34 c4 c35"
+            >
+              Check the website
+            </p>
+          </a>
+        </div>
+      </div>
+    </section>
+    <section
+      class="c2"
+    >
+      <div
+        class="c3"
+      >
+        <p
+          class="c4 c5"
+        >
+          02
+        </p>
+        <div
+          class="c6"
+        >
+          <p
+            class="c4 c7"
+          >
+            Smart Protection
+          </p>
+          <p
+            class="c4 c8"
+          >
+            February 2021
+             - 
+            January 2022
+          </p>
+        </div>
+      </div>
+      <div
+        class="c9"
+      >
+        <div
+          class="c10"
+        >
+          <div
+            class="c11 c12"
+            role="presentation"
+          >
+            <div
+              class="c13"
+            >
+              <svg
+                class="c14"
+                color="#FFDD83"
+              >
+                portal.svg
+              </svg>
+            </div>
+            <div
+              class="c15"
+            >
+              <svg
+                class="c14"
+                color="#98DFD6"
+              >
+                portal.svg
+              </svg>
+            </div>
+            <div
+              class="c16"
+            >
+              <li
+                class="c17"
+                data-testid="horizontal-movement"
+                style="animation-duration: 19.418589292394458s; animation-delay: 15.754178610335014s;"
+              >
+                <div
+                  class="c18 c19"
+                  data-testid="vertical-movement"
+                  style="--translateY-begin: -22%; --translateY-end: 1%; animation-duration: 2.1750665840069803s;"
+                >
+                  <div
+                    class="c20 c21"
+                    data-testid="rotation-movement"
+                    style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 6.759014200771513s;"
+                  >
+                    <a
+                      aria-label="NodeJS"
+                      class="c22 c23"
+                      data-testid="plain-anchor"
+                      href="https://nodejs.org/en/"
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      <div
+                        class="c24 c25"
+                        data-testid="color-swapping"
+                        style="animation-duration: 19.418589292394458s; animation-delay: 15.754178610335014s;"
+                      >
+                        <svg>
+                          nodejs.svg
+                        </svg>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </li>
+            </div>
+          </div>
+        </div>
+        <div
+          class="c26"
+        >
+          <p
+            class="c4 c27"
+          >
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi non quam nec dui luctus faucibus. Nullam quis risus eget urna mollis ornare vel eu leo.
+          </p>
+          <p
+            class="c4 c27"
+          >
+            Nulla vitae elit libero, a pharetra augue. Donec ullamcorper nulla non metus auctor fringilla.
+          </p>
+          <a
+            class="c22 c28 c29"
+            data-testid="plain-anchor"
+            href="https://www.smartprotection.com/"
+            rel="noreferrer"
+            target="_blank"
+          >
+            <div
+              class="c30"
+            >
+              <svg
+                class="c31 c32"
+                height="42"
+                width="42"
+              >
+                circleButton.svg
+              </svg>
+              <div
+                class="c33"
+              >
+                <svg>
+                  arrowRight.svg
+                </svg>
+              </div>
+            </div>
+            <p
+              class="c34 c4 c35"
+            >
+              Check the website
+            </p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+`;

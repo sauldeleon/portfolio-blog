@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 
 import {
   Auth0Icon,
+  BF2042Icon,
   CSS3Icon,
   ChromeIcon,
   CypressIcon,
@@ -196,6 +197,12 @@ export function useMainPortalItems() {
         svg: <HalfLifeIcon />,
         path: 'https://half-life.com/',
         ariaLabel: 'Half-Life',
+        focusable: false,
+      },
+      {
+        svg: <BF2042Icon />,
+        path: 'https://www.ea.com/en-gb/games/battlefield/battlefield-2042',
+        ariaLabel: 'Battlefield 2042',
         focusable: false,
       },
     ],
