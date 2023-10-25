@@ -5,6 +5,7 @@ exports[`ContactPage should render successfully 1`] = `
   --iconHeight: 249px;
   --iconWidth: 130px;
   --pathHeight: 212px;
+  --pathBorder: 30px 50%;
   z-index: 2;
   display: flex;
   justify-content: space-between;
@@ -15,10 +16,10 @@ exports[`ContactPage should render successfully 1`] = `
   position: absolute;
   overflow: clip;
   height: var(--pathHeight);
-  border-top-left-radius: 30px 50%;
-  border-bottom-left-radius: 30px 50%;
-  border-top-right-radius: 30px 50%;
-  border-bottom-right-radius: 30px 50%;
+  border-top-left-radius: var(--pathBorder);
+  border-bottom-left-radius: var(--pathBorder);
+  border-top-right-radius: var(--pathBorder);
+  border-bottom-right-radius: var(--pathBorder);
   top: calc((var(--iconHeight) - var(--pathHeight)) / 2);
   left: calc((var(--iconWidth) / 2) - 3px);
   right: calc((var(--iconWidth) / 2) - 3px);
@@ -292,16 +293,8 @@ exports[`ContactPage should render successfully 1`] = `
     --iconHeight: 358px;
     --iconWidth: 188px;
     --pathHeight: 305px;
+    --pathBorder: 40px 50%;
     transform: unset;
-  }
-}
-
-@media (width >= 768px) {
-  .c8 {
-    border-top-left-radius: 40px 50%;
-    border-bottom-left-radius: 40px 50%;
-    border-top-right-radius: 40px 50%;
-    border-bottom-right-radius: 40px 50%;
   }
 }
 

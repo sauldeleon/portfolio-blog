@@ -128,7 +128,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   --translateX-end: calc(50% + var(--itemSize));
   list-style: none;
   position: absolute;
-  transform: translateX(-60%);
+  transform: translateX(-70%);
   width: 100%;
   height: 100%;
   pointer-events: none;
@@ -154,7 +154,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   --translateX-end: calc(50% + var(--itemSize));
   list-style: none;
   position: absolute;
-  transform: translateX(-60%);
+  transform: translateX(-70%);
   width: 100%;
   height: 100%;
   pointer-events: none;
@@ -180,7 +180,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   --translateX-end: calc(50% + var(--itemSize));
   list-style: none;
   position: absolute;
-  transform: translateX(-60%);
+  transform: translateX(-70%);
   width: 100%;
   height: 100%;
   pointer-events: none;
@@ -204,6 +204,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
   --iconHeight: 249px;
   --iconWidth: 130px;
   --pathHeight: 212px;
+  --pathBorder: 30px 50%;
   z-index: 2;
   display: flex;
   justify-content: space-between;
@@ -214,10 +215,10 @@ exports[`[lng] route - Page should render successfully 1`] = `
   position: absolute;
   overflow: clip;
   height: var(--pathHeight);
-  border-top-left-radius: 30px 50%;
-  border-bottom-left-radius: 30px 50%;
-  border-top-right-radius: 30px 50%;
-  border-bottom-right-radius: 30px 50%;
+  border-top-left-radius: var(--pathBorder);
+  border-bottom-left-radius: var(--pathBorder);
+  border-top-right-radius: var(--pathBorder);
+  border-bottom-right-radius: var(--pathBorder);
   top: calc((var(--iconHeight) - var(--pathHeight)) / 2);
   left: calc((var(--iconWidth) / 2) - 3px);
   right: calc((var(--iconWidth) / 2) - 3px);
@@ -373,16 +374,8 @@ exports[`[lng] route - Page should render successfully 1`] = `
     --iconHeight: 358px;
     --iconWidth: 188px;
     --pathHeight: 305px;
+    --pathBorder: 40px 50%;
     transform: unset;
-  }
-}
-
-@media (width >= 768px) {
-  .c8 {
-    border-top-left-radius: 40px 50%;
-    border-bottom-left-radius: 40px 50%;
-    border-top-right-radius: 40px 50%;
-    border-bottom-right-radius: 40px 50%;
   }
 }
 
@@ -997,7 +990,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 8.863313964128423s; animation-delay: 16.568849030340978s;"
+                style="animation-duration: 12.48341597539348s; animation-delay: 1.7443883224146601s;"
               >
                 <div
                   class="c14 c15"
@@ -1020,7 +1013,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 8.863313964128423s; animation-delay: 16.568849030340978s;"
+                        style="animation-duration: 12.48341597539348s; animation-delay: 1.7443883224146601s;"
                       >
                         <svg>
                           nodejs.svg
@@ -1033,7 +1026,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c22"
                 data-testid="horizontal-movement"
-                style="animation-duration: 13.786750058896462s; animation-delay: 18.337519014903997s;"
+                style="animation-duration: 18.27111509700878s; animation-delay: 18.392989666209726s;"
               >
                 <div
                   class="c14 c15"
@@ -1056,7 +1049,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 13.786750058896462s; animation-delay: 18.337519014903997s;"
+                        style="animation-duration: 18.27111509700878s; animation-delay: 18.392989666209726s;"
                       >
                         <svg>
                           css3.svg
@@ -1069,7 +1062,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c22"
                 data-testid="horizontal-movement"
-                style="animation-duration: 19.892571930205534s; animation-delay: 15.999182916576032s;"
+                style="animation-duration: 17.024308027926118s; animation-delay: 7.93402930909094s;"
               >
                 <div
                   class="c14 c15"
@@ -1092,7 +1085,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 19.892571930205534s; animation-delay: 15.999182916576032s;"
+                        style="animation-duration: 17.024308027926118s; animation-delay: 7.93402930909094s;"
                       >
                         <svg>
                           github.svg
@@ -1103,9 +1096,9 @@ exports[`[lng] route - Page should render successfully 1`] = `
                 </div>
               </li>
               <li
-                class="c22"
+                class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 18.412964603232417s; animation-delay: 4.582155967659035s;"
+                style="animation-duration: 16.408326904936835s; animation-delay: 7.047038158390374s;"
               >
                 <div
                   class="c14 c15"
@@ -1128,7 +1121,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 18.412964603232417s; animation-delay: 4.582155967659035s;"
+                        style="animation-duration: 16.408326904936835s; animation-delay: 7.047038158390374s;"
                       >
                         <svg>
                           typescript.svg
@@ -1141,7 +1134,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c23"
                 data-testid="horizontal-movement"
-                style="animation-duration: 7.601709352407495s; animation-delay: 19.944298555309906s;"
+                style="animation-duration: 6.2143418653471105s; animation-delay: 14.96279356081713s;"
               >
                 <div
                   class="c14 c15"
@@ -1164,7 +1157,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 7.601709352407495s; animation-delay: 19.944298555309906s;"
+                        style="animation-duration: 6.2143418653471105s; animation-delay: 14.96279356081713s;"
                       >
                         <svg>
                           nextjs.svg
@@ -1177,7 +1170,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c23"
                 data-testid="horizontal-movement"
-                style="animation-duration: 7.973007547148972s; animation-delay: 2.6852191865478408s;"
+                style="animation-duration: 13.282794723394549s; animation-delay: 19.407062081011592s;"
               >
                 <div
                   class="c14 c15"
@@ -1200,7 +1193,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 7.973007547148972s; animation-delay: 2.6852191865478408s;"
+                        style="animation-duration: 13.282794723394549s; animation-delay: 19.407062081011592s;"
                       >
                         <svg>
                           reactjs.svg
@@ -1213,7 +1206,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c22"
                 data-testid="horizontal-movement"
-                style="animation-duration: 13.963351823705295s; animation-delay: 20.341778399867685s;"
+                style="animation-duration: 7.965933224497556s; animation-delay: 10.014627188007138s;"
               >
                 <div
                   class="c14 c15"
@@ -1236,7 +1229,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 13.963351823705295s; animation-delay: 20.341778399867685s;"
+                        style="animation-duration: 7.965933224497556s; animation-delay: 10.014627188007138s;"
                       >
                         <svg>
                           mongodb.svg
@@ -1249,7 +1242,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 8.852800132621072s; animation-delay: 3.099824836717412s;"
+                style="animation-duration: 17.33718816611197s; animation-delay: 16.74725799928217s;"
               >
                 <div
                   class="c14 c15"
@@ -1272,7 +1265,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 8.852800132621072s; animation-delay: 3.099824836717412s;"
+                        style="animation-duration: 17.33718816611197s; animation-delay: 16.74725799928217s;"
                       >
                         <svg>
                           reactQuery.svg
@@ -1285,7 +1278,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 11.217878381555153s; animation-delay: 19.922858667232482s;"
+                style="animation-duration: 7.354113296373541s; animation-delay: 18.422958214654322s;"
               >
                 <div
                   class="c14 c15"
@@ -1308,7 +1301,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 11.217878381555153s; animation-delay: 19.922858667232482s;"
+                        style="animation-duration: 7.354113296373541s; animation-delay: 18.422958214654322s;"
                       >
                         <svg>
                           jest.svg
@@ -1321,7 +1314,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c22"
                 data-testid="horizontal-movement"
-                style="animation-duration: 13.285594132025308s; animation-delay: 3.822453596503797s;"
+                style="animation-duration: 16.723809272622788s; animation-delay: 17.81607617840846s;"
               >
                 <div
                   class="c14 c15"
@@ -1344,7 +1337,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 13.285594132025308s; animation-delay: 3.822453596503797s;"
+                        style="animation-duration: 16.723809272622788s; animation-delay: 17.81607617840846s;"
                       >
                         <svg>
                           nx.svg
@@ -1357,7 +1350,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c22"
                 data-testid="horizontal-movement"
-                style="animation-duration: 6.140394548449443s; animation-delay: 17.45090511424524s;"
+                style="animation-duration: 15.17095522545967s; animation-delay: 20.611233930033464s;"
               >
                 <div
                   class="c14 c15"
@@ -1380,7 +1373,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 6.140394548449443s; animation-delay: 17.45090511424524s;"
+                        style="animation-duration: 15.17095522545967s; animation-delay: 20.611233930033464s;"
                       >
                         <svg>
                           yarn.svg
@@ -1393,7 +1386,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 18.380772518842353s; animation-delay: 17.532690801181168s;"
+                style="animation-duration: 16.99254132192197s; animation-delay: 10.119766539837089s;"
               >
                 <div
                   class="c14 c15"
@@ -1417,7 +1410,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 18.380772518842353s; animation-delay: 17.532690801181168s;"
+                        style="animation-duration: 16.99254132192197s; animation-delay: 10.119766539837089s;"
                       >
                         <svg>
                           scottPilgrim.svg
@@ -1430,7 +1423,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c22"
                 data-testid="horizontal-movement"
-                style="animation-duration: 16.328130561642666s; animation-delay: 6.9342167534804s;"
+                style="animation-duration: 12.844715365443747s; animation-delay: 3.4188403867003667s;"
               >
                 <div
                   class="c14 c15"
@@ -1453,7 +1446,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 16.328130561642666s; animation-delay: 6.9342167534804s;"
+                        style="animation-duration: 12.844715365443747s; animation-delay: 3.4188403867003667s;"
                       >
                         <svg>
                           xataIO.svg
@@ -1466,7 +1459,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 17.271344348475175s; animation-delay: 8.056759901806338s;"
+                style="animation-duration: 10.427384209174082s; animation-delay: 18.736199877193933s;"
               >
                 <div
                   class="c14 c15"
@@ -1489,7 +1482,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 17.271344348475175s; animation-delay: 8.056759901806338s;"
+                        style="animation-duration: 10.427384209174082s; animation-delay: 18.736199877193933s;"
                       >
                         <svg>
                           styledComponents.svg
@@ -1502,7 +1495,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 18.381619673625828s; animation-delay: 7.104194971133172s;"
+                style="animation-duration: 10.359796886337136s; animation-delay: 3.0347968570283315s;"
               >
                 <div
                   class="c14 c15"
@@ -1525,7 +1518,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 18.381619673625828s; animation-delay: 7.104194971133172s;"
+                        style="animation-duration: 10.359796886337136s; animation-delay: 3.0347968570283315s;"
                       >
                         <svg>
                           eslint.svg
@@ -1538,7 +1531,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 16.157087671041783s; animation-delay: 12.520902566745143s;"
+                style="animation-duration: 10.495753659262913s; animation-delay: 12.500452286468345s;"
               >
                 <div
                   class="c14 c15"
@@ -1561,7 +1554,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 16.157087671041783s; animation-delay: 12.520902566745143s;"
+                        style="animation-duration: 10.495753659262913s; animation-delay: 12.500452286468345s;"
                       >
                         <svg>
                           cypress.svg
@@ -1574,7 +1567,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 14.587389009524479s; animation-delay: 18.500250385822373s;"
+                style="animation-duration: 14.473562029794005s; animation-delay: 7.388133554290528s;"
               >
                 <div
                   class="c14 c15"
@@ -1597,7 +1590,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 14.587389009524479s; animation-delay: 18.500250385822373s;"
+                        style="animation-duration: 14.473562029794005s; animation-delay: 7.388133554290528s;"
                       >
                         <svg>
                           prettier.svg
@@ -1610,7 +1603,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 14.54153333523598s; animation-delay: 2.7910106729333313s;"
+                style="animation-duration: 8.581803270997197s; animation-delay: 4.205700782245803s;"
               >
                 <div
                   class="c14 c15"
@@ -1633,7 +1626,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 14.54153333523598s; animation-delay: 2.7910106729333313s;"
+                        style="animation-duration: 8.581803270997197s; animation-delay: 4.205700782245803s;"
                       >
                         <svg>
                           docker.svg
@@ -1646,7 +1639,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 8.294339875663672s; animation-delay: 10.122007953064076s;"
+                style="animation-duration: 19.495206850024108s; animation-delay: 3.061621388117784s;"
               >
                 <div
                   class="c14 c15"
@@ -1669,7 +1662,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 8.294339875663672s; animation-delay: 10.122007953064076s;"
+                        style="animation-duration: 19.495206850024108s; animation-delay: 3.061621388117784s;"
                       >
                         <svg>
                           html5.svg
@@ -1682,7 +1675,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 19.266980102366603s; animation-delay: 6.277431201227875s;"
+                style="animation-duration: 7.3674427330272785s; animation-delay: 8.828664287135588s;"
               >
                 <div
                   class="c14 c15"
@@ -1705,7 +1698,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 19.266980102366603s; animation-delay: 6.277431201227875s;"
+                        style="animation-duration: 7.3674427330272785s; animation-delay: 8.828664287135588s;"
                       >
                         <svg>
                           javascript.svg
@@ -1718,7 +1711,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 14.715448840651458s; animation-delay: 10.051014461092613s;"
+                style="animation-duration: 12.655282668799973s; animation-delay: 4.979799356547822s;"
               >
                 <div
                   class="c14 c15"
@@ -1741,7 +1734,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 14.715448840651458s; animation-delay: 10.051014461092613s;"
+                        style="animation-duration: 12.655282668799973s; animation-delay: 4.979799356547822s;"
                       >
                         <svg>
                           npm.svg
@@ -1754,7 +1747,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 17.685194910444892s; animation-delay: 18.038661357658167s;"
+                style="animation-duration: 7.176141756273594s; animation-delay: 13.294264768474779s;"
               >
                 <div
                   class="c14 c15"
@@ -1777,7 +1770,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 17.685194910444892s; animation-delay: 18.038661357658167s;"
+                        style="animation-duration: 7.176141756273594s; animation-delay: 13.294264768474779s;"
                       >
                         <svg>
                           git.svg
@@ -1790,7 +1783,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 8.337109494430436s; animation-delay: 8.155550221907083s;"
+                style="animation-duration: 8.342072797372582s; animation-delay: 16.383101487890137s;"
               >
                 <div
                   class="c14 c15"
@@ -1813,7 +1806,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 8.337109494430436s; animation-delay: 8.155550221907083s;"
+                        style="animation-duration: 8.342072797372582s; animation-delay: 16.383101487890137s;"
                       >
                         <svg>
                           chrome.svg
@@ -1826,7 +1819,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 8.136088621999374s; animation-delay: 8.76228147644557s;"
+                style="animation-duration: 20.00336680354149s; animation-delay: 6.735355803631174s;"
               >
                 <div
                   class="c14 c15"
@@ -1849,7 +1842,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 8.136088621999374s; animation-delay: 8.76228147644557s;"
+                        style="animation-duration: 20.00336680354149s; animation-delay: 6.735355803631174s;"
                       >
                         <svg>
                           vscode.svg
@@ -1862,7 +1855,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 8.367296304582151s; animation-delay: 19.732727964617926s;"
+                style="animation-duration: 15.341269132191854s; animation-delay: 11.330069597589556s;"
               >
                 <div
                   class="c14 c15"
@@ -1885,7 +1878,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 8.367296304582151s; animation-delay: 19.732727964617926s;"
+                        style="animation-duration: 15.341269132191854s; animation-delay: 11.330069597589556s;"
                       >
                         <svg>
                           materialui.svg
@@ -1898,7 +1891,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 7.423394359927529s; animation-delay: 13.528987552606395s;"
+                style="animation-duration: 18.501250869398337s; animation-delay: 4.202130447980862s;"
               >
                 <div
                   class="c14 c15"
@@ -1921,7 +1914,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 7.423394359927529s; animation-delay: 13.528987552606395s;"
+                        style="animation-duration: 18.501250869398337s; animation-delay: 4.202130447980862s;"
                       >
                         <svg>
                           postgresSQL.svg
@@ -1934,7 +1927,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 9.981661135911185s; animation-delay: 14.758127533936404s;"
+                style="animation-duration: 14.271043418332656s; animation-delay: 12.494933821236991s;"
               >
                 <div
                   class="c14 c15"
@@ -1957,7 +1950,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 9.981661135911185s; animation-delay: 14.758127533936404s;"
+                        style="animation-duration: 14.271043418332656s; animation-delay: 12.494933821236991s;"
                       >
                         <svg>
                           sentry.svg
@@ -1970,7 +1963,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 7.63128276624017s; animation-delay: 3.5692605941147773s;"
+                style="animation-duration: 6.802685214352472s; animation-delay: 9.854921291874906s;"
               >
                 <div
                   class="c14 c15"
@@ -1993,7 +1986,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 7.63128276624017s; animation-delay: 3.5692605941147773s;"
+                        style="animation-duration: 6.802685214352472s; animation-delay: 9.854921291874906s;"
                       >
                         <svg>
                           storybook.svg
@@ -2006,7 +1999,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 8.224715389235337s; animation-delay: 9.43807281182656s;"
+                style="animation-duration: 20.18328141163432s; animation-delay: 13.062648682005467s;"
               >
                 <div
                   class="c14 c15"
@@ -2029,7 +2022,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 8.224715389235337s; animation-delay: 9.43807281182656s;"
+                        style="animation-duration: 20.18328141163432s; animation-delay: 13.062648682005467s;"
                       >
                         <svg>
                           webpack.svg
@@ -2042,7 +2035,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 7.347436450909249s; animation-delay: 20.200585431268962s;"
+                style="animation-duration: 17.278640804924414s; animation-delay: 3.989736873833169s;"
               >
                 <div
                   class="c14 c15"
@@ -2065,7 +2058,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 7.347436450909249s; animation-delay: 20.200585431268962s;"
+                        style="animation-duration: 17.278640804924414s; animation-delay: 3.989736873833169s;"
                       >
                         <svg>
                           gitLab.svg
@@ -2078,7 +2071,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 13.47835889276898s; animation-delay: 16.378596221158826s;"
+                style="animation-duration: 13.363278590005844s; animation-delay: 8.593868262494325s;"
               >
                 <div
                   class="c14 c15"
@@ -2101,7 +2094,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 13.47835889276898s; animation-delay: 16.378596221158826s;"
+                        style="animation-duration: 13.363278590005844s; animation-delay: 8.593868262494325s;"
                       >
                         <svg>
                           json.svg
@@ -2114,7 +2107,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 19.93296761408395s; animation-delay: 11.821549919105154s;"
+                style="animation-duration: 15.856209992709317s; animation-delay: 4.803537088898943s;"
               >
                 <div
                   class="c14 c15"
@@ -2137,7 +2130,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 19.93296761408395s; animation-delay: 11.821549919105154s;"
+                        style="animation-duration: 15.856209992709317s; animation-delay: 4.803537088898943s;"
                       >
                         <svg>
                           vercel.svg
@@ -2150,7 +2143,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 17.144149138157797s; animation-delay: 15.568898600596697s;"
+                style="animation-duration: 13.944582045084193s; animation-delay: 15.58888851412879s;"
               >
                 <div
                   class="c14 c15"
@@ -2170,7 +2163,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 17.144149138157797s; animation-delay: 15.568898600596697s;"
+                        style="animation-duration: 13.944582045084193s; animation-delay: 15.58888851412879s;"
                       >
                         <svg>
                           auth0.svg
@@ -2183,7 +2176,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 19.284600443743102s; animation-delay: 2.7892558767554902s;"
+                style="animation-duration: 9.004456309721103s; animation-delay: 9.746613934148566s;"
               >
                 <div
                   class="c14 c15"
@@ -2207,7 +2200,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 19.284600443743102s; animation-delay: 2.7892558767554902s;"
+                        style="animation-duration: 9.004456309721103s; animation-delay: 9.746613934148566s;"
                       >
                         <svg>
                           spidermask.svg
@@ -2220,7 +2213,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 6.152773924806048s; animation-delay: 17.475741728505554s;"
+                style="animation-duration: 11.669600102493067s; animation-delay: 18.85949814669319s;"
               >
                 <div
                   class="c14 c15"
@@ -2244,7 +2237,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 6.152773924806048s; animation-delay: 17.475741728505554s;"
+                        style="animation-duration: 11.669600102493067s; animation-delay: 18.85949814669319s;"
                       >
                         <svg>
                           halflife.svg
@@ -2257,7 +2250,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 20.096322941922587s; animation-delay: 18.69386146770302s;"
+                style="animation-duration: 19.53381433772886s; animation-delay: 18.178173182546793s;"
               >
                 <div
                   class="c14 c15"
@@ -2281,7 +2274,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 20.096322941922587s; animation-delay: 18.69386146770302s;"
+                        style="animation-duration: 19.53381433772886s; animation-delay: 18.178173182546793s;"
                       >
                         <svg>
                           bf2042.svg

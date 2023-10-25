@@ -1,5 +1,8 @@
 {
   "title": "Experiencia",
+  "present": "Actualmente",
+  "usedTechnologies": "Tecnologías utilizadas en {{company}}",
+  "checkWebsiteLink": "Comprueba la página web",
   "metadata": {
     "description": "Mi experiencia laboral"
   }

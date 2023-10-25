@@ -1,5 +1,5 @@
-import { AnimatedItemProps } from '@web/components/AnimatedItem/AnimatedItem'
 import { useClientTranslation } from '@web/i18n/client'
+import { AnimatedItemKey } from '@web/utils/animatedItem/animatedItemMap'
 
 import { StyledHeading } from './ExperiencePage.styles'
 import { ExperienceItem } from './components/ExperienceItem/ExperienceItem'
@@ -8,9 +8,9 @@ import { useExperienceItems } from './useExperienceItems'
 export type ExperienceItem = {
   order: number
   company: string
-  technologies: AnimatedItemProps[]
-  beginDate: string
-  endDate?: string
+  technologies: AnimatedItemKey[]
+  beginDate: Date
+  endDate?: Date
   link: string
   linkLabel: string
   descriptionParagraphs: string[]
@@ -26,33 +26,9 @@ export function ExperiencePage() {
       <StyledHeading $level={2}>{t('title')}</StyledHeading>
       {experienceItems
         .sort((a, b) => a.order - b.order)
-        .map(
-          (
-            {
-              order,
-              company,
-              technologies,
-              beginDate,
-              endDate,
-              link,
-              linkLabel,
-              descriptionParagraphs,
-            },
-            index,
-          ) => (
-            <ExperienceItem
-              key={index}
-              order={order}
-              company={company}
-              technologies={technologies}
-              beginDate={beginDate}
-              endDate={endDate}
-              link={link}
-              linkLabel={linkLabel}
-              descriptionParagraphs={descriptionParagraphs}
-            />
-          ),
-        )}
+        .map((props, index) => (
+          <ExperienceItem key={index} {...props} />
+        ))}
     </>
   )
 }

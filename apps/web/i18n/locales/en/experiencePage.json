@@ -1,6 +1,8 @@
 {
   "title": "Experience",
+  "present": "Present",
   "checkWebsiteLink": "Check the website",
+  "usedTechnologies": "Used technologies at {{company}}",
   "metadata": {
     "description": "My work experience"
   }

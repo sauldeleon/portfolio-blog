@@ -6,6 +6,7 @@ export const StyledPortals = styled.div`
   --iconHeight: 249px;
   --iconWidth: 130px;
   --pathHeight: 212px;
+  --pathBorder: 30px 50%;
 
   z-index: 2;
   display: flex;
@@ -16,6 +17,7 @@ export const StyledPortals = styled.div`
     --iconHeight: 358px;
     --iconWidth: 188px;
     --pathHeight: 305px;
+    --pathBorder: 40px 50%;
 
     transform: unset;
   }
@@ -26,21 +28,14 @@ export const PortalPath = styled.div`
   overflow: clip;
   height: var(--pathHeight);
 
-  border-top-left-radius: 30px 50%;
-  border-bottom-left-radius: 30px 50%;
-  border-top-right-radius: 30px 50%;
-  border-bottom-right-radius: 30px 50%;
+  border-top-left-radius: var(--pathBorder);
+  border-bottom-left-radius: var(--pathBorder);
+  border-top-right-radius: var(--pathBorder);
+  border-bottom-right-radius: var(--pathBorder);
 
   top: calc((var(--iconHeight) - var(--pathHeight)) / 2);
   left: calc((var(--iconWidth) / 2) - 3px);
   right: calc((var(--iconWidth) / 2) - 3px);
-
-  ${({ theme }) => theme.media.up.md} {
-    border-top-left-radius: 40px 50%;
-    border-bottom-left-radius: 40px 50%;
-    border-top-right-radius: 40px 50%;
-    border-bottom-right-radius: 40px 50%;
-  }
 `
 
 export const StyledPortalIcon = styled(Portal)`

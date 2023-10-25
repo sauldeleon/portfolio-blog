@@ -18,7 +18,7 @@ export function HomePage() {
         {items
           .filter(({ isHidden }) => !isHidden)
           .map((props, index) => (
-            <AnimatedItem key={`${id}-${index}`} {...props} />
+            <AnimatedItem key={`${id}-${index}`} increaseOnDesktop {...props} />
           ))}
       </ul>
     </MainPortal>

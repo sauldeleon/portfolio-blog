@@ -1,4 +1,3 @@
-import { NodeJSIcon } from '@sdlgr/assets'
 import { useClientTranslation } from '@sdlgr/i18n-client'
 
 import { ExperienceItem } from './ExperiencePage'
@@ -10,13 +9,14 @@ export function useExperienceItems(): ExperienceItem[] {
       order: 0,
       company: 'Bonhams',
       technologies: [
-        {
-          svg: <NodeJSIcon />,
-          path: 'https://nodejs.org/en/',
-          ariaLabel: 'NodeJS',
-        },
+        'nodeJS',
+        'cypress',
+        'jest',
+        'reactQuery',
+        'nextJS',
+        'styledComponents',
       ],
-      beginDate: 'January 2022',
+      beginDate: new Date('2022-02-01T00:00:00.000Z'),
       link: 'https://www.bonhams.com/',
       linkLabel: t('checkWebsiteLink'),
       descriptionParagraphs: [
@@ -27,15 +27,9 @@ export function useExperienceItems(): ExperienceItem[] {
     {
       order: 1,
       company: 'Smart Protection',
-      technologies: [
-        {
-          svg: <NodeJSIcon />,
-          path: 'https://nodejs.org/en/',
-          ariaLabel: 'NodeJS',
-        },
-      ],
-      beginDate: 'February 2021',
-      endDate: 'January 2022',
+      technologies: ['nodeJS'],
+      beginDate: new Date('2021-02-01T00:00:00.000Z'),
+      endDate: new Date('2022-02-01T00:00:00.000Z'),
       link: 'https://www.smartprotection.com/',
       linkLabel: t('checkWebsiteLink'),
       descriptionParagraphs: [

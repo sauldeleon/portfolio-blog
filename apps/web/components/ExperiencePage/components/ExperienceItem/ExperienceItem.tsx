@@ -1,11 +1,14 @@
+import { format } from 'date-fns'
 import { useId } from 'react'
 
 import { ArrowRightIcon } from '@sdlgr/assets'
 
+import { AnimatedItem } from '@web/components/AnimatedItem/AnimatedItem'
+import { useClientTranslation } from '@web/i18n/client'
 import {
-  AnimatedItem,
-  AnimatedItemProps,
-} from '@web/components/AnimatedItem/AnimatedItem'
+  AnimatedItemKey,
+  animatedItemMap,
+} from '@web/utils/animatedItem/animatedItemMap'
 
 import {
   StyledCircleLink,
@@ -25,9 +28,9 @@ import {
 export interface ExperienceItemProps {
   order: number
   company: string
-  technologies: AnimatedItemProps[]
-  beginDate: string
-  endDate?: string
+  technologies: AnimatedItemKey[]
+  beginDate: Date
+  endDate?: Date
   link: string
   linkLabel: string
   descriptionParagraphs: string[]
@@ -47,6 +50,8 @@ export function ExperienceItem({
   descriptionParagraphs,
 }: ExperienceItemProps) {
   const id = useId()
+  const { t } = useClientTranslation('experiencePage')
+
   return (
     <StyledSection>
       <StyledExperienceHeader>
@@ -54,18 +59,23 @@ export function ExperienceItem({
         <StyledCompanyInfo>
           <StyledCompanyName>{company}</StyledCompanyName>
           <StyledCompanyPeriod>
-            {beginDate} - {endDate ?? 'Present'}
+            {`${format(beginDate, 'MMM yyyy')} - ${
+              endDate ? format(endDate, 'MMM yyyy') : t('present')
+            }`}
           </StyledCompanyPeriod>
         </StyledCompanyInfo>
       </StyledExperienceHeader>
       <StyledExperienceInfo>
         <StyledExperiencePortal>
           <StyledPortals>
-            {technologies
-              .filter(({ isHidden }) => !isHidden)
-              .map((props, index) => (
-                <AnimatedItem key={`${id}-${index}`} {...props} />
-              ))}
+            <ul aria-label={t('usedTechnologies', { company })}>
+              {technologies
+                .map((tech) => animatedItemMap[tech])
+                .filter(({ isHidden }) => !isHidden)
+                .map((props, index) => (
+                  <AnimatedItem key={`${id}-${index}`} fastDelay {...props} />
+                ))}
+            </ul>
           </StyledPortals>
         </StyledExperiencePortal>
         <StyledExperienceDescription>

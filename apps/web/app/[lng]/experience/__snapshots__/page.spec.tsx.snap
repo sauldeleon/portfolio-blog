@@ -134,7 +134,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
   --translateX-end: calc(50% + var(--itemSize));
   list-style: none;
   position: absolute;
-  transform: translateX(-60%);
+  transform: translateX(-70%);
   width: 100%;
   height: 100%;
   pointer-events: none;
@@ -154,12 +154,38 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
   animation-play-state: paused;
 }
 
-.c35 {
+.c26 {
+  --itemSize: 55px;
+  --translateX-begin: calc(-50% - var(--itemSize));
+  --translateX-end: calc(50% + var(--itemSize));
+  list-style: none;
+  position: absolute;
+  transform: translateX(-70%);
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  animation-name: ciDIWM;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.c26:hover {
+  z-index: 200;
+  animation-play-state: paused;
+}
+
+.c26:hover .c18,
+.c26:hover .c20,
+.c26:hover .c24 {
+  animation-play-state: paused;
+}
+
+.c36 {
   margin-left: 8px;
   position: relative;
 }
 
-.c35::after {
+.c36::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -169,13 +195,13 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
   background-color: currentColor;
 }
 
-.c35::after {
+.c36::after {
   transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.5s ease-out;
 }
 
-.c32 .loading {
+.c33 .loading {
   transform: rotate(-90deg);
   transform-origin: center;
   stroke: #FBFBFB;
@@ -185,7 +211,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
   transition: stroke-dashoffset 0.5s steps(4, end);
 }
 
-.c28 {
+.c29 {
   outline: none;
   cursor: pointer;
   display: flex;
@@ -193,34 +219,34 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
   max-height: 42px;
 }
 
-.c28:after {
+.c29:after {
   content: none;
 }
 
-.c28:hover:after {
+.c29:hover:after {
   content: none;
 }
 
-.c28:focus-visible {
+.c29:focus-visible {
   outline: #FBFBFB auto 1px;
 }
 
-.c28:hover .c31 .loading {
+.c29:hover .c32 .loading {
   stroke-dashoffset: 0;
 }
 
-.c28:hover .c34::after {
+.c29:hover .c35::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
 
-.c30 {
+.c31 {
   position: relative;
   width: 42px;
   height: 42px;
 }
 
-.c33 {
+.c34 {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
@@ -232,6 +258,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
   --iconHeight: 249px;
   --iconWidth: 130px;
   --pathHeight: 212px;
+  --pathBorder: 30px 50%;
   z-index: 2;
   display: flex;
   justify-content: space-between;
@@ -242,10 +269,10 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
   position: absolute;
   overflow: clip;
   height: var(--pathHeight);
-  border-top-left-radius: 30px 50%;
-  border-bottom-left-radius: 30px 50%;
-  border-top-right-radius: 30px 50%;
-  border-bottom-right-radius: 30px 50%;
+  border-top-left-radius: var(--pathBorder);
+  border-bottom-left-radius: var(--pathBorder);
+  border-top-right-radius: var(--pathBorder);
+  border-bottom-right-radius: var(--pathBorder);
   top: calc((var(--iconHeight) - var(--pathHeight)) / 2);
   left: calc((var(--iconWidth) / 2) - 3px);
   right: calc((var(--iconWidth) / 2) - 3px);
@@ -307,6 +334,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
 
 .c7 {
   font-size: 30px;
+  text-align: end;
   font-family: fontFamily;
   font-weight: 500;
 }
@@ -333,12 +361,12 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
   margin-bottom: 40px;
 }
 
-.c27 {
+.c28 {
   margin-bottom: 20px;
   font-size: 15px;
 }
 
-.c29 {
+.c30 {
   margin-top: 50px;
   text-transform: uppercase;
   width: max-content;
@@ -363,26 +391,12 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
 }
 
 @media (width >= 768px) {
-  .c17 {
-    --itemSize: 55px;
-  }
-}
-
-@media (width >= 768px) {
   .c11 {
     --iconHeight: 358px;
     --iconWidth: 188px;
     --pathHeight: 305px;
+    --pathBorder: 40px 50%;
     transform: unset;
-  }
-}
-
-@media (width >= 768px) {
-  .c16 {
-    border-top-left-radius: 40px 50%;
-    border-bottom-left-radius: 40px 50%;
-    border-top-right-radius: 40px 50%;
-    border-bottom-right-radius: 40px 50%;
   }
 }
 
@@ -447,7 +461,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
 }
 
 @media (width >= 768px) {
-  .c26 {
+  .c27 {
     padding: 0 20px;
     max-width: 55%;
     padding: 0;
@@ -455,19 +469,20 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
 }
 
 @media (width >= 768px) {
-  .c27 {
+  .c28 {
     font-size: 20px;
   }
 }
 
 @media (width >= 768px) {
   .c12 {
-    margin: 70px 0 40px;
-    min-width: 400px;
-    width: 400px;
     --iconHeight: 249px;
     --iconWidth: 130px;
     --pathHeight: 212px;
+    --pathBorder: 30px 50%;
+    margin: 70px 0 40px;
+    min-width: 400px;
+    width: 400px;
     transform: rotate(90deg);
   }
 }
@@ -501,9 +516,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
           <p
             class="c4 c8"
           >
-            January 2022
-             - 
-            Present
+            Feb 2022 - Present
           </p>
         </div>
       </div>
@@ -540,77 +553,261 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
             <div
               class="c16"
             >
-              <li
-                class="c17"
-                data-testid="horizontal-movement"
-                style="animation-duration: 14.03796670595332s; animation-delay: 1.8362914836770063s;"
+              <ul
+                aria-label="Used technologies at Bonhams"
               >
-                <div
-                  class="c18 c19"
-                  data-testid="vertical-movement"
-                  style="--translateY-begin: -34%; --translateY-end: 4%; animation-duration: 9.410548820538102s;"
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 4.328231817421966s;"
                 >
                   <div
-                    class="c20 c21"
-                    data-testid="rotation-movement"
-                    style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.969143762427998s;"
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -34%; --translateY-end: 4%; animation-duration: 9.410548820538102s;"
                   >
-                    <a
-                      aria-label="NodeJS"
-                      class="c22 c23"
-                      data-testid="plain-anchor"
-                      href="https://nodejs.org/en/"
-                      rel="noreferrer"
-                      target="_blank"
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.969143762427998s;"
                     >
-                      <div
-                        class="c24 c25"
-                        data-testid="color-swapping"
-                        style="animation-duration: 14.03796670595332s; animation-delay: 1.8362914836770063s;"
+                      <a
+                        aria-label="NodeJS"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://nodejs.org/en/"
+                        rel="noreferrer"
+                        target="_blank"
                       >
-                        <svg>
-                          nodejs.svg
-                        </svg>
-                      </div>
-                    </a>
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 4.328231817421966s;"
+                        >
+                          <svg>
+                            nodejs.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
                   </div>
-                </div>
-              </li>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 5.317700619202389s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -18%; --translateY-end: 16%; animation-duration: 2.6506713315882395s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.69452697337711s;"
+                    >
+                      <a
+                        aria-label="Cypress"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://www.cypress.io"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 5.317700619202389s;"
+                        >
+                          <svg>
+                            cypress.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 3.608072757430517s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -22%; --translateY-end: 1%; animation-duration: 2.1750665840069803s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 6.759014200771513s;"
+                    >
+                      <a
+                        aria-label="Jest"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://jestjs.io"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 3.608072757430517s;"
+                        >
+                          <svg>
+                            jest.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 4.413853448650663s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -8%; --translateY-end: 3%; animation-duration: 5.139833716157671s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 4.926964759094687s;"
+                    >
+                      <a
+                        aria-label="Tanstack React Query"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://react-query.tanstack.com/"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 4.413853448650663s;"
+                        >
+                          <svg>
+                            reactQuery.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c26"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 2.4686951030768998s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: 3%; --translateY-end: 0%; animation-duration: 9.08099097805323s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 6.409370599693125s;"
+                    >
+                      <a
+                        aria-label="NextJS"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://nextjs.org"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 2.4686951030768998s;"
+                        >
+                          <svg>
+                            nextjs.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 5.083733872294745s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: 16%; --translateY-end: 35%; animation-duration: 9.072815630320118s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 5.170840168145276s;"
+                    >
+                      <a
+                        aria-label="Styled Components"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://styled-components.com"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 5.083733872294745s;"
+                        >
+                          <svg>
+                            styledComponents.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
         <div
-          class="c26"
+          class="c27"
         >
           <p
-            class="c4 c27"
+            class="c4 c28"
           >
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi non quam nec dui luctus faucibus. Nullam quis risus eget urna mollis ornare vel eu leo.
           </p>
           <p
-            class="c4 c27"
+            class="c4 c28"
           >
             Nulla vitae elit libero, a pharetra augue. Donec ullamcorper nulla non metus auctor fringilla.
           </p>
           <a
-            class="c22 c28 c29"
+            class="c22 c29 c30"
             data-testid="plain-anchor"
             href="https://www.bonhams.com/"
             rel="noreferrer"
             target="_blank"
           >
             <div
-              class="c30"
+              class="c31"
             >
               <svg
-                class="c31 c32"
+                class="c32 c33"
                 height="42"
                 width="42"
               >
                 circleButton.svg
               </svg>
               <div
-                class="c33"
+                class="c34"
               >
                 <svg>
                   arrowRight.svg
@@ -618,7 +815,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
               </div>
             </div>
             <p
-              class="c34 c4 c35"
+              class="c35 c4 c36"
             >
               Check the website
             </p>
@@ -648,9 +845,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
           <p
             class="c4 c8"
           >
-            February 2021
-             - 
-            January 2022
+            Feb 2021 - Feb 2022
           </p>
         </div>
       </div>
@@ -687,77 +882,81 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
             <div
               class="c16"
             >
-              <li
-                class="c17"
-                data-testid="horizontal-movement"
-                style="animation-duration: 19.418589292394458s; animation-delay: 15.754178610335014s;"
+              <ul
+                aria-label="Used technologies at Smart Protection"
               >
-                <div
-                  class="c18 c19"
-                  data-testid="vertical-movement"
-                  style="--translateY-begin: -22%; --translateY-end: 1%; animation-duration: 2.1750665840069803s;"
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 4.5555725705325685s;"
                 >
                   <div
-                    class="c20 c21"
-                    data-testid="rotation-movement"
-                    style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 6.759014200771513s;"
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -3%; --translateY-end: 34%; animation-duration: 7.338088360319994s;"
                   >
-                    <a
-                      aria-label="NodeJS"
-                      class="c22 c23"
-                      data-testid="plain-anchor"
-                      href="https://nodejs.org/en/"
-                      rel="noreferrer"
-                      target="_blank"
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.601112449866713s;"
                     >
-                      <div
-                        class="c24 c25"
-                        data-testid="color-swapping"
-                        style="animation-duration: 19.418589292394458s; animation-delay: 15.754178610335014s;"
+                      <a
+                        aria-label="NodeJS"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://nodejs.org/en/"
+                        rel="noreferrer"
+                        target="_blank"
                       >
-                        <svg>
-                          nodejs.svg
-                        </svg>
-                      </div>
-                    </a>
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 4.5555725705325685s;"
+                        >
+                          <svg>
+                            nodejs.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
                   </div>
-                </div>
-              </li>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
         <div
-          class="c26"
+          class="c27"
         >
           <p
-            class="c4 c27"
+            class="c4 c28"
           >
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi non quam nec dui luctus faucibus. Nullam quis risus eget urna mollis ornare vel eu leo.
           </p>
           <p
-            class="c4 c27"
+            class="c4 c28"
           >
             Nulla vitae elit libero, a pharetra augue. Donec ullamcorper nulla non metus auctor fringilla.
           </p>
           <a
-            class="c22 c28 c29"
+            class="c22 c29 c30"
             data-testid="plain-anchor"
             href="https://www.smartprotection.com/"
             rel="noreferrer"
             target="_blank"
           >
             <div
-              class="c30"
+              class="c31"
             >
               <svg
-                class="c31 c32"
+                class="c32 c33"
                 height="42"
                 width="42"
               >
                 circleButton.svg
               </svg>
               <div
-                class="c33"
+                class="c34"
               >
                 <svg>
                   arrowRight.svg
@@ -765,7 +964,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
               </div>
             </div>
             <p
-              class="c34 c4 c35"
+              class="c35 c4 c36"
             >
               Check the website
             </p>

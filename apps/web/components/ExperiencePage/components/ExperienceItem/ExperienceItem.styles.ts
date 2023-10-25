@@ -45,6 +45,7 @@ export const StyledCompanyInfo = styled.div`
 
 export const StyledCompanyName = styled(Body)`
   font-size: 30px;
+  text-align: end;
   ${({ theme }) => theme.fontStyles.robotoMono.medium};
 
   ${({ theme }) => theme.media.up.lg} {
@@ -119,12 +120,18 @@ export const StyledPortals = styled(Portals)`
   position: relative;
 
   ${({ theme }) => theme.media.up.md} {
-    margin: 70px 0 40px;
-    min-width: 400px;
-    width: 400px;
     --iconHeight: 249px;
     --iconWidth: 130px;
     --pathHeight: 212px;
+    --pathBorder: 30px 50%;
+
+    margin: 70px 0 40px;
+    min-width: 400px;
+    width: 400px;
     transform: rotate(90deg);
+
+    ${({ theme }) => theme.media.up.md} {
+      --pathBorder: 30px 50%;
+    }
   }
 `
