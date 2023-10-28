@@ -1,4 +1,4 @@
-import { sharedRootMetadata } from './metadata'
+import { sharedRootMetadata, sharedRootViewport } from './metadata'
 
 describe('sharedMetadata', () => {
   it('should match snapshot', () => {
@@ -11,9 +11,16 @@ describe('sharedMetadata', () => {
             "es-ES": "/es",
           },
         },
-        "colorScheme": "dark",
         "metadataBase": "https://www.sawl.dev/",
         "title": "Saúl de León Guerrero",
+      }
+    `)
+  })
+
+  it('should match snapshot', () => {
+    expect(sharedRootViewport).toMatchInlineSnapshot(`
+      {
+        "colorScheme": "dark",
       }
     `)
   })

@@ -1,8 +1,12 @@
+import { Viewport } from 'next'
 import { ReactNode } from 'react'
 
 import { getServerTranslation } from '@web/i18n/server'
 import { fallbackLng } from '@web/i18n/settings'
-import { sharedRootMetadata } from '@web/utils/metadata/metadata'
+import {
+  sharedRootMetadata,
+  sharedRootViewport,
+} from '@web/utils/metadata/metadata'
 
 type RootLayoutProps = {
   children: ReactNode
@@ -14,6 +18,10 @@ export async function generateMetadata() {
     ...sharedRootMetadata,
     description: t('metadata.description'),
   }
+}
+
+export const viewport: Viewport = {
+  ...sharedRootViewport,
 }
 
 export default function RootLayout({ children }: RootLayoutProps) {

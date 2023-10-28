@@ -6,6 +6,7 @@ import { renderApp } from '@sdlgr/test-utils'
 import RootLayout, {
   generateMetadata,
   generateStaticParams,
+  viewport,
 } from './layout.next'
 
 jest.mock('next/navigation', () => ({
@@ -71,7 +72,6 @@ describe('[lng] route - metadata', () => {
     expect(await generateMetadata({ params: { lng: 'en' } })).toEqual({
       title: 'Saúl de León Guerrero',
       description: 'My personal Portfolio',
-      colorScheme: 'dark',
       metadataBase: expect.any(Object),
       alternates: {
         languages: {
@@ -80,6 +80,11 @@ describe('[lng] route - metadata', () => {
           'es-ES': '/es',
         },
       },
+    })
+  })
+  it('should generate viewport data successfully', async () => {
+    expect(viewport).toEqual({
+      colorScheme: 'dark',
     })
   })
 })

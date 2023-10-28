@@ -1,6 +1,7 @@
-export const sharedRootMetadata = {
+import { Metadata, Viewport } from 'next'
+
+export const sharedRootMetadata: Metadata = {
   title: 'Saúl de León Guerrero',
-  colorScheme: 'dark',
   metadataBase: new URL('https://www.sawl.dev'),
   alternates: {
     languages: {
@@ -9,4 +10,8 @@ export const sharedRootMetadata = {
       'es-ES': '/es',
     },
   },
+}
+
+export const sharedRootViewport: Viewport = {
+  colorScheme: 'dark',
 }

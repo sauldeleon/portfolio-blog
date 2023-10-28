@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 
-import RootLayout, { generateMetadata } from './layout.next'
+import RootLayout, { generateMetadata, viewport } from './layout.next'
 
 describe('RootLayout', () => {
   it('should render children', async () => {
@@ -14,7 +14,6 @@ describe('/ route - metadata', () => {
     expect(await generateMetadata()).toEqual({
       title: 'Saúl de León Guerrero',
       description: 'My personal Portfolio',
-      colorScheme: 'dark',
       metadataBase: expect.any(Object),
       alternates: {
         languages: {
@@ -23,6 +22,12 @@ describe('/ route - metadata', () => {
           'es-ES': '/es',
         },
       },
+    })
+  })
+
+  it('should generate viewport data successfully', async () => {
+    expect(viewport).toEqual({
+      colorScheme: 'dark',
     })
   })
 })
