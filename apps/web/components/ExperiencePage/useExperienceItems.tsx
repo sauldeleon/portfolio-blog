@@ -20,8 +20,9 @@ export function useExperienceItems(): ExperienceItem[] {
       link: 'https://www.bonhams.com/',
       linkLabel: t('checkWebsiteLink'),
       descriptionParagraphs: [
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi non quam nec dui luctus faucibus. Nullam quis risus eget urna mollis ornare vel eu leo.',
-        'Nulla vitae elit libero, a pharetra augue. Donec ullamcorper nulla non metus auctor fringilla.',
+        t('experienceItems.bonhams.p1'),
+        t('experienceItems.bonhams.p2'),
+        t('experienceItems.bonhams.p3'),
       ],
     },
     {
@@ -33,8 +34,9 @@ export function useExperienceItems(): ExperienceItem[] {
       link: 'https://www.smartprotection.com/',
       linkLabel: t('checkWebsiteLink'),
       descriptionParagraphs: [
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi non quam nec dui luctus faucibus. Nullam quis risus eget urna mollis ornare vel eu leo.',
-        'Nulla vitae elit libero, a pharetra augue. Donec ullamcorper nulla non metus auctor fringilla.',
+        t('experienceItems.smartProtection.p1'),
+        t('experienceItems.smartProtection.p2'),
+        t('experienceItems.smartProtection.p3'),
       ],
     },
   ]
