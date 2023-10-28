@@ -31,8 +31,8 @@ export interface ExperienceItemProps {
   technologies: AnimatedItemKey[]
   beginDate: Date
   endDate?: Date
-  link: string
-  linkLabel: string
+  link?: string
+  linkLabel?: string
   descriptionParagraphs: string[]
 }
 
@@ -84,12 +84,14 @@ export function ExperienceItem({
               {paragraph}
             </StyledDescriptionParagraph>
           ))}
-          <StyledCircleLink
-            href={link}
-            target="_blank"
-            iconContent={<ArrowRightIcon />}
-            label={linkLabel}
-          />
+          {link && (
+            <StyledCircleLink
+              href={link}
+              target="_blank"
+              iconContent={<ArrowRightIcon />}
+              label={linkLabel}
+            />
+          )}
         </StyledExperienceDescription>
       </StyledExperienceInfo>
     </StyledSection>

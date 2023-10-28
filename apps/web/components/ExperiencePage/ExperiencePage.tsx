@@ -13,8 +13,8 @@ export type ExperienceItem = {
   technologies: AnimatedItemKey[]
   beginDate: Date
   endDate?: Date
-  link: string
-  linkLabel: string
+  link?: string
+  linkLabel?: string
   descriptionParagraphs: string[]
 }
 

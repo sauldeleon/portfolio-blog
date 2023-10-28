@@ -1,4 +1,6 @@
 import {
+  AngularJSIcon,
+  ArduinoIcon,
   Auth0Icon,
   BF2042Icon,
   CSS3Icon,
@@ -6,27 +8,42 @@ import {
   CypressIcon,
   DockerIcon,
   EslintIcon,
+  ExpoIcon,
+  ExpressJSIcon,
   GitIcon,
   GitLabIcon,
   GithubIcon,
+  GwtIcon,
   HTML5Icon,
   HalfLifeIcon,
+  HibernateIcon,
+  IonicIcon,
+  JavaIcon,
   JavascriptIcon,
   JestIcon,
   JsonIcon,
+  LitElementIcon,
   MaterialUiIcon,
+  MochaIcon,
   MongoDBIcon,
   NextJSIcon,
   NodeJSIcon,
   NpmIcon,
   NxIcon,
+  OracleIcon,
+  PerlIcon,
   PostgresSqlIcon,
   PrettierIcon,
+  PythonIcon,
   ReactJSIcon,
   ReactQueryIcon,
+  ReduxIcon,
   ScottPilgrimIcon,
+  SenchaIcon,
   SentryIcon,
+  SocketIOIcon,
   SpiderManIcon,
+  SpringIcon,
   StorybookIcon,
   StyledComponentsIcon,
   TypescriptIcon,
@@ -40,6 +57,8 @@ import {
 import { AnimatedElement } from '@web/components/AnimatedItem/AnimatedItem'
 
 export type AnimatedItemKey =
+  | 'angularJS'
+  | 'arduino'
   | 'auth0'
   | 'bf2042'
   | 'chrome'
@@ -47,27 +66,42 @@ export type AnimatedItemKey =
   | 'cypress'
   | 'docker'
   | 'eslint'
+  | 'expo'
+  | 'expressJS'
   | 'git'
-  | 'gitlab'
   | 'github'
+  | 'gitlab'
+  | 'gwt'
   | 'halfLife'
+  | 'hibernate'
   | 'html'
+  | 'ionic'
+  | 'java'
   | 'javascript'
   | 'jest'
   | 'json'
+  | 'litElement'
   | 'materialUI'
+  | 'mocha'
   | 'mongoDB'
   | 'nextJS'
   | 'nodeJS'
   | 'npm'
   | 'nx'
+  | 'oracle'
+  | 'perl'
   | 'postgreSql'
   | 'prettier'
+  | 'python'
   | 'reactJS'
   | 'reactQuery'
+  | 'redux'
   | 'scottPilgrim'
+  | 'sencha'
   | 'sentry'
+  | 'socketIO'
   | 'spiderMan'
+  | 'spring'
   | 'storybook'
   | 'styledComponents'
   | 'typescript'
@@ -78,180 +112,282 @@ export type AnimatedItemKey =
   | 'yarn'
 
 export const animatedItemMap: Record<AnimatedItemKey, AnimatedElement> = {
-  nodeJS: {
-    svg: <NodeJSIcon />,
-    path: 'https://nodejs.org/en/',
-    ariaLabel: 'NodeJS',
+  angularJS: {
+    ariaLabel: 'AngularJS',
+    path: 'https://angular.io',
+    svg: <AngularJSIcon />,
   },
-  css3: {
-    svg: <CSS3Icon />,
-    size: 'S',
-    path: 'https://www.w3.org/Style/CSS/',
-    ariaLabel: 'CSS3',
-  },
-  github: {
-    svg: <GithubIcon />,
-    size: 'S',
-    path: 'https://github.com',
-    ariaLabel: 'Github',
-  },
-  typescript: {
-    svg: <TypescriptIcon />,
-    path: 'https://www.typescriptlang.org/',
-    ariaLabel: 'Typescript',
-  },
-  nextJS: {
-    svg: <NextJSIcon />,
-    path: 'https://nextjs.org',
-    ariaLabel: 'NextJS',
-    size: 'L',
-  },
-  reactJS: {
-    svg: <ReactJSIcon />,
-    path: 'https://reactjs.org',
-    ariaLabel: 'ReactJS',
-    size: 'L',
-  },
-  mongoDB: {
-    svg: <MongoDBIcon />,
-    size: 'S',
-    path: 'https://www.mongodb.com',
-    ariaLabel: 'MongoDB',
-  },
-  reactQuery: {
-    svg: <ReactQueryIcon />,
-    path: 'https://react-query.tanstack.com/',
-    ariaLabel: 'Tanstack React Query',
-  },
-  jest: { svg: <JestIcon />, path: 'https://jestjs.io', ariaLabel: 'Jest' },
-  nx: { svg: <NxIcon />, size: 'S', path: 'https://nx.dev', ariaLabel: 'Nx' },
-  yarn: {
-    svg: <YarnIcon />,
-    size: 'S',
-    path: 'https://yarnpkg.com',
-    ariaLabel: 'Yarn',
-  },
-  scottPilgrim: {
-    svg: <ScottPilgrimIcon />,
-    size: 'M',
-    path: 'https://onipress.com/collections/scott-pilgrim',
-    ariaLabel: 'Scott Pilgrim',
-    focusable: false,
-  },
-  xataIO: {
-    svg: <XataIOIcon />,
-    size: 'S',
-    path: 'https://xata.io',
-    ariaLabel: 'Xata IO',
-  },
-  styledComponents: {
-    svg: <StyledComponentsIcon />,
-    path: 'https://styled-components.com',
-    ariaLabel: 'Styled Components',
-  },
-  eslint: {
-    svg: <EslintIcon />,
-    path: 'https://eslint.org',
-    ariaLabel: 'ESLint',
-  },
-  cypress: {
-    svg: <CypressIcon />,
-    path: 'https://www.cypress.io',
-    ariaLabel: 'Cypress',
-  },
-  prettier: {
-    svg: <PrettierIcon />,
-    path: 'https://prettier.io',
-    ariaLabel: 'Prettier',
-  },
-  docker: {
-    svg: <DockerIcon />,
-    path: 'https://www.docker.com',
-    ariaLabel: 'Docker',
-  },
-  html: {
-    svg: <HTML5Icon />,
-    path: 'https://www.w3.org/html/',
-    ariaLabel: 'HTML5',
-  },
-  javascript: {
-    svg: <JavascriptIcon />,
-    path: 'https://developer.mozilla.org/en/JavaScript',
-    ariaLabel: 'JavaScript',
-  },
-  npm: {
-    svg: <NpmIcon />,
-    path: 'https://www.npmjs.com',
-    ariaLabel: 'Node Package Manager',
-  },
-  git: { svg: <GitIcon />, path: 'https://git-scm.com', ariaLabel: 'Git' },
-  chrome: {
-    svg: <ChromeIcon />,
-    path: 'https://www.google.com/chrome',
-    ariaLabel: 'Google Chrome',
-  },
-  vscode: {
-    svg: <VSCodeIcon />,
-    path: 'https://code.visualstudio.com',
-    ariaLabel: 'Visual Studio Code',
-  },
-  materialUI: {
-    svg: <MaterialUiIcon />,
-    path: 'https://material-ui.com',
-    ariaLabel: 'Material UI',
-  },
-  postgreSql: {
-    svg: <PostgresSqlIcon />,
-    path: 'https://www.postgresql.org',
-    ariaLabel: 'PostgreSQL',
-  },
-  sentry: {
-    svg: <SentryIcon />,
-    path: 'https://sentry.io',
-    ariaLabel: 'Sentry',
-  },
-  storybook: {
-    svg: <StorybookIcon />,
-    path: 'https://storybook.js.org',
-    ariaLabel: 'Storybook',
-  },
-  webpack: {
-    svg: <WebpackIcon />,
-    path: 'https://webpack.js.org',
-    ariaLabel: 'Webpack',
-  },
-  gitlab: {
-    svg: <GitLabIcon />,
-    path: 'https://gitlab.com',
-    ariaLabel: 'GitLab',
-  },
-  json: { svg: <JsonIcon />, path: 'https://json.org', ariaLabel: 'JSON' },
-  vercel: {
-    svg: <VercelIcon />,
-    path: 'https://vercel.com',
-    ariaLabel: 'Vercel',
+  arduino: {
+    ariaLabel: 'Arduino',
+    path: 'https://www.arduino.cc/',
+    svg: <ArduinoIcon />,
   },
   auth0: {
-    svg: <Auth0Icon />,
-    path: '  https://auth0.com',
     ariaLabel: 'Auth0',
-  },
-  spiderMan: {
-    svg: <SpiderManIcon />,
-    path: 'https://wikipedia.org/wiki/Spider-Man',
-    ariaLabel: 'Spider Man',
-    focusable: false,
-  },
-  halfLife: {
-    svg: <HalfLifeIcon />,
-    path: 'https://half-life.com/',
-    ariaLabel: 'Half-Life',
-    focusable: false,
+    path: '  https://auth0.com',
+    svg: <Auth0Icon />,
   },
   bf2042: {
-    svg: <BF2042Icon />,
-    path: 'https://www.ea.com/en-gb/games/battlefield/battlefield-2042',
     ariaLabel: 'Battlefield 2042',
     focusable: false,
+    path: 'https://www.ea.com/en-gb/games/battlefield/battlefield-2042',
+    svg: <BF2042Icon />,
+  },
+  chrome: {
+    ariaLabel: 'Google Chrome',
+    path: 'https://www.google.com/chrome',
+    svg: <ChromeIcon />,
+  },
+  css3: {
+    ariaLabel: 'CSS3',
+    path: 'https://www.w3.org/Style/CSS/',
+    size: 'S',
+    svg: <CSS3Icon />,
+  },
+  cypress: {
+    ariaLabel: 'Cypress',
+    path: 'https://www.cypress.io',
+    svg: <CypressIcon />,
+  },
+  docker: {
+    ariaLabel: 'Docker',
+    path: 'https://www.docker.com',
+    svg: <DockerIcon />,
+  },
+  eslint: {
+    ariaLabel: 'ESLint',
+    path: 'https://eslint.org',
+    svg: <EslintIcon />,
+  },
+  expressJS: {
+    ariaLabel: 'ExpressJS',
+    path: 'https://expressjs.com',
+    svg: <ExpressJSIcon />,
+  },
+  expo: {
+    ariaLabel: 'Expo',
+    path: 'https://expo.dev',
+    svg: <ExpoIcon />,
+  },
+  git: {
+    ariaLabel: 'Git',
+    path: 'https://git-scm.com',
+    svg: <GitIcon />,
+  },
+  github: {
+    ariaLabel: 'Github',
+    path: 'https://github.com',
+    size: 'S',
+    svg: <GithubIcon />,
+  },
+  gitlab: {
+    ariaLabel: 'GitLab',
+    path: 'https://gitlab.com',
+    svg: <GitLabIcon />,
+  },
+  gwt: {
+    ariaLabel: 'Google Web Toolkit',
+    path: 'https://developers.google.com/web-toolkit',
+    svg: <GwtIcon />,
+  },
+  halfLife: {
+    ariaLabel: 'Half-Life',
+    focusable: false,
+    path: 'https://half-life.com/',
+    svg: <HalfLifeIcon />,
+  },
+  hibernate: {
+    ariaLabel: 'Hibernate',
+    path: 'https://hibernate.org',
+    svg: <HibernateIcon />,
+  },
+  html: {
+    ariaLabel: 'HTML5',
+    path: 'https://www.w3.org/html/',
+    svg: <HTML5Icon />,
+  },
+  ionic: {
+    ariaLabel: 'Ionic',
+    path: 'https://ionicframework.com',
+    svg: <IonicIcon />,
+  },
+  java: {
+    ariaLabel: 'Java',
+    path: 'https://java.com',
+    svg: <JavaIcon />,
+  },
+  javascript: {
+    ariaLabel: 'JavaScript',
+    path: 'https://developer.mozilla.org/en/JavaScript',
+    svg: <JavascriptIcon />,
+  },
+  jest: {
+    ariaLabel: 'Jest',
+    path: 'https://jestjs.io',
+    svg: <JestIcon />,
+  },
+  json: {
+    ariaLabel: 'JSON',
+    path: 'https://json.org',
+    svg: <JsonIcon />,
+  },
+  litElement: {
+    ariaLabel: 'LitElement',
+    path: 'https://lit.dev',
+    svg: <LitElementIcon />,
+  },
+  materialUI: {
+    ariaLabel: 'Material UI',
+    path: 'https://material-ui.com',
+    svg: <MaterialUiIcon />,
+  },
+  mocha: {
+    ariaLabel: 'Mocha',
+    path: 'https://mochajs.org',
+    svg: <MochaIcon />,
+  },
+  mongoDB: {
+    ariaLabel: 'MongoDB',
+    path: 'https://www.mongodb.com',
+    size: 'S',
+    svg: <MongoDBIcon />,
+  },
+  nextJS: {
+    ariaLabel: 'NextJS',
+    path: 'https://nextjs.org',
+    size: 'L',
+    svg: <NextJSIcon />,
+  },
+  nodeJS: {
+    ariaLabel: 'NodeJS',
+    path: 'https://nodejs.org/en/',
+    svg: <NodeJSIcon />,
+  },
+  npm: {
+    ariaLabel: 'Node Package Manager',
+    path: 'https://www.npmjs.com',
+    svg: <NpmIcon />,
+  },
+  nx: {
+    ariaLabel: 'Nx',
+    path: 'https://nx.dev',
+    size: 'S',
+    svg: <NxIcon />,
+  },
+  oracle: {
+    ariaLabel: 'Oracle',
+    path: 'https://www.oracle.com',
+    svg: <OracleIcon />,
+  },
+  perl: {
+    ariaLabel: 'Perl',
+    path: 'https://www.perl.org',
+    svg: <PerlIcon />,
+  },
+  postgreSql: {
+    ariaLabel: 'PostgreSQL',
+    path: 'https://www.postgresql.org',
+    svg: <PostgresSqlIcon />,
+  },
+  prettier: {
+    ariaLabel: 'Prettier',
+    path: 'https://prettier.io',
+    svg: <PrettierIcon />,
+  },
+  python: {
+    ariaLabel: 'Python',
+    path: 'https://www.python.org',
+    svg: <PythonIcon />,
+  },
+  reactJS: {
+    ariaLabel: 'ReactJS',
+    path: 'https://reactjs.org',
+    size: 'L',
+    svg: <ReactJSIcon />,
+  },
+  reactQuery: {
+    ariaLabel: 'Tanstack React Query',
+    path: 'https://react-query.tanstack.com/',
+    svg: <ReactQueryIcon />,
+  },
+  redux: {
+    ariaLabel: 'Redux',
+    path: 'https://redux.js.org',
+    svg: <ReduxIcon />,
+  },
+  scottPilgrim: {
+    ariaLabel: 'Scott Pilgrim',
+    focusable: false,
+    path: 'https://onipress.com/collections/scott-pilgrim',
+    size: 'M',
+    svg: <ScottPilgrimIcon />,
+  },
+  sencha: {
+    ariaLabel: 'Ext JS',
+    path: 'https://www.sencha.com/products/extjs/',
+    svg: <SenchaIcon />,
+  },
+  sentry: {
+    ariaLabel: 'Sentry',
+    path: 'https://sentry.io',
+    svg: <SentryIcon />,
+  },
+  socketIO: {
+    ariaLabel: 'SocketIO',
+    path: 'https://socket.io',
+    svg: <SocketIOIcon />,
+  },
+  spiderMan: {
+    ariaLabel: 'Spider Man',
+    focusable: false,
+    path: 'https://wikipedia.org/wiki/Spider-Man',
+    svg: <SpiderManIcon />,
+  },
+  spring: {
+    ariaLabel: 'Spring',
+    path: 'https://spring.io',
+    svg: <SpringIcon />,
+  },
+  storybook: {
+    ariaLabel: 'Storybook',
+    path: 'https://storybook.js.org',
+    svg: <StorybookIcon />,
+  },
+  styledComponents: {
+    ariaLabel: 'Styled Components',
+    path: 'https://styled-components.com',
+    svg: <StyledComponentsIcon />,
+  },
+  typescript: {
+    ariaLabel: 'Typescript',
+    path: 'https://www.typescriptlang.org/',
+    svg: <TypescriptIcon />,
+  },
+  vercel: {
+    ariaLabel: 'Vercel',
+    path: 'https://vercel.com',
+    svg: <VercelIcon />,
+  },
+  vscode: {
+    ariaLabel: 'Visual Studio Code',
+    path: 'https://code.visualstudio.com',
+    svg: <VSCodeIcon />,
+  },
+  webpack: {
+    ariaLabel: 'Webpack',
+    path: 'https://webpack.js.org',
+    svg: <WebpackIcon />,
+  },
+  xataIO: {
+    ariaLabel: 'Xata IO',
+    path: 'https://xata.io',
+    size: 'S',
+    svg: <XataIOIcon />,
+  },
+  yarn: {
+    ariaLabel: 'Yarn',
+    path: 'https://yarnpkg.com',
+    size: 'S',
+    svg: <YarnIcon />,
   },
 }

@@ -180,6 +180,32 @@ exports[`ExperiencePage should render successfully 1`] = `
   animation-play-state: paused;
 }
 
+.c37 {
+  --itemSize: 25px;
+  --translateX-begin: calc(-50% - var(--itemSize));
+  --translateX-end: calc(50% + var(--itemSize));
+  list-style: none;
+  position: absolute;
+  transform: translateX(-70%);
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  animation-name: ciDIWM;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.c37:hover {
+  z-index: 200;
+  animation-play-state: paused;
+}
+
+.c37:hover .c18,
+.c37:hover .c20,
+.c37:hover .c24 {
+  animation-play-state: paused;
+}
+
 .c36 {
   margin-left: 8px;
   position: relative;
@@ -752,6 +778,42 @@ exports[`ExperiencePage should render successfully 1`] = `
                       style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 4.572059010408153s;"
                     >
                       <a
+                        aria-label="Typescript"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://www.typescriptlang.org/"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 5.276069308335727s;"
+                        >
+                          <svg>
+                            typescript.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 4.5555725705325685s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -3%; --translateY-end: 34%; animation-duration: 7.338088360319994s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.601112449866713s;"
+                    >
+                      <a
                         aria-label="Styled Components"
                         class="c22 c23"
                         data-testid="plain-anchor"
@@ -762,10 +824,82 @@ exports[`ExperiencePage should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 5.276069308335727s;"
+                          style="animation-duration: 6s; animation-delay: 4.5555725705325685s;"
                         >
                           <svg>
                             styledComponents.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 4.144348516768651s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -15%; --translateY-end: 6%; animation-duration: 4.506798326937581s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 6.054742129509922s;"
+                    >
+                      <a
+                        aria-label="Vercel"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://vercel.com"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 4.144348516768651s;"
+                        >
+                          <svg>
+                            vercel.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 4.937717012755187s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: 19%; --translateY-end: 27%; animation-duration: 9.465419591147509s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 6.855852024305374s;"
+                    >
+                      <a
+                        aria-label="Expo"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://expo.dev"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 4.937717012755187s;"
+                        >
+                          <svg>
+                            expo.svg
                           </svg>
                         </div>
                       </a>
@@ -793,6 +927,11 @@ exports[`ExperiencePage should render successfully 1`] = `
             class="c4 c28"
           >
             Proficiently employed Jest and MSW for thorough unit and integration testing, while utilizing Cypress for end-to-end testing.
+          </p>
+          <p
+            class="c4 c28"
+          >
+            Helped at the implementation of a robust CI/CD pipeline using GitLab for efficient and seamless deployment.
           </p>
           <a
             class="c22 c29 c30"
@@ -893,17 +1032,17 @@ exports[`ExperiencePage should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 4.144348516768651s;"
+                  style="animation-duration: 6s; animation-delay: 5.9146385124661975s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -15%; --translateY-end: 6%; animation-duration: 4.506798326937581s;"
+                    style="--translateY-begin: -34%; --translateY-end: 9%; animation-duration: 2.353939998116203s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 6.054742129509922s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 5.452335976466719s;"
                     >
                       <a
                         aria-label="NodeJS"
@@ -916,10 +1055,226 @@ exports[`ExperiencePage should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 4.144348516768651s;"
+                          style="animation-duration: 6s; animation-delay: 5.9146385124661975s;"
                         >
                           <svg>
                             nodejs.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 2.6811710837917135s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -19%; --translateY-end: -16%; animation-duration: 10.525157302922535s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 6.499967783735601s;"
+                    >
+                      <a
+                        aria-label="Jest"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://jestjs.io"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 2.6811710837917135s;"
+                        >
+                          <svg>
+                            jest.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 2.1144718592580314s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -2%; --translateY-end: 32%; animation-duration: 7.704566079851224s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 4.202277950942575s;"
+                    >
+                      <a
+                        aria-label="Storybook"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://storybook.js.org"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 2.1144718592580314s;"
+                        >
+                          <svg>
+                            storybook.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 5.641801376120956s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -12%; --translateY-end: 35%; animation-duration: 7.464361410258245s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 4.397730628456588s;"
+                    >
+                      <a
+                        aria-label="Tanstack React Query"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://react-query.tanstack.com/"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 5.641801376120956s;"
+                        >
+                          <svg>
+                            reactQuery.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c37"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 5.3733763627190525s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: 2%; --translateY-end: 33%; animation-duration: 9.063217066326375s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 6.986365679078023s;"
+                    >
+                      <a
+                        aria-label="Yarn"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://yarnpkg.com"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 5.3733763627190525s;"
+                        >
+                          <svg>
+                            yarn.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c26"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 4.159129481057648s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -36%; --translateY-end: 4%; animation-duration: 9.383058456714515s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 5.026697635858043s;"
+                    >
+                      <a
+                        aria-label="ReactJS"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://reactjs.org"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 4.159129481057648s;"
+                        >
+                          <svg>
+                            reactjs.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 3.4610477120517147s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -10%; --translateY-end: -16%; animation-duration: 10.093836267459825s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.388194663532255s;"
+                    >
+                      <a
+                        aria-label="Typescript"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://www.typescriptlang.org/"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 3.4610477120517147s;"
+                        >
+                          <svg>
+                            typescript.svg
                           </svg>
                         </div>
                       </a>
@@ -947,6 +1302,31 @@ exports[`ExperiencePage should render successfully 1`] = `
             class="c4 c28"
           >
             Initiated the creation of a comprehensive monorepo from the ground up using Yarn Workspaces, ensuring the development of full TypeScript applications.
+          </p>
+          <p
+            class="c4 c28"
+          >
+            Implemented a robust Test-Driven Development (TDD) approach using Jest and React Testing Library.
+          </p>
+          <p
+            class="c4 c28"
+          >
+            Implemented a robust Test-Driven Development (TDD) approach using Jest and React Testing Library.
+          </p>
+          <p
+            class="c4 c28"
+          >
+            Leveraged Styled Components with EmotionJs for seamless UI design.
+          </p>
+          <p
+            class="c4 c28"
+          >
+            Established and optimized the frontend pipeline in Jenkins, utilizing parallel optimization for multiple stages.
+          </p>
+          <p
+            class="c4 c28"
+          >
+            Basic knowledge in utilizing Terraform for storing environment variables in AWS.
           </p>
           <a
             class="c22 c29 c30"
@@ -979,6 +1359,2574 @@ exports[`ExperiencePage should render successfully 1`] = `
               Check the website
             </p>
           </a>
+        </div>
+      </div>
+    </section>
+    <section
+      class="c2"
+    >
+      <div
+        class="c3"
+      >
+        <p
+          class="c4 c5"
+        >
+          03
+        </p>
+        <div
+          class="c6"
+        >
+          <p
+            class="c4 c7"
+          >
+            ING
+          </p>
+          <p
+            class="c4 c8"
+          >
+            Aug 2020 - Feb 2021
+          </p>
+        </div>
+      </div>
+      <div
+        class="c9"
+      >
+        <div
+          class="c10"
+        >
+          <div
+            class="c11 c12"
+            role="presentation"
+          >
+            <div
+              class="c13"
+            >
+              <svg
+                class="c14"
+                color="#FFDD83"
+              >
+                portal.svg
+              </svg>
+            </div>
+            <div
+              class="c15"
+            >
+              <svg
+                class="c14"
+                color="#98DFD6"
+              >
+                portal.svg
+              </svg>
+            </div>
+            <div
+              class="c16"
+            >
+              <ul
+                aria-label="Used technologies at ING"
+              >
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 2.892972644632456s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -32%; --translateY-end: 20%; animation-duration: 8.738879665504397s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 6.166490921398118s;"
+                    >
+                      <a
+                        aria-label="NodeJS"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://nodejs.org/en/"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 2.892972644632456s;"
+                        >
+                          <svg>
+                            nodejs.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 5.395078316230084s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -19%; --translateY-end: -5%; animation-duration: 9.49834613208741s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 6.030628187343217s;"
+                    >
+                      <a
+                        aria-label="Cypress"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://www.cypress.io"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 5.395078316230084s;"
+                        >
+                          <svg>
+                            cypress.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 1.4746937704570975s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -28%; --translateY-end: -5%; animation-duration: 9.907079771027993s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 4.082116958171184s;"
+                    >
+                      <a
+                        aria-label="Node Package Manager"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://www.npmjs.com"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 1.4746937704570975s;"
+                        >
+                          <svg>
+                            npm.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 4.000120284463302s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -35%; --translateY-end: 35%; animation-duration: 4.212417045070516s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 4.09574427983789s;"
+                    >
+                      <a
+                        aria-label="Cypress"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://www.cypress.io"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 4.000120284463302s;"
+                        >
+                          <svg>
+                            cypress.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 2.5934610473567092s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: 9%; --translateY-end: 25%; animation-duration: 2.8157205786780644s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 4.7020571134358375s;"
+                    >
+                      <a
+                        aria-label="Jest"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://jestjs.io"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 2.5934610473567092s;"
+                        >
+                          <svg>
+                            jest.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 3.5780387389206885s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -27%; --translateY-end: -15%; animation-duration: 4.329409225143362s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.306338061412448s;"
+                    >
+                      <a
+                        aria-label="Mocha"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://mochajs.org"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 3.5780387389206885s;"
+                        >
+                          <svg>
+                            mocha.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 5.845679352907075s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -25%; --translateY-end: 16%; animation-duration: 4.218195329431742s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 6.968065613136936s;"
+                    >
+                      <a
+                        aria-label="LitElement"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://lit.dev"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 5.845679352907075s;"
+                        >
+                          <svg>
+                            litElement.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 4.118191467083027s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: 18%; --translateY-end: 4%; animation-duration: 6.389992275717069s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 5.42560370997005s;"
+                    >
+                      <a
+                        aria-label="Redux"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://redux.js.org"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 4.118191467083027s;"
+                        >
+                          <svg>
+                            redux.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div
+          class="c27"
+        >
+          <p
+            class="c4 c28"
+          >
+            Front-end Developer.
+          </p>
+          <p
+            class="c4 c28"
+          >
+            Contributed to an international project, focusing on web development based on WebComponents, specifically LitElement, and Redux, with seamless communication with REST APIs.
+          </p>
+          <p
+            class="c4 c28"
+          >
+            Adopted a Test-Driven Development (TDD) approach using Karma with Mocha for comprehensive unit testing.
+          </p>
+          <p
+            class="c4 c28"
+          >
+            Adopted a Test-Driven Development (TDD) approach using Karma with Mocha for comprehensive unit testing.
+          </p>
+          <p
+            class="c4 c28"
+          >
+            Conducted end-to-end testing using Cucumber and WebdriverIO for thorough functionality testing.
+          </p>
+          <p
+            class="c4 c28"
+          >
+            Possesses a strong background in pairing code review experience, serving as an approver of the main repository to ensure the validation of merges into the master branch.
+          </p>
+          <a
+            class="c22 c29 c30"
+            data-testid="plain-anchor"
+            href="https://www.ing.es/"
+            rel="noreferrer"
+            target="_blank"
+          >
+            <div
+              class="c31"
+            >
+              <svg
+                class="c32 c33"
+                height="42"
+                width="42"
+              >
+                circleButton.svg
+              </svg>
+              <div
+                class="c34"
+              >
+                <svg>
+                  arrowRight.svg
+                </svg>
+              </div>
+            </div>
+            <p
+              class="c35 c4 c36"
+            >
+              Check the website
+            </p>
+          </a>
+        </div>
+      </div>
+    </section>
+    <section
+      class="c2"
+    >
+      <div
+        class="c3"
+      >
+        <p
+          class="c4 c5"
+        >
+          04
+        </p>
+        <div
+          class="c6"
+        >
+          <p
+            class="c4 c7"
+          >
+            Keytree (Deloitte)
+          </p>
+          <p
+            class="c4 c8"
+          >
+            Oct 2017 - Aug 2020
+          </p>
+        </div>
+      </div>
+      <div
+        class="c9"
+      >
+        <div
+          class="c10"
+        >
+          <div
+            class="c11 c12"
+            role="presentation"
+          >
+            <div
+              class="c13"
+            >
+              <svg
+                class="c14"
+                color="#FFDD83"
+              >
+                portal.svg
+              </svg>
+            </div>
+            <div
+              class="c15"
+            >
+              <svg
+                class="c14"
+                color="#98DFD6"
+              >
+                portal.svg
+              </svg>
+            </div>
+            <div
+              class="c16"
+            >
+              <ul
+                aria-label="Used technologies at Keytree (Deloitte)"
+              >
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 5.584946025014547s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: 7%; --translateY-end: 28%; animation-duration: 8.24726029213836s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 5.47865567080887s;"
+                    >
+                      <a
+                        aria-label="NodeJS"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://nodejs.org/en/"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 5.584946025014547s;"
+                        >
+                          <svg>
+                            nodejs.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c26"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 5.230146775393621s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -11%; --translateY-end: 36%; animation-duration: 4.136024061665583s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 6.123191291033947s;"
+                    >
+                      <a
+                        aria-label="ReactJS"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://reactjs.org"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 5.230146775393621s;"
+                        >
+                          <svg>
+                            reactjs.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c37"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 1.2525926174545345s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -30%; --translateY-end: -3%; animation-duration: 10.527701040190168s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 4.037418074980781s;"
+                    >
+                      <a
+                        aria-label="Yarn"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://yarnpkg.com"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 1.2525926174545345s;"
+                        >
+                          <svg>
+                            yarn.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 4.421826499968204s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -14%; --translateY-end: 17%; animation-duration: 8.86269403980053s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 4.143584229267579s;"
+                    >
+                      <a
+                        aria-label="Storybook"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://storybook.js.org"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 4.421826499968204s;"
+                        >
+                          <svg>
+                            storybook.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 1.1452133119543768s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -37%; --translateY-end: 1%; animation-duration: 9.887691837763974s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.5546632477222655s;"
+                    >
+                      <a
+                        aria-label="Jest"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://jestjs.io"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 1.1452133119543768s;"
+                        >
+                          <svg>
+                            jest.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 4.007046912507221s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -32%; --translateY-end: 33%; animation-duration: 7.830227456792823s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.158271656903402s;"
+                    >
+                      <a
+                        aria-label="Styled Components"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://styled-components.com"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 4.007046912507221s;"
+                        >
+                          <svg>
+                            styledComponents.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 1.7149853037286853s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: 17%; --translateY-end: 6%; animation-duration: 5.077188191486716s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 4.433400068295318s;"
+                    >
+                      <a
+                        aria-label="Redux"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://redux.js.org"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 1.7149853037286853s;"
+                        >
+                          <svg>
+                            redux.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div
+          class="c27"
+        >
+          <p
+            class="c4 c28"
+          >
+            Front-end Developer.
+          </p>
+          <p
+            class="c4 c28"
+          >
+            Involved in the development of multiple React.JS web applications, utilizing REST services provided by the Gateway service, primarily based on SAP, Java, or Node.js backend services.
+          </p>
+          <p
+            class="c4 c28"
+          >
+            Took on the role of a front-end developer lead for an Angular JS 1.7 application, responsible for onboarding newcomers and overseeing new developments or maintenance. Additionally, proficient in deploying applications across various environments for multiple clients.
+          </p>
+          <a
+            class="c22 c29 c30"
+            data-testid="plain-anchor"
+            href="https://www2.deloitte.com/"
+            rel="noreferrer"
+            target="_blank"
+          >
+            <div
+              class="c31"
+            >
+              <svg
+                class="c32 c33"
+                height="42"
+                width="42"
+              >
+                circleButton.svg
+              </svg>
+              <div
+                class="c34"
+              >
+                <svg>
+                  arrowRight.svg
+                </svg>
+              </div>
+            </div>
+            <p
+              class="c35 c4 c36"
+            >
+              Check the website
+            </p>
+          </a>
+        </div>
+      </div>
+    </section>
+    <section
+      class="c2"
+    >
+      <div
+        class="c3"
+      >
+        <p
+          class="c4 c5"
+        >
+          05
+        </p>
+        <div
+          class="c6"
+        >
+          <p
+            class="c4 c7"
+          >
+            Babel S.I
+          </p>
+          <p
+            class="c4 c8"
+          >
+            Apr 2017 - Sep 2017
+          </p>
+        </div>
+      </div>
+      <div
+        class="c9"
+      >
+        <div
+          class="c10"
+        >
+          <div
+            class="c11 c12"
+            role="presentation"
+          >
+            <div
+              class="c13"
+            >
+              <svg
+                class="c14"
+                color="#FFDD83"
+              >
+                portal.svg
+              </svg>
+            </div>
+            <div
+              class="c15"
+            >
+              <svg
+                class="c14"
+                color="#98DFD6"
+              >
+                portal.svg
+              </svg>
+            </div>
+            <div
+              class="c16"
+            >
+              <ul
+                aria-label="Used technologies at Babel S.I"
+              >
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 1.932765764454406s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: 2%; --translateY-end: -5%; animation-duration: 5.201358967228348s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 5.272987570070384s;"
+                    >
+                      <a
+                        aria-label="NodeJS"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://nodejs.org/en/"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 1.932765764454406s;"
+                        >
+                          <svg>
+                            nodejs.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 4.505531720721695s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: 17%; --translateY-end: -6%; animation-duration: 4.624378202523986s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 5.583246825735737s;"
+                    >
+                      <a
+                        aria-label="ExpressJS"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://expressjs.com"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 4.505531720721695s;"
+                        >
+                          <svg>
+                            expressJs.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 3.693953433482098s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -16%; --translateY-end: 5%; animation-duration: 5.275580324558712s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.419612943852137s;"
+                    >
+                      <a
+                        aria-label="Node Package Manager"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://www.npmjs.com"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 3.693953433482098s;"
+                        >
+                          <svg>
+                            npm.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 4.703305216251405s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -1%; --translateY-end: 19%; animation-duration: 2.436751055816556s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 5.461593102168306s;"
+                    >
+                      <a
+                        aria-label="Storybook"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://storybook.js.org"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 4.703305216251405s;"
+                        >
+                          <svg>
+                            storybook.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 2.8457192483436664s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -17%; --translateY-end: -14%; animation-duration: 4.917752283381981s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 4.252868948837238s;"
+                    >
+                      <a
+                        aria-label="Jest"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://jestjs.io"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 2.8457192483436664s;"
+                        >
+                          <svg>
+                            jest.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c37"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 3.932028371118763s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -29%; --translateY-end: 33%; animation-duration: 6.190233838463961s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 5.816493875694573s;"
+                    >
+                      <a
+                        aria-label="MongoDB"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://www.mongodb.com"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 3.932028371118763s;"
+                        >
+                          <svg>
+                            mongodb.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 4.863303217786158s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: 11%; --translateY-end: -6%; animation-duration: 6.295832883022208s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 4.70414919548972s;"
+                    >
+                      <a
+                        aria-label="AngularJS"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://angular.io"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 4.863303217786158s;"
+                        >
+                          <svg>
+                            angularJS.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 3.3855582362851218s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -16%; --translateY-end: 27%; animation-duration: 4.876107354680007s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 6.150529459573802s;"
+                    >
+                      <a
+                        aria-label="Java"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://java.com"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 3.3855582362851218s;"
+                        >
+                          <svg>
+                            java.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 4.5567163333813685s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: 1%; --translateY-end: 24%; animation-duration: 2.803487547722927s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 6.615950922429325s;"
+                    >
+                      <a
+                        aria-label="SocketIO"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://socket.io"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 4.5567163333813685s;"
+                        >
+                          <svg>
+                            socketIO.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 5.7184292294421155s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -19%; --translateY-end: 21%; animation-duration: 7.57810111231047s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 4.705822927193229s;"
+                    >
+                      <a
+                        aria-label="Ionic"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://ionicframework.com"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 5.7184292294421155s;"
+                        >
+                          <svg>
+                            ionic.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div
+          class="c27"
+        >
+          <p
+            class="c4 c28"
+          >
+            Front-end Developer.
+          </p>
+          <p
+            class="c4 c28"
+          >
+            Involved in the development of multiple React.JS web applications, utilizing REST services provided by the Gateway service, primarily based on SAP, Java, or Node.js backend services.
+          </p>
+          <p
+            class="c4 c28"
+          >
+            Took on the role of a front-end developer lead for an Angular JS 1.7 application, responsible for onboarding newcomers and overseeing new developments or maintenance. Additionally, proficient in deploying applications across various environments for multiple clients.
+          </p>
+          <a
+            class="c22 c29 c30"
+            data-testid="plain-anchor"
+            href="https://www2.deloitte.com/"
+            rel="noreferrer"
+            target="_blank"
+          >
+            <div
+              class="c31"
+            >
+              <svg
+                class="c32 c33"
+                height="42"
+                width="42"
+              >
+                circleButton.svg
+              </svg>
+              <div
+                class="c34"
+              >
+                <svg>
+                  arrowRight.svg
+                </svg>
+              </div>
+            </div>
+            <p
+              class="c35 c4 c36"
+            >
+              Check the website
+            </p>
+          </a>
+        </div>
+      </div>
+    </section>
+    <section
+      class="c2"
+    >
+      <div
+        class="c3"
+      >
+        <p
+          class="c4 c5"
+        >
+          06
+        </p>
+        <div
+          class="c6"
+        >
+          <p
+            class="c4 c7"
+          >
+            Ioon Technologies
+          </p>
+          <p
+            class="c4 c8"
+          >
+            Jan 2016 - Apr 2017
+          </p>
+        </div>
+      </div>
+      <div
+        class="c9"
+      >
+        <div
+          class="c10"
+        >
+          <div
+            class="c11 c12"
+            role="presentation"
+          >
+            <div
+              class="c13"
+            >
+              <svg
+                class="c14"
+                color="#FFDD83"
+              >
+                portal.svg
+              </svg>
+            </div>
+            <div
+              class="c15"
+            >
+              <svg
+                class="c14"
+                color="#98DFD6"
+              >
+                portal.svg
+              </svg>
+            </div>
+            <div
+              class="c16"
+            >
+              <ul
+                aria-label="Used technologies at Ioon Technologies"
+              >
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 4.300299797814808s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -16%; --translateY-end: 12%; animation-duration: 6.068290618529677s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.423250643493091s;"
+                    >
+                      <a
+                        aria-label="Java"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://java.com"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 4.300299797814808s;"
+                        >
+                          <svg>
+                            java.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 5.654826775034396s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -3%; --translateY-end: -9%; animation-duration: 2.3940119044331185s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 4.6620656516462295s;"
+                    >
+                      <a
+                        aria-label="Spring"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://spring.io"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 5.654826775034396s;"
+                        >
+                          <svg>
+                            spring.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 5.327291269578514s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: 16%; --translateY-end: 24%; animation-duration: 9.948012634136678s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 5.879848242689816s;"
+                    >
+                      <a
+                        aria-label="Ionic"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://ionicframework.com"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 5.327291269578514s;"
+                        >
+                          <svg>
+                            ionic.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 3.5509643555286337s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -21%; --translateY-end: 33%; animation-duration: 5.604479284938084s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 4.240967516423843s;"
+                    >
+                      <a
+                        aria-label="Storybook"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://storybook.js.org"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 3.5509643555286337s;"
+                        >
+                          <svg>
+                            storybook.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 1.186097080603665s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -21%; --translateY-end: -7%; animation-duration: 5.4528032510395565s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 6.6131899808432095s;"
+                    >
+                      <a
+                        aria-label="AngularJS"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://angular.io"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 1.186097080603665s;"
+                        >
+                          <svg>
+                            angularJS.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 5.348247416552431s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -21%; --translateY-end: -12%; animation-duration: 8.84406140044027s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 4.677947235348267s;"
+                    >
+                      <a
+                        aria-label="Arduino"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://www.arduino.cc/"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 5.348247416552431s;"
+                        >
+                          <svg>
+                            arduino.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div
+          class="c27"
+        >
+          <p
+            class="c4 c28"
+          >
+            Scrum Master and Full Stack Developer.
+          </p>
+          <p
+            class="c4 c28"
+          >
+            Served as the CTO from November 2016 to April 2017. Acted as the Scrum Master of the main I+D+i project, utilizing Java 1.7, Spring 4, GWT 1.7, Hibernate 5, and MySQL 5.6. Implemented IONIC 2 and Angular 2 for mobile development.
+          </p>
+          <p
+            class="c4 c28"
+          >
+            Implemented an Arduino monitoring system for real-time information within the application.
+          </p>
+          <p
+            class="c4 c28"
+          >
+            Demonstrated proficiency in utilizing Maven, Sonarqube, and JUnit, along with Mockito for testing and validating clean code.
+          </p>
+          <p
+            class="c4 c28"
+          >
+            Involved in front-end development for various customers, employing CSS3, jQuery, and HTML5.
+          </p>
+          <p
+            class="c4 c28"
+          >
+            Worked as a Java consultant, focusing on back-end developments in PSA Peugeot-Citroën. Involved in incident resolution and new functionalities development, utilizing Spring 3 MVC, Hibernate, Struts 2 and BBDD Oracle.
+          </p>
+          <p
+            class="c4 c28"
+          >
+            Utilized Agile Obeya and JIRA for managing tasks and issues.
+          </p>
+          <a
+            class="c22 c29 c30"
+            data-testid="plain-anchor"
+            href="https://ioon.es/"
+            rel="noreferrer"
+            target="_blank"
+          >
+            <div
+              class="c31"
+            >
+              <svg
+                class="c32 c33"
+                height="42"
+                width="42"
+              >
+                circleButton.svg
+              </svg>
+              <div
+                class="c34"
+              >
+                <svg>
+                  arrowRight.svg
+                </svg>
+              </div>
+            </div>
+            <p
+              class="c35 c4 c36"
+            >
+              Check the website
+            </p>
+          </a>
+        </div>
+      </div>
+    </section>
+    <section
+      class="c2"
+    >
+      <div
+        class="c3"
+      >
+        <p
+          class="c4 c5"
+        >
+          07
+        </p>
+        <div
+          class="c6"
+        >
+          <p
+            class="c4 c7"
+          >
+            Clarive
+          </p>
+          <p
+            class="c4 c8"
+          >
+            Jan 2014 - Jan 2016
+          </p>
+        </div>
+      </div>
+      <div
+        class="c9"
+      >
+        <div
+          class="c10"
+        >
+          <div
+            class="c11 c12"
+            role="presentation"
+          >
+            <div
+              class="c13"
+            >
+              <svg
+                class="c14"
+                color="#FFDD83"
+              >
+                portal.svg
+              </svg>
+            </div>
+            <div
+              class="c15"
+            >
+              <svg
+                class="c14"
+                color="#98DFD6"
+              >
+                portal.svg
+              </svg>
+            </div>
+            <div
+              class="c16"
+            >
+              <ul
+                aria-label="Used technologies at Clarive"
+              >
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 2.511759539597594s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -28%; --translateY-end: -13%; animation-duration: 6.66223603043087s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.008588049848845s;"
+                    >
+                      <a
+                        aria-label="Perl"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://www.perl.org"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 2.511759539597594s;"
+                        >
+                          <svg>
+                            perl.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c37"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 4.490698390204282s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -25%; --translateY-end: 15%; animation-duration: 5.681162213685664s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 6.427921889901393s;"
+                    >
+                      <a
+                        aria-label="MongoDB"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://www.mongodb.com"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 4.490698390204282s;"
+                        >
+                          <svg>
+                            mongodb.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 5.601765520252898s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -1%; --translateY-end: 21%; animation-duration: 10.33234730309377s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 5.182829993408179s;"
+                    >
+                      <a
+                        aria-label="Ext JS"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://www.sencha.com/products/extjs/"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 5.601765520252898s;"
+                        >
+                          <svg>
+                            sencha.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 3.2536567970017845s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -8%; --translateY-end: -18%; animation-duration: 6.5860154882682s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 6.772619699382583s;"
+                    >
+                      <a
+                        aria-label="JavaScript"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://developer.mozilla.org/en/JavaScript"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 3.2536567970017845s;"
+                        >
+                          <svg>
+                            javascript.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 4.936814499820542s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -4%; --translateY-end: 12%; animation-duration: 4.371169117164589s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 5.3656892087593935s;"
+                    >
+                      <a
+                        aria-label="HTML5"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://www.w3.org/html/"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 4.936814499820542s;"
+                        >
+                          <svg>
+                            html5.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c37"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 5.355739553663581s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -32%; --translateY-end: 36%; animation-duration: 4.561990913864435s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 4.987608102926577s;"
+                    >
+                      <a
+                        aria-label="CSS3"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://www.w3.org/Style/CSS/"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 5.355739553663581s;"
+                        >
+                          <svg>
+                            css3.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 5.204019044602115s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -33%; --translateY-end: 4%; animation-duration: 8.906807845984384s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 6.067972895041349s;"
+                    >
+                      <a
+                        aria-label="Oracle"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://www.oracle.com"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 5.204019044602115s;"
+                        >
+                          <svg>
+                            oracle.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div
+          class="c27"
+        >
+          <p
+            class="c4 c28"
+          >
+            Full Stack Developer.
+          </p>
+          <p
+            class="c4 c28"
+          >
+            Involved in back-end development using Perl and the Catalyst Framework, alongside various CPAN modules for seamless database integration, including Oracle and MongoDB.
+          </p>
+          <p
+            class="c4 c28"
+          >
+            Utilized the ExtJS Framework for front-end development.
+          </p>
+          <p
+            class="c4 c28"
+          >
+            Integrated SOAP webservices for streamlined communication.
+          </p>
+          <a
+            class="c22 c29 c30"
+            data-testid="plain-anchor"
+            href="https://clarive.com/"
+            rel="noreferrer"
+            target="_blank"
+          >
+            <div
+              class="c31"
+            >
+              <svg
+                class="c32 c33"
+                height="42"
+                width="42"
+              >
+                circleButton.svg
+              </svg>
+              <div
+                class="c34"
+              >
+                <svg>
+                  arrowRight.svg
+                </svg>
+              </div>
+            </div>
+            <p
+              class="c35 c4 c36"
+            >
+              Check the website
+            </p>
+          </a>
+        </div>
+      </div>
+    </section>
+    <section
+      class="c2"
+    >
+      <div
+        class="c3"
+      >
+        <p
+          class="c4 c5"
+        >
+          08
+        </p>
+        <div
+          class="c6"
+        >
+          <p
+            class="c4 c7"
+          >
+            idealista.com
+          </p>
+          <p
+            class="c4 c8"
+          >
+            Sep 2013 - Dec 2013
+          </p>
+        </div>
+      </div>
+      <div
+        class="c9"
+      >
+        <div
+          class="c10"
+        >
+          <div
+            class="c11 c12"
+            role="presentation"
+          >
+            <div
+              class="c13"
+            >
+              <svg
+                class="c14"
+                color="#FFDD83"
+              >
+                portal.svg
+              </svg>
+            </div>
+            <div
+              class="c15"
+            >
+              <svg
+                class="c14"
+                color="#98DFD6"
+              >
+                portal.svg
+              </svg>
+            </div>
+            <div
+              class="c16"
+            >
+              <ul
+                aria-label="Used technologies at idealista.com"
+              >
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 3.2799416349592723s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: 6%; --translateY-end: -20%; animation-duration: 9.276495255443937s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 4.157312560720967s;"
+                    >
+                      <a
+                        aria-label="Java"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://java.com"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 3.2799416349592723s;"
+                        >
+                          <svg>
+                            java.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c37"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 1.6047100966750918s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: 2%; --translateY-end: 22%; animation-duration: 7.956435550677551s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 6.668365095917251s;"
+                    >
+                      <a
+                        aria-label="MongoDB"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://www.mongodb.com"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 1.6047100966750918s;"
+                        >
+                          <svg>
+                            mongodb.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 5.434049969298483s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -5%; --translateY-end: 5%; animation-duration: 2.9972948936737707s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 4.144148034787797s;"
+                    >
+                      <a
+                        aria-label="Hibernate"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://hibernate.org"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 5.434049969298483s;"
+                        >
+                          <svg>
+                            hibernate.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 1.5086992142570828s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -6%; --translateY-end: 22%; animation-duration: 2.5764987695767707s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 5.767556093246887s;"
+                    >
+                      <a
+                        aria-label="Spring"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://spring.io"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 1.5086992142570828s;"
+                        >
+                          <svg>
+                            spring.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 3.8751130716170863s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: 15%; --translateY-end: -10%; animation-duration: 6.630245442915703s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 4.340475769349846s;"
+                    >
+                      <a
+                        aria-label="Oracle"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://www.oracle.com"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 3.8751130716170863s;"
+                        >
+                          <svg>
+                            oracle.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div
+          class="c27"
+        >
+          <p
+            class="c4 c28"
+          >
+            Back-end Developer.
+          </p>
+          <p
+            class="c4 c28"
+          >
+            Involved in back-end development following an Agile (Scrum) methodology.
+          </p>
+          <p
+            class="c4 c28"
+          >
+            Utilized Spring 3 and JPA, incorporating Hibernate with both MongoDB and Oracle databases.
+          </p>
+          <a
+            class="c22 c29 c30"
+            data-testid="plain-anchor"
+            href="https://www.idealista.com/"
+            rel="noreferrer"
+            target="_blank"
+          >
+            <div
+              class="c31"
+            >
+              <svg
+                class="c32 c33"
+                height="42"
+                width="42"
+              >
+                circleButton.svg
+              </svg>
+              <div
+                class="c34"
+              >
+                <svg>
+                  arrowRight.svg
+                </svg>
+              </div>
+            </div>
+            <p
+              class="c35 c4 c36"
+            >
+              Check the website
+            </p>
+          </a>
+        </div>
+      </div>
+    </section>
+    <section
+      class="c2"
+    >
+      <div
+        class="c3"
+      >
+        <p
+          class="c4 c5"
+        >
+          09
+        </p>
+        <div
+          class="c6"
+        >
+          <p
+            class="c4 c7"
+          >
+            Incita Security
+          </p>
+          <p
+            class="c4 c8"
+          >
+            Nov 2012 - Sep 2013
+          </p>
+        </div>
+      </div>
+      <div
+        class="c9"
+      >
+        <div
+          class="c10"
+        >
+          <div
+            class="c11 c12"
+            role="presentation"
+          >
+            <div
+              class="c13"
+            >
+              <svg
+                class="c14"
+                color="#FFDD83"
+              >
+                portal.svg
+              </svg>
+            </div>
+            <div
+              class="c15"
+            >
+              <svg
+                class="c14"
+                color="#98DFD6"
+              >
+                portal.svg
+              </svg>
+            </div>
+            <div
+              class="c16"
+            >
+              <ul
+                aria-label="Used technologies at Incita Security"
+              >
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 1.8014251955614506s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -25%; --translateY-end: -11%; animation-duration: 5.049184051332398s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 6.490050749992952s;"
+                    >
+                      <a
+                        aria-label="Python"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://www.python.org"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 1.8014251955614506s;"
+                        >
+                          <svg>
+                            python.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 1.515405347029446s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -32%; --translateY-end: 13%; animation-duration: 5.01079194488918s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 4.179385351249394s;"
+                    >
+                      <a
+                        aria-label="Oracle"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://www.oracle.com"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 1.515405347029446s;"
+                        >
+                          <svg>
+                            oracle.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 2.957166071783897s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -12%; --translateY-end: 37%; animation-duration: 8.327624498442017s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 4.838190436027354s;"
+                    >
+                      <a
+                        aria-label="JavaScript"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://developer.mozilla.org/en/JavaScript"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 2.957166071783897s;"
+                        >
+                          <svg>
+                            javascript.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 1.9949498391369556s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -11%; --translateY-end: -7%; animation-duration: 10.612376686686511s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.606028726515981s;"
+                    >
+                      <a
+                        aria-label="HTML5"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://www.w3.org/html/"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 1.9949498391369556s;"
+                        >
+                          <svg>
+                            html5.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c37"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 4.073566192118695s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -23%; --translateY-end: 34%; animation-duration: 5.941591534592026s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 5.327759359487322s;"
+                    >
+                      <a
+                        aria-label="CSS3"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://www.w3.org/Style/CSS/"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 4.073566192118695s;"
+                        >
+                          <svg>
+                            css3.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div
+          class="c27"
+        >
+          <p
+            class="c4 c28"
+          >
+            Security Consultant and Web Developer.
+          </p>
+          <p
+            class="c4 c28"
+          >
+            Actively involved in SIEM management, utilizing tools such as ArcSight and OSSIM, and proficient in Shell script development.
+          </p>
+          <p
+            class="c4 c28"
+          >
+            Demonstrated proficiency in using Python and PHP 5.3, with MySQL 5.1 for robust database management.
+          </p>
+          <p
+            class="c4 c28"
+          >
+            Employed CSS3 and JavaScript for efficient and dynamic web development.
+          </p>
         </div>
       </div>
     </section>
