@@ -1,3 +1,5 @@
+import { useId } from 'react'
+
 import { useClientTranslation } from '@web/i18n/client'
 import { AnimatedItemKey } from '@web/utils/animatedItem/animatedItemMap'
 
@@ -18,17 +20,16 @@ export type ExperienceItem = {
 
 export function ExperiencePage() {
   const { t } = useClientTranslation('experiencePage')
+  const id = useId()
 
-  const experienceItems = useExperienceItems()
+  const experienceItems = useExperienceItems().sort((a, b) => a.order - b.order)
 
   return (
     <>
       <StyledHeading $level={2}>{t('title')}</StyledHeading>
-      {experienceItems
-        .sort((a, b) => a.order - b.order)
-        .map((props, index) => (
-          <ExperienceItem key={index} {...props} />
-        ))}
+      {experienceItems.map((props, index) => (
+        <ExperienceItem key={`${id}-${index}`} {...props} />
+      ))}
     </>
   )
 }

@@ -559,42 +559,6 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 4.328231817421966s;"
-                >
-                  <div
-                    class="c18 c19"
-                    data-testid="vertical-movement"
-                    style="--translateY-begin: -34%; --translateY-end: 4%; animation-duration: 9.410548820538102s;"
-                  >
-                    <div
-                      class="c20 c21"
-                      data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.969143762427998s;"
-                    >
-                      <a
-                        aria-label="NodeJS"
-                        class="c22 c23"
-                        data-testid="plain-anchor"
-                        href="https://nodejs.org/en/"
-                        rel="noreferrer"
-                        target="_blank"
-                      >
-                        <div
-                          class="c24 c25"
-                          data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 4.328231817421966s;"
-                        >
-                          <svg>
-                            nodejs.svg
-                          </svg>
-                        </div>
-                      </a>
-                    </div>
-                  </div>
-                </li>
-                <li
-                  class="c17"
-                  data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 5.317700619202389s;"
                 >
                   <div
@@ -608,10 +572,10 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.69452697337711s;"
                     >
                       <a
-                        aria-label="Cypress"
+                        aria-label="NodeJS"
                         class="c22 c23"
                         data-testid="plain-anchor"
-                        href="https://www.cypress.io"
+                        href="https://nodejs.org/en/"
                         rel="noreferrer"
                         target="_blank"
                       >
@@ -621,7 +585,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                           style="animation-duration: 6s; animation-delay: 5.317700619202389s;"
                         >
                           <svg>
-                            cypress.svg
+                            nodejs.svg
                           </svg>
                         </div>
                       </a>
@@ -644,10 +608,10 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 6.759014200771513s;"
                     >
                       <a
-                        aria-label="Jest"
+                        aria-label="Cypress"
                         class="c22 c23"
                         data-testid="plain-anchor"
-                        href="https://jestjs.io"
+                        href="https://www.cypress.io"
                         rel="noreferrer"
                         target="_blank"
                       >
@@ -657,7 +621,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                           style="animation-duration: 6s; animation-delay: 3.608072757430517s;"
                         >
                           <svg>
-                            jest.svg
+                            cypress.svg
                           </svg>
                         </div>
                       </a>
@@ -680,10 +644,10 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 4.926964759094687s;"
                     >
                       <a
-                        aria-label="Tanstack React Query"
+                        aria-label="Jest"
                         class="c22 c23"
                         data-testid="plain-anchor"
-                        href="https://react-query.tanstack.com/"
+                        href="https://jestjs.io"
                         rel="noreferrer"
                         target="_blank"
                       >
@@ -693,7 +657,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                           style="animation-duration: 6s; animation-delay: 4.413853448650663s;"
                         >
                           <svg>
-                            reactQuery.svg
+                            jest.svg
                           </svg>
                         </div>
                       </a>
@@ -701,7 +665,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c26"
+                  class="c17"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 2.4686951030768998s;"
                 >
@@ -716,10 +680,10 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 6.409370599693125s;"
                     >
                       <a
-                        aria-label="NextJS"
+                        aria-label="Tanstack React Query"
                         class="c22 c23"
                         data-testid="plain-anchor"
-                        href="https://nextjs.org"
+                        href="https://react-query.tanstack.com/"
                         rel="noreferrer"
                         target="_blank"
                       >
@@ -729,7 +693,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                           style="animation-duration: 6s; animation-delay: 2.4686951030768998s;"
                         >
                           <svg>
-                            nextjs.svg
+                            reactQuery.svg
                           </svg>
                         </div>
                       </a>
@@ -737,7 +701,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c26"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 5.083733872294745s;"
                 >
@@ -752,6 +716,42 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 5.170840168145276s;"
                     >
                       <a
+                        aria-label="NextJS"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://nextjs.org"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 5.083733872294745s;"
+                        >
+                          <svg>
+                            nextjs.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 5.276069308335727s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: 2%; --translateY-end: -18%; animation-duration: 10.782789961495135s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 4.572059010408153s;"
+                    >
+                      <a
                         aria-label="Styled Components"
                         class="c22 c23"
                         data-testid="plain-anchor"
@@ -762,7 +762,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 5.083733872294745s;"
+                          style="animation-duration: 6s; animation-delay: 5.276069308335727s;"
                         >
                           <svg>
                             styledComponents.svg
@@ -782,12 +782,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
           <p
             class="c4 c28"
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi non quam nec dui luctus faucibus. Nullam quis risus eget urna mollis ornare vel eu leo.
+            Front-end React Developer.
           </p>
           <p
             class="c4 c28"
           >
-            Nulla vitae elit libero, a pharetra augue. Donec ullamcorper nulla non metus auctor fringilla.
+            Part of the team responsible for migrating the legacy website to a cutting-edge Next.JS Typescript application within an NX monorepo. Instrumental in developing a comprehensive Design System from the ground up using Styled Components. Additionally, involved in creating new applications for clients and internal administration, including an EXPO mobile app for iOS and Android.
+          </p>
+          <p
+            class="c4 c28"
+          >
+            Proficiently employed Jest and MSW for thorough unit and integration testing, while utilizing Cypress for end-to-end testing.
           </p>
           <a
             class="c22 c29 c30"
@@ -888,17 +893,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 4.5555725705325685s;"
+                  style="animation-duration: 6s; animation-delay: 4.144348516768651s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -3%; --translateY-end: 34%; animation-duration: 7.338088360319994s;"
+                    style="--translateY-begin: -15%; --translateY-end: 6%; animation-duration: 4.506798326937581s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.601112449866713s;"
+                      style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 6.054742129509922s;"
                     >
                       <a
                         aria-label="NodeJS"
@@ -911,7 +916,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 4.5555725705325685s;"
+                          style="animation-duration: 6s; animation-delay: 4.144348516768651s;"
                         >
                           <svg>
                             nodejs.svg
@@ -931,12 +936,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
           <p
             class="c4 c28"
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi non quam nec dui luctus faucibus. Nullam quis risus eget urna mollis ornare vel eu leo.
+            Front-end React Developer.
           </p>
           <p
             class="c4 c28"
           >
-            Nulla vitae elit libero, a pharetra augue. Donec ullamcorper nulla non metus auctor fringilla.
+            Responsible for spearheading the development of back-office applications, catering to the internal administrative requirements of the company's business data.
+          </p>
+          <p
+            class="c4 c28"
+          >
+            Initiated the creation of a comprehensive monorepo from the ground up using Yarn Workspaces, ensuring the development of full TypeScript applications.
           </p>
           <a
             class="c22 c29 c30"

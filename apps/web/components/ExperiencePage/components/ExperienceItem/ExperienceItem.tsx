@@ -48,7 +48,7 @@ export function ExperienceItem({
   link,
   linkLabel,
   descriptionParagraphs,
-}: ExperienceItemProps) {
+}: Readonly<ExperienceItemProps>) {
   const id = useId()
   const { t } = useClientTranslation('experiencePage')
 
@@ -80,7 +80,7 @@ export function ExperienceItem({
         </StyledExperiencePortal>
         <StyledExperienceDescription>
           {descriptionParagraphs.map((paragraph, index) => (
-            <StyledDescriptionParagraph key={index}>
+            <StyledDescriptionParagraph key={`${id}-${index}`}>
               {paragraph}
             </StyledDescriptionParagraph>
           ))}
