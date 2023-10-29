@@ -1354,12 +1354,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
           <p
             class="c5 c28"
           >
-            Implemented a robust Test-Driven Development (TDD) approach using Jest and React Testing Library.
-          </p>
-          <p
-            class="c5 c28"
-          >
-            Leveraged Styled Components with EmotionJs for seamless UI design.
+            Implemented a sophisticated design system, utilizing a customized library of components alongside Storybook for comprehensive documentation.
           </p>
           <p
             class="c5 c28"
@@ -1771,11 +1766,6 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
             class="c5 c28"
           >
             Contributed to an international project, focusing on web development based on WebComponents, specifically LitElement, and Redux, with seamless communication with REST APIs.
-          </p>
-          <p
-            class="c5 c28"
-          >
-            Adopted a Test-Driven Development (TDD) approach using Karma with Mocha for comprehensive unit testing.
           </p>
           <p
             class="c5 c28"
@@ -2597,22 +2587,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
           <p
             class="c5 c28"
           >
-            Front-end Developer.
+            Full Stack Developer.
           </p>
           <p
             class="c5 c28"
           >
-            Involved in the development of multiple React.JS web applications, utilizing REST services provided by the Gateway service, primarily based on SAP, Java, or Node.js backend services.
-          </p>
-          <p
-            class="c5 c28"
-          >
-            Took on the role of a front-end developer lead for an Angular JS 1.7 application, responsible for onboarding newcomers and overseeing new developments or maintenance. Additionally, proficient in deploying applications across various environments for multiple clients.
+            Contributed to the Mobile Development Center, focusing on the main project, an IONIC app with Angular JS 1.6. Involved in the development of an instant messaging system using Socket.io and Node.js. Integrated Spring Boot and multiple REST services.
           </p>
           <a
             class="c22 c29 c30"
             data-testid="plain-anchor"
-            href="https://www2.deloitte.com/"
+            href="https://www.babelgroup.com/"
             rel="noreferrer"
             target="_blank"
           >
@@ -2957,11 +2942,6 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
             class="c5 c28"
           >
             Worked as a Java consultant, focusing on back-end developments in PSA Peugeot-Citroën. Involved in incident resolution and new functionalities development, utilizing Spring 3 MVC, Hibernate, Struts 2 and BBDD Oracle.
-          </p>
-          <p
-            class="c5 c28"
-          >
-            Utilized Agile Obeya and JIRA for managing tasks and issues.
           </p>
           <a
             class="c22 c29 c30"

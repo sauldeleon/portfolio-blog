@@ -51,10 +51,9 @@ export function useExperienceItems(): ExperienceItem[] {
         t('experienceItems.smartProtection.p2'),
         t('experienceItems.smartProtection.p3'),
         t('experienceItems.smartProtection.p4'),
-        t('experienceItems.smartProtection.p4'),
+        t('experienceItems.smartProtection.p5'),
         t('experienceItems.smartProtection.p6'),
         t('experienceItems.smartProtection.p7'),
-        t('experienceItems.smartProtection.p8'),
       ],
     },
     {
@@ -77,7 +76,6 @@ export function useExperienceItems(): ExperienceItem[] {
       descriptionParagraphs: [
         t('experienceItems.ing.p1'),
         t('experienceItems.ing.p2'),
-        t('experienceItems.ing.p3'),
         t('experienceItems.ing.p3'),
         t('experienceItems.ing.p4'),
         t('experienceItems.ing.p5'),
@@ -120,12 +118,11 @@ export function useExperienceItems(): ExperienceItem[] {
       ],
       beginDate: new Date('2017-04-01T00:00:00.000Z'),
       endDate: new Date('2017-09-01T00:00:00.000Z'),
-      link: 'https://www2.deloitte.com/',
+      link: 'https://www.babelgroup.com/',
       linkLabel: t('checkWebsiteLink'),
       descriptionParagraphs: [
-        t('experienceItems.keytree.p1'),
-        t('experienceItems.keytree.p2'),
-        t('experienceItems.keytree.p3'),
+        t('experienceItems.babel.p1'),
+        t('experienceItems.babel.p2'),
       ],
     },
     {
@@ -150,7 +147,6 @@ export function useExperienceItems(): ExperienceItem[] {
         t('experienceItems.ioon.p4'),
         t('experienceItems.ioon.p5'),
         t('experienceItems.ioon.p6'),
-        t('experienceItems.ioon.p7'),
       ],
     },
     {

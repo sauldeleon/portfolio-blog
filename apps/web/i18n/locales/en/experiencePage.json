@@ -16,9 +16,8 @@
       "p3": "Initiated the creation of a comprehensive monorepo from the ground up using Yarn Workspaces, ensuring the development of full TypeScript applications.",
       "p4": "Implemented a robust Test-Driven Development (TDD) approach using Jest and React Testing Library.",
       "p5": "Implemented a sophisticated design system, utilizing a customized library of components alongside Storybook for comprehensive documentation.",
-      "p6": "Leveraged Styled Components with EmotionJs for seamless UI design.",
-      "p7": "Established and optimized the frontend pipeline in Jenkins, utilizing parallel optimization for multiple stages.",
-      "p8": "Basic knowledge in utilizing Terraform for storing environment variables in AWS."
+      "p6": "Established and optimized the frontend pipeline in Jenkins, utilizing parallel optimization for multiple stages.",
+      "p7": "Basic knowledge in utilizing Terraform for storing environment variables in AWS."
     },
     "ing": {
       "p1": "Front-end Developer.",
@@ -42,8 +41,7 @@
       "p3": "Implemented an Arduino monitoring system for real-time information within the application.",
       "p4": "Demonstrated proficiency in utilizing Maven, Sonarqube, and JUnit, along with Mockito for testing and validating clean code.",
       "p5": "Involved in front-end development for various customers, employing CSS3, jQuery, and HTML5.",
-      "p6": "Worked as a Java consultant, focusing on back-end developments in PSA Peugeot-Citroën. Involved in incident resolution and new functionalities development, utilizing Spring 3 MVC, Hibernate, Struts 2 and BBDD Oracle.",
-      "p7": "Utilized Agile Obeya and JIRA for managing tasks and issues."
+      "p6": "Worked as a Java consultant, focusing on back-end developments in PSA Peugeot-Citroën. Involved in incident resolution and new functionalities development, utilizing Spring 3 MVC, Hibernate, Struts 2 and BBDD Oracle."
     },
     "clarive": {
       "p1": "Full Stack Developer.",
