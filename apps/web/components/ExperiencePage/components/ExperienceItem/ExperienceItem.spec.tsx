@@ -24,7 +24,7 @@ describe('ExperienceItem', () => {
     expect(baseElement).toMatchSnapshot()
     expect(screen.getByText('01')).toBeInTheDocument()
     expect(screen.getByText('test')).toBeInTheDocument()
-    expect(screen.getByText('Feb 2022 - Present')).toBeInTheDocument()
+    expect(screen.getByText('Feb 2022')).toBeInTheDocument()
     expect(screen.getByLabelText('NodeJS')).toBeInTheDocument()
     expect(
       screen.getByText(

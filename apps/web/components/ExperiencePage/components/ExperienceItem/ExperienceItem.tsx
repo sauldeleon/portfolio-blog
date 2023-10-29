@@ -12,7 +12,7 @@ import {
 
 import {
   StyledCircleLink,
-  StyledCompanyInfo,
+  StyledCompany,
   StyledCompanyName,
   StyledCompanyPeriod,
   StyledDescriptionParagraph,
@@ -55,15 +55,15 @@ export function ExperienceItem({
   return (
     <StyledSection>
       <StyledExperienceHeader>
-        <StyledOrder>{zeroPad(order + 1, 2)}</StyledOrder>
-        <StyledCompanyInfo>
+        <StyledCompany>
+          <StyledOrder>{zeroPad(order + 1, 2)}</StyledOrder>
           <StyledCompanyName>{company}</StyledCompanyName>
-          <StyledCompanyPeriod>
-            {`${format(beginDate, 'MMM yyyy')} - ${
-              endDate ? format(endDate, 'MMM yyyy') : t('present')
-            }`}
-          </StyledCompanyPeriod>
-        </StyledCompanyInfo>
+        </StyledCompany>
+        <StyledCompanyPeriod>
+          {`${format(beginDate, 'MMM yyyy')}${
+            endDate ? format(endDate, ' - MMM yyyy') : ''
+          }`}
+        </StyledCompanyPeriod>
       </StyledExperienceHeader>
       <StyledExperienceInfo>
         <StyledExperiencePortal>

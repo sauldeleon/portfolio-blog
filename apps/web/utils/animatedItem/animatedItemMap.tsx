@@ -7,6 +7,7 @@ import {
   ChromeIcon,
   CypressIcon,
   DockerIcon,
+  EmotionJSIcon,
   EslintIcon,
   ExpoIcon,
   ExpressJSIcon,
@@ -65,6 +66,7 @@ export type AnimatedItemKey =
   | 'css3'
   | 'cypress'
   | 'docker'
+  | 'emotion'
   | 'eslint'
   | 'expo'
   | 'expressJS'
@@ -153,6 +155,11 @@ export const animatedItemMap: Record<AnimatedItemKey, AnimatedElement> = {
     ariaLabel: 'Docker',
     path: 'https://www.docker.com',
     svg: <DockerIcon />,
+  },
+  emotion: {
+    ariaLabel: 'EmotionJS',
+    path: 'https://emotion.sh',
+    svg: <EmotionJSIcon />,
   },
   eslint: {
     ariaLabel: 'ESLint',

@@ -15,8 +15,9 @@ export const StyledSection = styled.section`
 
 export const StyledExperienceHeader = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
+  align-items: flex-end;
   width: 100%;
   border-bottom: 1px solid ${({ theme }) => rgba(theme.colors.white, 0.5)};
   margin-bottom: 40px;
@@ -36,11 +37,16 @@ export const StyledOrder = styled(Body)`
   }
 `
 
-export const StyledCompanyInfo = styled.div`
+export const StyledCompany = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  flex-direction: row;
   justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+
+  ${({ theme }) => theme.media.up.lg} {
+    margin-bottom: 30px;
+  }
 `
 
 export const StyledCompanyName = styled(Body)`
@@ -51,7 +57,6 @@ export const StyledCompanyName = styled(Body)`
   ${({ theme }) => theme.media.up.lg} {
     font-size: 65px;
     ${({ theme }) => theme.fontStyles.robotoMono.light};
-    margin-bottom: 30px;
   }
 `
 
