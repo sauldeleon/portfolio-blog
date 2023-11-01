@@ -5,6 +5,7 @@ import {
   BF2042Icon,
   CSS3Icon,
   ChromeIcon,
+  CucumberIcon,
   CypressIcon,
   DockerIcon,
   EmotionJSIcon,
@@ -64,6 +65,7 @@ export type AnimatedItemKey =
   | 'bf2042'
   | 'chrome'
   | 'css3'
+  | 'cucumber'
   | 'cypress'
   | 'docker'
   | 'emotion'
@@ -145,6 +147,11 @@ export const animatedItemMap: Record<AnimatedItemKey, AnimatedElement> = {
     path: 'https://www.w3.org/Style/CSS/',
     size: 'S',
     svg: <CSS3Icon />,
+  },
+  cucumber: {
+    ariaLabel: 'Cucumber',
+    path: 'https://cucumber.io',
+    svg: <CucumberIcon />,
   },
   cypress: {
     ariaLabel: 'Cypress',

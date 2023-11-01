@@ -7,6 +7,8 @@ import { Link } from '@sdlgr/link'
 export const StyledLogoLink = styled(Link)`
   display: flex;
   margin-right: 15px;
+
+  ${({ theme }) => theme.helpers.textBottomBorder.removeAfter};
 `
 
 export const StyledSLLogo = styled(SLLogo)`

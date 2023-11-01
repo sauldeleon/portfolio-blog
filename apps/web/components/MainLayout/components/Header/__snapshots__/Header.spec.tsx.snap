@@ -232,6 +232,14 @@ exports[`Header should render successfully 1`] = `
   margin-right: 15px;
 }
 
+.c2:after {
+  content: none;
+}
+
+.c2:hover:after {
+  content: none;
+}
+
 .c3 {
   color: #000000;
   margin-bottom: 25px;

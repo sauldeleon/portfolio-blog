@@ -13,27 +13,22 @@ describe('ExperienceItem', () => {
         technologies={['nodeJS']}
         beginDate={new Date('2022-02-01T00:00:00.000Z')}
         link="https://www.test.com/"
-        linkLabel="Check website"
-        descriptionParagraphs={[
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi non quam nec dui luctus faucibus. Nullam quis risus eget urna mollis ornare vel eu leo.',
-          'Nulla vitae elit libero, a pharetra augue. Donec ullamcorper nulla non metus auctor fringilla.',
+        descriptionParagraphKeys={[
+          'experienceItems.bonhams.p1',
+          'experienceItems.bonhams.p2',
         ]}
       />,
     )
-    await screen.findByText('Check website')
+    await screen.findByText('Check the website')
     expect(baseElement).toMatchSnapshot()
     expect(screen.getByText('01')).toBeInTheDocument()
     expect(screen.getByText('test')).toBeInTheDocument()
     expect(screen.getByText('Feb 2022')).toBeInTheDocument()
     expect(screen.getByLabelText('NodeJS')).toBeInTheDocument()
-    expect(
-      screen.getByText(
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi non quam nec dui luctus faucibus. Nullam quis risus eget urna mollis ornare vel eu leo.',
-      ),
-    ).toBeInTheDocument()
+    expect(screen.getByText(/EXPO/)).toBeInTheDocument()
     expect(
       screen.getByRole('link', {
-        name: /Check website/,
+        name: /Check the website/,
       }),
     ).toHaveAttribute('href', 'https://www.test.com/')
   })
@@ -47,14 +42,13 @@ describe('ExperienceItem', () => {
         beginDate={new Date('2021-02-01T00:00:00.000Z')}
         endDate={new Date('2022-02-01T00:00:00.000Z')}
         link="https://www.test.com/"
-        linkLabel="Check website"
-        descriptionParagraphs={[
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi non quam nec dui luctus faucibus. Nullam quis risus eget urna mollis ornare vel eu leo.',
-          'Nulla vitae elit libero, a pharetra augue. Donec ullamcorper nulla non metus auctor fringilla.',
+        descriptionParagraphKeys={[
+          'experienceItems.bonhams.p1',
+          'experienceItems.bonhams.p2',
         ]}
       />,
     )
-    await screen.findByText('Check website')
+    await screen.findByText('Check the website')
     expect(await screen.findByText('Feb 2021 - Feb 2022')).toBeInTheDocument()
   })
 })

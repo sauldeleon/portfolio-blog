@@ -1,5 +1,7 @@
 import { format } from 'date-fns'
+import { ParseKeys } from 'i18next'
 import { useId } from 'react'
+import { Trans } from 'react-i18next'
 
 import { ArrowRightIcon } from '@sdlgr/assets'
 
@@ -23,6 +25,7 @@ import {
   StyledOrder,
   StyledPortals,
   StyledSection,
+  StyledTechnology,
 } from './ExperienceItem.styles'
 
 export interface ExperienceItemProps {
@@ -31,9 +34,8 @@ export interface ExperienceItemProps {
   technologies: AnimatedItemKey[]
   beginDate: Date
   endDate?: Date
+  descriptionParagraphKeys: ParseKeys<'experiencePage'>[]
   link?: string
-  linkLabel?: string
-  descriptionParagraphs: string[]
 }
 
 const zeroPad = (num: number, places: number) =>
@@ -46,8 +48,7 @@ export function ExperienceItem({
   beginDate,
   endDate,
   link,
-  linkLabel,
-  descriptionParagraphs,
+  descriptionParagraphKeys,
 }: Readonly<ExperienceItemProps>) {
   const id = useId()
   const { t } = useClientTranslation('experiencePage')
@@ -79,9 +80,15 @@ export function ExperienceItem({
           </StyledPortals>
         </StyledExperiencePortal>
         <StyledExperienceDescription>
-          {descriptionParagraphs.map((paragraph, index) => (
+          {descriptionParagraphKeys.map((paragraphKey, index) => (
             <StyledDescriptionParagraph key={`${id}-${index}`}>
-              {paragraph}
+              <Trans
+                t={t}
+                i18nKey={paragraphKey}
+                components={{
+                  bold: <StyledTechnology />,
+                }}
+              />
             </StyledDescriptionParagraph>
           ))}
           {link && (
@@ -89,7 +96,7 @@ export function ExperienceItem({
               href={link}
               target="_blank"
               iconContent={<ArrowRightIcon />}
-              label={linkLabel}
+              label={t('checkWebsiteLink')}
             />
           )}
         </StyledExperienceDescription>

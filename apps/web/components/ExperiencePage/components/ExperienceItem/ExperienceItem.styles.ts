@@ -140,3 +140,8 @@ export const StyledPortals = styled(Portals)`
     }
   }
 `
+
+export const StyledTechnology = styled.b`
+  ${({ theme }) => theme.typography.body.M}
+  font-weight: bold;
+`

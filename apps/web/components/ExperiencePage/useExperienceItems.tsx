@@ -1,9 +1,6 @@
-import { useClientTranslation } from '@sdlgr/i18n-client'
-
 import { ExperienceItem } from './ExperiencePage'
 
 export function useExperienceItems(): ExperienceItem[] {
-  const { t } = useClientTranslation('experiencePage')
   return [
     {
       order: 0,
@@ -21,12 +18,11 @@ export function useExperienceItems(): ExperienceItem[] {
       ],
       beginDate: new Date('2022-02-01T00:00:00.000Z'),
       link: 'https://www.bonhams.com/',
-      linkLabel: t('checkWebsiteLink'),
-      descriptionParagraphs: [
-        t('experienceItems.bonhams.p1'),
-        t('experienceItems.bonhams.p2'),
-        t('experienceItems.bonhams.p3'),
-        t('experienceItems.bonhams.p4'),
+      descriptionParagraphKeys: [
+        'experienceItems.bonhams.p1',
+        'experienceItems.bonhams.p2',
+        'experienceItems.bonhams.p3',
+        'experienceItems.bonhams.p4',
       ],
     },
     {
@@ -45,15 +41,14 @@ export function useExperienceItems(): ExperienceItem[] {
       beginDate: new Date('2021-02-01T00:00:00.000Z'),
       endDate: new Date('2022-02-01T00:00:00.000Z'),
       link: 'https://www.smartprotection.com/',
-      linkLabel: t('checkWebsiteLink'),
-      descriptionParagraphs: [
-        t('experienceItems.smartProtection.p1'),
-        t('experienceItems.smartProtection.p2'),
-        t('experienceItems.smartProtection.p3'),
-        t('experienceItems.smartProtection.p4'),
-        t('experienceItems.smartProtection.p5'),
-        t('experienceItems.smartProtection.p6'),
-        t('experienceItems.smartProtection.p7'),
+      descriptionParagraphKeys: [
+        'experienceItems.smartProtection.p1',
+        'experienceItems.smartProtection.p2',
+        'experienceItems.smartProtection.p3',
+        'experienceItems.smartProtection.p4',
+        'experienceItems.smartProtection.p5',
+        'experienceItems.smartProtection.p6',
+        'experienceItems.smartProtection.p7',
       ],
     },
     {
@@ -67,18 +62,18 @@ export function useExperienceItems(): ExperienceItem[] {
         'jest',
         'mocha',
         'litElement',
+        'cucumber',
         'redux',
       ],
       beginDate: new Date('2020-08-01T00:00:00.000Z'),
       endDate: new Date('2021-02-01T00:00:00.000Z'),
       link: 'https://www.ing.es/',
-      linkLabel: t('checkWebsiteLink'),
-      descriptionParagraphs: [
-        t('experienceItems.ing.p1'),
-        t('experienceItems.ing.p2'),
-        t('experienceItems.ing.p3'),
-        t('experienceItems.ing.p4'),
-        t('experienceItems.ing.p5'),
+      descriptionParagraphKeys: [
+        'experienceItems.ing.p1',
+        'experienceItems.ing.p2',
+        'experienceItems.ing.p3',
+        'experienceItems.ing.p4',
+        'experienceItems.ing.p5',
       ],
     },
     {
@@ -95,10 +90,10 @@ export function useExperienceItems(): ExperienceItem[] {
       ],
       beginDate: new Date('2017-10-01T00:00:00.000Z'),
       endDate: new Date('2020-08-01T00:00:00.000Z'),
-      descriptionParagraphs: [
-        t('experienceItems.keytree.p1'),
-        t('experienceItems.keytree.p2'),
-        t('experienceItems.keytree.p3'),
+      descriptionParagraphKeys: [
+        'experienceItems.keytree.p1',
+        'experienceItems.keytree.p2',
+        'experienceItems.keytree.p3',
       ],
     },
     {
@@ -119,10 +114,9 @@ export function useExperienceItems(): ExperienceItem[] {
       beginDate: new Date('2017-04-01T00:00:00.000Z'),
       endDate: new Date('2017-09-01T00:00:00.000Z'),
       link: 'https://www.babelgroup.com/',
-      linkLabel: t('checkWebsiteLink'),
-      descriptionParagraphs: [
-        t('experienceItems.babel.p1'),
-        t('experienceItems.babel.p2'),
+      descriptionParagraphKeys: [
+        'experienceItems.babel.p1',
+        'experienceItems.babel.p2',
       ],
     },
     {
@@ -139,14 +133,13 @@ export function useExperienceItems(): ExperienceItem[] {
       beginDate: new Date('2016-01-01T00:00:00.000Z'),
       endDate: new Date('2017-04-01T00:00:00.000Z'),
       link: 'https://ioon.es/',
-      linkLabel: t('checkWebsiteLink'),
-      descriptionParagraphs: [
-        t('experienceItems.ioon.p1'),
-        t('experienceItems.ioon.p2'),
-        t('experienceItems.ioon.p3'),
-        t('experienceItems.ioon.p4'),
-        t('experienceItems.ioon.p5'),
-        t('experienceItems.ioon.p6'),
+      descriptionParagraphKeys: [
+        'experienceItems.ioon.p1',
+        'experienceItems.ioon.p2',
+        'experienceItems.ioon.p3',
+        'experienceItems.ioon.p4',
+        'experienceItems.ioon.p5',
+        'experienceItems.ioon.p6',
       ],
     },
     {
@@ -164,12 +157,11 @@ export function useExperienceItems(): ExperienceItem[] {
       beginDate: new Date('2014-01-01T00:00:00.000Z'),
       endDate: new Date('2016-01-01T00:00:00.000Z'),
       link: 'https://clarive.com/',
-      linkLabel: t('checkWebsiteLink'),
-      descriptionParagraphs: [
-        t('experienceItems.clarive.p1'),
-        t('experienceItems.clarive.p2'),
-        t('experienceItems.clarive.p3'),
-        t('experienceItems.clarive.p4'),
+      descriptionParagraphKeys: [
+        'experienceItems.clarive.p1',
+        'experienceItems.clarive.p2',
+        'experienceItems.clarive.p3',
+        'experienceItems.clarive.p4',
       ],
     },
     {
@@ -179,11 +171,10 @@ export function useExperienceItems(): ExperienceItem[] {
       beginDate: new Date('2013-09-01T00:00:00.000Z'),
       endDate: new Date('2013-12-01T00:00:00.000Z'),
       link: 'https://www.idealista.com/',
-      linkLabel: t('checkWebsiteLink'),
-      descriptionParagraphs: [
-        t('experienceItems.idealista.p1'),
-        t('experienceItems.idealista.p2'),
-        t('experienceItems.idealista.p3'),
+      descriptionParagraphKeys: [
+        'experienceItems.idealista.p1',
+        'experienceItems.idealista.p2',
+        'experienceItems.idealista.p3',
       ],
     },
     {
@@ -192,11 +183,11 @@ export function useExperienceItems(): ExperienceItem[] {
       technologies: ['python', 'oracle', 'javascript', 'html', 'css3'],
       beginDate: new Date('2012-11-01T00:00:00.000Z'),
       endDate: new Date('2013-09-01T00:00:00.000Z'),
-      descriptionParagraphs: [
-        t('experienceItems.incitaSecurity.p1'),
-        t('experienceItems.incitaSecurity.p2'),
-        t('experienceItems.incitaSecurity.p3'),
-        t('experienceItems.incitaSecurity.p4'),
+      descriptionParagraphKeys: [
+        'experienceItems.incitaSecurity.p1',
+        'experienceItems.incitaSecurity.p2',
+        'experienceItems.incitaSecurity.p3',
+        'experienceItems.incitaSecurity.p4',
       ],
     },
   ]

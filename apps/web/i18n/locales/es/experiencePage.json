@@ -6,59 +6,59 @@
   "experienceItems": {
     "bonhams": {
       "p1": "Desarrollador de Front-end React.",
-      "p2": "Parte del equipo responsable de migrar la antigua web a una aplicación web de última generación Next.JS utilizando Typescript dentro de un monorepo NX. Desarrollo de un design system utilizando Styled Components. Además, participé en la creación de nuevas aplicaciones para usuarios externos y de administración interna, incluyendo una aplicación móvil EXPO para iOS y Android.",
-      "p3": "Uso de Jest y MSW para test de integración y unitarias, mientras utilizaba Cypress para pruebas de end to end.",
+      "p2": "Parte del equipo responsable de migrar la antigua web a una aplicación web de última generación <bold>Next.JS</bold> utilizando <bold>Typescript</bold> dentro de un monorepo <bold>NX</bold>. Desarrollo de un design system utilizando <bold>Styled Components</bold>. Además, participé en la creación de nuevas aplicaciones para usuarios externos y de administración interna, incluyendo una aplicación móvil <bold>EXPO</bold> para iOS y Android.",
+      "p3": "Uso de <bold>Jest</bold> y <bold>MSW</bold> para test de integración y unitarias, mientras utilizaba <bold>Cypress</bold> para pruebas de end to end.",
       "p4": "Ayudé en la mejora del pipeline CI/CD utilizando GitLab para una ejecutar despliegues en múltiples entornos."
     },
     "smartProtection": {
       "p1": "Desarrollador de Front-end React.",
       "p2": "Parte del equipo responsable del desarrollo de aplicaciones de back-office, atendiendo a los requisitos administrativos internos de los datos comerciales de la empresa.",
-      "p3": "Creación de un monorepo integral utilizando Yarn Workspaces, asegurando el desarrollo de aplicaciones completas basadas en Typescript.",
-      "p4": "Uso de TDD utilizando Jest y React Testing Library.",
-      "p5": "Implementación de un design system, utilizando una biblioteca personalizada de componentes css-in-js usando Emotion.JS junto con Storybook para una documentación completa.",
-      "p6": "Optimización del pipeline en Jenkins, paralelizando múltiples etapas.",
+      "p3": "Creación de un monorepo integral utilizando <bold>Yarn Workspaces</bold>, asegurando el desarrollo de aplicaciones completas basadas en <bold>Typescript</bold>.",
+      "p4": "Uso de TDD utilizando <bold>Jest</bold> y <bold>React Testing Library</bold>.",
+      "p5": "Implementación de un design system, utilizando una biblioteca personalizada de componentes css-in-js usando <bold>Emotion.JS</bold> junto con <bold>Storybook</bold> para una documentación completa.",
+      "p6": "Optimización del pipeline en <bold>Jenkins</bold>, paralelizando múltiples etapas.",
       "p7": "Conocimientos básicos en el uso de Terraform para almacenar variables de entorno en AWS."
     },
     "ing": {
       "p1": "Desarrollador de Front-end.",
-      "p2": "Contribución a un proyecto internacional, donde me enfoqué en el desarrollo utilizando Web Components con LitElement y Redux.",
-      "p3": "TDD utilizando Karma con Mocha para pruebas integrales y unitarias.",
-      "p4": "Realización pruebas de end to end utilizando Cucumber y WebdriverIO para pruebas exhaustivas de funcionalidad.",
+      "p2": "Contribución a un proyecto internacional, donde me enfoqué en el desarrollo utilizando Web Components con <bold>LitElement</bold> y <bold>Redux</bold>.",
+      "p3": "TDD utilizando <bold>Karma</bold> con <bold>Mocha</bold> para pruebas integrales y unitarias.",
+      "p4": "Realización pruebas de end to end utilizando <bold>Cucumber</bold> y <bold>WebdriverIO</bold> para pruebas exhaustivas de funcionalidad.",
       "p5": "Revisiones exhaustivas de código, actuando como uno de los aprobadores del repositorio principal."
     },
     "keytree": {
       "p1": "Desarrollador de Front-end.",
-      "p2": "Participé en el desarrollo de múltiples aplicaciones web de React.JS, utilizando servicios REST proporcionados por el servicio Gateway, principalmente basado en servicios de backend de SAP, Java o Node.js.",
-      "p3": "Líder de desarrollo front-end para una aplicación Angular JS 1.7, responsable de la integración de nuevos miembros y supervisión de nuevos desarrollos o mantenimiento. Experiencia en implementar aplicaciones en varios entornos para múltiples clientes."
+      "p2": "Participé en el desarrollo de múltiples aplicaciones web de <bold>React.JS</bold>, utilizando servicios REST proporcionados por el servicio Gateway, principalmente basado en servicios de backend de SAP, Java o Node.js.",
+      "p3": "Líder de desarrollo front-end para una aplicación <bold>Angular JS</bold>, responsable de la integración de nuevos miembros y supervisión de nuevos desarrollos o mantenimiento. Experiencia en implementar aplicaciones en varios entornos para múltiples clientes."
     },
     "babel": {
       "p1": "Desarrollador de Full Stack.",
-      "p2": "Participé al Centro de Desarrollo Móvil, centrándome en una aplicación IONIC con Angular JS 1.6. Desarrollo de un sistema de mensajería instantánea utilizando Socket.io y Node.js. Integración con Spring Boot y múltiples servicios REST."
+      "p2": "Participé al Centro de Desarrollo Móvil, centrándome en una aplicación <bold>IONIC</bold> con <bold>Angular JS</bold>. Desarrollo de un sistema de mensajería instantánea utilizando <bold>Socket.io</bold> y <bold>Node.js</bold>. Integración con <bold>Spring Boot</bold> y múltiples servicios REST."
     },
     "ioon": {
       "p1": "Scrum Master y Desarrollador Full Stack.",
-      "p2": "CTO entre Noviembre de 2016 y Abril de 2017. Scrum Master del proyecto principal de I+D+i, utilizando Java 1.7, Spring 4, GWT 1.7, Hibernate 5 y MySQL 5.6. Uso de IONIC 2 y Angular 2 para el desarrollo móvil.",
+      "p2": "CTO entre Noviembre de 2016 y Abril de 2017. Scrum Master del proyecto principal de I+D+i, utilizando <bold>Java 1.7</bold>, <bold>Spring 4</bold>, <bold>GWT 1.7</bold>, <bold>Hibernate 5</bold> y <bold>MySQL 5.6</bold>. Uso de <bold>IONIC 2</bold> y <bold>Angular</bold> para el desarrollo móvil.",
       "p3": "Implementación de un sistema de monitorización Arduino para obtener información en tiempo real dentro de la aplicación.",
-      "p4": "Uso de Maven, Sonarqube y JUnit, junto con Mockito para pruebas y validación de calidad de código.",
-      "p5": "Desarrollos front-end para varios clientes, empleando CSS3, jQuery y HTML5.",
-      "p6": "Consultor de Java, enfocándome en el desarrollo de back-end en PSA Peugeot-Citroën. Participé en la resolución de incidentes y el desarrollo de nuevas funcionalidades, utilizando Spring 3 MVC, Hibernate, Struts 2 y BBDD Oracle."
+      "p4": "Uso de <bold>Maven</bold>, <bold>Sonarqube</bold> y <bold>JUnit</bold>, junto con <bold>Mockito</bold> para pruebas unitarias y validación de calidad de código.",
+      "p5": "Desarrollos front-end para varios clientes, empleando <bold>CSS3</bold>, <bold>jQuery</bold> y <bold>HTML5</bold>.",
+      "p6": "Consultor de <bold>Java</bold>, enfocándome en el desarrollo de back-end en PSA Peugeot-Citroën. Participé en la resolución de incidentes y el desarrollo de nuevas funcionalidades, utilizando <bold>Spring 3 MVC</bold>, <bold>Hibernate</bold>, <bold>Struts 2</bold> y BBDD <bold>Oracle</bold>."
     },
     "clarive": {
       "p1": "Desarrollador de Full Stack.",
-      "p2": "Desarrollo de back-end utilizando Perl y el Framework Catalyst, junto con varios módulos CPAN para una integración de múltiples bases de datos, incluidas Oracle y MongoDB.",
-      "p3": "Uso del Framework ExtJS para el desarrollo de front-end.",
+      "p2": "Desarrollo de back-end utilizando <bold>Perl</bold> y el Framework Catalyst, junto con varios módulos CPAN para una integración de múltiples bases de datos, incluidas <bold>Oracle</bold> y <bold>MongoDB</bold>.",
+      "p3": "Uso del Framework <bold>ExtJS</bold> para el desarrollo de front-end.",
       "p4": "Integración de servicios web SOAP para una comunicación fluida con múltiples sistemas."
     },
     "idealista": {
       "p1": "Desarrollador de Back-end.",
       "p2": "Participé en el desarrollo de back-end de la web principal siguiendo una metodología ágil (Scrum).",
-      "p3": "Uso de Spring 3 y JPA, utilizando Hibernate con bases de datos tanto MongoDB como Oracle."
+      "p3": "Uso de <bold>Spring 3</bold> y <bold>JPA</bold>, utilizando <bold>Hibernate</bolde con bases de datos tanto <bold>MongoDB</bold> como <bold>Oracle</bold>."
     },
     "incitaSecurity": {
       "p1": "Consultor de Seguridad y desarrollador Web.",
       "p2": "Participé activamente en la gestión de SIEM, utilizando herramientas como ArcSight y OSSIM, y desarrollando scripts Shell.",
-      "p3": "Competencia en el uso de Python y PHP 5.3, con MySQL 5.1 para una sólida gestión de bases de datos.",
-      "p4": "Utilización de CSS3 y JavaScript para un desarrollo web de pequeñas aplicaciones de gestión de datos internos."
+      "p3": "Competencia en el uso de <bold>Python</bold> y PHP 5.3, con MySQL 5.1 para una sólida gestión de bases de datos.",
+      "p4": "Utilización de <bold>CSS3</bold> y <bold>JavaScript</bold> para un desarrollo web de pequeñas aplicaciones de gestión de datos internos."
     }
   },
   "metadata": {

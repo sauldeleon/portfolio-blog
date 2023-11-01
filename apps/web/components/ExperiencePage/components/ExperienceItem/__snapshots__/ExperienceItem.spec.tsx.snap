@@ -139,12 +139,12 @@ exports[`ExperienceItem should render successfully 1`] = `
   padding-left: 10px;
 }
 
-.c33 {
+.c34 {
   margin-left: 8px;
   position: relative;
 }
 
-.c33::after {
+.c34::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -154,13 +154,13 @@ exports[`ExperienceItem should render successfully 1`] = `
   background-color: currentColor;
 }
 
-.c33::after {
+.c34::after {
   transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.5s ease-out;
 }
 
-.c30 .loading {
+.c31 .loading {
   transform: rotate(-90deg);
   transform-origin: center;
   stroke: #FBFBFB;
@@ -170,7 +170,7 @@ exports[`ExperienceItem should render successfully 1`] = `
   transition: stroke-dashoffset 0.5s steps(4, end);
 }
 
-.c26 {
+.c27 {
   outline: none;
   cursor: pointer;
   display: flex;
@@ -178,34 +178,34 @@ exports[`ExperienceItem should render successfully 1`] = `
   max-height: 42px;
 }
 
-.c26:after {
+.c27:after {
   content: none;
 }
 
-.c26:hover:after {
+.c27:hover:after {
   content: none;
 }
 
-.c26:focus-visible {
+.c27:focus-visible {
   outline: #FBFBFB auto 1px;
 }
 
-.c26:hover .c29 .loading {
+.c27:hover .c30 .loading {
   stroke-dashoffset: 0;
 }
 
-.c26:hover .c32::after {
+.c27:hover .c33::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
 
-.c28 {
+.c29 {
   position: relative;
   width: 42px;
   height: 42px;
 }
 
-.c31 {
+.c32 {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
@@ -327,7 +327,7 @@ exports[`ExperienceItem should render successfully 1`] = `
   font-size: 15px;
 }
 
-.c27 {
+.c28 {
   margin-top: 50px;
   text-transform: uppercase;
   width: max-content;
@@ -337,6 +337,15 @@ exports[`ExperienceItem should render successfully 1`] = `
   width: 100%;
   transform: unset;
   position: relative;
+}
+
+.c26 {
+  font-family: fontFamily;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
 }
 
 @media (width >= 768px) {
@@ -551,32 +560,56 @@ exports[`ExperienceItem should render successfully 1`] = `
           <p
             class="c3 c25"
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi non quam nec dui luctus faucibus. Nullam quis risus eget urna mollis ornare vel eu leo.
+            Front-end React Developer.
           </p>
           <p
             class="c3 c25"
           >
-            Nulla vitae elit libero, a pharetra augue. Donec ullamcorper nulla non metus auctor fringilla.
+            Part of the team responsible for migrating the legacy website to a cutting-edge 
+            <b
+              class="c26"
+            >
+              Next.JS Typescript
+            </b>
+             application within an 
+            <b
+              class="c26"
+            >
+              NX
+            </b>
+             monorepo. Instrumental in developing a comprehensive Design System from the ground up using 
+            <b
+              class="c26"
+            >
+              Styled Components
+            </b>
+            . Additionally, involved in creating new applications for clients and internal administration, including an 
+            <b
+              class="c26"
+            >
+              EXPO
+            </b>
+             mobile app for iOS and Android.
           </p>
           <a
-            class="c20 c26 c27"
+            class="c20 c27 c28"
             data-testid="plain-anchor"
             href="https://www.test.com/"
             rel="noreferrer"
             target="_blank"
           >
             <div
-              class="c28"
+              class="c29"
             >
               <svg
-                class="c29 c30"
+                class="c30 c31"
                 height="42"
                 width="42"
               >
                 circleButton.svg
               </svg>
               <div
-                class="c31"
+                class="c32"
               >
                 <svg>
                   arrowRight.svg
@@ -584,9 +617,9 @@ exports[`ExperienceItem should render successfully 1`] = `
               </div>
             </div>
             <p
-              class="c32 c3 c33"
+              class="c33 c3 c34"
             >
-              Check website
+              Check the website
             </p>
           </a>
         </div>

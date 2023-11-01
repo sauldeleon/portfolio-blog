@@ -180,7 +180,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
   animation-play-state: paused;
 }
 
-.c37 {
+.c38 {
   --itemSize: 25px;
   --translateX-begin: calc(-50% - var(--itemSize));
   --translateX-end: calc(50% + var(--itemSize));
@@ -195,23 +195,23 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
   animation-iteration-count: infinite;
 }
 
-.c37:hover {
+.c38:hover {
   z-index: 200;
   animation-play-state: paused;
 }
 
-.c37:hover .c18,
-.c37:hover .c20,
-.c37:hover .c24 {
+.c38:hover .c18,
+.c38:hover .c20,
+.c38:hover .c24 {
   animation-play-state: paused;
 }
 
-.c36 {
+.c37 {
   margin-left: 8px;
   position: relative;
 }
 
-.c36::after {
+.c37::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -221,13 +221,13 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
   background-color: currentColor;
 }
 
-.c36::after {
+.c37::after {
   transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.5s ease-out;
 }
 
-.c33 .loading {
+.c34 .loading {
   transform: rotate(-90deg);
   transform-origin: center;
   stroke: #FBFBFB;
@@ -237,7 +237,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
   transition: stroke-dashoffset 0.5s steps(4, end);
 }
 
-.c29 {
+.c30 {
   outline: none;
   cursor: pointer;
   display: flex;
@@ -245,34 +245,34 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
   max-height: 42px;
 }
 
-.c29:after {
+.c30:after {
   content: none;
 }
 
-.c29:hover:after {
+.c30:hover:after {
   content: none;
 }
 
-.c29:focus-visible {
+.c30:focus-visible {
   outline: #FBFBFB auto 1px;
 }
 
-.c29:hover .c32 .loading {
+.c30:hover .c33 .loading {
   stroke-dashoffset: 0;
 }
 
-.c29:hover .c35::after {
+.c30:hover .c36::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
 
-.c31 {
+.c32 {
   position: relative;
   width: 42px;
   height: 42px;
 }
 
-.c34 {
+.c35 {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
@@ -394,7 +394,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
   font-size: 15px;
 }
 
-.c30 {
+.c31 {
   margin-top: 50px;
   text-transform: uppercase;
   width: max-content;
@@ -404,6 +404,15 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
   width: 100%;
   transform: unset;
   position: relative;
+}
+
+.c29 {
+  font-family: fontFamily;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
 }
 
 @media (width >= 1024px) {
@@ -928,37 +937,85 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
           <p
             class="c5 c28"
           >
-            Part of the team responsible for migrating the legacy website to a cutting-edge Next.JS Typescript application within an NX monorepo. Instrumental in developing a comprehensive Design System from the ground up using Styled Components. Additionally, involved in creating new applications for clients and internal administration, including an EXPO mobile app for iOS and Android.
+            Part of the team responsible for migrating the legacy website to a cutting-edge 
+            <b
+              class="c29"
+            >
+              Next.JS Typescript
+            </b>
+             application within an 
+            <b
+              class="c29"
+            >
+              NX
+            </b>
+             monorepo. Instrumental in developing a comprehensive Design System from the ground up using 
+            <b
+              class="c29"
+            >
+              Styled Components
+            </b>
+            . Additionally, involved in creating new applications for clients and internal administration, including an 
+            <b
+              class="c29"
+            >
+              EXPO
+            </b>
+             mobile app for iOS and Android.
           </p>
           <p
             class="c5 c28"
           >
-            Proficiently employed Jest and MSW for thorough unit and integration testing, while utilizing Cypress for end-to-end testing.
+            Proficiently employed 
+            <b
+              class="c29"
+            >
+              Jest
+            </b>
+             and 
+            <b
+              class="c29"
+            >
+              MSW
+            </b>
+             for thorough unit and integration testing, while utilizing 
+            <b
+              class="c29"
+            >
+              Cypress
+            </b>
+             for end-to-end testing.
           </p>
           <p
             class="c5 c28"
           >
-            Helped at the implementation of a robust CI/CD pipeline using GitLab for efficient and seamless deployment.
+            Helped at the implementation of a robust 
+            <b
+              class="c29"
+            >
+              CI/CD
+            </b>
+             pipeline using GitLab for efficient and seamless deployment.
           </p>
           <a
-            class="c22 c29 c30"
+            class="c22 c30 c31"
             data-testid="plain-anchor"
             href="https://www.bonhams.com/"
             rel="noreferrer"
             target="_blank"
           >
             <div
-              class="c31"
+              class="c32"
             >
               <svg
-                class="c32 c33"
+                class="c33 c34"
                 height="42"
                 width="42"
               >
                 circleButton.svg
               </svg>
               <div
-                class="c34"
+                class="c35"
               >
                 <svg>
                   arrowRight.svg
@@ -966,7 +1023,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
               </div>
             </div>
             <p
-              class="c35 c5 c36"
+              class="c36 c5 c37"
             >
               Check the website
             </p>
@@ -1217,7 +1274,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c37"
+                  class="c38"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 4.159129481057648s;"
                 >
@@ -1344,22 +1401,64 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
           <p
             class="c5 c28"
           >
-            Initiated the creation of a comprehensive monorepo from the ground up using Yarn Workspaces, ensuring the development of full TypeScript applications.
+            Initiated the creation of a comprehensive monorepo from the ground up using 
+            <b
+              class="c29"
+            >
+              Yarn Workspaces
+            </b>
+            , ensuring the development of full 
+            <b
+              class="c29"
+            >
+              TypeScript
+            </b>
+             applications.
           </p>
           <p
             class="c5 c28"
           >
-            Implemented a robust Test-Driven Development (TDD) approach using Jest and React Testing Library.
+            Implemented a robust Test-Driven Development (TDD) approach using 
+            <b
+              class="c29"
+            >
+              Jest
+            </b>
+             and 
+            <b
+              class="c29"
+            >
+              React Testing Library
+            </b>
+            .
           </p>
           <p
             class="c5 c28"
           >
-            Implemented a sophisticated design system, utilizing a customized library of components alongside Storybook for comprehensive documentation.
+            Implemented a sophisticated design system, utilizing a customized library of components using 
+            <b
+              class="c29"
+            >
+              Emotion.JS
+            </b>
+             alongside 
+            <b
+              class="c29"
+            >
+              Storybook
+            </b>
+             for comprehensive documentation.
           </p>
           <p
             class="c5 c28"
           >
-            Established and optimized the frontend pipeline in Jenkins, utilizing parallel optimization for multiple stages.
+            Established and optimized the frontend pipeline in 
+            <b
+              class="c29"
+            >
+              Jenkins
+            </b>
+            , utilizing parallel optimization for multiple stages.
           </p>
           <p
             class="c5 c28"
@@ -1367,24 +1466,24 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
             Basic knowledge in utilizing Terraform for storing environment variables in AWS.
           </p>
           <a
-            class="c22 c29 c30"
+            class="c22 c30 c31"
             data-testid="plain-anchor"
             href="https://www.smartprotection.com/"
             rel="noreferrer"
             target="_blank"
           >
             <div
-              class="c31"
+              class="c32"
             >
               <svg
-                class="c32 c33"
+                class="c33 c34"
                 height="42"
                 width="42"
               >
                 circleButton.svg
               </svg>
               <div
-                class="c34"
+                class="c35"
               >
                 <svg>
                   arrowRight.svg
@@ -1392,7 +1491,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
               </div>
             </div>
             <p
-              class="c35 c5 c36"
+              class="c36 c5 c37"
             >
               Check the website
             </p>
@@ -1730,6 +1829,42 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.810940407493962s;"
                     >
                       <a
+                        aria-label="Cucumber"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://cucumber.io"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 1.7795714669083629s;"
+                        >
+                          <svg>
+                            cucumber.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 5.584946025014547s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: 7%; --translateY-end: 28%; animation-duration: 8.24726029213836s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 5.47865567080887s;"
+                    >
+                      <a
                         aria-label="Redux"
                         class="c22 c23"
                         data-testid="plain-anchor"
@@ -1740,7 +1875,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 1.7795714669083629s;"
+                          style="animation-duration: 6s; animation-delay: 5.584946025014547s;"
                         >
                           <svg>
                             redux.svg
@@ -1765,17 +1900,53 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
           <p
             class="c5 c28"
           >
-            Contributed to an international project, focusing on web development based on WebComponents, specifically LitElement, and Redux, with seamless communication with REST APIs.
+            Contributed to an international project, focusing on web development based on WebComponents, specifically 
+            <b
+              class="c29"
+            >
+              LitElement
+            </b>
+            , and 
+            <b
+              class="c29"
+            >
+              Redux
+            </b>
+            , with seamless communication with REST APIs.
           </p>
           <p
             class="c5 c28"
           >
-            Adopted a Test-Driven Development (TDD) approach using Karma with Mocha for comprehensive unit testing.
+            Adopted a Test-Driven Development (TDD) approach using 
+            <b
+              class="c29"
+            >
+              Karma
+            </b>
+             with 
+            <b
+              class="c29"
+            >
+              Mocha
+            </b>
+             for comprehensive unit testing.
           </p>
           <p
             class="c5 c28"
           >
-            Conducted end-to-end testing using Cucumber and WebdriverIO for thorough functionality testing.
+            Conducted end-to-end testing using 
+            <b
+              class="c29"
+            >
+              Cucumber
+            </b>
+             and 
+            <b
+              class="c29"
+            >
+              WebdriverIO
+            </b>
+             for thorough functionality testing.
           </p>
           <p
             class="c5 c28"
@@ -1783,24 +1954,24 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
             Possesses a strong background in pairing code review experience, serving as an approver of the main repository to ensure the validation of merges into the master branch.
           </p>
           <a
-            class="c22 c29 c30"
+            class="c22 c30 c31"
             data-testid="plain-anchor"
             href="https://www.ing.es/"
             rel="noreferrer"
             target="_blank"
           >
             <div
-              class="c31"
+              class="c32"
             >
               <svg
-                class="c32 c33"
+                class="c33 c34"
                 height="42"
                 width="42"
               >
                 circleButton.svg
               </svg>
               <div
-                class="c34"
+                class="c35"
               >
                 <svg>
                   arrowRight.svg
@@ -1808,7 +1979,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
               </div>
             </div>
             <p
-              class="c35 c5 c36"
+              class="c36 c5 c37"
             >
               Check the website
             </p>
@@ -1881,42 +2052,6 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 5.230146775393621s;"
-                >
-                  <div
-                    class="c18 c19"
-                    data-testid="vertical-movement"
-                    style="--translateY-begin: -11%; --translateY-end: 36%; animation-duration: 4.136024061665583s;"
-                  >
-                    <div
-                      class="c20 c21"
-                      data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 6.123191291033947s;"
-                    >
-                      <a
-                        aria-label="NodeJS"
-                        class="c22 c23"
-                        data-testid="plain-anchor"
-                        href="https://nodejs.org/en/"
-                        rel="noreferrer"
-                        target="_blank"
-                      >
-                        <div
-                          class="c24 c25"
-                          data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 5.230146775393621s;"
-                        >
-                          <svg>
-                            nodejs.svg
-                          </svg>
-                        </div>
-                      </a>
-                    </div>
-                  </div>
-                </li>
-                <li
-                  class="c26"
-                  data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 1.2525926174545345s;"
                 >
                   <div
@@ -1930,10 +2065,10 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 4.037418074980781s;"
                     >
                       <a
-                        aria-label="ReactJS"
+                        aria-label="NodeJS"
                         class="c22 c23"
                         data-testid="plain-anchor"
-                        href="https://reactjs.org"
+                        href="https://nodejs.org/en/"
                         rel="noreferrer"
                         target="_blank"
                       >
@@ -1943,7 +2078,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                           style="animation-duration: 6s; animation-delay: 1.2525926174545345s;"
                         >
                           <svg>
-                            reactjs.svg
+                            nodejs.svg
                           </svg>
                         </div>
                       </a>
@@ -1951,7 +2086,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c37"
+                  class="c26"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 4.421826499968204s;"
                 >
@@ -1966,10 +2101,10 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 4.143584229267579s;"
                     >
                       <a
-                        aria-label="Yarn"
+                        aria-label="ReactJS"
                         class="c22 c23"
                         data-testid="plain-anchor"
-                        href="https://yarnpkg.com"
+                        href="https://reactjs.org"
                         rel="noreferrer"
                         target="_blank"
                       >
@@ -1979,7 +2114,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                           style="animation-duration: 6s; animation-delay: 4.421826499968204s;"
                         >
                           <svg>
-                            yarn.svg
+                            reactjs.svg
                           </svg>
                         </div>
                       </a>
@@ -1987,7 +2122,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c38"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 1.1452133119543768s;"
                 >
@@ -2002,10 +2137,10 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.5546632477222655s;"
                     >
                       <a
-                        aria-label="Storybook"
+                        aria-label="Yarn"
                         class="c22 c23"
                         data-testid="plain-anchor"
-                        href="https://storybook.js.org"
+                        href="https://yarnpkg.com"
                         rel="noreferrer"
                         target="_blank"
                       >
@@ -2015,7 +2150,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                           style="animation-duration: 6s; animation-delay: 1.1452133119543768s;"
                         >
                           <svg>
-                            storybook.svg
+                            yarn.svg
                           </svg>
                         </div>
                       </a>
@@ -2038,10 +2173,10 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.158271656903402s;"
                     >
                       <a
-                        aria-label="Jest"
+                        aria-label="Storybook"
                         class="c22 c23"
                         data-testid="plain-anchor"
-                        href="https://jestjs.io"
+                        href="https://storybook.js.org"
                         rel="noreferrer"
                         target="_blank"
                       >
@@ -2051,7 +2186,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                           style="animation-duration: 6s; animation-delay: 4.007046912507221s;"
                         >
                           <svg>
-                            jest.svg
+                            storybook.svg
                           </svg>
                         </div>
                       </a>
@@ -2074,10 +2209,10 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 4.433400068295318s;"
                     >
                       <a
-                        aria-label="EmotionJS"
+                        aria-label="Jest"
                         class="c22 c23"
                         data-testid="plain-anchor"
-                        href="https://emotion.sh"
+                        href="https://jestjs.io"
                         rel="noreferrer"
                         target="_blank"
                       >
@@ -2087,7 +2222,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                           style="animation-duration: 6s; animation-delay: 1.7149853037286853s;"
                         >
                           <svg>
-                            emotion.svg
+                            jest.svg
                           </svg>
                         </div>
                       </a>
@@ -2110,6 +2245,42 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 6.898993201032326s;"
                     >
                       <a
+                        aria-label="EmotionJS"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://emotion.sh"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 4.158445160833349s;"
+                        >
+                          <svg>
+                            emotion.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 1.932765764454406s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: 2%; --translateY-end: -5%; animation-duration: 5.201358967228348s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 5.272987570070384s;"
+                    >
+                      <a
                         aria-label="Redux"
                         class="c22 c23"
                         data-testid="plain-anchor"
@@ -2120,7 +2291,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 4.158445160833349s;"
+                          style="animation-duration: 6s; animation-delay: 1.932765764454406s;"
                         >
                           <svg>
                             redux.svg
@@ -2145,12 +2316,24 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
           <p
             class="c5 c28"
           >
-            Involved in the development of multiple React.JS web applications, utilizing REST services provided by the Gateway service, primarily based on SAP, Java, or Node.js backend services.
+            Involved in the development of multiple 
+            <b
+              class="c29"
+            >
+              React.JS
+            </b>
+             web applications, utilizing REST services provided by the Gateway service, primarily based on SAP, Java, or Node.js backend services.
           </p>
           <p
             class="c5 c28"
           >
-            Took on the role of a front-end developer lead for an Angular JS 1.7 application, responsible for onboarding newcomers and overseeing new developments or maintenance. Additionally, proficient in deploying applications across various environments for multiple clients.
+            Took on the role of a front-end developer lead for an 
+            <b
+              class="c29"
+            >
+              Angular JS
+            </b>
+             application, responsible for onboarding newcomers and overseeing new developments or maintenance. Additionally, proficient in deploying applications across various environments for multiple clients.
           </p>
         </div>
       </div>
@@ -2220,42 +2403,6 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 4.505531720721695s;"
-                >
-                  <div
-                    class="c18 c19"
-                    data-testid="vertical-movement"
-                    style="--translateY-begin: 17%; --translateY-end: -6%; animation-duration: 4.624378202523986s;"
-                  >
-                    <div
-                      class="c20 c21"
-                      data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 5.583246825735737s;"
-                    >
-                      <a
-                        aria-label="NodeJS"
-                        class="c22 c23"
-                        data-testid="plain-anchor"
-                        href="https://nodejs.org/en/"
-                        rel="noreferrer"
-                        target="_blank"
-                      >
-                        <div
-                          class="c24 c25"
-                          data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 4.505531720721695s;"
-                        >
-                          <svg>
-                            nodejs.svg
-                          </svg>
-                        </div>
-                      </a>
-                    </div>
-                  </div>
-                </li>
-                <li
-                  class="c17"
-                  data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 3.693953433482098s;"
                 >
                   <div
@@ -2269,10 +2416,10 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.419612943852137s;"
                     >
                       <a
-                        aria-label="ExpressJS"
+                        aria-label="NodeJS"
                         class="c22 c23"
                         data-testid="plain-anchor"
-                        href="https://expressjs.com"
+                        href="https://nodejs.org/en/"
                         rel="noreferrer"
                         target="_blank"
                       >
@@ -2282,7 +2429,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                           style="animation-duration: 6s; animation-delay: 3.693953433482098s;"
                         >
                           <svg>
-                            expressJs.svg
+                            nodejs.svg
                           </svg>
                         </div>
                       </a>
@@ -2305,10 +2452,10 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 5.461593102168306s;"
                     >
                       <a
-                        aria-label="Node Package Manager"
+                        aria-label="ExpressJS"
                         class="c22 c23"
                         data-testid="plain-anchor"
-                        href="https://www.npmjs.com"
+                        href="https://expressjs.com"
                         rel="noreferrer"
                         target="_blank"
                       >
@@ -2318,7 +2465,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                           style="animation-duration: 6s; animation-delay: 4.703305216251405s;"
                         >
                           <svg>
-                            npm.svg
+                            expressJs.svg
                           </svg>
                         </div>
                       </a>
@@ -2341,10 +2488,10 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 4.252868948837238s;"
                     >
                       <a
-                        aria-label="Storybook"
+                        aria-label="Node Package Manager"
                         class="c22 c23"
                         data-testid="plain-anchor"
-                        href="https://storybook.js.org"
+                        href="https://www.npmjs.com"
                         rel="noreferrer"
                         target="_blank"
                       >
@@ -2354,7 +2501,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                           style="animation-duration: 6s; animation-delay: 2.8457192483436664s;"
                         >
                           <svg>
-                            storybook.svg
+                            npm.svg
                           </svg>
                         </div>
                       </a>
@@ -2377,10 +2524,10 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 5.816493875694573s;"
                     >
                       <a
-                        aria-label="Jest"
+                        aria-label="Storybook"
                         class="c22 c23"
                         data-testid="plain-anchor"
-                        href="https://jestjs.io"
+                        href="https://storybook.js.org"
                         rel="noreferrer"
                         target="_blank"
                       >
@@ -2390,7 +2537,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                           style="animation-duration: 6s; animation-delay: 3.932028371118763s;"
                         >
                           <svg>
-                            jest.svg
+                            storybook.svg
                           </svg>
                         </div>
                       </a>
@@ -2398,7 +2545,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c37"
+                  class="c17"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 4.863303217786158s;"
                 >
@@ -2413,10 +2560,10 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 4.70414919548972s;"
                     >
                       <a
-                        aria-label="MongoDB"
+                        aria-label="Jest"
                         class="c22 c23"
                         data-testid="plain-anchor"
-                        href="https://www.mongodb.com"
+                        href="https://jestjs.io"
                         rel="noreferrer"
                         target="_blank"
                       >
@@ -2426,7 +2573,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                           style="animation-duration: 6s; animation-delay: 4.863303217786158s;"
                         >
                           <svg>
-                            mongodb.svg
+                            jest.svg
                           </svg>
                         </div>
                       </a>
@@ -2434,7 +2581,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c38"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 3.3855582362851218s;"
                 >
@@ -2449,10 +2596,10 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 6.150529459573802s;"
                     >
                       <a
-                        aria-label="AngularJS"
+                        aria-label="MongoDB"
                         class="c22 c23"
                         data-testid="plain-anchor"
-                        href="https://angular.io"
+                        href="https://www.mongodb.com"
                         rel="noreferrer"
                         target="_blank"
                       >
@@ -2462,7 +2609,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                           style="animation-duration: 6s; animation-delay: 3.3855582362851218s;"
                         >
                           <svg>
-                            angularJS.svg
+                            mongodb.svg
                           </svg>
                         </div>
                       </a>
@@ -2485,10 +2632,10 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 6.615950922429325s;"
                     >
                       <a
-                        aria-label="Java"
+                        aria-label="AngularJS"
                         class="c22 c23"
                         data-testid="plain-anchor"
-                        href="https://java.com"
+                        href="https://angular.io"
                         rel="noreferrer"
                         target="_blank"
                       >
@@ -2498,7 +2645,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                           style="animation-duration: 6s; animation-delay: 4.5567163333813685s;"
                         >
                           <svg>
-                            java.svg
+                            angularJS.svg
                           </svg>
                         </div>
                       </a>
@@ -2521,10 +2668,10 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 4.705822927193229s;"
                     >
                       <a
-                        aria-label="SocketIO"
+                        aria-label="Java"
                         class="c22 c23"
                         data-testid="plain-anchor"
-                        href="https://socket.io"
+                        href="https://java.com"
                         rel="noreferrer"
                         target="_blank"
                       >
@@ -2534,7 +2681,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                           style="animation-duration: 6s; animation-delay: 5.7184292294421155s;"
                         >
                           <svg>
-                            socketIO.svg
+                            java.svg
                           </svg>
                         </div>
                       </a>
@@ -2557,6 +2704,42 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 5.515916940792735s;"
                     >
                       <a
+                        aria-label="SocketIO"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://socket.io"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 2.4240985683012393s;"
+                        >
+                          <svg>
+                            socketIO.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 4.300299797814808s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -16%; --translateY-end: 12%; animation-duration: 6.068290618529677s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.423250643493091s;"
+                    >
+                      <a
                         aria-label="Ionic"
                         class="c22 c23"
                         data-testid="plain-anchor"
@@ -2567,7 +2750,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 2.4240985683012393s;"
+                          style="animation-duration: 6s; animation-delay: 4.300299797814808s;"
                         >
                           <svg>
                             ionic.svg
@@ -2592,27 +2775,57 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
           <p
             class="c5 c28"
           >
-            Contributed to the Mobile Development Center, focusing on the main project, an IONIC app with Angular JS 1.6. Involved in the development of an instant messaging system using Socket.io and Node.js. Integrated Spring Boot and multiple REST services.
+            Contributed to the Mobile Development Center, focusing on the main project, an 
+            <b
+              class="c29"
+            >
+              IONIC
+            </b>
+             app with 
+            <b
+              class="c29"
+            >
+              Angular JS
+            </b>
+            . Involved in the development of an instant messaging system using 
+            <b
+              class="c29"
+            >
+              Socket.io
+            </b>
+             and 
+            <b
+              class="c29"
+            >
+              Node.js
+            </b>
+            . Integrated 
+            <b
+              class="c29"
+            >
+              Spring Boot
+            </b>
+             and multiple REST services.
           </p>
           <a
-            class="c22 c29 c30"
+            class="c22 c30 c31"
             data-testid="plain-anchor"
             href="https://www.babelgroup.com/"
             rel="noreferrer"
             target="_blank"
           >
             <div
-              class="c31"
+              class="c32"
             >
               <svg
-                class="c32 c33"
+                class="c33 c34"
                 height="42"
                 width="42"
               >
                 circleButton.svg
               </svg>
               <div
-                class="c34"
+                class="c35"
               >
                 <svg>
                   arrowRight.svg
@@ -2620,7 +2833,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
               </div>
             </div>
             <p
-              class="c35 c5 c36"
+              class="c36 c5 c37"
             >
               Check the website
             </p>
@@ -2693,42 +2906,6 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 5.654826775034396s;"
-                >
-                  <div
-                    class="c18 c19"
-                    data-testid="vertical-movement"
-                    style="--translateY-begin: -3%; --translateY-end: -9%; animation-duration: 2.3940119044331185s;"
-                  >
-                    <div
-                      class="c20 c21"
-                      data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 4.6620656516462295s;"
-                    >
-                      <a
-                        aria-label="Java"
-                        class="c22 c23"
-                        data-testid="plain-anchor"
-                        href="https://java.com"
-                        rel="noreferrer"
-                        target="_blank"
-                      >
-                        <div
-                          class="c24 c25"
-                          data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 5.654826775034396s;"
-                        >
-                          <svg>
-                            java.svg
-                          </svg>
-                        </div>
-                      </a>
-                    </div>
-                  </div>
-                </li>
-                <li
-                  class="c17"
-                  data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 5.327291269578514s;"
                 >
                   <div
@@ -2742,10 +2919,10 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 5.879848242689816s;"
                     >
                       <a
-                        aria-label="Spring"
+                        aria-label="Java"
                         class="c22 c23"
                         data-testid="plain-anchor"
-                        href="https://spring.io"
+                        href="https://java.com"
                         rel="noreferrer"
                         target="_blank"
                       >
@@ -2755,7 +2932,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                           style="animation-duration: 6s; animation-delay: 5.327291269578514s;"
                         >
                           <svg>
-                            spring.svg
+                            java.svg
                           </svg>
                         </div>
                       </a>
@@ -2778,10 +2955,10 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 4.240967516423843s;"
                     >
                       <a
-                        aria-label="Ionic"
+                        aria-label="Spring"
                         class="c22 c23"
                         data-testid="plain-anchor"
-                        href="https://ionicframework.com"
+                        href="https://spring.io"
                         rel="noreferrer"
                         target="_blank"
                       >
@@ -2791,7 +2968,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                           style="animation-duration: 6s; animation-delay: 3.5509643555286337s;"
                         >
                           <svg>
-                            ionic.svg
+                            spring.svg
                           </svg>
                         </div>
                       </a>
@@ -2814,10 +2991,10 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 6.6131899808432095s;"
                     >
                       <a
-                        aria-label="Storybook"
+                        aria-label="Ionic"
                         class="c22 c23"
                         data-testid="plain-anchor"
-                        href="https://storybook.js.org"
+                        href="https://ionicframework.com"
                         rel="noreferrer"
                         target="_blank"
                       >
@@ -2827,7 +3004,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                           style="animation-duration: 6s; animation-delay: 1.186097080603665s;"
                         >
                           <svg>
-                            storybook.svg
+                            ionic.svg
                           </svg>
                         </div>
                       </a>
@@ -2850,10 +3027,10 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 4.677947235348267s;"
                     >
                       <a
-                        aria-label="AngularJS"
+                        aria-label="Storybook"
                         class="c22 c23"
                         data-testid="plain-anchor"
-                        href="https://angular.io"
+                        href="https://storybook.js.org"
                         rel="noreferrer"
                         target="_blank"
                       >
@@ -2863,7 +3040,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                           style="animation-duration: 6s; animation-delay: 5.348247416552431s;"
                         >
                           <svg>
-                            angularJS.svg
+                            storybook.svg
                           </svg>
                         </div>
                       </a>
@@ -2886,6 +3063,42 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 4.867310464426373s;"
                     >
                       <a
+                        aria-label="AngularJS"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://angular.io"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 2.733507327272735s;"
+                        >
+                          <svg>
+                            angularJS.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 2.511759539597594s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -28%; --translateY-end: -13%; animation-duration: 6.66223603043087s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.008588049848845s;"
+                    >
+                      <a
                         aria-label="Arduino"
                         class="c22 c23"
                         data-testid="plain-anchor"
@@ -2896,7 +3109,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 2.733507327272735s;"
+                          style="animation-duration: 6s; animation-delay: 2.511759539597594s;"
                         >
                           <svg>
                             arduino.svg
@@ -2921,47 +3134,167 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
           <p
             class="c5 c28"
           >
-            Served as the CTO from November 2016 to April 2017. Acted as the Scrum Master of the main I+D+i project, utilizing Java 1.7, Spring 4, GWT 1.7, Hibernate 5, and MySQL 5.6. Implemented IONIC 2 and Angular 2 for mobile development.
+            Served as the CTO from November 2016 to April 2017. Acted as the Scrum Master of the main I+D+i project, utilizing 
+            <b
+              class="c29"
+            >
+              Java 1.7
+            </b>
+            , 
+            <b
+              class="c29"
+            >
+              Spring 4
+            </b>
+            , 
+            <b
+              class="c29"
+            >
+              GWT 1.7
+            </b>
+            , 
+            <b
+              class="c29"
+            >
+              Hibernate 5
+            </b>
+            , and 
+            <b
+              class="c29"
+            >
+              MySQL 5.6
+            </b>
+            . Implemented 
+            <b
+              class="c29"
+            >
+              IONIC 2
+            </b>
+             and 
+            <b
+              class="c29"
+            >
+              Angular
+            </b>
+             for mobile development.
           </p>
           <p
             class="c5 c28"
           >
-            Implemented an Arduino monitoring system for real-time information within the application.
+            Implemented an 
+            <b
+              class="c29"
+            >
+              Arduino
+            </b>
+             monitoring system for real-time information within the application.
           </p>
           <p
             class="c5 c28"
           >
-            Demonstrated proficiency in utilizing Maven, Sonarqube, and JUnit, along with Mockito for testing and validating clean code.
+            Demonstrated proficiency in utilizing 
+            <b
+              class="c29"
+            >
+              Maven
+            </b>
+            , 
+            <b
+              class="c29"
+            >
+              Sonarqube
+            </b>
+            , and 
+            <b
+              class="c29"
+            >
+              JUnit
+            </b>
+            , along with 
+            <b
+              class="c29"
+            >
+              Mockito
+            </b>
+             for testing and validating clean code.
           </p>
           <p
             class="c5 c28"
           >
-            Involved in front-end development for various customers, employing CSS3, jQuery, and HTML5.
+            Involved in front-end development for various customers, employing 
+            <b
+              class="c29"
+            >
+              CSS3
+            </b>
+            , 
+            <b
+              class="c29"
+            >
+              jQuery
+            </b>
+            , and 
+            <b
+              class="c29"
+            >
+              HTML5
+            </b>
+            .
           </p>
           <p
             class="c5 c28"
           >
-            Worked as a Java consultant, focusing on back-end developments in PSA Peugeot-Citroën. Involved in incident resolution and new functionalities development, utilizing Spring 3 MVC, Hibernate, Struts 2 and BBDD Oracle.
+            Worked as a 
+            <b
+              class="c29"
+            >
+              Java
+            </b>
+             consultant, focusing on back-end developments in PSA Peugeot-Citroën. Involved in incident resolution and new functionalities development, utilizing 
+            <b
+              class="c29"
+            >
+              Spring 3 MVC
+            </b>
+            , 
+            <b
+              class="c29"
+            >
+              Hibernate
+            </b>
+            , 
+            <b
+              class="c29"
+            >
+              Struts 2
+            </b>
+             and DB 
+            <b
+              class="c29"
+            >
+              Oracle
+            </b>
+            .
           </p>
           <a
-            class="c22 c29 c30"
+            class="c22 c30 c31"
             data-testid="plain-anchor"
             href="https://ioon.es/"
             rel="noreferrer"
             target="_blank"
           >
             <div
-              class="c31"
+              class="c32"
             >
               <svg
-                class="c32 c33"
+                class="c33 c34"
                 height="42"
                 width="42"
               >
                 circleButton.svg
               </svg>
               <div
-                class="c34"
+                class="c35"
               >
                 <svg>
                   arrowRight.svg
@@ -2969,7 +3302,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
               </div>
             </div>
             <p
-              class="c35 c5 c36"
+              class="c36 c5 c37"
             >
               Check the website
             </p>
@@ -3042,42 +3375,6 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 4.490698390204282s;"
-                >
-                  <div
-                    class="c18 c19"
-                    data-testid="vertical-movement"
-                    style="--translateY-begin: -25%; --translateY-end: 15%; animation-duration: 5.681162213685664s;"
-                  >
-                    <div
-                      class="c20 c21"
-                      data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 6.427921889901393s;"
-                    >
-                      <a
-                        aria-label="Perl"
-                        class="c22 c23"
-                        data-testid="plain-anchor"
-                        href="https://www.perl.org"
-                        rel="noreferrer"
-                        target="_blank"
-                      >
-                        <div
-                          class="c24 c25"
-                          data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 4.490698390204282s;"
-                        >
-                          <svg>
-                            perl.svg
-                          </svg>
-                        </div>
-                      </a>
-                    </div>
-                  </div>
-                </li>
-                <li
-                  class="c37"
-                  data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 5.601765520252898s;"
                 >
                   <div
@@ -3091,10 +3388,10 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 5.182829993408179s;"
                     >
                       <a
-                        aria-label="MongoDB"
+                        aria-label="Perl"
                         class="c22 c23"
                         data-testid="plain-anchor"
-                        href="https://www.mongodb.com"
+                        href="https://www.perl.org"
                         rel="noreferrer"
                         target="_blank"
                       >
@@ -3104,7 +3401,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                           style="animation-duration: 6s; animation-delay: 5.601765520252898s;"
                         >
                           <svg>
-                            mongodb.svg
+                            perl.svg
                           </svg>
                         </div>
                       </a>
@@ -3112,7 +3409,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c38"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 3.2536567970017845s;"
                 >
@@ -3127,10 +3424,10 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 6.772619699382583s;"
                     >
                       <a
-                        aria-label="Ext JS"
+                        aria-label="MongoDB"
                         class="c22 c23"
                         data-testid="plain-anchor"
-                        href="https://www.sencha.com/products/extjs/"
+                        href="https://www.mongodb.com"
                         rel="noreferrer"
                         target="_blank"
                       >
@@ -3140,7 +3437,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                           style="animation-duration: 6s; animation-delay: 3.2536567970017845s;"
                         >
                           <svg>
-                            sencha.svg
+                            mongodb.svg
                           </svg>
                         </div>
                       </a>
@@ -3163,10 +3460,10 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 5.3656892087593935s;"
                     >
                       <a
-                        aria-label="JavaScript"
+                        aria-label="Ext JS"
                         class="c22 c23"
                         data-testid="plain-anchor"
-                        href="https://developer.mozilla.org/en/JavaScript"
+                        href="https://www.sencha.com/products/extjs/"
                         rel="noreferrer"
                         target="_blank"
                       >
@@ -3176,7 +3473,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                           style="animation-duration: 6s; animation-delay: 4.936814499820542s;"
                         >
                           <svg>
-                            javascript.svg
+                            sencha.svg
                           </svg>
                         </div>
                       </a>
@@ -3199,10 +3496,10 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 4.987608102926577s;"
                     >
                       <a
-                        aria-label="HTML5"
+                        aria-label="JavaScript"
                         class="c22 c23"
                         data-testid="plain-anchor"
-                        href="https://www.w3.org/html/"
+                        href="https://developer.mozilla.org/en/JavaScript"
                         rel="noreferrer"
                         target="_blank"
                       >
@@ -3212,7 +3509,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                           style="animation-duration: 6s; animation-delay: 5.355739553663581s;"
                         >
                           <svg>
-                            html5.svg
+                            javascript.svg
                           </svg>
                         </div>
                       </a>
@@ -3220,7 +3517,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c37"
+                  class="c17"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 5.204019044602115s;"
                 >
@@ -3235,10 +3532,10 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 6.067972895041349s;"
                     >
                       <a
-                        aria-label="CSS3"
+                        aria-label="HTML5"
                         class="c22 c23"
                         data-testid="plain-anchor"
-                        href="https://www.w3.org/Style/CSS/"
+                        href="https://www.w3.org/html/"
                         rel="noreferrer"
                         target="_blank"
                       >
@@ -3248,7 +3545,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                           style="animation-duration: 6s; animation-delay: 5.204019044602115s;"
                         >
                           <svg>
-                            css3.svg
+                            html5.svg
                           </svg>
                         </div>
                       </a>
@@ -3256,7 +3553,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c38"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 5.902808482508366s;"
                 >
@@ -3271,6 +3568,42 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 4.360061928153607s;"
                     >
                       <a
+                        aria-label="CSS3"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://www.w3.org/Style/CSS/"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 5.902808482508366s;"
+                        >
+                          <svg>
+                            css3.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 3.2799416349592723s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: 6%; --translateY-end: -20%; animation-duration: 9.276495255443937s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 4.157312560720967s;"
+                    >
+                      <a
                         aria-label="Oracle"
                         class="c22 c23"
                         data-testid="plain-anchor"
@@ -3281,7 +3614,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 5.902808482508366s;"
+                          style="animation-duration: 6s; animation-delay: 3.2799416349592723s;"
                         >
                           <svg>
                             oracle.svg
@@ -3306,12 +3639,36 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
           <p
             class="c5 c28"
           >
-            Involved in back-end development using Perl and the Catalyst Framework, alongside various CPAN modules for seamless database integration, including Oracle and MongoDB.
+            Involved in back-end development using 
+            <b
+              class="c29"
+            >
+              Perl
+            </b>
+             and the Catalyst Framework, alongside various CPAN modules for seamless database integration, including 
+            <b
+              class="c29"
+            >
+              Oracle
+            </b>
+             and 
+            <b
+              class="c29"
+            >
+              MongoDB
+            </b>
+            .
           </p>
           <p
             class="c5 c28"
           >
-            Utilized the ExtJS Framework for front-end development.
+            Utilized the 
+            <b
+              class="c29"
+            >
+              ExtJS
+            </b>
+             Framework for front-end development.
           </p>
           <p
             class="c5 c28"
@@ -3319,24 +3676,24 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
             Integrated SOAP webservices for streamlined communication.
           </p>
           <a
-            class="c22 c29 c30"
+            class="c22 c30 c31"
             data-testid="plain-anchor"
             href="https://clarive.com/"
             rel="noreferrer"
             target="_blank"
           >
             <div
-              class="c31"
+              class="c32"
             >
               <svg
-                class="c32 c33"
+                class="c33 c34"
                 height="42"
                 width="42"
               >
                 circleButton.svg
               </svg>
               <div
-                class="c34"
+                class="c35"
               >
                 <svg>
                   arrowRight.svg
@@ -3344,7 +3701,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
               </div>
             </div>
             <p
-              class="c35 c5 c36"
+              class="c36 c5 c37"
             >
               Check the website
             </p>
@@ -3417,42 +3774,6 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 1.6047100966750918s;"
-                >
-                  <div
-                    class="c18 c19"
-                    data-testid="vertical-movement"
-                    style="--translateY-begin: 2%; --translateY-end: 22%; animation-duration: 7.956435550677551s;"
-                  >
-                    <div
-                      class="c20 c21"
-                      data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 6.668365095917251s;"
-                    >
-                      <a
-                        aria-label="Java"
-                        class="c22 c23"
-                        data-testid="plain-anchor"
-                        href="https://java.com"
-                        rel="noreferrer"
-                        target="_blank"
-                      >
-                        <div
-                          class="c24 c25"
-                          data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 1.6047100966750918s;"
-                        >
-                          <svg>
-                            java.svg
-                          </svg>
-                        </div>
-                      </a>
-                    </div>
-                  </div>
-                </li>
-                <li
-                  class="c37"
-                  data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 5.434049969298483s;"
                 >
                   <div
@@ -3466,10 +3787,10 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 4.144148034787797s;"
                     >
                       <a
-                        aria-label="MongoDB"
+                        aria-label="Java"
                         class="c22 c23"
                         data-testid="plain-anchor"
-                        href="https://www.mongodb.com"
+                        href="https://java.com"
                         rel="noreferrer"
                         target="_blank"
                       >
@@ -3479,7 +3800,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                           style="animation-duration: 6s; animation-delay: 5.434049969298483s;"
                         >
                           <svg>
-                            mongodb.svg
+                            java.svg
                           </svg>
                         </div>
                       </a>
@@ -3487,7 +3808,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c38"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 1.5086992142570828s;"
                 >
@@ -3502,10 +3823,10 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 5.767556093246887s;"
                     >
                       <a
-                        aria-label="Hibernate"
+                        aria-label="MongoDB"
                         class="c22 c23"
                         data-testid="plain-anchor"
-                        href="https://hibernate.org"
+                        href="https://www.mongodb.com"
                         rel="noreferrer"
                         target="_blank"
                       >
@@ -3515,7 +3836,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                           style="animation-duration: 6s; animation-delay: 1.5086992142570828s;"
                         >
                           <svg>
-                            hibernate.svg
+                            mongodb.svg
                           </svg>
                         </div>
                       </a>
@@ -3538,10 +3859,10 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 4.340475769349846s;"
                     >
                       <a
-                        aria-label="Spring"
+                        aria-label="Hibernate"
                         class="c22 c23"
                         data-testid="plain-anchor"
-                        href="https://spring.io"
+                        href="https://hibernate.org"
                         rel="noreferrer"
                         target="_blank"
                       >
@@ -3551,7 +3872,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                           style="animation-duration: 6s; animation-delay: 3.8751130716170863s;"
                         >
                           <svg>
-                            spring.svg
+                            hibernate.svg
                           </svg>
                         </div>
                       </a>
@@ -3574,6 +3895,42 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.64080313186948s;"
                     >
                       <a
+                        aria-label="Spring"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://spring.io"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 2.597033388572632s;"
+                        >
+                          <svg>
+                            spring.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c17"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 1.8014251955614506s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -25%; --translateY-end: -11%; animation-duration: 5.049184051332398s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 6.490050749992952s;"
+                    >
+                      <a
                         aria-label="Oracle"
                         class="c22 c23"
                         data-testid="plain-anchor"
@@ -3584,7 +3941,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 2.597033388572632s;"
+                          style="animation-duration: 6s; animation-delay: 1.8014251955614506s;"
                         >
                           <svg>
                             oracle.svg
@@ -3614,27 +3971,57 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
           <p
             class="c5 c28"
           >
-            Utilized Spring 3 and JPA, incorporating Hibernate with both MongoDB and Oracle databases.
+            Utilized 
+            <b
+              class="c29"
+            >
+              Spring 3
+            </b>
+             and 
+            <b
+              class="c29"
+            >
+              JPA
+            </b>
+            , incorporating 
+            <b
+              class="c29"
+            >
+              Hibernate
+            </b>
+             with both 
+            <b
+              class="c29"
+            >
+              MongoDB
+            </b>
+             and 
+            <b
+              class="c29"
+            >
+              Oracle
+            </b>
+             databases.
           </p>
           <a
-            class="c22 c29 c30"
+            class="c22 c30 c31"
             data-testid="plain-anchor"
             href="https://www.idealista.com/"
             rel="noreferrer"
             target="_blank"
           >
             <div
-              class="c31"
+              class="c32"
             >
               <svg
-                class="c32 c33"
+                class="c33 c34"
                 height="42"
                 width="42"
               >
                 circleButton.svg
               </svg>
               <div
-                class="c34"
+                class="c35"
               >
                 <svg>
                   arrowRight.svg
@@ -3642,7 +4029,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
               </div>
             </div>
             <p
-              class="c35 c5 c36"
+              class="c36 c5 c37"
             >
               Check the website
             </p>
@@ -3715,42 +4102,6 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 1.515405347029446s;"
-                >
-                  <div
-                    class="c18 c19"
-                    data-testid="vertical-movement"
-                    style="--translateY-begin: -32%; --translateY-end: 13%; animation-duration: 5.01079194488918s;"
-                  >
-                    <div
-                      class="c20 c21"
-                      data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 4.179385351249394s;"
-                    >
-                      <a
-                        aria-label="Python"
-                        class="c22 c23"
-                        data-testid="plain-anchor"
-                        href="https://www.python.org"
-                        rel="noreferrer"
-                        target="_blank"
-                      >
-                        <div
-                          class="c24 c25"
-                          data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 1.515405347029446s;"
-                        >
-                          <svg>
-                            python.svg
-                          </svg>
-                        </div>
-                      </a>
-                    </div>
-                  </div>
-                </li>
-                <li
-                  class="c17"
-                  data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 2.957166071783897s;"
                 >
                   <div
@@ -3764,10 +4115,10 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 4.838190436027354s;"
                     >
                       <a
-                        aria-label="Oracle"
+                        aria-label="Python"
                         class="c22 c23"
                         data-testid="plain-anchor"
-                        href="https://www.oracle.com"
+                        href="https://www.python.org"
                         rel="noreferrer"
                         target="_blank"
                       >
@@ -3777,7 +4128,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                           style="animation-duration: 6s; animation-delay: 2.957166071783897s;"
                         >
                           <svg>
-                            oracle.svg
+                            python.svg
                           </svg>
                         </div>
                       </a>
@@ -3800,10 +4151,10 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.606028726515981s;"
                     >
                       <a
-                        aria-label="JavaScript"
+                        aria-label="Oracle"
                         class="c22 c23"
                         data-testid="plain-anchor"
-                        href="https://developer.mozilla.org/en/JavaScript"
+                        href="https://www.oracle.com"
                         rel="noreferrer"
                         target="_blank"
                       >
@@ -3813,7 +4164,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                           style="animation-duration: 6s; animation-delay: 1.9949498391369556s;"
                         >
                           <svg>
-                            javascript.svg
+                            oracle.svg
                           </svg>
                         </div>
                       </a>
@@ -3836,10 +4187,10 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 5.327759359487322s;"
                     >
                       <a
-                        aria-label="HTML5"
+                        aria-label="JavaScript"
                         class="c22 c23"
                         data-testid="plain-anchor"
-                        href="https://www.w3.org/html/"
+                        href="https://developer.mozilla.org/en/JavaScript"
                         rel="noreferrer"
                         target="_blank"
                       >
@@ -3849,7 +4200,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                           style="animation-duration: 6s; animation-delay: 4.073566192118695s;"
                         >
                           <svg>
-                            html5.svg
+                            javascript.svg
                           </svg>
                         </div>
                       </a>
@@ -3857,7 +4208,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c37"
+                  class="c17"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 4.845775371972534s;"
                 >
@@ -3872,6 +4223,42 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 4.869104206716336s;"
                     >
                       <a
+                        aria-label="HTML5"
+                        class="c22 c23"
+                        data-testid="plain-anchor"
+                        href="https://www.w3.org/html/"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <div
+                          class="c24 c25"
+                          data-testid="color-swapping"
+                          style="animation-duration: 6s; animation-delay: 4.845775371972534s;"
+                        >
+                          <svg>
+                            html5.svg
+                          </svg>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="c38"
+                  data-testid="horizontal-movement"
+                  style="animation-duration: 6s; animation-delay: 2.4338389509077936s;"
+                >
+                  <div
+                    class="c18 c19"
+                    data-testid="vertical-movement"
+                    style="--translateY-begin: -2%; --translateY-end: 17%; animation-duration: 2.7840087240155853s;"
+                  >
+                    <div
+                      class="c20 c21"
+                      data-testid="rotation-movement"
+                      style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 6.087797405783441s;"
+                    >
+                      <a
                         aria-label="CSS3"
                         class="c22 c23"
                         data-testid="plain-anchor"
@@ -3882,7 +4269,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 4.845775371972534s;"
+                          style="animation-duration: 6s; animation-delay: 2.4338389509077936s;"
                         >
                           <svg>
                             css3.svg
@@ -3912,12 +4299,36 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
           <p
             class="c5 c28"
           >
-            Demonstrated proficiency in using Python and PHP 5.3, with MySQL 5.1 for robust database management.
+            Demonstrated proficiency in using 
+            <b
+              class="c29"
+            >
+              Python
+            </b>
+             and PHP 5.3, with 
+            <b
+              class="c29"
+            >
+              MySQL 5.1
+            </b>
+             for robust database management.
           </p>
           <p
             class="c5 c28"
           >
-            Employed CSS3 and JavaScript for efficient and dynamic web development.
+            Employed 
+            <b
+              class="c29"
+            >
+              CSS3
+            </b>
+             and 
+            <b
+              class="c29"
+            >
+              JavaScript
+            </b>
+             for efficient and dynamic web development.
           </p>
         </div>
       </div>
