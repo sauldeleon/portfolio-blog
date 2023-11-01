@@ -418,6 +418,14 @@ exports[`MainLayout should render successfully 1`] = `
   margin-right: 15px;
 }
 
+.c3:after {
+  content: none;
+}
+
+.c3:hover:after {
+  content: none;
+}
+
 .c4 {
   color: #000000;
   margin-bottom: 25px;
