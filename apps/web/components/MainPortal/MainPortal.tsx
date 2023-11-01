@@ -1,12 +1,11 @@
 import React from 'react'
 
-import { Portals } from '@web/components/Portals/Portals'
-
 import {
   FirstWall,
   LastWall,
   MiddleWall,
   PortalContainer,
+  StyledPortals,
 } from './MainPortal.styles'
 
 interface MainPortalProps {
@@ -25,9 +24,12 @@ export function MainPortal({
     <PortalContainer {...rest}>
       <FirstWall />
       <MiddleWall>
-        <Portals enableGlow={enableGlow} enableParticles={enableParticles}>
+        <StyledPortals
+          enableGlow={enableGlow}
+          enableParticles={enableParticles}
+        >
           {children}
-        </Portals>
+        </StyledPortals>
       </MiddleWall>
       <LastWall />
     </PortalContainer>

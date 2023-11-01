@@ -17,7 +17,7 @@ export type CustomAnimation = {
 
 export type AnimationSize = 'S' | 'M' | 'L'
 
-export interface AnimatedItemProps {
+export type AnimatedElement = {
   svg: React.ReactNode
   size?: AnimationSize
   rotate?: boolean
@@ -27,7 +27,11 @@ export interface AnimatedItemProps {
   path?: string
   ariaLabel?: string
   focusable?: boolean
+  increaseOnDesktop?: boolean
+  fastDelay?: boolean
 }
+
+interface AnimatedItemProps extends AnimatedElement {}
 
 export function AnimatedItem({
   svg,
@@ -38,6 +42,8 @@ export function AnimatedItem({
   path,
   ariaLabel,
   focusable = true,
+  increaseOnDesktop = false,
+  fastDelay = false,
 }: AnimatedItemProps) {
   const seed = useId()
 
@@ -58,6 +64,7 @@ export function AnimatedItem({
       data-testid="color-swapping"
       $seed={seed}
       $colorSwap={colorSwap}
+      $fastDelay={fastDelay}
     >
       {svg}
     </ColorSwapping>
@@ -69,6 +76,8 @@ export function AnimatedItem({
       $size={itemSize}
       $seed={seed}
       $customAnimation={customAnimation?.horizontal}
+      $increaseOnDesktop={increaseOnDesktop}
+      $fastDelay={fastDelay}
     >
       <VerticalMovement
         data-testid="vertical-movement"

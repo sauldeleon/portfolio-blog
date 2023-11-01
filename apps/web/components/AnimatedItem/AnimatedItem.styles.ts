@@ -77,13 +77,21 @@ export const StyledExternalLink = styled(Link)`
 export const ColorSwapping = styled.div.attrs<{
   $seed: string
   $colorSwap?: boolean
-}>(({ $seed }) => ({
+  $fastDelay?: boolean
+}>(({ $seed, $fastDelay }) => ({
   style: {
     animationDuration:
-      randomDecimalFromInterval(6, 20, `${$seed}-item-horizontal-duration`) +
-      's',
+      randomDecimalFromInterval(
+        6,
+        $fastDelay ? 5 : 20,
+        `${$seed}-item-initial-duration`,
+      ) + 's',
     animationDelay:
-      randomDecimalFromInterval(1, 20, `${$seed}-item-horizontal-delay`) + 's',
+      randomDecimalFromInterval(
+        1,
+        $fastDelay ? 5 : 20,
+        `${$seed}-item-initial-delay`,
+      ) + 's',
   },
 }))`
   ${({ theme, $colorSwap }) => css`
@@ -107,13 +115,22 @@ export const HorizontalMovement = styled.li.attrs<{
   $size: number
   $seed: string
   $customAnimation?: RuleSet<object>
-}>(({ $seed }) => ({
+  $increaseOnDesktop?: boolean
+  $fastDelay?: boolean
+}>(({ $seed, $fastDelay }) => ({
   style: {
     animationDuration:
-      randomDecimalFromInterval(6, 20, `${$seed}-item-horizontal-duration`) +
-      's',
+      randomDecimalFromInterval(
+        6,
+        $fastDelay ? 5 : 20,
+        `${$seed}-item-initial-duration`,
+      ) + 's',
     animationDelay:
-      randomDecimalFromInterval(1, 20, `${$seed}-item-horizontal-delay`) + 's',
+      randomDecimalFromInterval(
+        1,
+        $fastDelay ? 5 : 20,
+        `${$seed}-item-initial-delay`,
+      ) + 's',
   },
 }))`
   --itemSize: ${({ $size }) => `${$size}px`};
@@ -121,7 +138,7 @@ export const HorizontalMovement = styled.li.attrs<{
   --translateX-end: calc(50% + var(--itemSize));
   list-style: none;
   position: absolute;
-  transform: translateX(-60%);
+  transform: translateX(-70%);
   width: 100%;
   height: 100%;
   pointer-events: none;
@@ -142,7 +159,11 @@ export const HorizontalMovement = styled.li.attrs<{
     }
   }
 
-  ${({ theme }) => theme.media.up.md} {
-    --itemSize: ${({ $size }) => `${$size + 15}px`};
-  }
+  ${({ $increaseOnDesktop, $size, theme }) =>
+    $increaseOnDesktop &&
+    css`
+      ${theme.media.up.md} {
+        --itemSize: ${$size + 15}px;
+      }
+    `}
 `

@@ -1,5 +1,6 @@
 import common from './locales/en/common.json'
 import contactPage from './locales/en/contactPage.json'
+import experiencePage from './locales/en/experiencePage.json'
 import footer from './locales/en/footer.json'
 import header from './locales/en/header.json'
 import homepage from './locales/en/homepage.json'
@@ -16,6 +17,7 @@ export const resources = {
     footer,
     homepage,
     contactPage,
+    experiencePage,
     notFound,
   },
 } as const

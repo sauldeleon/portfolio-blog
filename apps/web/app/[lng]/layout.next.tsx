@@ -1,4 +1,5 @@
 import { dir } from 'i18next'
+import { Viewport } from 'next'
 import Script from 'next/script'
 
 import { LanguageContextProvider } from '@sdlgr/i18n-tools'
@@ -8,7 +9,10 @@ import { MainLayout } from '@web/components/MainLayout/MainLayout'
 import StyledComponentsRegistry from '@web/components/StyledComponentsRegistry/StyledComponentsRegistry'
 import { getServerTranslation } from '@web/i18n/server'
 import { languages } from '@web/i18n/settings'
-import { sharedRootMetadata } from '@web/utils/metadata/metadata'
+import {
+  sharedRootMetadata,
+  sharedRootViewport,
+} from '@web/utils/metadata/metadata'
 
 interface RouteProps {
   params: {
@@ -28,6 +32,10 @@ export async function generateMetadata({ params }: GenerateMetadataProps) {
     ...sharedRootMetadata,
     description: t('metadata.description'),
   }
+}
+
+export const viewport: Viewport = {
+  ...sharedRootViewport,
 }
 
 export async function generateStaticParams() {

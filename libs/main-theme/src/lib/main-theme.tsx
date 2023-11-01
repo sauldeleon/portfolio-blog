@@ -1,8 +1,8 @@
+import { Roboto_Mono } from 'next/font/google'
 import * as React from 'react'
 import { css, keyframes } from 'styled-components'
 import { Keyframes, RuleSet } from 'styled-components/dist/types'
 
-import { Roboto_Mono } from 'next/font/google'
 import { SLLogo, SLLogoSVG } from '@sdlgr/assets'
 
 const baseFontSize = 20

@@ -1,9 +1,9 @@
 import { mainTheme } from '@sdlgr/main-theme'
 
 import {
-  PortalFirst,
+  PortalDoorFirst,
+  PortalDoorLast,
   PortalFirstGlow,
-  PortalLast,
   PortalLastGlow,
   PortalPath,
   StyledCylinderShape,
@@ -24,15 +24,16 @@ export function Portals({
   children,
   enableParticles,
   enableGlow,
+  ...props
 }: PortalsProps) {
   return (
-    <StyledPortals role="presentation">
-      <PortalFirst>
+    <StyledPortals role="presentation" {...props}>
+      <PortalDoorFirst>
         <StyledPortalIcon color={mainTheme.colors.yellow} />
-      </PortalFirst>
-      <PortalLast>
+      </PortalDoorFirst>
+      <PortalDoorLast>
         <StyledPortalIcon color={mainTheme.colors.green} />
-      </PortalLast>
+      </PortalDoorLast>
       <PortalPath>
         {enableGlow && (
           <>
