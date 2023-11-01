@@ -62,6 +62,7 @@ export function useExperienceItems(): ExperienceItem[] {
         'jest',
         'mocha',
         'litElement',
+        'cucumber',
         'redux',
       ],
       beginDate: new Date('2020-08-01T00:00:00.000Z'),
