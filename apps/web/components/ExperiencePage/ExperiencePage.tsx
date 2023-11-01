@@ -1,3 +1,4 @@
+import { ParseKeys } from 'i18next'
 import { useId } from 'react'
 
 import { useClientTranslation } from '@web/i18n/client'
@@ -13,9 +14,8 @@ export type ExperienceItem = {
   technologies: AnimatedItemKey[]
   beginDate: Date
   endDate?: Date
+  descriptionParagraphKeys: ParseKeys<'experiencePage'>[]
   link?: string
-  linkLabel?: string
-  descriptionParagraphs: string[]
 }
 
 export function ExperiencePage() {

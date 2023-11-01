@@ -180,7 +180,7 @@ exports[`ExperiencePage should render successfully 1`] = `
   animation-play-state: paused;
 }
 
-.c37 {
+.c38 {
   --itemSize: 25px;
   --translateX-begin: calc(-50% - var(--itemSize));
   --translateX-end: calc(50% + var(--itemSize));
@@ -195,23 +195,23 @@ exports[`ExperiencePage should render successfully 1`] = `
   animation-iteration-count: infinite;
 }
 
-.c37:hover {
+.c38:hover {
   z-index: 200;
   animation-play-state: paused;
 }
 
-.c37:hover .c18,
-.c37:hover .c20,
-.c37:hover .c24 {
+.c38:hover .c18,
+.c38:hover .c20,
+.c38:hover .c24 {
   animation-play-state: paused;
 }
 
-.c36 {
+.c37 {
   margin-left: 8px;
   position: relative;
 }
 
-.c36::after {
+.c37::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -221,13 +221,13 @@ exports[`ExperiencePage should render successfully 1`] = `
   background-color: currentColor;
 }
 
-.c36::after {
+.c37::after {
   transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.5s ease-out;
 }
 
-.c33 .loading {
+.c34 .loading {
   transform: rotate(-90deg);
   transform-origin: center;
   stroke: #FBFBFB;
@@ -237,7 +237,7 @@ exports[`ExperiencePage should render successfully 1`] = `
   transition: stroke-dashoffset 0.5s steps(4, end);
 }
 
-.c29 {
+.c30 {
   outline: none;
   cursor: pointer;
   display: flex;
@@ -245,34 +245,34 @@ exports[`ExperiencePage should render successfully 1`] = `
   max-height: 42px;
 }
 
-.c29:after {
+.c30:after {
   content: none;
 }
 
-.c29:hover:after {
+.c30:hover:after {
   content: none;
 }
 
-.c29:focus-visible {
+.c30:focus-visible {
   outline: #FBFBFB auto 1px;
 }
 
-.c29:hover .c32 .loading {
+.c30:hover .c33 .loading {
   stroke-dashoffset: 0;
 }
 
-.c29:hover .c35::after {
+.c30:hover .c36::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
 
-.c31 {
+.c32 {
   position: relative;
   width: 42px;
   height: 42px;
 }
 
-.c34 {
+.c35 {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
@@ -394,7 +394,7 @@ exports[`ExperiencePage should render successfully 1`] = `
   font-size: 15px;
 }
 
-.c30 {
+.c31 {
   margin-top: 50px;
   text-transform: uppercase;
   width: max-content;
@@ -404,6 +404,15 @@ exports[`ExperiencePage should render successfully 1`] = `
   width: 100%;
   transform: unset;
   position: relative;
+}
+
+.c29 {
+  font-family: fontFamily;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
 }
 
 @media (width >= 1024px) {
@@ -928,37 +937,85 @@ exports[`ExperiencePage should render successfully 1`] = `
           <p
             class="c5 c28"
           >
-            Part of the team responsible for migrating the legacy website to a cutting-edge Next.JS Typescript application within an NX monorepo. Instrumental in developing a comprehensive Design System from the ground up using Styled Components. Additionally, involved in creating new applications for clients and internal administration, including an EXPO mobile app for iOS and Android.
+            Part of the team responsible for migrating the legacy website to a cutting-edge 
+            <b
+              class="c29"
+            >
+              Next.JS Typescript
+            </b>
+             application within an 
+            <b
+              class="c29"
+            >
+              NX
+            </b>
+             monorepo. Instrumental in developing a comprehensive Design System from the ground up using 
+            <b
+              class="c29"
+            >
+              Styled Components
+            </b>
+            . Additionally, involved in creating new applications for clients and internal administration, including an 
+            <b
+              class="c29"
+            >
+              EXPO
+            </b>
+             mobile app for iOS and Android.
           </p>
           <p
             class="c5 c28"
           >
-            Proficiently employed Jest and MSW for thorough unit and integration testing, while utilizing Cypress for end-to-end testing.
+            Proficiently employed 
+            <b
+              class="c29"
+            >
+              Jest
+            </b>
+             and 
+            <b
+              class="c29"
+            >
+              MSW
+            </b>
+             for thorough unit and integration testing, while utilizing 
+            <b
+              class="c29"
+            >
+              Cypress
+            </b>
+             for end-to-end testing.
           </p>
           <p
             class="c5 c28"
           >
-            Helped at the implementation of a robust CI/CD pipeline using GitLab for efficient and seamless deployment.
+            Helped at the implementation of a robust 
+            <b
+              class="c29"
+            >
+              CI/CD
+            </b>
+             pipeline using GitLab for efficient and seamless deployment.
           </p>
           <a
-            class="c22 c29 c30"
+            class="c22 c30 c31"
             data-testid="plain-anchor"
             href="https://www.bonhams.com/"
             rel="noreferrer"
             target="_blank"
           >
             <div
-              class="c31"
+              class="c32"
             >
               <svg
-                class="c32 c33"
+                class="c33 c34"
                 height="42"
                 width="42"
               >
                 circleButton.svg
               </svg>
               <div
-                class="c34"
+                class="c35"
               >
                 <svg>
                   arrowRight.svg
@@ -966,7 +1023,7 @@ exports[`ExperiencePage should render successfully 1`] = `
               </div>
             </div>
             <p
-              class="c35 c5 c36"
+              class="c36 c5 c37"
             >
               Check the website
             </p>
@@ -1217,7 +1274,7 @@ exports[`ExperiencePage should render successfully 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c37"
+                  class="c38"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 4.159129481057648s;"
                 >
@@ -1344,22 +1401,64 @@ exports[`ExperiencePage should render successfully 1`] = `
           <p
             class="c5 c28"
           >
-            Initiated the creation of a comprehensive monorepo from the ground up using Yarn Workspaces, ensuring the development of full TypeScript applications.
+            Initiated the creation of a comprehensive monorepo from the ground up using 
+            <b
+              class="c29"
+            >
+              Yarn Workspaces
+            </b>
+            , ensuring the development of full 
+            <b
+              class="c29"
+            >
+              TypeScript
+            </b>
+             applications.
           </p>
           <p
             class="c5 c28"
           >
-            Implemented a robust Test-Driven Development (TDD) approach using Jest and React Testing Library.
+            Implemented a robust Test-Driven Development (TDD) approach using 
+            <b
+              class="c29"
+            >
+              Jest
+            </b>
+             and 
+            <b
+              class="c29"
+            >
+              React Testing Library
+            </b>
+            .
           </p>
           <p
             class="c5 c28"
           >
-            Implemented a sophisticated design system, utilizing a customized library of components alongside Storybook for comprehensive documentation.
+            Implemented a sophisticated design system, utilizing a customized library of components using 
+            <b
+              class="c29"
+            >
+              Emotion.JS
+            </b>
+             alongside 
+            <b
+              class="c29"
+            >
+              Storybook
+            </b>
+             for comprehensive documentation.
           </p>
           <p
             class="c5 c28"
           >
-            Established and optimized the frontend pipeline in Jenkins, utilizing parallel optimization for multiple stages.
+            Established and optimized the frontend pipeline in 
+            <b
+              class="c29"
+            >
+              Jenkins
+            </b>
+            , utilizing parallel optimization for multiple stages.
           </p>
           <p
             class="c5 c28"
@@ -1367,24 +1466,24 @@ exports[`ExperiencePage should render successfully 1`] = `
             Basic knowledge in utilizing Terraform for storing environment variables in AWS.
           </p>
           <a
-            class="c22 c29 c30"
+            class="c22 c30 c31"
             data-testid="plain-anchor"
             href="https://www.smartprotection.com/"
             rel="noreferrer"
             target="_blank"
           >
             <div
-              class="c31"
+              class="c32"
             >
               <svg
-                class="c32 c33"
+                class="c33 c34"
                 height="42"
                 width="42"
               >
                 circleButton.svg
               </svg>
               <div
-                class="c34"
+                class="c35"
               >
                 <svg>
                   arrowRight.svg
@@ -1392,7 +1491,7 @@ exports[`ExperiencePage should render successfully 1`] = `
               </div>
             </div>
             <p
-              class="c35 c5 c36"
+              class="c36 c5 c37"
             >
               Check the website
             </p>
@@ -1765,17 +1864,53 @@ exports[`ExperiencePage should render successfully 1`] = `
           <p
             class="c5 c28"
           >
-            Contributed to an international project, focusing on web development based on WebComponents, specifically LitElement, and Redux, with seamless communication with REST APIs.
+            Contributed to an international project, focusing on web development based on WebComponents, specifically 
+            <b
+              class="c29"
+            >
+              LitElement
+            </b>
+            , and 
+            <b
+              class="c29"
+            >
+              Redux
+            </b>
+            , with seamless communication with REST APIs.
           </p>
           <p
             class="c5 c28"
           >
-            Adopted a Test-Driven Development (TDD) approach using Karma with Mocha for comprehensive unit testing.
+            Adopted a Test-Driven Development (TDD) approach using 
+            <b
+              class="c29"
+            >
+              Karma
+            </b>
+             with 
+            <b
+              class="c29"
+            >
+              Mocha
+            </b>
+             for comprehensive unit testing.
           </p>
           <p
             class="c5 c28"
           >
-            Conducted end-to-end testing using Cucumber and WebdriverIO for thorough functionality testing.
+            Conducted end-to-end testing using 
+            <b
+              class="c29"
+            >
+              Cucumber
+            </b>
+             and 
+            <b
+              class="c29"
+            >
+              WebdriverIO
+            </b>
+             for thorough functionality testing.
           </p>
           <p
             class="c5 c28"
@@ -1783,24 +1918,24 @@ exports[`ExperiencePage should render successfully 1`] = `
             Possesses a strong background in pairing code review experience, serving as an approver of the main repository to ensure the validation of merges into the master branch.
           </p>
           <a
-            class="c22 c29 c30"
+            class="c22 c30 c31"
             data-testid="plain-anchor"
             href="https://www.ing.es/"
             rel="noreferrer"
             target="_blank"
           >
             <div
-              class="c31"
+              class="c32"
             >
               <svg
-                class="c32 c33"
+                class="c33 c34"
                 height="42"
                 width="42"
               >
                 circleButton.svg
               </svg>
               <div
-                class="c34"
+                class="c35"
               >
                 <svg>
                   arrowRight.svg
@@ -1808,7 +1943,7 @@ exports[`ExperiencePage should render successfully 1`] = `
               </div>
             </div>
             <p
-              class="c35 c5 c36"
+              class="c36 c5 c37"
             >
               Check the website
             </p>
@@ -1951,7 +2086,7 @@ exports[`ExperiencePage should render successfully 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c37"
+                  class="c38"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 4.421826499968204s;"
                 >
@@ -2145,12 +2280,24 @@ exports[`ExperiencePage should render successfully 1`] = `
           <p
             class="c5 c28"
           >
-            Involved in the development of multiple React.JS web applications, utilizing REST services provided by the Gateway service, primarily based on SAP, Java, or Node.js backend services.
+            Involved in the development of multiple 
+            <b
+              class="c29"
+            >
+              React.JS
+            </b>
+             web applications, utilizing REST services provided by the Gateway service, primarily based on SAP, Java, or Node.js backend services.
           </p>
           <p
             class="c5 c28"
           >
-            Took on the role of a front-end developer lead for an Angular JS 1.7 application, responsible for onboarding newcomers and overseeing new developments or maintenance. Additionally, proficient in deploying applications across various environments for multiple clients.
+            Took on the role of a front-end developer lead for an 
+            <b
+              class="c29"
+            >
+              Angular JS
+            </b>
+             application, responsible for onboarding newcomers and overseeing new developments or maintenance. Additionally, proficient in deploying applications across various environments for multiple clients.
           </p>
         </div>
       </div>
@@ -2398,7 +2545,7 @@ exports[`ExperiencePage should render successfully 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c37"
+                  class="c38"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 4.863303217786158s;"
                 >
@@ -2592,27 +2739,57 @@ exports[`ExperiencePage should render successfully 1`] = `
           <p
             class="c5 c28"
           >
-            Contributed to the Mobile Development Center, focusing on the main project, an IONIC app with Angular JS 1.6. Involved in the development of an instant messaging system using Socket.io and Node.js. Integrated Spring Boot and multiple REST services.
+            Contributed to the Mobile Development Center, focusing on the main project, an 
+            <b
+              class="c29"
+            >
+              IONIC
+            </b>
+             app with 
+            <b
+              class="c29"
+            >
+              Angular JS
+            </b>
+            . Involved in the development of an instant messaging system using 
+            <b
+              class="c29"
+            >
+              Socket.io
+            </b>
+             and 
+            <b
+              class="c29"
+            >
+              Node.js
+            </b>
+            . Integrated 
+            <b
+              class="c29"
+            >
+              Spring Boot
+            </b>
+             and multiple REST services.
           </p>
           <a
-            class="c22 c29 c30"
+            class="c22 c30 c31"
             data-testid="plain-anchor"
             href="https://www.babelgroup.com/"
             rel="noreferrer"
             target="_blank"
           >
             <div
-              class="c31"
+              class="c32"
             >
               <svg
-                class="c32 c33"
+                class="c33 c34"
                 height="42"
                 width="42"
               >
                 circleButton.svg
               </svg>
               <div
-                class="c34"
+                class="c35"
               >
                 <svg>
                   arrowRight.svg
@@ -2620,7 +2797,7 @@ exports[`ExperiencePage should render successfully 1`] = `
               </div>
             </div>
             <p
-              class="c35 c5 c36"
+              class="c36 c5 c37"
             >
               Check the website
             </p>
@@ -2921,47 +3098,167 @@ exports[`ExperiencePage should render successfully 1`] = `
           <p
             class="c5 c28"
           >
-            Served as the CTO from November 2016 to April 2017. Acted as the Scrum Master of the main I+D+i project, utilizing Java 1.7, Spring 4, GWT 1.7, Hibernate 5, and MySQL 5.6. Implemented IONIC 2 and Angular 2 for mobile development.
+            Served as the CTO from November 2016 to April 2017. Acted as the Scrum Master of the main I+D+i project, utilizing 
+            <b
+              class="c29"
+            >
+              Java 1.7
+            </b>
+            , 
+            <b
+              class="c29"
+            >
+              Spring 4
+            </b>
+            , 
+            <b
+              class="c29"
+            >
+              GWT 1.7
+            </b>
+            , 
+            <b
+              class="c29"
+            >
+              Hibernate 5
+            </b>
+            , and 
+            <b
+              class="c29"
+            >
+              MySQL 5.6
+            </b>
+            . Implemented 
+            <b
+              class="c29"
+            >
+              IONIC 2
+            </b>
+             and 
+            <b
+              class="c29"
+            >
+              Angular
+            </b>
+             for mobile development.
           </p>
           <p
             class="c5 c28"
           >
-            Implemented an Arduino monitoring system for real-time information within the application.
+            Implemented an 
+            <b
+              class="c29"
+            >
+              Arduino
+            </b>
+             monitoring system for real-time information within the application.
           </p>
           <p
             class="c5 c28"
           >
-            Demonstrated proficiency in utilizing Maven, Sonarqube, and JUnit, along with Mockito for testing and validating clean code.
+            Demonstrated proficiency in utilizing 
+            <b
+              class="c29"
+            >
+              Maven
+            </b>
+            , 
+            <b
+              class="c29"
+            >
+              Sonarqube
+            </b>
+            , and 
+            <b
+              class="c29"
+            >
+              JUnit
+            </b>
+            , along with 
+            <b
+              class="c29"
+            >
+              Mockito
+            </b>
+             for testing and validating clean code.
           </p>
           <p
             class="c5 c28"
           >
-            Involved in front-end development for various customers, employing CSS3, jQuery, and HTML5.
+            Involved in front-end development for various customers, employing 
+            <b
+              class="c29"
+            >
+              CSS3
+            </b>
+            , 
+            <b
+              class="c29"
+            >
+              jQuery
+            </b>
+            , and 
+            <b
+              class="c29"
+            >
+              HTML5
+            </b>
+            .
           </p>
           <p
             class="c5 c28"
           >
-            Worked as a Java consultant, focusing on back-end developments in PSA Peugeot-Citroën. Involved in incident resolution and new functionalities development, utilizing Spring 3 MVC, Hibernate, Struts 2 and BBDD Oracle.
+            Worked as a 
+            <b
+              class="c29"
+            >
+              Java
+            </b>
+             consultant, focusing on back-end developments in PSA Peugeot-Citroën. Involved in incident resolution and new functionalities development, utilizing 
+            <b
+              class="c29"
+            >
+              Spring 3 MVC
+            </b>
+            , 
+            <b
+              class="c29"
+            >
+              Hibernate
+            </b>
+            , 
+            <b
+              class="c29"
+            >
+              Struts 2
+            </b>
+             and DB 
+            <b
+              class="c29"
+            >
+              Oracle
+            </b>
+            .
           </p>
           <a
-            class="c22 c29 c30"
+            class="c22 c30 c31"
             data-testid="plain-anchor"
             href="https://ioon.es/"
             rel="noreferrer"
             target="_blank"
           >
             <div
-              class="c31"
+              class="c32"
             >
               <svg
-                class="c32 c33"
+                class="c33 c34"
                 height="42"
                 width="42"
               >
                 circleButton.svg
               </svg>
               <div
-                class="c34"
+                class="c35"
               >
                 <svg>
                   arrowRight.svg
@@ -2969,7 +3266,7 @@ exports[`ExperiencePage should render successfully 1`] = `
               </div>
             </div>
             <p
-              class="c35 c5 c36"
+              class="c36 c5 c37"
             >
               Check the website
             </p>
@@ -3076,7 +3373,7 @@ exports[`ExperiencePage should render successfully 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c37"
+                  class="c38"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 5.601765520252898s;"
                 >
@@ -3220,7 +3517,7 @@ exports[`ExperiencePage should render successfully 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c37"
+                  class="c38"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 5.204019044602115s;"
                 >
@@ -3306,12 +3603,36 @@ exports[`ExperiencePage should render successfully 1`] = `
           <p
             class="c5 c28"
           >
-            Involved in back-end development using Perl and the Catalyst Framework, alongside various CPAN modules for seamless database integration, including Oracle and MongoDB.
+            Involved in back-end development using 
+            <b
+              class="c29"
+            >
+              Perl
+            </b>
+             and the Catalyst Framework, alongside various CPAN modules for seamless database integration, including 
+            <b
+              class="c29"
+            >
+              Oracle
+            </b>
+             and 
+            <b
+              class="c29"
+            >
+              MongoDB
+            </b>
+            .
           </p>
           <p
             class="c5 c28"
           >
-            Utilized the ExtJS Framework for front-end development.
+            Utilized the 
+            <b
+              class="c29"
+            >
+              ExtJS
+            </b>
+             Framework for front-end development.
           </p>
           <p
             class="c5 c28"
@@ -3319,24 +3640,24 @@ exports[`ExperiencePage should render successfully 1`] = `
             Integrated SOAP webservices for streamlined communication.
           </p>
           <a
-            class="c22 c29 c30"
+            class="c22 c30 c31"
             data-testid="plain-anchor"
             href="https://clarive.com/"
             rel="noreferrer"
             target="_blank"
           >
             <div
-              class="c31"
+              class="c32"
             >
               <svg
-                class="c32 c33"
+                class="c33 c34"
                 height="42"
                 width="42"
               >
                 circleButton.svg
               </svg>
               <div
-                class="c34"
+                class="c35"
               >
                 <svg>
                   arrowRight.svg
@@ -3344,7 +3665,7 @@ exports[`ExperiencePage should render successfully 1`] = `
               </div>
             </div>
             <p
-              class="c35 c5 c36"
+              class="c36 c5 c37"
             >
               Check the website
             </p>
@@ -3451,7 +3772,7 @@ exports[`ExperiencePage should render successfully 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c37"
+                  class="c38"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 5.434049969298483s;"
                 >
@@ -3614,27 +3935,57 @@ exports[`ExperiencePage should render successfully 1`] = `
           <p
             class="c5 c28"
           >
-            Utilized Spring 3 and JPA, incorporating Hibernate with both MongoDB and Oracle databases.
+            Utilized 
+            <b
+              class="c29"
+            >
+              Spring 3
+            </b>
+             and 
+            <b
+              class="c29"
+            >
+              JPA
+            </b>
+            , incorporating 
+            <b
+              class="c29"
+            >
+              Hibernate
+            </b>
+             with both 
+            <b
+              class="c29"
+            >
+              MongoDB
+            </b>
+             and 
+            <b
+              class="c29"
+            >
+              Oracle
+            </b>
+             databases.
           </p>
           <a
-            class="c22 c29 c30"
+            class="c22 c30 c31"
             data-testid="plain-anchor"
             href="https://www.idealista.com/"
             rel="noreferrer"
             target="_blank"
           >
             <div
-              class="c31"
+              class="c32"
             >
               <svg
-                class="c32 c33"
+                class="c33 c34"
                 height="42"
                 width="42"
               >
                 circleButton.svg
               </svg>
               <div
-                class="c34"
+                class="c35"
               >
                 <svg>
                   arrowRight.svg
@@ -3642,7 +3993,7 @@ exports[`ExperiencePage should render successfully 1`] = `
               </div>
             </div>
             <p
-              class="c35 c5 c36"
+              class="c36 c5 c37"
             >
               Check the website
             </p>
@@ -3857,7 +4208,7 @@ exports[`ExperiencePage should render successfully 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c37"
+                  class="c38"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 4.845775371972534s;"
                 >
@@ -3912,12 +4263,36 @@ exports[`ExperiencePage should render successfully 1`] = `
           <p
             class="c5 c28"
           >
-            Demonstrated proficiency in using Python and PHP 5.3, with MySQL 5.1 for robust database management.
+            Demonstrated proficiency in using 
+            <b
+              class="c29"
+            >
+              Python
+            </b>
+             and PHP 5.3, with 
+            <b
+              class="c29"
+            >
+              MySQL 5.1
+            </b>
+             for robust database management.
           </p>
           <p
             class="c5 c28"
           >
-            Employed CSS3 and JavaScript for efficient and dynamic web development.
+            Employed 
+            <b
+              class="c29"
+            >
+              CSS3
+            </b>
+             and 
+            <b
+              class="c29"
+            >
+              JavaScript
+            </b>
+             for efficient and dynamic web development.
           </p>
         </div>
       </div>
