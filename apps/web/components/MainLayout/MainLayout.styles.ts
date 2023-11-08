@@ -5,7 +5,7 @@ export const StyledPage = styled.div`
   display: flex;
   flex-direction: column;
   min-width: 300px;
-  overflow-x: auto;
+  /* overflow-x: auto; */
 `
 
 export const StyledContent = styled.div`
@@ -13,7 +13,7 @@ export const StyledContent = styled.div`
   min-height: calc(100vh - 115px - 300px);
   align-items: center;
   flex-direction: column;
-  overflow: hidden;
+  /* overflow: hidden; */
 
   ${({ theme }) => theme.media.up.md} {
     min-height: calc(100vh - 115px - 210px);

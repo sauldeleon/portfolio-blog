@@ -2971,6 +2971,7 @@ __metadata:
     react-i18next: 13.3.1
     react-is: 18.2.0
     react-overlays: 5.2.1
+    react-use-is-scrolling: 0.0.2
     seedrandom: 3.0.5
     styled-components: 6.1.0
     ts-jest: 29.1.1
@@ -10377,6 +10378,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.throttle@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "lodash.throttle@npm:4.1.1"
+  checksum: 129c0a28cee48b348aef146f638ef8a8b197944d4e9ec26c1890c19d9bf5a5690fe11b655c77a4551268819b32d27f4206343e30c78961f60b561b8608c8c805
+  languageName: node
+  linkType: hard
+
 "lodash.uniq@npm:^4.5.0":
   version: 4.5.0
   resolution: "lodash.uniq@npm:4.5.0"
@@ -12355,6 +12363,17 @@ __metadata:
     react: ">=16.3.0"
     react-dom: ">=16.3.0"
   checksum: ac43b3876829081c6912f083b53016384fe1357c2c819cf80ffa961dcc650b0d504da0c87d1e6139775976d514321061f39f6b69ab128d619c6917b70cb179d6
+  languageName: node
+  linkType: hard
+
+"react-use-is-scrolling@npm:0.0.2":
+  version: 0.0.2
+  resolution: "react-use-is-scrolling@npm:0.0.2"
+  dependencies:
+    lodash.throttle: ^4.1.1
+  peerDependencies:
+    react: ^16.12.0
+  checksum: e4fde1e44f93d857010b8ed763d8bdc43f30773583444f4e86027a6c9b953b9ee21c517994dc3e17a48ab2b7bec14d233dfcfb19f4217bd199238c757e9cb2a4
   languageName: node
   linkType: hard
 
