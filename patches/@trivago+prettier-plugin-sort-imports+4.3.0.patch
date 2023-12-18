@@ -1,8 +1,8 @@
 diff --git a/node_modules/@trivago/prettier-plugin-sort-imports/lib/src/index.js b/node_modules/@trivago/prettier-plugin-sort-imports/lib/src/index.js
-index e6f5c69..ed914ea 100644
+index 524d701..ccb58d9 100644
 --- a/node_modules/@trivago/prettier-plugin-sort-imports/lib/src/index.js
 +++ b/node_modules/@trivago/prettier-plugin-sort-imports/lib/src/index.js
-@@ -18,6 +18,12 @@ var parser_html_1 = require("prettier/parser-html");
+@@ -18,6 +18,12 @@ var parser_typescript_1 = require("prettier/parser-typescript");
  var default_processor_1 = require("./preprocessors/default-processor");
  var vue_preprocessor_1 = require("./preprocessors/vue-preprocessor");
  var options = {

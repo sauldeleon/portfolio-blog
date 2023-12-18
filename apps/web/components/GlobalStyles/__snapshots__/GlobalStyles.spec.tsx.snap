@@ -4,7 +4,7 @@ exports[`GlobalStyles should render successfully 1`] = `
 <head>
   <style
     data-styled="active"
-    data-styled-version="6.1.0"
+    data-styled-version="6.1.1"
   />
 </head>
 `;
