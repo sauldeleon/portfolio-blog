@@ -127,7 +127,7 @@
     "*": "yarn format:write --base=origin/main"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=18"
   },
   "packageManager": "yarn@3.6.3"
 }

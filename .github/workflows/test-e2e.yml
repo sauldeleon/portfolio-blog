@@ -25,11 +25,11 @@ jobs:
       - name: Display deployment status
         run: 'echo The deployment at ${{ fromJson(steps.await-vercel-preview-ready.outputs.deploymentDetails).url }} is ${{ fromJson(steps.await-vercel-preview-ready.outputs.deploymentDetails).readyState }}'
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
       - name: Install
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: 18
           cache: 'yarn'
       - name: Cypress run
         if: steps.vercel_preview_url.outcome == 'success'
