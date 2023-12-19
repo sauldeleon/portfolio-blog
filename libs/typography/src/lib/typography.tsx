@@ -17,7 +17,7 @@ export const Heading = styled.h1<HeadingProps>`
   `}
 `
 
-export type BodyLevel = 'L' | 'M' | 'S'
+export type BodyLevel = 'XL' | 'L' | 'M' | 'S'
 export type BodyProps = {
   $level?: BodyLevel
   $centered?: boolean

@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { keyframes, styled } from 'styled-components'
 
 export const StyledContent = styled.div`
@@ -65,7 +66,7 @@ export const StyledScrollButton = styled.button<{
   animation-duration: 0.5s;
   animation-iteration-count: infinite;
 
-  transition: transform 0.3s ease-out;
+  transition: transform 0.3s ease-in-out;
   transform: ${({ $scrollingDirection }) => {
     let translateYValue = 0
     if ($scrollingDirection === 'down') {

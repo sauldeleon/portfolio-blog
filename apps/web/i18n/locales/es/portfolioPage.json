@@ -1,5 +1,46 @@
 {
   "title": "Portfolio",
+  "items": {
+    "softwareEngineer": "Ingeniero de Software",
+    "profile": {
+      "title": "Perfil",
+      "summary": "Ingeniero de software con experimentado en transformar código complejo en soluciones digitales refinadas y efectivas. Con una atención especial a los detalles, me focalizo en crear software que no solo cumple con los requisitos funcionales, sino que también prioriza una experiencia de usuario fluida.",
+      "skills": {
+        "title": "Skills",
+        "items": [
+          {
+            "title": "Front End",
+            "icon": "frontEnd",
+            "items": ["1", "2", "3"]
+          },
+          {
+            "title": "Back End",
+            "icon": "backEnd",
+            "items": ["1", "2", "3"]
+          },
+          {
+            "title": "Mobile Apps",
+            "icon": "mobile",
+            "items": ["1", "2", "3"]
+          },
+          {
+            "title": "Bases de datos",
+            "icon": "database",
+            "items": ["1", "2", "3"]
+          },
+          {
+            "title": "Otros",
+            "icon": "other",
+            "items": ["1", "2", "3"]
+          }
+        ]
+      }
+    },
+    "workingExperience": "Experiencia profesional",
+    "other": "Otros"
+  },
+  "profilePicture": "Mi foto de perfil",
+  "basedIn": "Localizado en Madrid, España",
   "metadata": {
     "description": "Portfolio"
   }

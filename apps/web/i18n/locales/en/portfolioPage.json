@@ -1,5 +1,46 @@
 {
   "title": "Portfolio",
+  "items": {
+    "softwareEngineer": "Software engineer",
+    "profile": {
+      "title": "Profile",
+      "summary": "Seasoned Software Engineer adept at transforming complex code into refined and effective digital solutions. With a keen eye for detail, I specialize in creating software that not only meets functional requirements but also prioritizes a seamless user experience.",
+      "skills": {
+        "title": "Skills",
+        "items": [
+          {
+            "title": "Front End",
+            "icon": "frontEnd",
+            "items": ["1", "2", "3"]
+          },
+          {
+            "title": "Back End",
+            "icon": "backEnd",
+            "items": ["1", "2", "3"]
+          },
+          {
+            "title": "Mobile Apps",
+            "icon": "mobile",
+            "items": ["1", "2", "3"]
+          },
+          {
+            "title": "Database",
+            "icon": "database",
+            "items": ["1", "2", "3"]
+          },
+          {
+            "title": "Other",
+            "icon": "other",
+            "items": ["1", "2", "3"]
+          }
+        ]
+      }
+    },
+    "workingExperience": "Working Experience",
+    "other": "Other"
+  },
+  "profilePicture": "My profile picture",
+  "basedIn": "Based in Madrid, Spain",
   "metadata": {
     "description": "Portfolio"
   }

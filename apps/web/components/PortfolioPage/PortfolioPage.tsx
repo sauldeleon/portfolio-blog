@@ -3,18 +3,24 @@ import { useIsScrolling } from 'react-use-is-scrolling'
 
 import { ScrollTop } from '@sdlgr/assets'
 
+import { useClientTranslation } from '@web/i18n/client'
+
 import {
   StyledContent,
   StyledScrollButton,
   StyledScrollColumn,
   StyledWrap,
 } from './PortfolioPage.styles'
-import { PortfolioItem } from './components/ComponentItem/PortfolioItem'
+import { OtherSfuff } from './components/OtherSfuff/OtherSfuff'
+import { PortfolioHeading } from './components/PortfolioHeading/PortfolioHeading'
+import { PortfolioItem } from './components/PortfolioItem/PortfolioItem'
+import { ProfileInfo } from './components/ProfileInfo/ProfileInfo'
+import { WorkingExperience } from './components/WorkingExperience/WorkingExperience'
 
 export function PortfolioPage() {
+  const { t } = useClientTranslation('portfolioPage')
   const [scroll, setScroll] = useState(0)
   const { isScrolling, scrollDirectionY } = useIsScrolling()
-  console.log(scrollDirectionY)
   useEffect(() => {
     const listener = () => {
       const scrollValue =
@@ -56,11 +62,16 @@ export function PortfolioPage() {
           </StyledScrollButton>
         </StyledScrollColumn>
         <StyledWrap>
-          <PortfolioItem title="Potato"></PortfolioItem>
-          <PortfolioItem title="Potato"></PortfolioItem>
-          <PortfolioItem title="Potato"></PortfolioItem>
-          <PortfolioItem title="Potato"></PortfolioItem>
-          <PortfolioItem title="Potato"></PortfolioItem>
+          <PortfolioHeading />
+          <PortfolioItem title={t('items.profile.title')}>
+            <ProfileInfo />
+          </PortfolioItem>
+          <PortfolioItem title={t('items.workingExperience')}>
+            <WorkingExperience />
+          </PortfolioItem>
+          <PortfolioItem title={t('items.other')}>
+            <OtherSfuff />
+          </PortfolioItem>
         </StyledWrap>
       </StyledContent>
     </>
