@@ -90,9 +90,7 @@ export default function HomeLayout({ children }: HomeLayoutProps) {
   ]
 
   const summaryParagraphs: React.ReactNode[] = [
-    t('summary.p1'),
-    t('summary.p2'),
-    t('summary.p3'),
+    ...t('summary', { returnObjects: true }),
     <StyledAttributes key="attributes">
       {attributes.map(({ key, element }) => (
         <StyledAttribute key={`${key}-attribute`}>
