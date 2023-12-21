@@ -13,7 +13,6 @@ export const StyledContent = styled.div`
   min-height: calc(100vh - 115px - 300px);
   align-items: center;
   flex-direction: column;
-  /* overflow: hidden; */
 
   ${({ theme }) => theme.media.up.md} {
     min-height: calc(100vh - 115px - 210px);

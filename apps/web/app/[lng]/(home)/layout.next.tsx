@@ -20,6 +20,7 @@ import {
   StyledAttributeContent,
   StyledAttributes,
   StyledCircleLink,
+  StyledContainer,
   StyledHeading,
   StyledSubHeading,
   StyledSummary,
@@ -101,7 +102,7 @@ export default function HomeLayout({ children }: HomeLayoutProps) {
   ]
 
   return (
-    <>
+    <StyledContainer>
       <StyledHeading $level={2}>Saúl de León Guerrero</StyledHeading>
       <StyledCircleLink
         href={`/${language}/experience`}
@@ -122,6 +123,6 @@ export default function HomeLayout({ children }: HomeLayoutProps) {
         iconContent={<ArrowRightIcon />}
         label={t('experience')}
       />
-    </>
+    </StyledContainer>
   )
 }
