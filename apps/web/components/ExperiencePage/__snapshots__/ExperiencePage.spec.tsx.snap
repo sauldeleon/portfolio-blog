@@ -368,7 +368,7 @@ exports[`ExperiencePage should render successfully 1`] = `
 }
 
 .c8 {
-  font-size: 20px;
+  font-size: 16px;
   font-family: fontFamily;
   font-weight: 100;
 }

@@ -28,7 +28,7 @@ exports[`ProfileInfo should render successfully 1`] = `
   padding-left: 10px;
 }
 
-.c4 {
+.c5 {
   font-family: fontFamily;
   font-weight: 400;
   color: #FBFBFB;
@@ -37,25 +37,25 @@ exports[`ProfileInfo should render successfully 1`] = `
   white-space: pre-line;
 }
 
-.c4 ul,
-.c4 ol {
+.c5 ul,
+.c5 ol {
   margin-left: 40px;
   margin-bottom: 10px;
 }
 
-.c4 ul {
+.c5 ul {
   list-style: outside disc;
 }
 
-.c4 ol {
+.c5 ol {
   list-style: decimal;
 }
 
-.c4 li {
+.c5 li {
   padding-left: 10px;
 }
 
-.c1 {
+.c2 {
   font-family: fontFamily;
   font-weight: 500;
   color: #FBFBFB;
@@ -64,50 +64,44 @@ exports[`ProfileInfo should render successfully 1`] = `
   text-transform: uppercase;
 }
 
-.c2 {
-  margin-top: 40px;
+.c1 {
+  font-size: 20px;
 }
 
 .c3 {
+  margin-top: 40px;
+}
+
+.c4 {
   margin-top: 20px;
 }
 
-.c5 {
+.c6 {
   font-weight: 500;
   display: flex;
   line-height: 20px;
   margin-bottom: 10px;
 }
 
-.c5 svg {
+.c6 svg {
   margin-right: 10px;
 }
 
-.c6 {
-  padding-left: 25px;
+.c7 {
+  padding-left: 0px;
 }
 
-.c7 {
+.c8 {
   font-size: 16px;
   text-indent: -20px;
   padding-left: 20px;
 }
 
-.c7:before {
+.c8:before {
   content: '·';
   font-size: 30px;
   vertical-align: middle;
   line-height: 20px;
-}
-
-.c8 {
-  font-family: fontFamily;
-  font-weight: 400;
-  color: #FBFBFB;
-  font-size: 0.9rem;
-  line-height: normal;
-  font-size: 16px;
-  font-weight: bold;
 }
 
 .c9 {
@@ -117,25 +111,47 @@ exports[`ProfileInfo should render successfully 1`] = `
   font-size: 0.9rem;
   line-height: normal;
   font-size: 16px;
+  font-weight: bold;
+}
+
+.c10 {
+  font-family: fontFamily;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-size: 16px;
+}
+
+@media (width >= 1024px) {
+  .c1 {
+    font-size: 30px;
+  }
+}
+
+@media (width >= 1024px) {
+  .c7 {
+    padding-left: 25px;
+  }
 }
 
 <body>
   <div>
     <p
-      class="c0"
+      class="c0 c1"
     >
       Seasoned Software Engineer adept at transforming complex code into refined and effective digital solutions. With a keen eye for detail, I specialize in creating software that not only meets functional requirements but also prioritizes a seamless user experience.
     </p>
     <div
-      class="c1 c2"
+      class="c2 c3"
     >
       Skills
     </div>
     <div
-      class="c3"
+      class="c4"
     >
       <p
-        class="c4 c5"
+        class="c5 c6"
       >
         <svg
           height="20"
@@ -146,94 +162,94 @@ exports[`ProfileInfo should render successfully 1`] = `
         Front End
       </p>
       <ul
-        class="c6"
+        class="c7"
       >
         <li
-          class="c7"
+          class="c8"
         >
           SPA using 
           <b
-            class="c8"
+            class="c9"
           >
             React 18
           </b>
            and 
           <b
-            class="c8"
+            class="c9"
           >
             yarn
           </b>
            as the main package manager.
         </li>
         <li
-          class="c7"
+          class="c8"
         >
           SSR using 
           <b
-            class="c8"
+            class="c9"
           >
             Next.JS 14
           </b>
            with experience in both the new layout system and the legacy system.
         </li>
         <li
-          class="c7"
+          class="c8"
         >
           Testing: Primarily using 
           <b
-            class="c8"
+            class="c9"
           >
             Jest
           </b>
            for unit testing. 
           <b
-            class="c8"
+            class="c9"
           >
             Cypress
           </b>
            for e2e testing
         </li>
         <li
-          class="c7"
+          class="c8"
         >
           Usage of 
           Storybook
            for documenting components, design systems and applications
         </li>
         <li
-          class="c7"
+          class="c8"
         >
           Use of CSS-in-JS libraries such as 
           <b
-            class="c8"
+            class="c9"
           >
             Emotion
           </b>
            or 
           <b
-            class="c8"
+            class="c9"
           >
             Styled-Components
           </b>
           .
         </li>
         <li
-          class="c7"
+          class="c8"
         >
           Preference for projects in 
           <b
-            class="c8"
+            class="c9"
           >
             Typescript
           </b>
           .
         </li>
         <li
-          class="c7"
+          class="c8"
         >
           Experience with 
           <b
-            class="c8"
+            class="c9"
           >
             monorepos
           </b>
@@ -242,10 +258,10 @@ exports[`ProfileInfo should render successfully 1`] = `
       </ul>
     </div>
     <div
-      class="c3"
+      class="c4"
     >
       <p
-        class="c4 c5"
+        class="c5 c6"
       >
         <svg
           height="20"
@@ -256,77 +272,77 @@ exports[`ProfileInfo should render successfully 1`] = `
         Back End
       </p>
       <ul
-        class="c6"
+        class="c7"
       >
         <li
-          class="c7"
+          class="c8"
         >
           <b
-            class="c8"
+            class="c9"
           >
             REST
           </b>
            applications in node.js using 
           <b
-            class="c8"
+            class="c9"
           >
             express
           </b>
            and 
           <b
-            class="c8"
+            class="c9"
           >
             bottle.js
           </b>
            for dependency injection. 
           <b
-            class="c8"
+            class="c9"
           >
             Sequelize
           </b>
            and 
           <b
-            class="c8"
+            class="c9"
           >
             mongoose
           </b>
            for integration with different databases.
         </li>
         <li
-          class="c7"
+          class="c8"
         >
           Java development experience with 
           <b
-            class="c8"
+            class="c9"
           >
             Spring Framework
           </b>
            (Boot, Core, Security, MVC). Use of 
           <b
-            class="c8"
+            class="c9"
           >
             Hibernate
           </b>
            for integration with Oracle, MySQL, MongoDB... Experience with Apache Tiles and JMX, integrations with 
           <b
-            class="c8"
+            class="c9"
           >
             Kafka
           </b>
           .
         </li>
         <li
-          class="c7"
+          class="c8"
         >
           Development of 
           <b
-            class="c8"
+            class="c9"
           >
             Perl
           </b>
            applications using 
           <b
-            class="c8"
+            class="c9"
           >
             Catalyst
           </b>
@@ -335,10 +351,10 @@ exports[`ProfileInfo should render successfully 1`] = `
       </ul>
     </div>
     <div
-      class="c3"
+      class="c4"
     >
       <p
-        class="c4 c5"
+        class="c5 c6"
       >
         <svg
           height="20"
@@ -349,37 +365,37 @@ exports[`ProfileInfo should render successfully 1`] = `
         Mobile Apps
       </p>
       <ul
-        class="c6"
+        class="c7"
       >
         <li
-          class="c7"
+          class="c8"
         >
           Experience with 
           <b
-            class="c8"
+            class="c9"
           >
             EXPO
           </b>
            over 
           <b
-            class="c8"
+            class="c9"
           >
             React Native
           </b>
            for developing native applications.
         </li>
         <li
-          class="c7"
+          class="c8"
         >
           Basic knowledge of 
           <b
-            class="c8"
+            class="c9"
           >
             IONIC
           </b>
            and 
           <b
-            class="c8"
+            class="c9"
           >
             Cordova
           </b>
@@ -388,10 +404,10 @@ exports[`ProfileInfo should render successfully 1`] = `
       </ul>
     </div>
     <div
-      class="c3"
+      class="c4"
     >
       <p
-        class="c4 c5"
+        class="c5 c6"
       >
         <svg
           height="20"
@@ -402,25 +418,25 @@ exports[`ProfileInfo should render successfully 1`] = `
         Databases
       </p>
       <ul
-        class="c6"
+        class="c7"
       >
         <li
-          class="c7"
+          class="c8"
         >
           Course 
           <i
-            class="c9"
+            class="c10"
           >
             M101J, MongoDB for Java Developers
           </i>
            offered by MongoDB Inc. Experience with integrating MongoDB with Java, Perl, and Node.js.
         </li>
         <li
-          class="c7"
+          class="c8"
         >
           Experience with Oracle, PostgreSQL (including the 
           <b
-            class="c8"
+            class="c9"
           >
             PostGIS
           </b>
@@ -429,10 +445,10 @@ exports[`ProfileInfo should render successfully 1`] = `
       </ul>
     </div>
     <div
-      class="c3"
+      class="c4"
     >
       <p
-        class="c4 c5"
+        class="c5 c6"
       >
         <svg
           height="20"
@@ -443,31 +459,31 @@ exports[`ProfileInfo should render successfully 1`] = `
         Others
       </p>
       <ul
-        class="c6"
+        class="c7"
       >
         <li
-          class="c7"
+          class="c8"
         >
           Working environment on Windows, Unix, or Mac.
         </li>
         <li
-          class="c7"
+          class="c8"
         >
           Experience with 
           <b
-            class="c8"
+            class="c9"
           >
             Gitlab Pipelines
           </b>
           , 
           <b
-            class="c8"
+            class="c9"
           >
             Github Actions
           </b>
           , and 
           <b
-            class="c8"
+            class="c9"
           >
             Jenkins
           </b>

@@ -61,7 +61,7 @@ export const StyledCompanyName = styled(Body)`
 `
 
 export const StyledCompanyPeriod = styled(Body)`
-  font-size: 20px;
+  font-size: 16px;
   ${({ theme }) => theme.fontStyles.robotoMono.thin};
 
   ${({ theme }) => theme.media.up.lg} {

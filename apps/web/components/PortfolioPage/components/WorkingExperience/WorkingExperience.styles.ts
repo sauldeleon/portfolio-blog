@@ -4,13 +4,22 @@ import { Heading, Label } from '@sdlgr/typography'
 
 export const StyledCompanyName = styled(Heading)`
   ${({ theme }) => theme.fontStyles.robotoMono.medium};
+  font-size: 20px;
   margin-bottom: 30px;
+
+  ${({ theme }) => theme.media.up.lg} {
+    font-size: 30px;
+  }
 `
 
 export const StyledCompanyPeriod = styled(Label)`
-  font-size: 20px;
+  font-size: 16px;
   margin-bottom: 20px;
   ${({ theme }) => theme.fontStyles.robotoMono.regular};
+
+  ${({ theme }) => theme.media.up.lg} {
+    font-size: 20px;
+  }
 `
 
 export const StyledList = styled.ul`

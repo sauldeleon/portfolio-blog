@@ -1,12 +1,14 @@
 import { VerticalScrollDirection } from 'react-use-is-scrolling'
 import { keyframes, styled } from 'styled-components'
 
+import { Button } from '@sdlgr/button'
+
 export const StyledContent = styled.div`
   margin-top: 60px;
   width: 100%;
   max-width: 1440px;
   padding-left: 1rem;
-  padding-right: 1rem;
+  padding-right: calc(1rem - 16px);
   margin-bottom: 2rem;
   background-color: ${({ theme }) => theme.colors.black};
   display: flex;
@@ -88,12 +90,22 @@ export const StyledActionContainer = styled.div`
   align-items: center;
   flex-direction: row;
   margin-bottom: 50px;
-  padding-left: 1em;
-  padding-right: 1rem;
-  margin-left: -16px;
+  padding-left: calc(1rem - 8px);
+  padding-right: calc(1rem - 8px);
 
   ${({ theme }) => theme.media.up.lg} {
     padding-left: 2rem;
     padding-right: 2rem;
+    margin-left: -16px;
+  }
+`
+
+export const StyledShareButton = styled(Button)`
+  padding: 10px;
+  width: 100%;
+
+  ${({ theme }) => theme.media.up.md} {
+    width: fit-content;
+    padding: 15px 20px;
   }
 `

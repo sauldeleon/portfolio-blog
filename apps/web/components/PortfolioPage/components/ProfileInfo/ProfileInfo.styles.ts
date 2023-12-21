@@ -2,7 +2,13 @@ import { styled } from 'styled-components'
 
 import { Body, Label } from '@sdlgr/typography'
 
-export const StyledSummary = styled(Body)``
+export const StyledSummary = styled(Body)`
+  font-size: 20px;
+
+  ${({ theme }) => theme.media.up.lg} {
+    font-size: 30px;
+  }
+`
 
 export const StyledLabel = styled(Label)`
   margin-top: 40px;
@@ -24,7 +30,11 @@ export const StyledSkillTitle = styled(Body)`
 `
 
 export const StyledList = styled.ul`
-  padding-left: 25px;
+  padding-left: 0px;
+
+  ${({ theme }) => theme.media.up.lg} {
+    padding-left: 25px;
+  }
 `
 
 export const StyledListItem = styled.li`

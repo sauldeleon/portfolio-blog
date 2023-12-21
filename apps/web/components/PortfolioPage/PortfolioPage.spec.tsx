@@ -22,11 +22,6 @@ describe('PortfolioPage', () => {
       get: () => 1400,
     })
     global.scrollTo = jest.fn()
-
-    const writeText = jest.fn()
-    Object.assign(navigator, {
-      clipboard: { writeText },
-    })
   })
 
   it('should render successfully', async () => {
@@ -94,12 +89,39 @@ describe('PortfolioPage', () => {
     expect(watcher).toHaveBeenNthCalledWith(1, 0, 0)
   })
 
-  it('should copy the address url for sharing', async () => {
+  it('should copy the address url for sharing and the share function', async () => {
+    const writeText = jest.fn()
+    const shareFn = jest.fn()
+    Object.assign(navigator, {
+      clipboard: { writeText },
+      share: shareFn,
+    })
+
     renderApp(<PortfolioPage />)
     expect(await screen.findByText('Profile')).toBeInTheDocument()
+
     await userEvent.click(screen.getByText('Share with a friend'))
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
       'http://localhost/',
     )
+    expect(navigator.share).toHaveBeenCalledWith({ url: 'http://localhost/' })
+  })
+
+  it('should copy the address url for sharing but not call share method', async () => {
+    const writeText = jest.fn()
+    Object.assign(navigator, {
+      clipboard: { writeText },
+      share: undefined,
+    })
+
+    renderApp(<PortfolioPage />)
+    expect(await screen.findByText('Profile')).toBeInTheDocument()
+
+    await userEvent.click(screen.getByText('Share with a friend'))
+    expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
+      'http://localhost/',
+    )
+
+    expect(navigator.share).toBeUndefined()
   })
 })
