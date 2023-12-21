@@ -29,7 +29,7 @@ jobs:
       - name: Install
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
           cache: 'yarn'
       - name: Cypress run
         if: steps.vercel_preview_url.outcome == 'success'
