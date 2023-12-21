@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const StyledButton = styled.button`
+export const StyledTextButton = styled.button`
   padding: 0;
   display: flex;
   align-items: center;
@@ -17,4 +17,14 @@ export const StyledButton = styled.button`
   ${({ theme }) => theme.helpers.textBottomBorder.afterShared};
   ${({ theme }) => theme.helpers.textBottomBorder.transform()};
   ${({ theme }) => theme.helpers.focusVisible};
+`
+
+export const StyledContainedButton = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  cursor: pointer;
+  border: 1px solid ${({ theme }) => theme.colors.white};
+  padding: 15px 20px;
 `

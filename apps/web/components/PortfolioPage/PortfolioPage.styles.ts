@@ -80,3 +80,20 @@ export const StyledScrollButton = styled.button<{
   transform: ${({ $scrollingDirection }) =>
     translateHelper($scrollingDirection)};
 `
+
+export const StyledActionContainer = styled.div`
+  max-width: 1440px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin-bottom: 50px;
+  padding-left: 1em;
+  padding-right: 1rem;
+  margin-left: -16px;
+
+  ${({ theme }) => theme.media.up.lg} {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+`

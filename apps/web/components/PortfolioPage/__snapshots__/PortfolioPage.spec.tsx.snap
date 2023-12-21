@@ -1,89 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`PortfolioPage should render successfully 1`] = `
-.c0 {
-  margin-top: 60px;
-  width: 100%;
-  max-width: 1440px;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  margin-bottom: 2rem;
-  background-color: #000000;
+.c38 {
   display: flex;
-  flex-direction: row;
-}
-
-.c1 {
-  display: none;
-  filter: url(#fancy-goo);
-  width: 12px;
-  margin-left: -12px;
-  z-index: 2;
-  background-color: #FBFBFB;
-  opacity: 0;
-  transition: opacity 0.15s ease-out;
-}
-
-.c3 {
-  margin-left: -8px;
-  width: 100%;
-}
-
-.c2 {
-  position: sticky;
-  top: calc(100vh - 100px);
-  margin-bottom: 50px;
-  height: 50px;
-  width: 50px;
-  background-color: #FBFBFB;
-  border-top-right-radius: 50%;
-  border-bottom-right-radius: 50%;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
   cursor: pointer;
-  padding-block: 0;
-  padding-inline: 0;
-  border: none;
-  outline: none;
-  color: #000000;
-  animation-duration: 0.5s;
-  animation-iteration-count: infinite;
-  transition: transform 0.3s ease-in-out;
-  transform: translateY(0px);
-}
-
-.c34 {
-  position: relative;
-  position: relative;
-}
-
-.c34::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 2px;
-  bottom: 0;
-  left: 0;
-  background-color: currentColor;
-}
-
-.c34::after {
-  transform: scaleX(0);
-  transform-origin: bottom right;
-  transition: transform 0.25s ease-out;
-}
-
-.c34:hover::after {
-  transform: scaleX(1);
-  transform-origin: bottom left;
-}
-
-.c34:hover,
-.c34:active,
-.c34:focus {
-  text-decoration: none;
-}
-
-.c34:focus-visible {
-  outline: #FBFBFB auto 1px;
+  border: 1px solid #FBFBFB;
+  padding: 15px 20px;
 }
 
 .c13 {
@@ -165,6 +90,103 @@ exports[`PortfolioPage should render successfully 1`] = `
   font-size: 1rem;
   line-height: normal;
   text-transform: uppercase;
+}
+
+.c0 {
+  margin-top: 60px;
+  width: 100%;
+  max-width: 1440px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-bottom: 2rem;
+  background-color: #000000;
+  display: flex;
+  flex-direction: row;
+}
+
+.c1 {
+  display: none;
+  filter: url(#fancy-goo);
+  width: 12px;
+  margin-left: -12px;
+  z-index: 2;
+  background-color: #FBFBFB;
+  opacity: 0;
+  transition: opacity 0.15s ease-out;
+}
+
+.c3 {
+  margin-left: -8px;
+  width: 100%;
+}
+
+.c2 {
+  position: sticky;
+  top: calc(100vh - 100px);
+  margin-bottom: 50px;
+  height: 50px;
+  width: 50px;
+  background-color: #FBFBFB;
+  border-top-right-radius: 50%;
+  border-bottom-right-radius: 50%;
+  cursor: pointer;
+  padding-block: 0;
+  padding-inline: 0;
+  border: none;
+  outline: none;
+  color: #000000;
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
+  transition: transform 0.3s ease-in-out;
+  transform: translateY(0px);
+}
+
+.c37 {
+  max-width: 1440px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin-bottom: 50px;
+  padding-left: 1em;
+  padding-right: 1rem;
+  margin-left: -16px;
+}
+
+.c34 {
+  position: relative;
+  position: relative;
+}
+
+.c34::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: currentColor;
+}
+
+.c34::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.c34:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c34:hover,
+.c34:active,
+.c34:focus {
+  text-decoration: none;
+}
+
+.c34:focus-visible {
+  outline: #FBFBFB auto 1px;
 }
 
 .c31 {
@@ -382,6 +404,13 @@ exports[`PortfolioPage should render successfully 1`] = `
   .c1 {
     display: block;
     opacity: 0;
+  }
+}
+
+@media (width >= 1024px) {
+  .c37 {
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
 }
 
@@ -1740,6 +1769,25 @@ exports[`PortfolioPage should render successfully 1`] = `
           </div>
         </section>
       </div>
+    </div>
+    <div
+      class="c37"
+    >
+      <button
+        class="c38"
+      >
+        <svg
+          height="40"
+          width="40"
+        >
+          share.svg
+        </svg>
+        <div
+          class="c7"
+        >
+          Share with a friend
+        </div>
+      </button>
     </div>
   </div>
 </body>

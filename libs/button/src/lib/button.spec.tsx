@@ -14,4 +14,9 @@ describe('Button', () => {
     renderWithTheme(<Button>Click me</Button>)
     expect(screen.getByText('Click me')).toBeInTheDocument()
   })
+
+  it('should render variant contained', () => {
+    renderWithTheme(<Button variant="contained">Click me</Button>)
+    expect(screen.getByText('Click me')).toBeInTheDocument()
+  })
 })

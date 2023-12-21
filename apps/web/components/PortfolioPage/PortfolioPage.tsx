@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
 import { useIsScrolling } from 'react-use-is-scrolling'
 
-import { ScrollTop } from '@sdlgr/assets'
+import { ScrollTop, ShareIcon } from '@sdlgr/assets'
+import { Button } from '@sdlgr/button'
+import { Label } from '@sdlgr/typography'
 
 import { useClientTranslation } from '@web/i18n/client'
 
 import {
+  StyledActionContainer,
   StyledContent,
   StyledScrollButton,
   StyledScrollColumn,
@@ -76,6 +79,17 @@ export function PortfolioPage() {
           </PortfolioItem>
         </StyledWrap>
       </StyledContent>
+      <StyledActionContainer>
+        <Button
+          variant="contained"
+          onClick={() => {
+            navigator.clipboard.writeText(document.location.href)
+          }}
+        >
+          <ShareIcon height={40} width={40} />
+          <Label>{t('shareWithAFriend')}</Label>
+        </Button>
+      </StyledActionContainer>
     </>
   )
 }

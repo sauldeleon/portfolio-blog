@@ -6,14 +6,12 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { PortfolioPage } from './PortfolioPage'
 
-jest.mock('react-use-is-scrolling', () => {
-  return {
-    useIsScrolling: jest.fn().mockImplementation(() => ({
-      isScrolling: false,
-      scrollDirectionY: 'none',
-    })),
-  }
-})
+jest.mock('react-use-is-scrolling', () => ({
+  useIsScrolling: jest.fn().mockImplementation(() => ({
+    isScrolling: false,
+    scrollDirectionY: 'none',
+  })),
+}))
 
 describe('PortfolioPage', () => {
   beforeAll(() => {
@@ -24,6 +22,11 @@ describe('PortfolioPage', () => {
       get: () => 1400,
     })
     global.scrollTo = jest.fn()
+
+    const writeText = jest.fn()
+    Object.assign(navigator, {
+      clipboard: { writeText },
+    })
   })
 
   it('should render successfully', async () => {
@@ -89,5 +92,14 @@ describe('PortfolioPage', () => {
 
     expect(watcher).toHaveBeenCalledTimes(1)
     expect(watcher).toHaveBeenNthCalledWith(1, 0, 0)
+  })
+
+  it('should copy the address url for sharing', async () => {
+    renderApp(<PortfolioPage />)
+    expect(await screen.findByText('Profile')).toBeInTheDocument()
+    await userEvent.click(screen.getByText('Share with a friend'))
+    expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
+      'http://localhost/',
+    )
   })
 })
