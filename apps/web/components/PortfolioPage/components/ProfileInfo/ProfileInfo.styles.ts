@@ -16,6 +16,7 @@ export const StyledSkillTitle = styled(Body)`
   font-weight: 500;
   display: flex;
   line-height: 20px;
+  margin-bottom: 10px;
 
   svg {
     margin-right: 10px;
@@ -37,4 +38,15 @@ export const StyledListItem = styled.li`
     vertical-align: middle;
     line-height: 20px;
   }
+`
+
+export const StyledTechnology = styled.b`
+  ${({ theme }) => theme.typography.body.M}
+  font-size: 16px;
+  font-weight: bold;
+`
+
+export const StyledItalic = styled.i`
+  ${({ theme }) => theme.typography.body.M}
+  font-size: 16px;
 `

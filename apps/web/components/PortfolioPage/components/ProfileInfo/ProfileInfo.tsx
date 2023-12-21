@@ -1,3 +1,6 @@
+import { ParseKeys } from 'i18next'
+import { Trans } from 'react-i18next'
+
 import {
   BackendIcon,
   DatabaseIcon,
@@ -9,15 +12,17 @@ import {
 import { useClientTranslation } from '@web/i18n/client'
 
 import {
+  StyledItalic,
   StyledLabel,
   StyledList,
   StyledListItem,
   StyledSkillGroup,
   StyledSkillTitle,
   StyledSummary,
+  StyledTechnology,
 } from './ProfileInfo.styles'
 
-const icons: Record<string, React.ReactElement> = {
+const iconMap: Record<string, React.ReactElement> = {
   frontEnd: <FrontendIcon width={20} height={20} />,
   backEnd: <BackendIcon width={20} height={20} />,
   mobile: <MobileIcon width={20} height={20} />,
@@ -28,21 +33,32 @@ const icons: Record<string, React.ReactElement> = {
 export function ProfileInfo() {
   const { t } = useClientTranslation('portfolioPage')
 
-  const skillSections = t('items.profile.skills.items', { returnObjects: true })
+  const areas = t('items.profile.skillAreas.areas', {
+    returnObjects: true,
+  })
 
   return (
     <>
       <StyledSummary $level="XL">{t('items.profile.summary')}</StyledSummary>
-      <StyledLabel>{t('items.profile.skills.title')}</StyledLabel>
-      {skillSections.map(({ icon, title, items }) => (
+      <StyledLabel>{t('items.profile.skillAreas.title')}</StyledLabel>
+      {areas.map(({ icon, title, skills }) => (
         <StyledSkillGroup key={icon}>
           <StyledSkillTitle>
-            {icons[icon]}
+            {iconMap[icon]}
             {title}
           </StyledSkillTitle>
           <StyledList>
-            {items.map((item) => (
-              <StyledListItem key={item}>{item}</StyledListItem>
+            {skills.map((skill) => (
+              <StyledListItem key={skill}>
+                <Trans
+                  t={t}
+                  i18nKey={skill as ParseKeys<'portfolioPage'>}
+                  components={{
+                    bold: <StyledTechnology />,
+                    italic: <StyledItalic />,
+                  }}
+                />
+              </StyledListItem>
             ))}
           </StyledList>
         </StyledSkillGroup>

@@ -1,0 +1,739 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WorkingExperience should render successfully 1`] = `
+.c0 {
+  font-family: fontFamily;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 1.5rem;
+  line-height: normal;
+  margin: 0;
+}
+
+.c2 {
+  font-family: fontFamily;
+  font-weight: 500;
+  color: #FBFBFB;
+  font-size: 1rem;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.c1 {
+  font-family: fontFamily;
+  font-weight: 500;
+  margin-bottom: 30px;
+}
+
+.c3 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  font-family: fontFamily;
+  font-weight: 400;
+}
+
+.c4 {
+  margin-bottom: 50px;
+}
+
+.c5 {
+  font-size: 16px;
+  text-indent: -20px;
+  padding-left: 20px;
+}
+
+.c5:before {
+  content: '·';
+  font-size: 30px;
+  vertical-align: middle;
+  line-height: 20px;
+}
+
+.c6 {
+  font-family: fontFamily;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+<body>
+  <div>
+    <div>
+      <h1
+        class="c0 c1"
+      >
+        Bonhams
+         - 
+        Front-end React Developer.
+      </h1>
+      <div
+        class="c2 c3"
+      >
+        February 2022
+      </div>
+      <ul
+        class="c4"
+      >
+        <li
+          class="c5"
+        >
+          Part of the team responsible for migrating the legacy website to a cutting-edge 
+          <b
+            class="c6"
+          >
+            Next.JS Typescript
+          </b>
+           application within an 
+          <b
+            class="c6"
+          >
+            NX
+          </b>
+           monorepo. Instrumental in developing a comprehensive Design System from the ground up using 
+          <b
+            class="c6"
+          >
+            Styled Components
+          </b>
+          . Additionally, involved in creating new applications for clients and internal administration, including an 
+          <b
+            class="c6"
+          >
+            EXPO
+          </b>
+           mobile app for iOS and Android.
+        </li>
+        <li
+          class="c5"
+        >
+          Proficiently employed 
+          <b
+            class="c6"
+          >
+            Jest
+          </b>
+           and 
+          <b
+            class="c6"
+          >
+            MSW
+          </b>
+           for thorough unit and integration testing, while utilizing 
+          <b
+            class="c6"
+          >
+            Cypress
+          </b>
+           for end-to-end testing.
+        </li>
+        <li
+          class="c5"
+        >
+          Helped at the implementation of a robust 
+          <b
+            class="c6"
+          >
+            CI/CD
+          </b>
+           pipeline using GitLab for efficient and seamless deployment.
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1
+        class="c0 c1"
+      >
+        Smart Protection
+         - 
+        Front-end React Developer.
+      </h1>
+      <div
+        class="c2 c3"
+      >
+        February 2021 - February 2022
+      </div>
+      <ul
+        class="c4"
+      >
+        <li
+          class="c5"
+        >
+          Responsible for spearheading the development of back-office applications, catering to the internal administrative requirements of the company's business data.
+        </li>
+        <li
+          class="c5"
+        >
+          Initiated the creation of a comprehensive monorepo from the ground up using 
+          <b
+            class="c6"
+          >
+            Yarn Workspaces
+          </b>
+          , ensuring the development of full 
+          <b
+            class="c6"
+          >
+            TypeScript
+          </b>
+           applications.
+        </li>
+        <li
+          class="c5"
+        >
+          Implemented a robust Test-Driven Development (TDD) approach using 
+          <b
+            class="c6"
+          >
+            Jest
+          </b>
+           and 
+          <b
+            class="c6"
+          >
+            React Testing Library
+          </b>
+          .
+        </li>
+        <li
+          class="c5"
+        >
+          Implemented a sophisticated design system, utilizing a customized library of components using 
+          <b
+            class="c6"
+          >
+            Emotion.JS
+          </b>
+           alongside 
+          <b
+            class="c6"
+          >
+            Storybook
+          </b>
+           for comprehensive documentation.
+        </li>
+        <li
+          class="c5"
+        >
+          Established and optimized the frontend pipeline in 
+          <b
+            class="c6"
+          >
+            Jenkins
+          </b>
+          , utilizing parallel optimization for multiple stages.
+        </li>
+        <li
+          class="c5"
+        >
+          Basic knowledge in utilizing Terraform for storing environment variables in AWS.
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1
+        class="c0 c1"
+      >
+        ING
+         - 
+        Front-end Developer.
+      </h1>
+      <div
+        class="c2 c3"
+      >
+        August 2020 - February 2021
+      </div>
+      <ul
+        class="c4"
+      >
+        <li
+          class="c5"
+        >
+          Contributed to an international project, focusing on web development based on WebComponents, specifically 
+          <b
+            class="c6"
+          >
+            LitElement
+          </b>
+          , and 
+          <b
+            class="c6"
+          >
+            Redux
+          </b>
+          , with seamless communication with REST APIs.
+        </li>
+        <li
+          class="c5"
+        >
+          Adopted a Test-Driven Development (TDD) approach using 
+          <b
+            class="c6"
+          >
+            Karma
+          </b>
+           with 
+          <b
+            class="c6"
+          >
+            Mocha
+          </b>
+           for comprehensive unit testing.
+        </li>
+        <li
+          class="c5"
+        >
+          Conducted end-to-end testing using 
+          <b
+            class="c6"
+          >
+            Cucumber
+          </b>
+           and 
+          <b
+            class="c6"
+          >
+            WebdriverIO
+          </b>
+           for thorough functionality testing.
+        </li>
+        <li
+          class="c5"
+        >
+          Possesses a strong background in pairing code review experience, serving as an approver of the main repository to ensure the validation of merges into the master branch.
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1
+        class="c0 c1"
+      >
+        Keytree
+         - 
+        Front-end Developer.
+      </h1>
+      <div
+        class="c2 c3"
+      >
+        October 2017 - August 2020
+      </div>
+      <ul
+        class="c4"
+      >
+        <li
+          class="c5"
+        >
+          Involved in the development of multiple 
+          <b
+            class="c6"
+          >
+            React.JS
+          </b>
+           web applications, utilizing REST services provided by the Gateway service, primarily based on SAP, Java, or Node.js backend services.
+        </li>
+        <li
+          class="c5"
+        >
+          Took on the role of a front-end developer lead for an 
+          <b
+            class="c6"
+          >
+            Angular JS
+          </b>
+           application, responsible for onboarding newcomers and overseeing new developments or maintenance. Additionally, proficient in deploying applications across various environments for multiple clients.
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1
+        class="c0 c1"
+      >
+        Babel S.I
+         - 
+        Full Stack Developer.
+      </h1>
+      <div
+        class="c2 c3"
+      >
+        April 2017 - September 2017
+      </div>
+      <ul
+        class="c4"
+      >
+        <li
+          class="c5"
+        >
+          Contributed to the Mobile Development Center, focusing on the main project, an 
+          <b
+            class="c6"
+          >
+            IONIC
+          </b>
+           app with 
+          <b
+            class="c6"
+          >
+            Angular JS
+          </b>
+          . Involved in the development of an instant messaging system using 
+          <b
+            class="c6"
+          >
+            Socket.io
+          </b>
+           and 
+          <b
+            class="c6"
+          >
+            Node.js
+          </b>
+          . Integrated 
+          <b
+            class="c6"
+          >
+            Spring Boot
+          </b>
+           and multiple REST services.
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1
+        class="c0 c1"
+      >
+        Ioon Technologies
+         - 
+        Scrum Master and Full Stack Developer.
+      </h1>
+      <div
+        class="c2 c3"
+      >
+        January 2016 - April 2017
+      </div>
+      <ul
+        class="c4"
+      >
+        <li
+          class="c5"
+        >
+          Served as the CTO from November 2016 to April 2017. Acted as the Scrum Master of the main I+D+i project, utilizing 
+          <b
+            class="c6"
+          >
+            Java 1.7
+          </b>
+          , 
+          <b
+            class="c6"
+          >
+            Spring 4
+          </b>
+          , 
+          <b
+            class="c6"
+          >
+            GWT 1.7
+          </b>
+          , 
+          <b
+            class="c6"
+          >
+            Hibernate 5
+          </b>
+          , and 
+          <b
+            class="c6"
+          >
+            MySQL 5.6
+          </b>
+          . Implemented 
+          <b
+            class="c6"
+          >
+            IONIC 2
+          </b>
+           and 
+          <b
+            class="c6"
+          >
+            Angular
+          </b>
+           for mobile development.
+        </li>
+        <li
+          class="c5"
+        >
+          Implemented an 
+          <b
+            class="c6"
+          >
+            Arduino
+          </b>
+           monitoring system for real-time information within the application.
+        </li>
+        <li
+          class="c5"
+        >
+          Demonstrated proficiency in utilizing 
+          <b
+            class="c6"
+          >
+            Maven
+          </b>
+          , 
+          <b
+            class="c6"
+          >
+            Sonarqube
+          </b>
+          , and 
+          <b
+            class="c6"
+          >
+            JUnit
+          </b>
+          , along with 
+          <b
+            class="c6"
+          >
+            Mockito
+          </b>
+           for testing and validating clean code.
+        </li>
+        <li
+          class="c5"
+        >
+          Involved in front-end development for various customers, employing 
+          <b
+            class="c6"
+          >
+            CSS3
+          </b>
+          , 
+          <b
+            class="c6"
+          >
+            jQuery
+          </b>
+          , and 
+          <b
+            class="c6"
+          >
+            HTML5
+          </b>
+          .
+        </li>
+        <li
+          class="c5"
+        >
+          Worked as a 
+          <b
+            class="c6"
+          >
+            Java
+          </b>
+           consultant, focusing on back-end developments in PSA Peugeot-Citroën. Involved in incident resolution and new functionalities development, utilizing 
+          <b
+            class="c6"
+          >
+            Spring 3 MVC
+          </b>
+          , 
+          <b
+            class="c6"
+          >
+            Hibernate
+          </b>
+          , 
+          <b
+            class="c6"
+          >
+            Struts 2
+          </b>
+           and DB 
+          <b
+            class="c6"
+          >
+            Oracle
+          </b>
+          .
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1
+        class="c0 c1"
+      >
+        Clarive
+         - 
+        Full Stack Developer.
+      </h1>
+      <div
+        class="c2 c3"
+      >
+        January 2014 - January 2016
+      </div>
+      <ul
+        class="c4"
+      >
+        <li
+          class="c5"
+        >
+          Involved in back-end development using 
+          <b
+            class="c6"
+          >
+            Perl
+          </b>
+           and the Catalyst Framework, alongside various CPAN modules for seamless database integration, including 
+          <b
+            class="c6"
+          >
+            Oracle
+          </b>
+           and 
+          <b
+            class="c6"
+          >
+            MongoDB
+          </b>
+          .
+        </li>
+        <li
+          class="c5"
+        >
+          Utilized the 
+          <b
+            class="c6"
+          >
+            ExtJS
+          </b>
+           Framework for front-end development.
+        </li>
+        <li
+          class="c5"
+        >
+          Integrated SOAP webservices for streamlined communication.
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1
+        class="c0 c1"
+      >
+        idealista.com
+         - 
+        Back-end Developer.
+      </h1>
+      <div
+        class="c2 c3"
+      >
+        September 2013 - December 2013
+      </div>
+      <ul
+        class="c4"
+      >
+        <li
+          class="c5"
+        >
+          Involved in back-end development following an Agile (Scrum) methodology.
+        </li>
+        <li
+          class="c5"
+        >
+          Utilized 
+          <b
+            class="c6"
+          >
+            Spring 3
+          </b>
+           and 
+          <b
+            class="c6"
+          >
+            JPA
+          </b>
+          , incorporating 
+          <b
+            class="c6"
+          >
+            Hibernate
+          </b>
+           with both 
+          <b
+            class="c6"
+          >
+            MongoDB
+          </b>
+           and 
+          <b
+            class="c6"
+          >
+            Oracle
+          </b>
+           databases.
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h1
+        class="c0 c1"
+      >
+        Incita Security
+         - 
+        Security Consultant and Web Developer.
+      </h1>
+      <div
+        class="c2 c3"
+      >
+        November 2012 - September 2013
+      </div>
+      <ul
+        class="c4"
+      >
+        <li
+          class="c5"
+        >
+          Actively involved in SIEM management, utilizing tools such as ArcSight and OSSIM, and proficient in Shell script development.
+        </li>
+        <li
+          class="c5"
+        >
+          Demonstrated proficiency in using 
+          <b
+            class="c6"
+          >
+            Python
+          </b>
+           and PHP 5.3, with 
+          <b
+            class="c6"
+          >
+            MySQL 5.1
+          </b>
+           for robust database management.
+        </li>
+        <li
+          class="c5"
+        >
+          Employed 
+          <b
+            class="c6"
+          >
+            CSS3
+          </b>
+           and 
+          <b
+            class="c6"
+          >
+            JavaScript
+          </b>
+           for efficient and dynamic web development.
+        </li>
+      </ul>
+    </div>
+  </div>
+</body>
+`;

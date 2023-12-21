@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PortfolioHeading should render correctly 1`] = `
+.c1 {
+  font-family: fontFamily;
+  font-weight: 500;
+  color: #FBFBFB;
+  font-size: 1rem;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.c0 {
+  position: relative;
+  border: 3px solid #FBFBFB;
+  border-bottom: none;
+  padding: 1rem;
+  width: 100%;
+  min-height: 700px;
+  display: flex;
+  flex-direction: column;
+}
+
+.c0:last-child {
+  border-bottom: 3px solid #FBFBFB;
+}
+
+.c2 {
+  max-width: 900px;
+  padding: 0px 20px;
+}
+
+@media (width >= 1024px) {
+  .c0 {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 3rem;
+  }
+}
+
+<body>
+  <div>
+    <section
+      class="c0"
+    >
+      <div
+        class="c1"
+      >
+        title
+      </div>
+      <div
+        class="c2"
+      >
+        text
+      </div>
+    </section>
+  </div>
+</body>
+`;

@@ -5,39 +5,104 @@
     "profile": {
       "title": "Perfil",
       "summary": "Ingeniero de software con experimentado en transformar código complejo en soluciones digitales refinadas y efectivas. Con una atención especial a los detalles, me focalizo en crear software que no solo cumple con los requisitos funcionales, sino que también prioriza una experiencia de usuario fluida.",
-      "skills": {
+      "skillAreas": {
         "title": "Skills",
-        "items": [
+        "areas": [
           {
             "title": "Front End",
             "icon": "frontEnd",
-            "items": ["1", "2", "3"]
+            "skills": [
+              "SPA utilizando <bold>React 18</bold> y <bold>yarn</bold> como principal gestor de paquetes.",
+              "SSR utilizando <bold>Next.JS 14</bold> con experiencia tanto el nuevo sistema de layout como el legacy.",
+              "Testing: Principalmente usando <bold>jest</bold> para unit testing. <bold>e2e</bold> testing utilizando Cypress.",
+              "Documentación de componentes, sistemas de diseño y aplicaciones con <bold>Storybook</bold>.",
+              "Uso de librerías CSS-in-JS como <bold>Emotion</bold> o <bold>Styled-Components</bold>.",
+              "Preferencia de proyectos en <bold>Typescript</bold>.",
+              "Experiencia con <bold>monorepos</bold> (lerna, NX, yarn workspaces...)."
+            ]
           },
           {
             "title": "Back End",
             "icon": "backEnd",
-            "items": ["1", "2", "3"]
+            "skills": [
+              "Aplicaciones <bold>REST</bold> node.js utilizando <bold>express</bold> y <bold>bottle.js</bold> para inyección de dependencias. <bold>Sequelize</bold> y <bold>monoogose</bold> para integración con diferentes bases de datos.",
+              "Experiencia de desarrollo Java con <bold>Spring Framework</bold> (Boot, Core, Security, MVC). Uso de <bold>Hibernate</bold> para integración con Oracle, MySQL, Mongodb... Experiencia con Apache Tiles y JMX, integraciones con <bold>kafka</bold>.",
+              "Desarrollo de applicaciones Perl utilizando <bold>Catalyst</bold> como principal framework MVC."
+            ]
           },
           {
             "title": "Mobile Apps",
             "icon": "mobile",
-            "items": ["1", "2", "3"]
+            "skills": [
+              "Experiencia con <bold>EXPO</bold> sobre <bold>React Native</bold> para desarrollar aplicaciones nativas iOS y Android.",
+              "Conocimiento básico de <bold>IONIC</bold> y <bold>cordova</bold> para desarollo de aplicaciones web-in-app."
+            ]
           },
           {
             "title": "Bases de datos",
             "icon": "database",
-            "items": ["1", "2", "3"]
+            "skills": [
+              "Curso <italic>M101J, MongoDB for Java Developers</italic> impartido por MongoDB Inc. Experiencia de integración de MongoDB con Java, Perl y Node.js.",
+              "Experiencia con Oracle, PostgreSQL(incluyendo el módulo <bold>PostGIS</bold>) y MySQL en Java, Perl y Node.js."
+            ]
           },
           {
             "title": "Otros",
             "icon": "other",
-            "items": ["1", "2", "3"]
+            "skills": [
+              "Entorno de trabajo en Windows, Unix o Mac.",
+              "Experiencia con <bold>Gitlab Pipelines</bold>, <bold>Github Actions</bold> y <bold>Jenkins</bold> para <bold>CI/CD</bold>."
+            ]
           }
         ]
       }
     },
     "workingExperience": "Experiencia profesional",
-    "other": "Otros"
+    "other": {
+      "title": "Otros",
+      "otherAreas": [
+        {
+          "name": "Proyecto de fin de carrera.",
+          "highlights": [
+            "Desarrollo de una herramienta de apoyo para estudiantes relacionada con Estructuras de Datos para la verificación y derivación de algoritmos iterativos utilizando tableaux semánticos con una interfaz gráfica en Java.",
+            "Este trabajo obtuvo dos <link>publicaciones académicas</link>."
+          ]
+        },
+        {
+          "name": "Actividades colaborativas con el <italic>Departamento de Sistemas Informáticos y Computación</italic> (DSIC) de la Facultad de Informática de la Universidad Complutense de Madrid.",
+          "beginYear": "2011",
+          "endYear": "2012",
+          "highlights": [
+            "Mantenimiento del Área Virtual actualizando la base de datos con información relativa a clases y publicaciones.",
+            "Desarrollo de una aplicación para el conteo de alumnos que asisten a las clases para la obtención de estadísticas."
+          ]
+        },
+        {
+          "name": "Este portfolio.",
+          "beginYear": "2022",
+          "endYear": "Hasta que me defenestre",
+          "highlights": [
+            "Comprobar el link \"Acerca de\" en el pie de página de esta página web."
+          ]
+        },
+        {
+          "name": "Profesor de academia MATHS.",
+          "beginYear": "2009",
+          "endYear": "2013",
+          "highlights": [
+            "Clases de 1º y 2º de Ingeniería en Informática de Java and POO."
+          ]
+        },
+        {
+          "name": "Tutor.",
+          "beginYear": "2004",
+          "endYear": "2016",
+          "highlights": [
+            "Profesor particular de alumnos de colegio e instituto de matemáticas, física y química. Buena capacidad de enseñanza."
+          ]
+        }
+      ]
+    }
   },
   "profilePicture": "Mi foto de perfil",
   "basedIn": "Localizado en Madrid, España",

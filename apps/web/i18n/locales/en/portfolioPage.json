@@ -5,39 +5,104 @@
     "profile": {
       "title": "Profile",
       "summary": "Seasoned Software Engineer adept at transforming complex code into refined and effective digital solutions. With a keen eye for detail, I specialize in creating software that not only meets functional requirements but also prioritizes a seamless user experience.",
-      "skills": {
+      "skillAreas": {
         "title": "Skills",
-        "items": [
+        "areas": [
           {
             "title": "Front End",
             "icon": "frontEnd",
-            "items": ["1", "2", "3"]
+            "skills": [
+              "SPA using <bold>React 18</bold> and <bold>yarn</bold> as the main package manager.",
+              "SSR using <bold>Next.JS 14</bold> with experience in both the new layout system and the legacy system.",
+              "Testing: Primarily using <bold>Jest</bold> for unit testing. <bold>Cypress</bold> for e2e testing",
+              "Usage of </bold>Storybook</bold> for documenting components, design systems and applications",
+              "Use of CSS-in-JS libraries such as <bold>Emotion</bold> or <bold>Styled-Components</bold>.",
+              "Preference for projects in <bold>Typescript</bold>.",
+              "Experience with <bold>monorepos</bold> (lerna, NX, yarn workspaces...)."
+            ]
           },
           {
             "title": "Back End",
             "icon": "backEnd",
-            "items": ["1", "2", "3"]
+            "skills": [
+              "<bold>REST</bold> applications in node.js using <bold>express</bold> and <bold>bottle.js</bold> for dependency injection. <bold>Sequelize</bold> and <bold>mongoose</bold> for integration with different databases.",
+              "Java development experience with <bold>Spring Framework</bold> (Boot, Core, Security, MVC). Use of <bold>Hibernate</bold> for integration with Oracle, MySQL, MongoDB... Experience with Apache Tiles and JMX, integrations with <bold>Kafka</bold>.",
+              "Development of <bold>Perl</bold> applications using <bold>Catalyst</bold> as the main MVC framework."
+            ]
           },
           {
             "title": "Mobile Apps",
             "icon": "mobile",
-            "items": ["1", "2", "3"]
+            "skills": [
+              "Experience with <bold>EXPO</bold> over <bold>React Native</bold> for developing native applications.",
+              "Basic knowledge of <bold>IONIC</bold> and <bold>Cordova</bold> for web-in-app development."
+            ]
           },
           {
-            "title": "Database",
+            "title": "Databases",
             "icon": "database",
-            "items": ["1", "2", "3"]
+            "skills": [
+              "Course <italic>M101J, MongoDB for Java Developers</italic> offered by MongoDB Inc. Experience with integrating MongoDB with Java, Perl, and Node.js.",
+              "Experience with Oracle, PostgreSQL (including the <bold>PostGIS</bold> module), and MySQL in Java, Perl, and Node.js."
+            ]
           },
           {
-            "title": "Other",
+            "title": "Others",
             "icon": "other",
-            "items": ["1", "2", "3"]
+            "skills": [
+              "Working environment on Windows, Unix, or Mac.",
+              "Experience with <bold>Gitlab Pipelines</bold>, <bold>Github Actions</bold>, and <bold>Jenkins</bold> for CI/CD."
+            ]
           }
         ]
       }
     },
     "workingExperience": "Working Experience",
-    "other": "Other"
+    "other": {
+      "title": "Other",
+      "otherAreas": [
+        {
+          "name": "Bachelor thesis",
+          "highlights": [
+            "Development of a support tool for students related to Data Structures for the verification and derivation of iterative algorithms using semantic tableaux with a graphical interface in Java.",
+            "This work resulted in two <linkComponent>papers</linkComponent>."
+          ]
+        },
+        {
+          "name": "Collaborative activities with the <italic>Departamento de Sistemas Informáticos y Computación</italic> (DSIC) at the Facultad de Informática at the Universidad Complutense of Madrid.",
+          "beginYear": "2011",
+          "endYear": "2012",
+          "highlights": [
+            "Maintenance of the Virtual Area by updating the database with information related to classes and publications.",
+            "Development of an application for counting students attending classes for obtaining statistics."
+          ]
+        },
+        {
+          "name": "This Portfolio.",
+          "beginYear": "2022",
+          "endYear": "Until I throw it out the window",
+          "highlights": [
+            "Check the 'About' link in the footer of this website."
+          ]
+        },
+        {
+          "name": "MATHS Academy Teacher.",
+          "beginYear": "2009",
+          "endYear": "2013",
+          "highlights": [
+            "Taught 1st and 2nd-year Computer Engineering classes in Java and OOP."
+          ]
+        },
+        {
+          "name": "Tutor.",
+          "beginYear": "2004",
+          "endYear": "2016",
+          "highlights": [
+            "Private tutor for school and high school students in mathematics, physics, and chemistry. Strong teaching abilities."
+          ]
+        }
+      ]
+    }
   },
   "profilePicture": "My profile picture",
   "basedIn": "Based in Madrid, Spain",

@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import { VerticalScrollDirection } from 'react-use-is-scrolling'
 import { keyframes, styled } from 'styled-components'
 
 export const StyledContent = styled.div`
@@ -43,9 +43,19 @@ const gelatineY = keyframes`
   50% { scale: 1 1.1; }
 `
 
+const translateHelper = ($scrollingDirection: VerticalScrollDirection) => {
+  const scrollMapper: Record<VerticalScrollDirection, number> = {
+    down: -40,
+    up: 40,
+    none: 0,
+  }
+
+  return `translateY(${scrollMapper[$scrollingDirection]}px)`
+}
+
 export const StyledScrollButton = styled.button<{
   $isScrolling: boolean
-  $scrollingDirection: 'up' | 'down' | 'none'
+  $scrollingDirection: VerticalScrollDirection
 }>`
   position: sticky;
   top: calc(100vh - 100px);
@@ -67,13 +77,6 @@ export const StyledScrollButton = styled.button<{
   animation-iteration-count: infinite;
 
   transition: transform 0.3s ease-in-out;
-  transform: ${({ $scrollingDirection }) => {
-    let translateYValue = 0
-    if ($scrollingDirection === 'down') {
-      translateYValue = -40
-    } else if ($scrollingDirection === 'up') {
-      translateYValue = 40
-    }
-    return `translateY(${translateYValue}px)`
-  }};
+  transform: ${({ $scrollingDirection }) =>
+    translateHelper($scrollingDirection)};
 `

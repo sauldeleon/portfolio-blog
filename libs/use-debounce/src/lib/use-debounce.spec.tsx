@@ -28,7 +28,7 @@ describe('useDebounce', function () {
     const debouncedValue = screen.getByTestId('debouncedValue')
     const value = screen.getByTestId('value')
 
-    const incrementAndPassTime = (passedTime: number) => {
+    const incrementAndPassTime = async (passedTime: number) => {
       userEvent.click(incrementButton)
       jest.advanceTimersByTime(passedTime)
     }

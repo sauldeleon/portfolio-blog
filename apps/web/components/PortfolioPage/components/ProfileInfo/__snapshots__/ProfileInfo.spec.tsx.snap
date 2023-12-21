@@ -1,0 +1,480 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProfileInfo should render successfully 1`] = `
+.c0 {
+  font-family: fontFamily;
+  font-weight: 500;
+  color: #FBFBFB;
+  font-size: 1.5rem;
+  line-height: normal;
+  white-space: pre-line;
+}
+
+.c0 ul,
+.c0 ol {
+  margin-left: 40px;
+  margin-bottom: 10px;
+}
+
+.c0 ul {
+  list-style: outside disc;
+}
+
+.c0 ol {
+  list-style: decimal;
+}
+
+.c0 li {
+  padding-left: 10px;
+}
+
+.c4 {
+  font-family: fontFamily;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  white-space: pre-line;
+}
+
+.c4 ul,
+.c4 ol {
+  margin-left: 40px;
+  margin-bottom: 10px;
+}
+
+.c4 ul {
+  list-style: outside disc;
+}
+
+.c4 ol {
+  list-style: decimal;
+}
+
+.c4 li {
+  padding-left: 10px;
+}
+
+.c1 {
+  font-family: fontFamily;
+  font-weight: 500;
+  color: #FBFBFB;
+  font-size: 1rem;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.c2 {
+  margin-top: 40px;
+}
+
+.c3 {
+  margin-top: 20px;
+}
+
+.c5 {
+  font-weight: 500;
+  display: flex;
+  line-height: 20px;
+  margin-bottom: 10px;
+}
+
+.c5 svg {
+  margin-right: 10px;
+}
+
+.c6 {
+  padding-left: 25px;
+}
+
+.c7 {
+  font-size: 16px;
+  text-indent: -20px;
+  padding-left: 20px;
+}
+
+.c7:before {
+  content: '·';
+  font-size: 30px;
+  vertical-align: middle;
+  line-height: 20px;
+}
+
+.c8 {
+  font-family: fontFamily;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.c9 {
+  font-family: fontFamily;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-size: 16px;
+}
+
+<body>
+  <div>
+    <p
+      class="c0"
+    >
+      Seasoned Software Engineer adept at transforming complex code into refined and effective digital solutions. With a keen eye for detail, I specialize in creating software that not only meets functional requirements but also prioritizes a seamless user experience.
+    </p>
+    <div
+      class="c1 c2"
+    >
+      Skills
+    </div>
+    <div
+      class="c3"
+    >
+      <p
+        class="c4 c5"
+      >
+        <svg
+          height="20"
+          width="20"
+        >
+          frontEnd.svg
+        </svg>
+        Front End
+      </p>
+      <ul
+        class="c6"
+      >
+        <li
+          class="c7"
+        >
+          SPA using 
+          <b
+            class="c8"
+          >
+            React 18
+          </b>
+           and 
+          <b
+            class="c8"
+          >
+            yarn
+          </b>
+           as the main package manager.
+        </li>
+        <li
+          class="c7"
+        >
+          SSR using 
+          <b
+            class="c8"
+          >
+            Next.JS 14
+          </b>
+           with experience in both the new layout system and the legacy system.
+        </li>
+        <li
+          class="c7"
+        >
+          Testing: Primarily using 
+          <b
+            class="c8"
+          >
+            Jest
+          </b>
+           for unit testing. 
+          <b
+            class="c8"
+          >
+            Cypress
+          </b>
+           for e2e testing
+        </li>
+        <li
+          class="c7"
+        >
+          Usage of 
+          Storybook
+           for documenting components, design systems and applications
+        </li>
+        <li
+          class="c7"
+        >
+          Use of CSS-in-JS libraries such as 
+          <b
+            class="c8"
+          >
+            Emotion
+          </b>
+           or 
+          <b
+            class="c8"
+          >
+            Styled-Components
+          </b>
+          .
+        </li>
+        <li
+          class="c7"
+        >
+          Preference for projects in 
+          <b
+            class="c8"
+          >
+            Typescript
+          </b>
+          .
+        </li>
+        <li
+          class="c7"
+        >
+          Experience with 
+          <b
+            class="c8"
+          >
+            monorepos
+          </b>
+           (lerna, NX, yarn workspaces...).
+        </li>
+      </ul>
+    </div>
+    <div
+      class="c3"
+    >
+      <p
+        class="c4 c5"
+      >
+        <svg
+          height="20"
+          width="20"
+        >
+          backEnd.svg
+        </svg>
+        Back End
+      </p>
+      <ul
+        class="c6"
+      >
+        <li
+          class="c7"
+        >
+          <b
+            class="c8"
+          >
+            REST
+          </b>
+           applications in node.js using 
+          <b
+            class="c8"
+          >
+            express
+          </b>
+           and 
+          <b
+            class="c8"
+          >
+            bottle.js
+          </b>
+           for dependency injection. 
+          <b
+            class="c8"
+          >
+            Sequelize
+          </b>
+           and 
+          <b
+            class="c8"
+          >
+            mongoose
+          </b>
+           for integration with different databases.
+        </li>
+        <li
+          class="c7"
+        >
+          Java development experience with 
+          <b
+            class="c8"
+          >
+            Spring Framework
+          </b>
+           (Boot, Core, Security, MVC). Use of 
+          <b
+            class="c8"
+          >
+            Hibernate
+          </b>
+           for integration with Oracle, MySQL, MongoDB... Experience with Apache Tiles and JMX, integrations with 
+          <b
+            class="c8"
+          >
+            Kafka
+          </b>
+          .
+        </li>
+        <li
+          class="c7"
+        >
+          Development of 
+          <b
+            class="c8"
+          >
+            Perl
+          </b>
+           applications using 
+          <b
+            class="c8"
+          >
+            Catalyst
+          </b>
+           as the main MVC framework.
+        </li>
+      </ul>
+    </div>
+    <div
+      class="c3"
+    >
+      <p
+        class="c4 c5"
+      >
+        <svg
+          height="20"
+          width="20"
+        >
+          mobile.svg
+        </svg>
+        Mobile Apps
+      </p>
+      <ul
+        class="c6"
+      >
+        <li
+          class="c7"
+        >
+          Experience with 
+          <b
+            class="c8"
+          >
+            EXPO
+          </b>
+           over 
+          <b
+            class="c8"
+          >
+            React Native
+          </b>
+           for developing native applications.
+        </li>
+        <li
+          class="c7"
+        >
+          Basic knowledge of 
+          <b
+            class="c8"
+          >
+            IONIC
+          </b>
+           and 
+          <b
+            class="c8"
+          >
+            Cordova
+          </b>
+           for web-in-app development.
+        </li>
+      </ul>
+    </div>
+    <div
+      class="c3"
+    >
+      <p
+        class="c4 c5"
+      >
+        <svg
+          height="20"
+          width="20"
+        >
+          database.svg
+        </svg>
+        Databases
+      </p>
+      <ul
+        class="c6"
+      >
+        <li
+          class="c7"
+        >
+          Course 
+          <i
+            class="c9"
+          >
+            M101J, MongoDB for Java Developers
+          </i>
+           offered by MongoDB Inc. Experience with integrating MongoDB with Java, Perl, and Node.js.
+        </li>
+        <li
+          class="c7"
+        >
+          Experience with Oracle, PostgreSQL (including the 
+          <b
+            class="c8"
+          >
+            PostGIS
+          </b>
+           module), and MySQL in Java, Perl, and Node.js.
+        </li>
+      </ul>
+    </div>
+    <div
+      class="c3"
+    >
+      <p
+        class="c4 c5"
+      >
+        <svg
+          height="20"
+          width="20"
+        >
+          file.svg
+        </svg>
+        Others
+      </p>
+      <ul
+        class="c6"
+      >
+        <li
+          class="c7"
+        >
+          Working environment on Windows, Unix, or Mac.
+        </li>
+        <li
+          class="c7"
+        >
+          Experience with 
+          <b
+            class="c8"
+          >
+            Gitlab Pipelines
+          </b>
+          , 
+          <b
+            class="c8"
+          >
+            Github Actions
+          </b>
+          , and 
+          <b
+            class="c8"
+          >
+            Jenkins
+          </b>
+           for CI/CD.
+        </li>
+      </ul>
+    </div>
+  </div>
+</body>
+`;

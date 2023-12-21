@@ -1,0 +1,1746 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PortfolioPage should render successfully 1`] = `
+.c0 {
+  margin-top: 60px;
+  width: 100%;
+  max-width: 1440px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-bottom: 2rem;
+  background-color: #000000;
+  display: flex;
+  flex-direction: row;
+}
+
+.c1 {
+  display: none;
+  filter: url(#fancy-goo);
+  width: 12px;
+  margin-left: -12px;
+  z-index: 2;
+  background-color: #FBFBFB;
+  opacity: 0;
+  transition: opacity 0.15s ease-out;
+}
+
+.c3 {
+  margin-left: -8px;
+  width: 100%;
+}
+
+.c2 {
+  position: sticky;
+  top: calc(100vh - 100px);
+  margin-bottom: 50px;
+  height: 50px;
+  width: 50px;
+  background-color: #FBFBFB;
+  border-top-right-radius: 50%;
+  border-bottom-right-radius: 50%;
+  cursor: pointer;
+  padding-block: 0;
+  padding-inline: 0;
+  border: none;
+  outline: none;
+  color: #000000;
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
+  transition: transform 0.3s ease-in-out;
+  transform: translateY(0px);
+}
+
+.c34 {
+  position: relative;
+  position: relative;
+}
+
+.c34::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: currentColor;
+}
+
+.c34::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.c34:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.c34:hover,
+.c34:active,
+.c34:focus {
+  text-decoration: none;
+}
+
+.c34:focus-visible {
+  outline: #FBFBFB auto 1px;
+}
+
+.c13 {
+  font-family: fontFamily;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 3rem;
+  line-height: normal;
+  margin: 0;
+}
+
+.c25 {
+  font-family: fontFamily;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 1.5rem;
+  line-height: normal;
+  margin: 0;
+}
+
+.c10 {
+  font-family: fontFamily;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  white-space: pre-line;
+}
+
+.c10 ul,
+.c10 ol {
+  margin-left: 40px;
+  margin-bottom: 10px;
+}
+
+.c10 ul {
+  list-style: outside disc;
+}
+
+.c10 ol {
+  list-style: decimal;
+}
+
+.c10 li {
+  padding-left: 10px;
+}
+
+.c17 {
+  font-family: fontFamily;
+  font-weight: 500;
+  color: #FBFBFB;
+  font-size: 1.5rem;
+  line-height: normal;
+  white-space: pre-line;
+}
+
+.c17 ul,
+.c17 ol {
+  margin-left: 40px;
+  margin-bottom: 10px;
+}
+
+.c17 ul {
+  list-style: outside disc;
+}
+
+.c17 ol {
+  list-style: decimal;
+}
+
+.c17 li {
+  padding-left: 10px;
+}
+
+.c7 {
+  font-family: fontFamily;
+  font-weight: 500;
+  color: #FBFBFB;
+  font-size: 1rem;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.c31 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  font-family: fontFamily;
+  font-weight: 400;
+}
+
+.c32 {
+  margin-bottom: 50px;
+}
+
+.c33 {
+  font-size: 16px;
+  text-indent: -20px;
+  padding-left: 20px;
+}
+
+.c33:before {
+  content: '·';
+  font-size: 30px;
+  vertical-align: middle;
+  line-height: 20px;
+}
+
+.c36 {
+  font-family: fontFamily;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+}
+
+.c35 {
+  font-weight: bold;
+}
+
+.c4 {
+  border: 3px solid #FBFBFB;
+  border-bottom: none;
+  padding: 1rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.c5 {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.c8 {
+  font-size: 16px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.c6 {
+  flex-direction: column-reverse;
+  font-size: 16px;
+}
+
+.c9 {
+  text-transform: uppercase;
+  margin-bottom: 30px;
+  width: 100%;
+  text-align: right;
+}
+
+.c11 {
+  font-size: 16px;
+}
+
+.c12 {
+  overflow: hidden;
+  border-radius: 50%;
+  width: 60px;
+  min-width: 60px;
+  height: 60px;
+}
+
+.c14 {
+  margin-top: 25px;
+  margin-left: 20px;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.c15 {
+  position: relative;
+  border: 3px solid #FBFBFB;
+  border-bottom: none;
+  padding: 1rem;
+  width: 100%;
+  min-height: 700px;
+  display: flex;
+  flex-direction: column;
+}
+
+.c15:last-child {
+  border-bottom: 3px solid #FBFBFB;
+}
+
+.c16 {
+  max-width: 900px;
+  padding: 0px 20px;
+}
+
+.c18 {
+  margin-top: 40px;
+}
+
+.c19 {
+  margin-top: 20px;
+}
+
+.c20 {
+  font-weight: 500;
+  display: flex;
+  line-height: 20px;
+  margin-bottom: 10px;
+}
+
+.c20 svg {
+  margin-right: 10px;
+}
+
+.c21 {
+  padding-left: 25px;
+}
+
+.c22 {
+  font-size: 16px;
+  text-indent: -20px;
+  padding-left: 20px;
+}
+
+.c22:before {
+  content: '·';
+  font-size: 30px;
+  vertical-align: middle;
+  line-height: 20px;
+}
+
+.c23 {
+  font-family: fontFamily;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.c24 {
+  font-family: fontFamily;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-size: 16px;
+}
+
+.c26 {
+  font-family: fontFamily;
+  font-weight: 500;
+  margin-bottom: 30px;
+}
+
+.c27 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  font-family: fontFamily;
+  font-weight: 400;
+}
+
+.c28 {
+  margin-bottom: 50px;
+}
+
+.c29 {
+  font-size: 16px;
+  text-indent: -20px;
+  padding-left: 20px;
+}
+
+.c29:before {
+  content: '·';
+  font-size: 30px;
+  vertical-align: middle;
+  line-height: 20px;
+}
+
+.c30 {
+  font-family: fontFamily;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+@media (width >= 1024px) {
+  .c0 {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (width >= 768px) {
+  .c1 {
+    display: block;
+    opacity: 0;
+  }
+}
+
+@media (width >= 1024px) {
+  .c4 {
+    padding: 3rem;
+  }
+}
+
+@media (width >= 768px) {
+  .c8 {
+    font-size: 20px;
+  }
+}
+
+@media (width >= 768px) {
+  .c6 {
+    flex-direction: row;
+    font-size: 20px;
+  }
+}
+
+@media (width >= 768px) {
+  .c9 {
+    margin-bottom: 50px;
+  }
+}
+
+@media (width >= 1024px) {
+  .c11 {
+    font-size: 20px;
+  }
+}
+
+@media (width >= 768px) {
+  .c12 {
+    width: 180px;
+    min-width: 180px;
+    height: 180px;
+  }
+}
+
+@media (width >= 1024px) {
+  .c12 {
+    width: 310px;
+    min-width: 310px;
+    height: 310px;
+  }
+}
+
+@media (width >= 768px) {
+  .c14 {
+    margin-top: 40px;
+    margin-top: 100px;
+    margin-left: 40px;
+    font-size: 3rem;
+    font-weight: 500;
+  }
+}
+
+@media (width >= 1024px) {
+  .c14 {
+    margin-top: 160px;
+    margin-left: 80px;
+    font-size: 4rem;
+    font-weight: 500;
+  }
+}
+
+@media (width >= 1024px) {
+  .c15 {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 3rem;
+  }
+}
+
+<body>
+  <div>
+    <svg
+      style="display: none;"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <defs>
+        <filter
+          id="fancy-goo"
+        >
+          <fegaussianblur
+            in="SourceGraphic"
+            result="blur"
+            stdDeviation="5"
+          />
+          <fecolormatrix
+            in="blur"
+            result="goo"
+            type="matrix"
+            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -14"
+          />
+          <fecomposite
+            in="SourceGraphic"
+            in2="goo"
+            operator="atop"
+          />
+        </filter>
+      </defs>
+    </svg>
+    <div
+      class="c0"
+    >
+      <div
+        class="c1"
+        data-testid="scrollColumn"
+      >
+        <button
+          class="c2"
+          data-testid="scrollToTop"
+        >
+          <svg
+            height="18"
+          >
+            scrollTop.svg
+          </svg>
+        </button>
+      </div>
+      <div
+        class="c3"
+      >
+        <section
+          class="c4"
+        >
+          <div
+            class="c5 c6"
+          >
+            <div
+              class="c7 c8"
+            >
+              Software engineer
+            </div>
+            <div
+              class="c9"
+            >
+              <p
+                class="c10 c11"
+              >
+                Based in Madrid, Spain
+              </p>
+              <p
+                class="c10 c11"
+              >
+                sauldeleonguerrero@gmail.com
+              </p>
+            </div>
+          </div>
+          <div
+            class="c5"
+          >
+            <img
+              alt="My profile picture"
+              class="c12"
+              data-nimg="1"
+              decoding="async"
+              height="310"
+              loading="lazy"
+              src="/_next/image?url=%2Fassets%2Fportrait-4.png&w=640&q=75"
+              srcset="/_next/image?url=%2Fassets%2Fportrait-4.png&w=384&q=75 1x, /_next/image?url=%2Fassets%2Fportrait-4.png&w=640&q=75 2x"
+              style="color: transparent;"
+              width="310"
+            />
+            <h1
+              class="c13 c14"
+            >
+              Saúl de León Guerrero
+            </h1>
+          </div>
+        </section>
+        <section
+          class="c15"
+        >
+          <div
+            class="c7"
+          >
+            Profile
+          </div>
+          <div
+            class="c16"
+          >
+            <p
+              class="c17"
+            >
+              Seasoned Software Engineer adept at transforming complex code into refined and effective digital solutions. With a keen eye for detail, I specialize in creating software that not only meets functional requirements but also prioritizes a seamless user experience.
+            </p>
+            <div
+              class="c7 c18"
+            >
+              Skills
+            </div>
+            <div
+              class="c19"
+            >
+              <p
+                class="c10 c20"
+              >
+                <svg
+                  height="20"
+                  width="20"
+                >
+                  frontEnd.svg
+                </svg>
+                Front End
+              </p>
+              <ul
+                class="c21"
+              >
+                <li
+                  class="c22"
+                >
+                  SPA using 
+                  <b
+                    class="c23"
+                  >
+                    React 18
+                  </b>
+                   and 
+                  <b
+                    class="c23"
+                  >
+                    yarn
+                  </b>
+                   as the main package manager.
+                </li>
+                <li
+                  class="c22"
+                >
+                  SSR using 
+                  <b
+                    class="c23"
+                  >
+                    Next.JS 14
+                  </b>
+                   with experience in both the new layout system and the legacy system.
+                </li>
+                <li
+                  class="c22"
+                >
+                  Testing: Primarily using 
+                  <b
+                    class="c23"
+                  >
+                    Jest
+                  </b>
+                   for unit testing. 
+                  <b
+                    class="c23"
+                  >
+                    Cypress
+                  </b>
+                   for e2e testing
+                </li>
+                <li
+                  class="c22"
+                >
+                  Usage of 
+                  Storybook
+                   for documenting components, design systems and applications
+                </li>
+                <li
+                  class="c22"
+                >
+                  Use of CSS-in-JS libraries such as 
+                  <b
+                    class="c23"
+                  >
+                    Emotion
+                  </b>
+                   or 
+                  <b
+                    class="c23"
+                  >
+                    Styled-Components
+                  </b>
+                  .
+                </li>
+                <li
+                  class="c22"
+                >
+                  Preference for projects in 
+                  <b
+                    class="c23"
+                  >
+                    Typescript
+                  </b>
+                  .
+                </li>
+                <li
+                  class="c22"
+                >
+                  Experience with 
+                  <b
+                    class="c23"
+                  >
+                    monorepos
+                  </b>
+                   (lerna, NX, yarn workspaces...).
+                </li>
+              </ul>
+            </div>
+            <div
+              class="c19"
+            >
+              <p
+                class="c10 c20"
+              >
+                <svg
+                  height="20"
+                  width="20"
+                >
+                  backEnd.svg
+                </svg>
+                Back End
+              </p>
+              <ul
+                class="c21"
+              >
+                <li
+                  class="c22"
+                >
+                  <b
+                    class="c23"
+                  >
+                    REST
+                  </b>
+                   applications in node.js using 
+                  <b
+                    class="c23"
+                  >
+                    express
+                  </b>
+                   and 
+                  <b
+                    class="c23"
+                  >
+                    bottle.js
+                  </b>
+                   for dependency injection. 
+                  <b
+                    class="c23"
+                  >
+                    Sequelize
+                  </b>
+                   and 
+                  <b
+                    class="c23"
+                  >
+                    mongoose
+                  </b>
+                   for integration with different databases.
+                </li>
+                <li
+                  class="c22"
+                >
+                  Java development experience with 
+                  <b
+                    class="c23"
+                  >
+                    Spring Framework
+                  </b>
+                   (Boot, Core, Security, MVC). Use of 
+                  <b
+                    class="c23"
+                  >
+                    Hibernate
+                  </b>
+                   for integration with Oracle, MySQL, MongoDB... Experience with Apache Tiles and JMX, integrations with 
+                  <b
+                    class="c23"
+                  >
+                    Kafka
+                  </b>
+                  .
+                </li>
+                <li
+                  class="c22"
+                >
+                  Development of 
+                  <b
+                    class="c23"
+                  >
+                    Perl
+                  </b>
+                   applications using 
+                  <b
+                    class="c23"
+                  >
+                    Catalyst
+                  </b>
+                   as the main MVC framework.
+                </li>
+              </ul>
+            </div>
+            <div
+              class="c19"
+            >
+              <p
+                class="c10 c20"
+              >
+                <svg
+                  height="20"
+                  width="20"
+                >
+                  mobile.svg
+                </svg>
+                Mobile Apps
+              </p>
+              <ul
+                class="c21"
+              >
+                <li
+                  class="c22"
+                >
+                  Experience with 
+                  <b
+                    class="c23"
+                  >
+                    EXPO
+                  </b>
+                   over 
+                  <b
+                    class="c23"
+                  >
+                    React Native
+                  </b>
+                   for developing native applications.
+                </li>
+                <li
+                  class="c22"
+                >
+                  Basic knowledge of 
+                  <b
+                    class="c23"
+                  >
+                    IONIC
+                  </b>
+                   and 
+                  <b
+                    class="c23"
+                  >
+                    Cordova
+                  </b>
+                   for web-in-app development.
+                </li>
+              </ul>
+            </div>
+            <div
+              class="c19"
+            >
+              <p
+                class="c10 c20"
+              >
+                <svg
+                  height="20"
+                  width="20"
+                >
+                  database.svg
+                </svg>
+                Databases
+              </p>
+              <ul
+                class="c21"
+              >
+                <li
+                  class="c22"
+                >
+                  Course 
+                  <i
+                    class="c24"
+                  >
+                    M101J, MongoDB for Java Developers
+                  </i>
+                   offered by MongoDB Inc. Experience with integrating MongoDB with Java, Perl, and Node.js.
+                </li>
+                <li
+                  class="c22"
+                >
+                  Experience with Oracle, PostgreSQL (including the 
+                  <b
+                    class="c23"
+                  >
+                    PostGIS
+                  </b>
+                   module), and MySQL in Java, Perl, and Node.js.
+                </li>
+              </ul>
+            </div>
+            <div
+              class="c19"
+            >
+              <p
+                class="c10 c20"
+              >
+                <svg
+                  height="20"
+                  width="20"
+                >
+                  file.svg
+                </svg>
+                Others
+              </p>
+              <ul
+                class="c21"
+              >
+                <li
+                  class="c22"
+                >
+                  Working environment on Windows, Unix, or Mac.
+                </li>
+                <li
+                  class="c22"
+                >
+                  Experience with 
+                  <b
+                    class="c23"
+                  >
+                    Gitlab Pipelines
+                  </b>
+                  , 
+                  <b
+                    class="c23"
+                  >
+                    Github Actions
+                  </b>
+                  , and 
+                  <b
+                    class="c23"
+                  >
+                    Jenkins
+                  </b>
+                   for CI/CD.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <section
+          class="c15"
+        >
+          <div
+            class="c7"
+          >
+            Working Experience
+          </div>
+          <div
+            class="c16"
+          >
+            <div>
+              <h1
+                class="c25 c26"
+              >
+                Bonhams
+                 - 
+                Front-end React Developer.
+              </h1>
+              <div
+                class="c7 c27"
+              >
+                February 2022
+              </div>
+              <ul
+                class="c28"
+              >
+                <li
+                  class="c29"
+                >
+                  Part of the team responsible for migrating the legacy website to a cutting-edge 
+                  <b
+                    class="c30"
+                  >
+                    Next.JS Typescript
+                  </b>
+                   application within an 
+                  <b
+                    class="c30"
+                  >
+                    NX
+                  </b>
+                   monorepo. Instrumental in developing a comprehensive Design System from the ground up using 
+                  <b
+                    class="c30"
+                  >
+                    Styled Components
+                  </b>
+                  . Additionally, involved in creating new applications for clients and internal administration, including an 
+                  <b
+                    class="c30"
+                  >
+                    EXPO
+                  </b>
+                   mobile app for iOS and Android.
+                </li>
+                <li
+                  class="c29"
+                >
+                  Proficiently employed 
+                  <b
+                    class="c30"
+                  >
+                    Jest
+                  </b>
+                   and 
+                  <b
+                    class="c30"
+                  >
+                    MSW
+                  </b>
+                   for thorough unit and integration testing, while utilizing 
+                  <b
+                    class="c30"
+                  >
+                    Cypress
+                  </b>
+                   for end-to-end testing.
+                </li>
+                <li
+                  class="c29"
+                >
+                  Helped at the implementation of a robust 
+                  <b
+                    class="c30"
+                  >
+                    CI/CD
+                  </b>
+                   pipeline using GitLab for efficient and seamless deployment.
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h1
+                class="c25 c26"
+              >
+                Smart Protection
+                 - 
+                Front-end React Developer.
+              </h1>
+              <div
+                class="c7 c27"
+              >
+                February 2021 - February 2022
+              </div>
+              <ul
+                class="c28"
+              >
+                <li
+                  class="c29"
+                >
+                  Responsible for spearheading the development of back-office applications, catering to the internal administrative requirements of the company's business data.
+                </li>
+                <li
+                  class="c29"
+                >
+                  Initiated the creation of a comprehensive monorepo from the ground up using 
+                  <b
+                    class="c30"
+                  >
+                    Yarn Workspaces
+                  </b>
+                  , ensuring the development of full 
+                  <b
+                    class="c30"
+                  >
+                    TypeScript
+                  </b>
+                   applications.
+                </li>
+                <li
+                  class="c29"
+                >
+                  Implemented a robust Test-Driven Development (TDD) approach using 
+                  <b
+                    class="c30"
+                  >
+                    Jest
+                  </b>
+                   and 
+                  <b
+                    class="c30"
+                  >
+                    React Testing Library
+                  </b>
+                  .
+                </li>
+                <li
+                  class="c29"
+                >
+                  Implemented a sophisticated design system, utilizing a customized library of components using 
+                  <b
+                    class="c30"
+                  >
+                    Emotion.JS
+                  </b>
+                   alongside 
+                  <b
+                    class="c30"
+                  >
+                    Storybook
+                  </b>
+                   for comprehensive documentation.
+                </li>
+                <li
+                  class="c29"
+                >
+                  Established and optimized the frontend pipeline in 
+                  <b
+                    class="c30"
+                  >
+                    Jenkins
+                  </b>
+                  , utilizing parallel optimization for multiple stages.
+                </li>
+                <li
+                  class="c29"
+                >
+                  Basic knowledge in utilizing Terraform for storing environment variables in AWS.
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h1
+                class="c25 c26"
+              >
+                ING
+                 - 
+                Front-end Developer.
+              </h1>
+              <div
+                class="c7 c27"
+              >
+                August 2020 - February 2021
+              </div>
+              <ul
+                class="c28"
+              >
+                <li
+                  class="c29"
+                >
+                  Contributed to an international project, focusing on web development based on WebComponents, specifically 
+                  <b
+                    class="c30"
+                  >
+                    LitElement
+                  </b>
+                  , and 
+                  <b
+                    class="c30"
+                  >
+                    Redux
+                  </b>
+                  , with seamless communication with REST APIs.
+                </li>
+                <li
+                  class="c29"
+                >
+                  Adopted a Test-Driven Development (TDD) approach using 
+                  <b
+                    class="c30"
+                  >
+                    Karma
+                  </b>
+                   with 
+                  <b
+                    class="c30"
+                  >
+                    Mocha
+                  </b>
+                   for comprehensive unit testing.
+                </li>
+                <li
+                  class="c29"
+                >
+                  Conducted end-to-end testing using 
+                  <b
+                    class="c30"
+                  >
+                    Cucumber
+                  </b>
+                   and 
+                  <b
+                    class="c30"
+                  >
+                    WebdriverIO
+                  </b>
+                   for thorough functionality testing.
+                </li>
+                <li
+                  class="c29"
+                >
+                  Possesses a strong background in pairing code review experience, serving as an approver of the main repository to ensure the validation of merges into the master branch.
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h1
+                class="c25 c26"
+              >
+                Keytree
+                 - 
+                Front-end Developer.
+              </h1>
+              <div
+                class="c7 c27"
+              >
+                October 2017 - August 2020
+              </div>
+              <ul
+                class="c28"
+              >
+                <li
+                  class="c29"
+                >
+                  Involved in the development of multiple 
+                  <b
+                    class="c30"
+                  >
+                    React.JS
+                  </b>
+                   web applications, utilizing REST services provided by the Gateway service, primarily based on SAP, Java, or Node.js backend services.
+                </li>
+                <li
+                  class="c29"
+                >
+                  Took on the role of a front-end developer lead for an 
+                  <b
+                    class="c30"
+                  >
+                    Angular JS
+                  </b>
+                   application, responsible for onboarding newcomers and overseeing new developments or maintenance. Additionally, proficient in deploying applications across various environments for multiple clients.
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h1
+                class="c25 c26"
+              >
+                Babel S.I
+                 - 
+                Full Stack Developer.
+              </h1>
+              <div
+                class="c7 c27"
+              >
+                April 2017 - September 2017
+              </div>
+              <ul
+                class="c28"
+              >
+                <li
+                  class="c29"
+                >
+                  Contributed to the Mobile Development Center, focusing on the main project, an 
+                  <b
+                    class="c30"
+                  >
+                    IONIC
+                  </b>
+                   app with 
+                  <b
+                    class="c30"
+                  >
+                    Angular JS
+                  </b>
+                  . Involved in the development of an instant messaging system using 
+                  <b
+                    class="c30"
+                  >
+                    Socket.io
+                  </b>
+                   and 
+                  <b
+                    class="c30"
+                  >
+                    Node.js
+                  </b>
+                  . Integrated 
+                  <b
+                    class="c30"
+                  >
+                    Spring Boot
+                  </b>
+                   and multiple REST services.
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h1
+                class="c25 c26"
+              >
+                Ioon Technologies
+                 - 
+                Scrum Master and Full Stack Developer.
+              </h1>
+              <div
+                class="c7 c27"
+              >
+                January 2016 - April 2017
+              </div>
+              <ul
+                class="c28"
+              >
+                <li
+                  class="c29"
+                >
+                  Served as the CTO from November 2016 to April 2017. Acted as the Scrum Master of the main I+D+i project, utilizing 
+                  <b
+                    class="c30"
+                  >
+                    Java 1.7
+                  </b>
+                  , 
+                  <b
+                    class="c30"
+                  >
+                    Spring 4
+                  </b>
+                  , 
+                  <b
+                    class="c30"
+                  >
+                    GWT 1.7
+                  </b>
+                  , 
+                  <b
+                    class="c30"
+                  >
+                    Hibernate 5
+                  </b>
+                  , and 
+                  <b
+                    class="c30"
+                  >
+                    MySQL 5.6
+                  </b>
+                  . Implemented 
+                  <b
+                    class="c30"
+                  >
+                    IONIC 2
+                  </b>
+                   and 
+                  <b
+                    class="c30"
+                  >
+                    Angular
+                  </b>
+                   for mobile development.
+                </li>
+                <li
+                  class="c29"
+                >
+                  Implemented an 
+                  <b
+                    class="c30"
+                  >
+                    Arduino
+                  </b>
+                   monitoring system for real-time information within the application.
+                </li>
+                <li
+                  class="c29"
+                >
+                  Demonstrated proficiency in utilizing 
+                  <b
+                    class="c30"
+                  >
+                    Maven
+                  </b>
+                  , 
+                  <b
+                    class="c30"
+                  >
+                    Sonarqube
+                  </b>
+                  , and 
+                  <b
+                    class="c30"
+                  >
+                    JUnit
+                  </b>
+                  , along with 
+                  <b
+                    class="c30"
+                  >
+                    Mockito
+                  </b>
+                   for testing and validating clean code.
+                </li>
+                <li
+                  class="c29"
+                >
+                  Involved in front-end development for various customers, employing 
+                  <b
+                    class="c30"
+                  >
+                    CSS3
+                  </b>
+                  , 
+                  <b
+                    class="c30"
+                  >
+                    jQuery
+                  </b>
+                  , and 
+                  <b
+                    class="c30"
+                  >
+                    HTML5
+                  </b>
+                  .
+                </li>
+                <li
+                  class="c29"
+                >
+                  Worked as a 
+                  <b
+                    class="c30"
+                  >
+                    Java
+                  </b>
+                   consultant, focusing on back-end developments in PSA Peugeot-Citroën. Involved in incident resolution and new functionalities development, utilizing 
+                  <b
+                    class="c30"
+                  >
+                    Spring 3 MVC
+                  </b>
+                  , 
+                  <b
+                    class="c30"
+                  >
+                    Hibernate
+                  </b>
+                  , 
+                  <b
+                    class="c30"
+                  >
+                    Struts 2
+                  </b>
+                   and DB 
+                  <b
+                    class="c30"
+                  >
+                    Oracle
+                  </b>
+                  .
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h1
+                class="c25 c26"
+              >
+                Clarive
+                 - 
+                Full Stack Developer.
+              </h1>
+              <div
+                class="c7 c27"
+              >
+                January 2014 - January 2016
+              </div>
+              <ul
+                class="c28"
+              >
+                <li
+                  class="c29"
+                >
+                  Involved in back-end development using 
+                  <b
+                    class="c30"
+                  >
+                    Perl
+                  </b>
+                   and the Catalyst Framework, alongside various CPAN modules for seamless database integration, including 
+                  <b
+                    class="c30"
+                  >
+                    Oracle
+                  </b>
+                   and 
+                  <b
+                    class="c30"
+                  >
+                    MongoDB
+                  </b>
+                  .
+                </li>
+                <li
+                  class="c29"
+                >
+                  Utilized the 
+                  <b
+                    class="c30"
+                  >
+                    ExtJS
+                  </b>
+                   Framework for front-end development.
+                </li>
+                <li
+                  class="c29"
+                >
+                  Integrated SOAP webservices for streamlined communication.
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h1
+                class="c25 c26"
+              >
+                idealista.com
+                 - 
+                Back-end Developer.
+              </h1>
+              <div
+                class="c7 c27"
+              >
+                September 2013 - December 2013
+              </div>
+              <ul
+                class="c28"
+              >
+                <li
+                  class="c29"
+                >
+                  Involved in back-end development following an Agile (Scrum) methodology.
+                </li>
+                <li
+                  class="c29"
+                >
+                  Utilized 
+                  <b
+                    class="c30"
+                  >
+                    Spring 3
+                  </b>
+                   and 
+                  <b
+                    class="c30"
+                  >
+                    JPA
+                  </b>
+                  , incorporating 
+                  <b
+                    class="c30"
+                  >
+                    Hibernate
+                  </b>
+                   with both 
+                  <b
+                    class="c30"
+                  >
+                    MongoDB
+                  </b>
+                   and 
+                  <b
+                    class="c30"
+                  >
+                    Oracle
+                  </b>
+                   databases.
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h1
+                class="c25 c26"
+              >
+                Incita Security
+                 - 
+                Security Consultant and Web Developer.
+              </h1>
+              <div
+                class="c7 c27"
+              >
+                November 2012 - September 2013
+              </div>
+              <ul
+                class="c28"
+              >
+                <li
+                  class="c29"
+                >
+                  Actively involved in SIEM management, utilizing tools such as ArcSight and OSSIM, and proficient in Shell script development.
+                </li>
+                <li
+                  class="c29"
+                >
+                  Demonstrated proficiency in using 
+                  <b
+                    class="c30"
+                  >
+                    Python
+                  </b>
+                   and PHP 5.3, with 
+                  <b
+                    class="c30"
+                  >
+                    MySQL 5.1
+                  </b>
+                   for robust database management.
+                </li>
+                <li
+                  class="c29"
+                >
+                  Employed 
+                  <b
+                    class="c30"
+                  >
+                    CSS3
+                  </b>
+                   and 
+                  <b
+                    class="c30"
+                  >
+                    JavaScript
+                  </b>
+                   for efficient and dynamic web development.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <section
+          class="c15"
+        >
+          <div
+            class="c7"
+          >
+            Other
+          </div>
+          <div
+            class="c16"
+          >
+            <div>
+              <div
+                class="c7 c31"
+              >
+                Bachelor thesis
+                 
+              </div>
+              <ul
+                class="c32"
+              >
+                <li
+                  class="c33"
+                >
+                  Development of a support tool for students related to Data Structures for the verification and derivation of iterative algorithms using semantic tableaux with a graphical interface in Java.
+                </li>
+                <li
+                  class="c33"
+                >
+                  This work resulted in two 
+                  <a
+                    class="c34 c35"
+                    data-testid="plain-anchor"
+                    href="https://rd.springer.com/chapter/10.1007/978-3-642-21350-2_29#page-1"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    papers
+                  </a>
+                  .
+                </li>
+              </ul>
+            </div>
+            <div>
+              <div
+                class="c7 c31"
+              >
+                Collaborative activities with the 
+                <i
+                  class="c36"
+                >
+                  Departamento de Sistemas Informáticos y Computación
+                </i>
+                 (DSIC) at the Facultad de Informática at the Universidad Complutense of Madrid.
+                 
+                2011 - 2012
+              </div>
+              <ul
+                class="c32"
+              >
+                <li
+                  class="c33"
+                >
+                  Maintenance of the Virtual Area by updating the database with information related to classes and publications.
+                </li>
+                <li
+                  class="c33"
+                >
+                  Development of an application for counting students attending classes for obtaining statistics.
+                </li>
+              </ul>
+            </div>
+            <div>
+              <div
+                class="c7 c31"
+              >
+                This Portfolio.
+                 
+                2022 - Until I throw it out the window
+              </div>
+              <ul
+                class="c32"
+              >
+                <li
+                  class="c33"
+                >
+                  Check the 'About' link in the footer of this website.
+                </li>
+              </ul>
+            </div>
+            <div>
+              <div
+                class="c7 c31"
+              >
+                MATHS Academy Teacher.
+                 
+                2009 - 2013
+              </div>
+              <ul
+                class="c32"
+              >
+                <li
+                  class="c33"
+                >
+                  Taught 1st and 2nd-year Computer Engineering classes in Java and OOP.
+                </li>
+              </ul>
+            </div>
+            <div>
+              <div
+                class="c7 c31"
+              >
+                Tutor.
+                 
+                2004 - 2016
+              </div>
+              <ul
+                class="c32"
+              >
+                <li
+                  class="c33"
+                >
+                  Private tutor for school and high school students in mathematics, physics, and chemistry. Strong teaching abilities.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</body>
+`;

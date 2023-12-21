@@ -11,7 +11,7 @@ import {
   StyledScrollColumn,
   StyledWrap,
 } from './PortfolioPage.styles'
-import { OtherSfuff } from './components/OtherSfuff/OtherSfuff'
+import { OtherStuff } from './components/OtherStuff/OtherStuff'
 import { PortfolioHeading } from './components/PortfolioHeading/PortfolioHeading'
 import { PortfolioItem } from './components/PortfolioItem/PortfolioItem'
 import { ProfileInfo } from './components/ProfileInfo/ProfileInfo'
@@ -21,6 +21,7 @@ export function PortfolioPage() {
   const { t } = useClientTranslation('portfolioPage')
   const [scroll, setScroll] = useState(0)
   const { isScrolling, scrollDirectionY } = useIsScrolling()
+
   useEffect(() => {
     const listener = () => {
       const scrollValue =
@@ -52,8 +53,9 @@ export function PortfolioPage() {
         </defs>
       </svg>
       <StyledContent>
-        <StyledScrollColumn $active={scroll > 0.1}>
+        <StyledScrollColumn $active={scroll > 0.1} data-testid="scrollColumn">
           <StyledScrollButton
+            data-testid="scrollToTop"
             $isScrolling={isScrolling}
             $scrollingDirection={scrollDirectionY}
             onClick={() => window.scrollTo(0, 0)}
@@ -69,8 +71,8 @@ export function PortfolioPage() {
           <PortfolioItem title={t('items.workingExperience')}>
             <WorkingExperience />
           </PortfolioItem>
-          <PortfolioItem title={t('items.other')}>
-            <OtherSfuff />
+          <PortfolioItem title={t('items.other.title')}>
+            <OtherStuff />
           </PortfolioItem>
         </StyledWrap>
       </StyledContent>
