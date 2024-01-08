@@ -1,5 +1,4 @@
 import { format } from 'date-fns/format'
-import { useId } from 'react'
 import { Trans } from 'react-i18next'
 
 import { useExperienceItems } from '@web/components/ExperiencePage/useExperienceItems'
@@ -15,7 +14,6 @@ import {
 
 export function WorkingExperience() {
   const experienceItems = useExperienceItems()
-  const id = useId()
   const { t } = useClientTranslation('experiencePage')
 
   return (
@@ -32,8 +30,8 @@ export function WorkingExperience() {
               }`}
             </StyledCompanyPeriod>
             <StyledList>
-              {descriptionParagraphKeys.slice(1).map((paragraphKey, index) => (
-                <StyledListItem key={`${id}-${index}`}>
+              {descriptionParagraphKeys.slice(1).map((paragraphKey) => (
+                <StyledListItem key={paragraphKey}>
                   <Trans
                     t={t}
                     i18nKey={paragraphKey}

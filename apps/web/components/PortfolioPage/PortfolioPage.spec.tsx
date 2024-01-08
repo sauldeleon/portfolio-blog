@@ -59,21 +59,12 @@ describe('PortfolioPage', () => {
 
     expect(watcher).toHaveBeenCalledTimes(1)
     expect(watcher).toHaveBeenNthCalledWith(1, 0, 0)
-  })
 
-  it('should scroll top when user scrolls', async () => {
+    //scroll back
     ;(useIsScrolling as jest.Mock).mockReturnValueOnce({
       isScrolling: true,
       scrollDirectionY: 'up',
     })
-
-    const watcher = jest.spyOn(global.window, 'scrollTo')
-
-    renderApp(<PortfolioPage />)
-    expect(await screen.findByText('Profile')).toBeInTheDocument()
-
-    const scrollColumn = screen.getByTestId('scrollColumn')
-    const scrollToTopButton = screen.getByTestId('scrollToTop')
 
     expect(scrollColumn).toHaveStyleRule('opacity: 0')
     expect(scrollToTopButton).toHaveStyleRule('translateY: 40px')
@@ -85,7 +76,7 @@ describe('PortfolioPage', () => {
 
     await userEvent.click(scrollToTopButton)
 
-    expect(watcher).toHaveBeenCalledTimes(1)
+    expect(watcher).toHaveBeenCalledTimes(2)
     expect(watcher).toHaveBeenNthCalledWith(1, 0, 0)
   })
 
