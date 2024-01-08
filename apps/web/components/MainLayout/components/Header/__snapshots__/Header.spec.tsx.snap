@@ -70,7 +70,7 @@ exports[`Header should render successfully 1`] = `
   height: 130px;
   max-width: 1440px;
   width: 100%;
-  padding: 0 30px;
+  padding: 0 10px;
   margin: 0 auto;
   display: flex;
   justify-items: center;
@@ -243,6 +243,7 @@ exports[`Header should render successfully 1`] = `
 .c3 {
   color: #000000;
   margin-bottom: 25px;
+  width: 89px;
 }
 
 .c11 {
@@ -255,12 +256,13 @@ exports[`Header should render successfully 1`] = `
     background-color: transparent;
     color: #FBFBFB;
     height: 115px;
+    padding: 0 10px;
   }
 }
 
-@media (width >= 1440px) {
+@media (width >= 1024px) {
   .c0 {
-    padding: 0 20px;
+    padding: 0 30px;
   }
 }
 
@@ -341,6 +343,7 @@ exports[`Header should render successfully 1`] = `
 
 @media (width >= 768px) {
   .c3 {
+    width: 106px;
     color: #FBFBFB;
     margin-bottom: 0;
   }
@@ -367,7 +370,7 @@ exports[`Header should render successfully 1`] = `
         <svg
           class="c3"
           height="55"
-          width="106"
+          width="89"
         >
           slLogo.svg
         </svg>

@@ -331,7 +331,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
 .c2 {
   max-width: 1440px;
   width: 100%;
-  padding: 0 20px;
+  padding: 0 10px;
   margin-bottom: 90px;
 }
 
@@ -452,6 +452,12 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
     border-bottom-right-radius: 60px 50%;
     border-top-left-radius: 60px 50%;
     border-bottom-left-radius: 60px 50%;
+  }
+}
+
+@media (width >= 1024px) {
+  .c2 {
+    padding: 0 20px;
   }
 }
 
