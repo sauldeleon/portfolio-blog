@@ -1,5 +1,7 @@
 # Changelog Header component
 
+## [0.1.4](https://github.com/sauldeleon/portfolio-blog/compare/header-0.1.3...header-0.1.4) (2024-01-08)
+
 ## [0.1.3](https://github.com/sauldeleon/portfolio-blog/compare/header-0.1.2...header-0.1.3) (2023-09-14)
 
 ## [0.1.2](https://github.com/sauldeleon/portfolio-blog/compare/header-0.1.1...header-0.1.2) (2023-09-08)
