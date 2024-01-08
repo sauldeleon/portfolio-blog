@@ -1,5 +1,26 @@
 # Changelog web app
 
+# [0.8.0](https://github.com/sauldeleon/portfolio-blog/compare/web-0.7.1...web-0.8.0) (2024-01-08)
+
+### Bug Fixes
+
+- homepage styles ([d8ef709](https://github.com/sauldeleon/portfolio-blog/commit/d8ef709cc2c98cb0e052d5eef17b4a6c7b189f23))
+- sonarcloud ([47dbb7a](https://github.com/sauldeleon/portfolio-blog/commit/47dbb7a4460be64fc5f92ea3abdd10e529633359))
+- sonarcloud ([6f09095](https://github.com/sauldeleon/portfolio-blog/commit/6f09095ab71ed82705484360689b28a2e6b5e2a7))
+- translations ([2be4d19](https://github.com/sauldeleon/portfolio-blog/commit/2be4d19bfe8864ef5336fbd208aedb8c63e76e0b))
+
+### Features
+
+- add better experience descriptions ([#53](https://github.com/sauldeleon/portfolio-blog/issues/53)) ([4b2f44a](https://github.com/sauldeleon/portfolio-blog/commit/4b2f44a90468c8bd6a6a77ec5b2c457c5a5e1010))
+- add copys ([046fc42](https://github.com/sauldeleon/portfolio-blog/commit/046fc4220a94e48de4d5e467373e10234dff6275))
+- add further tests ([1f568ab](https://github.com/sauldeleon/portfolio-blog/commit/1f568ab0a86595a6c3a4fc54b5881e8277a04a29))
+- add portfolio item components ([afb7d30](https://github.com/sauldeleon/portfolio-blog/commit/afb7d309663f62c30464ffb13e444949a68f5ba0))
+- add scroll to top button ([3b721c4](https://github.com/sauldeleon/portfolio-blog/commit/3b721c4b2db1cc004ecf884efe4a0e424e0021a1))
+- add share behavior ([f148d1a](https://github.com/sauldeleon/portfolio-blog/commit/f148d1a13c25ee3dd4ab4e5b6edad0781fe3eb33))
+- add share button to portfolio ([02b7450](https://github.com/sauldeleon/portfolio-blog/commit/02b7450d6fa116e47717e28bd7ed83071823f6d2))
+- improve translations ([be1a56b](https://github.com/sauldeleon/portfolio-blog/commit/be1a56bb311ebaaac35c03f7ee36fc88c34120b5))
+- improve translations in homepage ([ea364a1](https://github.com/sauldeleon/portfolio-blog/commit/ea364a16fcbb41705f8df230aeff4cd7c4a68de9))
+
 ## [0.7.1](https://github.com/sauldeleon/portfolio-blog/compare/web-0.7.0...web-0.7.1) (2023-09-26)
 
 # [0.7.0](https://github.com/sauldeleon/portfolio-blog/compare/web-0.6.2...web-0.7.0) (2023-09-14)
