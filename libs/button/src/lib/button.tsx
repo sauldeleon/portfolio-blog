@@ -1,18 +1,22 @@
 import { ButtonHTMLAttributes, DetailedHTMLProps, forwardRef } from 'react'
 
-import { StyledButton } from './button.styles'
+import { StyledContainedButton, StyledTextButton } from './button.styles'
 
 export type ButtonProps = DetailedHTMLProps<
   ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement
->
+> & { variant?: 'text' | 'contained' }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ children, ...props }, forwardedRef) => {
-    return (
-      <StyledButton {...props} ref={forwardedRef}>
+  ({ children, variant = 'text', ...props }, forwardedRef) => {
+    return variant === 'text' ? (
+      <StyledTextButton {...props} ref={forwardedRef}>
         {children}
-      </StyledButton>
+      </StyledTextButton>
+    ) : (
+      <StyledContainedButton {...props} ref={forwardedRef}>
+        {children}
+      </StyledContainedButton>
     )
   },
 )

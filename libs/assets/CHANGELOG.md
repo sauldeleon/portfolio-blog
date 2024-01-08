@@ -1,5 +1,14 @@
 # Changelog Assets library
 
+# [0.5.0](https://github.com/sauldeleon/portfolio-blog/compare/assets-0.4.0...assets-0.5.0) (2024-01-08)
+
+### Features
+
+- add better experience descriptions ([#53](https://github.com/sauldeleon/portfolio-blog/issues/53)) ([4b2f44a](https://github.com/sauldeleon/portfolio-blog/commit/4b2f44a90468c8bd6a6a77ec5b2c457c5a5e1010))
+- add portfolio item components ([afb7d30](https://github.com/sauldeleon/portfolio-blog/commit/afb7d309663f62c30464ffb13e444949a68f5ba0))
+- add scroll to top button ([3b721c4](https://github.com/sauldeleon/portfolio-blog/commit/3b721c4b2db1cc004ecf884efe4a0e424e0021a1))
+- add share button to portfolio ([02b7450](https://github.com/sauldeleon/portfolio-blog/commit/02b7450d6fa116e47717e28bd7ed83071823f6d2))
+
 # [0.4.0](https://github.com/sauldeleon/portfolio-blog/compare/assets-0.3.0...assets-0.4.0) (2023-09-14)
 
 ### Features

@@ -1,5 +1,11 @@
 # Changelog Typography component
 
+# [0.3.0](https://github.com/sauldeleon/portfolio-blog/compare/typography-0.2.0...typography-0.3.0) (2024-01-08)
+
+### Features
+
+- add portfolio item components ([afb7d30](https://github.com/sauldeleon/portfolio-blog/commit/afb7d309663f62c30464ffb13e444949a68f5ba0))
+
 # [0.2.0](https://github.com/sauldeleon/portfolio-blog/compare/typography-0.1.0...typography-0.2.0) (2023-09-05)
 
 ### Bug Fixes

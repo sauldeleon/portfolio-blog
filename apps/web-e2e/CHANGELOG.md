@@ -1,5 +1,11 @@
 # Changelog web E2E tests
 
+# [0.2.0](https://github.com/sauldeleon/portfolio-blog/compare/web-e2e-0.1.2...web-e2e-0.2.0) (2024-01-08)
+
+### Features
+
+- add e2e test ([21702f0](https://github.com/sauldeleon/portfolio-blog/commit/21702f0f28abc64da0bbfbccf443a000c4b9071a))
+
 ## [0.1.2](https://github.com/sauldeleon/portfolio-blog/compare/web-e2e-0.1.1...web-e2e-0.1.2) (2023-09-26)
 
 ### Bug Fixes

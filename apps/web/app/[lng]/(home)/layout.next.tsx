@@ -20,6 +20,7 @@ import {
   StyledAttributeContent,
   StyledAttributes,
   StyledCircleLink,
+  StyledContainer,
   StyledHeading,
   StyledSubHeading,
   StyledSummary,
@@ -90,9 +91,7 @@ export default function HomeLayout({ children }: HomeLayoutProps) {
   ]
 
   const summaryParagraphs: React.ReactNode[] = [
-    t('summary.p1'),
-    t('summary.p2'),
-    t('summary.p3'),
+    ...t('summary', { returnObjects: true }),
     <StyledAttributes key="attributes">
       {attributes.map(({ key, element }) => (
         <StyledAttribute key={`${key}-attribute`}>
@@ -103,7 +102,7 @@ export default function HomeLayout({ children }: HomeLayoutProps) {
   ]
 
   return (
-    <>
+    <StyledContainer>
       <StyledHeading $level={2}>Saúl de León Guerrero</StyledHeading>
       <StyledCircleLink
         href={`/${language}/experience`}
@@ -124,6 +123,6 @@ export default function HomeLayout({ children }: HomeLayoutProps) {
         iconContent={<ArrowRightIcon />}
         label={t('experience')}
       />
-    </>
+    </StyledContainer>
   )
 }

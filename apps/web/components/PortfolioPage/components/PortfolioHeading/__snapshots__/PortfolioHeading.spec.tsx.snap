@@ -1,0 +1,220 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PortfolioHeading should render correctly 1`] = `
+.c9 {
+  font-family: fontFamily;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 3rem;
+  line-height: normal;
+  margin: 0;
+}
+
+.c6 {
+  font-family: fontFamily;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  white-space: pre-line;
+}
+
+.c6 ul,
+.c6 ol {
+  margin-left: 40px;
+  margin-bottom: 10px;
+}
+
+.c6 ul {
+  list-style: outside disc;
+}
+
+.c6 ol {
+  list-style: decimal;
+}
+
+.c6 li {
+  padding-left: 10px;
+}
+
+.c3 {
+  font-family: fontFamily;
+  font-weight: 500;
+  color: #FBFBFB;
+  font-size: 1rem;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.c0 {
+  border: 3px solid #FBFBFB;
+  border-bottom: none;
+  padding: 1rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.c1 {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.c4 {
+  font-size: 16px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.c2 {
+  flex-direction: column-reverse;
+  font-size: 16px;
+}
+
+.c5 {
+  text-transform: uppercase;
+  margin-bottom: 30px;
+  width: 100%;
+  text-align: right;
+}
+
+.c7 {
+  font-size: 16px;
+}
+
+.c8 {
+  overflow: hidden;
+  border-radius: 50%;
+  width: 60px;
+  min-width: 60px;
+  height: 60px;
+}
+
+.c10 {
+  margin-top: 25px;
+  margin-left: 20px;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+@media (width >= 1024px) {
+  .c0 {
+    padding: 3rem;
+  }
+}
+
+@media (width >= 768px) {
+  .c4 {
+    font-size: 20px;
+  }
+}
+
+@media (width >= 768px) {
+  .c2 {
+    flex-direction: row;
+    font-size: 20px;
+  }
+}
+
+@media (width >= 768px) {
+  .c5 {
+    margin-bottom: 50px;
+  }
+}
+
+@media (width >= 1024px) {
+  .c7 {
+    font-size: 20px;
+  }
+}
+
+@media (width >= 768px) {
+  .c8 {
+    width: 180px;
+    min-width: 180px;
+    height: 180px;
+  }
+}
+
+@media (width >= 1024px) {
+  .c8 {
+    width: 310px;
+    min-width: 310px;
+    height: 310px;
+  }
+}
+
+@media (width >= 768px) {
+  .c10 {
+    margin-top: 40px;
+    margin-top: 100px;
+    margin-left: 40px;
+    font-size: 3rem;
+    font-weight: 500;
+  }
+}
+
+@media (width >= 1024px) {
+  .c10 {
+    margin-top: 160px;
+    margin-left: 80px;
+    font-size: 4rem;
+    font-weight: 500;
+  }
+}
+
+<body>
+  <div>
+    <section
+      class="c0"
+    >
+      <div
+        class="c1 c2"
+      >
+        <div
+          class="c3 c4"
+        >
+          Software engineer
+        </div>
+        <div
+          class="c5"
+        >
+          <p
+            class="c6 c7"
+          >
+            Based in Madrid, Spain
+          </p>
+          <p
+            class="c6 c7"
+          >
+            sauldeleonguerrero@gmail.com
+          </p>
+        </div>
+      </div>
+      <div
+        class="c1"
+      >
+        <img
+          alt="My profile picture"
+          class="c8"
+          data-nimg="1"
+          decoding="async"
+          height="310"
+          loading="lazy"
+          src="/_next/image?url=%2Fassets%2Fportrait-4.png&w=640&q=75"
+          srcset="/_next/image?url=%2Fassets%2Fportrait-4.png&w=384&q=75 1x, /_next/image?url=%2Fassets%2Fportrait-4.png&w=640&q=75 2x"
+          style="color: transparent;"
+          width="310"
+        />
+        <h1
+          class="c9 c10"
+        >
+          Saúl de León Guerrero
+        </h1>
+      </div>
+    </section>
+  </div>
+</body>
+`;

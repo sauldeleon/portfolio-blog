@@ -1,0 +1,496 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProfileInfo should render successfully 1`] = `
+.c0 {
+  font-family: fontFamily;
+  font-weight: 500;
+  color: #FBFBFB;
+  font-size: 1.5rem;
+  line-height: normal;
+  white-space: pre-line;
+}
+
+.c0 ul,
+.c0 ol {
+  margin-left: 40px;
+  margin-bottom: 10px;
+}
+
+.c0 ul {
+  list-style: outside disc;
+}
+
+.c0 ol {
+  list-style: decimal;
+}
+
+.c0 li {
+  padding-left: 10px;
+}
+
+.c5 {
+  font-family: fontFamily;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  white-space: pre-line;
+}
+
+.c5 ul,
+.c5 ol {
+  margin-left: 40px;
+  margin-bottom: 10px;
+}
+
+.c5 ul {
+  list-style: outside disc;
+}
+
+.c5 ol {
+  list-style: decimal;
+}
+
+.c5 li {
+  padding-left: 10px;
+}
+
+.c2 {
+  font-family: fontFamily;
+  font-weight: 500;
+  color: #FBFBFB;
+  font-size: 1rem;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.c1 {
+  font-size: 20px;
+}
+
+.c3 {
+  margin-top: 40px;
+}
+
+.c4 {
+  margin-top: 20px;
+}
+
+.c6 {
+  font-weight: 500;
+  display: flex;
+  line-height: 20px;
+  margin-bottom: 10px;
+}
+
+.c6 svg {
+  margin-right: 10px;
+}
+
+.c7 {
+  padding-left: 0px;
+}
+
+.c8 {
+  font-size: 16px;
+  text-indent: -20px;
+  padding-left: 20px;
+}
+
+.c8:before {
+  content: '·';
+  font-size: 30px;
+  vertical-align: middle;
+  line-height: 20px;
+}
+
+.c9 {
+  font-family: fontFamily;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.c10 {
+  font-family: fontFamily;
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-size: 16px;
+}
+
+@media (width >= 1024px) {
+  .c1 {
+    font-size: 30px;
+  }
+}
+
+@media (width >= 1024px) {
+  .c7 {
+    padding-left: 25px;
+  }
+}
+
+<body>
+  <div>
+    <p
+      class="c0 c1"
+    >
+      Experienced Software Engineer skilled in translating code into polished and efficient digital solutions. With a meticulous attention to detail, I specialize in developing software that not only fulfills functional requirements but also results into a smooth and user-friendly experience.
+    </p>
+    <div
+      class="c2 c3"
+    >
+      Skills
+    </div>
+    <div
+      class="c4"
+    >
+      <p
+        class="c5 c6"
+      >
+        <svg
+          height="20"
+          width="20"
+        >
+          frontEnd.svg
+        </svg>
+        Front End
+      </p>
+      <ul
+        class="c7"
+      >
+        <li
+          class="c8"
+        >
+          SPA using 
+          <b
+            class="c9"
+          >
+            React 18
+          </b>
+           and 
+          <b
+            class="c9"
+          >
+            yarn
+          </b>
+           as the main package manager.
+        </li>
+        <li
+          class="c8"
+        >
+          SSR using 
+          <b
+            class="c9"
+          >
+            Next.JS 14
+          </b>
+           with experience in both the new layout system and the legacy system.
+        </li>
+        <li
+          class="c8"
+        >
+          Testing: Primarily using 
+          <b
+            class="c9"
+          >
+            Jest
+          </b>
+           for unit testing. 
+          <b
+            class="c9"
+          >
+            Cypress
+          </b>
+           for e2e testing
+        </li>
+        <li
+          class="c8"
+        >
+          Usage of 
+          Storybook
+           for documenting components, design systems and applications
+        </li>
+        <li
+          class="c8"
+        >
+          Use of CSS-in-JS libraries such as 
+          <b
+            class="c9"
+          >
+            Emotion
+          </b>
+           or 
+          <b
+            class="c9"
+          >
+            Styled-Components
+          </b>
+          .
+        </li>
+        <li
+          class="c8"
+        >
+          Preference for projects in 
+          <b
+            class="c9"
+          >
+            Typescript
+          </b>
+          .
+        </li>
+        <li
+          class="c8"
+        >
+          Experience with 
+          <b
+            class="c9"
+          >
+            monorepos
+          </b>
+           (lerna, NX, yarn workspaces...).
+        </li>
+      </ul>
+    </div>
+    <div
+      class="c4"
+    >
+      <p
+        class="c5 c6"
+      >
+        <svg
+          height="20"
+          width="20"
+        >
+          backEnd.svg
+        </svg>
+        Back End
+      </p>
+      <ul
+        class="c7"
+      >
+        <li
+          class="c8"
+        >
+          <b
+            class="c9"
+          >
+            REST
+          </b>
+           applications in node.js using 
+          <b
+            class="c9"
+          >
+            express
+          </b>
+           and 
+          <b
+            class="c9"
+          >
+            bottle.js
+          </b>
+           for dependency injection. 
+          <b
+            class="c9"
+          >
+            Sequelize
+          </b>
+           and 
+          <b
+            class="c9"
+          >
+            mongoose
+          </b>
+           for integration with different databases.
+        </li>
+        <li
+          class="c8"
+        >
+          Java development experience with 
+          <b
+            class="c9"
+          >
+            Spring Framework
+          </b>
+           (Boot, Core, Security, MVC). Use of 
+          <b
+            class="c9"
+          >
+            Hibernate
+          </b>
+           for integration with Oracle, MySQL, MongoDB... Experience with Apache Tiles and JMX, integrations with 
+          <b
+            class="c9"
+          >
+            Kafka
+          </b>
+          .
+        </li>
+        <li
+          class="c8"
+        >
+          Development of 
+          <b
+            class="c9"
+          >
+            Perl
+          </b>
+           applications using 
+          <b
+            class="c9"
+          >
+            Catalyst
+          </b>
+           as the main MVC framework.
+        </li>
+      </ul>
+    </div>
+    <div
+      class="c4"
+    >
+      <p
+        class="c5 c6"
+      >
+        <svg
+          height="20"
+          width="20"
+        >
+          mobile.svg
+        </svg>
+        Mobile Apps
+      </p>
+      <ul
+        class="c7"
+      >
+        <li
+          class="c8"
+        >
+          Experience with 
+          <b
+            class="c9"
+          >
+            EXPO
+          </b>
+           over 
+          <b
+            class="c9"
+          >
+            React Native
+          </b>
+           for developing native applications.
+        </li>
+        <li
+          class="c8"
+        >
+          Basic knowledge of 
+          <b
+            class="c9"
+          >
+            IONIC
+          </b>
+           and 
+          <b
+            class="c9"
+          >
+            Cordova
+          </b>
+           for web-in-app development.
+        </li>
+      </ul>
+    </div>
+    <div
+      class="c4"
+    >
+      <p
+        class="c5 c6"
+      >
+        <svg
+          height="20"
+          width="20"
+        >
+          database.svg
+        </svg>
+        Databases
+      </p>
+      <ul
+        class="c7"
+      >
+        <li
+          class="c8"
+        >
+          Course 
+          <i
+            class="c10"
+          >
+            M101J, MongoDB for Java Developers
+          </i>
+           offered by MongoDB Inc. Experience with integrating MongoDB with Java, Perl, and Node.js.
+        </li>
+        <li
+          class="c8"
+        >
+          Experience with Oracle, PostgreSQL (including the 
+          <b
+            class="c9"
+          >
+            PostGIS
+          </b>
+           module), and MySQL in Java, Perl, and Node.js.
+        </li>
+      </ul>
+    </div>
+    <div
+      class="c4"
+    >
+      <p
+        class="c5 c6"
+      >
+        <svg
+          height="20"
+          width="20"
+        >
+          file.svg
+        </svg>
+        Others
+      </p>
+      <ul
+        class="c7"
+      >
+        <li
+          class="c8"
+        >
+          Working environment on Windows, Unix, or Mac.
+        </li>
+        <li
+          class="c8"
+        >
+          Experience with 
+          <b
+            class="c9"
+          >
+            Gitlab Pipelines
+          </b>
+          , 
+          <b
+            class="c9"
+          >
+            Github Actions
+          </b>
+          , and 
+          <b
+            class="c9"
+          >
+            Jenkins
+          </b>
+           for CI/CD.
+        </li>
+      </ul>
+    </div>
+  </div>
+</body>
+`;

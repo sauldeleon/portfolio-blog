@@ -1,0 +1,23 @@
+diff --git a/node_modules/react-use-is-scrolling/.DS_Store b/node_modules/react-use-is-scrolling/.DS_Store
+new file mode 100644
+index 0000000..c88a062
+Binary files /dev/null and b/node_modules/react-use-is-scrolling/.DS_Store differ
+diff --git a/node_modules/react-use-is-scrolling/dist/index.d.ts b/node_modules/react-use-is-scrolling/dist/index.d.ts
+index a9f0002..3835c19 100644
+--- a/node_modules/react-use-is-scrolling/dist/index.d.ts
++++ b/node_modules/react-use-is-scrolling/dist/index.d.ts
+@@ -5,12 +5,12 @@ interface IsScrollingValue {
+     scrollDirectionX: HorizontalScrollDirection;
+     scrollDirectionY: VerticalScrollDirection;
+ }
+-declare enum HorizontalScrollDirection {
++export declare enum HorizontalScrollDirection {
+     Left = "left",
+     Right = "right",
+     None = "none"
+ }
+-declare enum VerticalScrollDirection {
++export declare enum VerticalScrollDirection {
+     Up = "up",
+     Down = "down",
+     None = "none"

@@ -9,8 +9,12 @@ import { Portals } from '@web/components/Portals/Portals'
 export const StyledSection = styled.section`
   max-width: 1440px;
   width: 100%;
-  padding: 0 20px;
+  padding: 0 10px;
   margin-bottom: 90px;
+
+  ${({ theme }) => theme.media.up.lg} {
+    padding: 0 20px;
+  }
 `
 
 export const StyledExperienceHeader = styled.div`
@@ -61,7 +65,7 @@ export const StyledCompanyName = styled(Body)`
 `
 
 export const StyledCompanyPeriod = styled(Body)`
-  font-size: 20px;
+  font-size: 16px;
   ${({ theme }) => theme.fontStyles.robotoMono.thin};
 
   ${({ theme }) => theme.media.up.lg} {

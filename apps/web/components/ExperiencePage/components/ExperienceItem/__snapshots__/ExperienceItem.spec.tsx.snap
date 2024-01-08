@@ -264,7 +264,7 @@ exports[`ExperienceItem should render successfully 1`] = `
 .c0 {
   max-width: 1440px;
   width: 100%;
-  padding: 0 20px;
+  padding: 0 10px;
   margin-bottom: 90px;
 }
 
@@ -301,7 +301,7 @@ exports[`ExperienceItem should render successfully 1`] = `
 }
 
 .c6 {
-  font-size: 20px;
+  font-size: 16px;
   font-family: fontFamily;
   font-weight: 100;
 }
@@ -373,6 +373,12 @@ exports[`ExperienceItem should render successfully 1`] = `
     border-bottom-right-radius: 60px 50%;
     border-top-left-radius: 60px 50%;
     border-bottom-left-radius: 60px 50%;
+  }
+}
+
+@media (width >= 1024px) {
+  .c0 {
+    padding: 0 20px;
   }
 }
 

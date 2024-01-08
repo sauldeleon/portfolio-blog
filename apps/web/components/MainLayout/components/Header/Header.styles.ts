@@ -14,8 +14,10 @@ export const StyledLogoLink = styled(Link)`
 export const StyledSLLogo = styled(SLLogo)`
   color: ${({ theme }) => theme.colors.black};
   margin-bottom: 25px;
+  width: 89px;
 
   ${({ theme }) => theme.media.up.md} {
+    width: 106px;
     color: ${({ theme }) => theme.colors.white};
     margin-bottom: 0;
   }

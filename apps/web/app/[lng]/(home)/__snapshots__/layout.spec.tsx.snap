@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`/[lng]/(home) - HomeLayout should render 1`] = `
-.c0 {
+.c1 {
   font-family: fontFamily;
   font-weight: 400;
   color: #FBFBFB;
@@ -10,7 +10,7 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
   margin: 0;
 }
 
-.c13 {
+.c14 {
   font-family: fontFamily;
   font-weight: 400;
   color: #FBFBFB;
@@ -19,25 +19,25 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
   white-space: pre-line;
 }
 
-.c13 ul,
-.c13 ol {
+.c14 ul,
+.c14 ol {
   margin-left: 40px;
   margin-bottom: 10px;
 }
 
-.c13 ul {
+.c14 ul {
   list-style: outside disc;
 }
 
-.c13 ol {
+.c14 ol {
   list-style: decimal;
 }
 
-.c13 li {
+.c14 li {
   padding-left: 10px;
 }
 
-.c9 {
+.c10 {
   font-family: fontFamily;
   font-weight: 500;
   color: #FBFBFB;
@@ -46,12 +46,12 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
   text-transform: uppercase;
 }
 
-.c2 {
+.c3 {
   position: relative;
   position: relative;
 }
 
-.c2::after {
+.c3::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -61,33 +61,33 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
   background-color: currentColor;
 }
 
-.c2::after {
+.c3::after {
   transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.25s ease-out;
 }
 
-.c2:hover::after {
+.c3:hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
 
-.c2:hover,
-.c2:active,
-.c2:focus {
+.c3:hover,
+.c3:active,
+.c3:focus {
   text-decoration: none;
 }
 
-.c2:focus-visible {
+.c3:focus-visible {
   outline: #FBFBFB auto 1px;
 }
 
-.c20 {
+.c21 {
   margin-left: 8px;
   position: relative;
 }
 
-.c20::after {
+.c21::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -97,13 +97,13 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
   background-color: currentColor;
 }
 
-.c20::after {
+.c21::after {
   transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.5s ease-out;
 }
 
-.c7 .loading {
+.c8 .loading {
   transform: rotate(-90deg);
   transform-origin: center;
   stroke: #FBFBFB;
@@ -113,7 +113,7 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
   transition: stroke-dashoffset 0.5s steps(4, end);
 }
 
-.c3 {
+.c4 {
   outline: none;
   cursor: pointer;
   display: flex;
@@ -121,28 +121,28 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
   max-height: 76px;
 }
 
-.c3:after {
+.c4:after {
   content: none;
 }
 
-.c3:hover:after {
+.c4:hover:after {
   content: none;
 }
 
-.c3:focus-visible {
+.c4:focus-visible {
   outline: #FBFBFB auto 1px;
 }
 
-.c3:hover .c6 .loading {
+.c4:hover .c7 .loading {
   stroke-dashoffset: 0;
 }
 
-.c3:hover .c19::after {
+.c4:hover .c20::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
 
-.c17 {
+.c18 {
   outline: none;
   cursor: pointer;
   display: flex;
@@ -150,40 +150,40 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
   max-height: 42px;
 }
 
-.c17:after {
+.c18:after {
   content: none;
 }
 
-.c17:hover:after {
+.c18:hover:after {
   content: none;
 }
 
-.c17:focus-visible {
+.c18:focus-visible {
   outline: #FBFBFB auto 1px;
 }
 
-.c17:hover .c6 .loading {
+.c18:hover .c7 .loading {
   stroke-dashoffset: 0;
 }
 
-.c17:hover .c19::after {
+.c18:hover .c20::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
 
-.c5 {
+.c6 {
   position: relative;
   width: 76px;
   height: 76px;
 }
 
-.c18 {
+.c19 {
   position: relative;
   width: 42px;
   height: 42px;
 }
 
-.c8 {
+.c9 {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
@@ -191,52 +191,61 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
   display: flex;
 }
 
-.c1 {
+.c0 {
+  display: flex;
+  min-height: calc(100vh - 115px - 300px);
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+  width: 100%;
+}
+
+.c2 {
   text-align: center;
   margin-top: 80px;
 }
 
-.c10 {
+.c11 {
   margin-top: 30px;
 }
 
-.c4 {
+.c5 {
   margin-top: 40px;
   margin-bottom: 40px;
 }
 
-.c11 {
+.c12 {
   text-align: center;
   max-width: 1180px;
   padding: 0 34px;
 }
 
-.c11 .c12 {
+.c12 .c13 {
   margin-top: 20px;
 }
 
-.c14 {
+.c15 {
   display: inline-block;
 }
 
-.c15 {
+.c16 {
   display: inline;
 }
 
-.c15:after {
+.c16:after {
   content: ' ';
   word-spacing: 1em;
   background-image: linear-gradient(       0.25turn,       transparent 0 calc(50% - 0.03em),       currentcolor 0 calc(50% + 0.03em),       transparent 0     );
 }
 
-.c16 {
+.c17 {
   display: inline-flex;
   align-items: center;
   gap: 10px;
 }
 
 @media (width >= 768px) {
-  .c1 {
+  .c2 {
     font-family: fontFamily;
     font-weight: 400;
     color: #FBFBFB;
@@ -246,13 +255,13 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
 }
 
 @media (width >= 1024px) {
-  .c1 {
+  .c2 {
     margin-bottom: 10px;
   }
 }
 
 @media (width >= 768px) {
-  .c10 {
+  .c11 {
     margin-bottom: 40px;
     font-family: fontFamily;
     font-weight: 400;
@@ -263,13 +272,13 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
 }
 
 @media (width >= 768px) {
-  .c4 {
+  .c5 {
     margin-bottom: 50px;
   }
 }
 
 @media (width >= 768px) {
-  .c11 .c12 {
+  .c12 .c13 {
     font-family: fontFamily;
     font-weight: 400;
     color: #FBFBFB;
@@ -280,65 +289,65 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
 
 <body>
   <div>
-    <h1
-      class="c0 c1"
+    <div
+      class="c0"
     >
-      Saúl de León Guerrero
-    </h1>
-    <a
-      class="c2 c3 c4"
-      href="/en/experience"
-    >
-      <div
-        class="c5"
+      <h1
+        class="c1 c2"
       >
-        <svg
-          class="c6 c7"
-          height="76"
-          width="76"
-        >
-          circleButton.svg
-        </svg>
+        Saúl de León Guerrero
+      </h1>
+      <a
+        class="c3 c4 c5"
+        href="/en/experience"
+      >
         <div
-          class="c8"
+          class="c6"
         >
+          <svg
+            class="c7 c8"
+            height="76"
+            width="76"
+          >
+            circleButton.svg
+          </svg>
           <div
             class="c9"
           >
-            Explore
+            <div
+              class="c10"
+            >
+              Explore
+            </div>
           </div>
         </div>
-      </div>
-    </a>
-    test
-    <h2
-      class="c0 c10"
-    >
-      About me
-    </h2>
-    <section
-      class="c11"
-    >
-      <p
-        class="c12 c13"
+      </a>
+      test
+      <h2
+        class="c1 c11"
       >
-        Preference for the (x)ERN stack, transforming designs into responsive webs. I'm fluent in HTML5, CSS3, and (Java|Type)Script.
-      </p>
-      <p
-        class="c12 c13"
+        About me
+      </h2>
+      <section
+        class="c12"
       >
-        I've got Fullstack experience, but I'm most enthusiastic about FrontEnd development.
-      </p>
-      <p
-        class="c12 c13"
-      >
-        I do love staying up-to-date with the latest trends, and my commitment is to deliver work that can be easily maintained and evolved without too much suffering (if possible).
-      </p>
-      <p
-        class="c12 c13"
-      >
-        <span
-          class="c14"
+        <p
+          class="c13 c14"
+        >
+          Preference for the (x)ERN stack, transforming designs into responsive webs. I'm fluent in HTML5, CSS3, and (Java|Type)Script.
+        </p>
+        <p
+          class="c13 c14"
+        >
+          I've got Fullstack experience, but I'm most enthusiastic about FrontEnd development.
+        </p>
+        <p
+          class="c13 c14"
+        >
+          I do love staying up-to-date with the latest trends, and my commitment is to deliver work that can be easily maintained and evolved without too much suffering (if possible).
+        </p>
+        <p
+          class="c13 c14"
         >
           <span
             class="c15"
@@ -346,91 +355,95 @@ exports[`/[lng]/(home) - HomeLayout should render 1`] = `
             <span
               class="c16"
             >
-              Mountaineer
-              <svg
-                height="22"
-                width="22"
+              <span
+                class="c17"
               >
-                hike.svg
-              </svg>
+                Mountaineer
+                <svg
+                  height="22"
+                  width="22"
+                >
+                  hike.svg
+                </svg>
+              </span>
             </span>
-          </span>
-          <span
-            class="c15"
-          >
             <span
               class="c16"
             >
-              Cat petter
-              <svg
-                height="22"
-                width="22"
+              <span
+                class="c17"
               >
-                cat.svg
-              </svg>
+                Cat petter
+                <svg
+                  height="22"
+                  width="22"
+                >
+                  cat.svg
+                </svg>
+              </span>
             </span>
-          </span>
-          <span
-            class="c15"
-          >
             <span
               class="c16"
             >
-              Tireless gamer
-              <svg
-                height="22"
-                width="22"
+              <span
+                class="c17"
               >
-                game-controller.svg
-              </svg>
+                Tireless gamer
+                <svg
+                  height="22"
+                  width="22"
+                >
+                  game-controller.svg
+                </svg>
+              </span>
             </span>
-          </span>
-          <span
-            class="c15"
-          >
             <span
               class="c16"
             >
-              Disastrous photographer
-              <svg
-                height="22"
-                width="22"
+              <span
+                class="c17"
               >
-                camera.svg
-              </svg>
+                Disastrous photographer
+                <svg
+                  height="22"
+                  width="22"
+                >
+                  camera.svg
+                </svg>
+              </span>
             </span>
           </span>
-        </span>
-      </p>
-    </section>
-    <a
-      class="c2 c17 c4"
-      href="/en/experience"
-    >
-      <div
-        class="c18"
+        </p>
+      </section>
+      <a
+        class="c3 c18 c5"
+        href="/en/experience"
       >
-        <svg
-          class="c6 c7"
-          height="42"
-          width="42"
-        >
-          circleButton.svg
-        </svg>
         <div
-          class="c8"
+          class="c19"
         >
-          <svg>
-            arrowRight.svg
+          <svg
+            class="c7 c8"
+            height="42"
+            width="42"
+          >
+            circleButton.svg
           </svg>
+          <div
+            class="c9"
+          >
+            <svg>
+              arrowRight.svg
+            </svg>
+          </div>
         </div>
-      </div>
-      <p
-        class="c12 c19 c13 c20"
-      >
-        Experience
-      </p>
-    </a>
+        <p
+          class="c13 c20 c14 c21"
+        >
+          Experience
+        </p>
+      </a>
+    </div>
   </div>
 </body>
 `;

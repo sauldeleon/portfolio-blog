@@ -53,7 +53,7 @@ export function Header() {
       aria-label={t('mainMenu')}
       logo={
         <StyledLogoLink href={`/${language}/`} aria-label={t('headerLogo')}>
-          <StyledSLLogo height={55} width={106} />
+          <StyledSLLogo height={55} width={89} />
         </StyledLogoLink>
       }
       navItems={navItems}

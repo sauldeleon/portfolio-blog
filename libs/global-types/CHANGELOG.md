@@ -1,5 +1,7 @@
 # Changelog Global types
 
+## [0.2.1](https://github.com/sauldeleon/portfolio-blog/compare/global-types-0.2.0...global-types-0.2.1) (2024-01-08)
+
 # [0.2.0](https://github.com/sauldeleon/portfolio-blog/compare/global-types-0.1.0...global-types-0.2.0) (2023-09-26)
 
 ### Bug Fixes

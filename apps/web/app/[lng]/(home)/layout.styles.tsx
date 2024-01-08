@@ -3,6 +3,15 @@ import styled from 'styled-components'
 import { CircleLink } from '@sdlgr/circle-link'
 import { Body, Heading } from '@sdlgr/typography'
 
+export const StyledContainer = styled.div`
+  display: flex;
+  min-height: calc(100vh - 115px - 300px);
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+  width: 100%;
+`
+
 export const StyledHeading = styled(Heading)`
   text-align: center;
   margin-top: 80px;

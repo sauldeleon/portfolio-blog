@@ -1,5 +1,7 @@
 # Changelog i18n config
 
+## [0.2.2](https://github.com/sauldeleon/portfolio-blog/compare/i18n-config-0.2.1...i18n-config-0.2.2) (2024-01-08)
+
 ## [0.2.1](https://github.com/sauldeleon/portfolio-blog/compare/i18n-config-0.2.0...i18n-config-0.2.1) (2023-09-14)
 
 # [0.2.0](https://github.com/sauldeleon/portfolio-blog/compare/i18n-config-0.1.0...i18n-config-0.2.0) (2023-09-10)
