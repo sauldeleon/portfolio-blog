@@ -1,6 +1,6 @@
 {
   "name": "web-e2e",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "",
   "scripts": {
     "e2e": "cypress run",
