@@ -1,5 +1,12 @@
 # Changelog Button component
 
+# [0.3.0](https://github.com/sauldeleon/portfolio-blog/compare/button-0.2.3...button-0.3.0) (2024-01-08)
+
+### Features
+
+- add share behavior ([f148d1a](https://github.com/sauldeleon/portfolio-blog/commit/f148d1a13c25ee3dd4ab4e5b6edad0781fe3eb33))
+- add share button to portfolio ([02b7450](https://github.com/sauldeleon/portfolio-blog/commit/02b7450d6fa116e47717e28bd7ed83071823f6d2))
+
 ## [0.2.3](https://github.com/sauldeleon/portfolio-blog/compare/button-0.2.2...button-0.2.3) (2023-09-14)
 
 ## [0.2.2](https://github.com/sauldeleon/portfolio-blog/compare/button-0.2.1...button-0.2.2) (2023-09-10)
