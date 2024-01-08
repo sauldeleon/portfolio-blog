@@ -1,5 +1,7 @@
 # Changelog Visually Hidden component
 
+## [0.2.1](https://github.com/sauldeleon/portfolio-blog/compare/visually-hidden-0.2.0...visually-hidden-0.2.1) (2024-01-08)
+
 # [0.2.0](https://github.com/sauldeleon/portfolio-blog/compare/visually-hidden-0.1.0...visually-hidden-0.2.0) (2023-09-26)
 
 ### Bug Fixes
