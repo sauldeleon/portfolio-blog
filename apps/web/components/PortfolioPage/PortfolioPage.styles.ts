@@ -2,6 +2,7 @@ import { VerticalScrollDirection } from 'react-use-is-scrolling'
 import { keyframes, styled } from 'styled-components'
 
 import { Button } from '@sdlgr/button'
+import { Label } from '@sdlgr/typography'
 
 export const StyledContent = styled.div`
   margin-top: 60px;
@@ -100,9 +101,18 @@ export const StyledActionContainer = styled.div`
   }
 `
 
+export const StyledLabel = styled(Label)`
+  color: currentColor;
+`
+
 export const StyledShareButton = styled(Button)`
   padding: 10px;
   width: 100%;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.black};
+    background: ${({ theme }) => theme.colors.white};
+  }
 
   ${({ theme }) => theme.media.up.md} {
     width: fit-content;

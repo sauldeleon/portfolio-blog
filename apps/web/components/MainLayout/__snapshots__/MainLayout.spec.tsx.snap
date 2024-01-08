@@ -16,18 +16,18 @@ exports[`MainLayout should render successfully 1`] = `
 }
 
 .c21 {
-  padding: 0;
   display: flex;
   align-items: center;
   gap: 5px;
   background: transparent;
+  cursor: pointer;
+  padding: 0;
   outline: none;
   box-shadow: none;
-  color: #FBFBFB;
   padding-block: 0;
   padding-inline: 0;
   border: none;
-  cursor: pointer;
+  color: #FBFBFB;
   position: relative;
 }
 

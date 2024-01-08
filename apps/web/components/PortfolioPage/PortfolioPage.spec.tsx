@@ -123,5 +123,7 @@ describe('PortfolioPage', () => {
     )
 
     expect(navigator.share).toBeUndefined()
+
+    expect(screen.getByText('Copied!')).toBeInTheDocument()
   })
 })

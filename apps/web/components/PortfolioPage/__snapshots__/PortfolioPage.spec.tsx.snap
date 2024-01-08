@@ -1,6 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`PortfolioPage should render successfully 1`] = `
+.c40 {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  cursor: pointer;
+  border: 1px solid #FBFBFB;
+  padding: 15px 20px;
+}
+
 .c13 {
   font-family: fontFamily;
   font-weight: 400;
@@ -82,16 +92,6 @@ exports[`PortfolioPage should render successfully 1`] = `
   text-transform: uppercase;
 }
 
-.c40 {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  background: transparent;
-  cursor: pointer;
-  border: 1px solid #FBFBFB;
-  padding: 15px 20px;
-}
-
 .c0 {
   margin-top: 60px;
   width: 100%;
@@ -152,9 +152,18 @@ exports[`PortfolioPage should render successfully 1`] = `
   padding-right: calc(1rem - 8px);
 }
 
+.c42 {
+  color: currentColor;
+}
+
 .c41 {
   padding: 10px;
   width: 100%;
+}
+
+.c41:hover {
+  color: #000000;
+  background: #FBFBFB;
 }
 
 .c36 {
@@ -1841,7 +1850,7 @@ exports[`PortfolioPage should render successfully 1`] = `
           share.svg
         </svg>
         <div
-          class="c7"
+          class="c7 c42"
         >
           Share with a friend
         </div>

@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react'
 import { useIsScrolling } from 'react-use-is-scrolling'
 
 import { ScrollTop, ShareIcon } from '@sdlgr/assets'
-import { Label } from '@sdlgr/typography'
 
 import { useClientTranslation } from '@web/i18n/client'
 
 import {
   StyledActionContainer,
   StyledContent,
+  StyledLabel,
   StyledScrollButton,
   StyledScrollColumn,
   StyledShareButton,
@@ -23,6 +23,7 @@ import { WorkingExperience } from './components/WorkingExperience/WorkingExperie
 export function PortfolioPage() {
   const { t } = useClientTranslation('portfolioPage')
   const [scroll, setScroll] = useState(0)
+  const [isShared, setIsShared] = useState(false)
   const { isScrolling, scrollDirectionY } = useIsScrolling()
 
   useEffect(() => {
@@ -87,10 +88,13 @@ export function PortfolioPage() {
             if (navigator.share !== undefined) {
               navigator.share({ url: document.location.href })
             }
+            setIsShared(true)
           }}
         >
           <ShareIcon height={40} width={40} />
-          <Label>{t('shareWithAFriend')}</Label>
+          <StyledLabel>
+            {t(isShared ? 'shared' : 'shareWithAFriend')}
+          </StyledLabel>
         </StyledShareButton>
       </StyledActionContainer>
     </>

@@ -1,18 +1,22 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
-export const StyledTextButton = styled.button`
-  padding: 0;
+const sharedButtonStyles = css`
   display: flex;
   align-items: center;
   gap: 5px;
   background: transparent;
+  cursor: pointer;
+`
+
+export const StyledTextButton = styled.button`
+  ${sharedButtonStyles}
+  padding: 0;
   outline: none;
   box-shadow: none;
-  color: ${({ theme }) => theme.colors.white};
   padding-block: 0;
   padding-inline: 0;
   border: none;
-  cursor: pointer;
+  color: ${({ theme }) => theme.colors.white};
 
   ${({ theme }) => theme.helpers.textBottomBorder.afterShared};
   ${({ theme }) => theme.helpers.textBottomBorder.transform()};
@@ -20,11 +24,7 @@ export const StyledTextButton = styled.button`
 `
 
 export const StyledContainedButton = styled.button`
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  background: transparent;
-  cursor: pointer;
+  ${sharedButtonStyles}
   border: 1px solid ${({ theme }) => theme.colors.white};
   padding: 15px 20px;
 `
