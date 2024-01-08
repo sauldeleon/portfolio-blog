@@ -1,5 +1,4 @@
 import { ParseKeys } from 'i18next'
-import { useId } from 'react'
 import { Trans } from 'react-i18next'
 
 import { useClientTranslation } from '@web/i18n/client'
@@ -13,14 +12,13 @@ import {
 } from './OtherStuff.styles'
 
 export function OtherStuff() {
-  const id = useId()
   const { t } = useClientTranslation('portfolioPage')
   const otherItems = t('items.other.otherAreas', { returnObjects: true })
 
   return (
     <>
-      {otherItems.map(({ name, beginYear, endYear, highlights }, index) => (
-        <div key={index}>
+      {otherItems.map(({ name, beginYear, endYear, highlights }) => (
+        <div key={name}>
           <StyledAreaPeriod>
             <Trans
               t={t}
@@ -29,11 +27,11 @@ export function OtherStuff() {
                 italic: <StyledItalic />,
               }}
             />{' '}
-            {`${beginYear ? beginYear : ''}${endYear ? ' - ' + endYear : ''}`}
+            {`${beginYear || ''}${endYear ? ' - ' + endYear : ''}`}
           </StyledAreaPeriod>
           <StyledList>
-            {highlights.map((highlight, index) => (
-              <StyledListItem key={`${id}-${index}`}>
+            {highlights.map((highlight) => (
+              <StyledListItem key={highlight}>
                 <Trans
                   t={t}
                   i18nKey={highlight as ParseKeys<'portfolioPage'>}

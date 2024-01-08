@@ -9,7 +9,10 @@ export interface PortfolioItemProps {
   children: React.ReactNode
 }
 
-export function PortfolioItem({ title, children }: PortfolioItemProps) {
+export function PortfolioItem({
+  title,
+  children,
+}: Readonly<PortfolioItemProps>) {
   return (
     <StyledSection>
       <StyledTitle $level="L">{title}</StyledTitle>
