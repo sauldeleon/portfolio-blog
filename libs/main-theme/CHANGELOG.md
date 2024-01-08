@@ -1,5 +1,12 @@
 # Changelog Main Theme
 
+# [0.5.0](https://github.com/sauldeleon/portfolio-blog/compare/main-theme-0.4.1...main-theme-0.5.0) (2024-01-08)
+
+### Features
+
+- add portfolio item components ([afb7d30](https://github.com/sauldeleon/portfolio-blog/commit/afb7d309663f62c30464ffb13e444949a68f5ba0))
+- cleanup unused libraries ([30a54d0](https://github.com/sauldeleon/portfolio-blog/commit/30a54d0d1270dc3caf08b33015ddf7be8bf4a25f))
+
 ## [0.4.1](https://github.com/sauldeleon/portfolio-blog/compare/main-theme-0.4.0...main-theme-0.4.1) (2023-09-26)
 
 # [0.4.0](https://github.com/sauldeleon/portfolio-blog/compare/main-theme-0.3.0...main-theme-0.4.0) (2023-09-14)
