@@ -1,12 +1,16 @@
 diff --git a/node_modules/@nx/next/plugins/with-nx.js b/node_modules/@nx/next/plugins/with-nx.js
-index 0635d96..f455ffd 100644
+index 0635d96..8d96223 100644
 --- a/node_modules/@nx/next/plugins/with-nx.js
 +++ b/node_modules/@nx/next/plugins/with-nx.js
-@@ -236,7 +236,21 @@ function getNextConfig(nextConfig = {}, context = getWithNxContext()) {
+@@ -235,8 +235,24 @@ function getNextConfig(nextConfig = {}, context = getWithNxContext()) {
+                 {
                      test: /\.svg$/i,
                      issuer: /\.[jt]sx?$/,
-                     resourceQuery: { not: [/url/] },
+-                    resourceQuery: { not: [/url/] },
 -                    use: ['@svgr/webpack'],
++                    resourceQuery: { 
++                        not: [/url/] 
++                    },
 +                    use: [{
 +                        loader: require.resolve('@svgr/webpack'),
 +                        options: {
