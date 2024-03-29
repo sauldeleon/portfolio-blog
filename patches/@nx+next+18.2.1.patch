@@ -1,0 +1,27 @@
+diff --git a/node_modules/@nx/next/plugins/with-nx.js b/node_modules/@nx/next/plugins/with-nx.js
+index 0635d96..e942ab8 100644
+--- a/node_modules/@nx/next/plugins/with-nx.js
++++ b/node_modules/@nx/next/plugins/with-nx.js
+@@ -236,7 +236,21 @@ function getNextConfig(nextConfig = {}, context = getWithNxContext()) {
+                     test: /\.svg$/i,
+                     issuer: /\.[jt]sx?$/,
+                     resourceQuery: { not: [/url/] },
+-                    use: ['@svgr/webpack'],
++                    use: [{
++                        loader: require.resolve('@svgr/webpack'),
++                        options: {
++                        svgo: true,
++                        titleProp: true,
++                        ref: true,
++                        },
++                    },
++                    {
++                        loader: require.resolve('url-loader'),
++                        options: {
++                        limit: 10000, // 10kB
++                        name: '[name].[hash:7].[ext]',
++                        },
++                    }],
+                 });
+             }
+             return userWebpack(config, options);

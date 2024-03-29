@@ -92,7 +92,7 @@ exports[`CircleLink should render with a different size 1`] = `
   stroke-width: 6px;
   stroke-dasharray: 110;
   stroke-dashoffset: 110;
-  transition: stroke-dashoffset 0.5s steps(4,end);
+  transition: stroke-dashoffset 0.5s steps(4, end);
 }
 
 .c1 {
@@ -132,7 +132,7 @@ exports[`CircleLink should render with a different size 1`] = `
 
 .c5 {
   position: absolute;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   top: 50%;
   left: 50%;
   display: flex;

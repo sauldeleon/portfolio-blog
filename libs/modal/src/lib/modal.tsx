@@ -1,4 +1,5 @@
 import React from 'react'
+import { RenderModalBackdropProps } from 'react-overlays/Modal'
 
 import { CloseIcon } from '@sdlgr/assets'
 
@@ -20,7 +21,9 @@ export function Modal({ isOpen, setIsOpen, children, ...rest }: ModalProps) {
     <StyledModal
       show={isOpen}
       onHide={() => setIsOpen(false)}
-      renderBackdrop={(props) => <StyledBackdrop {...props} />}
+      renderBackdrop={(props: RenderModalBackdropProps) => (
+        <StyledBackdrop {...props} />
+      )}
       aria-labelledby="about-modal-label"
       {...rest}
     >
