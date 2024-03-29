@@ -10,7 +10,7 @@ index 0635d96..e942ab8 100644
 +                    use: [{
 +                        loader: require.resolve('@svgr/webpack'),
 +                        options: {
-+                        svgo: true,
++                        svgo: false,
 +                        titleProp: true,
 +                        ref: true,
 +                        },
