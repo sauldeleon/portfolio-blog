@@ -4,6 +4,7 @@
 dist
 tmp
 /out-tsc
+*.tsbuildinfo
 .yarn/cache
 .yarn/install-state.gz
 
