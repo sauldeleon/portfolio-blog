@@ -2625,7 +2625,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.13.8, @babel/runtime@npm:^7.14.6, @babel/runtime@npm:^7.17.8, @babel/runtime@npm:^7.22.5, @babel/runtime@npm:^7.22.6, @babel/runtime@npm:^7.6.3, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7":
+"@babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.13.8, @babel/runtime@npm:^7.14.6, @babel/runtime@npm:^7.17.8, @babel/runtime@npm:^7.22.6, @babel/runtime@npm:^7.6.3, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7":
   version: 7.23.2
   resolution: "@babel/runtime@npm:7.23.2"
   dependencies:
@@ -2640,6 +2640,13 @@ __metadata:
   dependencies:
     regenerator-runtime: ^0.14.0
   checksum: 1a8eaf3d3a103ef5227b60ca7ab5c589118c36ca65ef2d64e65380b32a98a3f3b5b3ef96660fa0471b079a18b619a8317f3e7f03ab2b930c45282a8b69ed9a16
+  languageName: node
+  linkType: hard
+
+"@babel/runtime@npm:^7.29.2":
+  version: 7.29.2
+  resolution: "@babel/runtime@npm:7.29.2"
+  checksum: d5548d1165de8995f8afc93a5694b8625409be16cd1f2250ac13e331335858ddac3cb9fd278e6c43956a130101a2203f09417938a1a96f9fb70f02b4b4172e1d
   languageName: node
   linkType: hard
 
@@ -5911,9 +5918,9 @@ __metadata:
     eslint-plugin-react-hooks: ^7.1.1
     eslint-plugin-testing-library: ^7.16.2
     husky: ^9.1.7
-    i18next: 23.7.16
-    i18next-browser-languagedetector: 7.2.0
-    i18next-http-backend: 2.4.2
+    i18next: ^26.0.10
+    i18next-browser-languagedetector: ^8.2.1
+    i18next-http-backend: ^4.0.0
     i18next-resources-to-backend: 1.2.1
     jest: ^30.3.0
     jest-environment-jsdom: ^30.3.0
@@ -5931,7 +5938,7 @@ __metadata:
     react: 19.2.6
     react-cookie-consent: 9.0.0
     react-dom: 19.2.6
-    react-i18next: 14.0.0
+    react-i18next: ^17.0.7
     react-is: 19.2.6
     react-overlays: 5.2.1
     react-use-is-scrolling: 0.0.2
@@ -10085,15 +10092,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cross-fetch@npm:4.0.0":
-  version: 4.0.0
-  resolution: "cross-fetch@npm:4.0.0"
-  dependencies:
-    node-fetch: ^2.6.12
-  checksum: ecca4f37ffa0e8283e7a8a590926b66713a7ef7892757aa36c2d20ffa27b0ac5c60dcf453119c809abe5923fc0bae3702a4d896bfb406ef1077b0d0018213e24
-  languageName: node
-  linkType: hard
-
 "cross-spawn@npm:^7.0.0, cross-spawn@npm:^7.0.3":
   version: 7.0.3
   resolution: "cross-spawn@npm:7.0.3"
@@ -13577,21 +13575,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next-browser-languagedetector@npm:7.2.0":
-  version: 7.2.0
-  resolution: "i18next-browser-languagedetector@npm:7.2.0"
+"i18next-browser-languagedetector@npm:^8.2.1":
+  version: 8.2.1
+  resolution: "i18next-browser-languagedetector@npm:8.2.1"
   dependencies:
     "@babel/runtime": ^7.23.2
-  checksum: 757845c7ae7dfc541f5150855c3a3e4f6d29bcee113796d44dc781594abc7f16f2750a2a70d786904c16d23ba952eba2741c0bcfeaa381016669522a6236998f
+  checksum: 13aa156dddb1f40742d2216e62270dfadb0745f7a5c254479847bbe6953116992f3b0f0a9dbad781a2f86adbfba3b5de669ec36763239ee32614003b23b7c5c6
   languageName: node
   linkType: hard
 
-"i18next-http-backend@npm:2.4.2":
-  version: 2.4.2
-  resolution: "i18next-http-backend@npm:2.4.2"
-  dependencies:
-    cross-fetch: 4.0.0
-  checksum: 90b71a024691988ae98781cfa9a6e1c25ee63b0206027939df85c55f46b91c41faaacea6f8a9f868a484bea9ee85377e1aae21a889b2dd970af9ac825120579c
+"i18next-http-backend@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "i18next-http-backend@npm:4.0.0"
+  checksum: 9986ffa9858eec27ac114978517873162e39a20ce93aac8d915a43d3caf26d61b800edc40f610090d63f96615ebf4ef499fdb5673d1c7da61f74e33e61396164
   languageName: node
   linkType: hard
 
@@ -13604,12 +13600,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next@npm:23.7.16":
-  version: 23.7.16
-  resolution: "i18next@npm:23.7.16"
-  dependencies:
-    "@babel/runtime": ^7.23.2
-  checksum: 907eb4429598a53780152a54e8f8edadb224b506dc419b8cc3130e74ace7445dfbaa03af8a173d5145834fa8b45c39310673420f825ace2002dc56bb5879add0
+"i18next@npm:^26.0.10":
+  version: 26.0.10
+  resolution: "i18next@npm:26.0.10"
+  peerDependencies:
+    typescript: ^5 || ^6
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: e12a75ff395cd98537863edd022f5a5b5a594294ab71ddfb2a77ee490f3d461b1fec0233e1e9b61adfa120b67612039cf646dc1ca939082605c0f833fc6d7d7b
   languageName: node
   linkType: hard
 
@@ -16771,7 +16770,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:2.7.0, node-fetch@npm:^2.6.12":
+"node-fetch@npm:2.7.0":
   version: 2.7.0
   resolution: "node-fetch@npm:2.7.0"
   dependencies:
@@ -18716,21 +18715,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-i18next@npm:14.0.0":
-  version: 14.0.0
-  resolution: "react-i18next@npm:14.0.0"
+"react-i18next@npm:^17.0.7":
+  version: 17.0.7
+  resolution: "react-i18next@npm:17.0.7"
   dependencies:
-    "@babel/runtime": ^7.22.5
+    "@babel/runtime": ^7.29.2
     html-parse-stringify: ^3.0.1
+    use-sync-external-store: ^1.6.0
   peerDependencies:
-    i18next: ">= 23.2.3"
+    i18next: ">= 26.0.10"
     react: ">= 16.8.0"
+    typescript: ^5 || ^6
   peerDependenciesMeta:
     react-dom:
       optional: true
     react-native:
       optional: true
-  checksum: ab41bc1db8f0d127d608087444906c0b5ae8decbd442f8d64dffdb05cc8112f024f705818d347cbc5f9cb9cbb9bca137a171ee810494130da917f7befb5669b2
+    typescript:
+      optional: true
+  checksum: 1405034c25329b072bef1b6e17bb79654475288627596202a148f2fcb1a2f9befa6bc05cc4c11aafaf3137ea6f744087caf919675f67db8f2763ba287ca90966
   languageName: node
   linkType: hard
 
@@ -22121,6 +22124,15 @@ __metadata:
   version: 4.0.1
   resolution: "url-join@npm:4.0.1"
   checksum: f74e868bf25dbc8be6a8d7237d4c36bb5b6c62c72e594d5ab1347fe91d6af7ccd9eb5d621e30152e4da45c2e9a26bec21390e911ab54a62d4d82e76028374ee5
+  languageName: node
+  linkType: hard
+
+"use-sync-external-store@npm:^1.6.0":
+  version: 1.6.0
+  resolution: "use-sync-external-store@npm:1.6.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 61a62e910713adfaf91bdb72ff2cd30e5ba83687accaf3b6e75a903b45bf635f5722e3694af30d83a03e92cb533c0a5c699298d2fef639a03ffc86b469f4eee2
   languageName: node
   linkType: hard
 
