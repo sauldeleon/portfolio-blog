@@ -1,0 +1,228 @@
+/* ─── Reset ─────────────────────────────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font-family: var(--font-roboto-mono), monospace;
+  font-weight: 400;
+  vertical-align: baseline;
+}
+
+input:required,
+textarea:required,
+select:required,
+button:required,
+label:required,
+input:invalid,
+textarea:invalid,
+select:invalid,
+button:invalid,
+label:invalid {
+  box-shadow: none;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+
+body {
+  line-height: normal;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+:focus-visible {
+  outline: -webkit-focus-ring-color auto 1px;
+}
+
+/* ─── Generic ────────────────────────────────────────────────────────────── */
+
+:root {
+  font-size: 20px;
+}
+
+html {
+  font-size: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  -webkit-font-smoothing: antialiased;
+  background-color: #000000;
+  font-family: var(--font-roboto-mono), monospace;
+  font-weight: 400;
+  color: #fbfbfb;
+  font-size: 0.9rem;
+  line-height: normal;
+}
+
+/* ─── Typography ─────────────────────────────────────────────────────────── */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  font-family: var(--font-roboto-mono), monospace;
+  color: #fbfbfb;
+}
+
+h1 {
+  font-weight: 400;
+  font-size: 3rem;
+  line-height: normal;
+}
+
+h2 {
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: normal;
+}
+
+p {
+  font-size: 1rem;
+  line-height: normal;
+}
+
+a {
+  color: #fbfbfb;
+  text-decoration: none;
+}
+
+button {
+  font-family: var(--font-roboto-mono), monospace;
+}
+
+i,
+em {
+  font-style: italic;
+}
+
+b,
+strong {
+  font-family: var(--font-roboto-mono), monospace;
+  font-weight: 500;
+}

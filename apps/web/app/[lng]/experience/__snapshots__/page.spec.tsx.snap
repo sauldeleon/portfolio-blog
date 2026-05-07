@@ -382,7 +382,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
 }
 
 .c10 {
-  width: 120%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -502,7 +502,6 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
 
 @media (width >= 768px) {
   .c10 {
-    width: 100%;
     margin-bottom: 0px;
     max-width: 45%;
   }

@@ -315,7 +315,7 @@ exports[`ExperienceItem should render successfully 1`] = `
 }
 
 .c8 {
-  width: 120%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -423,7 +423,6 @@ exports[`ExperienceItem should render successfully 1`] = `
 
 @media (width >= 768px) {
   .c8 {
-    width: 100%;
     margin-bottom: 0px;
     max-width: 45%;
   }

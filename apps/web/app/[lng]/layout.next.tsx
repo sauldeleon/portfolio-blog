@@ -16,6 +16,8 @@ import {
   sharedRootViewport,
 } from '@web/utils/metadata/metadata'
 
+import '../globals.css'
+
 interface RouteProps {
   params: Promise<{ lng: string }>
 }

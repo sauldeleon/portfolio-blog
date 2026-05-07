@@ -71,8 +71,8 @@ export const StyledAttribute = styled.span`
     word-spacing: 1em;
     background-image: linear-gradient(
       0.25turn,
-      transparent 0 calc(50% - 0.03em),
-      currentcolor 0 calc(50% + 0.03em),
+      transparent 0 calc(50% - 0.04em),
+      currentcolor 0 calc(50% + 0.04em),
       transparent 0
     );
   }

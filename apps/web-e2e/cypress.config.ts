@@ -19,12 +19,13 @@ export default defineConfig({
     setupNodeEvents(on) {
       const cypressVersion: string = require('cypress/package.json').version
       const binaryBase = path.join(
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         process.env['HOME']!,
         'Library/Caches/Cypress',
         cypressVersion,
         'Cypress.app/Contents/Resources/app/packages/server/node_modules',
       )
-       
+
       const preprocessor = require(
         path.join(
           binaryBase,
@@ -60,7 +61,6 @@ export default defineConfig({
             }
           }
 
-           
           const webpackPreprocessor = require(
             path.join(binaryBase, '@cypress/webpack-preprocessor'),
           )
