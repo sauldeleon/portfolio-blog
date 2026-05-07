@@ -239,10 +239,6 @@ exports[`Footer should render successfully 1`] = `
   }
 }
 
-@media (width >= 768px) {
-
-}
-
 <body>
   <div>
     <footer

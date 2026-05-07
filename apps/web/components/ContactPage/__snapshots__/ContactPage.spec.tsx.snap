@@ -245,7 +245,7 @@ exports[`ContactPage should render successfully 1`] = `
   height: 70px;
   position: absolute;
   opacity: 0;
-  animation: BLSUr 60s 10s infinite;
+  animation: k0 60s 10s infinite;
 }
 
 .c14 {
@@ -255,7 +255,7 @@ exports[`ContactPage should render successfully 1`] = `
   height: 70px;
   position: absolute;
   opacity: 0;
-  animation: feYcwF 60s 10s infinite;
+  animation: k1 60s 10s infinite;
 }
 
 .c15 {
@@ -265,7 +265,7 @@ exports[`ContactPage should render successfully 1`] = `
   height: 70px;
   position: absolute;
   opacity: 0;
-  animation: gBIqQN 60s 10s infinite;
+  animation: k2 60s 10s infinite;
 }
 
 .c16 {
@@ -275,7 +275,7 @@ exports[`ContactPage should render successfully 1`] = `
   height: 70px;
   position: absolute;
   opacity: 0;
-  animation: jCGkWp 60s 10s infinite;
+  animation: k3 60s 10s infinite;
 }
 
 .c17 {
@@ -285,7 +285,7 @@ exports[`ContactPage should render successfully 1`] = `
   height: 70px;
   position: absolute;
   opacity: 0;
-  animation: cJztmO 60s 10s infinite;
+  animation: k4 60s 10s infinite;
 }
 
 @media (width >= 768px) {
@@ -463,6 +463,56 @@ exports[`ContactPage should render successfully 1`] = `
   .c17 {
     width: 140px;
     height: 140px;
+  }
+}
+
+@keyframes k0 {
+  0% {
+    opacity: 0;
+  }
+
+  16.666666666666664% {
+    opacity: 1;
+  }
+}
+
+@keyframes k1 {
+  16.666666666666664% {
+    opacity: 0;
+  }
+
+  33.33333333333333% {
+    opacity: 1;
+  }
+}
+
+@keyframes k2 {
+  33.33333333333333% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes k3 {
+  50% {
+    opacity: 0;
+  }
+
+  66.66666666666666% {
+    opacity: 1;
+  }
+}
+
+@keyframes k4 {
+  66.66666666666666% {
+    opacity: 0;
+  }
+
+  83.33333333333334% {
+    opacity: 1;
   }
 }
 

@@ -3,7 +3,17 @@
 exports[`LanguageGuard should render successfully 1`] = `
 .c0 {
   opacity: 0;
-  animation: cJoqxJ 0.2s 0.1s linear forwards;
+  animation: k0 0.2s 0.1s linear forwards;
+}
+
+@keyframes k0 {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 <body>

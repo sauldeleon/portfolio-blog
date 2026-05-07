@@ -89,7 +89,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
   animation-direction: alternate;
-  animation-name: TpVAo;
+  animation-name: k1;
 }
 
 .c21 {
@@ -97,7 +97,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
   aspect-ratio: 1/1;
   position: absolute;
   pointer-events: none;
-  animation-name: cABewS;
+  animation-name: k2;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
@@ -117,7 +117,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
 
 .c25 {
   color: #FFDD83;
-  animation-name: lhbgW;
+  animation-name: k3;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
@@ -138,7 +138,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
   width: 100%;
   height: 100%;
   pointer-events: none;
-  animation-name: ciDIWM;
+  animation-name: k0;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
@@ -164,7 +164,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
   width: 100%;
   height: 100%;
   pointer-events: none;
-  animation-name: ciDIWM;
+  animation-name: k0;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
@@ -190,7 +190,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
   width: 100%;
   height: 100%;
   pointer-events: none;
-  animation-name: ciDIWM;
+  animation-name: k0;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
@@ -532,6 +532,46 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
     min-width: 400px;
     width: 400px;
     transform: rotate(90deg);
+  }
+}
+
+@keyframes k3 {
+  from {
+    color: #FFDD83;
+  }
+
+  to {
+    color: #98DFD6;
+  }
+}
+
+@keyframes k0 {
+  0% {
+    transform: translateX(var(--translateX-begin));
+  }
+
+  100% {
+    transform: translateX(var(--translateX-end));
+  }
+}
+
+@keyframes k1 {
+  0% {
+    transform: translateY(var(--translateY-begin));
+  }
+
+  100% {
+    transform: translateY(var(--translateY-end));
+  }
+}
+
+@keyframes k2 {
+  from {
+    rotate: 0deg;
+  }
+
+  to {
+    rotate: var(--rotation);
   }
 }
 
