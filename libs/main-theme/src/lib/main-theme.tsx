@@ -33,10 +33,13 @@ const robotoMono = Roboto_Mono({
   display: 'swap',
   weight: ['100', '300', '400', '500'],
   fallback: ['monospace'],
+  variable: '--font-roboto-mono',
 })
 
+export const robotoMonoClassName = robotoMono.className
+
 const fontFamilies: Record<'robotoMono', string> = {
-  robotoMono: robotoMono.style.fontFamily,
+  robotoMono: 'var(--font-roboto-mono)',
 }
 
 const fontStyles: MainTheme['fontStyles'] = {

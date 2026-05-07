@@ -22,7 +22,7 @@ describe('Modal', () => {
         <div>test</div>
       </Modal>,
     )
-    const closeButton = await screen.findByText('close.svg')
+    const closeButton = await screen.findByRole('button', { name: /close/i })
     await userEvent.click(closeButton)
     expect(mockFn).toHaveBeenNthCalledWith(1, false)
   })
@@ -34,7 +34,7 @@ describe('Modal', () => {
         <div>test</div>
       </Modal>,
     )
-    const closeButton = await screen.findByText('close.svg')
+    const closeButton = await screen.findByRole('button', { name: /close/i })
     fireEvent.keyDown(closeButton, {
       key: 'Escape',
       code: 'Escape',

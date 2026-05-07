@@ -4,6 +4,7 @@ import Script from 'next/script'
 import { use } from 'react'
 
 import { LanguageContextProvider } from '@sdlgr/i18n-tools'
+import { robotoMonoClassName } from '@sdlgr/main-theme'
 
 import { LanguageGuard } from '@web/components/LanguageGuard/LanguageGuard'
 import { MainLayout } from '@web/components/MainLayout/MainLayout'
@@ -42,7 +43,12 @@ export default function RootLayout({ children, params }: RootLayoutProps) {
   const googleAnalyticsId = process.env.GOOGLE_ANALYTICS_ID
 
   return (
-    <html lang={lng} dir={dir(lng)} data-testid="root-html">
+    <html
+      lang={lng}
+      dir={dir(lng)}
+      data-testid="root-html"
+      className={robotoMonoClassName}
+    >
       <head>
         <Script
           async

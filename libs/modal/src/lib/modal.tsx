@@ -28,7 +28,10 @@ export function Modal({ isOpen, setIsOpen, children, ...rest }: ModalProps) {
       {...rest}
     >
       <StyledModalContent>
-        <StyledModalCloseButton onClick={() => setIsOpen(false)}>
+        <StyledModalCloseButton
+          aria-label="close"
+          onClick={() => setIsOpen(false)}
+        >
           <CloseIcon width={24} height={24} />
         </StyledModalCloseButton>
         {children}

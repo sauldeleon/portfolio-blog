@@ -7,7 +7,7 @@ import { MainPortal } from './MainPortal'
 describe('MainPortal', () => {
   it('should render', () => {
     renderApp(<MainPortal />)
-    expect(screen.getAllByText('portal.svg')).toHaveLength(2)
+    expect(screen.getAllByRole('img')).toHaveLength(2)
   })
 
   it('should pass children', () => {

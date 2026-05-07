@@ -113,29 +113,29 @@ exports[`mainTheme should work 1`] = `
     "robotoMono": {
       "light": [
         "font-family:",
-        "fontFamily",
+        "var(--font-roboto-mono)",
         ";font-weight:300;",
       ],
       "medium": [
         "font-family:",
-        "fontFamily",
+        "var(--font-roboto-mono)",
         ";font-weight:500;",
       ],
       "regular": [
         "font-family:",
-        "fontFamily",
+        "var(--font-roboto-mono)",
         ";font-weight:400;",
       ],
       "thin": [
         "font-family:",
-        "fontFamily",
+        "var(--font-roboto-mono)",
         ";font-weight:100;",
       ],
     },
   },
   "fonts": {
     "baseSize": 20,
-    "bodyFont": "fontFamily",
+    "bodyFont": "var(--font-roboto-mono)",
   },
   "helpers": {
     "border": {
@@ -209,7 +209,7 @@ exports[`mainTheme should work 1`] = `
     "body": {
       "L": [
         "font-family:",
-        "fontFamily",
+        "var(--font-roboto-mono)",
         ";font-weight:400;",
         " color:",
         "#FBFBFB",
@@ -219,7 +219,7 @@ exports[`mainTheme should work 1`] = `
       ],
       "M": [
         "font-family:",
-        "fontFamily",
+        "var(--font-roboto-mono)",
         ";font-weight:400;",
         " color:",
         "#FBFBFB",
@@ -229,7 +229,7 @@ exports[`mainTheme should work 1`] = `
       ],
       "S": [
         "font-family:",
-        "fontFamily",
+        "var(--font-roboto-mono)",
         ";font-weight:400;",
         " color:",
         "#FBFBFB",
@@ -239,7 +239,7 @@ exports[`mainTheme should work 1`] = `
       ],
       "XL": [
         "font-family:",
-        "fontFamily",
+        "var(--font-roboto-mono)",
         ";font-weight:500;",
         " color:",
         "#FBFBFB",
@@ -249,7 +249,7 @@ exports[`mainTheme should work 1`] = `
       ],
       "XS": [
         "font-family:",
-        "fontFamily",
+        "var(--font-roboto-mono)",
         ";font-weight:500;",
         " color:",
         "#FBFBFB",
@@ -261,7 +261,7 @@ exports[`mainTheme should work 1`] = `
     "heading": {
       "heading1": [
         "font-family:",
-        "fontFamily",
+        "var(--font-roboto-mono)",
         ";font-weight:400;",
         " color:",
         "#FBFBFB",
@@ -271,7 +271,7 @@ exports[`mainTheme should work 1`] = `
       ],
       "heading2": [
         "font-family:",
-        "fontFamily",
+        "var(--font-roboto-mono)",
         ";font-weight:400;",
         " color:",
         "#FBFBFB",
@@ -283,7 +283,7 @@ exports[`mainTheme should work 1`] = `
     "label": {
       "L": [
         "font-family:",
-        "fontFamily",
+        "var(--font-roboto-mono)",
         ";font-weight:500;",
         " color:",
         "#FBFBFB",
@@ -293,7 +293,7 @@ exports[`mainTheme should work 1`] = `
       ],
       "XS": [
         "font-family:",
-        "fontFamily",
+        "var(--font-roboto-mono)",
         ";font-weight:500;",
         " color:",
         "#FBFBFB",
