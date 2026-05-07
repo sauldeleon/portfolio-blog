@@ -3050,6 +3050,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@cypress/webpack-preprocessor@npm:7.1.0":
+  version: 7.1.0
+  resolution: "@cypress/webpack-preprocessor@npm:7.1.0"
+  dependencies:
+    bluebird: 3.7.1
+    debug: ^4.3.4
+    lodash: ^4.17.20
+    semver: ^7.7.3
+  peerDependencies:
+    "@babel/core": ^7.28.0
+    "@babel/preset-env": ^7.26.0
+    babel-loader: ^9 || ^10
+    webpack: ^5
+  checksum: 3b01eba945e775ac3451a17d7311a954f1638d1edb571695c8876defae158507a9ac25a1b95bdea75d1f290866c6f150fd1c3dab9d2474b68778c54f3793bf00
+  languageName: node
+  linkType: hard
+
 "@cypress/xvfb@npm:^1.2.4":
   version: 1.2.4
   resolution: "@cypress/xvfb@npm:1.2.4"
@@ -6081,6 +6098,7 @@ __metadata:
     "@babel/preset-react": 7.28.5
     "@commitlint/cli": ^20.5.3
     "@commitlint/config-conventional": ^20.5.3
+    "@cypress/webpack-preprocessor": 7.1.0
     "@eslint/eslintrc": ^3.3.5
     "@eslint/js": ^9.39.4
     "@fingerprintjs/botd": 1.9.0
@@ -6158,6 +6176,7 @@ __metadata:
     seedrandom: 3.0.5
     styled-components: 6.4.1
     ts-jest: 29.4.9
+    ts-loader: 9.5.7
     ts-node: 10.9.2
     tslib: 2.8.1
     typescript: ^6.0.3
@@ -9006,6 +9025,13 @@ __metadata:
   version: 2.0.2
   resolution: "blob-util@npm:2.0.2"
   checksum: d543e6b92e4ca715ca33c78e89a07a2290d43e5b2bc897d7ec588c5c7bbf59df93e45225ac0c9258aa6ce4320358990f99c9288f1c48280f8ec5d7a2e088d19b
+  languageName: node
+  linkType: hard
+
+"bluebird@npm:3.7.1":
+  version: 3.7.1
+  resolution: "bluebird@npm:3.7.1"
+  checksum: 58c295399e109925149977ebcb40e42fd109d3e458899e71441bc7e5e0867bbd796fdd20278b425fa29f13377fe335fbfc2a6e68e5ca1da03b1c3afdc439d097
   languageName: node
   linkType: hard
 
@@ -16088,6 +16114,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash@npm:^4.17.20":
+  version: 4.18.1
+  resolution: "lodash@npm:4.18.1"
+  checksum: bb5f5b49aad29614e709af02b64c56b0f8b78c6a81434a3c1ae527d2f0f78ca08f9d9fb22aa825a053876c9d2166e9c01f31c356014b5e2bdc0556c057433102
+  languageName: node
+  linkType: hard
+
 "log-symbols@npm:4.1.0, log-symbols@npm:^4.0.0, log-symbols@npm:^4.1.0":
   version: 4.1.0
   resolution: "log-symbols@npm:4.1.0"
@@ -21693,7 +21726,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-loader@npm:^9.3.1":
+"ts-loader@npm:9.5.7, ts-loader@npm:^9.3.1":
   version: 9.5.7
   resolution: "ts-loader@npm:9.5.7"
   dependencies:
