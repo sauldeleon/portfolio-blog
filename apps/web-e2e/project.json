@@ -3,6 +3,8 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/web-e2e/src",
   "projectType": "application",
+  "tags": [],
+  "implicitDependencies": ["web"],
   "targets": {
     "version": {
       "executor": "@jscutlery/semver:version",
@@ -33,7 +35,5 @@
         "lintFilePatterns": ["apps/web-e2e/**/*.{js,ts}"]
       }
     }
-  },
-  "tags": [],
-  "implicitDependencies": ["web"]
+  }
 }

@@ -1,4 +1,3 @@
-/* eslint-disable */
 module.exports = {
   displayName: 'mocks',
   preset: '../../jest.preset.js',

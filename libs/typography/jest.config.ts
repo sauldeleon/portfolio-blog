@@ -1,4 +1,3 @@
-/* eslint-disable */
 module.exports = {
   displayName: 'typography',
   preset: '../../jest.preset.js',

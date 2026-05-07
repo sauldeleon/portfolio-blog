@@ -1,4 +1,3 @@
-/* eslint-disable */
 module.exports = {
   displayName: 'use-is-bot',
   preset: '../../jest.preset.js',

@@ -1,4 +1,3 @@
-/* eslint-disable */
 module.exports = {
   displayName: 'visually-hidden',
   preset: '../../jest.preset.js',

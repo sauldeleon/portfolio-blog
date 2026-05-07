@@ -1,4 +1,3 @@
-/* eslint-disable */
 module.exports = {
   displayName: 'footer',
   preset: '../../jest.preset.js',

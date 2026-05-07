@@ -31,7 +31,7 @@ export type AnimatedElement = {
   fastDelay?: boolean
 }
 
-interface AnimatedItemProps extends AnimatedElement {}
+type AnimatedItemProps = AnimatedElement
 
 export function AnimatedItem({
   svg,

@@ -1,4 +1,3 @@
-/* eslint-disable */
 module.exports = {
   displayName: 'i18n-config',
   preset: '../../jest.preset.js',

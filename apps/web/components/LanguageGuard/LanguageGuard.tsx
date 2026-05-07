@@ -32,6 +32,7 @@ export function LanguageGuard({ children }: LanguageGuardProps) {
       const differencePath = removeFirstPart(pathname)
       router.push(`/${defaultLanguage}${differencePath}`)
     } else {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsReady(true)
     }
   }, [defaultLanguage, language, pathname, router])

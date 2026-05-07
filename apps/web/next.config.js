@@ -68,10 +68,10 @@ const nextConfig = {
 }
 
 // Add SVGR webpack config function
-// @ts-ignore
+// @ts-expect-error untyped Nx/Next config wrapper
 const withSvgr = (config) => {
   const originalWebpack = config.webpack
-  // @ts-ignore
+  // @ts-expect-error untyped webpack config params
   config.webpack = (webpackConfig, ctx) => {
     // Add SVGR support with webpack 5 asset modules
     webpackConfig.module.rules.push({
