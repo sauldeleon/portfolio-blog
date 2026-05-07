@@ -1,5 +1,5 @@
 /* eslint-disable */
-export default {
+module.exports = {
   displayName: 'use-is-bot',
   preset: '../../jest.preset.js',
   transform: {

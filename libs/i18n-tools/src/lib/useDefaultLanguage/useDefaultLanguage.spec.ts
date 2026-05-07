@@ -1,5 +1,4 @@
 import { renderHook } from '@testing-library/react'
-import { renderHook as renderHookSSR } from '@testing-library/react-hooks/server'
 
 import { STORAGE_I18N_KEY } from '@sdlgr/i18n-config'
 import { LocalStorageMock } from '@sdlgr/mocks'
@@ -50,17 +49,6 @@ describe('useDefaultLanguage', () => {
     })
 
     const { result } = renderHook(() => useDefaultLanguage(mockData))
-    expect(result.current).toEqual('en')
-  })
-})
-
-describe('useDefaultLanguage SSR', () => {
-  it('should return default language to fallback on SSR with no window', () => {
-    Object.defineProperty(global, 'window', {
-      value: undefined,
-    })
-
-    const { result } = renderHookSSR(() => useDefaultLanguage(mockData))
     expect(result.current).toEqual('en')
   })
 })

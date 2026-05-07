@@ -1,8 +1,5 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "affected": {
-    "defaultBase": "origin/main"
-  },
   "plugins": ["@nx-go/nx-go"],
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
@@ -56,5 +53,7 @@
       }
     }
   },
-  "nxCloudAccessToken": "M2JjNmZlNzQtZmE3OC00ZTg5LWFlNTgtODUzMDMzMmIyMTY0fHJlYWQtd3JpdGU="
+  "nxCloudAccessToken": "M2JjNmZlNzQtZmE3OC00ZTg5LWFlNTgtODUzMDMzMmIyMTY0fHJlYWQtd3JpdGU=",
+  "useInferencePlugins": false,
+  "defaultBase": "origin/main"
 }

@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`MainLayout should render successfully 1`] = `
 .c0 {
@@ -771,7 +771,7 @@ exports[`MainLayout should render successfully 1`] = `
       </div>
       <div
         class="CookieConsent"
-        style="align-items: center; background: rgb(251, 251, 251); color: white; display: flex; flex-wrap: wrap; justify-content: space-between; left: 0px; position: fixed; width: 100%; z-index: 999; font-family: fontFamily; bottom: 0px;"
+        style="align-items: center; background: rgb(251, 251, 251); color: white; display: flex; flex-wrap: wrap; justify-content: space-between; left: 0px; position: fixed; width: 100%; z-index: 999; bottom: 0px;"
       >
         <div
           class=""

@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`mainTheme should work 1`] = `
 {
@@ -182,10 +182,7 @@ exports[`mainTheme should work 1`] = `
     },
   },
   "logo": {
-    "component": {
-      "$$typeof": Symbol(react.forward_ref),
-      "render": [Function],
-    },
+    "component": [Function],
     "svg": "slLogo.svg",
   },
   "media": {

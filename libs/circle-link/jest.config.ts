@@ -1,5 +1,5 @@
 /* eslint-disable */
-export default {
+module.exports = {
   displayName: 'circle-link',
   preset: '../../jest.preset.js',
   transform: {

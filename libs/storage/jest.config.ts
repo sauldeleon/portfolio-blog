@@ -1,5 +1,5 @@
 /* eslint-disable */
-export default {
+module.exports = {
   displayName: 'storage',
   preset: '../../jest.preset.js',
   transform: {

@@ -8,11 +8,7 @@ const locales = ['en', 'es']
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
  **/
 const nextConfig = {
-  nx: {
-    // Set this to true if you would like to to use SVGR
-    // See: https://github.com/gregberge/svgr
-    svgr: true,
-  },
+  nx: {},
   output: process.env.EXPORT_STATIC_FILES === 'true' ? 'export' : undefined,
   compiler: {
     // For other options, see https://styled-components.com/docs/tooling#babel-plugin
@@ -71,9 +67,54 @@ const nextConfig = {
   },
 }
 
+// Add SVGR webpack config function
+// @ts-ignore
+const withSvgr = (config) => {
+  const originalWebpack = config.webpack
+  // @ts-ignore
+  config.webpack = (webpackConfig, ctx) => {
+    // Add SVGR support with webpack 5 asset modules
+    webpackConfig.module.rules.push({
+      test: /.svg$/,
+      oneOf: [
+        {
+          resourceQuery: /url/,
+          type: 'asset/resource',
+          generator: {
+            filename: 'static/media/[name].[hash][ext]',
+          },
+        },
+        {
+          issuer: { not: /.(css|scss|sass)$/ },
+          resourceQuery: {
+            not: [
+              /__next_metadata__/,
+              /__next_metadata_route__/,
+              /__next_metadata_image_meta__/,
+            ],
+          },
+          use: [
+            {
+              loader: require.resolve('@svgr/webpack'),
+              options: {
+                svgo: false,
+                titleProp: true,
+                ref: true,
+                exportType: 'named',
+              },
+            },
+          ],
+        },
+      ],
+    })
+    return originalWebpack ? originalWebpack(webpackConfig, ctx) : webpackConfig
+  }
+  return config
+}
+
 const plugins = [
   // Add more Next.js plugins to this list if needed.
   withNx,
 ]
 
-module.exports = composePlugins(...plugins)(nextConfig)
+module.exports = composePlugins(...plugins, withSvgr)(nextConfig)
