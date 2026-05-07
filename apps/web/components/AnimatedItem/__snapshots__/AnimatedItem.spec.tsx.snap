@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`AnimatedItem should render successfully 1`] = `
 .c5 {
@@ -144,12 +144,12 @@ exports[`AnimatedItem should render successfully 1`] = `
     <li
       class="c0"
       data-testid="horizontal-movement"
-      style="animation-duration: 14.41839661278781s; animation-delay: 13.847421686441452s;"
+      style="animation-duration: 10.705239013947832s; animation-delay: 1.1599880495699082s;"
     >
       <div
         class="c1 c2"
         data-testid="vertical-movement"
-        style="--translateY-begin: -3%; --translateY-end: 31%; animation-duration: 7.388991085926664s;"
+        style="--translateY-begin: -21%; --translateY-end: 13%; animation-duration: 10.836175601009854s;"
       >
         <div
           class="c3 c4"
@@ -166,7 +166,7 @@ exports[`AnimatedItem should render successfully 1`] = `
             <div
               class="c7 c8"
               data-testid="color-swapping"
-              style="animation-duration: 14.41839661278781s; animation-delay: 13.847421686441452s;"
+              style="animation-duration: 10.705239013947832s; animation-delay: 1.1599880495699082s;"
             >
               <svg />
             </div>

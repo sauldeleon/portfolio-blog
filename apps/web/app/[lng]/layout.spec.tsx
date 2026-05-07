@@ -42,14 +42,14 @@ describe('[lng] route - layout', () => {
     renderApp(<RootLayout params={{ lng: 'en' }}>test</RootLayout>)
 
     expect(await screen.findByText('test')).toBeInTheDocument()
-    expect(screen.getByTestId('root-html')).toHaveAttribute('lang', 'en')
+    expect(document.documentElement).toHaveAttribute('lang', 'en')
   })
 
   it('should render successfully in Spanish', async () => {
     renderApp(<RootLayout params={{ lng: 'es' }}>test</RootLayout>)
 
     expect(await screen.findByText('test')).toBeInTheDocument()
-    expect(screen.getByTestId('root-html')).toHaveAttribute('lang', 'es')
+    expect(document.documentElement).toHaveAttribute('lang', 'es')
   })
 })
 

@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Particles should render successfully 1`] = `
 .c0 {
@@ -65,11 +65,11 @@ exports[`Particles should render successfully 1`] = `
   <div>
     <div
       class="c0"
-      style="--particleSize: 8px; --begin-y: 29%; --end-y: -12%; animation-duration: 4289ms; animation-delay: 8505ms;"
+      style="--particleSize: 7px; --begin-y: 29%; --end-y: -11%; animation-duration: 6146ms; animation-delay: 7931ms;"
     >
       <div
         class="c1"
-        style="animation-duration: 515ms, 1294ms; animation-delay: 30ms;"
+        style="animation-duration: 774ms, 1208ms; animation-delay: 9ms;"
       />
     </div>
   </div>

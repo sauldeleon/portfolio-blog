@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`ExperienceItem should render successfully 1`] = `
 .c20 {
@@ -563,17 +563,17 @@ exports[`ExperienceItem should render successfully 1`] = `
                 <li
                   class="c15"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 5.317700619202389s;"
+                  style="animation-duration: 6s; animation-delay: 5.580623580085307s;"
                 >
                   <div
                     class="c16 c17"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -18%; --translateY-end: 16%; animation-duration: 2.6506713315882395s;"
+                    style="--translateY-begin: -1%; --translateY-end: 20%; animation-duration: 7.139931313146209s;"
                   >
                     <div
                       class="c18 c19"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.69452697337711s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 5.864801760056939s;"
                     >
                       <a
                         aria-label="NodeJS"
@@ -586,7 +586,7 @@ exports[`ExperienceItem should render successfully 1`] = `
                         <div
                           class="c22 c23"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 5.317700619202389s;"
+                          style="animation-duration: 6s; animation-delay: 5.580623580085307s;"
                         >
                           <svg>
                             nodejs.svg

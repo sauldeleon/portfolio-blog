@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`[lng]/experience route -  page should render successfully 1`] = `
 .c0 {
@@ -647,17 +647,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 5.317700619202389s;"
+                  style="animation-duration: 6s; animation-delay: 2.260358087573086s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -18%; --translateY-end: 16%; animation-duration: 2.6506713315882395s;"
+                    style="--translateY-begin: -17%; --translateY-end: 4%; animation-duration: 10.417444951173s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.69452697337711s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.378342137759292s;"
                     >
                       <a
                         aria-label="NodeJS"
@@ -670,7 +670,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 5.317700619202389s;"
+                          style="animation-duration: 6s; animation-delay: 2.260358087573086s;"
                         >
                           <svg>
                             nodejs.svg
@@ -683,17 +683,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 3.608072757430517s;"
+                  style="animation-duration: 6s; animation-delay: 5.580623580085307s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -22%; --translateY-end: 1%; animation-duration: 2.1750665840069803s;"
+                    style="--translateY-begin: -1%; --translateY-end: 20%; animation-duration: 7.139931313146209s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 6.759014200771513s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 5.864801760056939s;"
                     >
                       <a
                         aria-label="Cypress"
@@ -706,7 +706,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 3.608072757430517s;"
+                          style="animation-duration: 6s; animation-delay: 5.580623580085307s;"
                         >
                           <svg>
                             cypress.svg
@@ -719,17 +719,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 4.413853448650663s;"
+                  style="animation-duration: 6s; animation-delay: 5.219303257153408s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -8%; --translateY-end: 3%; animation-duration: 5.139833716157671s;"
+                    style="--translateY-begin: -12%; --translateY-end: 8%; animation-duration: 8.364400407710384s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 4.926964759094687s;"
+                      style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 4.552927301330753s;"
                     >
                       <a
                         aria-label="Jest"
@@ -742,7 +742,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 4.413853448650663s;"
+                          style="animation-duration: 6s; animation-delay: 5.219303257153408s;"
                         >
                           <svg>
                             jest.svg
@@ -755,17 +755,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 2.4686951030768998s;"
+                  style="animation-duration: 6s; animation-delay: 2.8469059373100425s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: 3%; --translateY-end: 0%; animation-duration: 9.08099097805323s;"
+                    style="--translateY-begin: 5%; --translateY-end: -1%; animation-duration: 2.5990522199350403s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 6.409370599693125s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 6.67873451306061s;"
                     >
                       <a
                         aria-label="Tanstack React Query"
@@ -778,7 +778,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 2.4686951030768998s;"
+                          style="animation-duration: 6s; animation-delay: 2.8469059373100425s;"
                         >
                           <svg>
                             reactQuery.svg
@@ -791,17 +791,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c26"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 5.083733872294745s;"
+                  style="animation-duration: 6s; animation-delay: 3.6204990710600713s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: 16%; --translateY-end: 35%; animation-duration: 9.072815630320118s;"
+                    style="--translateY-begin: -28%; --translateY-end: 37%; animation-duration: 5.9537302530318055s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 5.170840168145276s;"
+                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.449384545001999s;"
                     >
                       <a
                         aria-label="NextJS"
@@ -814,7 +814,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 5.083733872294745s;"
+                          style="animation-duration: 6s; animation-delay: 3.6204990710600713s;"
                         >
                           <svg>
                             nextjs.svg
@@ -827,17 +827,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 5.276069308335727s;"
+                  style="animation-duration: 6s; animation-delay: 2.1385167323969045s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: 2%; --translateY-end: -18%; animation-duration: 10.782789961495135s;"
+                    style="--translateY-begin: 2%; --translateY-end: -7%; animation-duration: 5.384610939041053s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 4.572059010408153s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 4.664569072530999s;"
                     >
                       <a
                         aria-label="Typescript"
@@ -850,7 +850,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 5.276069308335727s;"
+                          style="animation-duration: 6s; animation-delay: 2.1385167323969045s;"
                         >
                           <svg>
                             typescript.svg
@@ -863,17 +863,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 4.5555725705325685s;"
+                  style="animation-duration: 6s; animation-delay: 5.295743755214707s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -3%; --translateY-end: 34%; animation-duration: 7.338088360319994s;"
+                    style="--translateY-begin: -28%; --translateY-end: -3%; animation-duration: 6.736478921971688s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.601112449866713s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 4.100088631819362s;"
                     >
                       <a
                         aria-label="Styled Components"
@@ -886,7 +886,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 4.5555725705325685s;"
+                          style="animation-duration: 6s; animation-delay: 5.295743755214707s;"
                         >
                           <svg>
                             styledComponents.svg
@@ -899,17 +899,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 4.144348516768651s;"
+                  style="animation-duration: 6s; animation-delay: 1.221914078523888s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -15%; --translateY-end: 6%; animation-duration: 4.506798326937581s;"
+                    style="--translateY-begin: 14%; --translateY-end: 6%; animation-duration: 8.500211539448369s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 6.054742129509922s;"
+                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 6.799064484476231s;"
                     >
                       <a
                         aria-label="Vercel"
@@ -922,7 +922,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 4.144348516768651s;"
+                          style="animation-duration: 6s; animation-delay: 1.221914078523888s;"
                         >
                           <svg>
                             vercel.svg
@@ -935,17 +935,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 4.937717012755187s;"
+                  style="animation-duration: 6s; animation-delay: 1.1668872819325402s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: 19%; --translateY-end: 27%; animation-duration: 9.465419591147509s;"
+                    style="--translateY-begin: -28%; --translateY-end: 24%; animation-duration: 3.51327646370279s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 6.855852024305374s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 4.421938885693201s;"
                     >
                       <a
                         aria-label="Expo"
@@ -958,7 +958,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 4.937717012755187s;"
+                          style="animation-duration: 6s; animation-delay: 1.1668872819325402s;"
                         >
                           <svg>
                             expo.svg
@@ -1142,17 +1142,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 5.9146385124661975s;"
+                  style="animation-duration: 6s; animation-delay: 5.899719154880641s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -34%; --translateY-end: 9%; animation-duration: 2.353939998116203s;"
+                    style="--translateY-begin: -12%; --translateY-end: 11%; animation-duration: 5.018135238257322s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 5.452335976466719s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 6.268746962825486s;"
                     >
                       <a
                         aria-label="NodeJS"
@@ -1165,7 +1165,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 5.9146385124661975s;"
+                          style="animation-duration: 6s; animation-delay: 5.899719154880641s;"
                         >
                           <svg>
                             nodejs.svg
@@ -1178,17 +1178,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 2.6811710837917135s;"
+                  style="animation-duration: 6s; animation-delay: 5.739829711312399s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -19%; --translateY-end: -16%; animation-duration: 10.525157302922535s;"
+                    style="--translateY-begin: -26%; --translateY-end: 28%; animation-duration: 3.530138064022075s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 6.499967783735601s;"
+                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.8407908590309106s;"
                     >
                       <a
                         aria-label="Jest"
@@ -1201,7 +1201,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 2.6811710837917135s;"
+                          style="animation-duration: 6s; animation-delay: 5.739829711312399s;"
                         >
                           <svg>
                             jest.svg
@@ -1214,17 +1214,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 2.1144718592580314s;"
+                  style="animation-duration: 6s; animation-delay: 3.3768074966124004s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -2%; --translateY-end: 32%; animation-duration: 7.704566079851224s;"
+                    style="--translateY-begin: 2%; --translateY-end: 9%; animation-duration: 2.5149723476734684s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 4.202277950942575s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 5.701537749114324s;"
                     >
                       <a
                         aria-label="Storybook"
@@ -1237,7 +1237,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 2.1144718592580314s;"
+                          style="animation-duration: 6s; animation-delay: 3.3768074966124004s;"
                         >
                           <svg>
                             storybook.svg
@@ -1250,17 +1250,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 5.641801376120956s;"
+                  style="animation-duration: 6s; animation-delay: 3.7979785910707173s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -12%; --translateY-end: 35%; animation-duration: 7.464361410258245s;"
+                    style="--translateY-begin: 6%; --translateY-end: 13%; animation-duration: 6.229976347455669s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 4.397730628456588s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 4.587196968304488s;"
                     >
                       <a
                         aria-label="EmotionJS"
@@ -1273,7 +1273,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 5.641801376120956s;"
+                          style="animation-duration: 6s; animation-delay: 3.7979785910707173s;"
                         >
                           <svg>
                             emotion.svg
@@ -1286,17 +1286,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 5.3733763627190525s;"
+                  style="animation-duration: 6s; animation-delay: 3.1930431577428555s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: 2%; --translateY-end: 33%; animation-duration: 9.063217066326375s;"
+                    style="--translateY-begin: -1%; --translateY-end: 4%; animation-duration: 6.461921455624293s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 6.986365679078023s;"
+                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.8281542655977265s;"
                     >
                       <a
                         aria-label="Tanstack React Query"
@@ -1309,7 +1309,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 5.3733763627190525s;"
+                          style="animation-duration: 6s; animation-delay: 3.1930431577428555s;"
                         >
                           <svg>
                             reactQuery.svg
@@ -1322,17 +1322,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c38"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 4.159129481057648s;"
+                  style="animation-duration: 6s; animation-delay: 2.6474122208764586s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -36%; --translateY-end: 4%; animation-duration: 9.383058456714515s;"
+                    style="--translateY-begin: -31%; --translateY-end: 35%; animation-duration: 6.024086585612796s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 5.026697635858043s;"
+                      style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 5.837089896566783s;"
                     >
                       <a
                         aria-label="Yarn"
@@ -1345,7 +1345,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 4.159129481057648s;"
+                          style="animation-duration: 6s; animation-delay: 2.6474122208764586s;"
                         >
                           <svg>
                             yarn.svg
@@ -1358,17 +1358,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c26"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 3.4610477120517147s;"
+                  style="animation-duration: 6s; animation-delay: 3.826057351111811s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -10%; --translateY-end: -16%; animation-duration: 10.093836267459825s;"
+                    style="--translateY-begin: 9%; --translateY-end: 11%; animation-duration: 9.68368497016209s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.388194663532255s;"
+                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.213256064388586s;"
                     >
                       <a
                         aria-label="ReactJS"
@@ -1381,7 +1381,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 3.4610477120517147s;"
+                          style="animation-duration: 6s; animation-delay: 3.826057351111811s;"
                         >
                           <svg>
                             reactjs.svg
@@ -1394,17 +1394,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 2.763998337295282s;"
+                  style="animation-duration: 6s; animation-delay: 1.2775942774268185s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: 1%; --translateY-end: 4%; animation-duration: 8.971308938977463s;"
+                    style="--translateY-begin: -22%; --translateY-end: -4%; animation-duration: 9.704315444148664s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 6.986962233512698s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 5.149864677492873s;"
                     >
                       <a
                         aria-label="Typescript"
@@ -1417,7 +1417,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 2.763998337295282s;"
+                          style="animation-duration: 6s; animation-delay: 1.2775942774268185s;"
                         >
                           <svg>
                             typescript.svg
@@ -1610,17 +1610,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 5.395078316230084s;"
+                  style="animation-duration: 6s; animation-delay: 1.7248874957166147s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -19%; --translateY-end: -5%; animation-duration: 9.49834613208741s;"
+                    style="--translateY-begin: -31%; --translateY-end: 23%; animation-duration: 4.430085306686301s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 6.030628187343217s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 6.878318224334729s;"
                     >
                       <a
                         aria-label="NodeJS"
@@ -1633,7 +1633,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 5.395078316230084s;"
+                          style="animation-duration: 6s; animation-delay: 1.7248874957166147s;"
                         >
                           <svg>
                             nodejs.svg
@@ -1646,17 +1646,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 1.4746937704570975s;"
+                  style="animation-duration: 6s; animation-delay: 1.9959116471378722s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -28%; --translateY-end: -5%; animation-duration: 9.907079771027993s;"
+                    style="--translateY-begin: -31%; --translateY-end: -16%; animation-duration: 2.717581948612875s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 4.082116958171184s;"
+                      style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 6.811811161118904s;"
                     >
                       <a
                         aria-label="Cypress"
@@ -1669,7 +1669,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 1.4746937704570975s;"
+                          style="animation-duration: 6s; animation-delay: 1.9959116471378722s;"
                         >
                           <svg>
                             cypress.svg
@@ -1682,17 +1682,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 4.000120284463302s;"
+                  style="animation-duration: 6s; animation-delay: 2.160079716850221s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -35%; --translateY-end: 35%; animation-duration: 4.212417045070516s;"
+                    style="--translateY-begin: 10%; --translateY-end: 19%; animation-duration: 7.909869979391426s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 4.09574427983789s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 5.1113967698537595s;"
                     >
                       <a
                         aria-label="Node Package Manager"
@@ -1705,7 +1705,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 4.000120284463302s;"
+                          style="animation-duration: 6s; animation-delay: 2.160079716850221s;"
                         >
                           <svg>
                             npm.svg
@@ -1718,17 +1718,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 2.5934610473567092s;"
+                  style="animation-duration: 6s; animation-delay: 1.2767287306017143s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: 9%; --translateY-end: 25%; animation-duration: 2.8157205786780644s;"
+                    style="--translateY-begin: -18%; --translateY-end: 0%; animation-duration: 2.5638408020959305s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 4.7020571134358375s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 4.905246573144001s;"
                     >
                       <a
                         aria-label="Cypress"
@@ -1741,7 +1741,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 2.5934610473567092s;"
+                          style="animation-duration: 6s; animation-delay: 1.2767287306017143s;"
                         >
                           <svg>
                             cypress.svg
@@ -1754,17 +1754,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 3.5780387389206885s;"
+                  style="animation-duration: 6s; animation-delay: 3.3317332809221294s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -27%; --translateY-end: -15%; animation-duration: 4.329409225143362s;"
+                    style="--translateY-begin: -8%; --translateY-end: -16%; animation-duration: 4.742961113493661s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.306338061412448s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 4.992771959488811s;"
                     >
                       <a
                         aria-label="Jest"
@@ -1777,7 +1777,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 3.5780387389206885s;"
+                          style="animation-duration: 6s; animation-delay: 3.3317332809221294s;"
                         >
                           <svg>
                             jest.svg
@@ -1790,17 +1790,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 5.845679352907075s;"
+                  style="animation-duration: 6s; animation-delay: 4.837795730559135s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -25%; --translateY-end: 16%; animation-duration: 4.218195329431742s;"
+                    style="--translateY-begin: 11%; --translateY-end: -14%; animation-duration: 5.545704214608373s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 6.968065613136936s;"
+                      style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 6.115458439465009s;"
                     >
                       <a
                         aria-label="Mocha"
@@ -1813,7 +1813,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 5.845679352907075s;"
+                          style="animation-duration: 6s; animation-delay: 4.837795730559135s;"
                         >
                           <svg>
                             mocha.svg
@@ -1826,17 +1826,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 4.118191467083027s;"
+                  style="animation-duration: 6s; animation-delay: 2.9076677632753296s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: 18%; --translateY-end: 4%; animation-duration: 6.389992275717069s;"
+                    style="--translateY-begin: -16%; --translateY-end: 20%; animation-duration: 10.685256396789375s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 5.42560370997005s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 4.231882170830964s;"
                     >
                       <a
                         aria-label="LitElement"
@@ -1849,7 +1849,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 4.118191467083027s;"
+                          style="animation-duration: 6s; animation-delay: 2.9076677632753296s;"
                         >
                           <svg>
                             litElement.svg
@@ -1862,17 +1862,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 1.7795714669083629s;"
+                  style="animation-duration: 6s; animation-delay: 1.988498837179336s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -22%; --translateY-end: -4%; animation-duration: 6.68751193127007s;"
+                    style="--translateY-begin: -20%; --translateY-end: 21%; animation-duration: 6.800644715226605s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.810940407493962s;"
+                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.35856383190983s;"
                     >
                       <a
                         aria-label="Cucumber"
@@ -1885,7 +1885,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 1.7795714669083629s;"
+                          style="animation-duration: 6s; animation-delay: 1.988498837179336s;"
                         >
                           <svg>
                             cucumber.svg
@@ -1898,17 +1898,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 5.584946025014547s;"
+                  style="animation-duration: 6s; animation-delay: 1.5543555572302803s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: 7%; --translateY-end: 28%; animation-duration: 8.24726029213836s;"
+                    style="--translateY-begin: -20%; --translateY-end: 9%; animation-duration: 8.10352243113967s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 5.47865567080887s;"
+                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 6.021438958790151s;"
                     >
                       <a
                         aria-label="Redux"
@@ -1921,7 +1921,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 5.584946025014547s;"
+                          style="animation-duration: 6s; animation-delay: 1.5543555572302803s;"
                         >
                           <svg>
                             redux.svg
@@ -2098,17 +2098,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 1.2525926174545345s;"
+                  style="animation-duration: 6s; animation-delay: 5.955502889251664s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -30%; --translateY-end: -3%; animation-duration: 10.527701040190168s;"
+                    style="--translateY-begin: 16%; --translateY-end: 14%; animation-duration: 10.25400005124696s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 4.037418074980781s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 6.7748700142684415s;"
                     >
                       <a
                         aria-label="NodeJS"
@@ -2121,7 +2121,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 1.2525926174545345s;"
+                          style="animation-duration: 6s; animation-delay: 5.955502889251664s;"
                         >
                           <svg>
                             nodejs.svg
@@ -2134,17 +2134,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c26"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 4.421826499968204s;"
+                  style="animation-duration: 6s; animation-delay: 3.226930517836155s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -14%; --translateY-end: 17%; animation-duration: 8.86269403980053s;"
+                    style="--translateY-begin: -29%; --translateY-end: 32%; animation-duration: 8.363689674963542s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 4.143584229267579s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 5.721348628686531s;"
                     >
                       <a
                         aria-label="ReactJS"
@@ -2157,7 +2157,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 4.421826499968204s;"
+                          style="animation-duration: 6s; animation-delay: 3.226930517836155s;"
                         >
                           <svg>
                             reactjs.svg
@@ -2170,17 +2170,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c38"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 1.1452133119543768s;"
+                  style="animation-duration: 6s; animation-delay: 1.340767874711747s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -37%; --translateY-end: 1%; animation-duration: 9.887691837763974s;"
+                    style="--translateY-begin: 15%; --translateY-end: 13%; animation-duration: 8.520815804106022s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.5546632477222655s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 6.959692313728118s;"
                     >
                       <a
                         aria-label="Yarn"
@@ -2193,7 +2193,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 1.1452133119543768s;"
+                          style="animation-duration: 6s; animation-delay: 1.340767874711747s;"
                         >
                           <svg>
                             yarn.svg
@@ -2206,17 +2206,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 4.007046912507221s;"
+                  style="animation-duration: 6s; animation-delay: 2.435937405263149s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -32%; --translateY-end: 33%; animation-duration: 7.830227456792823s;"
+                    style="--translateY-begin: -10%; --translateY-end: 17%; animation-duration: 7.130136901184507s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.158271656903402s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 5.297390978809806s;"
                     >
                       <a
                         aria-label="Storybook"
@@ -2229,7 +2229,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 4.007046912507221s;"
+                          style="animation-duration: 6s; animation-delay: 2.435937405263149s;"
                         >
                           <svg>
                             storybook.svg
@@ -2242,17 +2242,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 1.7149853037286853s;"
+                  style="animation-duration: 6s; animation-delay: 4.273200135306686s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: 17%; --translateY-end: 6%; animation-duration: 5.077188191486716s;"
+                    style="--translateY-begin: -9%; --translateY-end: 3%; animation-duration: 7.048505337597934s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 4.433400068295318s;"
+                      style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 5.84451515699741s;"
                     >
                       <a
                         aria-label="Jest"
@@ -2265,7 +2265,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 1.7149853037286853s;"
+                          style="animation-duration: 6s; animation-delay: 4.273200135306686s;"
                         >
                           <svg>
                             jest.svg
@@ -2278,17 +2278,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 4.158445160833349s;"
+                  style="animation-duration: 6s; animation-delay: 1.6891410435248297s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -12%; --translateY-end: -18%; animation-duration: 2.7908962287492973s;"
+                    style="--translateY-begin: 2%; --translateY-end: -14%; animation-duration: 10.28845886077368s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 6.898993201032326s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 6.176792460969031s;"
                     >
                       <a
                         aria-label="EmotionJS"
@@ -2301,7 +2301,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 4.158445160833349s;"
+                          style="animation-duration: 6s; animation-delay: 1.6891410435248297s;"
                         >
                           <svg>
                             emotion.svg
@@ -2314,17 +2314,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 1.932765764454406s;"
+                  style="animation-duration: 6s; animation-delay: 2.2057201225374605s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: 2%; --translateY-end: -5%; animation-duration: 5.201358967228348s;"
+                    style="--translateY-begin: -10%; --translateY-end: 22%; animation-duration: 10.939508458889605s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 5.272987570070384s;"
+                      style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 4.514306267067661s;"
                     >
                       <a
                         aria-label="Redux"
@@ -2337,7 +2337,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 1.932765764454406s;"
+                          style="animation-duration: 6s; animation-delay: 2.2057201225374605s;"
                         >
                           <svg>
                             redux.svg
@@ -2449,17 +2449,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 3.693953433482098s;"
+                  style="animation-duration: 6s; animation-delay: 5.440783135562626s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -16%; --translateY-end: 5%; animation-duration: 5.275580324558712s;"
+                    style="--translateY-begin: -34%; --translateY-end: 4%; animation-duration: 3.3853923129967947s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.419612943852137s;"
+                      style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 6.21330226653771s;"
                     >
                       <a
                         aria-label="NodeJS"
@@ -2472,7 +2472,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 3.693953433482098s;"
+                          style="animation-duration: 6s; animation-delay: 5.440783135562626s;"
                         >
                           <svg>
                             nodejs.svg
@@ -2485,17 +2485,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 4.703305216251405s;"
+                  style="animation-duration: 6s; animation-delay: 3.7581502244055467s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -1%; --translateY-end: 19%; animation-duration: 2.436751055816556s;"
+                    style="--translateY-begin: -14%; --translateY-end: 37%; animation-duration: 9.340150620601158s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 5.461593102168306s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 5.102789556631246s;"
                     >
                       <a
                         aria-label="ExpressJS"
@@ -2508,7 +2508,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 4.703305216251405s;"
+                          style="animation-duration: 6s; animation-delay: 3.7581502244055467s;"
                         >
                           <svg>
                             expressJs.svg
@@ -2521,17 +2521,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 2.8457192483436664s;"
+                  style="animation-duration: 6s; animation-delay: 3.474884949119358s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -17%; --translateY-end: -14%; animation-duration: 4.917752283381981s;"
+                    style="--translateY-begin: 18%; --translateY-end: 6%; animation-duration: 5.276367466842377s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 4.252868948837238s;"
+                      style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 6.343161039903113s;"
                     >
                       <a
                         aria-label="Node Package Manager"
@@ -2544,7 +2544,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 2.8457192483436664s;"
+                          style="animation-duration: 6s; animation-delay: 3.474884949119358s;"
                         >
                           <svg>
                             npm.svg
@@ -2557,17 +2557,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 3.932028371118763s;"
+                  style="animation-duration: 6s; animation-delay: 1.9374715382390149s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -29%; --translateY-end: 33%; animation-duration: 6.190233838463961s;"
+                    style="--translateY-begin: -21%; --translateY-end: 12%; animation-duration: 2.200463240262257s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 5.816493875694573s;"
+                      style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 5.144770302049603s;"
                     >
                       <a
                         aria-label="Storybook"
@@ -2580,7 +2580,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 3.932028371118763s;"
+                          style="animation-duration: 6s; animation-delay: 1.9374715382390149s;"
                         >
                           <svg>
                             storybook.svg
@@ -2593,17 +2593,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 4.863303217786158s;"
+                  style="animation-duration: 6s; animation-delay: 4.637231058998219s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: 11%; --translateY-end: -6%; animation-duration: 6.295832883022208s;"
+                    style="--translateY-begin: 5%; --translateY-end: 4%; animation-duration: 8.679778514529424s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 4.70414919548972s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 4.395779915317739s;"
                     >
                       <a
                         aria-label="Jest"
@@ -2616,7 +2616,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 4.863303217786158s;"
+                          style="animation-duration: 6s; animation-delay: 4.637231058998219s;"
                         >
                           <svg>
                             jest.svg
@@ -2629,17 +2629,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c38"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 3.3855582362851218s;"
+                  style="animation-duration: 6s; animation-delay: 3.7922881927067085s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -16%; --translateY-end: 27%; animation-duration: 4.876107354680007s;"
+                    style="--translateY-begin: 9%; --translateY-end: -15%; animation-duration: 2.2354402422414337s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 6.150529459573802s;"
+                      style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 6.336282870833946s;"
                     >
                       <a
                         aria-label="MongoDB"
@@ -2652,7 +2652,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 3.3855582362851218s;"
+                          style="animation-duration: 6s; animation-delay: 3.7922881927067085s;"
                         >
                           <svg>
                             mongodb.svg
@@ -2665,17 +2665,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 4.5567163333813685s;"
+                  style="animation-duration: 6s; animation-delay: 3.121959062753904s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: 1%; --translateY-end: 24%; animation-duration: 2.803487547722927s;"
+                    style="--translateY-begin: -3%; --translateY-end: 10%; animation-duration: 7.473178479910989s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 6.615950922429325s;"
+                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 6.962946557648543s;"
                     >
                       <a
                         aria-label="AngularJS"
@@ -2688,7 +2688,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 4.5567163333813685s;"
+                          style="animation-duration: 6s; animation-delay: 3.121959062753904s;"
                         >
                           <svg>
                             angularJS.svg
@@ -2701,17 +2701,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 5.7184292294421155s;"
+                  style="animation-duration: 6s; animation-delay: 1.7199005871079451s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -19%; --translateY-end: 21%; animation-duration: 7.57810111231047s;"
+                    style="--translateY-begin: 9%; --translateY-end: 27%; animation-duration: 4.929712104783205s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 4.705822927193229s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 6.284766054354932s;"
                     >
                       <a
                         aria-label="Java"
@@ -2724,7 +2724,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 5.7184292294421155s;"
+                          style="animation-duration: 6s; animation-delay: 1.7199005871079451s;"
                         >
                           <svg>
                             java.svg
@@ -2737,17 +2737,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 2.4240985683012393s;"
+                  style="animation-duration: 6s; animation-delay: 4.348881689397789s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -27%; --translateY-end: 11%; animation-duration: 2.5725617946869326s;"
+                    style="--translateY-begin: -9%; --translateY-end: -17%; animation-duration: 5.029637304042199s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 5.515916940792735s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 5.134759790991075s;"
                     >
                       <a
                         aria-label="SocketIO"
@@ -2760,7 +2760,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 2.4240985683012393s;"
+                          style="animation-duration: 6s; animation-delay: 4.348881689397789s;"
                         >
                           <svg>
                             socketIO.svg
@@ -2773,17 +2773,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 4.300299797814808s;"
+                  style="animation-duration: 6s; animation-delay: 5.571699852433586s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -16%; --translateY-end: 12%; animation-duration: 6.068290618529677s;"
+                    style="--translateY-begin: 13%; --translateY-end: -3%; animation-duration: 2.2918508185033484s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.423250643493091s;"
+                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 6.5595689339977294s;"
                     >
                       <a
                         aria-label="Ionic"
@@ -2796,7 +2796,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 4.300299797814808s;"
+                          style="animation-duration: 6s; animation-delay: 5.571699852433586s;"
                         >
                           <svg>
                             ionic.svg
@@ -2952,17 +2952,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 5.327291269578514s;"
+                  style="animation-duration: 6s; animation-delay: 1.8561148041764048s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: 16%; --translateY-end: 24%; animation-duration: 9.948012634136678s;"
+                    style="--translateY-begin: -31%; --translateY-end: 36%; animation-duration: 6.279205584724648s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 5.879848242689816s;"
+                      style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 5.639402359912333s;"
                     >
                       <a
                         aria-label="Java"
@@ -2975,7 +2975,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 5.327291269578514s;"
+                          style="animation-duration: 6s; animation-delay: 1.8561148041764048s;"
                         >
                           <svg>
                             java.svg
@@ -2988,17 +2988,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 3.5509643555286337s;"
+                  style="animation-duration: 6s; animation-delay: 5.901087318437233s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -21%; --translateY-end: 33%; animation-duration: 5.604479284938084s;"
+                    style="--translateY-begin: -19%; --translateY-end: 36%; animation-duration: 10.003686253832837s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 4.240967516423843s;"
+                      style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 6.354511391617681s;"
                     >
                       <a
                         aria-label="Spring"
@@ -3011,7 +3011,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 3.5509643555286337s;"
+                          style="animation-duration: 6s; animation-delay: 5.901087318437233s;"
                         >
                           <svg>
                             spring.svg
@@ -3024,17 +3024,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 1.186097080603665s;"
+                  style="animation-duration: 6s; animation-delay: 1.6881118118107876s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -21%; --translateY-end: -7%; animation-duration: 5.4528032510395565s;"
+                    style="--translateY-begin: -24%; --translateY-end: -14%; animation-duration: 3.7721484050423726s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 6.6131899808432095s;"
+                      style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 5.400198333167223s;"
                     >
                       <a
                         aria-label="Ionic"
@@ -3047,7 +3047,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 1.186097080603665s;"
+                          style="animation-duration: 6s; animation-delay: 1.6881118118107876s;"
                         >
                           <svg>
                             ionic.svg
@@ -3060,17 +3060,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 5.348247416552431s;"
+                  style="animation-duration: 6s; animation-delay: 1.6420123380990899s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -21%; --translateY-end: -12%; animation-duration: 8.84406140044027s;"
+                    style="--translateY-begin: -9%; --translateY-end: 10%; animation-duration: 9.245005891461542s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 4.677947235348267s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 6.6385529008148625s;"
                     >
                       <a
                         aria-label="Storybook"
@@ -3083,7 +3083,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 5.348247416552431s;"
+                          style="animation-duration: 6s; animation-delay: 1.6420123380990899s;"
                         >
                           <svg>
                             storybook.svg
@@ -3096,17 +3096,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 2.733507327272735s;"
+                  style="animation-duration: 6s; animation-delay: 4.289529725223943s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -21%; --translateY-end: 33%; animation-duration: 5.9295106679172465s;"
+                    style="--translateY-begin: -22%; --translateY-end: 22%; animation-duration: 9.869973444979234s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 4.867310464426373s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 5.866246165676847s;"
                     >
                       <a
                         aria-label="AngularJS"
@@ -3119,7 +3119,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 2.733507327272735s;"
+                          style="animation-duration: 6s; animation-delay: 4.289529725223943s;"
                         >
                           <svg>
                             angularJS.svg
@@ -3132,17 +3132,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 2.511759539597594s;"
+                  style="animation-duration: 6s; animation-delay: 2.8335444553232394s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -28%; --translateY-end: -13%; animation-duration: 6.66223603043087s;"
+                    style="--translateY-begin: 2%; --translateY-end: 13%; animation-duration: 10.525917926235772s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.008588049848845s;"
+                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 6.88842110340531s;"
                     >
                       <a
                         aria-label="Arduino"
@@ -3155,7 +3155,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 2.511759539597594s;"
+                          style="animation-duration: 6s; animation-delay: 2.8335444553232394s;"
                         >
                           <svg>
                             arduino.svg
@@ -3421,17 +3421,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 5.601765520252898s;"
+                  style="animation-duration: 6s; animation-delay: 5.5855447617167275s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -1%; --translateY-end: 21%; animation-duration: 10.33234730309377s;"
+                    style="--translateY-begin: -36%; --translateY-end: 20%; animation-duration: 3.890979077941477s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 5.182829993408179s;"
+                      style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 6.844201608619747s;"
                     >
                       <a
                         aria-label="Perl"
@@ -3444,7 +3444,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 5.601765520252898s;"
+                          style="animation-duration: 6s; animation-delay: 5.5855447617167275s;"
                         >
                           <svg>
                             perl.svg
@@ -3457,17 +3457,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c38"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 3.2536567970017845s;"
+                  style="animation-duration: 6s; animation-delay: 4.755940277505309s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -8%; --translateY-end: -18%; animation-duration: 6.5860154882682s;"
+                    style="--translateY-begin: -27%; --translateY-end: 3%; animation-duration: 4.189074280959575s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 6.772619699382583s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 5.860471898709803s;"
                     >
                       <a
                         aria-label="MongoDB"
@@ -3480,7 +3480,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 3.2536567970017845s;"
+                          style="animation-duration: 6s; animation-delay: 4.755940277505309s;"
                         >
                           <svg>
                             mongodb.svg
@@ -3493,17 +3493,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 4.936814499820542s;"
+                  style="animation-duration: 6s; animation-delay: 3.5733833056919293s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -4%; --translateY-end: 12%; animation-duration: 4.371169117164589s;"
+                    style="--translateY-begin: 8%; --translateY-end: 37%; animation-duration: 3.9970863098357703s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 5.3656892087593935s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.933216163304989s;"
                     >
                       <a
                         aria-label="Ext JS"
@@ -3516,7 +3516,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 4.936814499820542s;"
+                          style="animation-duration: 6s; animation-delay: 3.5733833056919293s;"
                         >
                           <svg>
                             sencha.svg
@@ -3529,17 +3529,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 5.355739553663581s;"
+                  style="animation-duration: 6s; animation-delay: 1.6442097572831296s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -32%; --translateY-end: 36%; animation-duration: 4.561990913864435s;"
+                    style="--translateY-begin: 7%; --translateY-end: -12%; animation-duration: 7.664809988948997s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 4.987608102926577s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 6.914386238759869s;"
                     >
                       <a
                         aria-label="JavaScript"
@@ -3552,7 +3552,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 5.355739553663581s;"
+                          style="animation-duration: 6s; animation-delay: 1.6442097572831296s;"
                         >
                           <svg>
                             javascript.svg
@@ -3565,17 +3565,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 5.204019044602115s;"
+                  style="animation-duration: 6s; animation-delay: 2.6985545103405455s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -33%; --translateY-end: 4%; animation-duration: 8.906807845984384s;"
+                    style="--translateY-begin: -14%; --translateY-end: 3%; animation-duration: 4.681199497186299s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 6.067972895041349s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.7009534260415045s;"
                     >
                       <a
                         aria-label="HTML5"
@@ -3588,7 +3588,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 5.204019044602115s;"
+                          style="animation-duration: 6s; animation-delay: 2.6985545103405455s;"
                         >
                           <svg>
                             html5.svg
@@ -3601,17 +3601,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c38"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 5.902808482508366s;"
+                  style="animation-duration: 6s; animation-delay: 5.0076318379377325s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: 8%; --translateY-end: -1%; animation-duration: 5.806813673152439s;"
+                    style="--translateY-begin: -18%; --translateY-end: -14%; animation-duration: 10.20230608533101s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 4.360061928153607s;"
+                      style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 5.843169425640823s;"
                     >
                       <a
                         aria-label="CSS3"
@@ -3624,7 +3624,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 5.902808482508366s;"
+                          style="animation-duration: 6s; animation-delay: 5.0076318379377325s;"
                         >
                           <svg>
                             css3.svg
@@ -3637,17 +3637,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 3.2799416349592723s;"
+                  style="animation-duration: 6s; animation-delay: 3.8444883056919226s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: 6%; --translateY-end: -20%; animation-duration: 9.276495255443937s;"
+                    style="--translateY-begin: -22%; --translateY-end: 2%; animation-duration: 3.4792594991535664s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 4.157312560720967s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.562182053103664s;"
                     >
                       <a
                         aria-label="Oracle"
@@ -3660,7 +3660,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 3.2799416349592723s;"
+                          style="animation-duration: 6s; animation-delay: 3.8444883056919226s;"
                         >
                           <svg>
                             oracle.svg
@@ -3820,17 +3820,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 5.434049969298483s;"
+                  style="animation-duration: 6s; animation-delay: 1.4896085481395889s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -5%; --translateY-end: 5%; animation-duration: 2.9972948936737707s;"
+                    style="--translateY-begin: -21%; --translateY-end: -10%; animation-duration: 3.4079417857327168s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 4.144148034787797s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 6.618217783829801s;"
                     >
                       <a
                         aria-label="Java"
@@ -3843,7 +3843,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 5.434049969298483s;"
+                          style="animation-duration: 6s; animation-delay: 1.4896085481395889s;"
                         >
                           <svg>
                             java.svg
@@ -3856,17 +3856,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c38"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 1.5086992142570828s;"
+                  style="animation-duration: 6s; animation-delay: 4.22822058031289s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -6%; --translateY-end: 22%; animation-duration: 2.5764987695767707s;"
+                    style="--translateY-begin: 18%; --translateY-end: 9%; animation-duration: 4.877799603227662s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 5.767556093246887s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 5.387798447607168s;"
                     >
                       <a
                         aria-label="MongoDB"
@@ -3879,7 +3879,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 1.5086992142570828s;"
+                          style="animation-duration: 6s; animation-delay: 4.22822058031289s;"
                         >
                           <svg>
                             mongodb.svg
@@ -3892,17 +3892,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 3.8751130716170863s;"
+                  style="animation-duration: 6s; animation-delay: 1.774758141363826s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: 15%; --translateY-end: -10%; animation-duration: 6.630245442915703s;"
+                    style="--translateY-begin: -5%; --translateY-end: 22%; animation-duration: 2.0180152663677116s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 4.340475769349846s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 5.416800232269552s;"
                     >
                       <a
                         aria-label="Hibernate"
@@ -3915,7 +3915,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 3.8751130716170863s;"
+                          style="animation-duration: 6s; animation-delay: 1.774758141363826s;"
                         >
                           <svg>
                             hibernate.svg
@@ -3928,17 +3928,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 2.597033388572632s;"
+                  style="animation-duration: 6s; animation-delay: 4.123943079219914s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -27%; --translateY-end: 32%; animation-duration: 6.31983544761413s;"
+                    style="--translateY-begin: -23%; --translateY-end: -4%; animation-duration: 3.618095236260644s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.64080313186948s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 6.134759649557654s;"
                     >
                       <a
                         aria-label="Spring"
@@ -3951,7 +3951,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 2.597033388572632s;"
+                          style="animation-duration: 6s; animation-delay: 4.123943079219914s;"
                         >
                           <svg>
                             spring.svg
@@ -3964,17 +3964,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 1.8014251955614506s;"
+                  style="animation-duration: 6s; animation-delay: 3.497734962863992s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -25%; --translateY-end: -11%; animation-duration: 5.049184051332398s;"
+                    style="--translateY-begin: -35%; --translateY-end: -14%; animation-duration: 3.3117706386280235s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 6.490050749992952s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 5.574636643872568s;"
                     >
                       <a
                         aria-label="Oracle"
@@ -3987,7 +3987,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 1.8014251955614506s;"
+                          style="animation-duration: 6s; animation-delay: 3.497734962863992s;"
                         >
                           <svg>
                             oracle.svg
@@ -4148,17 +4148,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 2.957166071783897s;"
+                  style="animation-duration: 6s; animation-delay: 2.2503495851253184s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -12%; --translateY-end: 37%; animation-duration: 8.327624498442017s;"
+                    style="--translateY-begin: 10%; --translateY-end: 24%; animation-duration: 4.940030744867554s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 4.838190436027354s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 4.638775037797611s;"
                     >
                       <a
                         aria-label="Python"
@@ -4171,7 +4171,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 2.957166071783897s;"
+                          style="animation-duration: 6s; animation-delay: 2.2503495851253184s;"
                         >
                           <svg>
                             python.svg
@@ -4184,17 +4184,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 1.9949498391369556s;"
+                  style="animation-duration: 6s; animation-delay: 4.486912226049329s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -11%; --translateY-end: -7%; animation-duration: 10.612376686686511s;"
+                    style="--translateY-begin: -17%; --translateY-end: 3%; animation-duration: 4.122745683003191s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.606028726515981s;"
+                      style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 5.910443380075771s;"
                     >
                       <a
                         aria-label="Oracle"
@@ -4207,7 +4207,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 1.9949498391369556s;"
+                          style="animation-duration: 6s; animation-delay: 4.486912226049329s;"
                         >
                           <svg>
                             oracle.svg
@@ -4220,17 +4220,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 4.073566192118695s;"
+                  style="animation-duration: 6s; animation-delay: 2.1993219774606168s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -23%; --translateY-end: 34%; animation-duration: 5.941591534592026s;"
+                    style="--translateY-begin: 13%; --translateY-end: -14%; animation-duration: 6.800350666500586s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 5.327759359487322s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 4.95628017878512s;"
                     >
                       <a
                         aria-label="JavaScript"
@@ -4243,7 +4243,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 4.073566192118695s;"
+                          style="animation-duration: 6s; animation-delay: 2.1993219774606168s;"
                         >
                           <svg>
                             javascript.svg
@@ -4256,17 +4256,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c17"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 4.845775371972534s;"
+                  style="animation-duration: 6s; animation-delay: 4.5398819173071026s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: 13%; --translateY-end: 22%; animation-duration: 5.348215418425745s;"
+                    style="--translateY-begin: 1%; --translateY-end: 0%; animation-duration: 5.678292340738683s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 4.869104206716336s;"
+                      style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.200176930490507s;"
                     >
                       <a
                         aria-label="HTML5"
@@ -4279,7 +4279,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 4.845775371972534s;"
+                          style="animation-duration: 6s; animation-delay: 4.5398819173071026s;"
                         >
                           <svg>
                             html5.svg
@@ -4292,17 +4292,17 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                 <li
                   class="c38"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 2.4338389509077936s;"
+                  style="animation-duration: 6s; animation-delay: 3.9022499471965912s;"
                 >
                   <div
                     class="c18 c19"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -2%; --translateY-end: 17%; animation-duration: 2.7840087240155853s;"
+                    style="--translateY-begin: -6%; --translateY-end: 14%; animation-duration: 9.837149956371496s;"
                   >
                     <div
                       class="c20 c21"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 6.087797405783441s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 5.1367041288336965s;"
                     >
                       <a
                         aria-label="CSS3"
@@ -4315,7 +4315,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                         <div
                           class="c24 c25"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 2.4338389509077936s;"
+                          style="animation-duration: 6s; animation-delay: 3.9022499471965912s;"
                         >
                           <svg>
                             css3.svg
