@@ -46,4 +46,8 @@ Thumbs.db
 # Nx monorepo
 .nx
 
+# Claude Code
+.claude
+.agents
+
 .env.local
