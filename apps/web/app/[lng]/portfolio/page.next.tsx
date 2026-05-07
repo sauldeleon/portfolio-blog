@@ -1,24 +1,19 @@
-'use client'
-
 import { PortfolioPage } from '@web/components/PortfolioPage/PortfolioPage'
 import { getServerTranslation } from '@web/i18n/server'
 
 interface RouteProps {
-  params: {
-    lng: string
-  }
+  params: Promise<{ lng: string }>
 }
 
 type GenerateMetadataProps = RouteProps
 
 export async function generateMetadata({ params }: GenerateMetadataProps) {
+  const { lng } = await params
   const { t } = await getServerTranslation({
     ns: 'portfolioPage',
-    language: params.lng,
+    language: lng,
   })
-  return {
-    description: t('metadata.description'),
-  }
+  return { description: t('metadata.description') }
 }
 
 export default function Page() {

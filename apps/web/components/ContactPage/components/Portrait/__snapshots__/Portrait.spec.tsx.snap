@@ -120,28 +120,64 @@ exports[`Portrait should render successfully 1`] = `
     opacity: 0;
   }
 
-  16.666666666666664% {
+  16.666666666666668% {
     opacity: 1;
+  }
+
+  33.333333333333336% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
   }
 }
 
 @keyframes k1 {
-  16.666666666666664% {
+  16.666666666666668% {
     opacity: 0;
   }
 
-  33.33333333333333% {
+  33.333333333333336% {
     opacity: 1;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  66.66666666666667% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
   }
 }
 
 @keyframes k2 {
-  33.33333333333333% {
+  33.333333333333336% {
     opacity: 0;
   }
 
   50% {
     opacity: 1;
+  }
+
+  66.66666666666667% {
+    opacity: 1;
+  }
+
+  83.33333333333334% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
   }
 }
 
@@ -150,17 +186,33 @@ exports[`Portrait should render successfully 1`] = `
     opacity: 0;
   }
 
-  66.66666666666666% {
+  66.66666666666667% {
     opacity: 1;
+  }
+
+  83.33333333333334% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
   }
 }
 
 @keyframes k4 {
-  66.66666666666666% {
+  66.66666666666667% {
     opacity: 0;
   }
 
   83.33333333333334% {
+    opacity: 1;
+  }
+
+  100% {
     opacity: 1;
   }
 }

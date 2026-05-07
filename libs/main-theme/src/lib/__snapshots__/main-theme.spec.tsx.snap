@@ -183,7 +183,7 @@ exports[`mainTheme should work 1`] = `
   },
   "logo": {
     "component": [Function],
-    "svg": "slLogo.svg",
+    "svg": "",
   },
   "media": {
     "down": {

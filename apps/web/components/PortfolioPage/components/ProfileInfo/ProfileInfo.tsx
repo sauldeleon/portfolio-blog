@@ -33,9 +33,8 @@ const iconMap: Record<string, React.ReactElement> = {
 export function ProfileInfo() {
   const { t } = useClientTranslation('portfolioPage')
 
-  const areas = t('items.profile.skillAreas.areas', {
-    returnObjects: true,
-  })
+  const areasRaw = t('items.profile.skillAreas.areas', { returnObjects: true })
+  const areas = Array.isArray(areasRaw) ? areasRaw : []
 
   return (
     <>

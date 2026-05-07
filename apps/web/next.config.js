@@ -10,6 +10,24 @@ const locales = ['en', 'es']
 const nextConfig = {
   nx: {},
   output: process.env.EXPORT_STATIC_FILES === 'true' ? 'export' : undefined,
+  turbopack: {
+    rules: {
+      '*.svg': {
+        loaders: [
+          {
+            loader: '@svgr/webpack',
+            options: {
+              svgo: false,
+              titleProp: true,
+              ref: true,
+              exportType: 'named',
+            },
+          },
+        ],
+        as: '*.js',
+      },
+    },
+  },
   compiler: {
     // For other options, see https://styled-components.com/docs/tooling#babel-plugin
     styledComponents: true,

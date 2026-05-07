@@ -1,5 +1,5 @@
-import { screen } from '@testing-library/react'
-import React from 'react'
+import { act, screen } from '@testing-library/react'
+import React, { Suspense } from 'react'
 
 import { renderApp } from '@sdlgr/test-utils'
 
@@ -39,16 +39,32 @@ describe('[lng] route - layout', () => {
     })
   })
   it('should render successfully in English', async () => {
-    renderApp(<RootLayout params={{ lng: 'en' }}>test</RootLayout>)
+    // act needed to flush React.use() Suspense resolution after Promise.resolve()
+    // eslint-disable-next-line testing-library/no-unnecessary-act
+    await act(async () => {
+      renderApp(
+        <Suspense fallback={null}>
+          <RootLayout params={Promise.resolve({ lng: 'en' })}>test</RootLayout>
+        </Suspense>,
+      )
+    })
 
-    expect(await screen.findByText('test')).toBeInTheDocument()
+    expect(screen.getByText('test')).toBeInTheDocument()
     expect(document.documentElement).toHaveAttribute('lang', 'en')
   })
 
   it('should render successfully in Spanish', async () => {
-    renderApp(<RootLayout params={{ lng: 'es' }}>test</RootLayout>)
+    // act needed to flush React.use() Suspense resolution after Promise.resolve()
+    // eslint-disable-next-line testing-library/no-unnecessary-act
+    await act(async () => {
+      renderApp(
+        <Suspense fallback={null}>
+          <RootLayout params={Promise.resolve({ lng: 'es' })}>test</RootLayout>
+        </Suspense>,
+      )
+    })
 
-    expect(await screen.findByText('test')).toBeInTheDocument()
+    expect(screen.getByText('test')).toBeInTheDocument()
     expect(document.documentElement).toHaveAttribute('lang', 'es')
   })
 })

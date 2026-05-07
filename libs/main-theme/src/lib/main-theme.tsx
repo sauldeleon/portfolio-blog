@@ -3,7 +3,7 @@ import * as React from 'react'
 import { css, keyframes } from 'styled-components'
 import { Keyframes, RuleSet } from 'styled-components/dist/types'
 
-import { SLLogo, SLLogoSVG } from '@sdlgr/assets'
+import { SLLogo } from '@sdlgr/assets'
 
 const baseFontSize = 20
 
@@ -154,7 +154,7 @@ export const mainTheme: MainTheme = {
   },
   logo: {
     component: SLLogo,
-    svg: SLLogoSVG,
+    svg: '',
   },
   media: {
     down: {

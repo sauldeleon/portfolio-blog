@@ -1,6 +1,7 @@
 import { dir } from 'i18next'
 import { Viewport } from 'next'
 import Script from 'next/script'
+import { use } from 'react'
 
 import { LanguageContextProvider } from '@sdlgr/i18n-tools'
 
@@ -15,9 +16,7 @@ import {
 } from '@web/utils/metadata/metadata'
 
 interface RouteProps {
-  params: {
-    lng: string
-  }
+  params: Promise<{ lng: string }>
 }
 
 interface RootLayoutProps extends RouteProps {
@@ -27,25 +26,19 @@ interface RootLayoutProps extends RouteProps {
 type GenerateMetadataProps = RouteProps
 
 export async function generateMetadata({ params }: GenerateMetadataProps) {
-  const { t } = await getServerTranslation({ language: params.lng })
-  return {
-    ...sharedRootMetadata,
-    description: t('metadata.description'),
-  }
+  const { lng } = await params
+  const { t } = await getServerTranslation({ language: lng })
+  return { ...sharedRootMetadata, description: t('metadata.description') }
 }
 
-export const viewport: Viewport = {
-  ...sharedRootViewport,
-}
+export const viewport: Viewport = { ...sharedRootViewport }
 
 export async function generateStaticParams() {
   return languages.map((lng) => ({ lng }))
 }
 
-export default function RootLayout({
-  children,
-  params: { lng },
-}: RootLayoutProps) {
+export default function RootLayout({ children, params }: RootLayoutProps) {
+  const { lng } = use(params)
   const googleAnalyticsId = process.env.GOOGLE_ANALYTICS_ID
 
   return (

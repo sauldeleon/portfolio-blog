@@ -3,8 +3,9 @@
   "compilerOptions": {
     "sourceMap": false,
     "outDir": "../../dist/out-tsc",
+    "rootDir": ".",
     "allowJs": true,
     "types": ["cypress", "node", "@testing-library/cypress"]
   },
-  "include": ["src/**/*.ts", "src/**/*.js", "cypress.config.ts"]
+  "include": ["src/**/*.ts", "src/**/*.js"]
 }
