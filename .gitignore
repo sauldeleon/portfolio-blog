@@ -4,6 +4,7 @@
 dist
 tmp
 /out-tsc
+*.tsbuildinfo
 .yarn/cache
 .yarn/install-state.gz
 
@@ -42,8 +43,13 @@ Thumbs.db
 
 # Next.js
 .next
+**/next-env.d.ts
 
 # Nx monorepo
 .nx
+
+# Claude Code
+.claude
+.agents
 
 .env.local

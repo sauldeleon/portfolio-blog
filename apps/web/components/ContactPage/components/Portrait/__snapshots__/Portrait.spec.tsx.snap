@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Portrait should render successfully 1`] = `
 .c0 {
@@ -23,7 +23,7 @@ exports[`Portrait should render successfully 1`] = `
   height: 70px;
   position: absolute;
   opacity: 0;
-  animation: BLSUr 60s 10s infinite;
+  animation: k0 60s 10s infinite;
 }
 
 .c3 {
@@ -33,7 +33,7 @@ exports[`Portrait should render successfully 1`] = `
   height: 70px;
   position: absolute;
   opacity: 0;
-  animation: feYcwF 60s 10s infinite;
+  animation: k1 60s 10s infinite;
 }
 
 .c4 {
@@ -43,7 +43,7 @@ exports[`Portrait should render successfully 1`] = `
   height: 70px;
   position: absolute;
   opacity: 0;
-  animation: gBIqQN 60s 10s infinite;
+  animation: k2 60s 10s infinite;
 }
 
 .c5 {
@@ -53,7 +53,7 @@ exports[`Portrait should render successfully 1`] = `
   height: 70px;
   position: absolute;
   opacity: 0;
-  animation: jCGkWp 60s 10s infinite;
+  animation: k3 60s 10s infinite;
 }
 
 .c6 {
@@ -63,7 +63,7 @@ exports[`Portrait should render successfully 1`] = `
   height: 70px;
   position: absolute;
   opacity: 0;
-  animation: cJztmO 60s 10s infinite;
+  animation: k4 60s 10s infinite;
 }
 
 @media (width >= 768px) {
@@ -112,6 +112,108 @@ exports[`Portrait should render successfully 1`] = `
   .c6 {
     width: 140px;
     height: 140px;
+  }
+}
+
+@keyframes k0 {
+  0% {
+    opacity: 0;
+  }
+
+  16.666666666666668% {
+    opacity: 1;
+  }
+
+  33.333333333333336% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes k1 {
+  16.666666666666668% {
+    opacity: 0;
+  }
+
+  33.333333333333336% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  66.66666666666667% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes k2 {
+  33.333333333333336% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  66.66666666666667% {
+    opacity: 1;
+  }
+
+  83.33333333333334% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes k3 {
+  50% {
+    opacity: 0;
+  }
+
+  66.66666666666667% {
+    opacity: 1;
+  }
+
+  83.33333333333334% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes k4 {
+  66.66666666666667% {
+    opacity: 0;
+  }
+
+  83.33333333333334% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
   }
 }
 

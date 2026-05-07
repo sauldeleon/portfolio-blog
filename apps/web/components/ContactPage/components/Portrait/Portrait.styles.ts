@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import styled, { css, keyframes } from 'styled-components'
+import styled, { Keyframes, css, keyframes } from 'styled-components'
 
 export const StyledPortraitContainer = styled.div`
   position: relative;
@@ -24,18 +24,26 @@ export const portraitStyles = css`
   }
 `
 
-const generateAnimation = (index: number, total: number) =>
-  keyframes`
-  ${css`
-    ${(index / total) * 100}% {
-      opacity: 0;
-    }
-    ${((index + 1) / total) * 100}% {
-      opacity: 1;
-    }
-  `}
-     
-  `
+const animationCache = new Map<string, Keyframes>()
+
+const getAnimation = (index: number, total: number): Keyframes => {
+  const key = `${index}-${total}`
+  if (!animationCache.has(key)) {
+    const slotSize = 100 / total
+    const fadeInStart = index * slotSize
+    const fadeInEnd = (index + 1) * slotSize
+    const holdEnd = Math.min((index + 2) * slotSize, 100)
+    const fadeOutEnd = Math.min((index + 3) * slotSize, 100)
+    const isLast = holdEnd >= 100
+    animationCache.set(
+      key,
+      isLast
+        ? keyframes`${fadeInStart}% { opacity: 0; } ${fadeInEnd}% { opacity: 1; } 100% { opacity: 1; }`
+        : keyframes`${fadeInStart}% { opacity: 0; } ${fadeInEnd}% { opacity: 1; } ${holdEnd}% { opacity: 1; } ${fadeOutEnd}% { opacity: 0; } 100% { opacity: 0; }`,
+    )
+  }
+  return animationCache.get(key)!
+}
 
 const TIME_PER_IMAGE = 10
 export const StyledPortrait = styled(Image)<{
@@ -49,7 +57,7 @@ export const StyledPortrait = styled(Image)<{
   ${({ $index, $totalImages }) =>
     $index > 0 &&
     css`
-      animation: ${generateAnimation($index - 1, $totalImages)}
+      animation: ${getAnimation($index - 1, $totalImages)}
         ${$totalImages * TIME_PER_IMAGE}s ${TIME_PER_IMAGE}s infinite;
     `}
 `

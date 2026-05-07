@@ -87,14 +87,13 @@ export const StyledExperienceInfo = styled.div`
 `
 
 export const StyledExperiencePortal = styled.div`
-  width: 120%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 40px;
 
   ${({ theme }) => theme.media.up.md} {
-    width: 100%;
     margin-bottom: 0px;
     max-width: 45%;
   }

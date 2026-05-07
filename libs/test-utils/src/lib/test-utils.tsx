@@ -188,6 +188,7 @@ export function useWithRefreshInTest() {
 
   useEffect(() => {
     // Change state to "rerender" the component
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setWithRefreshInTest(true)
   }, [])
 

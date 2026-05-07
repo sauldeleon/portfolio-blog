@@ -3,7 +3,7 @@ import * as React from 'react'
 import { css, keyframes } from 'styled-components'
 import { Keyframes, RuleSet } from 'styled-components/dist/types'
 
-import { SLLogo, SLLogoSVG } from '@sdlgr/assets'
+import { SLLogo } from '@sdlgr/assets'
 
 const baseFontSize = 20
 
@@ -33,10 +33,13 @@ const robotoMono = Roboto_Mono({
   display: 'swap',
   weight: ['100', '300', '400', '500'],
   fallback: ['monospace'],
+  variable: '--font-roboto-mono',
 })
 
+export const robotoMonoClassName = robotoMono.className
+
 const fontFamilies: Record<'robotoMono', string> = {
-  robotoMono: robotoMono.style.fontFamily,
+  robotoMono: 'var(--font-roboto-mono)',
 }
 
 const fontStyles: MainTheme['fontStyles'] = {
@@ -154,7 +157,7 @@ export const mainTheme: MainTheme = {
   },
   logo: {
     component: SLLogo,
-    svg: SLLogoSVG,
+    svg: '',
   },
   media: {
     down: {

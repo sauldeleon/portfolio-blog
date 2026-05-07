@@ -21,6 +21,7 @@ export function CircleLink({
   iconContent,
   iconSize = 42,
   ref,
+  as: _as,
   ...rest
 }: CircleLinkProps) {
   return (

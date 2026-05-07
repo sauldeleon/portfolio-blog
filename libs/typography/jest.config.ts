@@ -1,5 +1,4 @@
-/* eslint-disable */
-export default {
+module.exports = {
   displayName: 'typography',
   preset: '../../jest.preset.js',
   transform: {

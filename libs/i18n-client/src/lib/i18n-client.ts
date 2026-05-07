@@ -63,6 +63,7 @@ export function useClientTranslation<
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
       if (activeLng === i18n.resolvedLanguage) return
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setActiveLng(i18n.resolvedLanguage)
     }, [activeLng, i18n.resolvedLanguage])
 

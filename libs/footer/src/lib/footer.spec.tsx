@@ -9,10 +9,10 @@ import { Footer } from './footer'
 describe('Footer', () => {
   it('should render successfully with no navItems', () => {
     renderWithTheme(<Footer />)
-    expect(screen.getByText('slLogo.svg')).toBeInTheDocument()
+    expect(screen.getByRole('contentinfo')).toBeInTheDocument()
   })
 
-  it('should render with icons', () => {
+  it('should render with icons', async () => {
     const mockClick = jest.fn()
     renderWithTheme(
       <Footer
@@ -40,9 +40,11 @@ describe('Footer', () => {
       />,
     )
     expect(screen.getAllByRole('link')).toHaveLength(3)
-    expect(screen.getByText('moon.svg')).toBeInTheDocument()
-    expect(screen.getByText('telegram.svg')).toBeInTheDocument()
-    userEvent.click(screen.getByText('Click me'))
+    expect(screen.getByRole('link', { name: 'Be dark' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: 'My Telegram user id' }),
+    ).toBeInTheDocument()
+    await userEvent.click(screen.getByText('Click me'))
     expect(mockClick).toHaveBeenCalledTimes(1)
   })
 })

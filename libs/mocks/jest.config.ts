@@ -1,5 +1,4 @@
-/* eslint-disable */
-export default {
+module.exports = {
   displayName: 'mocks',
   preset: '../../jest.preset.js',
   transform: {

@@ -17,7 +17,7 @@
       "executor": "@nx-go/nx-go:build",
       "options": {
         "outputPath": "dist/apps/api",
-        "main": "apps/api/main.go"
+        "main": "."
       }
     },
     "serve": {
@@ -25,7 +25,7 @@
       "options": {
         "cmd": "gow",
         "cwd": ".",
-        "main": "apps/api/main.go"
+        "main": "."
       }
     },
     "test": {

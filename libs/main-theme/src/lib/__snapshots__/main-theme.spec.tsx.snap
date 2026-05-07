@@ -1,85 +1,98 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`mainTheme should work 1`] = `
 {
   "animation": {
-    "colorSwap": e {
+    "colorSwap": qt {
       "id": "sc-keyframes-jQopbU",
       "inject": [Function],
       "name": "jQopbU",
       "rules": "from{color:#FFDD83;}to{color:#98DFD6;}",
+      Symbol(sc-keyframes): true,
     },
-    "horizontalMovement": e {
+    "horizontalMovement": qt {
       "id": "sc-keyframes-gkcxrO",
       "inject": [Function],
       "name": "gkcxrO",
       "rules": "0%{transform:translateX(var(--translateX-begin));}100%{transform:translateX(var(--translateX-end));}",
+      Symbol(sc-keyframes): true,
     },
-    "moveToothFall": e {
+    "moveToothFall": qt {
       "id": "sc-keyframes-cpZUNP",
       "inject": [Function],
       "name": "cpZUNP",
       "rules": "0%{top:-30px;}100%{top:200%;}",
+      Symbol(sc-keyframes): true,
     },
-    "moveToothHorizontal": e {
+    "moveToothHorizontal": qt {
       "id": "sc-keyframes-ivkSzl",
       "inject": [Function],
       "name": "ivkSzl",
       "rules": "0%{left:0;}100%{left:-65%;}",
+      Symbol(sc-keyframes): true,
     },
-    "moveToothRotate": e {
+    "moveToothRotate": qt {
       "id": "sc-keyframes-beQuxy",
       "inject": [Function],
       "name": "beQuxy",
       "rules": "0%{transform:rotate(180deg);}100%{transform:rotate(900deg);}",
+      Symbol(sc-keyframes): true,
     },
-    "moveToothVertical": e {
+    "moveToothVertical": qt {
       "id": "sc-keyframes-iPepDc",
       "inject": [Function],
       "name": "iPepDc",
       "rules": "100%{top:var(--final-tooth-top);}",
+      Symbol(sc-keyframes): true,
     },
-    "particleFade": e {
+    "particleFade": qt {
       "id": "sc-keyframes-itzSVh",
       "inject": [Function],
       "name": "itzSVh",
       "rules": "0%{opacity:1;}50%{opacity:0.7;}100%{opacity:1;}",
+      Symbol(sc-keyframes): true,
     },
-    "particleMovement": e {
+    "particleMovement": qt {
       "id": "sc-keyframes-iWWfjj",
       "inject": [Function],
       "name": "iWWfjj",
       "rules": "from{transform:translate(-50%,var(--begin-y));}to{transform:translate(50%,var(--end-y));}",
+      Symbol(sc-keyframes): true,
     },
-    "particleScale": e {
+    "particleScale": qt {
       "id": "sc-keyframes-defYgy",
       "inject": [Function],
       "name": "defYgy",
       "rules": "0%{transform:scale3d(0.4,0.4,1);}50%{transform:scale3d(1,1,1);}100%{transform:scale3d(0.4,0.4,1);}",
+      Symbol(sc-keyframes): true,
     },
-    "portalGlow": e {
+    "portalGlow": qt {
       "id": "sc-keyframes-iDgGpj",
       "inject": [Function],
       "name": "iDgGpj",
       "rules": "0%{box-shadow:inset 0px 0px 13px 1px var(--portal-glow-color);}50%{box-shadow:inset 0px 0px 20px 1px var(--portal-glow-color);}100%{box-shadow:inset 0px 0px 13px 1px var(--portal-glow-color);}",
+      Symbol(sc-keyframes): true,
     },
-    "rotateMovement": e {
+    "rotateMovement": qt {
       "id": "sc-keyframes-dOlMFI",
       "inject": [Function],
       "name": "dOlMFI",
       "rules": "from{rotate:0deg;}to{rotate:var(--rotation);}",
+      Symbol(sc-keyframes): true,
     },
-    "toothRemove": e {
+    "toothRemove": qt {
       "id": "sc-keyframes-jTSpTQ",
       "inject": [Function],
       "name": "jTSpTQ",
       "rules": "100%{opacity:1;}",
+      Symbol(sc-keyframes): true,
     },
-    "verticalMovement": e {
+    "verticalMovement": qt {
       "id": "sc-keyframes-dPpvJG",
       "inject": [Function],
       "name": "dPpvJG",
       "rules": "0%{transform:translateY(var(--translateY-begin));}100%{transform:translateY(var(--translateY-end));}",
+      Symbol(sc-keyframes): true,
     },
   },
   "breakpoints": {
@@ -100,29 +113,29 @@ exports[`mainTheme should work 1`] = `
     "robotoMono": {
       "light": [
         "font-family:",
-        "fontFamily",
+        "var(--font-roboto-mono)",
         ";font-weight:300;",
       ],
       "medium": [
         "font-family:",
-        "fontFamily",
+        "var(--font-roboto-mono)",
         ";font-weight:500;",
       ],
       "regular": [
         "font-family:",
-        "fontFamily",
+        "var(--font-roboto-mono)",
         ";font-weight:400;",
       ],
       "thin": [
         "font-family:",
-        "fontFamily",
+        "var(--font-roboto-mono)",
         ";font-weight:100;",
       ],
     },
   },
   "fonts": {
     "baseSize": 20,
-    "bodyFont": "fontFamily",
+    "bodyFont": "var(--font-roboto-mono)",
   },
   "helpers": {
     "border": {
@@ -169,11 +182,8 @@ exports[`mainTheme should work 1`] = `
     },
   },
   "logo": {
-    "component": {
-      "$$typeof": Symbol(react.forward_ref),
-      "render": [Function],
-    },
-    "svg": "slLogo.svg",
+    "component": [Function],
+    "svg": "",
   },
   "media": {
     "down": {
@@ -199,7 +209,7 @@ exports[`mainTheme should work 1`] = `
     "body": {
       "L": [
         "font-family:",
-        "fontFamily",
+        "var(--font-roboto-mono)",
         ";font-weight:400;",
         " color:",
         "#FBFBFB",
@@ -209,7 +219,7 @@ exports[`mainTheme should work 1`] = `
       ],
       "M": [
         "font-family:",
-        "fontFamily",
+        "var(--font-roboto-mono)",
         ";font-weight:400;",
         " color:",
         "#FBFBFB",
@@ -219,7 +229,7 @@ exports[`mainTheme should work 1`] = `
       ],
       "S": [
         "font-family:",
-        "fontFamily",
+        "var(--font-roboto-mono)",
         ";font-weight:400;",
         " color:",
         "#FBFBFB",
@@ -229,7 +239,7 @@ exports[`mainTheme should work 1`] = `
       ],
       "XL": [
         "font-family:",
-        "fontFamily",
+        "var(--font-roboto-mono)",
         ";font-weight:500;",
         " color:",
         "#FBFBFB",
@@ -239,7 +249,7 @@ exports[`mainTheme should work 1`] = `
       ],
       "XS": [
         "font-family:",
-        "fontFamily",
+        "var(--font-roboto-mono)",
         ";font-weight:500;",
         " color:",
         "#FBFBFB",
@@ -251,7 +261,7 @@ exports[`mainTheme should work 1`] = `
     "heading": {
       "heading1": [
         "font-family:",
-        "fontFamily",
+        "var(--font-roboto-mono)",
         ";font-weight:400;",
         " color:",
         "#FBFBFB",
@@ -261,7 +271,7 @@ exports[`mainTheme should work 1`] = `
       ],
       "heading2": [
         "font-family:",
-        "fontFamily",
+        "var(--font-roboto-mono)",
         ";font-weight:400;",
         " color:",
         "#FBFBFB",
@@ -273,7 +283,7 @@ exports[`mainTheme should work 1`] = `
     "label": {
       "L": [
         "font-family:",
-        "fontFamily",
+        "var(--font-roboto-mono)",
         ";font-weight:500;",
         " color:",
         "#FBFBFB",
@@ -283,7 +293,7 @@ exports[`mainTheme should work 1`] = `
       ],
       "XS": [
         "font-family:",
-        "fontFamily",
+        "var(--font-roboto-mono)",
         ";font-weight:500;",
         " color:",
         "#FBFBFB",

@@ -10,8 +10,6 @@ import {
 
 import { mainTheme } from '@sdlgr/main-theme'
 
-import { GlobalStyles } from '@web/components/GlobalStyles/GlobalStyles'
-
 export default function StyledComponentsRegistry({
   children,
 }: {
@@ -25,14 +23,11 @@ export default function StyledComponentsRegistry({
   useServerInsertedHTML(() => {
     const styles = styledComponentsStyleSheet.getStyleElement()
     styledComponentsStyleSheet.instance.clearTag()
-    return <>{styles}</>
+    return styles
   })
 
   const styledLayout = (
-    <ThemeProvider theme={mainTheme}>
-      <GlobalStyles />
-      {children}
-    </ThemeProvider>
+    <ThemeProvider theme={mainTheme}>{children}</ThemeProvider>
   )
 
   /* istanbul ignore else */

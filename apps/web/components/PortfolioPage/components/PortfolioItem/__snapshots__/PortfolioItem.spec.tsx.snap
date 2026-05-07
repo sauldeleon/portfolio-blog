@@ -1,8 +1,8 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`PortfolioHeading should render correctly 1`] = `
 .c1 {
-  font-family: fontFamily;
+  font-family: var(--font-roboto-mono);
   font-weight: 500;
   color: #FBFBFB;
   font-size: 1rem;

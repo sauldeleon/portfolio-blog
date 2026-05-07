@@ -11,4 +11,15 @@ describe('OtherStuff', () => {
 
     expect(baseElement).toMatchSnapshot()
   })
+
+  it('should render empty when otherItems is not an array', () => {
+    jest
+      .spyOn(require('@web/i18n/client'), 'useClientTranslation')
+      .mockReturnValue({
+        t: () => 'not-an-array',
+      })
+    const { baseElement } = renderApp(<OtherStuff />)
+    expect(baseElement).toBeTruthy()
+    jest.restoreAllMocks()
+  })
 })

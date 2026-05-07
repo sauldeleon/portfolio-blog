@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`CircleLink should render with a different size 1`] = `
 .c0 {
@@ -38,7 +38,7 @@ exports[`CircleLink should render with a different size 1`] = `
 }
 
 .c7 {
-  font-family: fontFamily;
+  font-family: var(--font-roboto-mono);
   font-weight: 400;
   color: #FBFBFB;
   font-size: 0.9rem;
@@ -149,10 +149,47 @@ exports[`CircleLink should render with a different size 1`] = `
       >
         <svg
           class="c3 c4"
+          fill="none"
           height="50"
+          viewBox="0 0 42 42"
           width="50"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          circleButton.svg
+          <circle
+            cx="21"
+            cy="21"
+            r="14.5"
+            stroke="white"
+          />
+          <circle
+            class="loading"
+            cx="21"
+            cy="21"
+            r="17.5"
+            stroke="none"
+          />
+          <circle
+            cx="21"
+            cy="21"
+            r="20.5"
+            stroke="white"
+          />
+          <path
+            d="M35.4238 6.42969L31.2021 10.6931M10.7968 31.2995L6.57502 35.5629"
+            stroke="white"
+          />
+          <path
+            d="M41.5 21L35.5 21M6.5 21L0.5 21"
+            stroke="white"
+          />
+          <path
+            d="M6.50391 6.50781L10.7465 10.7505M31.2526 31.2565L35.4953 35.4992"
+            stroke="white"
+          />
+          <path
+            d="M21 1V7M21 36V42"
+            stroke="white"
+          />
         </svg>
         <div
           class="c5"

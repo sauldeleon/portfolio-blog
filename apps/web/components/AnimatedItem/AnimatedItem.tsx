@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useId } from 'react'
 import { RuleSet } from 'styled-components'
 
@@ -31,7 +33,7 @@ export type AnimatedElement = {
   fastDelay?: boolean
 }
 
-interface AnimatedItemProps extends AnimatedElement {}
+type AnimatedItemProps = AnimatedElement
 
 export function AnimatedItem({
   svg,

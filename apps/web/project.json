@@ -3,6 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/web",
   "projectType": "application",
+  "tags": [],
   "targets": {
     "version": {
       "executor": "@jscutlery/semver:version",
@@ -72,6 +73,5 @@
         "lintFilePatterns": ["apps/web/**/*.{ts,tsx,js,jsx}"]
       }
     }
-  },
-  "tags": []
+  }
 }

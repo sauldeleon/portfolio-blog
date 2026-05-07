@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`OtherStuff should render successfully 1`] = `
 .c4 {
@@ -38,7 +38,7 @@ exports[`OtherStuff should render successfully 1`] = `
 }
 
 .c0 {
-  font-family: fontFamily;
+  font-family: var(--font-roboto-mono);
   font-weight: 500;
   color: #FBFBFB;
   font-size: 1rem;
@@ -49,7 +49,7 @@ exports[`OtherStuff should render successfully 1`] = `
 .c1 {
   font-size: 20px;
   margin-bottom: 20px;
-  font-family: fontFamily;
+  font-family: var(--font-roboto-mono);
   font-weight: 400;
 }
 
@@ -71,7 +71,7 @@ exports[`OtherStuff should render successfully 1`] = `
 }
 
 .c6 {
-  font-family: fontFamily;
+  font-family: var(--font-roboto-mono);
   font-weight: 400;
   color: #FBFBFB;
   font-size: 0.9rem;

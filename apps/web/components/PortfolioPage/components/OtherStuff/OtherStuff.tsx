@@ -13,7 +13,8 @@ import {
 
 export function OtherStuff() {
   const { t } = useClientTranslation('portfolioPage')
-  const otherItems = t('items.other.otherAreas', { returnObjects: true })
+  const otherItemsRaw = t('items.other.otherAreas', { returnObjects: true })
+  const otherItems = Array.isArray(otherItemsRaw) ? otherItemsRaw : []
 
   return (
     <>
@@ -23,9 +24,7 @@ export function OtherStuff() {
             <Trans
               t={t}
               i18nKey={name as ParseKeys<'portfolioPage'>}
-              components={{
-                italic: <StyledItalic />,
-              }}
+              components={{ italic: <StyledItalic /> }}
             />{' '}
             {`${beginYear || ''}${endYear ? ' - ' + endYear : ''}`}
           </StyledAreaPeriod>

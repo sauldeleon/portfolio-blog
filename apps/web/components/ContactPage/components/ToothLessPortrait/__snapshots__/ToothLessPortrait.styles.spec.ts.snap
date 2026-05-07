@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`generateKeyframeStep generate keyframe step snapshot for image 0 1`] = `
 "
@@ -37,7 +37,7 @@ exports[`generateKeyframeStep generate keyframe step snapshot for image 2 1`] = 
 `;
 
 exports[`swapImageAnimation generate keyframe snapshot for images 1`] = `
-e {
+qt {
   "id": "sc-keyframes-kzvgWv",
   "inject": [Function],
   "name": "kzvgWv",
@@ -71,5 +71,6 @@ e {
     }
   
 ",
+  Symbol(sc-keyframes): true,
 }
 `;

@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`RootPage should redirect to fallback language 1`] = `
 .c0 {
@@ -7,13 +7,9 @@ exports[`RootPage should redirect to fallback language 1`] = `
   width: 100%;
 }
 
-<body>
-  <div>
-    <html>
-      <body
-        class="c0"
-      />
-    </html>
-  </div>
+<body
+  class="c0"
+>
+  <div />
 </body>
 `;

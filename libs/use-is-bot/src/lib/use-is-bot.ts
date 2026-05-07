@@ -19,6 +19,9 @@ export function useIsBot(props?: UseIsBotProps) {
         setIsLoading(false)
         afterDetection?.()
       })
+      .catch(() => {
+        setIsLoading(false)
+      })
   }, [afterDetection])
 
   return { isBot, isLoading }

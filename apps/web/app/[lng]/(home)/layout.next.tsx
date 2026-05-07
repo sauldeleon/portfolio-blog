@@ -43,9 +43,7 @@ export default function HomeLayout({ children }: HomeLayoutProps) {
           key="mountaineer-translate"
           t={t}
           i18nKey="attributes.mountaineer"
-          components={{
-            icon: <HikeIcon width={22} height={22} />,
-          }}
+          components={{ icon: <HikeIcon width={22} height={22} /> }}
         />
       ),
     },
@@ -56,9 +54,7 @@ export default function HomeLayout({ children }: HomeLayoutProps) {
           key="petter-translate"
           t={t}
           i18nKey="attributes.petter"
-          components={{
-            icon: <CatIcon width={22} height={22} />,
-          }}
+          components={{ icon: <CatIcon width={22} height={22} /> }}
         />
       ),
     },
@@ -69,9 +65,7 @@ export default function HomeLayout({ children }: HomeLayoutProps) {
           key="gamer-translate"
           t={t}
           i18nKey="attributes.gamer"
-          components={{
-            icon: <GameControllerIcon width={22} height={22} />,
-          }}
+          components={{ icon: <GameControllerIcon width={22} height={22} /> }}
         />
       ),
     },
@@ -82,16 +76,15 @@ export default function HomeLayout({ children }: HomeLayoutProps) {
           key="photographer-translate"
           t={t}
           i18nKey="attributes.photographer"
-          components={{
-            icon: <CameraIcon width={22} height={22} />,
-          }}
+          components={{ icon: <CameraIcon width={22} height={22} /> }}
         />
       ),
     },
   ]
 
+  const summaryRaw = t('summary', { returnObjects: true })
   const summaryParagraphs: React.ReactNode[] = [
-    ...t('summary', { returnObjects: true }),
+    ...(Array.isArray(summaryRaw) ? summaryRaw : []),
     <StyledAttributes key="attributes">
       {attributes.map(({ key, element }) => (
         <StyledAttribute key={`${key}-attribute`}>

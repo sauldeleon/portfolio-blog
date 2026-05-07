@@ -1,8 +1,8 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`WorkingExperience should render successfully 1`] = `
 .c0 {
-  font-family: fontFamily;
+  font-family: var(--font-roboto-mono);
   font-weight: 400;
   color: #FBFBFB;
   font-size: 1.5rem;
@@ -11,7 +11,7 @@ exports[`WorkingExperience should render successfully 1`] = `
 }
 
 .c2 {
-  font-family: fontFamily;
+  font-family: var(--font-roboto-mono);
   font-weight: 500;
   color: #FBFBFB;
   font-size: 1rem;
@@ -20,7 +20,7 @@ exports[`WorkingExperience should render successfully 1`] = `
 }
 
 .c1 {
-  font-family: fontFamily;
+  font-family: var(--font-roboto-mono);
   font-weight: 500;
   font-size: 20px;
   margin-bottom: 30px;
@@ -29,7 +29,7 @@ exports[`WorkingExperience should render successfully 1`] = `
 .c3 {
   font-size: 16px;
   margin-bottom: 20px;
-  font-family: fontFamily;
+  font-family: var(--font-roboto-mono);
   font-weight: 400;
 }
 
@@ -51,7 +51,7 @@ exports[`WorkingExperience should render successfully 1`] = `
 }
 
 .c6 {
-  font-family: fontFamily;
+  font-family: var(--font-roboto-mono);
   font-weight: 400;
   color: #FBFBFB;
   font-size: 0.9rem;

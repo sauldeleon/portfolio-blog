@@ -1,3 +1,5 @@
+'use client'
+
 import { ParseKeys } from 'i18next'
 import { useId } from 'react'
 
@@ -5,7 +7,7 @@ import { useClientTranslation } from '@web/i18n/client'
 import { AnimatedItemKey } from '@web/utils/animatedItem/animatedItemMap'
 
 import { StyledHeading } from './ExperiencePage.styles'
-import { ExperienceItem } from './components/ExperienceItem/ExperienceItem'
+import { ExperienceItem as ExperienceItemCard } from './components/ExperienceItem/ExperienceItem'
 import { useExperienceItems } from './useExperienceItems'
 
 export type ExperienceItem = {
@@ -28,7 +30,7 @@ export function ExperiencePage() {
     <>
       <StyledHeading $level={2}>{t('title')}</StyledHeading>
       {experienceItems.map((props, index) => (
-        <ExperienceItem key={`${id}-${index}`} {...props} />
+        <ExperienceItemCard key={`${id}-${index}`} {...props} />
       ))}
     </>
   )

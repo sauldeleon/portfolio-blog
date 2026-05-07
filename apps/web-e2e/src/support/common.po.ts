@@ -7,10 +7,8 @@ export const checkLocalStorageValue = (
   options?: Parameters<typeof cy.getAllLocalStorage>[0],
 ) => {
   cy.getAllLocalStorage(options).then((result) => {
-    expect(result).to.deep.equal({
-      [Cypress.config().baseUrl]: {
-        [key]: value,
-      },
+    expect(result[Cypress.config().baseUrl as string]).to.deep.equal({
+      [key]: value,
     })
   })
 }

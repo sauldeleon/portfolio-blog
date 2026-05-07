@@ -1,9 +1,16 @@
 {
-  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "sourceMap": false,
     "outDir": "../../dist/out-tsc",
+    "rootDir": ".",
     "allowJs": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "module": "commonjs",
+    "target": "es2015",
+    "moduleResolution": "node",
+    "ignoreDeprecations": "6.0",
+    "strict": true,
     "types": ["cypress", "node", "@testing-library/cypress"]
   },
   "include": ["src/**/*.ts", "src/**/*.js", "cypress.config.ts"]

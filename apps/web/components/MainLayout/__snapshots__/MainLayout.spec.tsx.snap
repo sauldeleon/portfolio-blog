@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`MainLayout should render successfully 1`] = `
 .c0 {
@@ -57,7 +57,7 @@ exports[`MainLayout should render successfully 1`] = `
 }
 
 .c9 {
-  font-family: fontFamily;
+  font-family: var(--font-roboto-mono);
   font-weight: 400;
   color: #FBFBFB;
   font-size: 0.9rem;
@@ -291,7 +291,7 @@ exports[`MainLayout should render successfully 1`] = `
 }
 
 .c6 .c8 {
-  font-family: fontFamily;
+  font-family: var(--font-roboto-mono);
   font-weight: 500;
   color: #FBFBFB;
   font-size: 0.55rem;
@@ -318,7 +318,7 @@ exports[`MainLayout should render successfully 1`] = `
 }
 
 .c10 .c8 {
-  font-family: fontFamily;
+  font-family: var(--font-roboto-mono);
   font-weight: 500;
   color: #FBFBFB;
   font-size: 0.55rem;
@@ -461,10 +461,6 @@ exports[`MainLayout should render successfully 1`] = `
 }
 
 @media (width >= 768px) {
-
-}
-
-@media (width >= 768px) {
   .c1 {
     align-items: center;
     background-color: transparent;
@@ -525,7 +521,7 @@ exports[`MainLayout should render successfully 1`] = `
   }
 
   .c6 .c8 {
-    font-family: fontFamily;
+    font-family: var(--font-roboto-mono);
     font-weight: 400;
     color: #FBFBFB;
     font-size: 0.9rem;
@@ -544,7 +540,7 @@ exports[`MainLayout should render successfully 1`] = `
   }
 
   .c10 .c8 {
-    font-family: fontFamily;
+    font-family: var(--font-roboto-mono);
     font-weight: 400;
     color: #FBFBFB;
     font-size: 0.9rem;
@@ -577,79 +573,81 @@ exports[`MainLayout should render successfully 1`] = `
     >
       <style>
         
-          #nprogress {
-            pointer-events: none;
-          }
+#nprogress {
+  pointer-events: none;
+}
 
-          #nprogress .bar {
-            background: #FBFBFB;
+#nprogress .bar {
+  background: #FBFBFB;
 
-            position: fixed;
-            z-index: 1031;
-            top: 0;
-            left: 0;
+  position: fixed;
+  z-index: 99999;
+  top: 0;
+  left: 0;
 
-            width: 100%;
-            height: 1px;
-          }
+  width: 100%;
+  height: 1px;
+}
 
-          /* Fancy blur effect */
-          #nprogress .peg {
-            display: block;
-            position: absolute;
-            right: 0px;
-            width: 100px;
-            height: 100%;
-            box-shadow: 0 0 10px #FBFBFB, 0 0 5px #FBFBFB;
-            opacity: 1.0;
+/* Fancy blur effect */
+#nprogress .peg {
+  display: block;
+  position: absolute;
+  right: 0px;
+  width: 100px;
+  height: 100%;
+  box-shadow: 0 0 10px #FBFBFB, 0 0 5px #FBFBFB;
+  opacity: 1.0;
 
-            -webkit-transform: rotate(3deg) translate(0px, -4px);
-                -ms-transform: rotate(3deg) translate(0px, -4px);
-                    transform: rotate(3deg) translate(0px, -4px);
-          }
+  -webkit-transform: rotate(3deg) translate(0px, -4px);
+      -ms-transform: rotate(3deg) translate(0px, -4px);
+          transform: rotate(3deg) translate(0px, -4px);
+}
 
-          /* Remove these to get rid of the spinner */
-          #nprogress .spinner {
-            display: block;
-            position: fixed;
-            z-index: 1031;
-            top: 15px;
-            right: 15px;
-          }
+/* Remove these to get rid of the spinner */
+#nprogress .spinner {
+  display: block;
+  position: fixed;
+  z-index: 1031;
+  top: 15px;
+  bottom: auto;
+  right: 15px;
+  left: auto;
+}
 
-          #nprogress .spinner-icon {
-            width: 18px;
-            height: 18px;
-            box-sizing: border-box;
+#nprogress .spinner-icon {
+  width: 18px;
+  height: 18px;
+  box-sizing: border-box;
 
-            border: solid 2px transparent;
-            border-top-color: #FBFBFB;
-            border-left-color: #FBFBFB;
-            border-radius: 50%;
+  border: solid 2px transparent;
+  border-top-color: #FBFBFB;
+  border-left-color: #FBFBFB;
+  border-radius: 50%;
 
-            -webkit-animation: nprogress-spinner 400ms linear infinite;
-                    animation: nprogress-spinner 400ms linear infinite;
-          }
+  -webkit-animation: nprogress-spinner 400ms linear infinite;
+          animation: nprogress-spinner 400ms linear infinite;
+}
 
-          .nprogress-custom-parent {
-            overflow: hidden;
-            position: relative;
-          }
+.nprogress-custom-parent {
+  overflow: hidden;
+  position: relative;
+}
 
-          .nprogress-custom-parent #nprogress .spinner,
-          .nprogress-custom-parent #nprogress .bar {
-            position: absolute;
-          }
+.nprogress-custom-parent #nprogress .spinner,
+.nprogress-custom-parent #nprogress .bar {
+  position: absolute;
+}
 
-          @-webkit-keyframes nprogress-spinner {
-            0%   { -webkit-transform: rotate(0deg); }
-            100% { -webkit-transform: rotate(360deg); }
-          }
-          @keyframes nprogress-spinner {
-            0%   { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-          }
-        
+@-webkit-keyframes nprogress-spinner {
+  0%   { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+@keyframes nprogress-spinner {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
       </style>
       <nav
         aria-label="Main menu"
@@ -662,10 +660,90 @@ exports[`MainLayout should render successfully 1`] = `
         >
           <svg
             class="c4"
+            fill="none"
             height="55"
+            viewBox="0 0 145 75"
             width="89"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            slLogo.svg
+            <path
+              clip-rule="evenodd"
+              d="M36.5 19C35.1193 19 34 20.1193 34 21.5C34 22.8807 35.1193 24 36.5 24H76.5V27H36.5C33.4624 27 31 24.5376 31 21.5C31 18.4624 33.4624 16 36.5 16H76.5V19H36.5Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
+            <path
+              clip-rule="evenodd"
+              d="M28.5 50.5C29.8807 50.5 31 51.6193 31 53C31 54.3807 29.8807 55.5 28.5 55.5H0.5V58.5H28.5C31.5376 58.5 34 56.0376 34 53C34 49.9624 31.5376 47.5 28.5 47.5H0.5V50.5H28.5Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
+            <path
+              clip-rule="evenodd"
+              d="M110.5 3H32.5C22.2827 3 14 11.2827 14 21.5C14 31.7173 21.2827 40 31.5 40C38.9558 40 44 46.0442 44 53.5C44 60.9558 37.9558 67 30.5 67H0.5V64H30.5C36.299 64 41 59.299 41 53.5C41 47.701 37.299 43 31.5 43H0.5V40H20.8034C14.7898 36.2534 11 29.3706 11 21.5C11 9.62588 20.6259 0 32.5 0H110.5V3ZM72.5 35H44.1967C50.2102 38.7466 54 45.6294 54 53.5C54 65.3741 44.3741 75 32.5 75H0.5V72H32.5C42.7173 72 51 63.7173 51 53.5C51 43.2827 43.7173 35 33.5 35L31.5 34.8493C25.1563 33.8727 21 28.268 21 21.5C21 14.0442 27.0442 8 34.5 8H75.5V11H34.5C28.701 11 24 15.701 24 21.5C24 27.299 27.701 32 33.5 32H72.5V35Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
+            <path
+              clip-rule="evenodd"
+              d="M0.499999 72L0.5 41L3.5 41L3.5 72L0.499999 72Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
+            <path
+              clip-rule="evenodd"
+              d="M83 67L83 -1.31134e-07L86 0L86 67L83 67Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
+            <path
+              clip-rule="evenodd"
+              d="M75 59L75 -1.31134e-07L78 0L78 59L75 59Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
+            <path
+              clip-rule="evenodd"
+              d="M142 75L142 56L145 56L145 75L142 75Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
+            <path
+              clip-rule="evenodd"
+              d="M91.5 0H94.5V72H144V75H91.5V0Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
+            <path
+              clip-rule="evenodd"
+              d="M72.5 35C62.2827 35 54 43.2827 54 53.5C54 63.7173 62.2827 72 72.5 72H92.5V75H72.5C60.6259 75 51 65.3741 51 53.5C51 41.6259 60.6259 32 72.5 32H76.5V35H72.5Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
+            <path
+              clip-rule="evenodd"
+              d="M72.5 43C66.701 43 62 47.701 62 53.5C62 59.299 66.701 64 72.5 64H85.5V67H72.5C65.0442 67 59 60.9558 59 53.5C59 46.0442 65.0442 40 72.5 40H77.5V43H72.5Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
+            <path
+              clip-rule="evenodd"
+              d="M72.5 51C71.1193 51 70 52.1193 70 53.5C70 54.8807 71.1193 56 72.5 56H77.5V59H72.5C69.4624 59 67 56.5376 67 53.5C67 50.4624 69.4624 48 72.5 48H77.5V51H72.5Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
+            <path
+              clip-rule="evenodd"
+              d="M99.5 0H102.5V64H144V67H99.5V0Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
+            <path
+              clip-rule="evenodd"
+              d="M107.5 0H110.5V56.0053H145V59.0053H107.5V0Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
           </svg>
         </a>
         <ul
@@ -746,16 +824,62 @@ exports[`MainLayout should render successfully 1`] = `
           >
             <svg
               class="c14 c15"
+              fill="none"
               height="42"
+              viewBox="0 0 42 42"
               width="42"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              circleButton.svg
+              <circle
+                cx="21"
+                cy="21"
+                r="14.5"
+                stroke="white"
+              />
+              <circle
+                class="loading"
+                cx="21"
+                cy="21"
+                r="17.5"
+                stroke="none"
+              />
+              <circle
+                cx="21"
+                cy="21"
+                r="20.5"
+                stroke="white"
+              />
+              <path
+                d="M35.4238 6.42969L31.2021 10.6931M10.7968 31.2995L6.57502 35.5629"
+                stroke="white"
+              />
+              <path
+                d="M41.5 21L35.5 21M6.5 21L0.5 21"
+                stroke="white"
+              />
+              <path
+                d="M6.50391 6.50781L10.7465 10.7505M31.2526 31.2565L35.4953 35.4992"
+                stroke="white"
+              />
+              <path
+                d="M21 1V7M21 36V42"
+                stroke="white"
+              />
             </svg>
             <div
               class="c16"
             >
-              <svg>
-                arrowRight.svg
+              <svg
+                fill="none"
+                height="42"
+                viewBox="0 0 42 42"
+                width="42"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M27.95 20.7463C27.9182 20.6645 27.8706 20.5898 27.8099 20.5265L24.4752 17.1959C24.413 17.1338 24.3392 17.0845 24.2579 17.0509C24.1767 17.0173 24.0896 17 24.0017 17C23.8241 17 23.6537 17.0705 23.5281 17.1959C23.4659 17.258 23.4166 17.3317 23.383 17.4129C23.3493 17.494 23.332 17.581 23.332 17.6688C23.332 17.8462 23.4025 18.0164 23.5281 18.1418L25.729 20.3333H15.6669C15.4901 20.3333 15.3204 20.4035 15.1953 20.5284C15.0703 20.6533 15 20.8228 15 20.9994C15 21.1761 15.0703 21.3455 15.1953 21.4704C15.3204 21.5954 15.4901 21.6655 15.6669 21.6655H25.729L23.5281 23.8571C23.4656 23.919 23.416 23.9927 23.3821 24.0738C23.3483 24.155 23.3309 24.2421 23.3309 24.33C23.3309 24.418 23.3483 24.505 23.3821 24.5862C23.416 24.6674 23.4656 24.741 23.5281 24.803C23.5901 24.8654 23.6639 24.915 23.7452 24.9488C23.8264 24.9826 23.9136 25 24.0017 25C24.0897 25 24.1769 24.9826 24.2582 24.9488C24.3394 24.915 24.4132 24.8654 24.4752 24.803L27.8099 21.4724C27.8706 21.409 27.9182 21.3343 27.95 21.2526C28.0167 21.0904 28.0167 20.9085 27.95 20.7463Z"
+                  fill="white"
+                />
               </svg>
             </div>
           </div>
@@ -773,7 +897,7 @@ exports[`MainLayout should render successfully 1`] = `
       </div>
       <div
         class="CookieConsent"
-        style="align-items: center; background: rgb(251, 251, 251); color: white; display: flex; flex-wrap: wrap; justify-content: space-between; left: 0px; position: fixed; width: 100%; z-index: 999; font-family: fontFamily; bottom: 0px;"
+        style="align-items: center; background: rgb(251, 251, 251); color: white; display: flex; flex-wrap: wrap; justify-content: space-between; left: 0px; position: fixed; width: 100%; z-index: 999; font-family: var(--font-roboto-mono); bottom: 0px;"
       >
         <div
           class=""
@@ -822,10 +946,90 @@ exports[`MainLayout should render successfully 1`] = `
         >
           <svg
             class="c27"
+            fill="none"
             height="64"
+            viewBox="0 0 145 75"
             width="120"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            slLogo.svg
+            <path
+              clip-rule="evenodd"
+              d="M36.5 19C35.1193 19 34 20.1193 34 21.5C34 22.8807 35.1193 24 36.5 24H76.5V27H36.5C33.4624 27 31 24.5376 31 21.5C31 18.4624 33.4624 16 36.5 16H76.5V19H36.5Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
+            <path
+              clip-rule="evenodd"
+              d="M28.5 50.5C29.8807 50.5 31 51.6193 31 53C31 54.3807 29.8807 55.5 28.5 55.5H0.5V58.5H28.5C31.5376 58.5 34 56.0376 34 53C34 49.9624 31.5376 47.5 28.5 47.5H0.5V50.5H28.5Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
+            <path
+              clip-rule="evenodd"
+              d="M110.5 3H32.5C22.2827 3 14 11.2827 14 21.5C14 31.7173 21.2827 40 31.5 40C38.9558 40 44 46.0442 44 53.5C44 60.9558 37.9558 67 30.5 67H0.5V64H30.5C36.299 64 41 59.299 41 53.5C41 47.701 37.299 43 31.5 43H0.5V40H20.8034C14.7898 36.2534 11 29.3706 11 21.5C11 9.62588 20.6259 0 32.5 0H110.5V3ZM72.5 35H44.1967C50.2102 38.7466 54 45.6294 54 53.5C54 65.3741 44.3741 75 32.5 75H0.5V72H32.5C42.7173 72 51 63.7173 51 53.5C51 43.2827 43.7173 35 33.5 35L31.5 34.8493C25.1563 33.8727 21 28.268 21 21.5C21 14.0442 27.0442 8 34.5 8H75.5V11H34.5C28.701 11 24 15.701 24 21.5C24 27.299 27.701 32 33.5 32H72.5V35Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
+            <path
+              clip-rule="evenodd"
+              d="M0.499999 72L0.5 41L3.5 41L3.5 72L0.499999 72Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
+            <path
+              clip-rule="evenodd"
+              d="M83 67L83 -1.31134e-07L86 0L86 67L83 67Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
+            <path
+              clip-rule="evenodd"
+              d="M75 59L75 -1.31134e-07L78 0L78 59L75 59Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
+            <path
+              clip-rule="evenodd"
+              d="M142 75L142 56L145 56L145 75L142 75Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
+            <path
+              clip-rule="evenodd"
+              d="M91.5 0H94.5V72H144V75H91.5V0Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
+            <path
+              clip-rule="evenodd"
+              d="M72.5 35C62.2827 35 54 43.2827 54 53.5C54 63.7173 62.2827 72 72.5 72H92.5V75H72.5C60.6259 75 51 65.3741 51 53.5C51 41.6259 60.6259 32 72.5 32H76.5V35H72.5Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
+            <path
+              clip-rule="evenodd"
+              d="M72.5 43C66.701 43 62 47.701 62 53.5C62 59.299 66.701 64 72.5 64H85.5V67H72.5C65.0442 67 59 60.9558 59 53.5C59 46.0442 65.0442 40 72.5 40H77.5V43H72.5Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
+            <path
+              clip-rule="evenodd"
+              d="M72.5 51C71.1193 51 70 52.1193 70 53.5C70 54.8807 71.1193 56 72.5 56H77.5V59H72.5C69.4624 59 67 56.5376 67 53.5C67 50.4624 69.4624 48 72.5 48H77.5V51H72.5Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
+            <path
+              clip-rule="evenodd"
+              d="M99.5 0H102.5V64H144V67H99.5V0Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
+            <path
+              clip-rule="evenodd"
+              d="M107.5 0H110.5V56.0053H145V59.0053H107.5V0Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
           </svg>
           <nav
             aria-label="Site map"
@@ -893,10 +1097,15 @@ exports[`MainLayout should render successfully 1`] = `
                 >
                   <svg
                     color="#FBFBFB"
+                    fill="currentColor"
                     height="14"
+                    viewBox="0 0 30 30"
                     width="14"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    moon.svg
+                    <path
+                      d="M29.4108 16.5074C29.1944 16.3234 28.9322 16.2056 28.6539 16.1674C28.3757 16.1292 28.0926 16.1722 27.8369 16.2915C26.2519 17.0378 24.5287 17.4219 22.7856 17.4174C19.5613 17.4134 16.4692 16.0978 14.1837 13.7576C11.8981 11.4173 10.6044 8.24214 10.5846 4.92439C10.5914 3.88459 10.7172 2.84923 10.9593 1.83969C11.0107 1.57061 10.9914 1.2923 10.9035 1.03344C10.8156 0.774571 10.6621 0.54451 10.459 0.366954C10.256 0.189399 10.0105 0.0707719 9.74805 0.0232934C9.48558 -0.024185 9.21555 0.0012026 8.96578 0.0968408C6.616 1.18405 4.57337 2.86807 3.02978 4.99068C1.4862 7.11329 0.492329 9.60483 0.141541 12.2312C-0.209248 14.8576 0.0945599 17.5327 1.02442 20.0051C1.95429 22.4775 3.47968 24.6661 5.45731 26.3653C7.43494 28.0645 9.79988 29.2185 12.33 29.7189C14.8601 30.2193 17.4723 30.0497 19.9212 29.226C22.3701 28.4023 24.5753 26.9515 26.3296 25.01C28.084 23.0685 29.3299 20.6999 29.9504 18.1269C30.0259 17.8323 30.015 17.5212 29.919 17.233C29.8229 16.9448 29.6461 16.6923 29.4108 16.5074Z"
+                    />
                   </svg>
                   <p
                     class="c8 c9"
@@ -912,10 +1121,15 @@ exports[`MainLayout should render successfully 1`] = `
                 >
                   <svg
                     color="#FBFBFB"
+                    fill="currentColor"
                     height="14"
+                    viewBox="0 0 14 14"
                     width="14"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    cactus.svg
+                    <path
+                      d="M11.2 0C10.6462 0 10.1049 0.164217 9.6444 0.471885C9.18395 0.779553 8.82506 1.21685 8.61314 1.72849C8.40121 2.24012 8.34576 2.80311 8.4538 3.34625C8.56184 3.8894 8.82851 4.38831 9.2201 4.7799C9.61169 5.17149 10.1106 5.43816 10.6537 5.5462C11.1969 5.65424 11.7599 5.59879 12.2715 5.38686C12.7831 5.17494 13.2204 4.81605 13.5281 4.3556C13.8358 3.89514 14 3.35379 14 2.8C14 2.05739 13.705 1.3452 13.1799 0.820101C12.6548 0.294999 11.9426 0 11.2 0ZM9.1 12.6H7.7V11.2C7.7 11.0143 7.62625 10.8363 7.49497 10.705C7.3637 10.5737 7.18565 10.5 7 10.5C6.81435 10.5 6.6363 10.5737 6.50503 10.705C6.37375 10.8363 6.3 11.0143 6.3 11.2V12.6H4.9V10.234L7.315 9.023C7.43044 8.96483 7.52752 8.87583 7.59547 8.76587C7.66343 8.6559 7.69961 8.52927 7.7 8.4V5.6C7.7 5.41435 7.62625 5.2363 7.49497 5.10503C7.3637 4.97375 7.18565 4.9 7 4.9C6.81435 4.9 6.6363 4.97375 6.50503 5.10503C6.37375 5.2363 6.3 5.41435 6.3 5.6V7.966L4.9 8.666V4.2C4.9 4.01435 4.82625 3.8363 4.69497 3.70503C4.5637 3.57375 4.38565 3.5 4.2 3.5C4.01435 3.5 3.8363 3.57375 3.70503 3.70503C3.57375 3.8363 3.5 4.01435 3.5 4.2V10.066L2.1 9.366V7.7C2.1 7.51435 2.02625 7.3363 1.89497 7.20503C1.7637 7.07375 1.58565 7 1.4 7C1.21435 7 1.0363 7.07375 0.905025 7.20503C0.77375 7.3363 0.7 7.51435 0.7 7.7V9.8C0.700392 9.92927 0.736571 10.0559 0.804526 10.1659C0.872482 10.2758 0.96956 10.3648 1.085 10.423L3.5 11.634V12.6H0.7C0.514348 12.6 0.336301 12.6737 0.205025 12.805C0.0737498 12.9363 0 13.1143 0 13.3C0 13.4857 0.0737498 13.6637 0.205025 13.795C0.336301 13.9263 0.514348 14 0.7 14H9.1C9.28565 14 9.4637 13.9263 9.59497 13.795C9.72625 13.6637 9.8 13.4857 9.8 13.3C9.8 13.1143 9.72625 12.9363 9.59497 12.805C9.4637 12.6737 9.28565 12.6 9.1 12.6Z"
+                    />
                   </svg>
                   <p
                     class="c8 c9"
@@ -932,10 +1146,15 @@ exports[`MainLayout should render successfully 1`] = `
                 >
                   <svg
                     color="#FBFBFB"
+                    fill="currentColor"
                     height="22"
+                    viewBox="0 0 24 24"
                     width="22"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    language.svg
+                    <path
+                      d="M20.58 19.37L17.59 11.01C17.38 10.46 16.91 10.12 16.37 10.12C15.83 10.12 15.37 10.46 15.14 11.03L12.16 19.37C12.02 19.76 12.22 20.19 12.61 20.33C13 20.47 13.43 20.27 13.57 19.88L14.19 18.15H18.54L19.16 19.88C19.27 20.19 19.56 20.38 19.87 20.38C19.95 20.38 20.04 20.37 20.12 20.34C20.51 20.2 20.71 19.77 20.57 19.38L20.58 19.37ZM14.74 16.64L16.38 12.05L18.02 16.64H14.74ZM12.19 7.85C9.92999 11.42 7.89 13.58 5.41 15.02C5.29 15.09 5.16 15.12 5.04 15.12C4.78 15.12 4.53 14.99 4.39 14.75C4.18 14.39 4.3 13.93 4.66 13.73C6.75999 12.51 8.48 10.76 10.41 7.86H4.12C3.71 7.86 3.37 7.52 3.37 7.11C3.37 6.7 3.71 6.36 4.12 6.36H7.87V4.38C7.87 3.97 8.21 3.63 8.62 3.63C9.02999 3.63 9.37 3.97 9.37 4.38V6.36H13.12C13.53 6.36 13.87 6.7 13.87 7.11C13.87 7.52 13.53 7.86 13.12 7.86H12.18L12.19 7.85ZM12.23 15.12C12.1 15.12 11.97 15.09 11.85 15.02C11.2 14.64 10.57 14.22 9.97999 13.78C9.64999 13.53 9.58 13.06 9.83 12.73C10.08 12.4 10.55 12.33 10.88 12.58C11.42 12.99 12.01 13.37 12.61 13.72C12.97 13.93 13.09 14.39 12.88 14.75C12.74 14.99 12.49 15.12 12.23 15.12Z"
+                    />
                   </svg>
                   <p
                     class="c8 c9"
@@ -951,10 +1170,15 @@ exports[`MainLayout should render successfully 1`] = `
                 >
                   <svg
                     color="#FBFBFB"
+                    fill="currentColor"
                     height="18"
+                    viewBox="0 0 24 24"
                     width="18"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    about.svg
+                    <path
+                      d="M12,1A11,11,0,1,0,23,12,11.013,11.013,0,0,0,12,1Zm0,20a9,9,0,1,1,9-9A9.011,9.011,0,0,1,12,21ZM13,8H11V6h2Zm0,10H11V10h2Z"
+                    />
                   </svg>
                   <p
                     class="c8 c9"
@@ -978,8 +1202,16 @@ exports[`MainLayout should render successfully 1`] = `
             >
               <svg
                 color="#FBFBFB"
+                fill="none"
+                height="20"
+                viewBox="0 0 20 20"
+                width="20"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                telegram.svg
+                <path
+                  d="M10 3.44539e-08C8.02219 3.44539e-08 6.08879 0.58649 4.4443 1.6853C2.79981 2.78412 1.51809 4.3459 0.761209 6.17317C0.00433284 8.00043 -0.193701 10.0111 0.192152 11.9509C0.578004 13.8907 1.53041 15.6725 2.92894 17.0711C4.32746 18.4696 6.10929 19.422 8.0491 19.8079C9.98891 20.1937 11.9996 19.9957 13.8268 19.2388C15.6541 18.4819 17.2159 17.2002 18.3147 15.5557C19.4135 13.9112 20 11.9778 20 10C20.0001 8.68675 19.7415 7.38634 19.239 6.17304C18.7365 4.95973 17.9999 3.8573 17.0713 2.92869C16.1427 2.00008 15.0403 1.26349 13.827 0.760983C12.6137 0.258474 11.3133 -0.000108979 10 3.44539e-08ZM13.1795 15.1525C13.1421 15.2458 13.0851 15.33 13.0125 15.3996C12.9398 15.4691 12.8532 15.5223 12.7583 15.5556C12.6634 15.5889 12.5625 15.6015 12.4623 15.5926C12.3622 15.5837 12.265 15.5535 12.1775 15.504L9.46284 13.3946L7.72052 15.002C7.6801 15.0319 7.6328 15.0511 7.583 15.0579C7.5332 15.0647 7.48248 15.0589 7.43552 15.0409L7.76952 12.0525L7.78021 12.061L7.78704 12.002C7.78704 12.002 12.672 7.55445 12.871 7.36496C13.0725 7.17596 13.006 7.13496 13.006 7.13496C13.0175 6.90443 12.6445 7.13496 12.6445 7.13496L6.172 11.299L3.47651 10.381C3.47651 10.381 3.06251 10.2325 3.02351 9.906C2.98251 9.582 3.49 9.406 3.49 9.406L14.207 5.14849C14.207 5.14849 15.088 4.75597 15.088 5.406L13.1795 15.1525Z"
+                  fill="#FBFBFB"
+                />
               </svg>
             </a>
             <a
@@ -992,8 +1224,15 @@ exports[`MainLayout should render successfully 1`] = `
             >
               <svg
                 color="#FBFBFB"
+                fill="currentColor"
+                height="20"
+                viewBox="0 0 21 20"
+                width="21"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                github.svg
+                <path
+                  d="M10.706 0C8.3315 9.84653e-05 6.03451 0.845114 4.22602 2.38385C2.41754 3.92258 1.21558 6.05462 0.835214 8.39848C0.454849 10.7423 0.920898 13.1451 2.14997 15.1768C3.37904 17.2084 5.29094 18.7365 7.54355 19.4875C8.04355 19.575 8.23105 19.275 8.23105 19.0125C8.23105 18.775 8.21854 17.9875 8.21854 17.15C5.70605 17.6125 5.05605 16.5375 4.85605 15.975C4.63413 15.428 4.28233 14.9431 3.83106 14.5625C3.48106 14.375 2.98107 13.9125 3.81855 13.9C4.13833 13.9347 4.44504 14.046 4.71268 14.2244C4.98033 14.4028 5.20101 14.6432 5.35605 14.925C5.49282 15.1707 5.67673 15.387 5.89723 15.5615C6.11774 15.736 6.37052 15.8653 6.64107 15.9419C6.91163 16.0185 7.19465 16.041 7.47391 16.0081C7.75318 15.9752 8.0232 15.8875 8.26851 15.75C8.3118 15.2416 8.53837 14.7663 8.90602 14.4125C6.68104 14.1625 4.35606 13.3 4.35606 9.47503C4.342 8.48118 4.70874 7.51961 5.38105 6.78753C5.07533 5.92375 5.1111 4.97581 5.48105 4.13753C5.48105 4.13753 6.31851 3.87502 8.23103 5.16253C9.8673 4.7125 11.5947 4.7125 13.231 5.16253C15.1435 3.86253 15.981 4.13753 15.981 4.13753C16.351 4.9758 16.3867 5.92376 16.081 6.78753C16.7553 7.51835 17.1224 8.48076 17.106 9.47503C17.106 13.3125 14.7685 14.1625 12.5435 14.4125C12.7821 14.6544 12.9659 14.9448 13.0824 15.264C13.1989 15.5833 13.2453 15.9238 13.2185 16.2625C13.2185 17.6 13.206 18.675 13.206 19.0125C13.206 19.275 13.3935 19.5875 13.8935 19.4875C16.1421 18.7304 18.0485 17.1988 19.2724 15.166C20.4962 13.1333 20.9578 10.7318 20.5748 8.39024C20.1918 6.04865 18.9891 3.91937 17.1814 2.38251C15.3737 0.84565 13.0787 0.00123491 10.706 0Z"
+                />
               </svg>
             </a>
             <a
@@ -1006,8 +1245,15 @@ exports[`MainLayout should render successfully 1`] = `
             >
               <svg
                 color="#FBFBFB"
+                fill="currentColor"
+                height="20"
+                viewBox="0 0 21 20"
+                width="21"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                linkedIn.svg
+                <path
+                  d="M18.6422 0.000139831H1.59997C1.4084 -0.00250479 1.21818 0.0323873 1.04017 0.102824C0.862171 0.17326 0.69987 0.27786 0.56254 0.410652C0.42521 0.543443 0.315542 0.701824 0.239798 0.876749C0.164054 1.05167 0.123718 1.23972 0.121094 1.43014V18.5701C0.123718 18.7606 0.164054 18.9486 0.239798 19.1235C0.315542 19.2985 0.42521 19.4568 0.56254 19.5896C0.69987 19.7224 0.862171 19.827 1.04017 19.8975C1.21818 19.9679 1.4084 20.0028 1.59997 20.0001H18.6422C18.8338 20.0028 19.024 19.9679 19.202 19.8975C19.38 19.827 19.5423 19.7224 19.6796 19.5896C19.817 19.4568 19.9266 19.2985 20.0024 19.1235C20.0781 18.9486 20.1185 18.7606 20.1211 18.5701V1.43014C20.1185 1.23972 20.0781 1.05167 20.0024 0.876749C19.9266 0.701824 19.817 0.543443 19.6796 0.410652C19.5423 0.27786 19.38 0.17326 19.202 0.102824C19.024 0.0323873 18.8338 -0.00250479 18.6422 0.000139831ZM6.18749 16.7401H3.16938V7.74014H6.18749V16.7401ZM4.67844 6.48014C4.2622 6.48014 3.86302 6.31578 3.56869 6.02323C3.27437 5.73067 3.10902 5.33388 3.10902 4.92014C3.10902 4.5064 3.27437 4.10961 3.56869 3.81705C3.86302 3.5245 4.2622 3.36014 4.67844 3.36014C4.89946 3.33522 5.12328 3.35699 5.33525 3.42402C5.54722 3.49105 5.74256 3.60183 5.90847 3.7491C6.07439 3.89637 6.20714 4.07682 6.29803 4.27862C6.38892 4.48043 6.4359 4.69904 6.4359 4.92014C6.4359 5.14124 6.38892 5.35985 6.29803 5.56166C6.20714 5.76346 6.07439 5.94391 5.90847 6.09118C5.74256 6.23845 5.54722 6.34923 5.33525 6.41626C5.12328 6.48329 4.89946 6.50505 4.67844 6.48014ZM17.0728 16.7401H14.0547V11.9101C14.0547 10.7001 13.6221 9.91014 12.5255 9.91014C12.1861 9.91261 11.8557 10.0184 11.5787 10.2133C11.3017 10.4082 11.0914 10.6828 10.9762 11.0001C10.8975 11.2352 10.8634 11.4827 10.8756 11.7301V16.7301H7.85751C7.85751 16.7301 7.85751 8.55014 7.85751 7.73014H10.8756V9.00014C11.1498 8.52725 11.5486 8.13766 12.029 7.87334C12.5094 7.60902 13.0533 7.47999 13.602 7.50014C15.614 7.50014 17.0728 8.79014 17.0728 11.5601V16.7401Z"
+                />
               </svg>
             </a>
           </div>
