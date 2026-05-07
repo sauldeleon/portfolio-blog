@@ -39,7 +39,6 @@
       "application": { "style": "styled-components", "linter": "eslint" }
     }
   },
-  "nxCloudAccessToken": "M2JjNmZlNzQtZmE3OC00ZTg5LWFlNTgtODUzMDMzMmIyMTY0fHJlYWQtd3JpdGU=",
   "useInferencePlugins": false,
   "defaultBase": "origin/main",
   "analytics": true

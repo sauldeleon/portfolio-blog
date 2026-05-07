@@ -1,4 +1,5 @@
 import { render } from '@testing-library/react'
+import React from 'react'
 
 import { SLLogo } from './assets'
 import * as Icons from './assets'
@@ -19,5 +20,23 @@ describe('FireAssets', () => {
       const Component = Icons[keyComponent]
       expect(Boolean(Component)).toBe(true)
     })
+  })
+
+  it('should render all icons', () => {
+    Object.values(Icons)
+      .filter(
+        (v): v is React.ComponentType => v != null && typeof v !== 'boolean',
+      )
+      .forEach((Component) => {
+        const { baseElement } = render(React.createElement(Component))
+        expect(baseElement).toBeTruthy()
+        const { baseElement: withTitle } = render(
+          React.createElement(Component, {
+            title: 'Title',
+            titleId: 'title-id',
+          }),
+        )
+        expect(withTitle).toBeTruthy()
+      })
   })
 })

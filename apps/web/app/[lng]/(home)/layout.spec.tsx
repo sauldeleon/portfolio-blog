@@ -11,4 +11,15 @@ describe('/[lng]/(home) - HomeLayout', () => {
     expect(screen.getByText('test')).toBeInTheDocument()
     expect(baseElement).toMatchSnapshot()
   })
+
+  it('should render with non-array summary', () => {
+    jest
+      .spyOn(require('@web/i18n/client'), 'useClientTranslation')
+      .mockReturnValue({
+        t: () => 'not-an-array',
+      })
+    const { baseElement } = renderApp(<HomeLayout>test</HomeLayout>)
+    expect(baseElement).toBeTruthy()
+    jest.restoreAllMocks()
+  })
 })

@@ -1,3 +1,4 @@
+import { load } from '@fingerprintjs/botd'
 import { renderHook, waitFor } from '@testing-library/react'
 
 import { useIsBot } from './use-is-bot'
@@ -31,5 +32,13 @@ describe('UseIsBot', () => {
     const mockFn = jest.fn()
     renderHook(() => useIsBot({ afterDetection: mockFn }))
     await waitFor(() => expect(mockFn).toHaveBeenCalledTimes(1))
+  })
+
+  it('should set isLoading to false when botd load rejects', async () => {
+    ;(load as jest.Mock).mockRejectedValueOnce(new Error('fail'))
+    const { result } = renderHook(() => useIsBot())
+    await waitFor(() =>
+      expect(result.current).toEqual({ isBot: true, isLoading: false }),
+    )
   })
 })

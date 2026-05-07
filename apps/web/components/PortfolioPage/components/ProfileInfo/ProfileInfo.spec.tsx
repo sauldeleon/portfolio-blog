@@ -11,4 +11,15 @@ describe('ProfileInfo', () => {
 
     expect(baseElement).toMatchSnapshot()
   })
+
+  it('should render empty when areas is not an array', () => {
+    jest
+      .spyOn(require('@web/i18n/client'), 'useClientTranslation')
+      .mockReturnValue({
+        t: () => 'not-an-array',
+      })
+    const { baseElement } = renderApp(<ProfileInfo />)
+    expect(baseElement).toBeTruthy()
+    jest.restoreAllMocks()
+  })
 })
