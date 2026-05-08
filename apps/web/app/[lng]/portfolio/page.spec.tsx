@@ -3,15 +3,26 @@ import { renderApp } from '@sdlgr/test-utils'
 import Page, { generateMetadata } from './page.next'
 
 describe('[lng]/portfolio route -  page', () => {
-  it('should render successfully', () => {
-    const { baseElement } = renderApp(<Page />)
+  it('should render successfully', async () => {
+    const { baseElement } = renderApp(
+      await Page({ params: Promise.resolve({ lng: 'en' }) }),
+    )
+    expect(baseElement).toBeTruthy()
+  })
+
+  it('should render successfully in Spanish', async () => {
+    const { baseElement } = renderApp(
+      await Page({ params: Promise.resolve({ lng: 'es' }) }),
+    )
     expect(baseElement).toBeTruthy()
   })
 })
 
 describe('[lng]/contact - Metadata', () => {
   it('should set the correct metadata', async () => {
-    expect(await generateMetadata({ params: { lng: 'en' } })).toEqual({
+    expect(
+      await generateMetadata({ params: Promise.resolve({ lng: 'en' }) }),
+    ).toEqual({
       description: 'Portfolio',
     })
   })

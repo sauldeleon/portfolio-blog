@@ -1,15 +1,28 @@
-import { FlatCompat } from '@eslint/eslintrc'
-import js from '@eslint/js'
 import nx from '@nx/eslint-plugin'
+import coreWebVitals from 'eslint-config-next/core-web-vitals'
 import globals from 'globals'
-import { dirname } from 'path'
-import { fileURLToPath } from 'url'
 
 import baseConfig from '../../eslint.config.mjs'
 
-const compat = new FlatCompat({
-  baseDirectory: dirname(fileURLToPath(import.meta.url)),
-  recommendedConfig: js.configs.recommended,
+// Strip plugins already registered by baseConfig/nx to avoid "Cannot redefine plugin" errors
+const SKIP_PLUGINS = new Set([
+  'react',
+  'react-hooks',
+  'import',
+  'jsx-a11y',
+  '@typescript-eslint',
+])
+const nextConfigs = coreWebVitals.map((cfg) => {
+  if (!cfg.plugins) return cfg
+  const plugins = Object.fromEntries(
+    Object.entries(cfg.plugins).filter(([k]) => !SKIP_PLUGINS.has(k)),
+  )
+  if (!Object.keys(plugins).length) {
+    // eslint-disable-next-line no-unused-vars
+    const { plugins: _plugins, ...rest } = cfg
+    return rest
+  }
+  return { ...cfg, plugins }
 })
 
 export default [
@@ -18,7 +31,7 @@ export default [
   },
   ...baseConfig,
   ...nx.configs['flat/react-typescript'],
-  ...compat.extends('plugin:@next/next/recommended', 'next/core-web-vitals'),
+  ...nextConfigs,
   { languageOptions: { globals: { ...globals.jest } } },
   {
     rules: {

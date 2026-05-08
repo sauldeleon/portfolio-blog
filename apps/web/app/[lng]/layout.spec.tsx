@@ -96,6 +96,26 @@ describe('[lng] route - metadata', () => {
           'es-ES': '/es',
         },
       },
+      openGraph: {
+        type: 'website',
+        siteName: 'Saúl de León Guerrero',
+        images: [
+          {
+            url: '/assets/portrait.jpg',
+            width: 800,
+            height: 800,
+            alt: 'Saúl de León Guerrero',
+          },
+        ],
+      },
+      twitter: {
+        card: 'summary',
+        images: ['/assets/portrait.jpg'],
+      },
+      robots: {
+        index: true,
+        follow: true,
+      },
     })
   })
   it('should generate viewport data successfully', async () => {

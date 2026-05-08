@@ -4,12 +4,41 @@ const { composePlugins, withNx } = require('@nx/next')
 
 const locales = ['en', 'es']
 
+const isStaticExport = process.env.EXPORT_STATIC_FILES === 'true'
+
 /**
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
  **/
 const nextConfig = {
   nx: {},
-  output: process.env.EXPORT_STATIC_FILES === 'true' ? 'export' : undefined,
+  output: isStaticExport ? 'export' : undefined,
+  async headers() {
+    if (isStaticExport) return []
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'Link',
+            value: [
+              '</sitemap.xml>; rel="sitemap"',
+              '<https://github.com/sauldeleon>; rel="me"',
+              '<https://www.linkedin.com/in/sauldeleonguerrero>; rel="me"',
+            ].join(', '),
+          },
+        ],
+      },
+      ...['en', 'es'].map((lng) => ({
+        source: `/${lng}/(.*)?`,
+        headers: [
+          {
+            key: 'Link',
+            value: `</api/markdown/${lng}>; rel="alternate"; type="text/markdown"`,
+          },
+        ],
+      })),
+    ]
+  },
   turbopack: {
     rules: {
       '*.svg': {

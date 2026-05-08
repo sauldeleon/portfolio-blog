@@ -1,0 +1,25 @@
+# Saúl de León Guerrero
+
+> Personal portfolio of Saúl de León Guerrero, Front-End Software Engineer based in Asturias, Spain.
+
+## About
+
+Experienced Software Engineer skilled in translating code into polished and efficient digital solutions. Specializes in front-end development with a focus on React, Next.js, and TypeScript.
+
+## Pages
+
+- [Home](https://www.sawl.dev/en/): Introduction, skills, and summary
+- [Experience](https://www.sawl.dev/en/experience): Full work history (2012–present)
+- [Portfolio](https://www.sawl.dev/en/portfolio): CV and portfolio overview
+- [Blog](https://www.sawl.dev/en/blog): Technical articles
+
+## Machine-Readable Content
+
+- Markdown (EN): https://www.sawl.dev/api/markdown/en
+- Markdown (ES): https://www.sawl.dev/api/markdown/es
+- Sitemap: https://www.sawl.dev/sitemap.xml
+
+## Links
+
+- GitHub: https://github.com/sauldeleon
+- LinkedIn: https://www.linkedin.com/in/sauldeleonguerrero
