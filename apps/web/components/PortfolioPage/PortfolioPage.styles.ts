@@ -88,11 +88,18 @@ export const StyledActionContainer = styled.div`
   max-width: 1440px;
   width: 100%;
   display: flex;
-  align-items: center;
-  flex-direction: row;
+  align-items: stretch;
+  flex-direction: column;
+  gap: 12px;
   margin-bottom: 50px;
   padding-left: calc(1rem - 8px);
   padding-right: calc(1rem - 8px);
+
+  ${({ theme }) => theme.media.up.md} {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 16px;
+  }
 
   ${({ theme }) => theme.media.up.lg} {
     padding-left: 2rem;

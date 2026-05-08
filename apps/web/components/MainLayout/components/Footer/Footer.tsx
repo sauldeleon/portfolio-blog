@@ -3,11 +3,9 @@ import React, { useContext, useMemo, useState } from 'react'
 
 import {
   AboutIcon,
-  CactusIcon,
   GithubIcon,
   LanguageIcon,
   LinkedInIcon,
-  MoonIcon,
   TelegramIcon,
 } from '@sdlgr/assets'
 import { Footer as FooterLib, NavItem, SocialMediaItem } from '@sdlgr/footer'
@@ -51,26 +49,6 @@ export function Footer() {
       label: t('blog'),
       ariaLabel: t('blogAria'),
       href: `/${language}/blog`,
-    },
-    {
-      label: t('darkMode'),
-      ariaLabel: t('darkModeAria'),
-      onClick: (e) => {
-        e.preventDefault()
-        console.log('dark mode')
-      },
-      icon: <MoonIcon color={mainTheme.colors.white} height={14} width={14} />,
-    },
-    {
-      label: t('painMode'),
-      ariaLabel: t('painModeAria'),
-      onClick: (e) => {
-        e.preventDefault()
-        console.log('pain mode')
-      },
-      icon: (
-        <CactusIcon color={mainTheme.colors.white} height={14} width={14} />
-      ),
     },
     {
       label: t('languageLabel'),

@@ -103,7 +103,7 @@ const withSvgr = (config) => {
           },
         },
         {
-          issuer: { not: /.(css|scss|sass)$/ },
+          issuer: { not: /\.(css|scss|sass)$/ },
           resourceQuery: {
             not: [
               /__next_metadata__/,

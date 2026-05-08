@@ -145,8 +145,9 @@ exports[`PortfolioPage should render successfully 1`] = `
   max-width: 1440px;
   width: 100%;
   display: flex;
-  align-items: center;
-  flex-direction: row;
+  align-items: stretch;
+  flex-direction: column;
+  gap: 12px;
   margin-bottom: 50px;
   padding-left: calc(1rem - 8px);
   padding-right: calc(1rem - 8px);
@@ -429,6 +430,14 @@ exports[`PortfolioPage should render successfully 1`] = `
   }
 }
 
+@media (width >= 768px) {
+  .c39 {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 16px;
+  }
+}
+
 @media (width >= 1024px) {
   .c39 {
     padding-left: 2rem;
@@ -630,7 +639,7 @@ exports[`PortfolioPage should render successfully 1`] = `
               <p
                 class="c10 c11"
               >
-                Based in Madrid, Spain
+                Based in Asturias, Spain
               </p>
               <p
                 class="c10 c11"
@@ -728,9 +737,9 @@ exports[`PortfolioPage should render successfully 1`] = `
                   <b
                     class="c25"
                   >
-                    Next.JS 14
+                    Next.JS 14-16
                   </b>
-                   with experience in both the new layout system and the legacy system.
+                   with experience in both the new App router system and the legacy Pages Router.
                 </li>
                 <li
                   class="c24"
@@ -1903,6 +1912,11 @@ exports[`PortfolioPage should render successfully 1`] = `
     <div
       class="c39"
     >
+      <div
+        data-testid="mock-download-cv-button"
+      >
+        Download CV
+      </div>
       <button
         class="c40 c41"
       >

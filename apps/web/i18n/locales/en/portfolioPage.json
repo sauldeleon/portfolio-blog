@@ -2,6 +2,8 @@
   "title": "Portfolio",
   "shareWithAFriend": "Share with a friend",
   "shared": "Copied!",
+  "downloadCv": "Download a copy of the CV",
+  "generatingCv": "Generating...",
   "items": {
     "softwareEngineer": "Software engineer",
     "profile": {
@@ -15,7 +17,7 @@
             "icon": "frontEnd",
             "skills": [
               "SPA using <bold>React 18</bold> and <bold>yarn</bold> as the main package manager.",
-              "SSR using <bold>Next.JS 14</bold> with experience in both the new layout system and the legacy system.",
+              "SSR using <bold>Next.JS 14-16</bold> with experience in both the new App router system and the legacy Pages Router.",
               "Testing: Primarily using <bold>Jest</bold> for unit testing. <bold>Cypress</bold> for e2e testing",
               "Usage of </bold>Storybook</bold> for documenting components, design systems and applications",
               "Use of CSS-in-JS libraries such as <bold>Emotion</bold> or <bold>Styled-Components</bold>.",
@@ -107,7 +109,7 @@
     }
   },
   "profilePicture": "My profile picture",
-  "basedIn": "Based in Madrid, Spain",
+  "basedIn": "Based in Asturias, Spain",
   "metadata": {
     "description": "Portfolio"
   }

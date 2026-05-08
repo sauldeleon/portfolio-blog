@@ -28,20 +28,8 @@ describe('Footer', () => {
     const { baseElement } = renderApp(<Footer />)
     await screen.findByRole('navigation')
     expect(screen.getAllByRole('link')).toHaveLength(8)
-    expect(screen.getAllByRole('button')).toHaveLength(3)
+    expect(screen.getAllByRole('button')).toHaveLength(1)
     expect(baseElement).toMatchSnapshot()
-  })
-
-  it('should trigger actions in todo buttons successfully', async () => {
-    jest.spyOn(console, 'log')
-    const mockFn = jest.fn()
-    ;(console.log as jest.Mock).mockImplementation(mockFn)
-
-    renderApp(<Footer />)
-    await screen.findByRole('navigation')
-    await userEvent.click(screen.getByRole('button', { name: /Dark mode/ }))
-    await userEvent.click(screen.getByRole('button', { name: /Pain mode/ }))
-    expect(mockFn).toHaveBeenCalledTimes(2)
   })
 
   it('should trigger open about modal', async () => {

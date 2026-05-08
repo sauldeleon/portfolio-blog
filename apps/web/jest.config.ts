@@ -1,3 +1,6 @@
+const nextFontMock =
+  require.resolve('next/dist/build/jest/__mocks__/nextFontMock.js')
+
 module.exports = {
   displayName: 'web',
   preset: '../../jest.preset.js',
@@ -8,4 +11,8 @@ module.exports = {
   setupFilesAfterEnv: ['<rootDir>/jest.setupafterenv.ts'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/apps/web',
+  moduleNameMapper: {
+    'next/font/(.*)': nextFontMock,
+    '^@react-pdf/renderer$': '<rootDir>/__mocks__/react-pdf-renderer.tsx',
+  },
 }

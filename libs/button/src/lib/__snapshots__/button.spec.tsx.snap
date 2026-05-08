@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Button should render variant inverted 1`] = `
+.c0 {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  cursor: pointer;
+  border: 1px solid #FBFBFB;
+  background-color: #FBFBFB;
+  color: #000000;
+  padding: 15px 20px;
+}
+
+.c0:hover {
+  background-color: transparent;
+  color: #FBFBFB;
+}
+
+.c0:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+<body>
+  <div>
+    <button
+      class="c0"
+    >
+      Click me
+    </button>
+  </div>
+</body>
+`;

@@ -2,6 +2,8 @@
   "title": "Portfolio",
   "shareWithAFriend": "Comparte con un amigo",
   "shared": "¡Copiado!",
+  "downloadCv": "Descargar una copia del CV",
+  "generatingCv": "Generando...",
   "items": {
     "softwareEngineer": "Ingeniero de Software",
     "profile": {
@@ -15,7 +17,7 @@
             "icon": "frontEnd",
             "skills": [
               "SPA utilizando <bold>React 18</bold> y <bold>yarn</bold> como principal gestor de paquetes.",
-              "SSR utilizando <bold>Next.JS 14</bold> con experiencia tanto el nuevo sistema de layout como el legacy.",
+              "SSR utilizando <bold>Next.JS 14-16</bold> con experiencia tanto el nuevo sistema de App router como el legacy Pages Router.",
               "Testing: Principalmente usando <bold>jest</bold> para unit testing. <bold>e2e</bold> testing utilizando Cypress.",
               "Documentación de componentes, sistemas de diseño y aplicaciones con <bold>Storybook</bold>.",
               "Uso de librerías CSS-in-JS como <bold>Emotion</bold> o <bold>Styled-Components</bold>.",
@@ -67,7 +69,7 @@
           "name": "Proyecto de fin de carrera.",
           "highlights": [
             "Desarrollo de una herramienta de apoyo para estudiantes relacionada con Estructuras de Datos para la verificación y derivación de algoritmos iterativos utilizando tableaux semánticos con una interfaz gráfica en Java.",
-            "Este trabajo obtuvo dos <link>publicaciones académicas</link>."
+            "Este trabajo obtuvo dos <linkComponent>publicaciones académicas</linkComponent>."
           ]
         },
         {
@@ -107,7 +109,7 @@
     }
   },
   "profilePicture": "Mi foto de perfil",
-  "basedIn": "Localizado en Madrid, España",
+  "basedIn": "Localizado en Asturias, España",
   "metadata": {
     "description": "Portfolio"
   }

@@ -13,6 +13,12 @@ jest.mock('react-use-is-scrolling', () => ({
   })),
 }))
 
+jest.mock('./components/DownloadCvButton/DownloadCvButton', () => ({
+  DownloadCvButton: () => (
+    <div data-testid="mock-download-cv-button">Download CV</div>
+  ),
+}))
+
 describe('PortfolioPage', () => {
   beforeAll(() => {
     Object.defineProperty(global.document.body, 'offsetHeight', {
@@ -30,6 +36,7 @@ describe('PortfolioPage', () => {
 
     expect(screen.getByTestId('scrollColumn')).toHaveStyleRule('opacity: 0')
     expect(screen.getByTestId('scrollToTop')).toHaveStyleRule('translateY: 0px')
+    expect(screen.getByTestId('mock-download-cv-button')).toBeInTheDocument()
     expect(baseElement).toMatchSnapshot()
   })
 
@@ -116,5 +123,17 @@ describe('PortfolioPage', () => {
     expect(navigator.share).toBeUndefined()
 
     expect(screen.getByText('Copied!')).toBeInTheDocument()
+  })
+
+  it('should handle non-array translation values gracefully', () => {
+    jest
+      .spyOn(require('@web/i18n/client'), 'useClientTranslation')
+      .mockReturnValue({
+        t: () => 'not-an-array',
+        i18n: { resolvedLanguage: 'en' },
+      })
+    const { baseElement } = renderApp(<PortfolioPage />)
+    expect(baseElement).toBeTruthy()
+    jest.restoreAllMocks()
   })
 })
