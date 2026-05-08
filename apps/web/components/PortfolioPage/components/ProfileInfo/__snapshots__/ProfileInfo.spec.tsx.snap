@@ -193,9 +193,9 @@ exports[`ProfileInfo should render successfully 1`] = `
           <b
             class="c9"
           >
-            Next.JS 14
+            Next.JS 14-16
           </b>
-           with experience in both the new layout system and the legacy system.
+           with experience in both the new App router system and the legacy Pages Router.
         </li>
         <li
           class="c8"

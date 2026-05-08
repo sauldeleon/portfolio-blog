@@ -19,4 +19,12 @@ describe('Button', () => {
     renderWithTheme(<Button variant="contained">Click me</Button>)
     expect(screen.getByText('Click me')).toBeInTheDocument()
   })
+
+  it('should render variant inverted', () => {
+    const { baseElement } = renderWithTheme(
+      <Button variant="inverted">Click me</Button>,
+    )
+    expect(screen.getByText('Click me')).toBeInTheDocument()
+    expect(baseElement).toMatchSnapshot()
+  })
 })

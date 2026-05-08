@@ -28,3 +28,21 @@ export const StyledContainedButton = styled.button`
   border: 1px solid ${({ theme }) => theme.colors.white};
   padding: 15px 20px;
 `
+
+export const StyledInvertedButton = styled.button`
+  ${sharedButtonStyles}
+  border: 1px solid ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.black};
+  padding: 15px 20px;
+
+  &:hover {
+    background-color: transparent;
+    color: ${({ theme }) => theme.colors.white};
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+`
