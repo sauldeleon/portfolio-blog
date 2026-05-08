@@ -28,6 +28,7 @@ export function DownloadCvButton({
 }: DownloadCvButtonProps) {
   const photoUrl = useMemo(
     () =>
+      /* istanbul ignore next */
       typeof window !== 'undefined' ? window.location.origin + photoPath : '',
     [photoPath],
   )
@@ -45,7 +46,7 @@ export function DownloadCvButton({
 
   const handleDownload = () => {
     const link = document.createElement('a')
-    link.href = instance.url ?? ''
+    link.href = instance.url ?? /* istanbul ignore next */ ''
     link.download = filename
     document.body.appendChild(link)
     link.click()

@@ -130,7 +130,7 @@ describe('PortfolioPage', () => {
       .spyOn(require('@web/i18n/client'), 'useClientTranslation')
       .mockReturnValue({
         t: () => 'not-an-array',
-        i18n: { resolvedLanguage: 'en' },
+        i18n: { resolvedLanguage: undefined },
       })
     const { baseElement } = renderApp(<PortfolioPage />)
     expect(baseElement).toBeTruthy()
