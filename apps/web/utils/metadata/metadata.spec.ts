@@ -12,7 +12,29 @@ describe('sharedMetadata', () => {
           },
         },
         "metadataBase": "https://www.sawl.dev/",
+        "openGraph": {
+          "images": [
+            {
+              "alt": "Saúl de León Guerrero",
+              "height": 800,
+              "url": "/assets/portrait.jpg",
+              "width": 800,
+            },
+          ],
+          "siteName": "Saúl de León Guerrero",
+          "type": "website",
+        },
+        "robots": {
+          "follow": true,
+          "index": true,
+        },
         "title": "Saúl de León Guerrero",
+        "twitter": {
+          "card": "summary",
+          "images": [
+            "/assets/portrait.jpg",
+          ],
+        },
       }
     `)
   })
