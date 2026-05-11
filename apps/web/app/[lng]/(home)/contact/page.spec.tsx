@@ -2,7 +2,7 @@ import { screen } from '@testing-library/react'
 
 import { renderApp } from '@sdlgr/test-utils'
 
-import Page, { generateMetadata } from './page.next'
+import Page, { generateMetadata, revalidate } from './page.next'
 
 jest.mock('@sdlgr/use-is-bot', () => ({
   useIsBot: () => jest.fn().mockReturnValue({ isBot: false, isLoading: false }),
@@ -10,12 +10,18 @@ jest.mock('@sdlgr/use-is-bot', () => ({
 
 describe('[lng]/contact - Page', () => {
   it('should render successfully', async () => {
-    renderApp(<Page />)
+    renderApp(await Page({ params: Promise.resolve({ lng: 'en' }) }))
     const text = await screen.findByText('Software Engineer')
     expect(text).toBeInTheDocument()
     expect(
       screen.getByRole('link', { name: /My electronic mail address/i }),
     ).toBeInTheDocument()
+  })
+})
+
+describe('[lng]/contact - revalidate', () => {
+  it('should export revalidate as 86400', () => {
+    expect(revalidate).toBe(86400)
   })
 })
 

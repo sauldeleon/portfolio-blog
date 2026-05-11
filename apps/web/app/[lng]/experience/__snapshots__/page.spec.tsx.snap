@@ -580,6 +580,12 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
       data-testid="json-ld"
       type="application/ld+json"
     >
+      {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.sawl.dev/en/"},{"@type":"ListItem","position":2,"name":"Experience","item":"https://www.sawl.dev/en/experience/"}]}
+    </script>
+    <script
+      data-testid="json-ld"
+      type="application/ld+json"
+    >
       {"@context":"https://schema.org","@type":"Person","name":"Saúl de León Guerrero","url":"https://www.sawl.dev","jobTitle":"Front-End Software Engineer","inLanguage":"en-US","worksFor":{"@type":"Organization","name":"Bonhams","url":"https://www.bonhams.com/"},"hasOccupation":{"@type":"Occupation","name":"Front-End Software Engineer","occupationLocation":{"@type":"Country","name":"Spain"},"skills":"React, Next.js, TypeScript, Node.js, Jest, Cypress, Styled Components"},"alumniOf":[{"@type":"Organization","name":"Smart Protection","url":"https://www.smartprotection.com/"},{"@type":"Organization","name":"ING","url":"https://www.ing.es/"},{"@type":"Organization","name":"Keytree"},{"@type":"Organization","name":"Babel S.I","url":"https://www.babelgroup.com/"},{"@type":"Organization","name":"Ioon Technologies","url":"https://ioon.es/"},{"@type":"Organization","name":"Clarive","url":"https://clarive.com/"},{"@type":"Organization","name":"idealista.com","url":"https://www.idealista.com/"}]}
     </script>
     <h1

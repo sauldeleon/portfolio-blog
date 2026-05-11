@@ -30,8 +30,33 @@ export async function generateMetadata({ params }: GenerateMetadataProps) {
   }
 }
 
+export const revalidate = 86400
+
 export default async function Page({ params }: RouteProps) {
   const { lng } = await params
+  const { t } = await getServerTranslation({
+    ns: 'portfolioPage',
+    language: lng,
+  })
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: `https://www.sawl.dev/${lng}/`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: t('title'),
+        item: `https://www.sawl.dev/${lng}/portfolio/`,
+      },
+    ],
+  }
 
   const profilePageSchema = {
     '@context': 'https://schema.org',
@@ -59,6 +84,7 @@ export default async function Page({ params }: RouteProps) {
 
   return (
     <>
+      <JsonLd data={breadcrumbSchema} />
       <JsonLd data={profilePageSchema} />
       <PortfolioPage />
     </>

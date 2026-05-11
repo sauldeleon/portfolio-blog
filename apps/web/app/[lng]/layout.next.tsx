@@ -52,6 +52,8 @@ export default function RootLayout({ children, params }: RootLayoutProps) {
       className={robotoMonoClassName}
     >
       <head>
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <Script
           async
           strategy="afterInteractive"

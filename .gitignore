@@ -53,3 +53,5 @@ Thumbs.db
 .agents
 
 .env.local
+apps/web-e2e/cypress/downloads/CV-SaulDeLeonGuerrero-en.pdf
+apps/web-e2e/cypress/downloads/CV-SaulDeLeonGuerrero-es.pdf

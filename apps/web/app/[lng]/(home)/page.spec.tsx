@@ -2,7 +2,7 @@ import { screen } from '@testing-library/react'
 
 import { renderApp } from '@sdlgr/test-utils'
 
-import Page, { generateMetadata } from './page.next'
+import Page, { generateMetadata, revalidate } from './page.next'
 
 describe('[lng] route - Page', () => {
   it('should render successfully', async () => {
@@ -19,6 +19,12 @@ describe('[lng] route - Page', () => {
       await Page({ params: Promise.resolve({ lng: 'es' }) }),
     )
     expect(baseElement).toBeTruthy()
+  })
+})
+
+describe('[lng] route - revalidate', () => {
+  it('should export revalidate as 86400', () => {
+    expect(revalidate).toBe(86400)
   })
 })
 

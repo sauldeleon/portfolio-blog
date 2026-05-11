@@ -1,5 +1,18 @@
 import { checkLocalStorageValue, getTitle } from '../support/common.po'
 
+describe('Home page - SEO', () => {
+  beforeEach(() => cy.visit('/'))
+
+  it('should have preconnect link for Google Analytics', () => {
+    cy.get(
+      'link[rel="preconnect"][href="https://www.googletagmanager.com"]',
+    ).should('exist')
+    cy.get(
+      'link[rel="dns-prefetch"][href="https://www.googletagmanager.com"]',
+    ).should('exist')
+  })
+})
+
 describe('Home page', () => {
   beforeEach(() => cy.visit('/'))
 

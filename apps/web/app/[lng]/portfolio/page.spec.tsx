@@ -1,6 +1,6 @@
 import { renderApp } from '@sdlgr/test-utils'
 
-import Page, { generateMetadata } from './page.next'
+import Page, { generateMetadata, revalidate } from './page.next'
 
 describe('[lng]/portfolio route -  page', () => {
   it('should render successfully', async () => {
@@ -15,6 +15,12 @@ describe('[lng]/portfolio route -  page', () => {
       await Page({ params: Promise.resolve({ lng: 'es' }) }),
     )
     expect(baseElement).toBeTruthy()
+  })
+})
+
+describe('[lng]/portfolio - revalidate', () => {
+  it('should export revalidate as 86400', () => {
+    expect(revalidate).toBe(86400)
   })
 })
 

@@ -1,5 +1,5 @@
 import { act, screen } from '@testing-library/react'
-import React, { Suspense } from 'react'
+import { Suspense } from 'react'
 
 import { renderApp } from '@sdlgr/test-utils'
 
@@ -51,6 +51,18 @@ describe('[lng] route - layout', () => {
 
     expect(screen.getByText('test')).toBeInTheDocument()
     expect(document.documentElement).toHaveAttribute('lang', 'en')
+    expect(
+      // eslint-disable-next-line testing-library/no-node-access
+      document.querySelector(
+        'link[rel="preconnect"][href="https://www.googletagmanager.com"]',
+      ),
+    ).not.toBeNull()
+    expect(
+      // eslint-disable-next-line testing-library/no-node-access
+      document.querySelector(
+        'link[rel="dns-prefetch"][href="https://www.googletagmanager.com"]',
+      ),
+    ).not.toBeNull()
   })
 
   it('should render successfully in Spanish', async () => {
@@ -85,7 +97,9 @@ describe('[lng] route - static params', () => {
 
 describe('[lng] route - metadata', () => {
   it('should generate metadata successfully', async () => {
-    expect(await generateMetadata({ params: { lng: 'en' } })).toEqual({
+    expect(
+      await generateMetadata({ params: Promise.resolve({ lng: 'en' }) }),
+    ).toEqual({
       title: {
         default: 'Saúl de León Guerrero — Front-End Software Engineer',
         template: '%s | Saúl de León Guerrero',

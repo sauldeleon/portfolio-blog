@@ -1,6 +1,7 @@
 'use client'
 
 import { format } from 'date-fns/format'
+import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 import { useIsScrolling } from 'react-use-is-scrolling'
 
@@ -18,17 +19,24 @@ import {
   StyledShareButton,
   StyledWrap,
 } from './PortfolioPage.styles'
-import {
+import type {
   CvExperienceEntry,
   CvOtherEntry,
   CvSkillArea,
 } from './components/CvDocument/CvDocument'
-import { DownloadCvButton } from './components/DownloadCvButton/DownloadCvButton'
 import { OtherStuff } from './components/OtherStuff/OtherStuff'
 import { PortfolioHeading } from './components/PortfolioHeading/PortfolioHeading'
 import { PortfolioItem } from './components/PortfolioItem/PortfolioItem'
 import { ProfileInfo } from './components/ProfileInfo/ProfileInfo'
 import { WorkingExperience } from './components/WorkingExperience/WorkingExperience'
+
+const DownloadCvButton = dynamic(
+  () =>
+    import('./components/DownloadCvButton/DownloadCvButton').then((m) => ({
+      default: m.DownloadCvButton,
+    })),
+  { ssr: false },
+)
 
 type TextSegment = {
   text: string

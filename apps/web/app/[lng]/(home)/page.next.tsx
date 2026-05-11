@@ -21,6 +21,8 @@ export async function generateMetadata({ params }: RouteProps) {
   }
 }
 
+export const revalidate = 86400
+
 export default async function Page({ params }: RouteProps) {
   const { lng } = await params
 
