@@ -31,7 +31,7 @@ describe('PortfolioPage', () => {
   })
 
   it('should render successfully', async () => {
-    const { baseElement } = renderApp(<PortfolioPage />)
+    const { baseElement } = renderApp(await PortfolioPage({ lng: 'en' }))
     expect(await screen.findByText('Profile')).toBeInTheDocument()
 
     expect(screen.getByTestId('scrollColumn')).toHaveStyleRule('opacity: 0')
@@ -48,7 +48,7 @@ describe('PortfolioPage', () => {
 
     const watcher = jest.spyOn(global.window, 'scrollTo')
 
-    renderApp(<PortfolioPage />)
+    renderApp(await PortfolioPage({ lng: 'en' }))
     expect(await screen.findByText('Profile')).toBeInTheDocument()
 
     const scrollColumn = screen.getByTestId('scrollColumn')
@@ -95,7 +95,7 @@ describe('PortfolioPage', () => {
       share: shareFn,
     })
 
-    renderApp(<PortfolioPage />)
+    renderApp(await PortfolioPage({ lng: 'en' }))
     expect(await screen.findByText('Profile')).toBeInTheDocument()
 
     await userEvent.click(screen.getByText('Share with a friend'))
@@ -112,7 +112,7 @@ describe('PortfolioPage', () => {
       share: undefined,
     })
 
-    renderApp(<PortfolioPage />)
+    renderApp(await PortfolioPage({ lng: 'en' }))
     expect(await screen.findByText('Profile')).toBeInTheDocument()
 
     await userEvent.click(screen.getByText('Share with a friend'))
@@ -125,14 +125,11 @@ describe('PortfolioPage', () => {
     expect(screen.getByText('Copied!')).toBeInTheDocument()
   })
 
-  it('should handle non-array translation values gracefully', () => {
+  it('should handle non-array translation values gracefully', async () => {
     jest
-      .spyOn(require('@web/i18n/client'), 'useClientTranslation')
-      .mockReturnValue({
-        t: () => 'not-an-array',
-        i18n: { resolvedLanguage: undefined },
-      })
-    const { baseElement } = renderApp(<PortfolioPage />)
+      .spyOn(require('@web/i18n/server'), 'getServerTranslation')
+      .mockResolvedValue({ t: () => 'not-an-array' })
+    const { baseElement } = renderApp(await PortfolioPage({ lng: 'en' }))
     expect(baseElement).toBeTruthy()
     jest.restoreAllMocks()
   })

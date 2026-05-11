@@ -5,6 +5,7 @@ import {
   buildAlternates,
   inLanguage,
   ogLocale,
+  ogLocaleAlternate,
 } from '@web/utils/metadata/inLanguage'
 
 interface RouteProps {
@@ -26,6 +27,7 @@ export async function generateMetadata({ params }: GenerateMetadataProps) {
     openGraph: {
       url: `https://www.sawl.dev/${lng}/portfolio/`,
       locale: ogLocale(lng),
+      alternateLocale: ogLocaleAlternate(lng),
     },
   }
 }
@@ -62,7 +64,7 @@ export default async function Page({ params }: RouteProps) {
     '@context': 'https://schema.org',
     '@type': 'ProfilePage',
     name: 'Portfolio — Saúl de León Guerrero',
-    url: `https://www.sawl.dev/${lng}/portfolio`,
+    url: `https://www.sawl.dev/${lng}/portfolio/`,
     inLanguage: inLanguage(lng),
     mainEntity: {
       '@type': 'Person',
@@ -86,7 +88,7 @@ export default async function Page({ params }: RouteProps) {
     <>
       <JsonLd data={breadcrumbSchema} />
       <JsonLd data={profilePageSchema} />
-      <PortfolioPage />
+      <PortfolioPage lng={lng} />
     </>
   )
 }

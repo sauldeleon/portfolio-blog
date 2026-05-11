@@ -47,6 +47,7 @@ describe('[lng]/experience - Metadata', () => {
       openGraph: {
         url: 'https://www.sawl.dev/en/experience/',
         locale: 'en_US',
+        alternateLocale: ['es_ES'],
       },
     })
   })
@@ -70,6 +71,7 @@ describe('[lng]/experience - Metadata', () => {
       openGraph: {
         url: 'https://www.sawl.dev/es/experience/',
         locale: 'es_ES',
+        alternateLocale: ['en_US'],
       },
     })
   })

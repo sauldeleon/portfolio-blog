@@ -33,6 +33,9 @@ describe('[lng] route - Metadata', () => {
     expect(
       await generateMetadata({ params: Promise.resolve({ lng: 'en' }) }),
     ).toEqual({
+      title: {
+        absolute: 'Saúl de León Guerrero — Front-End Software Engineer',
+      },
       alternates: {
         canonical: 'https://www.sawl.dev/en/',
         languages: {
@@ -42,7 +45,11 @@ describe('[lng] route - Metadata', () => {
           'x-default': 'https://www.sawl.dev/en/',
         },
       },
-      openGraph: { url: 'https://www.sawl.dev/en/', locale: 'en_US' },
+      openGraph: {
+        url: 'https://www.sawl.dev/en/',
+        locale: 'en_US',
+        alternateLocale: ['es_ES'],
+      },
     })
   })
 
@@ -50,6 +57,9 @@ describe('[lng] route - Metadata', () => {
     expect(
       await generateMetadata({ params: Promise.resolve({ lng: 'es' }) }),
     ).toEqual({
+      title: {
+        absolute: 'Saúl de León Guerrero — Front-End Software Engineer',
+      },
       alternates: {
         canonical: 'https://www.sawl.dev/es/',
         languages: {
@@ -59,7 +69,11 @@ describe('[lng] route - Metadata', () => {
           'x-default': 'https://www.sawl.dev/en/',
         },
       },
-      openGraph: { url: 'https://www.sawl.dev/es/', locale: 'es_ES' },
+      openGraph: {
+        url: 'https://www.sawl.dev/es/',
+        locale: 'es_ES',
+        alternateLocale: ['en_US'],
+      },
     })
   })
 })

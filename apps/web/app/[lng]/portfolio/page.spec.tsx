@@ -44,6 +44,7 @@ describe('[lng]/portfolio - Metadata', () => {
       openGraph: {
         url: 'https://www.sawl.dev/en/portfolio/',
         locale: 'en_US',
+        alternateLocale: ['es_ES'],
       },
     })
   })
@@ -67,6 +68,7 @@ describe('[lng]/portfolio - Metadata', () => {
       openGraph: {
         url: 'https://www.sawl.dev/es/portfolio/',
         locale: 'es_ES',
+        alternateLocale: ['en_US'],
       },
     })
   })

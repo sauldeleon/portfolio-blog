@@ -1,4 +1,4 @@
-import { useClientTranslation } from '@web/i18n/client'
+'use client'
 
 import {
   StyledBody,
@@ -11,14 +11,23 @@ import {
   StyledSection,
 } from './PortfolioHeading.styles'
 
-export function PortfolioHeading() {
-  const { t } = useClientTranslation('portfolioPage')
+interface PortfolioHeadingProps {
+  softwareEngineer: string
+  basedIn: string
+  profilePicture: string
+}
+
+export function PortfolioHeading({
+  softwareEngineer,
+  basedIn,
+  profilePicture,
+}: PortfolioHeadingProps) {
   return (
     <StyledSection>
       <StyledFirstRow>
-        <StyledDegree>{t('items.softwareEngineer')}</StyledDegree>
+        <StyledDegree>{softwareEngineer}</StyledDegree>
         <StyledInfo>
-          <StyledBody>{t('basedIn')}</StyledBody>
+          <StyledBody>{basedIn}</StyledBody>
           <StyledBody>sauldeleonguerrero@gmail.com</StyledBody>
         </StyledInfo>
       </StyledFirstRow>
@@ -27,7 +36,7 @@ export function PortfolioHeading() {
           src="/assets/portrait-4.png"
           width={310}
           height={310}
-          alt={t('profilePicture')}
+          alt={profilePicture}
         />
         <StyledHeading $level={1}>Saúl de León Guerrero</StyledHeading>
       </StyledRow>

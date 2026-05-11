@@ -592,6 +592,12 @@ exports[`[lng] route - Page should render successfully 1`] = `
     >
       {"@context":"https://schema.org","@type":"Person","name":"Saúl de León Guerrero","url":"https://www.sawl.dev","jobTitle":"Front-End Software Engineer","description":"Experienced Software Engineer skilled in translating code into polished and efficient digital solutions.","inLanguage":"en-US","address":{"@type":"PostalAddress","addressLocality":"Asturias","addressCountry":"ES"},"sameAs":["https://github.com/sauldeleon","https://www.linkedin.com/in/sauldeleonguerrero"],"knowsAbout":["React","Next.js","TypeScript","Node.js","Styled Components","Jest","Cypress"]}
     </script>
+    <script
+      data-testid="json-ld"
+      type="application/ld+json"
+    >
+      {"@context":"https://schema.org","@type":"ProfilePage","name":"Saúl de León Guerrero — Front-End Software Engineer","url":"https://www.sawl.dev/en/","description":"Personal portfolio of Saúl de León Guerrero, Software Engineer","inLanguage":"en-US","isPartOf":{"@type":"WebSite","url":"https://www.sawl.dev"}}
+    </script>
     <div
       class="c0"
     >

@@ -1,7 +1,6 @@
-import { ParseKeys } from 'i18next'
-import { Trans } from 'react-i18next'
+'use client'
 
-import { useClientTranslation } from '@web/i18n/client'
+import { parseRichText } from '@web/utils/parseRichText/parseRichText'
 
 import {
   StyledAreaPeriod,
@@ -11,40 +10,40 @@ import {
   StyledListItem,
 } from './OtherStuff.styles'
 
-export function OtherStuff() {
-  const { t } = useClientTranslation('portfolioPage')
-  const otherItemsRaw = t('items.other.otherAreas', { returnObjects: true })
-  const otherItems = Array.isArray(otherItemsRaw) ? otherItemsRaw : []
+const LINK_URL =
+  'https://rd.springer.com/chapter/10.1007/978-3-642-21350-2_29#page-1'
 
+type OtherStuffItem = {
+  name: string
+  period: string
+  highlights: string[]
+}
+
+interface OtherStuffProps {
+  items: OtherStuffItem[]
+}
+
+export function OtherStuff({ items }: OtherStuffProps) {
   return (
     <>
-      {otherItems.map(({ name, beginYear, endYear, highlights }) => (
+      {items.map(({ name, period, highlights }) => (
         <div key={name}>
           <StyledAreaPeriod>
-            <Trans
-              t={t}
-              i18nKey={name as ParseKeys<'portfolioPage'>}
-              components={{ italic: <StyledItalic /> }}
-            />{' '}
-            {`${beginYear || ''}${endYear ? ' - ' + endYear : ''}`}
+            {parseRichText(name, {
+              italic: (k, t) => <StyledItalic key={k}>{t}</StyledItalic>,
+            })}{' '}
+            {period}
           </StyledAreaPeriod>
           <StyledList>
-            {highlights.map((highlight) => (
-              <StyledListItem key={highlight}>
-                <Trans
-                  t={t}
-                  i18nKey={highlight as ParseKeys<'portfolioPage'>}
-                  components={{
-                    linkComponent: (
-                      <StyledLink
-                        href="https://rd.springer.com/chapter/10.1007/978-3-642-21350-2_29#page-1"
-                        target="_blank"
-                      >
-                        text
-                      </StyledLink>
-                    ),
-                  }}
-                />
+            {highlights.map((highlight, i) => (
+              <StyledListItem key={`${i}-${highlight}`}>
+                {parseRichText(highlight, {
+                  linkComponent: (k, t) => (
+                    <StyledLink key={k} href={LINK_URL} target="_blank">
+                      {t}
+                    </StyledLink>
+                  ),
+                })}
               </StyledListItem>
             ))}
           </StyledList>

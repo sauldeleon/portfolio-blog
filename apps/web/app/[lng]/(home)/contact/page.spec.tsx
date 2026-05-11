@@ -42,7 +42,11 @@ describe('[lng]/contact - Metadata', () => {
           'x-default': 'https://www.sawl.dev/en/contact/',
         },
       },
-      openGraph: { url: 'https://www.sawl.dev/en/contact/', locale: 'en_US' },
+      openGraph: {
+        url: 'https://www.sawl.dev/en/contact/',
+        locale: 'en_US',
+        alternateLocale: ['es_ES'],
+      },
     })
   })
 
@@ -62,7 +66,11 @@ describe('[lng]/contact - Metadata', () => {
           'x-default': 'https://www.sawl.dev/en/contact/',
         },
       },
-      openGraph: { url: 'https://www.sawl.dev/es/contact/', locale: 'es_ES' },
+      openGraph: {
+        url: 'https://www.sawl.dev/es/contact/',
+        locale: 'es_ES',
+        alternateLocale: ['en_US'],
+      },
     })
   })
 })

@@ -6,6 +6,9 @@ export const inLanguage = (lng: string): string =>
 export const ogLocale = (lng: string): string =>
   lng === 'es' ? 'es_ES' : 'en_US'
 
+export const ogLocaleAlternate = (lng: string): string[] =>
+  lng === 'es' ? ['en_US'] : ['es_ES']
+
 export const buildAlternates = (lng: string, slug: string) => ({
   canonical: `${BASE_URL}/${lng}/${slug}`,
   languages: {

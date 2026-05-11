@@ -5,6 +5,7 @@ import {
   buildAlternates,
   inLanguage,
   ogLocale,
+  ogLocaleAlternate,
 } from '@web/utils/metadata/inLanguage'
 
 interface RouteProps {
@@ -26,6 +27,7 @@ export async function generateMetadata({ params }: GenerateMetadataProps) {
     openGraph: {
       url: `https://www.sawl.dev/${lng}/experience/`,
       locale: ogLocale(lng),
+      alternateLocale: ogLocaleAlternate(lng),
     },
   }
 }
@@ -107,12 +109,23 @@ export default async function Page({ params }: RouteProps) {
     ],
   }
 
+  const webPageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: `${t('title')} — Saúl de León Guerrero`,
+    url: `https://www.sawl.dev/${lng}/experience/`,
+    description: t('metadata.description'),
+    inLanguage: inLanguage(lng),
+    isPartOf: { '@type': 'WebSite', url: 'https://www.sawl.dev' },
+  }
+
   const experiencePage = await ExperiencePage({ lng })
 
   return (
     <>
       <JsonLd data={breadcrumbSchema} />
       <JsonLd data={workHistorySchema} />
+      <JsonLd data={webPageSchema} />
       {experiencePage}
     </>
   )

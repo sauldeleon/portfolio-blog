@@ -97,7 +97,7 @@ exports[`OtherStuff should render successfully 1`] = `
         <li
           class="c3"
         >
-          Development of a support tool for students related to Data Structures for the verification and derivation of iterative algorithms using semantic tableaux with a graphical interface in Java.
+          Development of a support tool for students.
         </li>
         <li
           class="c3"
@@ -124,9 +124,9 @@ exports[`OtherStuff should render successfully 1`] = `
         <i
           class="c6"
         >
-          Departamento de Sistemas Informáticos y Computación
+          DSIC
         </i>
-         (DSIC) at the Facultad de Informática at the Universidad Complutense of Madrid.
+         department.
          
         2011 - 2012
       </div>
@@ -136,66 +136,7 @@ exports[`OtherStuff should render successfully 1`] = `
         <li
           class="c3"
         >
-          Maintenance of the Virtual Area by updating the database with information related to classes and publications.
-        </li>
-        <li
-          class="c3"
-        >
-          Development of an application for counting students attending classes for obtaining statistics.
-        </li>
-      </ul>
-    </div>
-    <div>
-      <div
-        class="c0 c1"
-      >
-        This Portfolio.
-         
-        2022 - Until I throw it out the window
-      </div>
-      <ul
-        class="c2"
-      >
-        <li
-          class="c3"
-        >
-          Check the 'About' link in the footer of this website.
-        </li>
-      </ul>
-    </div>
-    <div>
-      <div
-        class="c0 c1"
-      >
-        MATHS Academy Teacher.
-         
-        2009 - 2013
-      </div>
-      <ul
-        class="c2"
-      >
-        <li
-          class="c3"
-        >
-          Taught 1st and 2nd-year Computer Engineering classes in Java and OOP.
-        </li>
-      </ul>
-    </div>
-    <div>
-      <div
-        class="c0 c1"
-      >
-        Tutor.
-         
-        2004 - 2016
-      </div>
-      <ul
-        class="c2"
-      >
-        <li
-          class="c3"
-        >
-          Private tutor for school and high school students in mathematics, physics, and chemistry. Strong teaching abilities.
+          Maintenance of the Virtual Area.
         </li>
       </ul>
     </div>

@@ -1,8 +1,6 @@
-import { format } from 'date-fns/format'
-import { Trans } from 'react-i18next'
+'use client'
 
-import { useExperienceItems } from '@web/components/ExperiencePage/useExperienceItems'
-import { useClientTranslation } from '@web/i18n/client'
+import { parseRichText } from '@web/utils/parseRichText/parseRichText'
 
 import {
   StyledCompanyName,
@@ -12,39 +10,40 @@ import {
   StyledTechnology,
 } from './WorkingExperience.styles'
 
-export function WorkingExperience() {
-  const experienceItems = useExperienceItems()
-  const { t } = useClientTranslation('experiencePage')
+type WorkingExperienceItem = {
+  order: number
+  company: string
+  role: string
+  period: string
+  bullets: string[]
+}
 
+interface WorkingExperienceProps {
+  items: WorkingExperienceItem[]
+}
+
+export function WorkingExperience({ items }: WorkingExperienceProps) {
   return (
     <>
-      {experienceItems.map(
-        ({ order, company, beginDate, endDate, descriptionParagraphKeys }) => (
-          <div key={order}>
-            <StyledCompanyName $level={2}>
-              {company} - {t(descriptionParagraphKeys[0])}
-            </StyledCompanyName>
-            <StyledCompanyPeriod>
-              {`${format(beginDate, 'MMMM yyyy')}${
-                endDate ? format(endDate, ' - MMMM yyyy') : ''
-              }`}
-            </StyledCompanyPeriod>
-            <StyledList>
-              {descriptionParagraphKeys.slice(1).map((paragraphKey) => (
-                <StyledListItem key={paragraphKey}>
-                  <Trans
-                    t={t}
-                    i18nKey={paragraphKey}
-                    components={{
-                      bold: <StyledTechnology />,
-                    }}
-                  />
-                </StyledListItem>
-              ))}
-            </StyledList>
-          </div>
-        ),
-      )}
+      {items.map(({ order, company, role, period, bullets }) => (
+        <div key={order}>
+          <StyledCompanyName $level={2}>
+            {company} - {role}
+          </StyledCompanyName>
+          <StyledCompanyPeriod>{period}</StyledCompanyPeriod>
+          <StyledList>
+            {bullets.map((bullet, i) => (
+              <StyledListItem key={`${i}-${bullet}`}>
+                {parseRichText(bullet, {
+                  bold: (k, t) => (
+                    <StyledTechnology key={k}>{t}</StyledTechnology>
+                  ),
+                })}
+              </StyledListItem>
+            ))}
+          </StyledList>
+        </div>
+      ))}
     </>
   )
 }

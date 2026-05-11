@@ -1,4 +1,9 @@
-import { buildAlternates, inLanguage, ogLocale } from './inLanguage'
+import {
+  buildAlternates,
+  inLanguage,
+  ogLocale,
+  ogLocaleAlternate,
+} from './inLanguage'
 
 describe('inLanguage', () => {
   it('returns es-ES for es', () => {
@@ -21,6 +26,18 @@ describe('ogLocale', () => {
   })
   it('returns en_US for unknown locale', () => {
     expect(ogLocale('fr')).toBe('en_US')
+  })
+})
+
+describe('ogLocaleAlternate', () => {
+  it('returns en_US array for es', () => {
+    expect(ogLocaleAlternate('es')).toEqual(['en_US'])
+  })
+  it('returns es_ES array for en', () => {
+    expect(ogLocaleAlternate('en')).toEqual(['es_ES'])
+  })
+  it('returns es_ES array for unknown locale', () => {
+    expect(ogLocaleAlternate('fr')).toEqual(['es_ES'])
   })
 })
 

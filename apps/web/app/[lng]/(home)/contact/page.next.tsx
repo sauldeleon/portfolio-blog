@@ -5,6 +5,7 @@ import {
   buildAlternates,
   inLanguage,
   ogLocale,
+  ogLocaleAlternate,
 } from '@web/utils/metadata/inLanguage'
 
 interface RouteProps {
@@ -23,6 +24,7 @@ export async function generateMetadata({ params }: GenerateMetadataProps) {
     openGraph: {
       url: `https://www.sawl.dev/${lng}/contact/`,
       locale: ogLocale(lng),
+      alternateLocale: ogLocaleAlternate(lng),
     },
   }
 }
