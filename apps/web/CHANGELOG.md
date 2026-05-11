@@ -1,5 +1,17 @@
 # Changelog web app
 
+# [0.9.0](https://github.com/sauldeleon/portfolio-blog/compare/web-0.8.0...web-0.9.0) (2026-05-11)
+
+### Bug Fixes
+
+- spacing ([f84168a](https://github.com/sauldeleon/portfolio-blog/commit/f84168a19ed2ce824312701094e64ef8909bb8ff))
+
+### Features
+
+- **portfolio:** add CV PDF generation and download button ([#64](https://github.com/sauldeleon/portfolio-blog/issues/64)) ([d021f5f](https://github.com/sauldeleon/portfolio-blog/commit/d021f5f7899c988dc8b2c7c44b2417cc5ff7dc52))
+- **seo:** add structured data, agent discovery and SEO improvements ([#65](https://github.com/sauldeleon/portfolio-blog/issues/65)) ([37ff8a5](https://github.com/sauldeleon/portfolio-blog/commit/37ff8a5d4025876cae122c032e200b51bff681ca))
+- **seo:** comprehensive SEO audit, structured data, og:locale and RSC migrations ([#66](https://github.com/sauldeleon/portfolio-blog/issues/66)) ([8dbc611](https://github.com/sauldeleon/portfolio-blog/commit/8dbc611e1d79241e8db65db74569aa083264bae3))
+
 # [0.8.0](https://github.com/sauldeleon/portfolio-blog/compare/web-0.7.1...web-0.8.0) (2024-01-08)
 
 ### Bug Fixes

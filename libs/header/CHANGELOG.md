@@ -1,5 +1,11 @@
 # Changelog Header component
 
+## [0.1.5](https://github.com/sauldeleon/portfolio-blog/compare/header-0.1.4...header-0.1.5) (2026-05-11)
+
+### Bug Fixes
+
+- spacing ([f84168a](https://github.com/sauldeleon/portfolio-blog/commit/f84168a19ed2ce824312701094e64ef8909bb8ff))
+
 ## [0.1.4](https://github.com/sauldeleon/portfolio-blog/compare/header-0.1.3...header-0.1.4) (2024-01-08)
 
 ## [0.1.3](https://github.com/sauldeleon/portfolio-blog/compare/header-0.1.2...header-0.1.3) (2023-09-14)

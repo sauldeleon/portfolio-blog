@@ -1,5 +1,12 @@
 # Changelog web E2E tests
 
+# [0.3.0](https://github.com/sauldeleon/portfolio-blog/compare/web-e2e-0.2.0...web-e2e-0.3.0) (2026-05-11)
+
+### Features
+
+- **portfolio:** add CV PDF generation and download button ([#64](https://github.com/sauldeleon/portfolio-blog/issues/64)) ([d021f5f](https://github.com/sauldeleon/portfolio-blog/commit/d021f5f7899c988dc8b2c7c44b2417cc5ff7dc52))
+- **seo:** comprehensive SEO audit, structured data, og:locale and RSC migrations ([#66](https://github.com/sauldeleon/portfolio-blog/issues/66)) ([8dbc611](https://github.com/sauldeleon/portfolio-blog/commit/8dbc611e1d79241e8db65db74569aa083264bae3))
+
 # [0.2.0](https://github.com/sauldeleon/portfolio-blog/compare/web-e2e-0.1.2...web-e2e-0.2.0) (2024-01-08)
 
 ### Features

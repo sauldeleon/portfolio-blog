@@ -1,5 +1,11 @@
 # Changelog Button component
 
+# [0.4.0](https://github.com/sauldeleon/portfolio-blog/compare/button-0.3.0...button-0.4.0) (2026-05-11)
+
+### Features
+
+- **portfolio:** add CV PDF generation and download button ([#64](https://github.com/sauldeleon/portfolio-blog/issues/64)) ([d021f5f](https://github.com/sauldeleon/portfolio-blog/commit/d021f5f7899c988dc8b2c7c44b2417cc5ff7dc52))
+
 # [0.3.0](https://github.com/sauldeleon/portfolio-blog/compare/button-0.2.3...button-0.3.0) (2024-01-08)
 
 ### Features
