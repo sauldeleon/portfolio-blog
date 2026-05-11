@@ -1,0 +1,206 @@
+import { ParseKeys } from 'i18next'
+
+import { AnimatedItemKey } from '@web/utils/animatedItem/animatedItemMap'
+
+export type ExperienceItem = {
+  order: number
+  company: string
+  technologies: AnimatedItemKey[]
+  beginDate: Date
+  endDate?: Date
+  descriptionParagraphKeys: ParseKeys<'experiencePage'>[]
+  link?: string
+}
+
+export function getExperienceItems(): ExperienceItem[] {
+  return [
+    {
+      order: 0,
+      company: 'Bonhams',
+      technologies: [
+        'nodeJS',
+        'cypress',
+        'jest',
+        'reactQuery',
+        'nextJS',
+        'typescript',
+        'styledComponents',
+        'vercel',
+        'expo',
+      ],
+      beginDate: new Date('2022-02-01T00:00:00.000Z'),
+      link: 'https://www.bonhams.com/',
+      descriptionParagraphKeys: [
+        'experienceItems.bonhams.p1',
+        'experienceItems.bonhams.p2',
+        'experienceItems.bonhams.p3',
+        'experienceItems.bonhams.p4',
+      ],
+    },
+    {
+      order: 1,
+      company: 'Smart Protection',
+      technologies: [
+        'nodeJS',
+        'jest',
+        'storybook',
+        'emotion',
+        'reactQuery',
+        'yarn',
+        'reactJS',
+        'typescript',
+      ],
+      beginDate: new Date('2021-02-01T00:00:00.000Z'),
+      endDate: new Date('2022-02-01T00:00:00.000Z'),
+      link: 'https://www.smartprotection.com/',
+      descriptionParagraphKeys: [
+        'experienceItems.smartProtection.p1',
+        'experienceItems.smartProtection.p2',
+        'experienceItems.smartProtection.p3',
+        'experienceItems.smartProtection.p4',
+        'experienceItems.smartProtection.p5',
+        'experienceItems.smartProtection.p6',
+        'experienceItems.smartProtection.p7',
+      ],
+    },
+    {
+      order: 2,
+      company: 'ING',
+      technologies: [
+        'nodeJS',
+        'cypress',
+        'npm',
+        'cypress',
+        'jest',
+        'mocha',
+        'litElement',
+        'cucumber',
+        'redux',
+      ],
+      beginDate: new Date('2020-08-01T00:00:00.000Z'),
+      endDate: new Date('2021-02-01T00:00:00.000Z'),
+      link: 'https://www.ing.es/',
+      descriptionParagraphKeys: [
+        'experienceItems.ing.p1',
+        'experienceItems.ing.p2',
+        'experienceItems.ing.p3',
+        'experienceItems.ing.p4',
+        'experienceItems.ing.p5',
+      ],
+    },
+    {
+      order: 3,
+      company: 'Keytree',
+      technologies: [
+        'nodeJS',
+        'reactJS',
+        'yarn',
+        'storybook',
+        'jest',
+        'emotion',
+        'redux',
+      ],
+      beginDate: new Date('2017-10-01T00:00:00.000Z'),
+      endDate: new Date('2020-08-01T00:00:00.000Z'),
+      descriptionParagraphKeys: [
+        'experienceItems.keytree.p1',
+        'experienceItems.keytree.p2',
+        'experienceItems.keytree.p3',
+      ],
+    },
+    {
+      order: 4,
+      company: 'Babel S.I',
+      technologies: [
+        'nodeJS',
+        'expressJS',
+        'npm',
+        'storybook',
+        'jest',
+        'mongoDB',
+        'angularJS',
+        'java',
+        'socketIO',
+        'ionic',
+      ],
+      beginDate: new Date('2017-04-01T00:00:00.000Z'),
+      endDate: new Date('2017-09-01T00:00:00.000Z'),
+      link: 'https://www.babelgroup.com/',
+      descriptionParagraphKeys: [
+        'experienceItems.babel.p1',
+        'experienceItems.babel.p2',
+      ],
+    },
+    {
+      order: 5,
+      company: 'Ioon Technologies',
+      technologies: [
+        'java',
+        'spring',
+        'ionic',
+        'storybook',
+        'angularJS',
+        'arduino',
+      ],
+      beginDate: new Date('2016-01-01T00:00:00.000Z'),
+      endDate: new Date('2017-04-01T00:00:00.000Z'),
+      link: 'https://ioon.es/',
+      descriptionParagraphKeys: [
+        'experienceItems.ioon.p1',
+        'experienceItems.ioon.p2',
+        'experienceItems.ioon.p3',
+        'experienceItems.ioon.p4',
+        'experienceItems.ioon.p5',
+        'experienceItems.ioon.p6',
+      ],
+    },
+    {
+      order: 6,
+      company: 'Clarive',
+      technologies: [
+        'perl',
+        'mongoDB',
+        'sencha',
+        'javascript',
+        'html',
+        'css3',
+        'oracle',
+      ],
+      beginDate: new Date('2014-01-01T00:00:00.000Z'),
+      endDate: new Date('2016-01-01T00:00:00.000Z'),
+      link: 'https://clarive.com/',
+      descriptionParagraphKeys: [
+        'experienceItems.clarive.p1',
+        'experienceItems.clarive.p2',
+        'experienceItems.clarive.p3',
+        'experienceItems.clarive.p4',
+      ],
+    },
+    {
+      order: 7,
+      company: 'idealista.com',
+      technologies: ['java', 'mongoDB', 'hibernate', 'spring', 'oracle'],
+      beginDate: new Date('2013-09-01T00:00:00.000Z'),
+      endDate: new Date('2013-12-01T00:00:00.000Z'),
+      link: 'https://www.idealista.com/',
+      descriptionParagraphKeys: [
+        'experienceItems.idealista.p1',
+        'experienceItems.idealista.p2',
+        'experienceItems.idealista.p3',
+      ],
+    },
+    {
+      order: 8,
+      company: 'Incita Security',
+      technologies: ['python', 'oracle', 'javascript', 'html', 'css3'],
+      beginDate: new Date('2012-11-01T00:00:00.000Z'),
+      endDate: new Date('2013-09-01T00:00:00.000Z'),
+      descriptionParagraphKeys: [
+        'experienceItems.incitaSecurity.p1',
+        'experienceItems.incitaSecurity.p2',
+        'experienceItems.incitaSecurity.p3',
+        'experienceItems.incitaSecurity.p4',
+      ],
+    },
+  ]
+}

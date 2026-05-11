@@ -1,12 +1,10 @@
-import { useMemo } from 'react'
-
 import { AnimatedElement } from '@web/components/AnimatedItem/AnimatedItem'
 import {
   AnimatedItemKey,
   animatedItemMap,
 } from '@web/utils/animatedItem/animatedItemMap'
 
-const mainPortalItems: AnimatedItemKey[] = [
+const mainPortalKeys: AnimatedItemKey[] = [
   'nodeJS',
   'css3',
   'github',
@@ -45,11 +43,6 @@ const mainPortalItems: AnimatedItemKey[] = [
   'bf2042',
 ]
 
-export function useMainPortalItems() {
-  const items: AnimatedElement[] = useMemo(
-    () => mainPortalItems.map((iconName) => animatedItemMap[iconName]),
-    [],
-  )
-
-  return items
+export function getMainPortalItems(): AnimatedElement[] {
+  return mainPortalKeys.map((iconName) => animatedItemMap[iconName])
 }

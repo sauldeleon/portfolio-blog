@@ -107,11 +107,13 @@ export default async function Page({ params }: RouteProps) {
     ],
   }
 
+  const experiencePage = await ExperiencePage({ lng })
+
   return (
     <>
       <JsonLd data={breadcrumbSchema} />
       <JsonLd data={workHistorySchema} />
-      <ExperiencePage />
+      {experiencePage}
     </>
   )
 }

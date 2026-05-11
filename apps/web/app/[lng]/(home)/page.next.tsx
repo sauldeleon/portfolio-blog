@@ -1,5 +1,6 @@
 import { HomePage } from '@web/components/HomePage/HomePage'
 import { JsonLd } from '@web/components/JsonLd'
+import { getServerTranslation } from '@web/i18n/server'
 import {
   buildAlternates,
   inLanguage,
@@ -25,6 +26,7 @@ export const revalidate = 86400
 
 export default async function Page({ params }: RouteProps) {
   const { lng } = await params
+  const { t } = await getServerTranslation({ ns: 'homepage', language: lng })
 
   const websiteSchema = {
     '@context': 'https://schema.org',
@@ -69,7 +71,7 @@ export default async function Page({ params }: RouteProps) {
     <>
       <JsonLd data={websiteSchema} />
       <JsonLd data={personSchema} />
-      <HomePage />
+      <HomePage skillListLabel={t('skillList')} />
     </>
   )
 }

@@ -1,37 +1,40 @@
-'use client'
+import { format } from 'date-fns'
 
-import { ParseKeys } from 'i18next'
-import { useId } from 'react'
+import { getServerTranslation } from '@web/i18n/server'
 
-import { useClientTranslation } from '@web/i18n/client'
-import { AnimatedItemKey } from '@web/utils/animatedItem/animatedItemMap'
-
-import { StyledHeading } from './ExperiencePage.styles'
+import { ExperiencePageTitle } from './ExperiencePageTitle'
 import { ExperienceItem as ExperienceItemCard } from './components/ExperienceItem/ExperienceItem'
-import { useExperienceItems } from './useExperienceItems'
+import { getExperienceItems } from './experienceItems'
 
-export type ExperienceItem = {
-  order: number
-  company: string
-  technologies: AnimatedItemKey[]
-  beginDate: Date
-  endDate?: Date
-  descriptionParagraphKeys: ParseKeys<'experiencePage'>[]
-  link?: string
+export type { ExperienceItem } from './experienceItems'
+
+interface ExperiencePageProps {
+  lng: string
 }
 
-export function ExperiencePage() {
-  const { t } = useClientTranslation('experiencePage')
-  const id = useId()
-
-  const experienceItems = useExperienceItems().sort((a, b) => a.order - b.order)
+export async function ExperiencePage({ lng }: ExperiencePageProps) {
+  const { t } = await getServerTranslation({
+    ns: 'experiencePage',
+    language: lng,
+  })
+  const checkWebsiteLabel = t('checkWebsiteLink')
+  const experienceItems = getExperienceItems().sort((a, b) => a.order - b.order)
 
   return (
     <>
-      <StyledHeading $level={2}>{t('title')}</StyledHeading>
-      {experienceItems.map((props, index) => (
-        <ExperienceItemCard key={`${id}-${index}`} {...props} />
-      ))}
+      <ExperiencePageTitle>{t('title')}</ExperiencePageTitle>
+      {experienceItems.map(
+        ({ descriptionParagraphKeys, beginDate, endDate, ...item }) => (
+          <ExperienceItemCard
+            key={item.order}
+            {...item}
+            period={`${format(beginDate, 'MMM yyyy')}${endDate ? format(endDate, ' - MMM yyyy') : ''}`}
+            ariaLabel={t('usedTechnologies', { company: item.company })}
+            checkWebsiteLabel={checkWebsiteLabel}
+            paragraphs={descriptionParagraphKeys.map((k) => t(k))}
+          />
+        ),
+      )}
     </>
   )
 }
