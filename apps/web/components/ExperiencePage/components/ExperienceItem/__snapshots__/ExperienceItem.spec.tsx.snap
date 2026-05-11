@@ -708,17 +708,17 @@ exports[`ExperienceItem should render successfully 1`] = `
                 <li
                   class="c15"
                   data-testid="horizontal-movement"
-                  style="animation-duration: 6s; animation-delay: 5.580623580085307s;"
+                  style="animation-duration: 6s; animation-delay: 5.457458048139314s;"
                 >
                   <div
                     class="c16 c17"
                     data-testid="vertical-movement"
-                    style="--translateY-begin: -1%; --translateY-end: 20%; animation-duration: 7.139931313146209s;"
+                    style="--translateY-begin: -36%; --translateY-end: 26%; animation-duration: 5.306167698459591s;"
                   >
                     <div
                       class="c18 c19"
                       data-testid="rotation-movement"
-                      style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 5.864801760056939s;"
+                      style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 6.224465472165357s;"
                     >
                       <a
                         aria-label="NodeJS"
@@ -731,7 +731,7 @@ exports[`ExperienceItem should render successfully 1`] = `
                         <div
                           class="c22 c23"
                           data-testid="color-swapping"
-                          style="animation-duration: 6s; animation-delay: 5.580623580085307s;"
+                          style="animation-duration: 6s; animation-delay: 5.457458048139314s;"
                         >
                           <svg
                             height="50"
@@ -772,25 +772,7 @@ exports[`ExperienceItem should render successfully 1`] = `
           <p
             class="c3 c25"
           >
-            Part of the team responsible for migrating the legacy website to a cutting-edge 
-            <b
-              class="c26"
-            >
-              Next.JS Typescript
-            </b>
-             application within an 
-            <b
-              class="c26"
-            >
-              NX
-            </b>
-             monorepo. Instrumental in developing a comprehensive Design System from the ground up using 
-            <b
-              class="c26"
-            >
-              Styled Components
-            </b>
-            . Additionally, involved in creating new applications for clients and internal administration, including an 
+            Including an 
             <b
               class="c26"
             >

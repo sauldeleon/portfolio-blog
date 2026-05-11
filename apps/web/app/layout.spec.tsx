@@ -12,14 +12,19 @@ describe('RootLayout', () => {
 describe('/ route - metadata', () => {
   it('should generate metadata successfully', async () => {
     expect(await generateMetadata()).toEqual({
-      title: 'Saúl de León Guerrero',
-      description: 'My personal Portfolio',
+      title: {
+        default: 'Saúl de León Guerrero — Front-End Software Engineer',
+        template: '%s | Saúl de León Guerrero',
+      },
+      description:
+        'Front-End Software Engineer based in Asturias, Spain. Specialising in React, Next.js and TypeScript. Explore my portfolio and work history.',
       metadataBase: expect.any(Object),
       alternates: {
         languages: {
-          'en-UK': '/en',
+          'en-GB': '/en',
           'en-US': '/en',
           'es-ES': '/es',
+          'x-default': '/en',
         },
       },
       openGraph: {
@@ -35,7 +40,7 @@ describe('/ route - metadata', () => {
         ],
       },
       twitter: {
-        card: 'summary',
+        card: 'summary_large_image',
         images: ['/assets/portrait.jpg'],
       },
       robots: {

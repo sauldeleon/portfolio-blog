@@ -7,7 +7,6 @@ export function GET(): NextResponse {
     'User-agent: *',
     'Content-Signal: ai-train=no, search=yes, ai-input=no',
     'Allow: /',
-    'Disallow: /*/contact/',
     '',
     `Sitemap: ${publicUrl('/sitemap.xml')}`,
     `Host: ${publicUrl('')}`,

@@ -1,14 +1,35 @@
 import { HomePage } from '@web/components/HomePage/HomePage'
 import { JsonLd } from '@web/components/JsonLd'
+import { getServerTranslation } from '@web/i18n/server'
+import {
+  buildAlternates,
+  inLanguage,
+  ogLocale,
+  ogLocaleAlternate,
+} from '@web/utils/metadata/inLanguage'
 
 interface RouteProps {
   params: Promise<{ lng: string }>
 }
 
-const inLanguage = (lng: string) => (lng === 'es' ? 'es-ES' : 'en-US')
+export async function generateMetadata({ params }: RouteProps) {
+  const { lng } = await params
+  return {
+    title: { absolute: 'Saúl de León Guerrero — Front-End Software Engineer' },
+    alternates: buildAlternates(lng, ''),
+    openGraph: {
+      url: `https://www.sawl.dev/${lng}/`,
+      locale: ogLocale(lng),
+      alternateLocale: ogLocaleAlternate(lng),
+    },
+  }
+}
+
+export const revalidate = 86400
 
 export default async function Page({ params }: RouteProps) {
   const { lng } = await params
+  const { t } = await getServerTranslation({ ns: 'homepage', language: lng })
 
   const websiteSchema = {
     '@context': 'https://schema.org',
@@ -49,11 +70,23 @@ export default async function Page({ params }: RouteProps) {
     ],
   }
 
+  const webPageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ProfilePage',
+    name: 'Saúl de León Guerrero — Front-End Software Engineer',
+    url: `https://www.sawl.dev/${lng}/`,
+    description:
+      'Personal portfolio of Saúl de León Guerrero, Software Engineer',
+    inLanguage: inLanguage(lng),
+    isPartOf: { '@type': 'WebSite', url: 'https://www.sawl.dev' },
+  }
+
   return (
     <>
       <JsonLd data={websiteSchema} />
       <JsonLd data={personSchema} />
-      <HomePage />
+      <JsonLd data={webPageSchema} />
+      <HomePage skillListLabel={t('skillList')} />
     </>
   )
 }

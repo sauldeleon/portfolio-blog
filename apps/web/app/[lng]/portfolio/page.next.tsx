@@ -1,6 +1,12 @@
 import { JsonLd } from '@web/components/JsonLd'
 import { PortfolioPage } from '@web/components/PortfolioPage/PortfolioPage'
 import { getServerTranslation } from '@web/i18n/server'
+import {
+  buildAlternates,
+  inLanguage,
+  ogLocale,
+  ogLocaleAlternate,
+} from '@web/utils/metadata/inLanguage'
 
 interface RouteProps {
   params: Promise<{ lng: string }>
@@ -14,19 +20,51 @@ export async function generateMetadata({ params }: GenerateMetadataProps) {
     ns: 'portfolioPage',
     language: lng,
   })
-  return { description: t('metadata.description') }
+  return {
+    title: t('title'),
+    description: t('metadata.description'),
+    alternates: buildAlternates(lng, 'portfolio/'),
+    openGraph: {
+      url: `https://www.sawl.dev/${lng}/portfolio/`,
+      locale: ogLocale(lng),
+      alternateLocale: ogLocaleAlternate(lng),
+    },
+  }
 }
 
-const inLanguage = (lng: string) => (lng === 'es' ? 'es-ES' : 'en-US')
+export const revalidate = 86400
 
 export default async function Page({ params }: RouteProps) {
   const { lng } = await params
+  const { t } = await getServerTranslation({
+    ns: 'portfolioPage',
+    language: lng,
+  })
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: `https://www.sawl.dev/${lng}/`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: t('title'),
+        item: `https://www.sawl.dev/${lng}/portfolio/`,
+      },
+    ],
+  }
 
   const profilePageSchema = {
     '@context': 'https://schema.org',
     '@type': 'ProfilePage',
     name: 'Portfolio — Saúl de León Guerrero',
-    url: `https://www.sawl.dev/${lng}/portfolio`,
+    url: `https://www.sawl.dev/${lng}/portfolio/`,
     inLanguage: inLanguage(lng),
     mainEntity: {
       '@type': 'Person',
@@ -48,8 +86,9 @@ export default async function Page({ params }: RouteProps) {
 
   return (
     <>
+      <JsonLd data={breadcrumbSchema} />
       <JsonLd data={profilePageSchema} />
-      <PortfolioPage />
+      <PortfolioPage lng={lng} />
     </>
   )
 }

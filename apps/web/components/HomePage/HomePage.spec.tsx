@@ -6,7 +6,7 @@ import { HomePage } from './HomePage'
 
 describe('HomePage', () => {
   it('should render successfully', async () => {
-    renderApp(<HomePage />)
+    renderApp(<HomePage skillListLabel="My skills" />)
     const items = await screen.findAllByRole('presentation')
     expect(items.length).toBe(2)
   })

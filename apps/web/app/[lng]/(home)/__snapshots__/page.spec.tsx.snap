@@ -592,6 +592,12 @@ exports[`[lng] route - Page should render successfully 1`] = `
     >
       {"@context":"https://schema.org","@type":"Person","name":"Saúl de León Guerrero","url":"https://www.sawl.dev","jobTitle":"Front-End Software Engineer","description":"Experienced Software Engineer skilled in translating code into polished and efficient digital solutions.","inLanguage":"en-US","address":{"@type":"PostalAddress","addressLocality":"Asturias","addressCountry":"ES"},"sameAs":["https://github.com/sauldeleon","https://www.linkedin.com/in/sauldeleonguerrero"],"knowsAbout":["React","Next.js","TypeScript","Node.js","Styled Components","Jest","Cypress"]}
     </script>
+    <script
+      data-testid="json-ld"
+      type="application/ld+json"
+    >
+      {"@context":"https://schema.org","@type":"ProfilePage","name":"Saúl de León Guerrero — Front-End Software Engineer","url":"https://www.sawl.dev/en/","description":"Personal portfolio of Saúl de León Guerrero, Software Engineer","inLanguage":"en-US","isPartOf":{"@type":"WebSite","url":"https://www.sawl.dev"}}
+    </script>
     <div
       class="c0"
     >
@@ -783,6 +789,33 @@ exports[`[lng] route - Page should render successfully 1`] = `
             <div
               role="presentation"
             >
+              <div
+                class="c11"
+                style="--particleSize: 7px; --begin-y: 29%; --end-y: -11%; animation-duration: 6146ms; animation-delay: 7931ms;"
+              >
+                <div
+                  class="c12"
+                  style="animation-duration: 774ms, 1208ms; animation-delay: 9ms;"
+                />
+              </div>
+              <div
+                class="c11"
+                style="--particleSize: 8px; --begin-y: 30%; --end-y: -30%; animation-duration: 6768ms; animation-delay: 10711ms;"
+              >
+                <div
+                  class="c12"
+                  style="animation-duration: 848ms, 1871ms; animation-delay: 8ms;"
+                />
+              </div>
+              <div
+                class="c11"
+                style="--particleSize: 2px; --begin-y: -1%; --end-y: 36%; animation-duration: 5566ms; animation-delay: 7667ms;"
+              >
+                <div
+                  class="c12"
+                  style="animation-duration: 824ms, 1656ms; animation-delay: 58ms;"
+                />
+              </div>
               <div
                 class="c11"
                 style="--particleSize: 2px; --begin-y: -10%; --end-y: -39%; animation-duration: 6732ms; animation-delay: 2078ms;"
@@ -1206,33 +1239,6 @@ exports[`[lng] route - Page should render successfully 1`] = `
                   style="animation-duration: 890ms, 1307ms; animation-delay: 96ms;"
                 />
               </div>
-              <div
-                class="c11"
-                style="--particleSize: 2px; --begin-y: -8%; --end-y: 4%; animation-duration: 6217ms; animation-delay: 2546ms;"
-              >
-                <div
-                  class="c12"
-                  style="animation-duration: 791ms, 1091ms; animation-delay: 1ms;"
-                />
-              </div>
-              <div
-                class="c11"
-                style="--particleSize: 6px; --begin-y: -1%; --end-y: -9%; animation-duration: 3354ms; animation-delay: 5253ms;"
-              >
-                <div
-                  class="c12"
-                  style="animation-duration: 604ms, 1318ms; animation-delay: 96ms;"
-                />
-              </div>
-              <div
-                class="c11"
-                style="--particleSize: 2px; --begin-y: -1%; --end-y: -46%; animation-duration: 5213ms; animation-delay: 5604ms;"
-              >
-                <div
-                  class="c12"
-                  style="animation-duration: 970ms, 1741ms; animation-delay: 53ms;"
-                />
-              </div>
             </div>
             <ul
               aria-label="My skills"
@@ -1240,17 +1246,17 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 13.939501820790943s; animation-delay: 3.56804935239636s;"
+                style="animation-duration: 8.66114535302859s; animation-delay: 4.424459216705619s;"
               >
                 <div
                   class="c14 c15"
                   data-testid="vertical-movement"
-                  style="--translateY-begin: -9%; --translateY-end: 10%; animation-duration: 9.245005891461542s;"
+                  style="--translateY-begin: -31%; --translateY-end: 36%; animation-duration: 6.279205584724648s;"
                 >
                   <div
                     class="c16 c17"
                     data-testid="rotation-movement"
-                    style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 6.6385529008148625s;"
+                    style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 5.639402359912333s;"
                   >
                     <a
                       aria-label="NodeJS"
@@ -1263,7 +1269,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 13.939501820790943s; animation-delay: 3.56804935239636s;"
+                        style="animation-duration: 8.66114535302859s; animation-delay: 4.424459216705619s;"
                       >
                         <svg
                           height="50"
@@ -1292,17 +1298,17 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c22"
                 data-testid="horizontal-movement"
-                style="animation-duration: 16.65586104930506s; animation-delay: 14.15811890089577s;"
+                style="animation-duration: 12.080167776302254s; animation-delay: 20.604349273748934s;"
               >
                 <div
                   class="c14 c15"
                   data-testid="vertical-movement"
-                  style="--translateY-begin: -22%; --translateY-end: 22%; animation-duration: 9.869973444979234s;"
+                  style="--translateY-begin: -19%; --translateY-end: 36%; animation-duration: 10.003686253832837s;"
                 >
                   <div
                     class="c16 c17"
                     data-testid="rotation-movement"
-                    style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 5.866246165676847s;"
+                    style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 6.354511391617681s;"
                   >
                     <a
                       aria-label="CSS3"
@@ -1315,7 +1321,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 16.65586104930506s; animation-delay: 14.15811890089577s;"
+                        style="animation-duration: 12.080167776302254s; animation-delay: 20.604349273748934s;"
                       >
                         <svg
                           fill="currentColor"
@@ -1334,17 +1340,17 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c22"
                 data-testid="horizontal-movement"
-                style="animation-duration: 11.217066444650737s; animation-delay: 8.334177821292958s;"
+                style="animation-duration: 20.701789888724107s; animation-delay: 3.752447247243151s;"
               >
                 <div
                   class="c14 c15"
                   data-testid="vertical-movement"
-                  style="--translateY-begin: 2%; --translateY-end: 13%; animation-duration: 10.525917926235772s;"
+                  style="--translateY-begin: -24%; --translateY-end: -14%; animation-duration: 3.7721484050423726s;"
                 >
                   <div
                     class="c16 c17"
                     data-testid="rotation-movement"
-                    style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 6.88842110340531s;"
+                    style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 5.400198333167223s;"
                   >
                     <a
                       aria-label="Github"
@@ -1357,7 +1363,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 11.217066444650737s; animation-delay: 8.334177821292958s;"
+                        style="animation-duration: 20.701789888724107s; animation-delay: 3.752447247243151s;"
                       >
                         <svg
                           fill="currentColor"
@@ -1378,17 +1384,17 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 13.80803000723342s; animation-delay: 17.621513557844366s;"
+                style="animation-duration: 13.939501820790943s; animation-delay: 3.56804935239636s;"
               >
                 <div
                   class="c14 c15"
                   data-testid="vertical-movement"
-                  style="--translateY-begin: 6%; --translateY-end: 32%; animation-duration: 7.909213118063964s;"
+                  style="--translateY-begin: -9%; --translateY-end: 10%; animation-duration: 9.245005891461542s;"
                 >
                   <div
                     class="c16 c17"
                     data-testid="rotation-movement"
-                    style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 6.861569411977941s;"
+                    style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 6.6385529008148625s;"
                   >
                     <a
                       aria-label="Typescript"
@@ -1401,7 +1407,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 13.80803000723342s; animation-delay: 17.621513557844366s;"
+                        style="animation-duration: 13.939501820790943s; animation-delay: 3.56804935239636s;"
                       >
                         <svg
                           fill="none"
@@ -1423,17 +1429,17 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c23"
                 data-testid="horizontal-movement"
-                style="animation-duration: 6.418578428153239s; animation-delay: 19.34217904686691s;"
+                style="animation-duration: 16.65586104930506s; animation-delay: 14.15811890089577s;"
               >
                 <div
                   class="c14 c15"
                   data-testid="vertical-movement"
-                  style="--translateY-begin: -36%; --translateY-end: 20%; animation-duration: 3.890979077941477s;"
+                  style="--translateY-begin: -22%; --translateY-end: 22%; animation-duration: 9.869973444979234s;"
                 >
                   <div
                     class="c16 c17"
                     data-testid="rotation-movement"
-                    style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 6.844201608619747s;"
+                    style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 5.866246165676847s;"
                   >
                     <a
                       aria-label="NextJS"
@@ -1446,7 +1452,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 6.418578428153239s; animation-delay: 19.34217904686691s;"
+                        style="animation-duration: 16.65586104930506s; animation-delay: 14.15811890089577s;"
                       >
                         <svg
                           fill="currentColor"
@@ -1465,17 +1471,17 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c23"
                 data-testid="horizontal-movement"
-                style="animation-duration: 19.277655342125932s; animation-delay: 16.023761110021237s;"
+                style="animation-duration: 11.217066444650737s; animation-delay: 8.334177821292958s;"
               >
                 <div
                   class="c14 c15"
                   data-testid="vertical-movement"
-                  style="--translateY-begin: -27%; --translateY-end: 3%; animation-duration: 4.189074280959575s;"
+                  style="--translateY-begin: 2%; --translateY-end: 13%; animation-duration: 10.525917926235772s;"
                 >
                   <div
                     class="c16 c17"
                     data-testid="rotation-movement"
-                    style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 5.860471898709803s;"
+                    style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 6.88842110340531s;"
                   >
                     <a
                       aria-label="ReactJS"
@@ -1488,7 +1494,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 19.277655342125932s; animation-delay: 16.023761110021237s;"
+                        style="animation-duration: 11.217066444650737s; animation-delay: 8.334177821292958s;"
                       >
                         <svg
                           viewBox="0 0 24 24"
@@ -1507,17 +1513,17 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c22"
                 data-testid="horizontal-movement"
-                style="animation-duration: 14.644338251752876s; animation-delay: 11.293533222767717s;"
+                style="animation-duration: 13.80803000723342s; animation-delay: 17.621513557844366s;"
               >
                 <div
                   class="c14 c15"
                   data-testid="vertical-movement"
-                  style="--translateY-begin: 8%; --translateY-end: 37%; animation-duration: 3.9970863098357703s;"
+                  style="--translateY-begin: 6%; --translateY-end: 32%; animation-duration: 7.909213118063964s;"
                 >
                   <div
                     class="c16 c17"
                     data-testid="rotation-movement"
-                    style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.933216163304989s;"
+                    style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 6.861569411977941s;"
                   >
                     <a
                       aria-label="MongoDB"
@@ -1530,7 +1536,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 14.644338251752876s; animation-delay: 11.293533222767717s;"
+                        style="animation-duration: 13.80803000723342s; animation-delay: 17.621513557844366s;"
                       >
                         <svg
                           fill="currentColor"
@@ -1549,17 +1555,17 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 10.14175237584551s; animation-delay: 3.576839029132518s;"
+                style="animation-duration: 6.418578428153239s; animation-delay: 19.34217904686691s;"
               >
                 <div
                   class="c14 c15"
                   data-testid="vertical-movement"
-                  style="--translateY-begin: 7%; --translateY-end: -12%; animation-duration: 7.664809988948997s;"
+                  style="--translateY-begin: -36%; --translateY-end: 20%; animation-duration: 3.890979077941477s;"
                 >
                   <div
                     class="c16 c17"
                     data-testid="rotation-movement"
-                    style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 6.914386238759869s;"
+                    style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 6.844201608619747s;"
                   >
                     <a
                       aria-label="Tanstack React Query"
@@ -1572,7 +1578,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 10.14175237584551s; animation-delay: 3.576839029132518s;"
+                        style="animation-duration: 6.418578428153239s; animation-delay: 19.34217904686691s;"
                       >
                         <svg
                           viewBox="0 0 256 230"
@@ -1603,17 +1609,17 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 7.4164774687551445s; animation-delay: 7.794218041362182s;"
+                style="animation-duration: 19.277655342125932s; animation-delay: 16.023761110021237s;"
               >
                 <div
                   class="c14 c15"
                   data-testid="vertical-movement"
-                  style="--translateY-begin: -14%; --translateY-end: 3%; animation-duration: 4.681199497186299s;"
+                  style="--translateY-begin: -27%; --translateY-end: 3%; animation-duration: 4.189074280959575s;"
                 >
                   <div
                     class="c16 c17"
                     data-testid="rotation-movement"
-                    style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.7009534260415045s;"
+                    style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 5.860471898709803s;"
                   >
                     <a
                       aria-label="Jest"
@@ -1626,7 +1632,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 7.4164774687551445s; animation-delay: 7.794218041362182s;"
+                        style="animation-duration: 19.277655342125932s; animation-delay: 16.023761110021237s;"
                       >
                         <svg
                           fill="currentColor"
@@ -1645,17 +1651,17 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c22"
                 data-testid="horizontal-movement"
-                style="animation-duration: 19.0397404595432s; animation-delay: 17.03052735175093s;"
+                style="animation-duration: 14.644338251752876s; animation-delay: 11.293533222767717s;"
               >
                 <div
                   class="c14 c15"
                   data-testid="vertical-movement"
-                  style="--translateY-begin: -18%; --translateY-end: -14%; animation-duration: 10.20230608533101s;"
+                  style="--translateY-begin: 8%; --translateY-end: 37%; animation-duration: 3.9970863098357703s;"
                 >
                   <div
                     class="c16 c17"
                     data-testid="rotation-movement"
-                    style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 5.843169425640823s;"
+                    style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.933216163304989s;"
                   >
                     <a
                       aria-label="Nx"
@@ -1668,7 +1674,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 19.0397404595432s; animation-delay: 17.03052735175093s;"
+                        style="animation-duration: 14.644338251752876s; animation-delay: 11.293533222767717s;"
                       >
                         <svg
                           preserveAspectRatio="xMidYMid"
@@ -1696,17 +1702,17 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c22"
                 data-testid="horizontal-movement"
-                style="animation-duration: 15.33034372807996s; animation-delay: 12.37795322276769s;"
+                style="animation-duration: 10.14175237584551s; animation-delay: 3.576839029132518s;"
               >
                 <div
                   class="c14 c15"
                   data-testid="vertical-movement"
-                  style="--translateY-begin: -22%; --translateY-end: 2%; animation-duration: 3.4792594991535664s;"
+                  style="--translateY-begin: 7%; --translateY-end: -12%; animation-duration: 7.664809988948997s;"
                 >
                   <div
                     class="c16 c17"
                     data-testid="rotation-movement"
-                    style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.562182053103664s;"
+                    style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 6.914386238759869s;"
                   >
                     <a
                       aria-label="Yarn"
@@ -1719,7 +1725,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 15.33034372807996s; animation-delay: 12.37795322276769s;"
+                        style="animation-duration: 10.14175237584551s; animation-delay: 3.576839029132518s;"
                       >
                         <svg
                           fill="currentColor"
@@ -1738,17 +1744,17 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 6.702838175631481s; animation-delay: 3.134917416336234s;"
+                style="animation-duration: 7.4164774687551445s; animation-delay: 7.794218041362182s;"
               >
                 <div
                   class="c14 c15"
                   data-testid="vertical-movement"
-                  style="--translateY-begin: -9%; --translateY-end: 37%; animation-duration: 6.470945831631842s;"
+                  style="--translateY-begin: -14%; --translateY-end: 3%; animation-duration: 4.681199497186299s;"
                 >
                   <div
                     class="c16 c17"
                     data-testid="rotation-movement"
-                    style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.891110106734741s;"
+                    style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.7009534260415045s;"
                   >
                     <a
                       aria-label="Scott Pilgrim"
@@ -1762,7 +1768,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 6.702838175631481s; animation-delay: 3.134917416336234s;"
+                        style="animation-duration: 7.4164774687551445s; animation-delay: 7.794218041362182s;"
                       >
                         <svg
                           height="460"
@@ -1788,17 +1794,17 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c22"
                 data-testid="horizontal-movement"
-                style="animation-duration: 16.297353883327176s; animation-delay: 2.9584341925583555s;"
+                style="animation-duration: 19.0397404595432s; animation-delay: 17.03052735175093s;"
               >
                 <div
                   class="c14 c15"
                   data-testid="vertical-movement"
-                  style="--translateY-begin: -21%; --translateY-end: -10%; animation-duration: 3.4079417857327168s;"
+                  style="--translateY-begin: -18%; --translateY-end: -14%; animation-duration: 10.20230608533101s;"
                 >
                   <div
                     class="c16 c17"
                     data-testid="rotation-movement"
-                    style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 6.618217783829801s;"
+                    style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 5.843169425640823s;"
                   >
                     <a
                       aria-label="Xata IO"
@@ -1811,7 +1817,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 16.297353883327176s; animation-delay: 2.9584341925583555s;"
+                        style="animation-duration: 19.0397404595432s; animation-delay: 17.03052735175093s;"
                       >
                         <svg
                           viewBox="0 0 450 450"
@@ -1904,6 +1910,133 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
+                style="animation-duration: 15.33034372807996s; animation-delay: 12.37795322276769s;"
+              >
+                <div
+                  class="c14 c15"
+                  data-testid="vertical-movement"
+                  style="--translateY-begin: -22%; --translateY-end: 2%; animation-duration: 3.4792594991535664s;"
+                >
+                  <div
+                    class="c16 c17"
+                    data-testid="rotation-movement"
+                    style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.562182053103664s;"
+                  >
+                    <a
+                      aria-label="Styled Components"
+                      class="c18 c19"
+                      data-testid="plain-anchor"
+                      href="https://styled-components.com"
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      <div
+                        class="c20 c21"
+                        data-testid="color-swapping"
+                        style="animation-duration: 15.33034372807996s; animation-delay: 12.37795322276769s;"
+                      >
+                        <svg
+                          fill="currentColor"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M16.214 6.762l-.075.391c-.116.741-.074.953.244 1.228l.307.254-.318 1.418c-.19.846-.423 1.555-.571 1.788-.127.201-.275.497-.307.656-.053.19-.233.381-.508.55-.243.138-.72.508-1.058.805-.27.243-.456.392-.557.456l-.33.261c-.106.17-.166.307-.189.411-.023.107-.01.178.024.23.033.05.09.085.168.107a.954.954 0 00.282.023 3 3 0 00.632-.112c.07-.019.125-.037.173-.053.074-.091.245-.263.548-.562.804-.793 1.111-1.227.794-1.11-.117.042-.064-.064.137-.276.424-.413.667-1.037 1.175-2.994.402-1.545.402-1.567.698-1.567.139 0 .532.024.532.024V6.762h-.902zm3.839 3.165c-.064 0-.17.096-.233.202-.116.19.021.306 1.767 1.396 1.037.657 1.873 1.217 1.852 1.26-.021.031-.868.582-1.883 1.217-1.842 1.142-1.852 1.153-1.683 1.386.212.275 0 .37 2.391-1.122L24 13.155v-.836l-1.937-1.196c-1.047-.656-1.957-1.185-2.01-1.196zm-16.085.117c-.053 0-.963.54-2.01 1.185L0 12.425v.836l1.947 1.217c1.08.666 1.99 1.217 2.032 1.217.042 0 .127-.096.212-.212.127-.201.02-.286-1.768-1.418C.72 12.996.54 12.848.71 12.732c.106-.074.91-.572 1.778-1.111 1.979-1.217 1.873-1.133 1.714-1.387-.063-.105-.17-.2-.233-.19zm8.684.023c-.292-.002-.92.443-2.8 1.978-.081.193-.088.326-.051.412.024.059.068.1.129.13.06.03.138.048.224.055.171.015.373-.012.536-.044l.11-.025a.386.386 0 01.144-.118c.116-.064.603-.508 1.09-.984.857-.868 1.058-1.26.709-1.387a.24.24 0 00-.09-.017zm2.196.603c-.257.007-.72.305-1.513.938-.398.323-.65.497-.785.533l-.524.414c-.197.36-.226.583-.174.706a.25.25 0 00.138.134.644.644 0 00.24.045 2.18 2.18 0 00.58-.085 3.466 3.466 0 00.291-.092l.029-.012.053-.028c.1-.129.33-.372.618-.652.91-.878 1.375-1.502 1.28-1.735-.043-.113-.117-.17-.233-.166zm-2.424 1.08c-.074.008-.24.136-.539.398-.432.382-.903.602-1.066.504a3.97 3.97 0 01-.114.024c-.166.033-.373.06-.558.045a.708.708 0 01-.252-.063.337.337 0 01-.168-.17c-.037-.09-.037-.202.005-.345l-.65.534-1.471 1.217V15.867l4.82-3.797a.41.41 0 01.016-.123c.037-.134.035-.202-.023-.196zm2.074.639c-.073 0-.195.103-.39.31-.265.283-.682.557-.903.613l-.034.018a2.191 2.191 0 01-.11.042c-.06.02-.138.044-.228.068-.18.049-.404.094-.604.089a.732.732 0 01-.275-.054.344.344 0 01-.184-.18c-.058-.139-.035-.334.092-.611L7.61 16.033v1.205h1.868l3.962-3.112c.103-.114.258-.27.467-.465.56-.519.687-.698.687-.963 0-.206-.023-.31-.096-.31zm.943 1.95l-.339.338c-.19.18-.529.402-.761.497l-.046.02-.003.005-.01.01c-.009.007-.013.008-.02.011a3.432 3.432 0 01-.282.093 3.058 3.058 0 01-.65.115 1.035 1.035 0 01-.31-.027.364.364 0 01-.218-.144c-.048-.074-.062-.173-.035-.295a1.11 1.11 0 01.095-.25l-3.197 2.526h4.252l.508-.582c.698-.814 1.016-1.396 1.016-1.894z"
+                          />
+                        </svg>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </li>
+              <li
+                class="c13"
+                data-testid="horizontal-movement"
+                style="animation-duration: 6.702838175631481s; animation-delay: 3.134917416336234s;"
+              >
+                <div
+                  class="c14 c15"
+                  data-testid="vertical-movement"
+                  style="--translateY-begin: -9%; --translateY-end: 37%; animation-duration: 6.470945831631842s;"
+                >
+                  <div
+                    class="c16 c17"
+                    data-testid="rotation-movement"
+                    style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.891110106734741s;"
+                  >
+                    <a
+                      aria-label="ESLint"
+                      class="c18 c19"
+                      data-testid="plain-anchor"
+                      href="https://eslint.org"
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      <div
+                        class="c20 c21"
+                        data-testid="color-swapping"
+                        style="animation-duration: 6.702838175631481s; animation-delay: 3.134917416336234s;"
+                      >
+                        <svg
+                          fill="currentColor"
+                          viewBox="0 0 16 16"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M4.671 1.065 C 4.278 1.162,3.903 1.400,3.624 1.728 C 3.446 1.938,0.499 7.105,0.414 7.357 C 0.273 7.775,0.273 8.225,0.414 8.643 C 0.499 8.895,3.446 14.062,3.624 14.272 C 3.815 14.497,4.020 14.657,4.280 14.785 C 4.736 15.008,4.527 14.995,7.773 15.006 C 9.646 15.013,10.761 15.007,10.961 14.988 C 11.566 14.934,11.996 14.717,12.369 14.279 C 12.552 14.065,15.498 8.904,15.586 8.643 C 15.726 8.231,15.726 7.770,15.587 7.359 C 15.498 7.096,12.553 1.936,12.369 1.721 C 12.113 1.421,11.835 1.231,11.440 1.089 L 11.267 1.027 8.067 1.022 C 5.059 1.017,4.855 1.020,4.671 1.065 M11.061 2.557 C 11.115 2.585,11.181 2.630,11.206 2.658 C 11.231 2.686,11.912 3.866,12.719 5.280 C 14.174 7.827,14.187 7.851,14.187 7.998 C 14.187 8.145,14.174 8.169,12.708 10.735 C 11.894 12.158,11.207 13.342,11.181 13.365 C 11.027 13.500,11.188 13.493,8.000 13.493 C 5.146 13.493,5.034 13.491,4.939 13.443 C 4.885 13.415,4.819 13.370,4.794 13.342 C 4.769 13.314,4.088 12.134,3.281 10.720 C 1.816 8.155,1.813 8.150,1.813 7.999 C 1.813 7.848,1.816 7.842,3.282 5.277 C 4.089 3.864,4.770 2.685,4.795 2.657 C 4.820 2.630,4.882 2.586,4.933 2.558 C 5.023 2.511,5.158 2.509,7.994 2.508 C 10.855 2.507,10.966 2.508,11.061 2.557 M7.730 4.323 C 7.633 4.335,7.459 4.379,7.343 4.420 C 7.129 4.496,5.645 5.324,5.347 5.534 C 4.940 5.820,4.648 6.263,4.546 6.749 C 4.489 7.022,4.489 8.978,4.546 9.251 C 4.648 9.737,4.940 10.180,5.347 10.466 C 5.641 10.673,7.129 11.504,7.339 11.578 C 7.761 11.728,8.238 11.728,8.658 11.579 C 8.854 11.510,10.307 10.703,10.640 10.478 C 10.928 10.285,11.201 9.946,11.344 9.605 C 11.481 9.280,11.493 9.152,11.493 8.000 C 11.493 6.848,11.481 6.720,11.344 6.395 C 11.201 6.054,10.928 5.715,10.640 5.522 C 10.310 5.299,8.854 4.490,8.661 4.422 C 8.547 4.381,8.356 4.336,8.235 4.321 C 7.991 4.290,7.981 4.290,7.730 4.323 M8.940 6.263 C 9.374 6.511,9.765 6.739,9.809 6.770 C 9.853 6.801,9.914 6.879,9.944 6.942 C 9.998 7.052,10.000 7.098,10.000 8.000 C 10.000 8.902,9.998 8.948,9.944 9.058 C 9.914 9.121,9.853 9.199,9.809 9.230 C 9.765 9.261,9.374 9.489,8.940 9.737 C 8.174 10.174,8.147 10.187,7.999 10.187 C 7.852 10.187,7.826 10.174,7.077 9.745 C 6.110 9.191,6.125 9.201,6.057 9.060 C 6.002 8.948,6.000 8.907,6.000 8.000 C 6.000 7.093,6.002 7.052,6.057 6.940 C 6.125 6.799,6.110 6.809,7.077 6.255 C 7.826 5.826,7.852 5.813,7.999 5.813 C 8.147 5.813,8.174 5.826,8.940 6.263 "
+                          />
+                        </svg>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </li>
+              <li
+                class="c13"
+                data-testid="horizontal-movement"
+                style="animation-duration: 16.297353883327176s; animation-delay: 2.9584341925583555s;"
+              >
+                <div
+                  class="c14 c15"
+                  data-testid="vertical-movement"
+                  style="--translateY-begin: -21%; --translateY-end: -10%; animation-duration: 3.4079417857327168s;"
+                >
+                  <div
+                    class="c16 c17"
+                    data-testid="rotation-movement"
+                    style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 6.618217783829801s;"
+                  >
+                    <a
+                      aria-label="Cypress"
+                      class="c18 c19"
+                      data-testid="plain-anchor"
+                      href="https://www.cypress.io"
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      <div
+                        class="c20 c21"
+                        data-testid="color-swapping"
+                        style="animation-duration: 16.297353883327176s; animation-delay: 2.9584341925583555s;"
+                      >
+                        <svg
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M11.998 0C5.366 0 0 5.367 0 12a11.992 11.992 0 0 0 12 12c6.633 0 12-5.367 12-12-.001-6.633-5.412-12-12.002-12zM6.37 14.575c.392.523.916.742 1.657.742.35 0 .699-.044 1.004-.175.306-.13.655-.306 1.09-.567l1.223 1.745c-1.003.83-2.138 1.222-3.447 1.222-1.048 0-1.92-.218-2.705-.654a4.393 4.393 0 0 1-1.746-1.92c-.392-.83-.611-1.79-.611-2.925 0-1.09.219-2.094.61-2.923a4.623 4.623 0 0 1 1.748-2.007c.741-.48 1.657-.698 2.661-.698.699 0 1.353.087 1.877.305a5.64 5.64 0 0 1 1.614.96l-1.222 1.658A4.786 4.786 0 0 0 9.12 8.77c-.305-.13-.698-.174-1.048-.174-1.483 0-2.225 1.134-2.225 3.446-.043 1.18.175 2.008.524 2.532H6.37zm12 2.705c-.436 1.353-1.091 2.357-2.008 3.098-.916.743-2.138 1.135-3.665 1.266l-.305-2.05c1.003-.132 1.745-.35 2.225-.7.174-.13.524-.523.524-.523L11.519 6.764h3.01l2.095 8.683 2.226-8.683h2.923L18.37 17.28z"
+                          />
+                        </svg>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </li>
+              <li
+                class="c13"
+                data-testid="horizontal-movement"
                 style="animation-duration: 13.697137942251953s; animation-delay: 13.91288232125156s;"
               >
                 <div
@@ -1917,10 +2050,10 @@ exports[`[lng] route - Page should render successfully 1`] = `
                     style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 5.387798447607168s;"
                   >
                     <a
-                      aria-label="Styled Components"
+                      aria-label="Prettier"
                       class="c18 c19"
                       data-testid="plain-anchor"
-                      href="https://styled-components.com"
+                      href="https://prettier.io"
                       rel="noreferrer"
                       target="_blank"
                     >
@@ -1931,12 +2064,11 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       >
                         <svg
                           fill="currentColor"
-                          role="img"
-                          viewBox="0 0 24 24"
+                          viewBox="0 0 32 32"
                           xmlns="http://www.w3.org/2000/svg"
                         >
                           <path
-                            d="M16.214 6.762l-.075.391c-.116.741-.074.953.244 1.228l.307.254-.318 1.418c-.19.846-.423 1.555-.571 1.788-.127.201-.275.497-.307.656-.053.19-.233.381-.508.55-.243.138-.72.508-1.058.805-.27.243-.456.392-.557.456l-.33.261c-.106.17-.166.307-.189.411-.023.107-.01.178.024.23.033.05.09.085.168.107a.954.954 0 00.282.023 3 3 0 00.632-.112c.07-.019.125-.037.173-.053.074-.091.245-.263.548-.562.804-.793 1.111-1.227.794-1.11-.117.042-.064-.064.137-.276.424-.413.667-1.037 1.175-2.994.402-1.545.402-1.567.698-1.567.139 0 .532.024.532.024V6.762h-.902zm3.839 3.165c-.064 0-.17.096-.233.202-.116.19.021.306 1.767 1.396 1.037.657 1.873 1.217 1.852 1.26-.021.031-.868.582-1.883 1.217-1.842 1.142-1.852 1.153-1.683 1.386.212.275 0 .37 2.391-1.122L24 13.155v-.836l-1.937-1.196c-1.047-.656-1.957-1.185-2.01-1.196zm-16.085.117c-.053 0-.963.54-2.01 1.185L0 12.425v.836l1.947 1.217c1.08.666 1.99 1.217 2.032 1.217.042 0 .127-.096.212-.212.127-.201.02-.286-1.768-1.418C.72 12.996.54 12.848.71 12.732c.106-.074.91-.572 1.778-1.111 1.979-1.217 1.873-1.133 1.714-1.387-.063-.105-.17-.2-.233-.19zm8.684.023c-.292-.002-.92.443-2.8 1.978-.081.193-.088.326-.051.412.024.059.068.1.129.13.06.03.138.048.224.055.171.015.373-.012.536-.044l.11-.025a.386.386 0 01.144-.118c.116-.064.603-.508 1.09-.984.857-.868 1.058-1.26.709-1.387a.24.24 0 00-.09-.017zm2.196.603c-.257.007-.72.305-1.513.938-.398.323-.65.497-.785.533l-.524.414c-.197.36-.226.583-.174.706a.25.25 0 00.138.134.644.644 0 00.24.045 2.18 2.18 0 00.58-.085 3.466 3.466 0 00.291-.092l.029-.012.053-.028c.1-.129.33-.372.618-.652.91-.878 1.375-1.502 1.28-1.735-.043-.113-.117-.17-.233-.166zm-2.424 1.08c-.074.008-.24.136-.539.398-.432.382-.903.602-1.066.504a3.97 3.97 0 01-.114.024c-.166.033-.373.06-.558.045a.708.708 0 01-.252-.063.337.337 0 01-.168-.17c-.037-.09-.037-.202.005-.345l-.65.534-1.471 1.217V15.867l4.82-3.797a.41.41 0 01.016-.123c.037-.134.035-.202-.023-.196zm2.074.639c-.073 0-.195.103-.39.31-.265.283-.682.557-.903.613l-.034.018a2.191 2.191 0 01-.11.042c-.06.02-.138.044-.228.068-.18.049-.404.094-.604.089a.732.732 0 01-.275-.054.344.344 0 01-.184-.18c-.058-.139-.035-.334.092-.611L7.61 16.033v1.205h1.868l3.962-3.112c.103-.114.258-.27.467-.465.56-.519.687-.698.687-.963 0-.206-.023-.31-.096-.31zm.943 1.95l-.339.338c-.19.18-.529.402-.761.497l-.046.02-.003.005-.01.01c-.009.007-.013.008-.02.011a3.432 3.432 0 01-.282.093 3.058 3.058 0 01-.65.115 1.035 1.035 0 01-.31-.027.364.364 0 01-.218-.144c-.048-.074-.062-.173-.035-.295a1.11 1.11 0 01.095-.25l-3.197 2.526h4.252l.508-.582c.698-.814 1.016-1.396 1.016-1.894z"
+                            d="M11.427 31.24c0 0.422-0.339 0.76-0.76 0.76h-7.62c-1.016 0-1.016-1.526 0-1.526h7.62c0.422 0 0.76 0.344 0.76 0.766zM10.667 27.427h-1.526c-1.016 0-1.016 1.526 0 1.526h1.526c1.016 0 1.016-1.526 0-1.526zM3.047 28.953h3.047c1.016 0 1.016-1.526 0-1.526h-3.047c-1.016 0-1.016 1.526 0 1.526zM10.667 24.38h-7.62c-1.016 0-1.016 1.526 0 1.526h7.62c1.016 0 1.016-1.526 0-1.526zM21.333 21.333h-13.714c-1.016 0-1.016 1.526 0 1.526h13.714c1.016 0 1.016-1.526 0-1.526zM3.047 22.859h1.526c1.016 0 1.016-1.526 0-1.526h-1.526c-1.016 0-1.016 1.526 0 1.526zM25.906 18.286h-4.573c-1.016 0-1.016 1.521 0 1.521h4.573c1.016 0 1.016-1.521 0-1.521zM12.193 19.807h6.094c1.016 0 1.016-1.521 0-1.521h-6.094c-1.016 0-1.016 1.521 0 1.521zM3.047 19.807h6.094c1.016 0 1.016-1.521 0-1.521h-6.094c-1.016 0-1.016 1.521 0 1.521zM27.427 15.24h-12.188c-1.016 0-1.016 1.521 0 1.521h12.188c1.016 0 1.016-1.521 0-1.521zM12.953 16c0-0.422-0.344-0.76-0.76-0.76h-4.573c-1.016 0-1.016 1.521 0 1.521h4.573c0.417 0 0.76-0.339 0.76-0.76zM3.047 16.76h1.526c1.016 0 1.016-1.521 0-1.521h-1.526c-1.016 0-1.016 1.521 0 1.521zM28.953 12.193h-7.62c-1.016 0-1.016 1.521 0 1.521h7.62c1.016 0 1.016-1.521 0-1.521zM3.047 13.714h7.62c1.016 0 1.016-1.521 0-1.521h-7.62c-1.016 0-1.016 1.521 0 1.521zM20.573 9.906c0 0.417 0.339 0.76 0.76 0.76h7.62c1.016 0 1.016-1.526 0-1.526h-7.62c-0.422 0-0.76 0.344-0.76 0.766zM9.141 9.141c-1.016 0-1.016 1.526 0 1.526h1.526c1.016 0 1.016-1.526 0-1.526zM3.047 10.667h3.047c1.016 0 1.016-1.526 0-1.526h-3.047c-1.016 0-1.016 1.526 0 1.526zM25.141 6.859c0 0.417 0.344 0.76 0.766 0.76h1.521c1.016 0 1.016-1.526 0-1.526h-1.521c-0.422 0-0.76 0.344-0.76 0.766zM23.62 6.859c0-0.422-0.344-0.766-0.76-0.766h-6.099c-1.016 0-1.016 1.526 0 1.526h6.094c0.422 0 0.766-0.344 0.766-0.76zM3.047 7.62h10.667c1.016 0 1.016-1.526 0-1.526h-10.667c-1.016 0-1.016 1.526 0 1.526zM9.906 3.807c0 0.422 0.339 0.766 0.76 0.766h15.24c1.016 0 1.016-1.526 0-1.526h-15.24c-0.422 0-0.76 0.344-0.76 0.76zM3.047 4.573h4.573c1.016 0 1.016-1.526 0-1.526h-4.573c-1.016 0-1.016 1.526 0 1.526zM3.047 1.526h18.286c1.016 0 1.016-1.526 0-1.526h-18.286c-1.016 0-1.016 1.526 0 1.526z"
                           />
                         </svg>
                       </div>
@@ -1960,10 +2092,10 @@ exports[`[lng] route - Page should render successfully 1`] = `
                     style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 5.416800232269552s;"
                   >
                     <a
-                      aria-label="ESLint"
+                      aria-label="Docker"
                       class="c18 c19"
                       data-testid="plain-anchor"
-                      href="https://eslint.org"
+                      href="https://www.docker.com"
                       rel="noreferrer"
                       target="_blank"
                     >
@@ -1978,7 +2110,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                           xmlns="http://www.w3.org/2000/svg"
                         >
                           <path
-                            d="M4.671 1.065 C 4.278 1.162,3.903 1.400,3.624 1.728 C 3.446 1.938,0.499 7.105,0.414 7.357 C 0.273 7.775,0.273 8.225,0.414 8.643 C 0.499 8.895,3.446 14.062,3.624 14.272 C 3.815 14.497,4.020 14.657,4.280 14.785 C 4.736 15.008,4.527 14.995,7.773 15.006 C 9.646 15.013,10.761 15.007,10.961 14.988 C 11.566 14.934,11.996 14.717,12.369 14.279 C 12.552 14.065,15.498 8.904,15.586 8.643 C 15.726 8.231,15.726 7.770,15.587 7.359 C 15.498 7.096,12.553 1.936,12.369 1.721 C 12.113 1.421,11.835 1.231,11.440 1.089 L 11.267 1.027 8.067 1.022 C 5.059 1.017,4.855 1.020,4.671 1.065 M11.061 2.557 C 11.115 2.585,11.181 2.630,11.206 2.658 C 11.231 2.686,11.912 3.866,12.719 5.280 C 14.174 7.827,14.187 7.851,14.187 7.998 C 14.187 8.145,14.174 8.169,12.708 10.735 C 11.894 12.158,11.207 13.342,11.181 13.365 C 11.027 13.500,11.188 13.493,8.000 13.493 C 5.146 13.493,5.034 13.491,4.939 13.443 C 4.885 13.415,4.819 13.370,4.794 13.342 C 4.769 13.314,4.088 12.134,3.281 10.720 C 1.816 8.155,1.813 8.150,1.813 7.999 C 1.813 7.848,1.816 7.842,3.282 5.277 C 4.089 3.864,4.770 2.685,4.795 2.657 C 4.820 2.630,4.882 2.586,4.933 2.558 C 5.023 2.511,5.158 2.509,7.994 2.508 C 10.855 2.507,10.966 2.508,11.061 2.557 M7.730 4.323 C 7.633 4.335,7.459 4.379,7.343 4.420 C 7.129 4.496,5.645 5.324,5.347 5.534 C 4.940 5.820,4.648 6.263,4.546 6.749 C 4.489 7.022,4.489 8.978,4.546 9.251 C 4.648 9.737,4.940 10.180,5.347 10.466 C 5.641 10.673,7.129 11.504,7.339 11.578 C 7.761 11.728,8.238 11.728,8.658 11.579 C 8.854 11.510,10.307 10.703,10.640 10.478 C 10.928 10.285,11.201 9.946,11.344 9.605 C 11.481 9.280,11.493 9.152,11.493 8.000 C 11.493 6.848,11.481 6.720,11.344 6.395 C 11.201 6.054,10.928 5.715,10.640 5.522 C 10.310 5.299,8.854 4.490,8.661 4.422 C 8.547 4.381,8.356 4.336,8.235 4.321 C 7.991 4.290,7.981 4.290,7.730 4.323 M8.940 6.263 C 9.374 6.511,9.765 6.739,9.809 6.770 C 9.853 6.801,9.914 6.879,9.944 6.942 C 9.998 7.052,10.000 7.098,10.000 8.000 C 10.000 8.902,9.998 8.948,9.944 9.058 C 9.914 9.121,9.853 9.199,9.809 9.230 C 9.765 9.261,9.374 9.489,8.940 9.737 C 8.174 10.174,8.147 10.187,7.999 10.187 C 7.852 10.187,7.826 10.174,7.077 9.745 C 6.110 9.191,6.125 9.201,6.057 9.060 C 6.002 8.948,6.000 8.907,6.000 8.000 C 6.000 7.093,6.002 7.052,6.057 6.940 C 6.125 6.799,6.110 6.809,7.077 6.255 C 7.826 5.826,7.852 5.813,7.999 5.813 C 8.147 5.813,8.174 5.826,8.940 6.263 "
+                            d="M12.342 4.536l.15-.227.262.159.116.083c.28.216.869.768.996 1.684.223-.04.448-.06.673-.06.534 0 .893.124 1.097.227l.105.057.068.045.191.156-.066.2a2.044 2.044 0 01-.47.73c-.29.299-.8.652-1.609.698l-.178.005h-.148c-.37.977-.867 2.078-1.702 3.066a7.081 7.081 0 01-1.74 1.488 7.941 7.941 0 01-2.549.968c-.644.125-1.298.187-1.953.185-1.45 0-2.73-.288-3.517-.792-.703-.449-1.243-1.182-1.606-2.177a8.25 8.25 0 01-.461-2.83.516.516 0 01.432-.516l.068-.005h10.54l.092-.007.149-.016c.256-.034.646-.11.92-.27-.328-.543-.421-1.178-.268-1.854a3.3 3.3 0 01.3-.81l.108-.187zM2.89 5.784l.04.007a.127.127 0 01.077.082l.006.04v1.315l-.006.041a.127.127 0 01-.078.082l-.039.006H1.478a.124.124 0 01-.117-.088l-.007-.04V5.912l.007-.04a.127.127 0 01.078-.083l.039-.006H2.89zm1.947 0l.039.007a.127.127 0 01.078.082l.006.04v1.315l-.007.041a.127.127 0 01-.078.082l-.039.006H3.424a.125.125 0 01-.117-.088L3.3 7.23V5.913a.13.13 0 01.085-.123l.039-.007h1.413zm1.976 0l.039.007a.127.127 0 01.077.082l.007.04v1.315l-.007.041a.127.127 0 01-.078.082l-.039.006H5.4a.124.124 0 01-.117-.088l-.006-.04V5.912l.006-.04a.127.127 0 01.078-.083l.039-.006h1.413zm1.952 0l.039.007a.127.127 0 01.078.082l.007.04v1.315a.13.13 0 01-.085.123l-.04.006H7.353a.124.124 0 01-.117-.088l-.006-.04V5.912l.006-.04a.127.127 0 01.078-.083l.04-.006h1.412zm1.97 0l.039.007a.127.127 0 01.078.082l.006.04v1.315a.13.13 0 01-.085.123l-.039.006H9.322a.124.124 0 01-.117-.088l-.006-.04V5.912l.006-.04a.127.127 0 01.078-.083l.04-.006h1.411zM4.835 3.892l.04.007a.127.127 0 01.077.081l.007.041v1.315a.13.13 0 01-.085.123l-.039.007H3.424a.125.125 0 01-.117-.09l-.007-.04V4.021a.13.13 0 01.085-.122l.039-.007h1.412zm1.976 0l.04.007a.127.127 0 01.077.081l.007.041v1.315a.13.13 0 01-.085.123l-.039.007H5.4a.125.125 0 01-.117-.09l-.006-.04V4.021l.006-.04a.127.127 0 01.078-.082l.039-.007h1.412zm1.953 0c.054 0 .1.037.117.088l.007.041v1.315a.13.13 0 01-.085.123l-.04.007H7.353a.125.125 0 01-.117-.09l-.006-.04V4.021l.006-.04a.127.127 0 01.078-.082l.04-.007h1.412zm0-1.892c.054 0 .1.037.117.088l.007.04v1.316a.13.13 0 01-.085.123l-.04.006H7.353a.124.124 0 01-.117-.088l-.006-.04V2.128l.006-.04a.127.127 0 01.078-.082L7.353 2h1.412z"
                           />
                         </svg>
                       </div>
@@ -2002,132 +2134,6 @@ exports[`[lng] route - Page should render successfully 1`] = `
                     style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 6.134759649557654s;"
                   >
                     <a
-                      aria-label="Cypress"
-                      class="c18 c19"
-                      data-testid="plain-anchor"
-                      href="https://www.cypress.io"
-                      rel="noreferrer"
-                      target="_blank"
-                    >
-                      <div
-                        class="c20 c21"
-                        data-testid="color-swapping"
-                        style="animation-duration: 10.695528845640002s; animation-delay: 13.495772316879656s;"
-                      >
-                        <svg
-                          fill="currentColor"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M11.998 0C5.366 0 0 5.367 0 12a11.992 11.992 0 0 0 12 12c6.633 0 12-5.367 12-12-.001-6.633-5.412-12-12.002-12zM6.37 14.575c.392.523.916.742 1.657.742.35 0 .699-.044 1.004-.175.306-.13.655-.306 1.09-.567l1.223 1.745c-1.003.83-2.138 1.222-3.447 1.222-1.048 0-1.92-.218-2.705-.654a4.393 4.393 0 0 1-1.746-1.92c-.392-.83-.611-1.79-.611-2.925 0-1.09.219-2.094.61-2.923a4.623 4.623 0 0 1 1.748-2.007c.741-.48 1.657-.698 2.661-.698.699 0 1.353.087 1.877.305a5.64 5.64 0 0 1 1.614.96l-1.222 1.658A4.786 4.786 0 0 0 9.12 8.77c-.305-.13-.698-.174-1.048-.174-1.483 0-2.225 1.134-2.225 3.446-.043 1.18.175 2.008.524 2.532H6.37zm12 2.705c-.436 1.353-1.091 2.357-2.008 3.098-.916.743-2.138 1.135-3.665 1.266l-.305-2.05c1.003-.132 1.745-.35 2.225-.7.174-.13.524-.523.524-.523L11.519 6.764h3.01l2.095 8.683 2.226-8.683h2.923L18.37 17.28z"
-                          />
-                        </svg>
-                      </div>
-                    </a>
-                  </div>
-                </div>
-              </li>
-              <li
-                class="c13"
-                data-testid="horizontal-movement"
-                style="animation-duration: 9.168459829566466s; animation-delay: 10.990939851455968s;"
-              >
-                <div
-                  class="c14 c15"
-                  data-testid="vertical-movement"
-                  style="--translateY-begin: -35%; --translateY-end: -14%; animation-duration: 3.3117706386280235s;"
-                >
-                  <div
-                    class="c16 c17"
-                    data-testid="rotation-movement"
-                    style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 5.574636643872568s;"
-                  >
-                    <a
-                      aria-label="Prettier"
-                      class="c18 c19"
-                      data-testid="plain-anchor"
-                      href="https://prettier.io"
-                      rel="noreferrer"
-                      target="_blank"
-                    >
-                      <div
-                        class="c20 c21"
-                        data-testid="color-swapping"
-                        style="animation-duration: 9.168459829566466s; animation-delay: 10.990939851455968s;"
-                      >
-                        <svg
-                          fill="currentColor"
-                          viewBox="0 0 32 32"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M11.427 31.24c0 0.422-0.339 0.76-0.76 0.76h-7.62c-1.016 0-1.016-1.526 0-1.526h7.62c0.422 0 0.76 0.344 0.76 0.766zM10.667 27.427h-1.526c-1.016 0-1.016 1.526 0 1.526h1.526c1.016 0 1.016-1.526 0-1.526zM3.047 28.953h3.047c1.016 0 1.016-1.526 0-1.526h-3.047c-1.016 0-1.016 1.526 0 1.526zM10.667 24.38h-7.62c-1.016 0-1.016 1.526 0 1.526h7.62c1.016 0 1.016-1.526 0-1.526zM21.333 21.333h-13.714c-1.016 0-1.016 1.526 0 1.526h13.714c1.016 0 1.016-1.526 0-1.526zM3.047 22.859h1.526c1.016 0 1.016-1.526 0-1.526h-1.526c-1.016 0-1.016 1.526 0 1.526zM25.906 18.286h-4.573c-1.016 0-1.016 1.521 0 1.521h4.573c1.016 0 1.016-1.521 0-1.521zM12.193 19.807h6.094c1.016 0 1.016-1.521 0-1.521h-6.094c-1.016 0-1.016 1.521 0 1.521zM3.047 19.807h6.094c1.016 0 1.016-1.521 0-1.521h-6.094c-1.016 0-1.016 1.521 0 1.521zM27.427 15.24h-12.188c-1.016 0-1.016 1.521 0 1.521h12.188c1.016 0 1.016-1.521 0-1.521zM12.953 16c0-0.422-0.344-0.76-0.76-0.76h-4.573c-1.016 0-1.016 1.521 0 1.521h4.573c0.417 0 0.76-0.339 0.76-0.76zM3.047 16.76h1.526c1.016 0 1.016-1.521 0-1.521h-1.526c-1.016 0-1.016 1.521 0 1.521zM28.953 12.193h-7.62c-1.016 0-1.016 1.521 0 1.521h7.62c1.016 0 1.016-1.521 0-1.521zM3.047 13.714h7.62c1.016 0 1.016-1.521 0-1.521h-7.62c-1.016 0-1.016 1.521 0 1.521zM20.573 9.906c0 0.417 0.339 0.76 0.76 0.76h7.62c1.016 0 1.016-1.526 0-1.526h-7.62c-0.422 0-0.76 0.344-0.76 0.766zM9.141 9.141c-1.016 0-1.016 1.526 0 1.526h1.526c1.016 0 1.016-1.526 0-1.526zM3.047 10.667h3.047c1.016 0 1.016-1.526 0-1.526h-3.047c-1.016 0-1.016 1.526 0 1.526zM25.141 6.859c0 0.417 0.344 0.76 0.766 0.76h1.521c1.016 0 1.016-1.526 0-1.526h-1.521c-0.422 0-0.76 0.344-0.76 0.766zM23.62 6.859c0-0.422-0.344-0.766-0.76-0.766h-6.099c-1.016 0-1.016 1.526 0 1.526h6.094c0.422 0 0.766-0.344 0.766-0.76zM3.047 7.62h10.667c1.016 0 1.016-1.526 0-1.526h-10.667c-1.016 0-1.016 1.526 0 1.526zM9.906 3.807c0 0.422 0.339 0.766 0.76 0.766h15.24c1.016 0 1.016-1.526 0-1.526h-15.24c-0.422 0-0.76 0.344-0.76 0.76zM3.047 4.573h4.573c1.016 0 1.016-1.526 0-1.526h-4.573c-1.016 0-1.016 1.526 0 1.526zM3.047 1.526h18.286c1.016 0 1.016-1.526 0-1.526h-18.286c-1.016 0-1.016 1.526 0 1.526z"
-                          />
-                        </svg>
-                      </div>
-                    </a>
-                  </div>
-                </div>
-              </li>
-              <li
-                class="c13"
-                data-testid="horizontal-movement"
-                style="animation-duration: 10.846456912104264s; animation-delay: 9.159323087161912s;"
-              >
-                <div
-                  class="c14 c15"
-                  data-testid="vertical-movement"
-                  style="--translateY-begin: -8%; --translateY-end: 3%; animation-duration: 10.297958655167884s;"
-                >
-                  <div
-                    class="c16 c17"
-                    data-testid="rotation-movement"
-                    style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 4.288995156525762s;"
-                  >
-                    <a
-                      aria-label="Docker"
-                      class="c18 c19"
-                      data-testid="plain-anchor"
-                      href="https://www.docker.com"
-                      rel="noreferrer"
-                      target="_blank"
-                    >
-                      <div
-                        class="c20 c21"
-                        data-testid="color-swapping"
-                        style="animation-duration: 10.846456912104264s; animation-delay: 9.159323087161912s;"
-                      >
-                        <svg
-                          fill="currentColor"
-                          viewBox="0 0 16 16"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M12.342 4.536l.15-.227.262.159.116.083c.28.216.869.768.996 1.684.223-.04.448-.06.673-.06.534 0 .893.124 1.097.227l.105.057.068.045.191.156-.066.2a2.044 2.044 0 01-.47.73c-.29.299-.8.652-1.609.698l-.178.005h-.148c-.37.977-.867 2.078-1.702 3.066a7.081 7.081 0 01-1.74 1.488 7.941 7.941 0 01-2.549.968c-.644.125-1.298.187-1.953.185-1.45 0-2.73-.288-3.517-.792-.703-.449-1.243-1.182-1.606-2.177a8.25 8.25 0 01-.461-2.83.516.516 0 01.432-.516l.068-.005h10.54l.092-.007.149-.016c.256-.034.646-.11.92-.27-.328-.543-.421-1.178-.268-1.854a3.3 3.3 0 01.3-.81l.108-.187zM2.89 5.784l.04.007a.127.127 0 01.077.082l.006.04v1.315l-.006.041a.127.127 0 01-.078.082l-.039.006H1.478a.124.124 0 01-.117-.088l-.007-.04V5.912l.007-.04a.127.127 0 01.078-.083l.039-.006H2.89zm1.947 0l.039.007a.127.127 0 01.078.082l.006.04v1.315l-.007.041a.127.127 0 01-.078.082l-.039.006H3.424a.125.125 0 01-.117-.088L3.3 7.23V5.913a.13.13 0 01.085-.123l.039-.007h1.413zm1.976 0l.039.007a.127.127 0 01.077.082l.007.04v1.315l-.007.041a.127.127 0 01-.078.082l-.039.006H5.4a.124.124 0 01-.117-.088l-.006-.04V5.912l.006-.04a.127.127 0 01.078-.083l.039-.006h1.413zm1.952 0l.039.007a.127.127 0 01.078.082l.007.04v1.315a.13.13 0 01-.085.123l-.04.006H7.353a.124.124 0 01-.117-.088l-.006-.04V5.912l.006-.04a.127.127 0 01.078-.083l.04-.006h1.412zm1.97 0l.039.007a.127.127 0 01.078.082l.006.04v1.315a.13.13 0 01-.085.123l-.039.006H9.322a.124.124 0 01-.117-.088l-.006-.04V5.912l.006-.04a.127.127 0 01.078-.083l.04-.006h1.411zM4.835 3.892l.04.007a.127.127 0 01.077.081l.007.041v1.315a.13.13 0 01-.085.123l-.039.007H3.424a.125.125 0 01-.117-.09l-.007-.04V4.021a.13.13 0 01.085-.122l.039-.007h1.412zm1.976 0l.04.007a.127.127 0 01.077.081l.007.041v1.315a.13.13 0 01-.085.123l-.039.007H5.4a.125.125 0 01-.117-.09l-.006-.04V4.021l.006-.04a.127.127 0 01.078-.082l.039-.007h1.412zm1.953 0c.054 0 .1.037.117.088l.007.041v1.315a.13.13 0 01-.085.123l-.04.007H7.353a.125.125 0 01-.117-.09l-.006-.04V4.021l.006-.04a.127.127 0 01.078-.082l.04-.007h1.412zm0-1.892c.054 0 .1.037.117.088l.007.04v1.316a.13.13 0 01-.085.123l-.04.006H7.353a.124.124 0 01-.117-.088l-.006-.04V2.128l.006-.04a.127.127 0 01.078-.082L7.353 2h1.412z"
-                          />
-                        </svg>
-                      </div>
-                    </a>
-                  </div>
-                </div>
-              </li>
-              <li
-                class="c13"
-                data-testid="horizontal-movement"
-                style="animation-duration: 19.147258311795248s; animation-delay: 6.001398340501273s;"
-              >
-                <div
-                  class="c14 c15"
-                  data-testid="vertical-movement"
-                  style="--translateY-begin: 10%; --translateY-end: 24%; animation-duration: 4.940030744867554s;"
-                >
-                  <div
-                    class="c16 c17"
-                    data-testid="rotation-movement"
-                    style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 4.638775037797611s;"
-                  >
-                    <a
                       aria-label="HTML5"
                       class="c18 c19"
                       data-testid="plain-anchor"
@@ -2138,7 +2144,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 19.147258311795248s; animation-delay: 6.001398340501273s;"
+                        style="animation-duration: 10.695528845640002s; animation-delay: 13.495772316879656s;"
                       >
                         <svg
                           viewBox="-1 0 20 20"
@@ -2166,17 +2172,17 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 18.350210396782828s; animation-delay: 14.947648904197314s;"
+                style="animation-duration: 9.168459829566466s; animation-delay: 10.990939851455968s;"
               >
                 <div
                   class="c14 c15"
                   data-testid="vertical-movement"
-                  style="--translateY-begin: -17%; --translateY-end: 3%; animation-duration: 4.122745683003191s;"
+                  style="--translateY-begin: -35%; --translateY-end: -14%; animation-duration: 3.3117706386280235s;"
                 >
                   <div
                     class="c16 c17"
                     data-testid="rotation-movement"
-                    style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 5.910443380075771s;"
+                    style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 5.574636643872568s;"
                   >
                     <a
                       aria-label="JavaScript"
@@ -2189,7 +2195,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 18.350210396782828s; animation-delay: 14.947648904197314s;"
+                        style="animation-duration: 9.168459829566466s; animation-delay: 10.990939851455968s;"
                       >
                         <svg
                           fill="currentColor"
@@ -2208,17 +2214,17 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 10.415961447727684s; animation-delay: 5.797287909842468s;"
+                style="animation-duration: 10.846456912104264s; animation-delay: 9.159323087161912s;"
               >
                 <div
                   class="c14 c15"
                   data-testid="vertical-movement"
-                  style="--translateY-begin: 13%; --translateY-end: -14%; animation-duration: 6.800350666500586s;"
+                  style="--translateY-begin: -8%; --translateY-end: 3%; animation-duration: 10.297958655167884s;"
                 >
                   <div
                     class="c16 c17"
                     data-testid="rotation-movement"
-                    style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 4.95628017878512s;"
+                    style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 4.288995156525762s;"
                   >
                     <a
                       aria-label="Node Package Manager"
@@ -2231,7 +2237,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 10.415961447727684s; animation-delay: 5.797287909842468s;"
+                        style="animation-duration: 10.846456912104264s; animation-delay: 9.159323087161912s;"
                       >
                         <svg
                           fill="currentColor"
@@ -2261,17 +2267,17 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 20.536762630029592s; animation-delay: 15.159527669228408s;"
+                style="animation-duration: 19.147258311795248s; animation-delay: 6.001398340501273s;"
               >
                 <div
                   class="c14 c15"
                   data-testid="vertical-movement"
-                  style="--translateY-begin: 1%; --translateY-end: 0%; animation-duration: 5.678292340738683s;"
+                  style="--translateY-begin: 10%; --translateY-end: 24%; animation-duration: 4.940030744867554s;"
                 >
                   <div
                     class="c16 c17"
                     data-testid="rotation-movement"
-                    style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.200176930490507s;"
+                    style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 4.638775037797611s;"
                   >
                     <a
                       aria-label="Git"
@@ -2284,7 +2290,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 20.536762630029592s; animation-delay: 15.159527669228408s;"
+                        style="animation-duration: 19.147258311795248s; animation-delay: 6.001398340501273s;"
                       >
                         <svg
                           fill="currentColor"
@@ -2303,17 +2309,17 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 15.660937927605577s; animation-delay: 12.608999788786365s;"
+                style="animation-duration: 18.350210396782828s; animation-delay: 14.947648904197314s;"
               >
                 <div
                   class="c14 c15"
                   data-testid="vertical-movement"
-                  style="--translateY-begin: -6%; --translateY-end: 14%; animation-duration: 9.837149956371496s;"
+                  style="--translateY-begin: -17%; --translateY-end: 3%; animation-duration: 4.122745683003191s;"
                 >
                   <div
                     class="c16 c17"
                     data-testid="rotation-movement"
-                    style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 5.1367041288336965s;"
+                    style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 5.910443380075771s;"
                   >
                     <a
                       aria-label="Google Chrome"
@@ -2326,7 +2332,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 15.660937927605577s; animation-delay: 12.608999788786365s;"
+                        style="animation-duration: 18.350210396782828s; animation-delay: 14.947648904197314s;"
                       >
                         <svg
                           fill="none"
@@ -2377,17 +2383,17 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 10.800854729940259s; animation-delay: 12.683557986679302s;"
+                style="animation-duration: 10.415961447727684s; animation-delay: 5.797287909842468s;"
               >
                 <div
                   class="c14 c15"
                   data-testid="vertical-movement"
-                  style="--translateY-begin: 18%; --translateY-end: 6%; animation-duration: 8.243233564956254s;"
+                  style="--translateY-begin: 13%; --translateY-end: -14%; animation-duration: 6.800350666500586s;"
                 >
                   <div
                     class="c16 c17"
                     data-testid="rotation-movement"
-                    style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 4.591343546967886s;"
+                    style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 4.95628017878512s;"
                   >
                     <a
                       aria-label="Visual Studio Code"
@@ -2400,7 +2406,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 10.800854729940259s; animation-delay: 12.683557986679302s;"
+                        style="animation-duration: 10.415961447727684s; animation-delay: 5.797287909842468s;"
                       >
                         <svg
                           fill="currentColor"
@@ -2428,6 +2434,132 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
+                style="animation-duration: 20.536762630029592s; animation-delay: 15.159527669228408s;"
+              >
+                <div
+                  class="c14 c15"
+                  data-testid="vertical-movement"
+                  style="--translateY-begin: 1%; --translateY-end: 0%; animation-duration: 5.678292340738683s;"
+                >
+                  <div
+                    class="c16 c17"
+                    data-testid="rotation-movement"
+                    style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.200176930490507s;"
+                  >
+                    <a
+                      aria-label="Material UI"
+                      class="c18 c19"
+                      data-testid="plain-anchor"
+                      href="https://material-ui.com"
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      <div
+                        class="c20 c21"
+                        data-testid="color-swapping"
+                        style="animation-duration: 20.536762630029592s; animation-delay: 15.159527669228408s;"
+                      >
+                        <svg
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 2.475v10.39l3 1.733V7.67l6 3.465 6-3.465v3.465l-6 3.463v3.464l6 3.463 9-5.195V9.402l-3 1.733v3.463l-6 3.464-3-1.732 6-3.465V2.475L9 7.67 0 2.475zm24 0-3 1.73V7.67l3-1.732V2.474z"
+                          />
+                        </svg>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </li>
+              <li
+                class="c13"
+                data-testid="horizontal-movement"
+                style="animation-duration: 15.660937927605577s; animation-delay: 12.608999788786365s;"
+              >
+                <div
+                  class="c14 c15"
+                  data-testid="vertical-movement"
+                  style="--translateY-begin: -6%; --translateY-end: 14%; animation-duration: 9.837149956371496s;"
+                >
+                  <div
+                    class="c16 c17"
+                    data-testid="rotation-movement"
+                    style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 5.1367041288336965s;"
+                  >
+                    <a
+                      aria-label="PostgreSQL"
+                      class="c18 c19"
+                      data-testid="plain-anchor"
+                      href="https://www.postgresql.org"
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      <div
+                        class="c20 c21"
+                        data-testid="color-swapping"
+                        style="animation-duration: 15.660937927605577s; animation-delay: 12.608999788786365s;"
+                      >
+                        <svg
+                          fill="currentColor"
+                          viewBox="0 0 32 32"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M22.839 0c-1.245 0.011-2.479 0.188-3.677 0.536l-0.083 0.027c-0.751-0.131-1.516-0.203-2.276-0.219-1.573-0.027-2.923 0.353-4.011 0.989-1.073-0.369-3.297-1.016-5.641-0.885-1.629 0.088-3.411 0.583-4.735 1.979-1.312 1.391-2.009 3.547-1.864 6.485 0.041 0.807 0.271 2.124 0.656 3.837 0.38 1.709 0.917 3.709 1.589 5.537 0.672 1.823 1.405 3.463 2.552 4.577 0.572 0.557 1.364 1.032 2.296 0.991 0.652-0.027 1.24-0.313 1.751-0.735 0.249 0.328 0.516 0.468 0.755 0.599 0.308 0.167 0.599 0.281 0.907 0.355 0.552 0.14 1.495 0.323 2.599 0.135 0.375-0.063 0.771-0.187 1.167-0.359 0.016 0.437 0.032 0.869 0.047 1.307 0.057 1.38 0.095 2.656 0.505 3.776 0.068 0.183 0.251 1.12 0.969 1.953 0.724 0.833 2.129 1.349 3.739 1.005 1.131-0.24 2.573-0.677 3.532-2.041 0.948-1.344 1.375-3.276 1.459-6.412 0.020-0.172 0.047-0.312 0.072-0.448l0.224 0.021h0.027c1.208 0.052 2.521-0.12 3.62-0.631 0.968-0.448 1.703-0.901 2.239-1.708 0.131-0.199 0.281-0.443 0.319-0.86 0.041-0.411-0.199-1.063-0.595-1.364-0.791-0.604-1.291-0.375-1.828-0.26-0.525 0.115-1.063 0.176-1.599 0.192 1.541-2.593 2.645-5.353 3.276-7.792 0.375-1.443 0.584-2.771 0.599-3.932 0.021-1.161-0.077-2.187-0.771-3.077-2.177-2.776-5.235-3.548-7.599-3.573-0.073 0-0.145 0-0.219 0zM22.776 0.855c2.235-0.021 5.093 0.604 7.145 3.228 0.464 0.589 0.6 1.448 0.584 2.511s-0.213 2.328-0.573 3.719c-0.692 2.699-2.011 5.833-3.859 8.652 0.063 0.047 0.135 0.088 0.208 0.115 0.385 0.161 1.265 0.296 3.025-0.063 0.443-0.095 0.767-0.156 1.105 0.099 0.167 0.14 0.255 0.349 0.244 0.568-0.020 0.161-0.077 0.317-0.177 0.448-0.339 0.509-1.009 0.995-1.869 1.396-0.76 0.353-1.855 0.536-2.817 0.547-0.489 0.005-0.937-0.032-1.319-0.152l-0.020-0.004c-0.147 1.411-0.484 4.203-0.704 5.473-0.176 1.025-0.484 1.844-1.072 2.453-0.589 0.615-1.417 0.979-2.537 1.219-1.385 0.297-2.391-0.021-3.041-0.568s-0.948-1.276-1.125-1.719c-0.124-0.307-0.187-0.703-0.249-1.235-0.063-0.531-0.104-1.177-0.136-1.911-0.041-1.12-0.057-2.24-0.041-3.365-0.577 0.532-1.296 0.88-2.068 1.016-0.921 0.156-1.739 0-2.228-0.12-0.24-0.063-0.475-0.151-0.693-0.271-0.229-0.12-0.443-0.255-0.588-0.527-0.084-0.156-0.109-0.337-0.073-0.509 0.041-0.177 0.145-0.328 0.287-0.443 0.265-0.215 0.615-0.333 1.14-0.443 0.959-0.199 1.297-0.333 1.5-0.496 0.172-0.135 0.371-0.416 0.713-0.828 0-0.015 0-0.036-0.005-0.052-0.619-0.020-1.224-0.181-1.771-0.479-0.197 0.208-1.224 1.292-2.468 2.792-0.521 0.624-1.099 0.984-1.713 1.011-0.609 0.025-1.163-0.281-1.631-0.735-0.937-0.912-1.688-2.48-2.339-4.251s-1.177-3.744-1.557-5.421c-0.375-1.683-0.599-3.037-0.631-3.688-0.14-2.776 0.511-4.645 1.625-5.828s2.641-1.625 4.131-1.713c2.672-0.151 5.213 0.781 5.724 0.979 0.989-0.672 2.265-1.088 3.859-1.063 0.756 0.011 1.505 0.109 2.24 0.292l0.027-0.016c0.323-0.109 0.651-0.208 0.984-0.28 0.907-0.215 1.833-0.324 2.76-0.339zM22.979 1.745h-0.197c-0.76 0.009-1.527 0.099-2.271 0.26 1.661 0.735 2.916 1.864 3.801 3 0.615 0.781 1.12 1.64 1.505 2.557 0.152 0.355 0.251 0.651 0.303 0.88 0.031 0.115 0.047 0.213 0.057 0.312 0 0.052 0.005 0.105-0.021 0.193 0 0.005-0.005 0.016-0.005 0.021 0.043 1.167-0.249 1.957-0.287 3.072-0.025 0.808 0.183 1.756 0.235 2.792 0.047 0.973-0.072 2.041-0.703 3.093 0.052 0.063 0.099 0.125 0.151 0.193 1.672-2.636 2.88-5.547 3.521-8.032 0.344-1.339 0.525-2.552 0.541-3.509 0.016-0.959-0.161-1.657-0.391-1.948-1.792-2.287-4.213-2.871-6.24-2.885zM16.588 2.088c-1.572 0.005-2.703 0.48-3.561 1.193-0.887 0.74-1.48 1.745-1.865 2.781-0.464 1.224-0.625 2.411-0.688 3.219l0.021-0.011c0.475-0.265 1.099-0.536 1.771-0.687 0.667-0.157 1.391-0.204 2.041 0.052 0.657 0.249 1.193 0.848 1.391 1.749 0.939 4.344-0.291 5.959-0.744 7.177-0.172 0.443-0.323 0.891-0.443 1.349 0.057-0.011 0.115-0.027 0.172-0.032 0.323-0.025 0.572 0.079 0.719 0.141 0.459 0.192 0.771 0.588 0.943 1.041 0.041 0.12 0.072 0.244 0.093 0.38 0.016 0.052 0.027 0.109 0.027 0.167-0.052 1.661-0.048 3.323 0.015 4.984 0.032 0.719 0.079 1.349 0.136 1.849 0.057 0.495 0.135 0.875 0.188 1.005 0.171 0.427 0.421 0.984 0.875 1.364 0.448 0.381 1.093 0.631 2.276 0.381 1.025-0.224 1.656-0.527 2.077-0.964 0.423-0.443 0.672-1.052 0.833-1.984 0.245-1.401 0.729-5.464 0.787-6.224-0.025-0.579 0.057-1.021 0.245-1.36 0.187-0.344 0.479-0.557 0.735-0.672 0.124-0.057 0.244-0.093 0.343-0.125-0.104-0.145-0.213-0.291-0.323-0.432-0.364-0.443-0.667-0.937-0.891-1.463-0.104-0.22-0.219-0.439-0.344-0.647-0.176-0.317-0.4-0.719-0.635-1.172-0.469-0.896-0.979-1.989-1.245-3.052-0.265-1.063-0.301-2.161 0.376-2.932 0.599-0.688 1.656-0.973 3.233-0.812-0.047-0.141-0.072-0.261-0.151-0.443-0.359-0.844-0.828-1.636-1.391-2.355-1.339-1.713-3.511-3.412-6.859-3.469zM7.735 2.156c-0.167 0-0.339 0.005-0.505 0.016-1.349 0.079-2.62 0.468-3.532 1.432-0.911 0.969-1.509 2.547-1.38 5.167 0.027 0.5 0.24 1.885 0.609 3.536 0.371 1.652 0.896 3.595 1.527 5.313 0.629 1.713 1.391 3.208 2.12 3.916 0.364 0.349 0.681 0.495 0.968 0.485 0.287-0.016 0.636-0.183 1.063-0.693 0.776-0.937 1.579-1.844 2.412-2.729-1.199-1.047-1.787-2.629-1.552-4.203 0.135-0.984 0.156-1.907 0.135-2.636-0.015-0.708-0.063-1.176-0.063-1.473 0-0.011 0-0.016 0-0.027v-0.005l-0.005-0.009c0-1.537 0.272-3.057 0.792-4.5 0.375-0.996 0.928-2 1.76-2.819-0.817-0.271-2.271-0.676-3.843-0.755-0.167-0.011-0.339-0.016-0.505-0.016zM24.265 9.197c-0.905 0.016-1.411 0.251-1.681 0.552-0.376 0.433-0.412 1.193-0.177 2.131 0.233 0.937 0.719 1.984 1.172 2.855 0.224 0.437 0.443 0.828 0.619 1.145 0.183 0.323 0.313 0.547 0.391 0.745 0.073 0.177 0.157 0.333 0.24 0.479 0.349-0.74 0.412-1.464 0.375-2.224-0.047-0.937-0.265-1.896-0.229-2.864 0.037-1.136 0.261-1.876 0.277-2.751-0.324-0.041-0.657-0.068-0.985-0.068zM13.287 9.355c-0.276 0-0.552 0.036-0.823 0.099-0.537 0.131-1.052 0.328-1.537 0.599-0.161 0.088-0.317 0.188-0.463 0.303l-0.032 0.025c0.011 0.199 0.047 0.667 0.063 1.365 0.016 0.76 0 1.728-0.145 2.776-0.323 2.281 1.333 4.167 3.276 4.172 0.115-0.469 0.301-0.944 0.489-1.443 0.541-1.459 1.604-2.521 0.708-6.677-0.145-0.677-0.437-0.953-0.839-1.109-0.224-0.079-0.457-0.115-0.697-0.109zM23.844 9.625h0.068c0.083 0.005 0.167 0.011 0.239 0.031 0.068 0.016 0.131 0.037 0.183 0.073 0.052 0.031 0.088 0.083 0.099 0.145v0.011c0 0.063-0.016 0.125-0.047 0.183-0.041 0.072-0.088 0.14-0.145 0.197-0.136 0.151-0.319 0.251-0.516 0.281-0.193 0.027-0.385-0.025-0.547-0.135-0.063-0.048-0.125-0.1-0.172-0.157-0.047-0.047-0.073-0.109-0.084-0.172-0.004-0.061 0.011-0.124 0.052-0.171 0.048-0.048 0.1-0.089 0.157-0.12 0.129-0.073 0.301-0.125 0.5-0.152 0.072-0.009 0.145-0.015 0.213-0.020zM13.416 9.849c0.068 0 0.147 0.005 0.22 0.015 0.208 0.032 0.385 0.084 0.525 0.167 0.068 0.032 0.131 0.084 0.177 0.141 0.052 0.063 0.077 0.14 0.073 0.224-0.016 0.077-0.048 0.151-0.1 0.208-0.057 0.068-0.119 0.125-0.192 0.172-0.172 0.125-0.385 0.177-0.599 0.151-0.215-0.036-0.412-0.14-0.557-0.301-0.063-0.068-0.115-0.141-0.157-0.219-0.047-0.073-0.067-0.156-0.057-0.24 0.021-0.14 0.141-0.219 0.256-0.26 0.131-0.043 0.271-0.057 0.411-0.052zM25.495 19.64h-0.005c-0.192 0.073-0.353 0.1-0.489 0.163-0.14 0.052-0.251 0.156-0.317 0.285-0.089 0.152-0.156 0.423-0.136 0.885 0.057 0.043 0.125 0.073 0.199 0.095 0.224 0.068 0.609 0.115 1.036 0.109 0.849-0.011 1.896-0.208 2.453-0.469 0.453-0.208 0.88-0.489 1.255-0.817-1.859 0.38-2.905 0.281-3.552 0.016-0.156-0.068-0.307-0.157-0.443-0.267zM14.787 19.765h-0.027c-0.072 0.005-0.172 0.032-0.375 0.251-0.464 0.52-0.625 0.848-1.005 1.151-0.385 0.307-0.88 0.469-1.875 0.672-0.312 0.063-0.495 0.135-0.615 0.192 0.036 0.032 0.036 0.043 0.093 0.068 0.147 0.084 0.333 0.152 0.485 0.193 0.427 0.104 1.124 0.229 1.859 0.104 0.729-0.125 1.489-0.475 2.141-1.385 0.115-0.156 0.124-0.391 0.031-0.641-0.093-0.244-0.297-0.463-0.437-0.52-0.089-0.043-0.183-0.068-0.276-0.084z"
+                          />
+                        </svg>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </li>
+              <li
+                class="c13"
+                data-testid="horizontal-movement"
+                style="animation-duration: 10.800854729940259s; animation-delay: 12.683557986679302s;"
+              >
+                <div
+                  class="c14 c15"
+                  data-testid="vertical-movement"
+                  style="--translateY-begin: 18%; --translateY-end: 6%; animation-duration: 8.243233564956254s;"
+                >
+                  <div
+                    class="c16 c17"
+                    data-testid="rotation-movement"
+                    style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 4.591343546967886s;"
+                  >
+                    <a
+                      aria-label="Sentry"
+                      class="c18 c19"
+                      data-testid="plain-anchor"
+                      href="https://sentry.io"
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      <div
+                        class="c20 c21"
+                        data-testid="color-swapping"
+                        style="animation-duration: 10.800854729940259s; animation-delay: 12.683557986679302s;"
+                      >
+                        <svg
+                          fill="currentColor"
+                          viewBox="0 0 14 14"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="m 12.831629,11.78565 c 0.224495,-0.373991 0.224495,-0.747985 0,-1.121976 L 7.9717297,2.2153495 C 7.7482343,1.8418575 7.3742421,1.6913605 7.0002499,1.6913605 c -0.3739922,0 -0.7474844,0.224496 -0.9714798,0.523989 l -1.5704672,2.765943 0.3739922,0.224495 c 1.196475,0.672986 2.1679548,1.644466 2.8409408,2.840941 0.5984875,1.046978 0.9719797,2.1679555 1.0469782,3.3649305 l -1.1214767,0 C 7.524239,10.439178 7.2247452,9.4671985 6.7017561,8.5697175 6.178267,7.5232395 5.3557842,6.7007565 4.309306,6.1022685 l -0.3744922,-0.223495 -1.4949689,2.541947 0.3734922,0.224495 c 0.9719798,0.597488 1.6449658,1.5694685 1.7944626,2.6914445 l -2.4674486,0 c -0.074498,0 -0.1499969,-0.075 -0.1499969,-0.075 0,0 -0.073999,-0.075 0,-0.149497 L 2.6643402,9.9156895 C 2.4398449,9.6921945 2.1403511,9.5416975 1.8413573,9.4676985 L 1.1683714,10.664173 c -0.22449535,0.373992 -0.22449535,0.747985 0,1.121977 0.2239953,0.372993 0.5229891,0.52249 0.9714798,0.52249 l 3.4394283,0 0,-0.447991 c 0,-0.822483 -0.2244953,-1.570468 -0.5979875,-2.3184515 C 4.6817982,8.9447095 4.2333075,8.4957185 3.7103184,8.1222265 l 0.5234891,-0.97248 c 0.673486,0.52299 1.2714735,1.121477 1.7194642,1.869462 0.5234891,0.896481 0.7479844,1.8689615 0.7479844,2.8409395 l 0,0.447991 2.9154393,0 0,-0.447991 c 0,-1.494968 -0.3734922,-2.9909365 -1.1959751,-4.3364085 C 7.8222328,6.3267645 6.850253,5.3552845 5.7282764,4.6072995 L 6.850253,2.6638405 c 0.075498,-0.075 0.1499969,-0.075 0.1499969,-0.075 0.074998,0 0.074998,0 0.1494969,0.075 l 4.8603992,8.4478245 c 0.074,0.074 0,0.149497 0,0.149497 0,0 -0.075,0.075 -0.149997,0.075 l -1.121477,0 0,0.897482 1.121477,0 c 0.44799,0.0745 0.747484,-0.075 0.97148,-0.447991 z"
+                          />
+                        </svg>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </li>
+              <li
+                class="c13"
+                data-testid="horizontal-movement"
                 style="animation-duration: 20.208687258872008s; animation-delay: 6.472553385349316s;"
               >
                 <div
@@ -2441,10 +2573,10 @@ exports[`[lng] route - Page should render successfully 1`] = `
                     style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 6.637782132961124s;"
                   >
                     <a
-                      aria-label="Material UI"
+                      aria-label="Storybook"
                       class="c18 c19"
                       data-testid="plain-anchor"
-                      href="https://material-ui.com"
+                      href="https://storybook.js.org"
                       rel="noreferrer"
                       target="_blank"
                     >
@@ -2455,11 +2587,11 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       >
                         <svg
                           fill="currentColor"
-                          viewBox="0 0 24 24"
+                          viewBox="0 0 32 32"
                           xmlns="http://www.w3.org/2000/svg"
                         >
                           <path
-                            d="M0 2.475v10.39l3 1.733V7.67l6 3.465 6-3.465v3.465l-6 3.463v3.464l6 3.463 9-5.195V9.402l-3 1.733v3.463l-6 3.464-3-1.732 6-3.465V2.475L9 7.67 0 2.475zm24 0-3 1.73V7.67l3-1.732V2.474z"
+                            d="M21.786 0.318l-0.161 3.615c-0.005 0.203 0.229 0.328 0.391 0.203l1.411-1.068 1.198 0.932c0.156 0.104 0.365 0 0.375-0.188l-0.135-3.677 1.776-0.135c0.922-0.063 1.708 0.672 1.708 1.599v28.802c0 0.917-0.766 1.646-1.682 1.599l-21.469-0.958c-0.833-0.036-1.505-0.708-1.531-1.547l-1-26.401c-0.052-0.885 0.62-1.646 1.505-1.693l17.599-1.109zM17.693 12.401c0 0.625 4.214 0.318 4.786-0.109 0-4.266-2.292-6.521-6.479-6.521-4.198 0-6.531 2.297-6.531 5.724 0 5.932 8 6.036 8 9.276 0 0.938-0.427 1.469-1.401 1.469-1.281 0-1.802-0.651-1.734-2.88 0-0.479-4.865-0.641-5.026 0-0.359 5.375 2.974 6.932 6.797 6.932 3.724 0 6.63-1.984 6.63-5.573 0-6.359-8.135-6.188-8.135-9.333 0-1.292 0.964-1.464 1.505-1.464 0.604 0 1.667 0.094 1.589 2.49z"
                           />
                         </svg>
                       </div>
@@ -2483,10 +2615,10 @@ exports[`[lng] route - Page should render successfully 1`] = `
                     style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 5.7461546550564595s;"
                   >
                     <a
-                      aria-label="PostgreSQL"
+                      aria-label="Webpack"
                       class="c18 c19"
                       data-testid="plain-anchor"
-                      href="https://www.postgresql.org"
+                      href="https://webpack.js.org"
                       rel="noreferrer"
                       target="_blank"
                     >
@@ -2497,11 +2629,11 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       >
                         <svg
                           fill="currentColor"
-                          viewBox="0 0 32 32"
+                          viewBox="-1 0 24 24"
                           xmlns="http://www.w3.org/2000/svg"
                         >
                           <path
-                            d="M22.839 0c-1.245 0.011-2.479 0.188-3.677 0.536l-0.083 0.027c-0.751-0.131-1.516-0.203-2.276-0.219-1.573-0.027-2.923 0.353-4.011 0.989-1.073-0.369-3.297-1.016-5.641-0.885-1.629 0.088-3.411 0.583-4.735 1.979-1.312 1.391-2.009 3.547-1.864 6.485 0.041 0.807 0.271 2.124 0.656 3.837 0.38 1.709 0.917 3.709 1.589 5.537 0.672 1.823 1.405 3.463 2.552 4.577 0.572 0.557 1.364 1.032 2.296 0.991 0.652-0.027 1.24-0.313 1.751-0.735 0.249 0.328 0.516 0.468 0.755 0.599 0.308 0.167 0.599 0.281 0.907 0.355 0.552 0.14 1.495 0.323 2.599 0.135 0.375-0.063 0.771-0.187 1.167-0.359 0.016 0.437 0.032 0.869 0.047 1.307 0.057 1.38 0.095 2.656 0.505 3.776 0.068 0.183 0.251 1.12 0.969 1.953 0.724 0.833 2.129 1.349 3.739 1.005 1.131-0.24 2.573-0.677 3.532-2.041 0.948-1.344 1.375-3.276 1.459-6.412 0.020-0.172 0.047-0.312 0.072-0.448l0.224 0.021h0.027c1.208 0.052 2.521-0.12 3.62-0.631 0.968-0.448 1.703-0.901 2.239-1.708 0.131-0.199 0.281-0.443 0.319-0.86 0.041-0.411-0.199-1.063-0.595-1.364-0.791-0.604-1.291-0.375-1.828-0.26-0.525 0.115-1.063 0.176-1.599 0.192 1.541-2.593 2.645-5.353 3.276-7.792 0.375-1.443 0.584-2.771 0.599-3.932 0.021-1.161-0.077-2.187-0.771-3.077-2.177-2.776-5.235-3.548-7.599-3.573-0.073 0-0.145 0-0.219 0zM22.776 0.855c2.235-0.021 5.093 0.604 7.145 3.228 0.464 0.589 0.6 1.448 0.584 2.511s-0.213 2.328-0.573 3.719c-0.692 2.699-2.011 5.833-3.859 8.652 0.063 0.047 0.135 0.088 0.208 0.115 0.385 0.161 1.265 0.296 3.025-0.063 0.443-0.095 0.767-0.156 1.105 0.099 0.167 0.14 0.255 0.349 0.244 0.568-0.020 0.161-0.077 0.317-0.177 0.448-0.339 0.509-1.009 0.995-1.869 1.396-0.76 0.353-1.855 0.536-2.817 0.547-0.489 0.005-0.937-0.032-1.319-0.152l-0.020-0.004c-0.147 1.411-0.484 4.203-0.704 5.473-0.176 1.025-0.484 1.844-1.072 2.453-0.589 0.615-1.417 0.979-2.537 1.219-1.385 0.297-2.391-0.021-3.041-0.568s-0.948-1.276-1.125-1.719c-0.124-0.307-0.187-0.703-0.249-1.235-0.063-0.531-0.104-1.177-0.136-1.911-0.041-1.12-0.057-2.24-0.041-3.365-0.577 0.532-1.296 0.88-2.068 1.016-0.921 0.156-1.739 0-2.228-0.12-0.24-0.063-0.475-0.151-0.693-0.271-0.229-0.12-0.443-0.255-0.588-0.527-0.084-0.156-0.109-0.337-0.073-0.509 0.041-0.177 0.145-0.328 0.287-0.443 0.265-0.215 0.615-0.333 1.14-0.443 0.959-0.199 1.297-0.333 1.5-0.496 0.172-0.135 0.371-0.416 0.713-0.828 0-0.015 0-0.036-0.005-0.052-0.619-0.020-1.224-0.181-1.771-0.479-0.197 0.208-1.224 1.292-2.468 2.792-0.521 0.624-1.099 0.984-1.713 1.011-0.609 0.025-1.163-0.281-1.631-0.735-0.937-0.912-1.688-2.48-2.339-4.251s-1.177-3.744-1.557-5.421c-0.375-1.683-0.599-3.037-0.631-3.688-0.14-2.776 0.511-4.645 1.625-5.828s2.641-1.625 4.131-1.713c2.672-0.151 5.213 0.781 5.724 0.979 0.989-0.672 2.265-1.088 3.859-1.063 0.756 0.011 1.505 0.109 2.24 0.292l0.027-0.016c0.323-0.109 0.651-0.208 0.984-0.28 0.907-0.215 1.833-0.324 2.76-0.339zM22.979 1.745h-0.197c-0.76 0.009-1.527 0.099-2.271 0.26 1.661 0.735 2.916 1.864 3.801 3 0.615 0.781 1.12 1.64 1.505 2.557 0.152 0.355 0.251 0.651 0.303 0.88 0.031 0.115 0.047 0.213 0.057 0.312 0 0.052 0.005 0.105-0.021 0.193 0 0.005-0.005 0.016-0.005 0.021 0.043 1.167-0.249 1.957-0.287 3.072-0.025 0.808 0.183 1.756 0.235 2.792 0.047 0.973-0.072 2.041-0.703 3.093 0.052 0.063 0.099 0.125 0.151 0.193 1.672-2.636 2.88-5.547 3.521-8.032 0.344-1.339 0.525-2.552 0.541-3.509 0.016-0.959-0.161-1.657-0.391-1.948-1.792-2.287-4.213-2.871-6.24-2.885zM16.588 2.088c-1.572 0.005-2.703 0.48-3.561 1.193-0.887 0.74-1.48 1.745-1.865 2.781-0.464 1.224-0.625 2.411-0.688 3.219l0.021-0.011c0.475-0.265 1.099-0.536 1.771-0.687 0.667-0.157 1.391-0.204 2.041 0.052 0.657 0.249 1.193 0.848 1.391 1.749 0.939 4.344-0.291 5.959-0.744 7.177-0.172 0.443-0.323 0.891-0.443 1.349 0.057-0.011 0.115-0.027 0.172-0.032 0.323-0.025 0.572 0.079 0.719 0.141 0.459 0.192 0.771 0.588 0.943 1.041 0.041 0.12 0.072 0.244 0.093 0.38 0.016 0.052 0.027 0.109 0.027 0.167-0.052 1.661-0.048 3.323 0.015 4.984 0.032 0.719 0.079 1.349 0.136 1.849 0.057 0.495 0.135 0.875 0.188 1.005 0.171 0.427 0.421 0.984 0.875 1.364 0.448 0.381 1.093 0.631 2.276 0.381 1.025-0.224 1.656-0.527 2.077-0.964 0.423-0.443 0.672-1.052 0.833-1.984 0.245-1.401 0.729-5.464 0.787-6.224-0.025-0.579 0.057-1.021 0.245-1.36 0.187-0.344 0.479-0.557 0.735-0.672 0.124-0.057 0.244-0.093 0.343-0.125-0.104-0.145-0.213-0.291-0.323-0.432-0.364-0.443-0.667-0.937-0.891-1.463-0.104-0.22-0.219-0.439-0.344-0.647-0.176-0.317-0.4-0.719-0.635-1.172-0.469-0.896-0.979-1.989-1.245-3.052-0.265-1.063-0.301-2.161 0.376-2.932 0.599-0.688 1.656-0.973 3.233-0.812-0.047-0.141-0.072-0.261-0.151-0.443-0.359-0.844-0.828-1.636-1.391-2.355-1.339-1.713-3.511-3.412-6.859-3.469zM7.735 2.156c-0.167 0-0.339 0.005-0.505 0.016-1.349 0.079-2.62 0.468-3.532 1.432-0.911 0.969-1.509 2.547-1.38 5.167 0.027 0.5 0.24 1.885 0.609 3.536 0.371 1.652 0.896 3.595 1.527 5.313 0.629 1.713 1.391 3.208 2.12 3.916 0.364 0.349 0.681 0.495 0.968 0.485 0.287-0.016 0.636-0.183 1.063-0.693 0.776-0.937 1.579-1.844 2.412-2.729-1.199-1.047-1.787-2.629-1.552-4.203 0.135-0.984 0.156-1.907 0.135-2.636-0.015-0.708-0.063-1.176-0.063-1.473 0-0.011 0-0.016 0-0.027v-0.005l-0.005-0.009c0-1.537 0.272-3.057 0.792-4.5 0.375-0.996 0.928-2 1.76-2.819-0.817-0.271-2.271-0.676-3.843-0.755-0.167-0.011-0.339-0.016-0.505-0.016zM24.265 9.197c-0.905 0.016-1.411 0.251-1.681 0.552-0.376 0.433-0.412 1.193-0.177 2.131 0.233 0.937 0.719 1.984 1.172 2.855 0.224 0.437 0.443 0.828 0.619 1.145 0.183 0.323 0.313 0.547 0.391 0.745 0.073 0.177 0.157 0.333 0.24 0.479 0.349-0.74 0.412-1.464 0.375-2.224-0.047-0.937-0.265-1.896-0.229-2.864 0.037-1.136 0.261-1.876 0.277-2.751-0.324-0.041-0.657-0.068-0.985-0.068zM13.287 9.355c-0.276 0-0.552 0.036-0.823 0.099-0.537 0.131-1.052 0.328-1.537 0.599-0.161 0.088-0.317 0.188-0.463 0.303l-0.032 0.025c0.011 0.199 0.047 0.667 0.063 1.365 0.016 0.76 0 1.728-0.145 2.776-0.323 2.281 1.333 4.167 3.276 4.172 0.115-0.469 0.301-0.944 0.489-1.443 0.541-1.459 1.604-2.521 0.708-6.677-0.145-0.677-0.437-0.953-0.839-1.109-0.224-0.079-0.457-0.115-0.697-0.109zM23.844 9.625h0.068c0.083 0.005 0.167 0.011 0.239 0.031 0.068 0.016 0.131 0.037 0.183 0.073 0.052 0.031 0.088 0.083 0.099 0.145v0.011c0 0.063-0.016 0.125-0.047 0.183-0.041 0.072-0.088 0.14-0.145 0.197-0.136 0.151-0.319 0.251-0.516 0.281-0.193 0.027-0.385-0.025-0.547-0.135-0.063-0.048-0.125-0.1-0.172-0.157-0.047-0.047-0.073-0.109-0.084-0.172-0.004-0.061 0.011-0.124 0.052-0.171 0.048-0.048 0.1-0.089 0.157-0.12 0.129-0.073 0.301-0.125 0.5-0.152 0.072-0.009 0.145-0.015 0.213-0.020zM13.416 9.849c0.068 0 0.147 0.005 0.22 0.015 0.208 0.032 0.385 0.084 0.525 0.167 0.068 0.032 0.131 0.084 0.177 0.141 0.052 0.063 0.077 0.14 0.073 0.224-0.016 0.077-0.048 0.151-0.1 0.208-0.057 0.068-0.119 0.125-0.192 0.172-0.172 0.125-0.385 0.177-0.599 0.151-0.215-0.036-0.412-0.14-0.557-0.301-0.063-0.068-0.115-0.141-0.157-0.219-0.047-0.073-0.067-0.156-0.057-0.24 0.021-0.14 0.141-0.219 0.256-0.26 0.131-0.043 0.271-0.057 0.411-0.052zM25.495 19.64h-0.005c-0.192 0.073-0.353 0.1-0.489 0.163-0.14 0.052-0.251 0.156-0.317 0.285-0.089 0.152-0.156 0.423-0.136 0.885 0.057 0.043 0.125 0.073 0.199 0.095 0.224 0.068 0.609 0.115 1.036 0.109 0.849-0.011 1.896-0.208 2.453-0.469 0.453-0.208 0.88-0.489 1.255-0.817-1.859 0.38-2.905 0.281-3.552 0.016-0.156-0.068-0.307-0.157-0.443-0.267zM14.787 19.765h-0.027c-0.072 0.005-0.172 0.032-0.375 0.251-0.464 0.52-0.625 0.848-1.005 1.151-0.385 0.307-0.88 0.469-1.875 0.672-0.312 0.063-0.495 0.135-0.615 0.192 0.036 0.032 0.036 0.043 0.093 0.068 0.147 0.084 0.333 0.152 0.485 0.193 0.427 0.104 1.124 0.229 1.859 0.104 0.729-0.125 1.489-0.475 2.141-1.385 0.115-0.156 0.124-0.391 0.031-0.641-0.093-0.244-0.297-0.463-0.437-0.52-0.089-0.043-0.183-0.068-0.276-0.084z"
+                            d="m20.952 18.5-9.714 5.5v-4.286l6.048-3.334zm.666-.595v-11.52l-3.548 2.071v7.381l3.548 2.048zm-20.952.595 9.714 5.5v-4.286l-6.048-3.334zm-.666-.595v-11.52l3.548 2.071v7.381zm.405-12.262 9.976-5.643v4.143l-6.429 3.548zm20.809 0-9.976-5.643v4.143l6.428 3.548zm-10.833 13.095-5.972-3.287v-6.524l5.976 3.452zm.857 0 5.976-3.286v-6.524l-5.976 3.452zm-6.429-10.548 6-3.31 6 3.31-6 3.453z"
                           />
                         </svg>
                       </div>
@@ -2525,10 +2657,10 @@ exports[`[lng] route - Page should render successfully 1`] = `
                     style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 6.747974639246889s;"
                   >
                     <a
-                      aria-label="Sentry"
+                      aria-label="GitLab"
                       class="c18 c19"
                       data-testid="plain-anchor"
-                      href="https://sentry.io"
+                      href="https://gitlab.com"
                       rel="noreferrer"
                       target="_blank"
                     >
@@ -2538,12 +2670,16 @@ exports[`[lng] route - Page should render successfully 1`] = `
                         style="animation-duration: 16.241804687857254s; animation-delay: 8.481301602032914s;"
                       >
                         <svg
-                          fill="currentColor"
-                          viewBox="0 0 14 14"
+                          fill="none"
+                          viewBox="0 0 24 24"
                           xmlns="http://www.w3.org/2000/svg"
                         >
                           <path
-                            d="m 12.831629,11.78565 c 0.224495,-0.373991 0.224495,-0.747985 0,-1.121976 L 7.9717297,2.2153495 C 7.7482343,1.8418575 7.3742421,1.6913605 7.0002499,1.6913605 c -0.3739922,0 -0.7474844,0.224496 -0.9714798,0.523989 l -1.5704672,2.765943 0.3739922,0.224495 c 1.196475,0.672986 2.1679548,1.644466 2.8409408,2.840941 0.5984875,1.046978 0.9719797,2.1679555 1.0469782,3.3649305 l -1.1214767,0 C 7.524239,10.439178 7.2247452,9.4671985 6.7017561,8.5697175 6.178267,7.5232395 5.3557842,6.7007565 4.309306,6.1022685 l -0.3744922,-0.223495 -1.4949689,2.541947 0.3734922,0.224495 c 0.9719798,0.597488 1.6449658,1.5694685 1.7944626,2.6914445 l -2.4674486,0 c -0.074498,0 -0.1499969,-0.075 -0.1499969,-0.075 0,0 -0.073999,-0.075 0,-0.149497 L 2.6643402,9.9156895 C 2.4398449,9.6921945 2.1403511,9.5416975 1.8413573,9.4676985 L 1.1683714,10.664173 c -0.22449535,0.373992 -0.22449535,0.747985 0,1.121977 0.2239953,0.372993 0.5229891,0.52249 0.9714798,0.52249 l 3.4394283,0 0,-0.447991 c 0,-0.822483 -0.2244953,-1.570468 -0.5979875,-2.3184515 C 4.6817982,8.9447095 4.2333075,8.4957185 3.7103184,8.1222265 l 0.5234891,-0.97248 c 0.673486,0.52299 1.2714735,1.121477 1.7194642,1.869462 0.5234891,0.896481 0.7479844,1.8689615 0.7479844,2.8409395 l 0,0.447991 2.9154393,0 0,-0.447991 c 0,-1.494968 -0.3734922,-2.9909365 -1.1959751,-4.3364085 C 7.8222328,6.3267645 6.850253,5.3552845 5.7282764,4.6072995 L 6.850253,2.6638405 c 0.075498,-0.075 0.1499969,-0.075 0.1499969,-0.075 0.074998,0 0.074998,0 0.1494969,0.075 l 4.8603992,8.4478245 c 0.074,0.074 0,0.149497 0,0.149497 0,0 -0.075,0.075 -0.149997,0.075 l -1.121477,0 0,0.897482 1.121477,0 c 0.44799,0.0745 0.747484,-0.075 0.97148,-0.447991 z"
+                            d="M20.6866 13.8822L13.1333 19.1915C12.4433 19.6766 11.5231 19.6766 10.833 19.1915L3.27976 13.8822C3.16308 13.7992 3.07653 13.6826 3.0325 13.5492C2.98846 13.4157 2.9892 13.2722 3.03459 13.1392L4.03161 10.1514L6.02563 4.2154C6.04497 4.16703 6.07576 4.12372 6.11552 4.08893C6.18028 4.03172 6.26481 4 6.35252 4C6.44022 4 6.52475 4.03172 6.58951 4.08893C6.6315 4.12819 6.66244 4.17716 6.67941 4.2312L8.21482 8.78981C8.48886 9.60346 9.25164 10.1514 10.1102 10.1514H13.8549C14.7141 10.1514 15.4772 9.60271 15.7508 8.78828L17.2869 4.2154C17.3063 4.16703 17.3371 4.12372 17.3768 4.08893C17.4416 4.03172 17.5261 4 17.6138 4C17.7015 4 17.7861 4.03172 17.8508 4.08893C17.8928 4.12819 17.9238 4.17716 17.9407 4.2312L19.9347 10.1672L20.9726 13.1392C21.0139 13.2763 21.0084 13.4227 20.9569 13.5565C20.9053 13.6904 20.8105 13.8046 20.6866 13.8822Z"
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
                           />
                         </svg>
                       </div>
@@ -2567,136 +2703,6 @@ exports[`[lng] route - Page should render successfully 1`] = `
                     style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 4.008450315312047s;"
                   >
                     <a
-                      aria-label="Storybook"
-                      class="c18 c19"
-                      data-testid="plain-anchor"
-                      href="https://storybook.js.org"
-                      rel="noreferrer"
-                      target="_blank"
-                    >
-                      <div
-                        class="c20 c21"
-                        data-testid="color-swapping"
-                        style="animation-duration: 10.064110637699992s; animation-delay: 13.67455774271733s;"
-                      >
-                        <svg
-                          fill="currentColor"
-                          viewBox="0 0 32 32"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M21.786 0.318l-0.161 3.615c-0.005 0.203 0.229 0.328 0.391 0.203l1.411-1.068 1.198 0.932c0.156 0.104 0.365 0 0.375-0.188l-0.135-3.677 1.776-0.135c0.922-0.063 1.708 0.672 1.708 1.599v28.802c0 0.917-0.766 1.646-1.682 1.599l-21.469-0.958c-0.833-0.036-1.505-0.708-1.531-1.547l-1-26.401c-0.052-0.885 0.62-1.646 1.505-1.693l17.599-1.109zM17.693 12.401c0 0.625 4.214 0.318 4.786-0.109 0-4.266-2.292-6.521-6.479-6.521-4.198 0-6.531 2.297-6.531 5.724 0 5.932 8 6.036 8 9.276 0 0.938-0.427 1.469-1.401 1.469-1.281 0-1.802-0.651-1.734-2.88 0-0.479-4.865-0.641-5.026 0-0.359 5.375 2.974 6.932 6.797 6.932 3.724 0 6.63-1.984 6.63-5.573 0-6.359-8.135-6.188-8.135-9.333 0-1.292 0.964-1.464 1.505-1.464 0.604 0 1.667 0.094 1.589 2.49z"
-                          />
-                        </svg>
-                      </div>
-                    </a>
-                  </div>
-                </div>
-              </li>
-              <li
-                class="c13"
-                data-testid="horizontal-movement"
-                style="animation-duration: 20.427088880766636s; animation-delay: 4.1773329734365845s;"
-              >
-                <div
-                  class="c14 c15"
-                  data-testid="vertical-movement"
-                  style="--translateY-begin: -31%; --translateY-end: -7%; animation-duration: 8.239499050700477s;"
-                >
-                  <div
-                    class="c16 c17"
-                    data-testid="rotation-movement"
-                    style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 4.104921797711315s;"
-                  >
-                    <a
-                      aria-label="Webpack"
-                      class="c18 c19"
-                      data-testid="plain-anchor"
-                      href="https://webpack.js.org"
-                      rel="noreferrer"
-                      target="_blank"
-                    >
-                      <div
-                        class="c20 c21"
-                        data-testid="color-swapping"
-                        style="animation-duration: 20.427088880766636s; animation-delay: 4.1773329734365845s;"
-                      >
-                        <svg
-                          fill="currentColor"
-                          viewBox="-1 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="m20.952 18.5-9.714 5.5v-4.286l6.048-3.334zm.666-.595v-11.52l-3.548 2.071v7.381l3.548 2.048zm-20.952.595 9.714 5.5v-4.286l-6.048-3.334zm-.666-.595v-11.52l3.548 2.071v7.381zm.405-12.262 9.976-5.643v4.143l-6.429 3.548zm20.809 0-9.976-5.643v4.143l6.428 3.548zm-10.833 13.095-5.972-3.287v-6.524l5.976 3.452zm.857 0 5.976-3.286v-6.524l-5.976 3.452zm-6.429-10.548 6-3.31 6 3.31-6 3.453z"
-                          />
-                        </svg>
-                      </div>
-                    </a>
-                  </div>
-                </div>
-              </li>
-              <li
-                class="c13"
-                data-testid="horizontal-movement"
-                style="animation-duration: 14.582221827681678s; animation-delay: 14.286808496175901s;"
-              >
-                <div
-                  class="c14 c15"
-                  data-testid="vertical-movement"
-                  style="--translateY-begin: -1%; --translateY-end: 6%; animation-duration: 4.200897314260742s;"
-                >
-                  <div
-                    class="c16 c17"
-                    data-testid="rotation-movement"
-                    style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 5.693787975500911s;"
-                  >
-                    <a
-                      aria-label="GitLab"
-                      class="c18 c19"
-                      data-testid="plain-anchor"
-                      href="https://gitlab.com"
-                      rel="noreferrer"
-                      target="_blank"
-                    >
-                      <div
-                        class="c20 c21"
-                        data-testid="color-swapping"
-                        style="animation-duration: 14.582221827681678s; animation-delay: 14.286808496175901s;"
-                      >
-                        <svg
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M20.6866 13.8822L13.1333 19.1915C12.4433 19.6766 11.5231 19.6766 10.833 19.1915L3.27976 13.8822C3.16308 13.7992 3.07653 13.6826 3.0325 13.5492C2.98846 13.4157 2.9892 13.2722 3.03459 13.1392L4.03161 10.1514L6.02563 4.2154C6.04497 4.16703 6.07576 4.12372 6.11552 4.08893C6.18028 4.03172 6.26481 4 6.35252 4C6.44022 4 6.52475 4.03172 6.58951 4.08893C6.6315 4.12819 6.66244 4.17716 6.67941 4.2312L8.21482 8.78981C8.48886 9.60346 9.25164 10.1514 10.1102 10.1514H13.8549C14.7141 10.1514 15.4772 9.60271 15.7508 8.78828L17.2869 4.2154C17.3063 4.16703 17.3371 4.12372 17.3768 4.08893C17.4416 4.03172 17.5261 4 17.6138 4C17.7015 4 17.7861 4.03172 17.8508 4.08893C17.8928 4.12819 17.9238 4.17716 17.9407 4.2312L19.9347 10.1672L20.9726 13.1392C21.0139 13.2763 21.0084 13.4227 20.9569 13.5565C20.9053 13.6904 20.8105 13.8046 20.6866 13.8822Z"
-                            stroke="currentColor"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                          />
-                        </svg>
-                      </div>
-                    </a>
-                  </div>
-                </div>
-              </li>
-              <li
-                class="c13"
-                data-testid="horizontal-movement"
-                style="animation-duration: 9.337499337730122s; animation-delay: 13.361846023598396s;"
-              >
-                <div
-                  class="c14 c15"
-                  data-testid="vertical-movement"
-                  style="--translateY-begin: -14%; --translateY-end: 6%; animation-duration: 6.212143362387304s;"
-                >
-                  <div
-                    class="c16 c17"
-                    data-testid="rotation-movement"
-                    style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 6.276552069883715s;"
-                  >
-                    <a
                       aria-label="JSON"
                       class="c18 c19"
                       data-testid="plain-anchor"
@@ -2707,7 +2713,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 9.337499337730122s; animation-delay: 13.361846023598396s;"
+                        style="animation-duration: 10.064110637699992s; animation-delay: 13.67455774271733s;"
                       >
                         <svg
                           viewBox="0 0 256 256"
@@ -2770,17 +2776,17 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 16.597797036978s; animation-delay: 9.001561049193226s;"
+                style="animation-duration: 20.427088880766636s; animation-delay: 4.1773329734365845s;"
               >
                 <div
                   class="c14 c15"
                   data-testid="vertical-movement"
-                  style="--translateY-begin: -14%; --translateY-end: 22%; animation-duration: 2.500759943231512s;"
+                  style="--translateY-begin: -31%; --translateY-end: -7%; animation-duration: 8.239499050700477s;"
                 >
                   <div
                     class="c16 c17"
                     data-testid="rotation-movement"
-                    style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 6.843162918570736s;"
+                    style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 4.104921797711315s;"
                   >
                     <a
                       aria-label="Vercel"
@@ -2793,7 +2799,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 16.597797036978s; animation-delay: 9.001561049193226s;"
+                        style="animation-duration: 20.427088880766636s; animation-delay: 4.1773329734365845s;"
                       >
                         <svg
                           fill="none"
@@ -2815,17 +2821,17 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 12.69079648098436s; animation-delay: 18.809579904227675s;"
+                style="animation-duration: 14.582221827681678s; animation-delay: 14.286808496175901s;"
               >
                 <div
                   class="c14 c15"
                   data-testid="vertical-movement"
-                  style="--translateY-begin: -2%; --translateY-end: 17%; animation-duration: 8.482909605942373s;"
+                  style="--translateY-begin: -1%; --translateY-end: 6%; animation-duration: 4.200897314260742s;"
                 >
                   <div
                     class="c16 c17"
                     data-testid="rotation-movement"
-                    style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 4.850663708859508s;"
+                    style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 5.693787975500911s;"
                   >
                     <a
                       aria-label="Auth0"
@@ -2835,7 +2841,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 12.69079648098436s; animation-delay: 18.809579904227675s;"
+                        style="animation-duration: 14.582221827681678s; animation-delay: 14.286808496175901s;"
                       >
                         <svg
                           viewBox="0 0 256 285"
@@ -2854,17 +2860,17 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 16.173426593805832s; animation-delay: 1.1732127373148575s;"
+                style="animation-duration: 9.337499337730122s; animation-delay: 13.361846023598396s;"
               >
                 <div
                   class="c14 c15"
                   data-testid="vertical-movement"
-                  style="--translateY-begin: 14%; --translateY-end: -17%; animation-duration: 5.662047256918759s;"
+                  style="--translateY-begin: -14%; --translateY-end: 6%; animation-duration: 6.212143362387304s;"
                 >
                   <div
                     class="c16 c17"
                     data-testid="rotation-movement"
-                    style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 6.2764410651865115s;"
+                    style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 6.276552069883715s;"
                   >
                     <a
                       aria-label="Spider Man"
@@ -2878,7 +2884,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 16.173426593805832s; animation-delay: 1.1732127373148575s;"
+                        style="animation-duration: 9.337499337730122s; animation-delay: 13.361846023598396s;"
                       >
                         <svg
                           viewBox="0 0 512 512"
@@ -2897,17 +2903,17 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 18.539516564946183s; animation-delay: 1.7741420323040682s;"
+                style="animation-duration: 16.597797036978s; animation-delay: 9.001561049193226s;"
               >
                 <div
                   class="c14 c15"
                   data-testid="vertical-movement"
-                  style="--translateY-begin: 2%; --translateY-end: 25%; animation-duration: 7.705748199062087s;"
+                  style="--translateY-begin: -14%; --translateY-end: 22%; animation-duration: 2.500759943231512s;"
                 >
                   <div
                     class="c16 c17"
                     data-testid="rotation-movement"
-                    style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 5.14657919323268s;"
+                    style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 6.843162918570736s;"
                   >
                     <a
                       aria-label="Half-Life"
@@ -2921,7 +2927,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 18.539516564946183s; animation-delay: 1.7741420323040682s;"
+                        style="animation-duration: 16.597797036978s; animation-delay: 9.001561049193226s;"
                       >
                         <svg
                           viewBox="0 0 364.707 364.707"
@@ -2947,17 +2953,17 @@ exports[`[lng] route - Page should render successfully 1`] = `
               <li
                 class="c13"
                 data-testid="horizontal-movement"
-                style="animation-duration: 20.23938186328798s; animation-delay: 11.127071136634846s;"
+                style="animation-duration: 12.69079648098436s; animation-delay: 18.809579904227675s;"
               >
                 <div
                   class="c14 c15"
                   data-testid="vertical-movement"
-                  style="--translateY-begin: -14%; --translateY-end: -6%; animation-duration: 9.74673913728655s;"
+                  style="--translateY-begin: -2%; --translateY-end: 17%; animation-duration: 8.482909605942373s;"
                 >
                   <div
                     class="c16 c17"
                     data-testid="rotation-movement"
-                    style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 4.55985921756319s;"
+                    style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 4.850663708859508s;"
                   >
                     <a
                       aria-label="Battlefield 2042"
@@ -2971,7 +2977,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                       <div
                         class="c20 c21"
                         data-testid="color-swapping"
-                        style="animation-duration: 20.23938186328798s; animation-delay: 11.127071136634846s;"
+                        style="animation-duration: 12.69079648098436s; animation-delay: 18.809579904227675s;"
                       >
                         <svg
                           viewBox="0 0 400 400"

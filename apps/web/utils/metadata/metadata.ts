@@ -1,13 +1,17 @@
 import { Metadata, Viewport } from 'next'
 
 export const sharedRootMetadata: Metadata = {
-  title: 'Saúl de León Guerrero',
+  title: {
+    default: 'Saúl de León Guerrero — Front-End Software Engineer',
+    template: '%s | Saúl de León Guerrero',
+  },
   metadataBase: new URL('https://www.sawl.dev'),
   alternates: {
     languages: {
       'en-US': '/en',
-      'en-UK': '/en',
+      'en-GB': '/en',
       'es-ES': '/es',
+      'x-default': '/en',
     },
   },
   openGraph: {
@@ -23,7 +27,7 @@ export const sharedRootMetadata: Metadata = {
     ],
   },
   twitter: {
-    card: 'summary',
+    card: 'summary_large_image',
     images: ['/assets/portrait.jpg'],
   },
   robots: {

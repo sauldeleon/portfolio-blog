@@ -761,9 +761,7 @@ exports[`PortfolioPage should render successfully 1`] = `
                 <li
                   class="c24"
                 >
-                  Usage of 
-                  Storybook
-                   for documenting components, design systems and applications
+                  Usage of &lt;/bold&gt;Storybook&lt;/bold&gt; for documenting components, design systems and applications
                 </li>
                 <li
                   class="c24"

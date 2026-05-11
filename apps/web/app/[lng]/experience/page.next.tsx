@@ -1,6 +1,12 @@
 import { ExperiencePage } from '@web/components/ExperiencePage/ExperiencePage'
 import { JsonLd } from '@web/components/JsonLd'
 import { getServerTranslation } from '@web/i18n/server'
+import {
+  buildAlternates,
+  inLanguage,
+  ogLocale,
+  ogLocaleAlternate,
+} from '@web/utils/metadata/inLanguage'
 
 interface RouteProps {
   params: Promise<{ lng: string }>
@@ -14,13 +20,45 @@ export async function generateMetadata({ params }: GenerateMetadataProps) {
     ns: 'experiencePage',
     language: lng,
   })
-  return { description: t('metadata.description') }
+  return {
+    title: t('title'),
+    description: t('metadata.description'),
+    alternates: buildAlternates(lng, 'experience/'),
+    openGraph: {
+      url: `https://www.sawl.dev/${lng}/experience/`,
+      locale: ogLocale(lng),
+      alternateLocale: ogLocaleAlternate(lng),
+    },
+  }
 }
 
-const inLanguage = (lng: string) => (lng === 'es' ? 'es-ES' : 'en-US')
+export const revalidate = 86400
 
 export default async function Page({ params }: RouteProps) {
   const { lng } = await params
+  const { t } = await getServerTranslation({
+    ns: 'experiencePage',
+    language: lng,
+  })
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: `https://www.sawl.dev/${lng}/`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: t('title'),
+        item: `https://www.sawl.dev/${lng}/experience/`,
+      },
+    ],
+  }
 
   const workHistorySchema = {
     '@context': 'https://schema.org',
@@ -71,10 +109,24 @@ export default async function Page({ params }: RouteProps) {
     ],
   }
 
+  const webPageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: `${t('title')} — Saúl de León Guerrero`,
+    url: `https://www.sawl.dev/${lng}/experience/`,
+    description: t('metadata.description'),
+    inLanguage: inLanguage(lng),
+    isPartOf: { '@type': 'WebSite', url: 'https://www.sawl.dev' },
+  }
+
+  const experiencePage = await ExperiencePage({ lng })
+
   return (
     <>
+      <JsonLd data={breadcrumbSchema} />
       <JsonLd data={workHistorySchema} />
-      <ExperiencePage />
+      <JsonLd data={webPageSchema} />
+      {experiencePage}
     </>
   )
 }

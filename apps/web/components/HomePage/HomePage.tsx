@@ -1,24 +1,23 @@
 'use client'
 
-import { useId } from 'react'
-
 import { AnimatedItem } from '@web/components/AnimatedItem/AnimatedItem'
 import { MainPortal } from '@web/components/MainPortal/MainPortal'
-import { useClientTranslation } from '@web/i18n/client'
 
-import { useMainPortalItems } from './useMainPortalItems'
+import { getMainPortalItems } from './mainPortalItems'
 
-export function HomePage() {
-  const id = useId()
-  const items = useMainPortalItems()
-  const { t } = useClientTranslation('homepage')
+interface HomePageProps {
+  skillListLabel: string
+}
+
+export function HomePage({ skillListLabel }: HomePageProps) {
+  const items = getMainPortalItems()
   return (
     <MainPortal enableParticles enableGlow>
-      <ul aria-label={t('skillList')}>
+      <ul aria-label={skillListLabel}>
         {items
           .filter(({ isHidden }) => !isHidden)
           .map((props, index) => (
-            <AnimatedItem key={`${id}-${index}`} increaseOnDesktop {...props} />
+            <AnimatedItem key={index} increaseOnDesktop {...props} />
           ))}
       </ul>
     </MainPortal>

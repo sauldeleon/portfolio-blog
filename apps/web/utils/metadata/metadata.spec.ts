@@ -6,9 +6,10 @@ describe('sharedMetadata', () => {
       {
         "alternates": {
           "languages": {
-            "en-UK": "/en",
+            "en-GB": "/en",
             "en-US": "/en",
             "es-ES": "/es",
+            "x-default": "/en",
           },
         },
         "metadataBase": "https://www.sawl.dev/",
@@ -28,9 +29,12 @@ describe('sharedMetadata', () => {
           "follow": true,
           "index": true,
         },
-        "title": "Saúl de León Guerrero",
+        "title": {
+          "default": "Saúl de León Guerrero — Front-End Software Engineer",
+          "template": "%s | Saúl de León Guerrero",
+        },
         "twitter": {
-          "card": "summary",
+          "card": "summary_large_image",
           "images": [
             "/assets/portrait.jpg",
           ],

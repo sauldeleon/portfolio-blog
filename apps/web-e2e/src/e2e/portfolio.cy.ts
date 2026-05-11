@@ -1,5 +1,22 @@
 import { getTitle } from '../support/common.po'
 
+describe('Portfolio page - SEO', () => {
+  beforeEach(() => cy.visit('/portfolio/'))
+
+  it('should have BreadcrumbList JSON-LD', () => {
+    cy.get('script[type="application/ld+json"]').then((scripts) => {
+      const schemas = scripts
+        .toArray()
+        .map((s) => JSON.parse(s.innerText ?? s.textContent ?? '{}'))
+      const breadcrumb = schemas.find((s) => s['@type'] === 'BreadcrumbList')
+      expect(breadcrumb).to.not.equal(undefined)
+      expect(breadcrumb.itemListElement).to.have.length(2)
+      expect(breadcrumb.itemListElement[0].name).to.equal('Home')
+      expect(breadcrumb.itemListElement[1].name).to.equal('Portfolio')
+    })
+  })
+})
+
 describe('Portfolio page', () => {
   beforeEach(() => {
     cy.visit('/portfolio/')

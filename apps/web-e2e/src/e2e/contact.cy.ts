@@ -1,5 +1,34 @@
 import { getTitle } from '../support/common.po'
 
+describe('Contact page - SEO', () => {
+  beforeEach(() => cy.visit('/contact/'))
+
+  it('should have BreadcrumbList JSON-LD', () => {
+    cy.get('script[type="application/ld+json"]').then((scripts) => {
+      const schemas = scripts
+        .toArray()
+        .map((s) => JSON.parse(s.innerText ?? s.textContent ?? '{}'))
+      const breadcrumb = schemas.find((s) => s['@type'] === 'BreadcrumbList')
+      expect(breadcrumb).to.not.equal(undefined)
+      expect(breadcrumb.itemListElement).to.have.length(2)
+      expect(breadcrumb.itemListElement[0].name).to.equal('Home')
+      expect(breadcrumb.itemListElement[1].name).to.equal('Contact')
+    })
+  })
+
+  it('should have ContactPage JSON-LD with Person mainEntity', () => {
+    cy.get('script[type="application/ld+json"]').then((scripts) => {
+      const schemas = scripts
+        .toArray()
+        .map((s) => JSON.parse(s.innerText ?? s.textContent ?? '{}'))
+      const contactPage = schemas.find((s) => s['@type'] === 'ContactPage')
+      expect(contactPage).to.not.equal(undefined)
+      expect(contactPage.mainEntity['@type']).to.equal('Person')
+      expect(contactPage.mainEntity.name).to.equal('Saúl de León Guerrero')
+    })
+  })
+})
+
 describe('Contact page', () => {
   beforeEach(() => {
     cy.visit('/contact/')

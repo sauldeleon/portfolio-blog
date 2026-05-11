@@ -1,12 +1,10 @@
-import { format } from 'date-fns'
-import { ParseKeys } from 'i18next'
+'use client'
+
 import { useId } from 'react'
-import { Trans } from 'react-i18next'
 
 import { ArrowRightIcon } from '@sdlgr/assets'
 
 import { AnimatedItem } from '@web/components/AnimatedItem/AnimatedItem'
-import { useClientTranslation } from '@web/i18n/client'
 import {
   AnimatedItemKey,
   animatedItemMap,
@@ -32,26 +30,43 @@ export interface ExperienceItemProps {
   order: number
   company: string
   technologies: AnimatedItemKey[]
-  beginDate: Date
-  endDate?: Date
-  descriptionParagraphKeys: ParseKeys<'experiencePage'>[]
+  period: string
   link?: string
+  ariaLabel: string
+  checkWebsiteLabel: string
+  paragraphs: string[]
 }
 
 const zeroPad = (num: number, places: number) =>
   String(num).padStart(places, '0')
 
+function parseParagraph(text: string, paragraphIndex: number) {
+  const parts = text.split(/(<bold>[\s\S]*?<\/bold>)/g)
+  return (
+    <StyledDescriptionParagraph key={paragraphIndex}>
+      {parts.map((part, i) => {
+        const match = part.match(/^<bold>([\s\S]*?)<\/bold>$/)
+        return match ? (
+          <StyledTechnology key={i}>{match[1]}</StyledTechnology>
+        ) : (
+          part
+        )
+      })}
+    </StyledDescriptionParagraph>
+  )
+}
+
 export function ExperienceItem({
   order,
   company,
   technologies,
-  beginDate,
-  endDate,
+  period,
   link,
-  descriptionParagraphKeys,
+  ariaLabel,
+  checkWebsiteLabel,
+  paragraphs,
 }: Readonly<ExperienceItemProps>) {
   const id = useId()
-  const { t } = useClientTranslation('experiencePage')
 
   return (
     <StyledSection>
@@ -60,16 +75,12 @@ export function ExperienceItem({
           <StyledOrder>{zeroPad(order + 1, 2)}</StyledOrder>
           <StyledCompanyName>{company}</StyledCompanyName>
         </StyledCompany>
-        <StyledCompanyPeriod>
-          {`${format(beginDate, 'MMM yyyy')}${
-            endDate ? format(endDate, ' - MMM yyyy') : ''
-          }`}
-        </StyledCompanyPeriod>
+        <StyledCompanyPeriod>{period}</StyledCompanyPeriod>
       </StyledExperienceHeader>
       <StyledExperienceInfo>
         <StyledExperiencePortal>
           <StyledPortals>
-            <ul aria-label={t('usedTechnologies', { company })}>
+            <ul aria-label={ariaLabel}>
               {technologies
                 .map((tech) => animatedItemMap[tech])
                 .filter(({ isHidden }) => !isHidden)
@@ -80,23 +91,13 @@ export function ExperienceItem({
           </StyledPortals>
         </StyledExperiencePortal>
         <StyledExperienceDescription>
-          {descriptionParagraphKeys.map((paragraphKey, index) => (
-            <StyledDescriptionParagraph key={`${id}-${index}`}>
-              <Trans
-                t={t}
-                i18nKey={paragraphKey}
-                components={{
-                  bold: <StyledTechnology />,
-                }}
-              />
-            </StyledDescriptionParagraph>
-          ))}
+          {paragraphs.map(parseParagraph)}
           {link && (
             <StyledCircleLink
               href={link}
               target="_blank"
               iconContent={<ArrowRightIcon />}
-              label={t('checkWebsiteLink')}
+              label={checkWebsiteLabel}
             />
           )}
         </StyledExperienceDescription>

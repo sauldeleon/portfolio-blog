@@ -1,29 +1,14 @@
-'use client'
-
 import { format } from 'date-fns/format'
-import { useEffect, useState } from 'react'
-import { useIsScrolling } from 'react-use-is-scrolling'
 
-import { ScrollTop, ShareIcon } from '@sdlgr/assets'
+import { getExperienceItems } from '@web/components/ExperiencePage/experienceItems'
+import { getServerTranslation } from '@web/i18n/server'
 
-import { useExperienceItems } from '@web/components/ExperiencePage/useExperienceItems'
-import { useClientTranslation } from '@web/i18n/client'
-
-import {
-  StyledActionContainer,
-  StyledContent,
-  StyledLabel,
-  StyledScrollButton,
-  StyledScrollColumn,
-  StyledShareButton,
-  StyledWrap,
-} from './PortfolioPage.styles'
-import {
+import { PortfolioPageClient } from './PortfolioPageClient'
+import type {
   CvExperienceEntry,
   CvOtherEntry,
   CvSkillArea,
 } from './components/CvDocument/CvDocument'
-import { DownloadCvButton } from './components/DownloadCvButton/DownloadCvButton'
 import { OtherStuff } from './components/OtherStuff/OtherStuff'
 import { PortfolioHeading } from './components/PortfolioHeading/PortfolioHeading'
 import { PortfolioItem } from './components/PortfolioItem/PortfolioItem'
@@ -42,7 +27,7 @@ const LINK_URLS: Record<string, string> = {
     'https://rd.springer.com/chapter/10.1007/978-3-642-21350-2_29#page-1',
 }
 
-function parseRichText(html: string): TextSegment[] {
+function parseCvRichText(html: string): TextSegment[] {
   const segments: TextSegment[] = []
   const parts = html.split(/(<\/?(?:bold|italic|linkComponent)>)/g)
   let isBold = false
@@ -82,37 +67,60 @@ function parseRichText(html: string): TextSegment[] {
   return segments
 }
 
-export function PortfolioPage() {
-  const { t, i18n } = useClientTranslation('portfolioPage')
-  const lng = i18n.resolvedLanguage ?? 'en'
-  const { t: tExp } = useClientTranslation('experiencePage')
-  const [scroll, setScroll] = useState(0)
-  const [isShared, setIsShared] = useState(false)
-  const { isScrolling, scrollDirectionY } = useIsScrolling()
-  const experienceItems = useExperienceItems()
+interface PortfolioPageProps {
+  lng: string
+}
 
-  useEffect(() => {
-    const listener = () => {
-      const scrollValue =
-        window.scrollY / (document.body.offsetHeight - window.innerHeight)
-      setScroll(scrollValue)
-    }
-    window.addEventListener('scroll', listener)
-    return () => window.removeEventListener('scroll', listener)
-  }, [])
+export async function PortfolioPage({ lng }: PortfolioPageProps) {
+  const { t } = await getServerTranslation({
+    ns: 'portfolioPage',
+    language: lng,
+  })
+  const { t: tExp } = await getServerTranslation({
+    ns: 'experiencePage',
+    language: lng,
+  })
 
   const areasRaw = t('items.profile.skillAreas.areas', { returnObjects: true })
-  const areas = Array.isArray(areasRaw) ? areasRaw : []
-  const skillAreas: CvSkillArea[] = areas.map(
-    ({ title, skills }: { title: string; skills: string[] }) => ({
-      title,
-      skills: skills.map((skill) => parseRichText(skill)),
-    }),
-  )
+  const areas: { icon: string; title: string; skills: string[] }[] =
+    Array.isArray(areasRaw) ? areasRaw : []
 
+  const otherItemsRaw = t('items.other.otherAreas', { returnObjects: true })
+  const otherItems: {
+    name: string
+    beginYear?: string
+    endYear?: string
+    highlights: string[]
+  }[] = Array.isArray(otherItemsRaw) ? otherItemsRaw : []
+
+  const experienceItems = getExperienceItems()
   const sortedExperience = [...experienceItems].sort(
     (a, b) => a.order - b.order,
   )
+
+  const workingExperienceItems = sortedExperience.map(
+    ({ order, company, beginDate, endDate, descriptionParagraphKeys }) => ({
+      order,
+      company,
+      role: tExp(descriptionParagraphKeys[0]),
+      period: `${format(beginDate, 'MMMM yyyy')}${endDate ? format(endDate, ' - MMMM yyyy') : ''}`,
+      bullets: descriptionParagraphKeys.slice(1).map((key) => tExp(key)),
+    }),
+  )
+
+  const otherStuffItems = otherItems.map(
+    ({ name, beginYear, endYear, highlights }) => ({
+      name,
+      period: `${beginYear ?? ''}${endYear ? ' - ' + endYear : ''}`,
+      highlights,
+    }),
+  )
+
+  const skillAreas: CvSkillArea[] = areas.map(({ title, skills }) => ({
+    title,
+    skills: skills.map((skill) => parseCvRichText(skill)),
+  }))
+
   const experienceEntries: CvExperienceEntry[] = sortedExperience.map(
     ({ company, beginDate, endDate, descriptionParagraphKeys }) => ({
       company,
@@ -120,27 +128,15 @@ export function PortfolioPage() {
       period: `${format(beginDate, 'MMMM yyyy')} - ${endDate ? format(endDate, 'MMMM yyyy') : tExp('present')}`,
       bullets: descriptionParagraphKeys
         .slice(1)
-        .map((key) => parseRichText(tExp(key))),
+        .map((key) => parseCvRichText(tExp(key))),
     }),
   )
 
-  const otherItemsRaw = t('items.other.otherAreas', { returnObjects: true })
-  const otherItems = Array.isArray(otherItemsRaw) ? otherItemsRaw : []
   const otherEntries: CvOtherEntry[] = otherItems.map(
-    ({
-      name,
-      beginYear,
-      endYear,
-      highlights,
-    }: {
-      name: string
-      beginYear?: string
-      endYear?: string
-      highlights: string[]
-    }) => ({
-      name: parseRichText(name),
+    ({ name, beginYear, endYear, highlights }) => ({
+      name: parseCvRichText(name),
       period: `${beginYear ?? ''}${endYear ? ' - ' + endYear : ''}`,
-      highlights: highlights.map((h) => parseRichText(h)),
+      highlights: highlights.map((h) => parseCvRichText(h)),
     }),
   )
 
@@ -160,74 +156,32 @@ export function PortfolioPage() {
   }
 
   return (
-    <>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        version="1.1"
-        style={{ display: 'none' }}
-      >
-        <defs>
-          <filter id="fancy-goo">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
-            <feColorMatrix
-              in="blur"
-              type="matrix"
-              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -14"
-              result="goo"
-            />
-            <feComposite in="SourceGraphic" in2="goo" operator="atop" />
-          </filter>
-        </defs>
-      </svg>
-      <StyledContent>
-        <StyledScrollColumn $active={scroll > 0.1} data-testid="scrollColumn">
-          <StyledScrollButton
-            data-testid="scrollToTop"
-            $isScrolling={isScrolling}
-            $scrollingDirection={scrollDirectionY}
-            onClick={() => window.scrollTo(0, 0)}
-          >
-            <ScrollTop height={18} />
-          </StyledScrollButton>
-        </StyledScrollColumn>
-        <StyledWrap>
-          <PortfolioHeading />
-          <PortfolioItem title={t('items.profile.title')}>
-            <ProfileInfo />
-          </PortfolioItem>
-          <PortfolioItem title={t('items.workingExperience')}>
-            <WorkingExperience />
-          </PortfolioItem>
-          <PortfolioItem title={t('items.other.title')}>
-            <OtherStuff />
-          </PortfolioItem>
-        </StyledWrap>
-      </StyledContent>
-      <StyledActionContainer>
-        <DownloadCvButton
-          lng={lng}
-          cvData={cvData}
-          photoPath="/assets/portrait-4.png"
-          downloadLabel={t('downloadCv')}
-          generatingLabel={t('generatingCv')}
-          filename={`CV-SaulDeLeonGuerrero-${lng}.pdf`}
+    <PortfolioPageClient
+      lng={lng}
+      cvData={cvData}
+      downloadLabel={t('downloadCv')}
+      generatingLabel={t('generatingCv')}
+      shareLabel={t('shareWithAFriend')}
+      sharedLabel={t('shared')}
+    >
+      <PortfolioHeading
+        softwareEngineer={t('items.softwareEngineer')}
+        basedIn={t('basedIn')}
+        profilePicture={t('profilePicture')}
+      />
+      <PortfolioItem title={t('items.profile.title')}>
+        <ProfileInfo
+          summary={t('items.profile.summary')}
+          skillAreasTitle={t('items.profile.skillAreas.title')}
+          areas={areas}
         />
-        <StyledShareButton
-          variant="contained"
-          onClick={() => {
-            navigator.clipboard.writeText(document.location.href)
-            if (navigator.share !== undefined) {
-              navigator.share({ url: document.location.href })
-            }
-            setIsShared(true)
-          }}
-        >
-          <ShareIcon height={40} width={40} />
-          <StyledLabel>
-            {t(isShared ? 'shared' : 'shareWithAFriend')}
-          </StyledLabel>
-        </StyledShareButton>
-      </StyledActionContainer>
-    </>
+      </PortfolioItem>
+      <PortfolioItem title={t('items.workingExperience')}>
+        <WorkingExperience items={workingExperienceItems} />
+      </PortfolioItem>
+      <PortfolioItem title={t('items.other.title')}>
+        <OtherStuff items={otherStuffItems} />
+      </PortfolioItem>
+    </PortfolioPageClient>
   )
 }

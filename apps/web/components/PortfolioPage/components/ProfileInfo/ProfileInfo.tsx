@@ -1,5 +1,6 @@
-import { ParseKeys } from 'i18next'
-import { Trans } from 'react-i18next'
+'use client'
+
+import React from 'react'
 
 import {
   BackendIcon,
@@ -9,7 +10,7 @@ import {
   MobileIcon,
 } from '@sdlgr/assets'
 
-import { useClientTranslation } from '@web/i18n/client'
+import { parseRichText } from '@web/utils/parseRichText/parseRichText'
 
 import {
   StyledItalic,
@@ -30,16 +31,27 @@ const iconMap: Record<string, React.ReactElement> = {
   other: <FileIcon width={20} height={20} />,
 }
 
-export function ProfileInfo() {
-  const { t } = useClientTranslation('portfolioPage')
+type SkillArea = {
+  icon: string
+  title: string
+  skills: string[]
+}
 
-  const areasRaw = t('items.profile.skillAreas.areas', { returnObjects: true })
-  const areas = Array.isArray(areasRaw) ? areasRaw : []
+interface ProfileInfoProps {
+  summary: string
+  skillAreasTitle: string
+  areas: SkillArea[]
+}
 
+export function ProfileInfo({
+  summary,
+  skillAreasTitle,
+  areas,
+}: ProfileInfoProps) {
   return (
     <>
-      <StyledSummary $level="XL">{t('items.profile.summary')}</StyledSummary>
-      <StyledLabel>{t('items.profile.skillAreas.title')}</StyledLabel>
+      <StyledSummary $level="XL">{summary}</StyledSummary>
+      <StyledLabel>{skillAreasTitle}</StyledLabel>
       {areas.map(({ icon, title, skills }) => (
         <StyledSkillGroup key={icon}>
           <StyledSkillTitle>
@@ -47,16 +59,14 @@ export function ProfileInfo() {
             {title}
           </StyledSkillTitle>
           <StyledList>
-            {skills.map((skill) => (
-              <StyledListItem key={skill}>
-                <Trans
-                  t={t}
-                  i18nKey={skill as ParseKeys<'portfolioPage'>}
-                  components={{
-                    bold: <StyledTechnology />,
-                    italic: <StyledItalic />,
-                  }}
-                />
+            {skills.map((skill, i) => (
+              <StyledListItem key={`${i}-${skill}`}>
+                {parseRichText(skill, {
+                  bold: (k, t) => (
+                    <StyledTechnology key={k}>{t}</StyledTechnology>
+                  ),
+                  italic: (k, t) => <StyledItalic key={k}>{t}</StyledItalic>,
+                })}
               </StyledListItem>
             ))}
           </StyledList>

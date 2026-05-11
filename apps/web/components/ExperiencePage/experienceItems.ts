@@ -1,6 +1,18 @@
-import { ExperienceItem } from './ExperiencePage'
+import { ParseKeys } from 'i18next'
 
-export function useExperienceItems(): ExperienceItem[] {
+import { AnimatedItemKey } from '@web/utils/animatedItem/animatedItemMap'
+
+export type ExperienceItem = {
+  order: number
+  company: string
+  technologies: AnimatedItemKey[]
+  beginDate: Date
+  endDate?: Date
+  descriptionParagraphKeys: ParseKeys<'experiencePage'>[]
+  link?: string
+}
+
+export function getExperienceItems(): ExperienceItem[] {
   return [
     {
       order: 0,
