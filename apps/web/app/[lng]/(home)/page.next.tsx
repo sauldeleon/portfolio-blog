@@ -1,11 +1,25 @@
 import { HomePage } from '@web/components/HomePage/HomePage'
 import { JsonLd } from '@web/components/JsonLd'
+import {
+  buildAlternates,
+  inLanguage,
+  ogLocale,
+} from '@web/utils/metadata/inLanguage'
 
 interface RouteProps {
   params: Promise<{ lng: string }>
 }
 
-const inLanguage = (lng: string) => (lng === 'es' ? 'es-ES' : 'en-US')
+export async function generateMetadata({ params }: RouteProps) {
+  const { lng } = await params
+  return {
+    alternates: buildAlternates(lng, ''),
+    openGraph: {
+      url: `https://www.sawl.dev/${lng}/`,
+      locale: ogLocale(lng),
+    },
+  }
+}
 
 export default async function Page({ params }: RouteProps) {
   const { lng } = await params

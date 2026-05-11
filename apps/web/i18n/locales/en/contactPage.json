@@ -7,6 +7,7 @@
   "emailAria": "My electronic mail address",
   "linkedInAria": "My LinkedIn profile",
   "metadata": {
-    "description": "Contact information"
+    "title": "Contact",
+    "description": "Get in touch with Saúl de León Guerrero — Front-End Engineer based in Asturias, Spain. Connect via LinkedIn or email."
   }
 }

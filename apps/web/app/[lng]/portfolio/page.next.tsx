@@ -1,6 +1,11 @@
 import { JsonLd } from '@web/components/JsonLd'
 import { PortfolioPage } from '@web/components/PortfolioPage/PortfolioPage'
 import { getServerTranslation } from '@web/i18n/server'
+import {
+  buildAlternates,
+  inLanguage,
+  ogLocale,
+} from '@web/utils/metadata/inLanguage'
 
 interface RouteProps {
   params: Promise<{ lng: string }>
@@ -14,10 +19,16 @@ export async function generateMetadata({ params }: GenerateMetadataProps) {
     ns: 'portfolioPage',
     language: lng,
   })
-  return { description: t('metadata.description') }
+  return {
+    title: t('title'),
+    description: t('metadata.description'),
+    alternates: buildAlternates(lng, 'portfolio/'),
+    openGraph: {
+      url: `https://www.sawl.dev/${lng}/portfolio/`,
+      locale: ogLocale(lng),
+    },
+  }
 }
-
-const inLanguage = (lng: string) => (lng === 'es' ? 'es-ES' : 'en-US')
 
 export default async function Page({ params }: RouteProps) {
   const { lng } = await params

@@ -14,29 +14,33 @@ const nextConfig = {
   output: isStaticExport ? 'export' : undefined,
   async headers() {
     if (isStaticExport) return []
+    const sharedLinks = [
+      '</sitemap.xml>; rel="sitemap"',
+      '<https://github.com/sauldeleon>; rel="me"',
+      '<https://www.linkedin.com/in/sauldeleonguerrero>; rel="me"',
+    ]
     return [
-      {
-        source: '/(.*)',
-        headers: [
-          {
-            key: 'Link',
-            value: [
-              '</sitemap.xml>; rel="sitemap"',
-              '<https://github.com/sauldeleon>; rel="me"',
-              '<https://www.linkedin.com/in/sauldeleonguerrero>; rel="me"',
-            ].join(', '),
-          },
-        ],
-      },
       ...['en', 'es'].map((lng) => ({
         source: `/${lng}/(.*)?`,
         headers: [
           {
             key: 'Link',
-            value: `</api/markdown/${lng}>; rel="alternate"; type="text/markdown"`,
+            value: [
+              ...sharedLinks,
+              `</api/markdown/${lng}>; rel="alternate"; type="text/markdown"`,
+            ].join(', '),
           },
         ],
       })),
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'Link',
+            value: sharedLinks.join(', '),
+          },
+        ],
+      },
     ]
   },
   turbopack: {
