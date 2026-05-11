@@ -1,5 +1,7 @@
 # Changelog Link component
 
+## [0.2.5](https://github.com/sauldeleon/portfolio-blog/compare/link-0.2.4...link-0.2.5) (2026-05-11)
+
 ## [0.2.4](https://github.com/sauldeleon/portfolio-blog/compare/link-0.2.3...link-0.2.4) (2024-01-08)
 
 ## [0.2.3](https://github.com/sauldeleon/portfolio-blog/compare/link-0.2.2...link-0.2.3) (2023-09-14)

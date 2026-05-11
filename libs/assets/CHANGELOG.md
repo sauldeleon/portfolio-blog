@@ -1,5 +1,11 @@
 # Changelog Assets library
 
+# [0.6.0](https://github.com/sauldeleon/portfolio-blog/compare/assets-0.5.0...assets-0.6.0) (2026-05-11)
+
+### Features
+
+- **portfolio:** add CV PDF generation and download button ([#64](https://github.com/sauldeleon/portfolio-blog/issues/64)) ([d021f5f](https://github.com/sauldeleon/portfolio-blog/commit/d021f5f7899c988dc8b2c7c44b2417cc5ff7dc52))
+
 # [0.5.0](https://github.com/sauldeleon/portfolio-blog/compare/assets-0.4.0...assets-0.5.0) (2024-01-08)
 
 ### Features

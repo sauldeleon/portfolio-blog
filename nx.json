@@ -11,7 +11,7 @@
       "!{projectRoot}/.eslintrc.json",
       "!{projectRoot}/eslint.config.mjs"
     ],
-    "sharedGlobals": ["{workspaceRoot}/go.mod"]
+    "sharedGlobals": []
   },
   "defaultProject": "web",
   "targetDefaults": {

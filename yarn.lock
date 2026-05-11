@@ -5011,16 +5011,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nx-go/nx-go@npm:4.0.0":
-  version: 4.0.0
-  resolution: "@nx-go/nx-go@npm:4.0.0"
-  dependencies:
-    "@nx/devkit": ">= 20 < 23"
-    tslib: ^2.3.0
-  checksum: 9f19f5b1e2a3b3aa044a8fb569e4f328c9d409d33f570d8b277d8fa0f1fde6c2f2f6bdf38e173ef3d00a115f5e72adba550551979eab8523c4890bfc1a21d9ac
-  languageName: node
-  linkType: hard
-
 "@nx/cypress@npm:22.7.1":
   version: 22.7.1
   resolution: "@nx/cypress@npm:22.7.1"
@@ -5042,7 +5032,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nx/devkit@npm:22.7.1, @nx/devkit@npm:>= 20 < 23":
+"@nx/devkit@npm:22.7.1":
   version: 22.7.1
   resolution: "@nx/devkit@npm:22.7.1"
   dependencies:
@@ -6480,7 +6470,6 @@ __metadata:
     "@fingerprintjs/botd": 1.9.0
     "@jscutlery/semver": 4.2.0
     "@next/bundle-analyzer": 16.2.6
-    "@nx-go/nx-go": 4.0.0
     "@nx/cypress": 22.7.1
     "@nx/eslint": 22.7.1
     "@nx/eslint-plugin": 22.7.1

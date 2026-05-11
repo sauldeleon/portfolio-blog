@@ -1,6 +1,6 @@
 ## Monorepo
 
-Nx monorepo. Apps: `web` (Next.js), `api` (Go/Gin). E2E: `web-e2e` (Cypress). Libs under `libs/`.
+Nx monorepo. Apps: `web` (Next.js). E2E: `web-e2e` (Cypress). Libs under `libs/`.
 
 ## Commands
 
@@ -9,9 +9,7 @@ Use `yarn` for all commands.
 | Action    | Command             |
 | --------- | ------------------- |
 | Start web | `yarn start:web`    |
-| Start API | `yarn start:api`    |
 | Test web  | `yarn test:web`     |
-| Test API  | `yarn test:api`     |
 | Test libs | `yarn test:libs`    |
 | Test all  | `yarn test:all`     |
 | Build all | `yarn build:all`    |
