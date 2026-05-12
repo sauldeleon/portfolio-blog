@@ -23,7 +23,7 @@ export async function getCategories(): Promise<CategoryWithCount[]> {
       posts,
       and(eq(posts.category, categories.slug), isNull(posts.deletedAt)),
     )
-    .groupBy(categories.slug)
+    .groupBy(categories.slug, categories.name, categories.description)
     .orderBy(asc(categories.name))
 }
 
