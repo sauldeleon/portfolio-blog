@@ -6,10 +6,13 @@ import {
   getPostById,
   getPostByPreviewToken,
   getPostBySlug,
+  getPostTranslations,
   getPostsBySeries,
+  getPublishedPostCountByCategory,
   getPublishedPosts,
   getRelatedPosts,
   restorePost,
+  slugExistsForLocale,
   softDeletePost,
   updatePost,
   updateTranslation,
@@ -356,5 +359,66 @@ describe('restorePost', () => {
     expect(mockSet).toHaveBeenCalledWith(
       expect.objectContaining({ status: 'draft', deletedAt: null }),
     )
+  })
+})
+
+describe('slugExistsForLocale', () => {
+  it('returns true when slug exists for locale', async () => {
+    mockDb.select.mockReturnValue(
+      makeChain([{ postId: '01JWTEST000000000000000000' }]),
+    )
+    const result = await slugExistsForLocale('en', 'test-post')
+    expect(result).toBe(true)
+  })
+
+  it('returns false when slug does not exist', async () => {
+    mockDb.select.mockReturnValue(makeChain([]))
+    const result = await slugExistsForLocale('en', 'nonexistent')
+    expect(result).toBe(false)
+  })
+
+  it('excludes a specific postId when provided', async () => {
+    mockDb.select.mockReturnValue(makeChain([]))
+    const result = await slugExistsForLocale(
+      'en',
+      'test-post',
+      '01JWTEST000000000000000000',
+    )
+    expect(result).toBe(false)
+    expect(mockDb.select).toHaveBeenCalled()
+  })
+})
+
+describe('getPostTranslations', () => {
+  it('returns translations for a post', async () => {
+    mockDb.select.mockReturnValue(makeChain([mockTranslation]))
+    const result = await getPostTranslations('01JWTEST000000000000000000')
+    expect(result).toEqual([mockTranslation])
+  })
+
+  it('returns empty array when post has no translations', async () => {
+    mockDb.select.mockReturnValue(makeChain([]))
+    const result = await getPostTranslations('nonexistent')
+    expect(result).toEqual([])
+  })
+})
+
+describe('getPublishedPostCountByCategory', () => {
+  it('returns count of published posts for category', async () => {
+    mockDb.select.mockReturnValue(makeChain([{ count: 3 }]))
+    const result = await getPublishedPostCountByCategory('engineering')
+    expect(result).toBe(3)
+  })
+
+  it('returns 0 when no published posts', async () => {
+    mockDb.select.mockReturnValue(makeChain([{ count: 0 }]))
+    const result = await getPublishedPostCountByCategory('engineering')
+    expect(result).toBe(0)
+  })
+
+  it('returns 0 when query returns no rows', async () => {
+    mockDb.select.mockReturnValue(makeChain([]))
+    const result = await getPublishedPostCountByCategory('nonexistent')
+    expect(result).toBe(0)
   })
 })

@@ -367,3 +367,48 @@ export async function restorePost(id: string): Promise<void> {
     .set({ deletedAt: null, status: 'draft', updatedAt: new Date() })
     .where(eq(posts.id, id))
 }
+
+export async function slugExistsForLocale(
+  locale: Locale,
+  slug: string,
+  excludePostId?: string,
+): Promise<boolean> {
+  const conditions = [
+    eq(postTranslations.locale, locale),
+    eq(postTranslations.slug, slug),
+  ]
+  if (excludePostId) {
+    conditions.push(ne(postTranslations.postId, excludePostId))
+  }
+  const rows = await db
+    .select({ postId: postTranslations.postId })
+    .from(postTranslations)
+    .where(and(...conditions))
+    .limit(1)
+  return rows.length > 0
+}
+
+export async function getPostTranslations(
+  postId: string,
+): Promise<Array<typeof postTranslations.$inferSelect>> {
+  return db
+    .select()
+    .from(postTranslations)
+    .where(eq(postTranslations.postId, postId))
+}
+
+export async function getPublishedPostCountByCategory(
+  slug: string,
+): Promise<number> {
+  const rows = await db
+    .select({ count: sql<number>`count(*)::int` })
+    .from(posts)
+    .where(
+      and(
+        eq(posts.category, slug),
+        eq(posts.status, 'published'),
+        isNull(posts.deletedAt),
+      ),
+    )
+  return rows[0]?.count ?? 0
+}

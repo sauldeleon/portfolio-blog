@@ -11,6 +11,11 @@ module.exports = {
   setupFilesAfterEnv: ['<rootDir>/jest.setupafterenv.ts'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/apps/web',
+  coveragePathIgnorePatterns: [
+    '/node_modules/',
+    '<rootDir>/lib/db/schema\\.ts',
+    '<rootDir>/lib/db/migrations/',
+  ],
   moduleNameMapper: {
     'next/font/(.*)': nextFontMock,
     '^@react-pdf/renderer$': '<rootDir>/__mocks__/react-pdf-renderer.tsx',
