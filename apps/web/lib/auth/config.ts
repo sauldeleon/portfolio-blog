@@ -17,7 +17,10 @@ export async function authorizeCredentials(
     return null
   }
 
-  const valid = await bcrypt.compare(password, process.env.ADMIN_PASSWORD_HASH)
+  const hash = Buffer.from(process.env.ADMIN_PASSWORD_HASH, 'base64').toString(
+    'utf8',
+  )
+  const valid = await bcrypt.compare(password, hash)
   return valid ? { id: 'admin', name: username } : null
 }
 

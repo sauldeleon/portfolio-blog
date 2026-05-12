@@ -1,10 +1,29 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { useRouter } from 'next/navigation'
+
+import { renderApp } from '@sdlgr/test-utils'
 
 import { LoginForm } from './LoginForm'
 
 const mockSignIn = jest.fn()
 const mockPush = jest.fn()
+
+jest.mock('@web/i18n/client', () => ({
+  useClientTranslation: jest.fn().mockReturnValue({
+    t: (key: string) => {
+      const translations: Record<string, string> = {
+        'login.username': 'Username',
+        'login.password': 'Password',
+        'login.showPassword': 'show',
+        'login.hidePassword': 'hide',
+        'login.signingIn': 'Signing in…',
+        'login.signIn': 'Sign in',
+        'login.invalidCredentials': 'Invalid credentials',
+      }
+      return translations[key] ?? key
+    },
+  }),
+}))
 
 jest.mock('next-auth/react', () => ({
   signIn: (...args: unknown[]) => mockSignIn(...args),
@@ -21,10 +40,24 @@ describe('LoginForm', () => {
   })
 
   it('renders username and password inputs and submit button', () => {
-    render(<LoginForm />)
+    renderApp(<LoginForm />)
     expect(screen.getByLabelText(/username/i)).toBeInTheDocument()
-    expect(screen.getByLabelText(/password/i)).toBeInTheDocument()
+    expect(
+      screen.getByLabelText(/password/i, { selector: 'input' }),
+    ).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Sign in' })).toBeInTheDocument()
+  })
+
+  it('toggles password visibility', () => {
+    renderApp(<LoginForm />)
+    const passwordInput = screen.getByLabelText(/password/i, {
+      selector: 'input',
+    })
+    expect(passwordInput).toHaveAttribute('type', 'password')
+    fireEvent.click(screen.getByTestId('password-toggle'))
+    expect(passwordInput).toHaveAttribute('type', 'text')
+    fireEvent.click(screen.getByTestId('password-toggle'))
+    expect(passwordInput).toHaveAttribute('type', 'password')
   })
 
   it('shows loading state while signing in', async () => {
@@ -35,13 +68,16 @@ describe('LoginForm', () => {
       }),
     )
 
-    render(<LoginForm />)
+    renderApp(<LoginForm />)
     fireEvent.change(screen.getByLabelText(/username/i), {
       target: { value: 'admin' },
     })
-    fireEvent.change(screen.getByLabelText(/password/i), {
-      target: { value: 'secret' },
-    })
+    fireEvent.change(
+      screen.getByLabelText(/password/i, { selector: 'input' }),
+      {
+        target: { value: 'secret' },
+      },
+    )
     fireEvent.submit(screen.getByTestId('login-form'))
 
     await waitFor(() => {
@@ -58,13 +94,16 @@ describe('LoginForm', () => {
   it('shows error on failed signIn', async () => {
     mockSignIn.mockResolvedValue({ error: 'CredentialsSignin' })
 
-    render(<LoginForm />)
+    renderApp(<LoginForm />)
     fireEvent.change(screen.getByLabelText(/username/i), {
       target: { value: 'wrong' },
     })
-    fireEvent.change(screen.getByLabelText(/password/i), {
-      target: { value: 'wrong' },
-    })
+    fireEvent.change(
+      screen.getByLabelText(/password/i, { selector: 'input' }),
+      {
+        target: { value: 'wrong' },
+      },
+    )
     fireEvent.submit(screen.getByTestId('login-form'))
 
     await waitFor(() => {
@@ -76,13 +115,16 @@ describe('LoginForm', () => {
   it('redirects to /admin/posts on success', async () => {
     mockSignIn.mockResolvedValue({ error: null })
 
-    render(<LoginForm />)
+    renderApp(<LoginForm />)
     fireEvent.change(screen.getByLabelText(/username/i), {
       target: { value: 'admin' },
     })
-    fireEvent.change(screen.getByLabelText(/password/i), {
-      target: { value: 'correct' },
-    })
+    fireEvent.change(
+      screen.getByLabelText(/password/i, { selector: 'input' }),
+      {
+        target: { value: 'correct' },
+      },
+    )
     fireEvent.submit(screen.getByTestId('login-form'))
 
     await waitFor(() => {
@@ -94,7 +136,7 @@ describe('LoginForm', () => {
   it('does not redirect on error', async () => {
     mockSignIn.mockResolvedValue({ error: 'CredentialsSignin' })
 
-    render(<LoginForm />)
+    renderApp(<LoginForm />)
     fireEvent.submit(screen.getByTestId('login-form'))
 
     await waitFor(() => {
@@ -108,13 +150,16 @@ describe('LoginForm', () => {
       .mockResolvedValueOnce({ error: 'CredentialsSignin' })
       .mockResolvedValueOnce({ error: null })
 
-    render(<LoginForm />)
+    renderApp(<LoginForm />)
     fireEvent.change(screen.getByLabelText(/username/i), {
       target: { value: 'admin' },
     })
-    fireEvent.change(screen.getByLabelText(/password/i), {
-      target: { value: 'wrong' },
-    })
+    fireEvent.change(
+      screen.getByLabelText(/password/i, { selector: 'input' }),
+      {
+        target: { value: 'wrong' },
+      },
+    )
     fireEvent.submit(screen.getByTestId('login-form'))
 
     await waitFor(() => {

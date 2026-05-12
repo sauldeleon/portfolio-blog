@@ -1,3 +1,4 @@
+import admin from './locales/en/admin.json'
 import common from './locales/en/common.json'
 import contactPage from './locales/en/contactPage.json'
 import experiencePage from './locales/en/experiencePage.json'
@@ -13,6 +14,7 @@ export const defaultNS = 'common'
 
 export const resources = {
   en: {
+    admin,
     common,
     header,
     footer,

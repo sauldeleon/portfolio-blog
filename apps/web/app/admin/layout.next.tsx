@@ -7,7 +7,7 @@ import { MainLayout } from '@web/components/MainLayout/MainLayout'
 import StyledComponentsRegistry from '@web/components/StyledComponentsRegistry/StyledComponentsRegistry'
 
 import '../globals.css'
-import { AdminNav } from './AdminNav'
+import { StyledAdminLayout } from './layout.styles'
 
 interface AdminLayoutProps {
   children: React.ReactNode
@@ -20,10 +20,9 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         <StyledComponentsRegistry>
           <LanguageContextProvider value={{ language: 'en' }}>
             <MainLayout>
-              <div data-testid="admin-layout">
-                <AdminNav />
-                <main>{children}</main>
-              </div>
+              <StyledAdminLayout data-testid="admin-layout">
+                {children}
+              </StyledAdminLayout>
             </MainLayout>
           </LanguageContextProvider>
         </StyledComponentsRegistry>

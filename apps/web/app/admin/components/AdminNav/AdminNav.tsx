@@ -1,0 +1,43 @@
+'use client'
+
+import { signOut } from 'next-auth/react'
+import { usePathname } from 'next/navigation'
+
+import { useClientTranslation } from '@web/i18n/client'
+
+import {
+  StyledBrand,
+  StyledDivider,
+  StyledLogoutButton,
+  StyledNav,
+  StyledNavLink,
+} from './AdminNav.styles'
+
+export function AdminNav() {
+  const { t } = useClientTranslation('admin')
+  const pathname = usePathname()
+
+  return (
+    <StyledNav data-testid="admin-nav">
+      <StyledBrand aria-hidden>Admin</StyledBrand>
+      <StyledNavLink
+        href="/admin/posts"
+        $active={pathname.startsWith('/admin/posts')}
+      >
+        {t('nav.posts')}
+      </StyledNavLink>
+      <StyledNavLink
+        href="/admin/categories"
+        $active={pathname.startsWith('/admin/categories')}
+      >
+        {t('nav.categories')}
+      </StyledNavLink>
+      <StyledDivider aria-hidden />
+      <StyledLogoutButton
+        onClick={() => signOut({ callbackUrl: '/admin/login' })}
+      >
+        {t('nav.logout')}
+      </StyledLogoutButton>
+    </StyledNav>
+  )
+}

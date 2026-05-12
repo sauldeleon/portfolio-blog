@@ -1,10 +1,5 @@
-import { LoginForm } from './LoginForm'
+import { LoginPage } from './components/LoginPage'
 
-export default function LoginPage() {
-  return (
-    <div data-testid="login-page">
-      <h1>Admin Login</h1>
-      <LoginForm />
-    </div>
-  )
+export default function Page() {
+  return <LoginPage />
 }

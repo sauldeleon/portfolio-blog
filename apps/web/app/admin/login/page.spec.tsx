@@ -1,25 +1,23 @@
 import { render, screen } from '@testing-library/react'
 
-import LoginPage from './page.next'
+import { LoginPage } from './components/LoginPage'
+import Page from './page.next'
 
-jest.mock('./LoginForm', () => {
+jest.mock('./components/LoginPage', () => {
   const React = require('react')
   return {
-    LoginForm: jest
+    LoginPage: jest
       .fn()
       .mockReturnValue(
-        React.createElement('div', { 'data-testid': 'login-form' }),
+        React.createElement('div', { 'data-testid': 'login-page' }),
       ),
   }
 })
 
-describe('LoginPage', () => {
-  it('renders the heading and LoginForm', () => {
-    render(<LoginPage />)
+describe('Page', () => {
+  it('renders LoginPage', () => {
+    render(<Page />)
     expect(screen.getByTestId('login-page')).toBeInTheDocument()
-    expect(
-      screen.getByRole('heading', { name: 'Admin Login' }),
-    ).toBeInTheDocument()
-    expect(screen.getByTestId('login-form')).toBeInTheDocument()
+    expect(LoginPage).toHaveBeenCalled()
   })
 })

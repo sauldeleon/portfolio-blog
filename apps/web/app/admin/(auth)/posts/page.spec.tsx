@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react'
 
 import type { AdminPost } from '@web/lib/db/queries/posts'
 
-import { PostTable } from './PostTable'
+import { PostsPageView } from './components/PostsPageView'
 import AdminPostsPage from './page.next'
 
 const mockGetAllPosts = jest.fn()
@@ -11,13 +11,25 @@ jest.mock('@web/lib/db/queries/posts', () => ({
   getAllPosts: (...args: unknown[]) => mockGetAllPosts(...args),
 }))
 
-jest.mock('./PostTable', () => {
+jest.mock('@web/i18n/server', () => ({
+  getServerTranslation: jest.fn().mockResolvedValue({
+    t: (key: string) => {
+      const strings: Record<string, string> = {
+        'posts.title': 'Posts',
+        'posts.newPost': 'New post',
+      }
+      return strings[key] ?? key
+    },
+  }),
+}))
+
+jest.mock('./components/PostsPageView', () => {
   const React = require('react')
   return {
-    PostTable: jest
+    PostsPageView: jest
       .fn()
       .mockReturnValue(
-        React.createElement('div', { 'data-testid': 'post-table' }),
+        React.createElement('div', { 'data-testid': 'posts-page-view' }),
       ),
   }
 })
@@ -49,22 +61,22 @@ describe('AdminPostsPage', () => {
     mockGetAllPosts.mockResolvedValue(mockPosts)
   })
 
-  it('renders PostTable with fetched posts', async () => {
+  it('renders PostsPageView with fetched posts', async () => {
     const ui = await AdminPostsPage()
     render(ui)
-    expect(screen.getByTestId('admin-posts-page')).toBeInTheDocument()
-    expect(screen.getByTestId('post-table')).toBeInTheDocument()
-    expect(PostTable).toHaveBeenCalledWith(
+    expect(screen.getByTestId('posts-page-view')).toBeInTheDocument()
+    expect(PostsPageView).toHaveBeenCalledWith(
       expect.objectContaining({ posts: mockPosts }),
       undefined,
     )
   })
 
-  it('renders "New post" link', async () => {
+  it('passes translated strings to PostsPageView', async () => {
     const ui = await AdminPostsPage()
     render(ui)
-    const link = screen.getByRole('link', { name: 'New post' })
-    expect(link).toBeInTheDocument()
-    expect(link).toHaveAttribute('href', '/admin/posts/new')
+    expect(PostsPageView).toHaveBeenCalledWith(
+      expect.objectContaining({ title: 'Posts', newPostLabel: 'New post' }),
+      undefined,
+    )
   })
 })

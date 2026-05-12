@@ -1,11 +1,41 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { useRouter } from 'next/navigation'
+
+import { renderApp } from '@sdlgr/test-utils'
 
 import type { AdminPost } from '@web/lib/db/queries/posts'
 
 import { PostTable } from './PostTable'
 
 const mockRefresh = jest.fn()
+const mockPush = jest.fn()
+
+jest.mock('@web/i18n/client', () => ({
+  useClientTranslation: jest.fn().mockReturnValue({
+    t: (key: string) => {
+      const translations: Record<string, string> = {
+        'posts.searchPlaceholder': 'Search posts…',
+        'posts.table.title': 'Title',
+        'posts.table.status': 'Status',
+        'posts.table.category': 'Category',
+        'posts.table.translations': 'Translations',
+        'posts.table.published': 'Published',
+        'posts.table.actions': 'Actions',
+        'posts.filters.all': 'All',
+        'posts.filters.published': 'Published',
+        'posts.filters.draft': 'Draft',
+        'posts.filters.archived': 'Archived',
+        'posts.edit': 'Edit',
+        'posts.publish': 'Publish',
+        'posts.unpublish': 'Unpublish',
+        'posts.delete': 'Delete',
+        'posts.deleteConfirm': 'Delete this post?',
+        'posts.empty': 'No posts found',
+      }
+      return translations[key] ?? key
+    },
+  }),
+}))
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
@@ -34,7 +64,10 @@ const makePost = (overrides: Partial<AdminPost> = {}): AdminPost => ({
 describe('PostTable', () => {
   beforeEach(() => {
     jest.clearAllMocks()
-    ;(useRouter as jest.Mock).mockReturnValue({ refresh: mockRefresh })
+    ;(useRouter as jest.Mock).mockReturnValue({
+      refresh: mockRefresh,
+      push: mockPush,
+    })
     jest.spyOn(window, 'confirm').mockReturnValue(true)
     global.fetch = jest.fn().mockResolvedValue({ ok: true })
   })
@@ -44,7 +77,7 @@ describe('PostTable', () => {
       makePost({ id: '01', titleEn: 'Post One' }),
       makePost({ id: '02', titleEn: 'Post Two', status: 'published' }),
     ]
-    render(<PostTable posts={posts} />)
+    renderApp(<PostTable posts={posts} />)
     expect(screen.getAllByTestId('post-row')).toHaveLength(2)
     expect(screen.getByText('Post One')).toBeInTheDocument()
     expect(screen.getByText('Post Two')).toBeInTheDocument()
@@ -55,7 +88,7 @@ describe('PostTable', () => {
       makePost({ id: '01', titleEn: 'Draft Post', status: 'draft' }),
       makePost({ id: '02', titleEn: 'Published Post', status: 'published' }),
     ]
-    render(<PostTable posts={posts} />)
+    renderApp(<PostTable posts={posts} />)
     fireEvent.click(screen.getByTestId('filter-published'))
     const rows = screen.getAllByTestId('post-row')
     expect(rows).toHaveLength(1)
@@ -68,7 +101,7 @@ describe('PostTable', () => {
       makePost({ id: '01', titleEn: 'Draft Post', status: 'draft' }),
       makePost({ id: '02', titleEn: 'Published Post', status: 'published' }),
     ]
-    render(<PostTable posts={posts} />)
+    renderApp(<PostTable posts={posts} />)
     fireEvent.click(screen.getByTestId('filter-draft'))
     const rows = screen.getAllByTestId('post-row')
     expect(rows).toHaveLength(1)
@@ -81,7 +114,7 @@ describe('PostTable', () => {
       makePost({ id: '01', titleEn: 'Draft Post', status: 'draft' }),
       makePost({ id: '02', titleEn: 'Published Post', status: 'published' }),
     ]
-    render(<PostTable posts={posts} />)
+    renderApp(<PostTable posts={posts} />)
     fireEvent.click(screen.getByTestId('filter-published'))
     fireEvent.click(screen.getByTestId('filter-all'))
     expect(screen.getAllByTestId('post-row')).toHaveLength(2)
@@ -92,7 +125,7 @@ describe('PostTable', () => {
       makePost({ id: '01', titleEn: 'React Basics' }),
       makePost({ id: '02', titleEn: 'CSS Tips' }),
     ]
-    render(<PostTable posts={posts} />)
+    renderApp(<PostTable posts={posts} />)
     fireEvent.change(screen.getByTestId('search-input'), {
       target: { value: 'react' },
     })
@@ -106,7 +139,7 @@ describe('PostTable', () => {
       makePost({ id: '01', titleEn: null, titleEs: 'Básicos de React' }),
       makePost({ id: '02', titleEn: null, titleEs: 'Trucos CSS' }),
     ]
-    render(<PostTable posts={posts} />)
+    renderApp(<PostTable posts={posts} />)
     fireEvent.change(screen.getByTestId('search-input'), {
       target: { value: 'básicos' },
     })
@@ -114,27 +147,41 @@ describe('PostTable', () => {
     expect(screen.getByText('Básicos de React')).toBeInTheDocument()
   })
 
-  it('translation indicators show checkmarks correctly', () => {
+  it('translation indicators show present when both translations exist', () => {
     const post = makePost({ titleEn: 'My Post', titleEs: 'Mi Post' })
-    render(<PostTable posts={[post]} />)
-    expect(screen.getByText(/EN ✓ \/ ES ✓/)).toBeInTheDocument()
+    renderApp(<PostTable posts={[post]} />)
+    expect(screen.getByTestId('lang-chip-en')).toHaveAttribute(
+      'data-present',
+      'true',
+    )
+    expect(screen.getByTestId('lang-chip-es')).toHaveAttribute(
+      'data-present',
+      'true',
+    )
   })
 
-  it('translation indicators show cross when translations missing', () => {
+  it('translation indicators show absent when ES translation missing', () => {
     const post = makePost({ titleEn: 'My Post', titleEs: null })
-    render(<PostTable posts={[post]} />)
-    expect(screen.getByText(/EN ✓ \/ ES ✗/)).toBeInTheDocument()
+    renderApp(<PostTable posts={[post]} />)
+    expect(screen.getByTestId('lang-chip-en')).toHaveAttribute(
+      'data-present',
+      'true',
+    )
+    expect(screen.getByTestId('lang-chip-es')).toHaveAttribute(
+      'data-present',
+      'false',
+    )
   })
 
   it('publish button disabled when translations incomplete (no titleEs)', () => {
     const post = makePost({ status: 'draft', titleEn: 'Post', titleEs: null })
-    render(<PostTable posts={[post]} />)
+    renderApp(<PostTable posts={[post]} />)
     expect(screen.getByTestId('publish-button')).toBeDisabled()
   })
 
   it('publish button disabled when translations incomplete (no titleEn)', () => {
     const post = makePost({ status: 'draft', titleEn: null, titleEs: 'Post' })
-    render(<PostTable posts={[post]} />)
+    renderApp(<PostTable posts={[post]} />)
     expect(screen.getByTestId('publish-button')).toBeDisabled()
   })
 
@@ -144,7 +191,7 @@ describe('PostTable', () => {
       titleEn: 'My Post',
       titleEs: 'Mi Post',
     })
-    render(<PostTable posts={[post]} />)
+    renderApp(<PostTable posts={[post]} />)
     expect(screen.getByTestId('publish-button')).not.toBeDisabled()
   })
 
@@ -154,7 +201,7 @@ describe('PostTable', () => {
       titleEn: 'My Post',
       titleEs: 'Mi Post',
     })
-    render(<PostTable posts={[post]} />)
+    renderApp(<PostTable posts={[post]} />)
     expect(screen.getByTestId('publish-button')).not.toBeDisabled()
   })
 
@@ -165,7 +212,7 @@ describe('PostTable', () => {
       titleEn: 'My Post',
       titleEs: 'Mi Post',
     })
-    render(<PostTable posts={[post]} />)
+    renderApp(<PostTable posts={[post]} />)
     fireEvent.click(screen.getByTestId('publish-button'))
     await waitFor(() => expect(global.fetch).toHaveBeenCalled())
     expect(global.fetch).toHaveBeenCalledWith('/api/posts/abc123', {
@@ -183,7 +230,7 @@ describe('PostTable', () => {
       titleEn: 'My Post',
       titleEs: 'Mi Post',
     })
-    render(<PostTable posts={[post]} />)
+    renderApp(<PostTable posts={[post]} />)
     fireEvent.click(screen.getByTestId('publish-button'))
     await waitFor(() => expect(global.fetch).toHaveBeenCalled())
     expect(global.fetch).toHaveBeenCalledWith('/api/posts/pub123', {
@@ -197,7 +244,7 @@ describe('PostTable', () => {
   it('clicking delete with confirm=true calls DELETE and refreshes', async () => {
     jest.spyOn(window, 'confirm').mockReturnValue(true)
     const post = makePost({ id: 'del123' })
-    render(<PostTable posts={[post]} />)
+    renderApp(<PostTable posts={[post]} />)
     fireEvent.click(screen.getByTestId('delete-button'))
     await waitFor(() => expect(global.fetch).toHaveBeenCalled())
     expect(global.fetch).toHaveBeenCalledWith('/api/posts/del123', {
@@ -209,33 +256,31 @@ describe('PostTable', () => {
   it('clicking delete with confirm=false does NOT call fetch', async () => {
     jest.spyOn(window, 'confirm').mockReturnValue(false)
     const post = makePost({ id: 'del456' })
-    render(<PostTable posts={[post]} />)
+    renderApp(<PostTable posts={[post]} />)
     fireEvent.click(screen.getByTestId('delete-button'))
     await waitFor(() => expect(window.confirm).toHaveBeenCalled())
     expect(global.fetch).not.toHaveBeenCalled()
   })
 
-  it('edit link href is correct', () => {
+  it('clicking a row navigates to the post edit page', () => {
     const post = makePost({ id: 'edit123' })
-    render(<PostTable posts={[post]} />)
-    const editLink = screen.getByTestId('edit-link')
-    expect(editLink).toHaveAttribute('href', '/admin/posts/edit123')
+    renderApp(<PostTable posts={[post]} />)
+    fireEvent.click(screen.getByTestId('post-row'))
+    expect(mockPush).toHaveBeenCalledWith('/admin/posts/edit123')
   })
 
   it('displays em dash when both titleEn and titleEs are null', () => {
     const post = makePost({ titleEn: null, titleEs: null })
-    render(<PostTable posts={[post]} />)
+    renderApp(<PostTable posts={[post]} />)
     const rows = screen.getAllByTestId('post-row')
-    // first td in the row is the title
     // eslint-disable-next-line testing-library/no-node-access
     expect(rows[0].querySelector('td')?.textContent).toBe('—')
   })
 
   it('displays em dash when publishedAt is null', () => {
     const post = makePost({ publishedAt: null })
-    render(<PostTable posts={[post]} />)
+    renderApp(<PostTable posts={[post]} />)
     const rows = screen.getAllByTestId('post-row')
-    // The publishedAt cell is the 5th td (index 4)
     // eslint-disable-next-line testing-library/no-node-access
     const cells = rows[0].querySelectorAll('td')
     expect(cells[4].textContent).toBe('—')
@@ -243,24 +288,39 @@ describe('PostTable', () => {
 
   it('displays formatted date when publishedAt exists', () => {
     const post = makePost({ publishedAt: new Date('2024-06-15') })
-    render(<PostTable posts={[post]} />)
+    renderApp(<PostTable posts={[post]} />)
     const rows = screen.getAllByTestId('post-row')
     // eslint-disable-next-line testing-library/no-node-access
     const cells = rows[0].querySelectorAll('td')
-    // The date is locale-formatted, so just check it's not the dash
     expect(cells[4].textContent).not.toBe('—')
     expect(cells[4].textContent).toBeTruthy()
   })
 
   it('shows Unpublish button text for published post', () => {
     const post = makePost({ status: 'published' })
-    render(<PostTable posts={[post]} />)
+    renderApp(<PostTable posts={[post]} />)
     expect(screen.getByTestId('publish-button')).toHaveTextContent('Unpublish')
   })
 
   it('shows Publish button text for draft post', () => {
     const post = makePost({ status: 'draft' })
-    render(<PostTable posts={[post]} />)
+    renderApp(<PostTable posts={[post]} />)
     expect(screen.getByTestId('publish-button')).toHaveTextContent('Publish')
+  })
+
+  it('renders archived status badge', () => {
+    const post = makePost({ status: 'archived' })
+    renderApp(<PostTable posts={[post]} />)
+    expect(screen.getByTestId('post-row')).toBeInTheDocument()
+  })
+
+  it('shows empty state when no posts match search', () => {
+    const post = makePost({ titleEn: 'React Basics', titleEs: null })
+    renderApp(<PostTable posts={[post]} />)
+    fireEvent.change(screen.getByTestId('search-input'), {
+      target: { value: 'zzznomatch' },
+    })
+    expect(screen.queryByTestId('post-row')).not.toBeInTheDocument()
+    expect(screen.getByText('No posts found')).toBeInTheDocument()
   })
 })

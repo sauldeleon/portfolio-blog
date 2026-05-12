@@ -1,0 +1,64 @@
+{
+  "login": {
+    "title": "Admin Login",
+    "subtitle": "Enter your credentials to continue",
+    "username": "Username",
+    "password": "Password",
+    "showPassword": "show",
+    "hidePassword": "hide",
+    "signingIn": "Signing in…",
+    "signIn": "Sign in",
+    "invalidCredentials": "Invalid credentials"
+  },
+  "nav": {
+    "posts": "Posts",
+    "categories": "Categories",
+    "logout": "Logout"
+  },
+  "posts": {
+    "title": "Posts",
+    "newPost": "New post",
+    "searchPlaceholder": "Search posts…",
+    "table": {
+      "title": "Title",
+      "status": "Status",
+      "category": "Category",
+      "translations": "Translations",
+      "published": "Published",
+      "actions": "Actions"
+    },
+    "filters": {
+      "all": "All",
+      "published": "Published",
+      "draft": "Draft",
+      "archived": "Archived"
+    },
+    "edit": "Edit",
+    "publish": "Publish",
+    "unpublish": "Unpublish",
+    "delete": "Delete",
+    "deleteConfirm": "Delete this post?",
+    "empty": "No posts found"
+  },
+  "categories": {
+    "title": "Categories",
+    "newCategory": "New category",
+    "searchPlaceholder": "Search categories…",
+    "table": {
+      "name": "Name",
+      "slug": "Slug",
+      "posts": "Posts",
+      "actions": "Actions"
+    },
+    "edit": "Edit",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "deleteConfirm": "Delete this category?",
+    "deleteBlocked": "Cannot delete: category has published posts",
+    "empty": "No categories found",
+    "slugPlaceholder": "my-category",
+    "namePlaceholder": "Category name",
+    "add": "Add"
+  }
+}

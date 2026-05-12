@@ -31,19 +31,8 @@ jest.mock('@web/components/MainLayout/MainLayout', () => {
   }
 })
 
-jest.mock('./AdminNav', () => {
-  const React = require('react')
-  return {
-    AdminNav: jest
-      .fn()
-      .mockReturnValue(
-        React.createElement('nav', { 'data-testid': 'admin-nav' }),
-      ),
-  }
-})
-
 describe('AdminLayout', () => {
-  it('renders the main layout with admin nav and children', () => {
+  it('renders the main layout and children', () => {
     render(
       <AdminLayout>
         <div data-testid="child-content">Hello</div>
@@ -51,7 +40,6 @@ describe('AdminLayout', () => {
     )
     expect(screen.getByTestId('main-layout')).toBeInTheDocument()
     expect(screen.getByTestId('admin-layout')).toBeInTheDocument()
-    expect(screen.getByTestId('admin-nav')).toBeInTheDocument()
     expect(screen.getByTestId('child-content')).toBeInTheDocument()
   })
 })

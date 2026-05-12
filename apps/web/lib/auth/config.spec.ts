@@ -28,7 +28,7 @@ describe('authorizeCredentials', () => {
     process.env = {
       ...originalEnv,
       ADMIN_USERNAME: 'admin',
-      ADMIN_PASSWORD_HASH: '$2b$10$testhash',
+      ADMIN_PASSWORD_HASH: 'JDJiJDEwJHRlc3RoYXNo', // base64('$2b$10$testhash')
     }
     jest.clearAllMocks()
   })
