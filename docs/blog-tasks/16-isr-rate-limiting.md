@@ -19,25 +19,40 @@ Two infra concerns: on-demand ISR to avoid stale post pages after publish/update
 
 ### On-demand revalidation
 
+Each post has two locale-specific URLs with different slugs — both must be revalidated. Use tag strategy (recommended) so you don't need to know the slug at revalidation time.
+
 In `PUT /api/posts/[id]` and `POST /api/posts` (on publish):
 
 ```ts
-import { revalidatePath } from 'next/cache'
+import { revalidateTag } from 'next/cache'
 
-// After DB update:
-revalidatePath('/en/blog')
-revalidatePath('/es/blog')
-revalidatePath(`/en/blog/${id}/${slug}`)
-revalidatePath(`/es/blog/${id}/${slug}`)
+// After DB update — invalidates all pages tagged with these keys:
+revalidateTag('posts') // listing pages both locales
+revalidateTag(`post-${id}`) // detail pages both locales + redirect page
 ```
 
-### `revalidate` tag strategy (recommended over path)
+If using `revalidatePath` instead (requires fetching both locale slugs first):
+
+```ts
+// Fetch translations to get locale-specific slugs
+const [en, es] = await Promise.all([getPostById(id, 'en'), getPostById(id, 'es')])
+revalidatePath('/en/blog')
+revalidatePath('/es/blog')
+revalidatePath(`/en/blog/${id}`) // redirect page
+revalidatePath(`/es/blog/${id}`) // redirect page
+revalidatePath(`/en/blog/${id}/${en.slug}`) // EN detail page
+revalidatePath(`/es/blog/${id}/${es.slug}`) // ES detail page
+```
+
+Prefer `revalidateTag` — simpler, no slug lookup needed.
+
+### `revalidate` tag strategy
 
 Tag pages at fetch time:
 
 ```ts
-fetch('/api/posts', { next: { tags: ['posts'] } })
-fetch(`/api/posts/${id}`, { next: { tags: [`post-${id}`] } })
+fetch('/api/posts?lng=en', { next: { tags: ['posts'] } })
+fetch(`/api/posts/${id}?lng=en`, { next: { tags: [`post-${id}`] } })
 ```
 
 Then in write handlers:
@@ -51,6 +66,7 @@ revalidateTag(`post-${id}`)
 
 - [ ] Add `export const revalidate = 60` to `app/[lng]/blog/page.next.tsx`
 - [ ] Add `export const revalidate = 3600` to `app/[lng]/blog/[id]/[slug]/page.next.tsx` (longer — on-demand handles freshness)
+- [ ] Add `export const revalidate = 3600` to `app/[lng]/blog/[id]/page.next.tsx` (slug redirect page)
 - [ ] Add `revalidateTag('posts')` to `POST /api/posts` (on create/publish)
 - [ ] Add `revalidateTag('posts')` + `revalidateTag('post-${id}')` to `PUT /api/posts/[id]`
 - [ ] Add `revalidateTag('posts')` + `revalidateTag('post-${id}')` to `DELETE /api/posts/[id]`
@@ -103,6 +119,7 @@ if (!success) return NextResponse.json({ error: 'Too many requests' }, { status:
   KV_REST_API_READ_ONLY_TOKEN="..."
   ```
 - [ ] `@upstash/redis`'s `Redis.fromEnv()` looks for `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN` — map Vercel KV vars in `lib/redis/index.ts`:
+
   ```ts
   import { Redis } from '@upstash/redis'
 
@@ -111,6 +128,7 @@ if (!success) return NextResponse.json({ error: 'Too many requests' }, { status:
     token: process.env.KV_REST_API_TOKEN!,
   })
   ```
+
 - [ ] Add `KV_REST_API_URL`, `KV_REST_API_TOKEN` keys (no values) to `.env.local.example`
 
 ### Code Tasks
