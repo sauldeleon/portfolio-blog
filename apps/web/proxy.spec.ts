@@ -12,7 +12,7 @@ type AuthRequest = {
   auth?: { user?: unknown } | null
 }
 
-const { handleMiddleware } = require('./middleware') as {
+const { handleMiddleware } = require('./proxy') as {
   handleMiddleware: (req: AuthRequest) => Response | undefined
 }
 
