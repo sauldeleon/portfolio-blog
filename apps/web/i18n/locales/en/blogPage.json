@@ -1,0 +1,10 @@
+{
+  "title": "Blog",
+  "noResults": "No posts found",
+  "readMore": "Read more",
+  "readingTime": "{{count}} min read",
+  "allCategories": "All categories",
+  "allTags": "All tags",
+  "pagination.previous": "Previous",
+  "pagination.next": "Next"
+}

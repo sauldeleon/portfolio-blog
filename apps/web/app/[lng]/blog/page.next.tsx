@@ -3,6 +3,12 @@ import { buildAlternates } from '@web/utils/metadata/inLanguage'
 
 interface RouteProps {
   params: Promise<{ lng: string }>
+  searchParams: Promise<{
+    page?: string
+    category?: string
+    tag?: string
+    q?: string
+  }>
 }
 
 export async function generateMetadata({ params }: RouteProps) {
@@ -14,6 +20,8 @@ export async function generateMetadata({ params }: RouteProps) {
   }
 }
 
-export default function Page() {
-  return <BlogPage />
+export default async function Page({ params, searchParams }: RouteProps) {
+  const { lng } = await params
+  const { page, category, tag, q } = await searchParams
+  return <BlogPage lng={lng} page={page} category={category} tag={tag} q={q} />
 }
