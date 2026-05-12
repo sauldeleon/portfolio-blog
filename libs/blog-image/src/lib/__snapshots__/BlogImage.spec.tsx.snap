@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`BlogImage matches snapshot 1`] = `
+.c0 {
+  margin: 0;
+  max-width: 600px;
+  margin-inline: auto;
+}
+
+.c1 {
+  font-size: 0.875rem;
+  text-align: center;
+  margin-top: 0.25rem;
+}
+
+<body>
+  <div>
+    <figure
+      class="c0"
+    >
+      <img
+        alt="A photo"
+        height="600"
+        src="blog/my-image"
+        width="800"
+      />
+      <figcaption
+        class="c1"
+      >
+        Caption text
+      </figcaption>
+    </figure>
+  </div>
+</body>
+`;
