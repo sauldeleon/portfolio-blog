@@ -5,6 +5,7 @@ import { auth } from '@web/lib/auth/config'
 import { getCategoryBySlug } from '@web/lib/db/queries/categories'
 import {
   createPost,
+  getAllPosts,
   getPublishedPostsPaginated,
   slugExistsForLocale,
 } from '@web/lib/db/queries/posts'
@@ -25,6 +26,15 @@ const getPostsQuerySchema = z.object({
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
+
+  if (searchParams.get('status') === 'all') {
+    const session = await auth()
+    if (!session)
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    const posts = await getAllPosts()
+    return NextResponse.json({ data: posts })
+  }
+
   const parsed = getPostsQuerySchema.safeParse(Object.fromEntries(searchParams))
   if (!parsed.success) {
     return NextResponse.json({ error: parsed.error.issues }, { status: 400 })

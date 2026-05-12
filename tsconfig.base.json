@@ -37,6 +37,8 @@
       "@sdlgr/blog-image": ["./libs/blog-image/src/index.ts"],
       "@sdlgr/pagination": ["./libs/pagination/src/index.ts"],
       "@sdlgr/post-card": ["./libs/post-card/src/index.ts"],
+      "@sdlgr/post-hero": ["./libs/post-hero/src/index.ts"],
+      "@sdlgr/callout": ["./libs/callout/src/index.ts"],
       "@sdlgr/visually-hidden": ["./libs/visually-hidden/src/index.ts"],
       "@web/*": ["./apps/web/*"]
     }

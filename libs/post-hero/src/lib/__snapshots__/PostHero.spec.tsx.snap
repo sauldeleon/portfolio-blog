@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`PostHero matches snapshot 1`] = `
+.c0 {
+  color: #FBFBFB;
+  padding: 2rem;
+  background-color: #00235B;
+}
+
+.c1 {
+  color: #98DFD6;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+}
+
+.c2 {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  color: #FBFBFB;
+  font-size: 0.875rem;
+}
+
+<body>
+  <div>
+    <header
+      class="c0"
+    >
+      <img
+        alt="My Post Title"
+        height="630"
+        src="blog/cover-image"
+        width="1200"
+      />
+      <span
+        class="c1"
+      >
+        Technology
+      </span>
+      <h1>
+        My Post Title
+      </h1>
+      <div
+        class="c2"
+      >
+        <span>
+          John Doe
+        </span>
+        <time
+          datetime="Jan 1, 2024"
+        >
+          Jan 1, 2024
+        </time>
+        <span
+          data-testid="reading-time"
+        >
+          5
+           min
+        </span>
+      </div>
+    </header>
+  </div>
+</body>
+`;

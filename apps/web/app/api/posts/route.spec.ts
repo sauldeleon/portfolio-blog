@@ -6,6 +6,7 @@ const mockGetCategoryBySlug = jest.fn()
 const mockSlugExistsForLocale = jest.fn()
 const mockCreatePost = jest.fn()
 const mockGetPublishedPostsPaginated = jest.fn()
+const mockGetAllPosts = jest.fn()
 
 jest.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
 jest.mock('@web/lib/db/queries/categories', () => ({
@@ -15,6 +16,7 @@ jest.mock('@web/lib/db/queries/posts', () => ({
   createPost: mockCreatePost,
   slugExistsForLocale: mockSlugExistsForLocale,
   getPublishedPostsPaginated: mockGetPublishedPostsPaginated,
+  getAllPosts: mockGetAllPosts,
 }))
 
 const { GET, POST } = require('./route') as {
@@ -80,6 +82,53 @@ const mockPostWithContent = {
   excerpt: 'An excerpt',
   content: 'word '.repeat(200).trim(),
 }
+
+const mockAdminPost = {
+  id: '01JWTEST',
+  category: 'engineering',
+  tags: ['react'],
+  status: 'draft' as const,
+  coverImage: null,
+  seriesId: null,
+  seriesOrder: null,
+  scheduledAt: null,
+  publishedAt: null,
+  createdAt: new Date('2024-01-01'),
+  updatedAt: new Date('2024-01-01'),
+  previewToken: 'tok',
+  titleEn: 'Test Post',
+  slugEn: 'test-post',
+  titleEs: 'Post de prueba',
+  slugEs: 'post-de-prueba',
+}
+
+describe('GET /api/posts (admin status=all)', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
+  it('returns 401 when status=all and no session', async () => {
+    mockAuth.mockResolvedValue(null)
+    const response = await GET(
+      new Request('http://localhost/api/posts?status=all'),
+    )
+    expect(response.status).toBe(401)
+    const body = (await response.json()) as { error: string }
+    expect(body.error).toBe('Unauthorized')
+  })
+
+  it('returns 200 with all posts when status=all and authenticated', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockGetAllPosts.mockResolvedValue([mockAdminPost])
+    const response = await GET(
+      new Request('http://localhost/api/posts?status=all'),
+    )
+    expect(response.status).toBe(200)
+    const body = (await response.json()) as { data: unknown[] }
+    expect(body.data).toHaveLength(1)
+    expect(mockGetAllPosts).toHaveBeenCalledTimes(1)
+  })
+})
 
 describe('GET /api/posts', () => {
   beforeEach(() => {
