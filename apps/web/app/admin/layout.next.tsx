@@ -1,3 +1,12 @@
+import { dir } from 'i18next'
+
+import { LanguageContextProvider } from '@sdlgr/i18n-tools'
+import { robotoMonoClassName } from '@sdlgr/main-theme'
+
+import { MainLayout } from '@web/components/MainLayout/MainLayout'
+import StyledComponentsRegistry from '@web/components/StyledComponentsRegistry/StyledComponentsRegistry'
+
+import '../globals.css'
 import { AdminNav } from './AdminNav'
 
 interface AdminLayoutProps {
@@ -6,12 +15,18 @@ interface AdminLayoutProps {
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
   return (
-    <html lang="en">
+    <html lang="en" dir={dir('en')} className={robotoMonoClassName}>
       <body>
-        <div data-testid="admin-layout">
-          <AdminNav />
-          <main>{children}</main>
-        </div>
+        <StyledComponentsRegistry>
+          <LanguageContextProvider value={{ language: 'en' }}>
+            <MainLayout>
+              <div data-testid="admin-layout">
+                <AdminNav />
+                <main>{children}</main>
+              </div>
+            </MainLayout>
+          </LanguageContextProvider>
+        </StyledComponentsRegistry>
       </body>
     </html>
   )
