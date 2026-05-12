@@ -1,4 +1,4 @@
-import { computeReadingTime } from './readingTime'
+import { computeReadingTime } from './computeReadingTime'
 
 describe('computeReadingTime', () => {
   it('returns 1 for empty string', () => {

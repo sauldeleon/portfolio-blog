@@ -1,5 +1,7 @@
 import { render, screen } from '@testing-library/react'
 
+import { Locale } from '@web/lib/db/schema'
+
 const mockGetPublishedPostsPaginated = jest.fn()
 const mockGetCategories = jest.fn()
 const mockGetPostCountPerTag = jest.fn()
@@ -54,7 +56,14 @@ function mockT(key: string) {
 describe('BlogPage', () => {
   beforeEach(() => {
     mockGetServerTranslation.mockResolvedValue({ t: mockT })
-    mockGetCategories.mockResolvedValue([])
+    mockGetCategories.mockResolvedValue([
+      {
+        id: 1,
+        slug: 'engineering',
+        name: 'Engineering',
+        description: 'Posts about engineering',
+      },
+    ])
     mockGetPostCountPerTag.mockResolvedValue([])
   })
 
@@ -128,7 +137,7 @@ describe('BlogPage', () => {
 
   it('falls back to enUS locale for unknown language', async () => {
     mockGetPublishedPostsPaginated.mockResolvedValue({ data: [], total: 0 })
-    const ui = await BlogPage({ lng: 'fr' })
+    const ui = await BlogPage({ lng: 'fr' as unknown as Locale })
     render(ui)
     expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument()
   })

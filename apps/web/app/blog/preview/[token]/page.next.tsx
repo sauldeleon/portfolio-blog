@@ -5,7 +5,7 @@ import { PostHero } from '@sdlgr/post-hero'
 
 import { getPostByPreviewToken } from '@web/lib/db/queries/posts'
 import { renderMDX } from '@web/lib/mdx/renderMDX'
-import { computeReadingTime } from '@web/utils/readingTime'
+import { computeReadingTime } from '@web/utils/computeReadingTime'
 
 interface RouteProps {
   params: Promise<{ token: string }>

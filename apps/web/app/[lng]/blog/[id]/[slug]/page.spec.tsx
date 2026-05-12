@@ -134,4 +134,11 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
       { lng: 'es', id: '01', slug: 'test-post' },
     ])
   })
+
+  it('generateStaticParams returns empty array when DB fails', async () => {
+    mockGetPublishedPosts.mockRejectedValue(new Error('no db'))
+    const { generateStaticParams } = require('./page.next')
+    const params = await generateStaticParams()
+    expect(params).toEqual([])
+  })
 })

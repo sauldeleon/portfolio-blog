@@ -1,12 +1,12 @@
 import { format } from 'date-fns'
-import { enUS, es } from 'date-fns/locale'
+import { type Locale, enUS, es } from 'date-fns/locale'
 import { notFound, redirect } from 'next/navigation'
 
 import { PostHero } from '@sdlgr/post-hero'
 
 import { getPostById, getPublishedPosts } from '@web/lib/db/queries/posts'
 import { renderMDX } from '@web/lib/mdx/renderMDX'
-import { computeReadingTime } from '@web/utils/readingTime'
+import { computeReadingTime } from '@web/utils/computeReadingTime'
 
 export const revalidate = 60
 
@@ -17,14 +17,18 @@ interface RouteProps {
 }
 
 export async function generateStaticParams() {
-  const locales = ['en', 'es'] as const
-  const results = await Promise.all(
-    locales.map(async (lng) => {
-      const posts = await getPublishedPosts(lng)
-      return posts.map((p) => ({ lng, id: p.id, slug: p.slug }))
-    }),
-  )
-  return results.flat()
+  try {
+    const locales = ['en', 'es'] as const
+    const results = await Promise.all(
+      locales.map(async (lng) => {
+        const posts = await getPublishedPosts(lng)
+        return posts.map((p) => ({ lng, id: p.id, slug: p.slug }))
+      }),
+    )
+    return results.flat()
+  } catch {
+    return []
+  }
 }
 
 export default async function BlogPostPage({ params }: RouteProps) {

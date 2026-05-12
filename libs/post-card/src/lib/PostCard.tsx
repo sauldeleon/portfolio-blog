@@ -1,9 +1,9 @@
 'use client'
 
 import { CldImage } from 'next-cloudinary'
-import Link from 'next/link'
 
 import {
+  StyledBody,
   StyledCard,
   StyledCategory,
   StyledCover,
@@ -65,23 +65,27 @@ export function PostCard({
           <StyledPlaceholder aria-hidden="true" />
         )}
       </StyledCover>
-      <StyledCategory>{category}</StyledCategory>
-      <StyledTitle>{title}</StyledTitle>
-      <StyledExcerpt>{excerpt}</StyledExcerpt>
-      <StyledMeta>
-        <span>{author}</span>
-        {publishedAt && <time dateTime={publishedAt}>{publishedAt}</time>}
-        <span>{readingTime} min</span>
-      </StyledMeta>
-      <StyledTagList>
-        {visibleTags.map((tag) => (
-          <StyledTag key={tag}>{tag}</StyledTag>
-        ))}
-        {extraTagCount > 0 && <StyledMoreTags>+{extraTagCount}</StyledMoreTags>}
-      </StyledTagList>
-      <StyledReadMore>
-        <Link href={`/${lng}/blog/${id}/${slug}`}>{readMoreLabel}</Link>
-      </StyledReadMore>
+      <StyledBody>
+        <StyledCategory>{category}</StyledCategory>
+        <StyledTitle>{title}</StyledTitle>
+        <StyledExcerpt>{excerpt}</StyledExcerpt>
+        <StyledMeta>
+          <span>{author}</span>
+          {publishedAt && <time dateTime={publishedAt}>{publishedAt}</time>}
+          <span>{readingTime} min</span>
+        </StyledMeta>
+        <StyledTagList>
+          {visibleTags.map((tag) => (
+            <StyledTag key={tag}>{tag}</StyledTag>
+          ))}
+          {extraTagCount > 0 && (
+            <StyledMoreTags>+{extraTagCount}</StyledMoreTags>
+          )}
+        </StyledTagList>
+        <StyledReadMore href={`/${lng}/blog/${id}/${slug}`}>
+          {readMoreLabel}
+        </StyledReadMore>
+      </StyledBody>
     </StyledCard>
   )
 }

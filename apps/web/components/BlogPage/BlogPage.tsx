@@ -1,5 +1,5 @@
 import { format } from 'date-fns'
-import { enUS, es } from 'date-fns/locale'
+import { type Locale as DateLocale, enUS, es } from 'date-fns/locale'
 
 import { CategoryFilter } from '@sdlgr/blog-filters'
 import { TagFilter } from '@sdlgr/blog-filters'
@@ -10,13 +10,26 @@ import { getServerTranslation } from '@web/i18n/server'
 import { getCategories } from '@web/lib/db/queries/categories'
 import { getPublishedPostsPaginated } from '@web/lib/db/queries/posts'
 import { getPostCountPerTag } from '@web/lib/db/queries/tags'
+import { Locale } from '@web/lib/db/schema'
+import { computeReadingTime } from '@web/utils/computeReadingTime'
+
+import {
+  StyledEmpty,
+  StyledFilters,
+  StyledGrid,
+  StyledHeader,
+  StyledHeading,
+  StyledHeadingAccent,
+  StyledPage,
+  StyledPaginationWrapper,
+} from './BlogPage.styles'
 
 const POSTS_PER_PAGE = 10
 
-const dateLocales: Record<string, Locale> = { en: enUS, es }
+const dateLocales: Record<Locale, DateLocale> = { en: enUS, es }
 
 export interface BlogPageProps {
-  lng: string
+  lng: Locale
   page?: string
   category?: string
   tag?: string
@@ -49,18 +62,32 @@ export async function BlogPage({
   const { t } = await getServerTranslation({ ns: 'blogPage', language: lng })
 
   return (
-    <main>
-      <h1>{t('title')}</h1>
-      <CategoryFilter
-        categories={categories}
-        activeCategory={category ?? null}
-        allLabel={t('allCategories')}
-      />
-      <TagFilter tags={tags} activeTag={tag ?? null} allLabel={t('allTags')} />
+    <StyledPage>
+      <StyledHeader>
+        <StyledHeading>{t('title')}</StyledHeading>
+        <StyledHeadingAccent aria-hidden />
+      </StyledHeader>
+      <StyledFilters>
+        <CategoryFilter
+          categories={categories.map((cat) => ({
+            id: cat.id,
+            slug: cat.slug,
+            name: `${cat.name} (${cat.postCount})`,
+            description: cat.description,
+          }))}
+          activeCategory={category ?? null}
+          allLabel={t('allCategories')}
+        />
+        <TagFilter
+          tags={tags}
+          activeTag={tag ?? null}
+          allLabel={t('allTags')}
+        />
+      </StyledFilters>
       {postsResult.data.length === 0 ? (
-        <p>{t('noResults')}</p>
+        <StyledEmpty>{t('noResults')}</StyledEmpty>
       ) : (
-        <section>
+        <StyledGrid>
           {postsResult.data.map((post) => (
             <PostCard
               key={post.id}
@@ -71,7 +98,7 @@ export async function BlogPage({
               coverImagePublicId={post.coverImage}
               category={post.category}
               tags={post.tags}
-              readingTime={post.readingTime}
+              readingTime={computeReadingTime(post.content)}
               publishedAt={
                 post.publishedAt
                   ? format(new Date(post.publishedAt), 'PP', { locale })
@@ -82,15 +109,17 @@ export async function BlogPage({
               readMoreLabel={t('readMore')}
             />
           ))}
-        </section>
+        </StyledGrid>
       )}
-      <Pagination
-        total={postsResult.total}
-        page={currentPage}
-        limit={POSTS_PER_PAGE}
-        previousLabel={t('pagination.previous')}
-        nextLabel={t('pagination.next')}
-      />
-    </main>
+      <StyledPaginationWrapper>
+        <Pagination
+          total={postsResult.total}
+          page={currentPage}
+          limit={POSTS_PER_PAGE}
+          previousLabel={t('pagination.previous')}
+          nextLabel={t('pagination.next')}
+        />
+      </StyledPaginationWrapper>
+    </StyledPage>
   )
 }

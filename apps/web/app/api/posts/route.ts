@@ -9,7 +9,7 @@ import {
   getPublishedPostsPaginated,
   slugExistsForLocale,
 } from '@web/lib/db/queries/posts'
-import { computeReadingTime } from '@web/utils/readingTime'
+import { computeReadingTime } from '@web/utils/computeReadingTime'
 
 const CACHE_HEADERS = {
   'Cache-Control': 's-maxage=60, stale-while-revalidate=3600',
