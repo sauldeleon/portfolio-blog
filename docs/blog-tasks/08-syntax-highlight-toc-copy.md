@@ -85,6 +85,7 @@ Auto-generated from post headings (`h2`, `h3`, `h4`). Sticky on desktop, collaps
 ### Tasks
 
 - [ ] Add `remarkHeadings` custom remark plugin to extract TOC from MDX AST
+- [ ] Create `lib/mdx/remarkHeadings.spec.ts` — test heading extraction (depth, text, id generation)
 - [ ] Auto-generate heading `id` from text (slug: lowercase, spaces→hyphens)
 - [ ] Create `libs/table-of-contents/` lib:
   - `TableOfContents.tsx` (Client Component)

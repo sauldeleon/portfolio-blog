@@ -78,10 +78,18 @@ This covers:
   - `PostHero.styles.ts`
   - `PostHero.spec.tsx`
   - `index.ts`
-- [ ] Create `libs/callout/` lib (MDX `[!NOTE]`, `[!WARNING]`, `[!TIP]` variants)
+- [ ] Create `libs/callout/` lib:
+  - `Callout.tsx`
+  - `Callout.spec.tsx` — test NOTE/WARNING/TIP variants render
+  - `Callout.styles.ts`
+  - `index.ts`
 - [ ] Add `generateStaticParams` for ISR pre-rendering — generate params for both locales: `[{ lng: 'en', id, slug: enSlug }, { lng: 'es', id, slug: esSlug }]`
 - [ ] Add `revalidate = 60` (ISR — see #16 for on-demand revalidation)
 - [ ] Install `next-mdx-remote`: add to deps in `apps/web/package.json`
+- [ ] Create `app/[lng]/blog/[id]/page.spec.tsx` — test redirect to correct locale slug, 404 on missing post
+- [ ] Create `app/[lng]/blog/[id]/[slug]/page.spec.tsx` — test render, wrong-slug redirect, draft 404
+- [ ] Create `app/blog/preview/[token]/page.spec.tsx` — test valid/invalid token
+- [ ] Create `lib/mdx/renderMDX.spec.ts` — test MDX compilation, component map registration
 
 ## Acceptance Criteria
 

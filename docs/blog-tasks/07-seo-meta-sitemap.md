@@ -115,6 +115,7 @@ const blogIndexRoutes = ['en', 'es'].map((lng) => ({
 - [ ] Add `<link rel="alternate" hreflang="...">` via Next.js `alternates` API — use locale-specific slug per alternate
 - [ ] Verify `og:locale` correct per `[lng]` segment (`en_US` / `es_ES`)
 - [ ] Preview metadata in browser devtools + og debugger
+- [ ] Create `app/sitemap.spec.ts` — test sitemap includes both locale URLs with correct slugs, excludes drafts
 
 ## Acceptance Criteria
 

@@ -78,7 +78,9 @@ return {
 ## Tasks
 
 - [ ] Create `app/og/route.tsx` — `ImageResponse` handler
+- [ ] Create `app/og/route.spec.ts` — test query param parsing, fallback title, cache headers
 - [ ] Create `app/og/OgImageTemplate.tsx` — JSX layout for OG image (inline styles only — `next/og` limitation)
+- [ ] Create `app/og/OgImageTemplate.spec.tsx` — test renders with/without cover, category badge, title clamp
 - [ ] Load Inter font via `fetch` from Google Fonts in route handler
 - [ ] Handle missing/broken cover gracefully (fallback to gradient)
 - [ ] Title truncation: CSS `-webkit-line-clamp: 2`

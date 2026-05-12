@@ -121,6 +121,9 @@ export const postTranslations = pgTable(
 - [ ] Add migration scripts: `yarn db:generate`, `yarn db:migrate`, `yarn db:studio`
 - [ ] Add env vars to `.env.local.example`: `POSTGRES_URL`, `POSTGRES_URL_NON_POOLING`, `NEXT_PUBLIC_SITE_URL`
 - [ ] Run initial migration in dev + staging
+- [ ] Create `lib/db/queries/posts.spec.ts` — test all query helpers (mock Drizzle client)
+- [ ] Create `lib/db/queries/categories.spec.ts` — test all category helpers
+- [ ] Create `lib/db/queries/tags.spec.ts` — test `getAllTags`, `getPostCountPerTag`
 
 ## Acceptance Criteria
 

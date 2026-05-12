@@ -138,6 +138,7 @@ if (!success) return NextResponse.json({ error: 'Too many requests' }, { status:
 - [ ] Add rate limit check in `middleware.ts` for `POST /api/auth/callback/credentials`
 - [ ] Return 429 with `Retry-After: 60` header when limit exceeded
 - [ ] Login page shows "Too many attempts, try again in 1 minute" error on 429
+- [ ] Create `middleware.spec.ts` — extend with rate limit tests: 10th req passes, 11th returns 429, non-auth routes unaffected
 
 ## Acceptance Criteria
 

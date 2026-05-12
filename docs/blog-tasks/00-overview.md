@@ -52,6 +52,38 @@ Next.js App Router (existing)
     └── utils/                            # readingTime, slugify, etc.
 ```
 
+## Test File Conventions
+
+All test files co-located with source. Pattern per component lib:
+
+```
+libs/post-card/
+├── PostCard.tsx
+├── PostCard.spec.tsx      ← unit + interaction tests
+├── PostCard.styles.ts
+└── index.ts
+```
+
+Pattern per API route:
+
+```
+app/api/posts/
+├── route.ts
+└── route.spec.ts          ← mock DB layer, test all HTTP methods + status codes
+```
+
+Pattern per utility / query helper:
+
+```
+lib/db/queries/
+├── posts.ts
+└── posts.spec.ts          ← mock Drizzle client, test all helpers
+```
+
+100% coverage enforced on statements, branches, functions, lines — no exceptions.
+
+---
+
 ## Translation Model
 
 Each post has one row in `posts` (locale-agnostic metadata) and one row in `post_translations` per locale:

@@ -114,6 +114,11 @@ ORDER BY count DESC, tag ASC;
 - [ ] Return appropriate HTTP status codes (200, 400, 404)
 - [ ] Add `Cache-Control` headers for public caching (`s-maxage=60, stale-while-revalidate=3600`)
 - [ ] `GET /api/categories` and `GET /api/tags` also cached (categories change rarely, tags derived live)
+- [ ] Create `app/api/posts/route.spec.ts` — test GET pagination, filters, lng validation
+- [ ] Create `app/api/posts/[id]/route.spec.ts` — test GET single post, 404 cases
+- [ ] Create `app/api/posts/[id]/related/route.spec.ts` — test related posts response
+- [ ] Create `app/api/categories/route.spec.ts` — test GET all categories
+- [ ] Create `app/api/tags/route.spec.ts` — test GET tags with counts
 
 ## Acceptance Criteria
 

@@ -63,6 +63,9 @@ Dashboard showing all posts (draft + published + archived). Search and filter. A
 - [ ] "Unpublish" → `PUT /api/posts/[id]` with `{ status: 'draft', publishedAt: null }`
 - [ ] Optimistic UI update after mutations
 - [ ] Loading skeleton while fetching
+- [ ] Create `app/admin/login/LoginForm.spec.tsx` — test form submit, error display, redirect on success
+- [ ] Create `app/admin/posts/PostTable.spec.tsx` — test filter tabs, row actions, optimistic updates
+- [ ] Create `app/admin/layout.spec.tsx` — test nav links render, logout action
 
 ## Acceptance Criteria
 

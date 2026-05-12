@@ -31,6 +31,7 @@ Display: `"5 min read"` (i18n key: `blog.readingTime` → `"{{count}} min read"`
 ### Tasks
 
 - [ ] Create `lib/utils/readingTime.ts` with `calculateReadingTime`
+- [ ] Create `lib/utils/readingTime.spec.ts` — test edge cases (empty, short, long content, MDX tags stripped)
 - [ ] Add `readingTime` to public post API response (computed from locale `content`, not stored)
 - [ ] Display on `PostCard` (listing)
 - [ ] Display in `PostHero` (detail page header)
@@ -66,6 +67,7 @@ Show 3 related posts at bottom of post detail page, based on shared tags/categor
 ### Tasks
 
 - [ ] Add `getRelatedPosts(postId, locale, { category, tags })` query in `lib/db/queries/`
+- [ ] Create `lib/db/queries/posts.spec.ts` — extend with `getRelatedPosts` tests (mock Drizzle)
 - [ ] Add `GET /api/posts/[id]/related?lng=[lng]` endpoint (public, returns up to 3 posts with locale fields)
 - [ ] Add `RelatedPosts` section to `app/[lng]/blog/[id]/[slug]/page.next.tsx`
 - [ ] Reuse `PostCard` component

@@ -59,8 +59,11 @@ export async function GET() {
 ### Tasks
 
 - [ ] Create `app/feed.xml/route.ts` — EN feed, uses `process.env.NEXT_PUBLIC_SITE_URL` as base URL
+- [ ] Create `app/feed.xml/route.spec.ts` — test content-type header, post count, EN slugs in URLs
 - [ ] Create `app/feed.es.xml/route.ts` — ES feed, same generator with `locale: 'es'`
+- [ ] Create `app/feed.es.xml/route.spec.ts` — test ES slugs in URLs, `<language>es</language>`
 - [ ] Create `lib/rss/generateRSS.ts` — pure function accepting `(posts: PublicPost[], locale: 'en' | 'es')`, testable
+- [ ] Create `lib/rss/generateRSS.spec.ts` — test valid RSS XML output, item fields, both locales
 - [ ] Add `<link rel="alternate" type="application/rss+xml" title="EN" href="/feed.xml">` to `app/layout.tsx`
 - [ ] Add `<link rel="alternate" type="application/rss+xml" title="ES" href="/feed.es.xml">` to `app/layout.tsx`
 
@@ -107,6 +110,7 @@ Inject via `<script type="application/ld+json">` in page.
 ### Tasks
 
 - [ ] Create `lib/seo/generateArticleJsonLd.ts`
+- [ ] Create `lib/seo/generateArticleJsonLd.spec.ts` — test schema shape, locale-specific fields, inLanguage value
 - [ ] Inject JSON-LD in `app/[lng]/blog/[id]/[slug]/page.next.tsx`
 
 ---

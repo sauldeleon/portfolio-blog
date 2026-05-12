@@ -70,10 +70,13 @@ MDX posts use custom `<BlogImage>` component:
   - Return typed response
 - [ ] Create `libs/blog-image/` lib:
   - `BlogImage.tsx` — `CldImage` wrapper with position prop
+  - `BlogImage.spec.tsx` — test all position variants render correctly
   - `BlogImage.styles.ts` — styled-components for each position variant
   - `index.ts`
 - [ ] Register `BlogImage` in MDX components map (used in post renderer)
 - [ ] Add `next.config` Cloudinary domain to `images.remotePatterns`
+- [ ] Create `lib/cloudinary/upload.spec.ts` — test upload helper (mock Cloudinary SDK)
+- [ ] Create `app/api/upload/route.spec.ts` — test auth guard, file validation (size, type), 413/415 responses
 
 ## Acceptance Criteria
 

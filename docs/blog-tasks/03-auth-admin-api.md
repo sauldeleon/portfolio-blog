@@ -149,7 +149,14 @@ Hard delete.
 - [ ] Add `scripts/hash-password.ts` — helper to generate bcrypt hash for env setup
 - [ ] Document env var setup in `.env.local.example`
 - [ ] Validate all request bodies with zod schemas
-- [ ] Per-locale slug uniqueness: `(locale, slug)` unique constraint enforced at API layer (DB constraint exists but surface 409 with clear message)
+- [ ] Per-locale slug uniqueness
+- [ ] Create `lib/auth/config.spec.ts` — test credentials validation, bcrypt compare
+- [ ] Create `app/api/auth/me/route.spec.ts` — test 200 with session, 401 without
+- [ ] Create `app/api/posts/route.spec.ts` — test POST (auth, validation, translation insert)
+- [ ] Create `app/api/posts/[id]/route.spec.ts` — test PUT/DELETE (auth, soft delete)
+- [ ] Create `app/api/categories/route.spec.ts` — test POST (auth, slug validation, 409)
+- [ ] Create `app/api/categories/[slug]/route.spec.ts` — test PUT (slug immutable), DELETE (FK check)
+- [ ] Create `middleware.spec.ts` — test auth guard for all protected routes: `(locale, slug)` unique constraint enforced at API layer (DB constraint exists but surface 409 with clear message)
 
 ## Acceptance Criteria
 

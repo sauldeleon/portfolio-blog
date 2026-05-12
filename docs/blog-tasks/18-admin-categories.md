@@ -67,6 +67,8 @@ Description: [Optional summary   ]
 - [ ] Confirm dialog before delete when 0 published posts
 - [ ] Optimistic UI: new row appears immediately, rolls back on API error
 - [ ] Edit inline (or modal): update name + description, slug shown as read-only text
+- [ ] Create `app/admin/categories/CategoryTable.spec.tsx` — test edit/delete actions, disabled delete with post count tooltip, optimistic update rollback
+- [ ] Create `app/admin/categories/CategoryForm.spec.tsx` — test slug auto-gen, 409 error display, create flow
 
 ## Acceptance Criteria
 

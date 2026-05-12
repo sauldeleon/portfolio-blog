@@ -82,6 +82,7 @@ Displays in listing grid:
 - [ ] `calculateReadingTime` utility implemented in #09 — import from `lib/utils/readingTime.ts`
 - [ ] Add loading state (skeleton cards while fetching)
 - [ ] Add empty state (no posts match filter)
+- [ ] Create `app/[lng]/blog/page.spec.tsx` — test server component renders posts, passes lng to API
 
 ## Acceptance Criteria
 

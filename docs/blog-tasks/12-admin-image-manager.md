@@ -65,6 +65,10 @@ Same image grid, but in a modal with:
 - [ ] Add "Images" nav link to admin layout
 - [ ] Copy URL → clipboard with feedback
 - [ ] Delete with confirm dialog → removes from Cloudinary + updates list
+- [ ] Create `app/api/images/route.spec.ts` — test GET auth guard, Cloudinary response mapping
+- [ ] Create `app/api/images/[publicId]/route.spec.ts` — test DELETE auth guard, Cloudinary destroy call
+- [ ] Create `app/admin/images/ImageGrid.spec.tsx` — test grid renders, copy URL, delete confirm
+- [ ] Create `app/admin/images/ImagePickerModal.spec.tsx` — test search filter, selection, position picker, insert output
 
 ## Acceptance Criteria
 

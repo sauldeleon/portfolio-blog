@@ -33,10 +33,16 @@ Series navigation uses locale-specific slugs for prev/next links:
 ### Tasks
 
 - [ ] Add `GET /api/series/[seriesId]?lng=[lng]` — returns all posts with that `seriesId`, ordered by `seriesOrder`, with locale-specific title and slug for `lng`
+- [ ] Create `app/api/series/[seriesId]/route.spec.ts` — test ordering, locale fields, missing lng 400
 - [ ] Create `SeriesNav` component (prev/next links within series — uses locale slug in href)
 - [ ] Add `SeriesNav` to post detail page (below hero, above content)
 - [ ] Admin post editor: `Series ID` + `Series Order` fields (from #11 — already specified)
 - [ ] i18n keys: `blog.series.partOf`, `blog.series.prev`, `blog.series.next`
+- [ ] Create `libs/series-nav/` lib:
+  - `SeriesNav.tsx`
+  - `SeriesNav.spec.tsx` — test prev/next links use locale slug, hidden when no series
+  - `SeriesNav.styles.ts`
+  - `index.ts`
 
 ---
 
@@ -80,6 +86,7 @@ Recommend **Option B** — Option A ties publish timing to request traffic.
 
 ### Code Tasks
 
+- [ ] Create `app/api/cron/publish/route.spec.ts` — test CRON_SECRET auth, batch publish logic, revalidateTag call
 - [ ] Create `app/api/cron/publish/route.ts`:
   - Verify `Authorization: Bearer <CRON_SECRET>` header — return 401 if missing/wrong
   - Query posts where `scheduled_at <= NOW()` AND `status = 'draft'` AND `deleted_at IS NULL` AND both translations have content
@@ -108,6 +115,7 @@ Already in DB schema (`deletedAt`). This issue ensures all queries respect it.
 - [ ] Update `softDeletePost(id)` in `lib/db/queries/posts.ts` to set both `deletedAt = now()` AND `status = 'archived'`
 - [ ] Update `restorePost(id)` helper: sets `deletedAt = null`, `status = 'draft'` — add to `lib/db/queries/posts.ts`
 - [ ] Add `PUT /api/posts/[id]/restore` endpoint (admin) — calls `restorePost`
+- [ ] Create `app/api/posts/[id]/restore/route.spec.ts` — test auth, sets correct fields
 - [ ] Add "Restore" action in admin for archived posts (from #10 admin post list)
 
 ---
@@ -127,7 +135,7 @@ Each locale generates its own slug from its own title. Already specified in #11.
 - [ ] Add uniqueness check in `POST /api/posts` — per locale: return 409 if `(locale, slug)` taken
 - [ ] Add uniqueness check in `PUT /api/posts/[id]` — per locale, exclude self from check
 - [ ] Create `lib/utils/slugify.ts` — pure function
-- [ ] Unit tests for `slugify` (edge cases: unicode, special chars, length)
+- [ ] Create `lib/utils/slugify.spec.ts` — test unicode, special chars, max length, already-valid input
 
 ---
 

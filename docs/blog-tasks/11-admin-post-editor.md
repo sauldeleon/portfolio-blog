@@ -98,6 +98,13 @@ Debounced re-render (300ms after last keystroke) to avoid performance issues.
 - [ ] Unsaved changes warning on navigate away (`beforeunload` event)
 - [ ] "Insert Image" modal: search uploaded images, select, pick position, insert MDX tag
 - [ ] Cover image: drag-drop or click → upload via `POST /api/upload` → show preview
+- [ ] Create `app/admin/posts/_components/PostEditor.spec.tsx` — test tab switching preserves content, save/publish calls
+- [ ] Create `app/admin/posts/_components/LocaleTab.spec.tsx` — test tab renders active state, completion indicator
+- [ ] Create `app/admin/posts/_components/TranslationForm.spec.tsx` — test field binding per locale
+- [ ] Create `app/admin/posts/_components/MetadataPanel.spec.tsx` — test category dropdown, tag input, cover upload
+- [ ] Create `app/admin/posts/_components/SlugInput.spec.tsx` — test auto-gen from title, manual edit, URL preview
+- [ ] Create `app/admin/posts/_components/TagInput.spec.tsx` — test add/remove tags via Enter and comma
+- [ ] Create `app/admin/posts/_components/CoverImageUpload.spec.tsx` — test drag-drop, file validation, preview
 
 ## Acceptance Criteria
 
