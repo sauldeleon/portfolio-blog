@@ -6,9 +6,13 @@ interface AdminLayoutProps {
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
   return (
-    <div data-testid="admin-layout">
-      <AdminNav />
-      <main>{children}</main>
-    </div>
+    <html lang="en">
+      <body>
+        <div data-testid="admin-layout">
+          <AdminNav />
+          <main>{children}</main>
+        </div>
+      </body>
+    </html>
   )
 }
