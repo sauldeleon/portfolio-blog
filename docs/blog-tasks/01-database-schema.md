@@ -8,7 +8,14 @@
 
 Need DB layer before any API or UI work. Vercel Postgres (Neon) with Drizzle ORM — edge-compatible, type-safe, minimal boilerplate.
 
-Two tables: `categories` (predefined, admin-managed) and `posts` (tags stored as `text[]` array — free-form, created at post-write time).
+Three tables: `categories` (predefined, admin-managed), `posts` (locale-agnostic metadata), and `post_translations` (locale-specific content: title, slug, excerpt, content). Tags stored as `text[]` array on posts — free-form, created at post-write time.
+
+Each post has two URLs, one per locale:
+
+- `/en/blog/[id]/[slug-en]`
+- `/es/blog/[id]/[slug-es]`
+
+Visiting `/[lng]/blog/[id]` (no slug) redirects to `/[lng]/blog/[id]/[locale-slug]` (see #06).
 
 ## Tasks
 
@@ -32,7 +39,7 @@ Two tables: `categories` (predefined, admin-managed) and `posts` (tags stored as
 ### Code
 
 - [ ] Install deps: `drizzle-orm`, `drizzle-kit`, `@neondatabase/serverless`, `ulid`
-- [ ] Create `lib/db/schema.ts` with both tables:
+- [ ] Create `lib/db/schema.ts` with all three tables:
 
 ```ts
 export const categories = pgTable('categories', {
@@ -43,9 +50,6 @@ export const categories = pgTable('categories', {
 
 export const posts = pgTable('posts', {
   id: text('id').primaryKey(), // ULID
-  slug: text('slug').notNull().unique(),
-  title: text('title').notNull(),
-  content: text('content').notNull(), // MDX string
   category: text('category')
     .notNull()
     .references(() => categories.slug),
@@ -55,7 +59,6 @@ export const posts = pgTable('posts', {
     .notNull()
     .default('draft'),
   coverImage: text('cover_image'),
-  excerpt: text('excerpt').notNull(),
   seriesId: text('series_id'),
   seriesOrder: integer('series_order'),
   scheduledAt: timestamp('scheduled_at', { withTimezone: true }),
@@ -65,6 +68,24 @@ export const posts = pgTable('posts', {
   deletedAt: timestamp('deleted_at', { withTimezone: true }), // soft delete
   previewToken: text('preview_token').unique(), // for draft preview URLs
 })
+
+export const postTranslations = pgTable(
+  'post_translations',
+  {
+    postId: text('post_id')
+      .notNull()
+      .references(() => posts.id, { onDelete: 'cascade' }),
+    locale: text('locale', { enum: ['en', 'es'] }).notNull(),
+    title: text('title').notNull(),
+    slug: text('slug').notNull(), // locale-specific slug
+    excerpt: text('excerpt').notNull(),
+    content: text('content').notNull(), // MDX string
+  },
+  (t) => ({
+    pk: primaryKey({ columns: [t.postId, t.locale] }),
+    slugLocaleUnique: unique().on(t.locale, t.slug), // slug unique per locale
+  }),
+)
 ```
 
 - [ ] Add GIN index on `posts.tags` for fast array queries:
@@ -76,14 +97,16 @@ export const posts = pgTable('posts', {
 
 - [ ] Create `lib/db/index.ts` — Drizzle client using Neon serverless driver (`@neondatabase/serverless`)
 - [ ] Create `lib/db/queries/posts.ts` — typed post query helpers:
-  - `getPosts({ page, limit, category, tag, status })` — all filters `WHERE deleted_at IS NULL` by default
-  - `getPostById(id)`
-  - `getPostBySlug(slug)`
-  - `getPostByPreviewToken(token)`
-  - `createPost(data)`
-  - `updatePost(id, data)`
-  - `softDeletePost(id)`
-  - `getRelatedPosts(postId, limit)`
+  - `getPosts({ page, limit, category, tag, status, locale })` — joins `post_translations` on locale, filters `WHERE deleted_at IS NULL` by default
+  - `getPostById(id, locale)` — joins translation for given locale
+  - `getPostBySlug(slug, locale)` — lookup by locale-specific slug
+  - `getPostByPreviewToken(token)` — returns post with all translations
+  - `createPost(data, translations)` — inserts post row + both translation rows atomically
+  - `updatePost(id, data)` — update post metadata
+  - `updateTranslation(postId, locale, data)` — update one translation
+  - `softDeletePost(id)` — sets `deletedAt = now()` AND `status = 'archived'`
+  - `restorePost(id)` — sets `deletedAt = null`, `status = 'draft'`
+  - `getRelatedPosts(postId, locale, limit)` — joins translations for locale
 - [ ] Create `lib/db/queries/categories.ts` — typed category query helpers:
   - `getCategories()` — all categories, ordered by name
   - `getCategoryBySlug(slug)`
@@ -94,7 +117,7 @@ export const posts = pgTable('posts', {
   - `getAllTags()` — `SELECT DISTINCT unnest(tags) FROM posts WHERE deleted_at IS NULL ORDER BY 1`
   - `getTagsForPost(postId)` — returns `post.tags` array directly
   - `getPostCountPerTag()` — `SELECT unnest(tags) as tag, count(*) FROM posts WHERE status='published' AND deleted_at IS NULL GROUP BY 1`
-- [ ] Setup Drizzle config (`drizzle.config.ts`)
+- [ ] Setup Drizzle config (`drizzle.config.ts`) — use `POSTGRES_URL_NON_POOLING` for migrations
 - [ ] Add migration scripts: `yarn db:generate`, `yarn db:migrate`, `yarn db:studio`
 - [ ] Add env vars to `.env.local.example`: `POSTGRES_URL`, `POSTGRES_URL_NON_POOLING`, `NEXT_PUBLIC_SITE_URL`
 - [ ] Run initial migration in dev + staging
@@ -102,9 +125,10 @@ export const posts = pgTable('posts', {
 ## Acceptance Criteria
 
 - [ ] `yarn db:migrate` runs without error
-- [ ] Drizzle Studio shows `posts` + `categories` tables with correct columns
+- [ ] Drizzle Studio shows `posts`, `categories`, `post_translations` tables with correct columns
 - [ ] GIN index on `posts.tags` confirmed in DB
 - [ ] `WHERE tags @> ARRAY['react']` query works on published posts
+- [ ] `post_translations` unique constraint on `(locale, slug)` enforced
 - [ ] All query helpers are typed — no `any`
 - [ ] 100% test coverage on all query helpers (use in-memory mock or test DB)
 
@@ -117,4 +141,6 @@ export const posts = pgTable('posts', {
 - `scheduledAt` nullable — cron publish job checks this (see #15)
 - Validate unknown category slug at API layer before insert (reject with 422)
 - `NEXT_PUBLIC_SITE_URL` — used by sitemap (#07), RSS (#13), JSON-LD (#13), OG image (#14), canonical URLs. Set to `https://sauldeleon.com` in Vercel production env, `http://localhost:4200` locally. Add to Vercel dashboard: Settings → Environment Variables.
-- Drizzle migration connection must use `POSTGRES_URL_NON_POOLING` (direct, not pooled) in `drizzle.config.ts`
+- Slug is locale-specific — `adventure-time` in EN, `tiempo-de-aventuras` in ES. Both unique within their locale. Slug uniqueness check in API must scope to locale.
+- `postTranslations` cascades delete from `posts` — deleting a post removes all its translations.
+- Both translations (`en` + `es`) required before a post can be published — enforced at API layer, not DB constraint.

@@ -21,17 +21,19 @@ Group posts into an ordered series (e.g. "Building a Blog, Part 1/3").
 
 ### UI on post detail page
 
+Series navigation uses locale-specific slugs for prev/next links:
+
 ```
 ┌─────────────────────────────────────┐
 │  Part 2 of 3 — "Building a Blog"   │
-│  ← Part 1: Setup  |  Part 3: ... → │
+│  ← Part 1: [EN title]  |  Part 3: [EN title] → │
 └─────────────────────────────────────┘
 ```
 
 ### Tasks
 
-- [ ] Add `GET /api/series/[seriesId]` — returns all posts with that `seriesId`, ordered by `seriesOrder`
-- [ ] Create `SeriesNav` component (prev/next links within series)
+- [ ] Add `GET /api/series/[seriesId]?lng=[lng]` — returns all posts with that `seriesId`, ordered by `seriesOrder`, with locale-specific title and slug for `lng`
+- [ ] Create `SeriesNav` component (prev/next links within series — uses locale slug in href)
 - [ ] Add `SeriesNav` to post detail page (below hero, above content)
 - [ ] Admin post editor: `Series ID` + `Series Order` fields (from #11 — already specified)
 - [ ] i18n keys: `blog.series.partOf`, `blog.series.prev`, `blog.series.next`
@@ -80,7 +82,7 @@ Recommend **Option B** — Option A ties publish timing to request traffic.
 
 - [ ] Create `app/api/cron/publish/route.ts`:
   - Verify `Authorization: Bearer <CRON_SECRET>` header — return 401 if missing/wrong
-  - Query posts where `scheduled_at <= NOW()` AND `status = 'draft'` AND `deleted_at IS NULL`
+  - Query posts where `scheduled_at <= NOW()` AND `status = 'draft'` AND `deleted_at IS NULL` AND both translations have content
   - Update each: `status = 'published'`, `published_at = scheduled_at`
   - Call `revalidateTag('posts')` after batch update (see #16)
 - [ ] Admin editor: datetime picker for schedule (from #11)
@@ -112,17 +114,18 @@ Already in DB schema (`deletedAt`). This issue ensures all queries respect it.
 
 ## 4. Slug Auto-generation
 
-Already specified in #11. Extracted here for tracking.
+Each locale generates its own slug from its own title. Already specified in #11. Extracted here for tracking.
 
-- Auto-generate slug from title on create
-- Editable in post editor
-- Validate uniqueness on save (return 409 Conflict if slug taken)
+- Auto-generate slug from `title` per locale on create
+- Editable per locale in post editor
+- Validate uniqueness **per locale** on save — return 409 Conflict if `(locale, slug)` already taken
 - Slug format: `lowercase-kebab-case`, max 100 chars, strip non-alphanumeric except `-`
+- Example: EN title "Adventure Time" → `adventure-time`, ES title "Tiempo de Aventuras" → `tiempo-de-aventuras`
 
 ### Tasks
 
-- [ ] Add uniqueness check in `POST /api/posts` — return 409 if slug taken
-- [ ] Add uniqueness check in `PUT /api/posts/[id]` — exclude self from check
+- [ ] Add uniqueness check in `POST /api/posts` — per locale: return 409 if `(locale, slug)` taken
+- [ ] Add uniqueness check in `PUT /api/posts/[id]` — per locale, exclude self from check
 - [ ] Create `lib/utils/slugify.ts` — pure function
 - [ ] Unit tests for `slugify` (edge cases: unicode, special chars, length)
 
@@ -130,9 +133,11 @@ Already specified in #11. Extracted here for tracking.
 
 ## Acceptance Criteria
 
-- [ ] Posts with same `seriesId` show prev/next navigation
+- [ ] Posts with same `seriesId` show prev/next navigation with locale-specific slugs in links
 - [ ] Scheduled posts auto-publish at correct time (cron job tested with mocked time)
+- [ ] Scheduled publish only triggers if both translations have content
 - [ ] Soft-deleted posts not returned in any public API
 - [ ] Archived posts visible + restorable in admin
-- [ ] Duplicate slug → 409 response
+- [ ] Duplicate slug within same locale → 409 response
+- [ ] Same slug used in different locales is allowed (e.g. `hello` can exist as both `en/hello` and `es/hello`)
 - [ ] 100% test coverage on all new utilities and API handlers

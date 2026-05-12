@@ -7,7 +7,7 @@
 
 ## Context
 
-E2E tests in `apps/web-e2e` (existing Cypress setup). Cover the main user-facing flows and admin CMS flows.
+E2E tests in `apps/web-e2e` (existing Cypress setup). Cover the main user-facing flows and admin CMS flows. Blog posts have locale-specific URLs — tests cover both EN and ES locales.
 
 ## Test Flows
 
@@ -15,20 +15,28 @@ E2E tests in `apps/web-e2e` (existing Cypress setup). Cover the main user-facing
 
 #### `blog-listing.cy.ts`
 
-- [ ] Visit `/en/blog` → see list of published posts
+- [ ] Visit `/en/blog` → see list of published posts with English titles
+- [ ] Visit `/es/blog` → see same posts with Spanish titles (different card link slugs)
 - [ ] Click category filter → URL updates, list filtered
 - [ ] Click tag filter → URL updates, list filtered
 - [ ] Pagination: click "Next" → page 2 loads
-- [ ] Click post card → navigates to post detail
+- [ ] Click EN post card → navigates to `/en/blog/[id]/[en-slug]`
+- [ ] Click ES post card → navigates to `/es/blog/[id]/[es-slug]`
 
 #### `blog-post-detail.cy.ts`
 
-- [ ] Visit `/en/blog/[id]/[slug]` → post content renders
+- [ ] Visit `/en/blog/[id]/[en-slug]` → English post content renders
+- [ ] Visit `/es/blog/[id]/[es-slug]` → Spanish post content renders
 - [ ] Table of contents visible, clicking heading scrolls to section
 - [ ] Code block copy button: click → clipboard updated (use `cy.window().its('navigator.clipboard')` mock)
 - [ ] Related posts section visible (if data present)
-- [ ] Series navigation visible for series posts (prev/next)
-- [ ] Wrong slug → redirects to canonical slug
+- [ ] Series navigation visible for series posts (prev/next use locale slugs)
+- [ ] Wrong slug → redirects to canonical locale slug
+
+#### `blog-post-redirect.cy.ts`
+
+- [ ] Visit `/en/blog/[id]` (no slug) → 301 redirects to `/en/blog/[id]/[en-slug]`
+- [ ] Visit `/es/blog/[id]` (no slug) → 301 redirects to `/es/blog/[id]/[es-slug]`
 
 #### `blog-draft-preview.cy.ts`
 
@@ -46,8 +54,10 @@ E2E tests in `apps/web-e2e` (existing Cypress setup). Cover the main user-facing
 
 #### `admin-post-management.cy.ts`
 
-- [ ] Create new post: fill form, save draft → appears in post list as Draft
-- [ ] Edit post: change title, save → updated in list
+- [ ] Create new post: fill EN + ES tabs, save draft → appears in post list as Draft
+- [ ] Translation status shows `EN ✓ / ES ✓` after both tabs filled
+- [ ] Publish button disabled until both translations complete
+- [ ] Edit post: change EN title, save → updated in list
 - [ ] Publish post: click Publish → status changes to Published
 - [ ] Unpublish post: click Unpublish → status changes to Draft
 - [ ] Delete post: click Delete, confirm → removed from list (soft delete)
@@ -55,7 +65,8 @@ E2E tests in `apps/web-e2e` (existing Cypress setup). Cover the main user-facing
 
 #### `admin-post-editor.cy.ts`
 
-- [ ] Slug auto-generates from title input
+- [ ] Switching between EN / ES tabs preserves content in each tab
+- [ ] Slug auto-generates from title independently per locale (EN title → EN slug, ES title → ES slug)
 - [ ] MDX preview updates after typing in editor (wait for debounce)
 - [ ] Cover image upload: attach file → preview appears in form
 - [ ] Tag input: type tag + Enter → tag chip appears
@@ -72,7 +83,8 @@ E2E tests in `apps/web-e2e` (existing Cypress setup). Cover the main user-facing
 
 #### `rss.cy.ts`
 
-- [ ] Visit `/feed.xml` → valid XML response, content-type is `application/rss+xml`
+- [ ] Visit `/feed.xml` → valid XML response, content-type is `application/rss+xml`, links use EN slugs
+- [ ] Visit `/feed.es.xml` → valid XML response, content-type is `application/rss+xml`, links use ES slugs
 
 ## Setup
 
@@ -101,7 +113,7 @@ Cypress.Commands.add('adminLogin', () => {
 
 ### Test data
 
-- Seed a known post in DB before test run (Cypress `before` hook using API)
+- Seed a known post in DB before test run (Cypress `before` hook using API) — seed with both EN and ES translations
 - Or use fixtures with mocked API responses for isolated tests
 - Prefer real API calls against a test DB instance
 
@@ -109,6 +121,7 @@ Cypress.Commands.add('adminLogin', () => {
 
 - [ ] Create `apps/web-e2e/src/e2e/blog/blog-listing.cy.ts`
 - [ ] Create `apps/web-e2e/src/e2e/blog/blog-post-detail.cy.ts`
+- [ ] Create `apps/web-e2e/src/e2e/blog/blog-post-redirect.cy.ts`
 - [ ] Create `apps/web-e2e/src/e2e/blog/blog-draft-preview.cy.ts`
 - [ ] Create `apps/web-e2e/src/e2e/admin/admin-auth.cy.ts`
 - [ ] Create `apps/web-e2e/src/e2e/admin/admin-post-management.cy.ts`

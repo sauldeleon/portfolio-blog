@@ -7,59 +7,84 @@ Next.js App Router (existing)
 ├── app/
 │   ├── [lng]/blog/                       # Public blog pages
 │   │   ├── page.next.tsx                 # Listing
+│   │   ├── [id]/page.next.tsx            # Slug redirect → /[lng]/blog/[id]/[locale-slug]
 │   │   └── [id]/[slug]/page.next.tsx     # Post detail
 │   ├── blog/preview/[token]/             # Draft preview (no [lng])
 │   ├── og/route.tsx                      # Dynamic OG image
-│   ├── feed.xml/route.ts                 # RSS feed
+│   ├── feed.xml/route.ts                 # RSS feed (EN)
+│   ├── feed.es.xml/route.ts              # RSS feed (ES)
 │   ├── admin/                            # CMS (outside [lng])
 │   │   ├── login/page.next.tsx
 │   │   ├── posts/page.next.tsx
 │   │   ├── posts/new/page.next.tsx
 │   │   ├── posts/[id]/page.next.tsx
+│   │   ├── categories/page.next.tsx
 │   │   └── images/page.next.tsx
 │   └── api/
-│       ├── posts/route.ts                    # GET (public), POST (admin)
-│       ├── posts/[id]/route.ts               # GET (public), PUT/DELETE (admin)
-│       ├── posts/[id]/related/route.ts       # GET (public)
+│       ├── posts/route.ts                    # GET?lng= (public), POST (admin)
+│       ├── posts/[id]/route.ts               # GET?lng= (public), PUT/DELETE (admin)
+│       ├── posts/[id]/related/route.ts       # GET?lng= (public)
+│       ├── posts/[id]/restore/route.ts       # PUT (admin)
 │       ├── categories/route.ts               # GET (public), POST (admin)
 │       ├── categories/[slug]/route.ts        # PUT/DELETE (admin)
 │       ├── tags/route.ts                     # GET (public) — derived from posts.tags array
+│       ├── series/[seriesId]/route.ts        # GET?lng= (public)
 │       ├── images/route.ts                   # GET (admin)
 │       ├── images/[publicId]/route.ts        # DELETE (admin)
 │       ├── upload/route.ts                   # POST (admin)
 │       ├── preview-mdx/route.ts              # POST (admin)
-│       ├── series/[seriesId]/route.ts        # GET (public)
 │       ├── cron/publish/route.ts             # GET (cron, CRON_SECRET)
 │       └── auth/[...nextauth]/route.ts       # next-auth
 ├── middleware.ts                          # Auth guard + rate limiting
 └── lib/
     ├── db/
     │   ├── index.ts                      # Drizzle client
-    │   ├── schema.ts                     # posts + categories tables
+    │   ├── schema.ts                     # posts + post_translations + categories tables
     │   └── queries/
-    │       ├── posts.ts                  # post CRUD helpers
+    │       ├── posts.ts                  # post CRUD helpers (locale-aware)
     │       ├── categories.ts             # category CRUD helpers
     │       └── tags.ts                   # tag helpers (unnest-based, no table)
     ├── auth/                             # next-auth config
     ├── cloudinary/                       # Upload helpers (folder: sawl.dev - blog)
     ├── mdx/                              # MDX render pipeline
-    ├── rss/                              # RSS generator
+    ├── rss/                              # RSS generator (per locale)
     ├── seo/                              # JSON-LD generators
     └── utils/                            # readingTime, slugify, etc.
 ```
 
+## Translation Model
+
+Each post has one row in `posts` (locale-agnostic metadata) and one row in `post_translations` per locale:
+
+```
+posts.id = "01HX..."
+  ├── post_translations (locale='en', slug='adventure-time',      title='Adventure Time')
+  └── post_translations (locale='es', slug='tiempo-de-aventuras', title='Tiempo de Aventuras')
+
+/en/blog/01HX.../adventure-time       ← EN URL
+/es/blog/01HX.../tiempo-de-aventuras  ← ES URL
+/en/blog/01HX.../                     → 301 → /en/blog/01HX.../adventure-time
+/es/blog/01HX.../                     → 301 → /es/blog/01HX.../tiempo-de-aventuras
+```
+
+- `id` is stable — used for DB lookup and URL
+- `slug` is locale-specific — different per language
+- Both translations required before publish
+- Slug unique per locale — `(locale, slug)` compound unique constraint
+
 ## Tech Stack
 
-| Concern          | Choice                                                    |
-| ---------------- | --------------------------------------------------------- |
-| Database         | Vercel Postgres (Neon)                                    |
-| ORM              | Drizzle ORM                                               |
-| Auth             | next-auth v5 Credentials                                  |
-| Images           | Cloudinary (`sawl.dev - blog` folder) + `next-cloudinary` |
-| MDX              | `next-mdx-remote` (DB-stored content)                     |
-| Editor           | `@uiw/react-md-editor` (SSR-safe via dynamic import)      |
-| Syntax highlight | `rehype-pretty-code` + `shiki`                            |
-| Rate limiting    | `@upstash/ratelimit` + Upstash Redis                      |
+| Concern             | Choice                                                                                   |
+| ------------------- | ---------------------------------------------------------------------------------------- |
+| Database            | Vercel Postgres (Neon)                                                                   |
+| ORM                 | Drizzle ORM                                                                              |
+| Auth                | next-auth v5 Credentials                                                                 |
+| Images              | Cloudinary (`sawl.dev - blog` folder) + `next-cloudinary`                                |
+| MDX                 | `next-mdx-remote` (DB-stored content)                                                    |
+| Editor              | `@uiw/react-md-editor` (SSR-safe via dynamic import)                                     |
+| Syntax highlight    | `rehype-pretty-code` + `shiki`                                                           |
+| Rate limiting       | `@upstash/ratelimit` + Upstash Redis                                                     |
+| i18n (post content) | `post_translations` table — EN + ES per post, locale-specific title/slug/excerpt/content |
 
 ---
 

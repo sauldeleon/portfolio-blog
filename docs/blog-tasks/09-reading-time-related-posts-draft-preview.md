@@ -12,7 +12,7 @@ Three content-enhancement features for the post detail and listing pages.
 
 ## 1. Reading Time Estimate
 
-Calculated from MDX word count. Displayed on listing card and post header.
+Calculated from MDX word count of the current locale's `content` field. Displayed on listing card and post header.
 
 ```ts
 // lib/utils/readingTime.ts
@@ -31,7 +31,7 @@ Display: `"5 min read"` (i18n key: `blog.readingTime` → `"{{count}} min read"`
 ### Tasks
 
 - [ ] Create `lib/utils/readingTime.ts` with `calculateReadingTime`
-- [ ] Add `readingTime` to public post API response (computed, not stored)
+- [ ] Add `readingTime` to public post API response (computed from locale `content`, not stored)
 - [ ] Display on `PostCard` (listing)
 - [ ] Display in `PostHero` (detail page header)
 - [ ] Add i18n key `blog.readingTime` in en + es
@@ -40,18 +40,19 @@ Display: `"5 min read"` (i18n key: `blog.readingTime` → `"{{count}} min read"`
 
 ## 2. Related Posts
 
-Show 3 related posts at bottom of post detail page, based on shared tags/category.
+Show 3 related posts at bottom of post detail page, based on shared tags/category. Returns locale-specific title and slug via `?lng` param.
 
 ### Algorithm
 
 ```ts
 // lib/db/queries/getRelatedPosts.ts
-// SELECT * FROM posts
-// WHERE id != currentId
-// AND status = 'published'
-// AND deleted_at IS NULL
-// AND (category = currentCategory OR tags && currentTags)
-// ORDER BY matching_tags_count DESC, published_at DESC
+// SELECT posts.*, pt.title, pt.slug, pt.excerpt FROM posts
+// JOIN post_translations pt ON pt.post_id = posts.id AND pt.locale = $locale
+// WHERE posts.id != $currentId
+// AND posts.status = 'published'
+// AND posts.deleted_at IS NULL
+// AND (posts.category = $currentCategory OR posts.tags && $currentTags)
+// ORDER BY matching_tags_count DESC, posts.published_at DESC
 // LIMIT 3
 ```
 
@@ -60,11 +61,12 @@ Show 3 related posts at bottom of post detail page, based on shared tags/categor
 - Grid of 3 `PostCard` (reuses component from #05)
 - Section heading: `blog.relatedPosts` i18n key
 - Hidden if fewer than 1 related post found
+- PostCard links use locale-specific slug from translation
 
 ### Tasks
 
-- [ ] Add `getRelatedPosts(postId, { category, tags })` query in `lib/db/queries/`
-- [ ] Add `GET /api/posts/[id]/related` endpoint (public, returns up to 3 posts)
+- [ ] Add `getRelatedPosts(postId, locale, { category, tags })` query in `lib/db/queries/`
+- [ ] Add `GET /api/posts/[id]/related?lng=[lng]` endpoint (public, returns up to 3 posts with locale fields)
 - [ ] Add `RelatedPosts` section to `app/[lng]/blog/[id]/[slug]/page.next.tsx`
 - [ ] Reuse `PostCard` component
 - [ ] Add i18n key `blog.relatedPosts`
@@ -84,6 +86,7 @@ URL: `/blog/preview/[token]` (implemented in #06 — this issue covers the token
 2. Admin copies preview URL from post editor
 3. Anyone with URL can view draft (no login needed)
 4. Token rotates on post publish (set to null or new value)
+5. Preview shows content for both locales — use language toggle or default to `en`
 
 ### Tasks
 
@@ -97,9 +100,9 @@ URL: `/blog/preview/[token]` (implemented in #06 — this issue covers the token
 
 ## Acceptance Criteria
 
-- [ ] Reading time shows on listing cards and post header
+- [ ] Reading time shows on listing cards and post header (computed from locale content)
 - [ ] `calculateReadingTime` unit tested with various content sizes
-- [ ] Related posts appear at bottom of post with shared category/tags
+- [ ] Related posts appear at bottom of post with shared category/tags, using locale-specific slugs
 - [ ] Related posts hidden when no matches
 - [ ] Preview URL works for draft post without login
 - [ ] Preview URL 404s after post is published (token rotated)

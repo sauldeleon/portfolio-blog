@@ -7,7 +7,7 @@
 
 ## Context
 
-Admin CMS lives at `/admin` (outside `[lng]` segment). Minimal, functional UI. No public branding needed — this is a private tool.
+Admin CMS lives at `/admin` (outside `[lng]` segment). Minimal, functional UI. No public branding needed — this is a private tool. Admin UI is English-only. Post list shows translation completeness (EN + ES indicators per row).
 
 ---
 
@@ -45,18 +45,21 @@ Dashboard showing all posts (draft + published + archived). Search and filter. A
 - Logout button (top right)
 - Search input (filter by title, client-side for ≤100 posts, server-side if >100)
 - Filter tabs: All | Published | Draft | Archived
-- Table columns: Title | Status | Category | Published date | Updated date | Actions
+- Table columns: Title (EN) | Status | Category | Translations | Published date | Updated date | Actions
+- **Translations column**: shows `EN ✓ / ES ✓` or `EN ✓ / ES ✗` — indicates which locales have content
 - Row actions: Edit → `/admin/posts/[id]` | Preview | Delete (soft) | Publish/Unpublish toggle
+- Publish blocked (button disabled with tooltip) if any translation is missing title/content
 - Pagination (25 per page)
 
 ### Tasks
 
-- [ ] Create `app/admin/posts/page.next.tsx` (Server Component, fetches all posts including drafts)
+- [ ] Create `app/admin/posts/page.next.tsx` (Server Component, fetches all posts including drafts with both translations)
 - [ ] Create `app/admin/posts/PostTable.tsx` (Client Component for interactivity)
-- [ ] Create `app/admin/layout.next.tsx` — shared admin shell (top nav, logout button)
-- [ ] Fetch `GET /api/posts?status=all` — add `status=all` support to API (admin-only, check session)
+- [ ] Create `app/admin/layout.next.tsx` — shared admin shell (top nav, logout button, "Categories" nav link)
+- [ ] Fetch `GET /api/posts?status=all` — add `status=all` support to API (admin-only, check session, no `lng` needed — returns all translations)
+- [ ] Show translation status per row: `EN ✓ / ES ✓` based on whether title + content exist per locale
 - [ ] "Delete" row action → calls `DELETE /api/posts/[id]`, confirm dialog before
-- [ ] "Publish" toggle → calls `PUT /api/posts/[id]` with `{ status: 'published', publishedAt: new Date() }`
+- [ ] "Publish" toggle → disabled if any translation incomplete; calls `PUT /api/posts/[id]` with `{ status: 'published', publishedAt: new Date() }`
 - [ ] "Unpublish" → `PUT /api/posts/[id]` with `{ status: 'draft', publishedAt: null }`
 - [ ] Optimistic UI update after mutations
 - [ ] Loading skeleton while fetching
@@ -69,6 +72,8 @@ Dashboard showing all posts (draft + published + archived). Search and filter. A
 - [ ] `/admin/posts` redirects to `/admin/login` when unauthenticated (middleware)
 - [ ] All posts (all statuses) visible in table
 - [ ] Filter tabs work
+- [ ] Translations column shows correct EN/ES status per post
+- [ ] Publish button disabled when any translation missing content
 - [ ] Delete shows confirm dialog, soft-deletes row, removes from table
 - [ ] 100% test coverage
 
@@ -77,3 +82,4 @@ Dashboard showing all posts (draft + published + archived). Search and filter. A
 - Admin UI does not need i18n — English only
 - Avoid heavy UI libraries — use styled-components consistent with rest of codebase
 - `status=all` query param only works when request has valid admin session (middleware check in API route)
+- Admin list title column shows EN title (fallback to ES if EN missing, show `—` if both missing)

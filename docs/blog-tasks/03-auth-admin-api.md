@@ -40,19 +40,60 @@ NEXTAUTH_URL=http://localhost:4200   # dev only — production uses live URL
 
 ## Admin Write Endpoints — Posts
 
+All post write endpoints manage both the `posts` row and its `post_translations` rows.
+
 ### `POST /api/posts`
 
-Create post. Body: all Post fields except `id`, `createdAt`, `updatedAt`.
+Create post. Body:
+
+```ts
+{
+  // post metadata (locale-agnostic):
+  category: string
+  tags: string[]
+  author: string
+  coverImage?: string
+  seriesId?: string
+  seriesOrder?: number
+  scheduledAt?: string
+  // translations (both required before publish, either may be partial for draft):
+  translations: {
+    en: { title: string; slug: string; excerpt: string; content: string }
+    es: { title: string; slug: string; excerpt: string; content: string }
+  }
+}
+```
 
 - Validates `category` slug exists in `categories` table — return 422 if unknown
+- Validates slug uniqueness per locale — return 409 if `(locale, slug)` already taken
 - Auto-generates: `id` (ULID), `previewToken` (UUID), `createdAt`, `updatedAt`
+- Inserts `posts` row + both `post_translations` rows atomically
+- Enforces both translations present before `status = 'published'` — return 422 if publishing with missing translation
 
 ### `PUT /api/posts/[id]`
 
-Update post. Body: partial Post fields.
+Update post. Body: partial — any combination of metadata and/or translations.
+
+```ts
+{
+  // optional metadata:
+  category?: string
+  tags?: string[]
+  status?: 'draft' | 'published' | 'archived'
+  coverImage?: string
+  scheduledAt?: string
+  // optional per-locale translation updates:
+  translations?: {
+    en?: { title?: string; slug?: string; excerpt?: string; content?: string }
+    es?: { title?: string; slug?: string; excerpt?: string; content?: string }
+  }
+}
+```
 
 - Validates `category` slug if provided
 - Auto-updates `updatedAt`
+- Validates slug uniqueness per locale (exclude self from check)
+- If `status = 'published'` → verify both translations exist — 422 if missing
 - If `publishedAt` set for first time and `scheduledAt` is null → set `status = published`
 
 ### `DELETE /api/posts/[id]`
@@ -100,7 +141,7 @@ Hard delete.
 - [ ] Hash comparison: `bcryptjs.compare(password, process.env.ADMIN_PASSWORD_HASH)`
 - [ ] Create `app/api/auth/[...nextauth]/route.ts`
 - [ ] Create `app/api/auth/me/route.ts`
-- [ ] Create `app/api/posts/route.ts` — POST handler
+- [ ] Create `app/api/posts/route.ts` — POST handler (creates post + both translations atomically)
 - [ ] Create `app/api/posts/[id]/route.ts` — PUT + DELETE handlers
 - [ ] Create `app/api/categories/route.ts` — POST handler
 - [ ] Create `app/api/categories/[slug]/route.ts` — PUT + DELETE handlers
@@ -108,16 +149,19 @@ Hard delete.
 - [ ] Add `scripts/hash-password.ts` — helper to generate bcrypt hash for env setup
 - [ ] Document env var setup in `.env.local.example`
 - [ ] Validate all request bodies with zod schemas
+- [ ] Per-locale slug uniqueness: `(locale, slug)` unique constraint enforced at API layer (DB constraint exists but surface 409 with clear message)
 
 ## Acceptance Criteria
 
 - [ ] `POST /api/posts` with unknown category slug → 422
+- [ ] `POST /api/posts` with duplicate slug in either locale → 409
+- [ ] `POST /api/posts` with `status: 'published'` and missing ES translation → 422
 - [ ] `POST /api/categories` creates category, returns 201
 - [ ] `PUT /api/categories/:slug` with `slug` in body → 400
 - [ ] `DELETE /api/categories/:slug` with referenced published posts → 409
 - [ ] `DELETE /api/categories/:slug` with no posts → 204
 - [ ] All write endpoints return 401 without session
-- [ ] `POST /api/posts` with valid session + valid category → creates post
+- [ ] `POST /api/posts` with valid session + valid category + both translations → creates post
 - [ ] `DELETE /api/posts/:id` sets `deletedAt`, does not hard-delete
 - [ ] 100% test coverage on all handlers + middleware
 
@@ -127,3 +171,4 @@ Hard delete.
 - Session stored in encrypted JWT cookie — no DB adapter needed
 - `/admin/login` exempt from middleware guard
 - Category slug immutability keeps FK integrity simple (no cascade rename needed)
+- Translation atomicity: use a DB transaction for `POST /api/posts` — insert `posts` row + both `post_translations` rows in one transaction. Roll back everything on failure.
