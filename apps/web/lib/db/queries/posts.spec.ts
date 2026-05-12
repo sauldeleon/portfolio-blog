@@ -10,6 +10,7 @@ import {
   getPostsBySeries,
   getPublishedPostCountByCategory,
   getPublishedPosts,
+  getPublishedPostsPaginated,
   getRelatedPosts,
   restorePost,
   slugExistsForLocale,
@@ -49,6 +50,7 @@ function makeChain(resolved: unknown) {
     'where',
     'orderBy',
     'limit',
+    'offset',
     'groupBy',
     'values',
     'set',
@@ -100,6 +102,8 @@ const mockPublicPost = {
   seriesOrder: mockPost.seriesOrder,
   publishedAt: mockPost.publishedAt,
   createdAt: mockPost.createdAt,
+  updatedAt: mockPost.updatedAt,
+  author: mockPost.author,
   title: mockTranslation.title,
   slug: mockTranslation.slug,
   excerpt: mockTranslation.excerpt,
@@ -162,6 +166,7 @@ describe('getRelatedPosts', () => {
       ...mockPublicPost,
       id: '01JWOTHER000000000000000000',
       slug: 'other-post',
+      content: '# Related',
     }
     // First call: getPostById for current post
     mockDb.select
@@ -400,6 +405,77 @@ describe('getPostTranslations', () => {
     mockDb.select.mockReturnValue(makeChain([]))
     const result = await getPostTranslations('nonexistent')
     expect(result).toEqual([])
+  })
+})
+
+describe('getPublishedPostsPaginated', () => {
+  const mockPostWithContent = { ...mockPublicPost, content: '# Hello' }
+
+  it('returns paginated data and total count', async () => {
+    mockDb.select
+      .mockReturnValueOnce(makeChain([mockPostWithContent]))
+      .mockReturnValueOnce(makeChain([{ count: 1 }]))
+    const result = await getPublishedPostsPaginated({
+      locale: 'en',
+      page: 1,
+      limit: 10,
+    })
+    expect(result.data).toEqual([mockPostWithContent])
+    expect(result.total).toBe(1)
+  })
+
+  it('applies category filter', async () => {
+    mockDb.select
+      .mockReturnValueOnce(makeChain([]))
+      .mockReturnValueOnce(makeChain([{ count: 0 }]))
+    const result = await getPublishedPostsPaginated({
+      locale: 'en',
+      page: 1,
+      limit: 10,
+      category: 'engineering',
+    })
+    expect(result.data).toEqual([])
+    expect(result.total).toBe(0)
+  })
+
+  it('applies tag filter', async () => {
+    mockDb.select
+      .mockReturnValueOnce(makeChain([mockPostWithContent]))
+      .mockReturnValueOnce(makeChain([{ count: 1 }]))
+    const result = await getPublishedPostsPaginated({
+      locale: 'es',
+      page: 1,
+      limit: 10,
+      tag: 'react',
+    })
+    expect(result.data).toEqual([mockPostWithContent])
+    expect(result.total).toBe(1)
+  })
+
+  it('applies search query filter', async () => {
+    mockDb.select
+      .mockReturnValueOnce(makeChain([]))
+      .mockReturnValueOnce(makeChain([{ count: 0 }]))
+    const result = await getPublishedPostsPaginated({
+      locale: 'en',
+      page: 2,
+      limit: 5,
+      q: 'hello',
+    })
+    expect(result.data).toEqual([])
+    expect(result.total).toBe(0)
+  })
+
+  it('returns 0 total when count row is missing', async () => {
+    mockDb.select
+      .mockReturnValueOnce(makeChain([]))
+      .mockReturnValueOnce(makeChain([]))
+    const result = await getPublishedPostsPaginated({
+      locale: 'en',
+      page: 1,
+      limit: 10,
+    })
+    expect(result.total).toBe(0)
   })
 })
 

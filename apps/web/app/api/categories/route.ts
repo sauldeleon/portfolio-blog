@@ -4,8 +4,18 @@ import { z } from 'zod'
 import { auth } from '@web/lib/auth/config'
 import {
   createCategory,
+  getCategories,
   getCategoryBySlug,
 } from '@web/lib/db/queries/categories'
+
+const CACHE_HEADERS = {
+  'Cache-Control': 's-maxage=60, stale-while-revalidate=3600',
+}
+
+export async function GET() {
+  const categories = await getCategories()
+  return NextResponse.json({ data: categories }, { headers: CACHE_HEADERS })
+}
 
 const createCategorySchema = z.object({
   slug: z

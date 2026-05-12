@@ -15,6 +15,7 @@ module.exports = {
     '/node_modules/',
     '<rootDir>/lib/db/schema\\.ts',
     '<rootDir>/lib/db/migrations/',
+    '<rootDir>/lib/types/',
   ],
   moduleNameMapper: {
     'next/font/(.*)': nextFontMock,

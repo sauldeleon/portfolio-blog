@@ -2,16 +2,19 @@
  * @jest-environment node
  */
 const mockAuth = jest.fn()
+const mockGetCategories = jest.fn()
 const mockGetCategoryBySlug = jest.fn()
 const mockCreateCategory = jest.fn()
 
 jest.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
 jest.mock('@web/lib/db/queries/categories', () => ({
+  getCategories: mockGetCategories,
   getCategoryBySlug: mockGetCategoryBySlug,
   createCategory: mockCreateCategory,
 }))
 
-const { POST } = require('./route') as {
+const { GET, POST } = require('./route') as {
+  GET: () => Promise<Response>
   POST: (req: Request) => Promise<Response>
 }
 
@@ -29,6 +32,31 @@ function makeRequest(body: unknown): Request {
     body: JSON.stringify(body),
   })
 }
+
+describe('GET /api/categories', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
+  it('returns categories with cache headers', async () => {
+    mockGetCategories.mockResolvedValue([mockCategory])
+    const response = await GET()
+    expect(response.status).toBe(200)
+    const body = await response.json()
+    expect(body).toEqual({ data: [mockCategory] })
+    expect(response.headers.get('Cache-Control')).toBe(
+      's-maxage=60, stale-while-revalidate=3600',
+    )
+  })
+
+  it('returns empty array when no categories', async () => {
+    mockGetCategories.mockResolvedValue([])
+    const response = await GET()
+    expect(response.status).toBe(200)
+    const body = await response.json()
+    expect(body).toEqual({ data: [] })
+  })
+})
 
 describe('POST /api/categories', () => {
   beforeEach(() => {

@@ -3,6 +3,7 @@
  */
 const mockAuth = jest.fn()
 const mockGetCategoryBySlug = jest.fn()
+const mockGetPostById = jest.fn()
 const mockSlugExistsForLocale = jest.fn()
 const mockGetPostTranslations = jest.fn()
 const mockUpdatePost = jest.fn()
@@ -14,6 +15,7 @@ jest.mock('../../../../lib/db/queries/categories', () => ({
   getCategoryBySlug: mockGetCategoryBySlug,
 }))
 jest.mock('../../../../lib/db/queries/posts', () => ({
+  getPostById: mockGetPostById,
   slugExistsForLocale: mockSlugExistsForLocale,
   getPostTranslations: mockGetPostTranslations,
   updatePost: mockUpdatePost,
@@ -21,7 +23,11 @@ jest.mock('../../../../lib/db/queries/posts', () => ({
   softDeletePost: mockSoftDeletePost,
 }))
 
-const { DELETE, PUT } = require('./route') as {
+const { DELETE, GET, PUT } = require('./route') as {
+  GET: (
+    req: Request,
+    ctx: { params: Promise<{ id: string }> },
+  ) => Promise<Response>
   PUT: (
     req: Request,
     ctx: { params: Promise<{ id: string }> },
@@ -67,6 +73,99 @@ function makePutRequest(body: unknown): Request {
     body: JSON.stringify(body),
   })
 }
+
+const mockPublishedPost = {
+  id: '01JWTEST000000000000000000',
+  category: 'engineering',
+  tags: ['js'],
+  status: 'published' as const,
+  coverImage: null,
+  seriesId: null,
+  seriesOrder: null,
+  publishedAt: new Date('2024-06-01'),
+  createdAt: new Date('2024-01-01'),
+  updatedAt: new Date('2024-06-01'),
+  author: 'admin',
+  title: 'Test Post',
+  slug: 'test-post',
+  excerpt: 'An excerpt',
+  content: 'word '.repeat(200).trim(),
+}
+
+describe('GET /api/posts/[id]', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
+  it('returns 400 when lng is missing', async () => {
+    const response = await GET(
+      new Request('http://localhost/api/posts/id'),
+      makeParams('id'),
+    )
+    expect(response.status).toBe(400)
+  })
+
+  it('returns 400 when lng is invalid', async () => {
+    const response = await GET(
+      new Request('http://localhost/api/posts/id?lng=fr'),
+      makeParams('id'),
+    )
+    expect(response.status).toBe(400)
+  })
+
+  it('returns 404 when post not found', async () => {
+    mockGetPostById.mockResolvedValue(null)
+    const response = await GET(
+      new Request('http://localhost/api/posts/id?lng=en'),
+      makeParams('id'),
+    )
+    expect(response.status).toBe(404)
+  })
+
+  it('returns 404 when post is not published', async () => {
+    mockGetPostById.mockResolvedValue({
+      ...mockPublishedPost,
+      status: 'draft',
+    })
+    const response = await GET(
+      new Request('http://localhost/api/posts/id?lng=en'),
+      makeParams('id'),
+    )
+    expect(response.status).toBe(404)
+  })
+
+  it('returns post with cache headers', async () => {
+    mockGetPostById.mockResolvedValue(mockPublishedPost)
+    const response = await GET(
+      new Request('http://localhost/api/posts/id?lng=en'),
+      makeParams('01JWTEST000000000000000000'),
+    )
+    expect(response.status).toBe(200)
+    expect(response.headers.get('Cache-Control')).toBe(
+      's-maxage=60, stale-while-revalidate=3600',
+    )
+    const body = (await response.json()) as Record<string, unknown>
+    expect(body).not.toHaveProperty('status')
+    expect(body).not.toHaveProperty('createdAt')
+    expect(body).toHaveProperty('content')
+    expect(body).toHaveProperty('readingTime')
+    expect(body.publishedAt).toBe('2024-06-01T00:00:00.000Z')
+    expect(body.updatedAt).toBe('2024-06-01T00:00:00.000Z')
+  })
+
+  it('returns null publishedAt when not set', async () => {
+    mockGetPostById.mockResolvedValue({
+      ...mockPublishedPost,
+      publishedAt: null,
+    })
+    const response = await GET(
+      new Request('http://localhost/api/posts/id?lng=en'),
+      makeParams('id'),
+    )
+    const body = (await response.json()) as Record<string, unknown>
+    expect(body.publishedAt).toBeNull()
+  })
+})
 
 describe('PUT /api/posts/[id]', () => {
   beforeEach(() => {

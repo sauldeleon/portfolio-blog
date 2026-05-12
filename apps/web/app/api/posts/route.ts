@@ -3,7 +3,63 @@ import { z } from 'zod'
 
 import { auth } from '@web/lib/auth/config'
 import { getCategoryBySlug } from '@web/lib/db/queries/categories'
-import { createPost, slugExistsForLocale } from '@web/lib/db/queries/posts'
+import {
+  createPost,
+  getPublishedPostsPaginated,
+  slugExistsForLocale,
+} from '@web/lib/db/queries/posts'
+import { computeReadingTime } from '@web/utils/readingTime'
+
+const CACHE_HEADERS = {
+  'Cache-Control': 's-maxage=60, stale-while-revalidate=3600',
+}
+
+const getPostsQuerySchema = z.object({
+  lng: z.enum(['en', 'es']),
+  page: z.coerce.number().int().min(1).default(1),
+  limit: z.coerce.number().int().min(1).max(50).default(10),
+  category: z.string().optional(),
+  tag: z.string().optional(),
+  q: z.string().optional(),
+})
+
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url)
+  const parsed = getPostsQuerySchema.safeParse(Object.fromEntries(searchParams))
+  if (!parsed.success) {
+    return NextResponse.json({ error: parsed.error.issues }, { status: 400 })
+  }
+
+  const { lng, page, limit, category, tag, q } = parsed.data
+  const { data, total } = await getPublishedPostsPaginated({
+    locale: lng,
+    page,
+    limit,
+    category,
+    tag,
+    q,
+  })
+
+  const posts = data.map(({ content, status: _s, createdAt: _c, ...post }) => ({
+    ...post,
+    publishedAt: post.publishedAt?.toISOString() ?? null,
+    updatedAt: post.updatedAt.toISOString(),
+    readingTime: computeReadingTime(content),
+  }))
+
+  return NextResponse.json(
+    {
+      data: posts,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit),
+      },
+    },
+    { headers: CACHE_HEADERS },
+  )
+}
 
 const translationSchema = z.object({
   title: z.string().min(1),

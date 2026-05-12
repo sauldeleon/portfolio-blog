@@ -4,12 +4,52 @@ import { z } from 'zod'
 import { auth } from '../../../../lib/auth/config'
 import { getCategoryBySlug } from '../../../../lib/db/queries/categories'
 import {
+  getPostById,
   getPostTranslations,
   slugExistsForLocale,
   softDeletePost,
   updatePost,
   updateTranslation,
 } from '../../../../lib/db/queries/posts'
+import { computeReadingTime } from '../../../../utils/readingTime'
+
+const CACHE_HEADERS = {
+  'Cache-Control': 's-maxage=60, stale-while-revalidate=3600',
+}
+
+const getPostQuerySchema = z.object({
+  lng: z.enum(['en', 'es']),
+})
+
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const { searchParams } = new URL(request.url)
+  const parsed = getPostQuerySchema.safeParse(Object.fromEntries(searchParams))
+  if (!parsed.success) {
+    return NextResponse.json({ error: parsed.error.issues }, { status: 400 })
+  }
+
+  const { lng } = parsed.data
+  const { id } = await params
+
+  const post = await getPostById(id, lng)
+  if (!post || post.status !== 'published') {
+    return NextResponse.json({ error: 'Post not found' }, { status: 404 })
+  }
+
+  const { status: _s, createdAt: _c, ...rest } = post
+  return NextResponse.json(
+    {
+      ...rest,
+      publishedAt: rest.publishedAt?.toISOString() ?? null,
+      updatedAt: rest.updatedAt.toISOString(),
+      readingTime: computeReadingTime(rest.content),
+    },
+    { headers: CACHE_HEADERS },
+  )
+}
 
 const translationUpdateSchema = z.object({
   title: z.string().min(1).optional(),

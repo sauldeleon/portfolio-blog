@@ -1,13 +1,14 @@
 import { db } from '../index'
-import { getAllTags } from './tags'
+import { getAllTags, getPostCountPerTag } from './tags'
 
 jest.mock('../index', () => ({
   db: {
     select: jest.fn(),
+    execute: jest.fn(),
   },
 }))
 
-const mockDb = db as unknown as { select: jest.Mock }
+const mockDb = db as unknown as { select: jest.Mock; execute: jest.Mock }
 
 function makeChain(resolved: unknown) {
   const chain: Record<string, unknown> = {}
@@ -57,5 +58,27 @@ describe('getAllTags', () => {
     const result = await getAllTags()
     expect(result).toEqual(['next', 'react'])
     expect(result).toHaveLength(2)
+  })
+})
+
+describe('getPostCountPerTag', () => {
+  it('returns tags with counts ordered by count desc', async () => {
+    mockDb.execute.mockResolvedValue({
+      rows: [
+        { tag: 'react', count: 5 },
+        { tag: 'typescript', count: 3 },
+      ],
+    })
+    const result = await getPostCountPerTag()
+    expect(result).toEqual([
+      { tag: 'react', count: 5 },
+      { tag: 'typescript', count: 3 },
+    ])
+  })
+
+  it('returns empty array when no published posts', async () => {
+    mockDb.execute.mockResolvedValue({ rows: [] })
+    const result = await getPostCountPerTag()
+    expect(result).toEqual([])
   })
 })

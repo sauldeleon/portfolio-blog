@@ -1,4 +1,15 @@
-import { and, asc, desc, eq, isNotNull, isNull, ne, sql } from 'drizzle-orm'
+import {
+  and,
+  asc,
+  desc,
+  eq,
+  ilike,
+  isNotNull,
+  isNull,
+  ne,
+  or,
+  sql,
+} from 'drizzle-orm'
 import { ulid } from 'ulid'
 
 import { db } from '../index'
@@ -20,6 +31,8 @@ export type PublicPost = {
   seriesOrder: number | null
   publishedAt: Date | null
   createdAt: Date
+  updatedAt: Date
+  author: string
   // locale-specific
   title: string
   slug: string
@@ -57,6 +70,8 @@ const publicFields = {
   seriesOrder: posts.seriesOrder,
   publishedAt: posts.publishedAt,
   createdAt: posts.createdAt,
+  updatedAt: posts.updatedAt,
+  author: posts.author,
   title: postTranslations.title,
   slug: postTranslations.slug,
   excerpt: postTranslations.excerpt,
@@ -130,12 +145,12 @@ export async function getRelatedPosts(
   postId: string,
   locale: Locale,
   limit = 3,
-): Promise<PublicPost[]> {
+): Promise<PostWithContent[]> {
   const current = await getPostById(postId, locale)
   if (!current) return []
 
   return db
-    .select(publicFields)
+    .select(publicFieldsWithContent)
     .from(posts)
     .innerJoin(
       postTranslations,
@@ -395,6 +410,63 @@ export async function getPostTranslations(
     .select()
     .from(postTranslations)
     .where(eq(postTranslations.postId, postId))
+}
+
+export type PaginatedPostsParams = {
+  locale: Locale
+  page: number
+  limit: number
+  category?: string
+  tag?: string
+  q?: string
+}
+
+export type PaginatedPostsResult = {
+  data: PostWithContent[]
+  total: number
+}
+
+export async function getPublishedPostsPaginated(
+  params: PaginatedPostsParams,
+): Promise<PaginatedPostsResult> {
+  const { locale, page, limit, category, tag, q } = params
+  const offset = (page - 1) * limit
+
+  const joinCondition = and(
+    eq(postTranslations.postId, posts.id),
+    eq(postTranslations.locale, locale),
+  )
+
+  const whereConditions = and(
+    eq(posts.status, 'published'),
+    isNull(posts.deletedAt),
+    category ? eq(posts.category, category) : undefined,
+    tag ? sql`${posts.tags} @> ARRAY[${tag}]::text[]` : undefined,
+    q
+      ? or(
+          ilike(postTranslations.title, `%${q}%`),
+          ilike(postTranslations.excerpt, `%${q}%`),
+        )
+      : undefined,
+  )
+
+  const [data, countRows] = await Promise.all([
+    db
+      .select(publicFieldsWithContent)
+      .from(posts)
+      .innerJoin(postTranslations, joinCondition)
+      .where(whereConditions)
+      .orderBy(desc(posts.publishedAt))
+      .limit(limit)
+      .offset(offset),
+    db
+      .select({ count: sql<number>`count(*)::int` })
+      .from(posts)
+      .innerJoin(postTranslations, joinCondition)
+      .where(whereConditions),
+  ])
+
+  return { data, total: countRows[0]?.count ?? 0 }
 }
 
 export async function getPublishedPostCountByCategory(
