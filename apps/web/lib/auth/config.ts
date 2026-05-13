@@ -24,6 +24,10 @@ export async function authorizeCredentials(
   return valid ? { id: 'admin', name: username } : null
 }
 
+export function resolveAuthSecret() {
+  return process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET
+}
+
 export const authConfig: NextAuthConfig = {
   providers: [
     CredentialsProvider({
@@ -34,6 +38,7 @@ export const authConfig: NextAuthConfig = {
       authorize: authorizeCredentials,
     }),
   ],
+  secret: resolveAuthSecret(),
   session: { strategy: 'jwt' },
   pages: { signIn: '/admin/login' },
   trustHost: true,

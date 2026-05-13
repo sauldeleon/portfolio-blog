@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs'
 
-import { authorizeCredentials } from './config'
+import { authorizeCredentials, resolveAuthSecret } from './config'
 
 jest.mock('next-auth', () => ({
   __esModule: true,
@@ -80,5 +80,31 @@ describe('authorizeCredentials', () => {
       password: 'correct',
     })
     expect(result).toEqual({ id: 'admin', name: 'admin' })
+  })
+})
+
+describe('resolveAuthSecret', () => {
+  const originalEnv = process.env
+
+  beforeEach(() => {
+    process.env = { ...originalEnv }
+  })
+
+  afterEach(() => {
+    process.env = originalEnv
+  })
+
+  it('uses AUTH_SECRET when available', () => {
+    process.env.AUTH_SECRET = 'auth-secret'
+    process.env.NEXTAUTH_SECRET = 'nextauth-secret'
+
+    expect(resolveAuthSecret()).toBe('auth-secret')
+  })
+
+  it('falls back to NEXTAUTH_SECRET', () => {
+    delete process.env.AUTH_SECRET
+    process.env.NEXTAUTH_SECRET = 'nextauth-secret'
+
+    expect(resolveAuthSecret()).toBe('nextauth-secret')
   })
 })
