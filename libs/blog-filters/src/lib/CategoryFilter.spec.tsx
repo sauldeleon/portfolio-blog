@@ -25,6 +25,7 @@ describe('CategoryFilter', () => {
         categories={categories}
         activeCategory={null}
         allLabel="All categories"
+        label="Category"
       />,
     )
     expect(screen.getByText('All categories')).toBeInTheDocument()

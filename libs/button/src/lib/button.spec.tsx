@@ -37,4 +37,14 @@ describe('Button', () => {
     expect(screen.getByText('Published')).toBeInTheDocument()
     expect(baseElement).toMatchSnapshot()
   })
+
+  it('should render variant label as not active', () => {
+    const { baseElement } = renderWithTheme(
+      <Button variant="label" active={false}>
+        Published
+      </Button>,
+    )
+    expect(screen.getByText('Published')).toBeInTheDocument()
+    expect(baseElement).toMatchSnapshot()
+  })
 })

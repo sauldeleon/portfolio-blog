@@ -21,7 +21,12 @@ describe('TagFilter', () => {
 
   it('renders all-tags label', () => {
     renderWithTheme(
-      <TagFilter tags={tags} activeTag={null} allLabel="All tags" />,
+      <TagFilter
+        tags={tags}
+        activeTag={null}
+        allLabel="All tags"
+        label="tag"
+      />,
     )
     expect(screen.getByText('All tags')).toBeInTheDocument()
   })
