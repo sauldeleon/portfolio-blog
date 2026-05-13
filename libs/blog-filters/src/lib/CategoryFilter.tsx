@@ -2,7 +2,12 @@
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
-import { StyledChip, StyledChipList } from './BlogFilters.styles'
+import {
+  StyledChip,
+  StyledChipList,
+  StyledFilterLabel,
+  StyledFilterNav,
+} from './BlogFilters.styles'
 
 export interface Category {
   id: number
@@ -15,12 +20,14 @@ export interface CategoryFilterProps {
   categories: Category[]
   activeCategory: string | null
   allLabel: string
+  label?: string
 }
 
 export function CategoryFilter({
   categories,
   activeCategory,
   allLabel,
+  label,
 }: CategoryFilterProps) {
   const router = useRouter()
   const pathname = usePathname()
@@ -38,7 +45,8 @@ export function CategoryFilter({
   }
 
   return (
-    <nav aria-label={allLabel}>
+    <StyledFilterNav aria-label={label ?? allLabel}>
+      {label ? <StyledFilterLabel>{label}</StyledFilterLabel> : null}
       <StyledChipList>
         <li>
           <StyledChip
@@ -61,6 +69,6 @@ export function CategoryFilter({
           </li>
         ))}
       </StyledChipList>
-    </nav>
+    </StyledFilterNav>
   )
 }

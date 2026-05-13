@@ -77,11 +77,13 @@ export async function BlogPage({
           }))}
           activeCategory={category ?? null}
           allLabel={t('allCategories')}
+          label={t('categories')}
         />
         <TagFilter
           tags={tags}
           activeTag={tag ?? null}
           allLabel={t('allTags')}
+          label={t('tags')}
         />
       </StyledFilters>
       {postsResult.data.length === 0 ? (

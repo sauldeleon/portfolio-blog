@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components'
 
+import { buttonLabelStyles } from '@sdlgr/button'
+
 export const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -22,29 +24,7 @@ export const StyledFilterTabs = styled.div`
 `
 
 export const StyledFilterTab = styled.button<{ $active: boolean }>`
-  background: transparent;
-  border: 1px solid transparent;
-  padding: 0.375rem 0.75rem;
-  font-family: inherit;
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  cursor: pointer;
-  color: ${({ theme }) => theme.colors.white};
-  opacity: ${({ $active }) => ($active ? 1 : 0.4)};
-  border-color: ${({ $active, theme }) =>
-    $active ? theme.colors.green : 'transparent'};
-  color: ${({ $active, theme }) =>
-    $active ? theme.colors.green : theme.colors.white};
-  transition:
-    opacity 0.15s,
-    border-color 0.15s,
-    color 0.15s;
-
-  &:hover {
-    opacity: 1;
-    color: ${({ theme }) => theme.colors.green};
-  }
+  ${buttonLabelStyles}
 `
 
 export const StyledCount = styled.span`

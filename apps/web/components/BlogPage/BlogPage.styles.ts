@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 export const StyledPage = styled.main`
   width: 100%;
+  max-width: 1440px;
   padding: 2rem 1rem 4rem;
 
   @media (width >= 1024px) {
@@ -33,10 +34,17 @@ export const StyledHeadingAccent = styled.div`
 `
 
 export const StyledFilters = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 2.5rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  margin-bottom: 2.75rem;
+  padding: 1rem 0;
+  border-top: 1px solid rgba(251, 251, 251, 0.08);
+  border-bottom: 1px solid rgba(251, 251, 251, 0.08);
+
+  @media (width >= 768px) {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  }
 `
 
 export const StyledGrid = styled.section`

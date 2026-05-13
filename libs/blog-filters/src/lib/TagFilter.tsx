@@ -2,7 +2,12 @@
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
-import { StyledChip, StyledChipList } from './BlogFilters.styles'
+import {
+  StyledChip,
+  StyledChipList,
+  StyledFilterLabel,
+  StyledFilterNav,
+} from './BlogFilters.styles'
 
 export interface TagWithCount {
   tag: string
@@ -13,9 +18,15 @@ export interface TagFilterProps {
   tags: TagWithCount[]
   activeTag: string | null
   allLabel: string
+  label?: string
 }
 
-export function TagFilter({ tags, activeTag, allLabel }: TagFilterProps) {
+export function TagFilter({
+  tags,
+  activeTag,
+  allLabel,
+  label,
+}: TagFilterProps) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -32,7 +43,8 @@ export function TagFilter({ tags, activeTag, allLabel }: TagFilterProps) {
   }
 
   return (
-    <nav aria-label={allLabel}>
+    <StyledFilterNav aria-label={label ?? allLabel}>
+      {label ? <StyledFilterLabel>{label}</StyledFilterLabel> : null}
       <StyledChipList>
         <li>
           <StyledChip
@@ -55,6 +67,6 @@ export function TagFilter({ tags, activeTag, allLabel }: TagFilterProps) {
           </li>
         ))}
       </StyledChipList>
-    </nav>
+    </StyledFilterNav>
   )
 }

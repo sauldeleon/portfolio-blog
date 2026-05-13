@@ -1,8 +1,9 @@
 import { BlogPage } from '@web/components/BlogPage/BlogPage'
+import { Locale } from '@web/lib/db/schema'
 import { buildAlternates } from '@web/utils/metadata/inLanguage'
 
 interface RouteProps {
-  params: Promise<{ lng: string }>
+  params: Promise<{ lng: Locale }>
   searchParams: Promise<{
     page?: string
     category?: string
