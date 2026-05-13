@@ -1,11 +1,11 @@
-import { fireEvent, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import { usePathname } from 'next/navigation'
 
 import { renderApp } from '@sdlgr/test-utils'
 
 import { AdminNav } from './AdminNav'
 
-const mockSignOut = jest.fn()
+const mockLogoutAction = jest.fn()
 
 jest.mock('@web/i18n/client', () => ({
   useClientTranslation: jest.fn().mockReturnValue({
@@ -20,8 +20,8 @@ jest.mock('@web/i18n/client', () => ({
   }),
 }))
 
-jest.mock('next-auth/react', () => ({
-  signOut: (...args: unknown[]) => mockSignOut(...args),
+jest.mock('../../actions/logout', () => ({
+  logoutAction: (...args: unknown[]) => mockLogoutAction(...args),
 }))
 
 jest.mock('next/navigation', () => ({
@@ -67,12 +67,6 @@ describe('AdminNav', () => {
   it('renders Logout button', () => {
     renderApp(<AdminNav />)
     expect(screen.getByRole('button', { name: 'Logout' })).toBeInTheDocument()
-  })
-
-  it('clicking Logout calls signOut with correct callbackUrl', () => {
-    renderApp(<AdminNav />)
-    fireEvent.click(screen.getByRole('button', { name: 'Logout' }))
-    expect(mockSignOut).toHaveBeenCalledWith({ callbackUrl: '/admin/login' })
   })
 
   it('marks Posts link active when on posts route', () => {

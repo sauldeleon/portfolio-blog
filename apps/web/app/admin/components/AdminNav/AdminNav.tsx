@@ -1,10 +1,10 @@
 'use client'
 
-import { signOut } from 'next-auth/react'
 import { usePathname } from 'next/navigation'
 
 import { useClientTranslation } from '@web/i18n/client'
 
+import { logoutAction } from '../../actions/logout'
 import {
   StyledBrand,
   StyledDivider,
@@ -33,11 +33,9 @@ export function AdminNav() {
         {t('nav.categories')}
       </StyledNavLink>
       <StyledDivider aria-hidden />
-      <StyledLogoutButton
-        onClick={() => signOut({ callbackUrl: '/admin/login' })}
-      >
-        {t('nav.logout')}
-      </StyledLogoutButton>
+      <form action={logoutAction}>
+        <StyledLogoutButton type="submit">{t('nav.logout')}</StyledLogoutButton>
+      </form>
     </StyledNav>
   )
 }
