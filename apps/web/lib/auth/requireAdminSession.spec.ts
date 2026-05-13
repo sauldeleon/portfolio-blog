@@ -1,3 +1,5 @@
+import { requireAdminSession } from './requireAdminSession'
+
 const mockAuth = jest.fn()
 const mockRedirect = jest.fn()
 
@@ -18,7 +20,6 @@ describe('requireAdminSession', () => {
     const session = { user: { name: 'admin' } }
     mockAuth.mockResolvedValue(session)
 
-    const { requireAdminSession } = require('./requireAdminSession')
     await expect(requireAdminSession()).resolves.toBe(session)
     expect(mockRedirect).not.toHaveBeenCalled()
   })
@@ -26,7 +27,6 @@ describe('requireAdminSession', () => {
   it('redirects to /admin/login when no session exists', async () => {
     mockAuth.mockResolvedValue(null)
 
-    const { requireAdminSession } = require('./requireAdminSession')
     await requireAdminSession()
     expect(mockRedirect).toHaveBeenCalledWith('/admin/login')
   })
