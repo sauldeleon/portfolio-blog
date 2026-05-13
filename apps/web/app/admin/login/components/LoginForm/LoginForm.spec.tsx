@@ -7,6 +7,7 @@ import { LoginForm } from './LoginForm'
 
 const mockSignIn = jest.fn()
 const mockPush = jest.fn()
+const mockRefresh = jest.fn()
 
 jest.mock('@web/i18n/client', () => ({
   useClientTranslation: jest.fn().mockReturnValue({
@@ -36,7 +37,10 @@ jest.mock('next/navigation', () => ({
 describe('LoginForm', () => {
   beforeEach(() => {
     jest.clearAllMocks()
-    ;(useRouter as jest.Mock).mockReturnValue({ push: mockPush })
+    ;(useRouter as jest.Mock).mockReturnValue({
+      push: mockPush,
+      refresh: mockRefresh,
+    })
   })
 
   it('renders username and password inputs and submit button', () => {
@@ -112,7 +116,7 @@ describe('LoginForm', () => {
     expect(mockPush).not.toHaveBeenCalled()
   })
 
-  it('redirects to /admin/posts on success', async () => {
+  it('refreshes then redirects to /admin/posts on success', async () => {
     mockSignIn.mockResolvedValue({ error: null })
 
     renderApp(<LoginForm />)
@@ -128,6 +132,7 @@ describe('LoginForm', () => {
     fireEvent.submit(screen.getByTestId('login-form'))
 
     await waitFor(() => {
+      expect(mockRefresh).toHaveBeenCalled()
       expect(mockPush).toHaveBeenCalledWith('/admin/posts')
     })
     expect(screen.queryByRole('alert')).not.toBeInTheDocument()
@@ -170,6 +175,7 @@ describe('LoginForm', () => {
 
     await waitFor(() => {
       expect(screen.queryByRole('alert')).not.toBeInTheDocument()
+      expect(mockRefresh).toHaveBeenCalled()
     })
   })
 })

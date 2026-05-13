@@ -42,6 +42,7 @@ export function LoginForm() {
     if (result?.error) {
       setError(t('login.invalidCredentials'))
     } else {
+      router.refresh()
       router.push('/admin/posts')
     }
   }
