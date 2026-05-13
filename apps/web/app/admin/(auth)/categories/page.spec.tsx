@@ -6,6 +6,11 @@ import { CategoriesPageView } from './components/CategoriesPageView'
 import AdminCategoriesPage from './page.next'
 
 const mockGetCategories = jest.fn()
+const mockRequireAdminSession = jest.fn()
+
+jest.mock('@web/lib/auth/requireAdminSession', () => ({
+  requireAdminSession: (...args: unknown[]) => mockRequireAdminSession(...args),
+}))
 
 jest.mock('@web/lib/db/queries/categories', () => ({
   getCategories: (...args: unknown[]) => mockGetCategories(...args),
@@ -40,6 +45,7 @@ const mockCategories: CategoryWithCount[] = [
 describe('AdminCategoriesPage', () => {
   beforeEach(() => {
     jest.clearAllMocks()
+    mockRequireAdminSession.mockResolvedValue({ user: { name: 'admin' } })
     mockGetCategories.mockResolvedValue(mockCategories)
   })
 
@@ -51,6 +57,7 @@ describe('AdminCategoriesPage', () => {
       expect.objectContaining({ categories: mockCategories }),
       undefined,
     )
+    expect(mockRequireAdminSession).toHaveBeenCalledTimes(1)
   })
 
   it('passes translated title to CategoriesPageView', async () => {
@@ -60,5 +67,13 @@ describe('AdminCategoriesPage', () => {
       expect.objectContaining({ title: 'Categories' }),
       undefined,
     )
+  })
+
+  it('does not fetch categories when the admin session check redirects', async () => {
+    const redirectError = new Error('NEXT_REDIRECT')
+    mockRequireAdminSession.mockRejectedValue(redirectError)
+
+    await expect(AdminCategoriesPage()).rejects.toBe(redirectError)
+    expect(mockGetCategories).not.toHaveBeenCalled()
   })
 })

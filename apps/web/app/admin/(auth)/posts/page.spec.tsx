@@ -6,6 +6,11 @@ import { PostsPageView } from './components/PostsPageView'
 import AdminPostsPage from './page.next'
 
 const mockGetAllPosts = jest.fn()
+const mockRequireAdminSession = jest.fn()
+
+jest.mock('@web/lib/auth/requireAdminSession', () => ({
+  requireAdminSession: (...args: unknown[]) => mockRequireAdminSession(...args),
+}))
 
 jest.mock('@web/lib/db/queries/posts', () => ({
   getAllPosts: (...args: unknown[]) => mockGetAllPosts(...args),
@@ -58,6 +63,7 @@ const mockPosts: AdminPost[] = [
 describe('AdminPostsPage', () => {
   beforeEach(() => {
     jest.clearAllMocks()
+    mockRequireAdminSession.mockResolvedValue({ user: { name: 'admin' } })
     mockGetAllPosts.mockResolvedValue(mockPosts)
   })
 
@@ -69,6 +75,7 @@ describe('AdminPostsPage', () => {
       expect.objectContaining({ posts: mockPosts }),
       undefined,
     )
+    expect(mockRequireAdminSession).toHaveBeenCalledTimes(1)
   })
 
   it('passes translated strings to PostsPageView', async () => {
@@ -78,5 +85,13 @@ describe('AdminPostsPage', () => {
       expect.objectContaining({ title: 'Posts', newPostLabel: 'New post' }),
       undefined,
     )
+  })
+
+  it('does not fetch posts when the admin session check redirects', async () => {
+    const redirectError = new Error('NEXT_REDIRECT')
+    mockRequireAdminSession.mockRejectedValue(redirectError)
+
+    await expect(AdminPostsPage()).rejects.toBe(redirectError)
+    expect(mockGetAllPosts).not.toHaveBeenCalled()
   })
 })

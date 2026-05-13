@@ -1,6 +1,4 @@
-import { redirect } from 'next/navigation'
-
-import { auth } from '@web/lib/auth/config'
+import { requireAdminSession } from '@web/lib/auth/requireAdminSession'
 
 import { AdminNav } from '../components/AdminNav'
 import { StyledAuthLayout, StyledMain } from './layout.styles'
@@ -12,8 +10,7 @@ interface AuthLayoutProps {
 }
 
 export default async function AuthLayout({ children }: AuthLayoutProps) {
-  const session = await auth()
-  if (!session) redirect('/admin/login')
+  await requireAdminSession()
 
   return (
     <StyledAuthLayout data-testid="auth-layout">
