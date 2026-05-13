@@ -1,10 +1,10 @@
 'use client'
 
 import { signIn } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 import { useClientTranslation } from '@web/i18n/client'
+import { navigateTo } from '@web/utils/navigation/navigate'
 
 import {
   StyledError,
@@ -18,7 +18,6 @@ import {
 } from './LoginForm.styles'
 
 export function LoginForm() {
-  const router = useRouter()
   const { t } = useClientTranslation('admin')
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
@@ -42,8 +41,7 @@ export function LoginForm() {
     if (result?.error) {
       setError(t('login.invalidCredentials'))
     } else {
-      router.refresh()
-      router.push('/admin/posts')
+      navigateTo('/admin/posts')
     }
   }
 

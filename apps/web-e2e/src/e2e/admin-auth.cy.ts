@@ -34,7 +34,7 @@ describe('Admin auth — login', () => {
 
   it('redirects to /admin/posts after successful login', () => {
     login()
-    cy.url().should('include', '/admin/posts', { timeout: 10000 })
+    cy.url({ timeout: 10000 }).should('include', '/admin/posts')
     cy.get('[data-testid="admin-nav"]').should('be.visible')
   })
 })
@@ -42,7 +42,7 @@ describe('Admin auth — login', () => {
 describe('Admin auth — logout', () => {
   beforeEach(() => {
     login()
-    cy.url().should('include', '/admin/posts', { timeout: 10000 })
+    cy.url({ timeout: 10000 }).should('include', '/admin/posts')
   })
 
   it('redirects to /admin/login after logout', () => {

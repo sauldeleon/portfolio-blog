@@ -1,13 +1,15 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react'
-import { useRouter } from 'next/navigation'
 
 import { renderApp } from '@sdlgr/test-utils'
 
 import { LoginForm } from './LoginForm'
 
 const mockSignIn = jest.fn()
-const mockPush = jest.fn()
-const mockRefresh = jest.fn()
+const mockNavigateTo = jest.fn()
+
+jest.mock('@web/utils/navigation/navigate', () => ({
+  navigateTo: (...args: unknown[]) => mockNavigateTo(...args),
+}))
 
 jest.mock('@web/i18n/client', () => ({
   useClientTranslation: jest.fn().mockReturnValue({
@@ -30,17 +32,9 @@ jest.mock('next-auth/react', () => ({
   signIn: (...args: unknown[]) => mockSignIn(...args),
 }))
 
-jest.mock('next/navigation', () => ({
-  useRouter: jest.fn(),
-}))
-
 describe('LoginForm', () => {
   beforeEach(() => {
     jest.clearAllMocks()
-    ;(useRouter as jest.Mock).mockReturnValue({
-      push: mockPush,
-      refresh: mockRefresh,
-    })
   })
 
   it('renders username and password inputs and submit button', () => {
@@ -113,10 +107,10 @@ describe('LoginForm', () => {
     await waitFor(() => {
       expect(screen.getByRole('alert')).toHaveTextContent('Invalid credentials')
     })
-    expect(mockPush).not.toHaveBeenCalled()
+    expect(mockNavigateTo).not.toHaveBeenCalled()
   })
 
-  it('refreshes then redirects to /admin/posts on success', async () => {
+  it('navigates to /admin/posts on success', async () => {
     mockSignIn.mockResolvedValue({ error: null })
 
     renderApp(<LoginForm />)
@@ -132,8 +126,7 @@ describe('LoginForm', () => {
     fireEvent.submit(screen.getByTestId('login-form'))
 
     await waitFor(() => {
-      expect(mockRefresh).toHaveBeenCalled()
-      expect(mockPush).toHaveBeenCalledWith('/admin/posts')
+      expect(mockNavigateTo).toHaveBeenCalledWith('/admin/posts')
     })
     expect(screen.queryByRole('alert')).not.toBeInTheDocument()
   })
@@ -147,7 +140,7 @@ describe('LoginForm', () => {
     await waitFor(() => {
       expect(screen.getByRole('alert')).toBeInTheDocument()
     })
-    expect(mockPush).not.toHaveBeenCalled()
+    expect(mockNavigateTo).not.toHaveBeenCalled()
   })
 
   it('clears error on new submit attempt', async () => {
@@ -175,7 +168,7 @@ describe('LoginForm', () => {
 
     await waitFor(() => {
       expect(screen.queryByRole('alert')).not.toBeInTheDocument()
-      expect(mockRefresh).toHaveBeenCalled()
+      expect(mockNavigateTo).toHaveBeenCalledWith('/admin/posts')
     })
   })
 })

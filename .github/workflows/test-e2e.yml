@@ -34,6 +34,8 @@ jobs:
       - name: Cypress run
         if: steps.vercel_preview_url.outcome == 'success'
         uses: cypress-io/github-action@v6
+        env:
+          CYPRESS_ADMIN_PASSWORD: ${{ secrets.CYPRESS_ADMIN_PASSWORD }}
         with:
           working-directory: apps/web-e2e
           wait-on: 'https://${{ steps.vercel_preview_url.outputs.preview_url }}'
