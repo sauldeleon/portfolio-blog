@@ -5,6 +5,8 @@ import { auth } from '@web/lib/auth/config'
 import { AdminNav } from '../components/AdminNav'
 import { StyledAuthLayout, StyledMain } from './layout.styles'
 
+export const dynamic = 'force-dynamic'
+
 interface AuthLayoutProps {
   children: React.ReactNode
 }
