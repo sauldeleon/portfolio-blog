@@ -39,6 +39,8 @@
       "@sdlgr/post-card": ["./libs/post-card/src/index.ts"],
       "@sdlgr/post-hero": ["./libs/post-hero/src/index.ts"],
       "@sdlgr/callout": ["./libs/callout/src/index.ts"],
+      "@sdlgr/code-block": ["./libs/code-block/src/index.ts"],
+      "@sdlgr/table-of-contents": ["./libs/table-of-contents/src/index.ts"],
       "@sdlgr/visually-hidden": ["./libs/visually-hidden/src/index.ts"],
       "@web/*": ["./apps/web/*"]
     }
