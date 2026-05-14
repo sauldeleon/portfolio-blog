@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
+import { ConfirmDeleteModal } from '@web/app/admin/(auth)/components/ConfirmDeleteModal'
 import { useClientTranslation } from '@web/i18n/client'
 import type { AdminPost } from '@web/lib/db/queries/posts'
 
@@ -16,6 +17,8 @@ import {
   StyledFilterTabs,
   StyledLangChip,
   StyledLangChips,
+  StyledLeftGroup,
+  StyledNewPostButton,
   StyledPublishButton,
   StyledSearchInput,
   StyledStatusBadge,
@@ -42,6 +45,7 @@ export function PostTable({ posts }: PostTableProps) {
   const { t } = useClientTranslation('admin')
   const [filter, setFilter] = useState<StatusFilter>('all')
   const [search, setSearch] = useState('')
+  const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null)
   const router = useRouter()
 
   const countFor = (status: StatusFilter) =>
@@ -57,11 +61,19 @@ export function PostTable({ posts }: PostTableProps) {
     return matchesStatus && matchesSearch
   })
 
-  async function handleDelete(e: React.MouseEvent, id: string) {
+  function handleDelete(e: React.MouseEvent, id: string) {
     e.stopPropagation()
-    if (!window.confirm(t('posts.deleteConfirm'))) return
-    await fetch(`/api/posts/${id}`, { method: 'DELETE' })
+    setDeleteTargetId(id)
+  }
+
+  async function handleConfirmDelete() {
+    await fetch(`/api/posts/${deleteTargetId!}`, { method: 'DELETE' })
+    setDeleteTargetId(null)
     router.refresh()
+  }
+
+  function handleCancelDelete() {
+    setDeleteTargetId(null)
   }
 
   async function handleTogglePublish(e: React.MouseEvent, post: AdminPost) {
@@ -84,27 +96,37 @@ export function PostTable({ posts }: PostTableProps) {
   return (
     <StyledWrapper data-testid="post-table">
       <StyledToolbar>
-        <StyledFilterTabs data-testid="filter-tabs">
-          {STATUS_FILTERS.map((s) => (
-            <StyledFilterTab
-              key={s}
-              active={filter === s}
-              onClick={() => setFilter(s)}
-              aria-pressed={filter === s}
-              data-testid={`filter-${s}`}
-            >
-              {t(`posts.filters.${s}`)}
-              <StyledCount>({countFor(s)})</StyledCount>
-            </StyledFilterTab>
-          ))}
-        </StyledFilterTabs>
-        <StyledSearchInput
-          type="search"
-          placeholder={t('posts.searchPlaceholder')}
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          data-testid="search-input"
-        />
+        <StyledLeftGroup>
+          <StyledSearchInput
+            type="search"
+            placeholder={t('posts.searchPlaceholder')}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            data-testid="search-input"
+          />
+          <StyledFilterTabs data-testid="filter-tabs">
+            {STATUS_FILTERS.map((s) => (
+              <StyledFilterTab
+                key={s}
+                active={filter === s}
+                onClick={() => setFilter(s)}
+                aria-pressed={filter === s}
+                data-testid={`filter-${s}`}
+              >
+                {t(`posts.filters.${s}`)}
+                <StyledCount>({countFor(s)})</StyledCount>
+              </StyledFilterTab>
+            ))}
+          </StyledFilterTabs>
+        </StyledLeftGroup>
+        <StyledNewPostButton
+          variant="inverted"
+          size="sm"
+          onClick={() => router.push('/admin/posts/new')}
+          data-testid="new-post-button"
+        >
+          {t('posts.newPost')}
+        </StyledNewPostButton>
       </StyledToolbar>
 
       <StyledTable>
@@ -194,6 +216,12 @@ export function PostTable({ posts }: PostTableProps) {
           ))}
         </StyledTbody>
       </StyledTable>
+      <ConfirmDeleteModal
+        isOpen={deleteTargetId !== null}
+        message={t('posts.deleteConfirm')}
+        onConfirm={handleConfirmDelete}
+        onCancel={handleCancelDelete}
+      />
     </StyledWrapper>
   )
 }

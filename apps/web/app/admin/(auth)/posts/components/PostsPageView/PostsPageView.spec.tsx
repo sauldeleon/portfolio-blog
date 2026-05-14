@@ -39,32 +39,17 @@ const mockPosts: AdminPost[] = [
 
 describe('PostsPageView', () => {
   it('renders the page wrapper', () => {
-    renderApp(
-      <PostsPageView posts={mockPosts} title="Posts" newPostLabel="New post" />,
-    )
+    renderApp(<PostsPageView posts={mockPosts} title="Posts" />)
     expect(screen.getByTestId('admin-posts-page')).toBeInTheDocument()
   })
 
   it('renders the heading', () => {
-    renderApp(
-      <PostsPageView posts={mockPosts} title="Posts" newPostLabel="New post" />,
-    )
+    renderApp(<PostsPageView posts={mockPosts} title="Posts" />)
     expect(screen.getByRole('heading', { name: 'Posts' })).toBeInTheDocument()
   })
 
-  it('renders the new post link with correct href', () => {
-    renderApp(
-      <PostsPageView posts={mockPosts} title="Posts" newPostLabel="New post" />,
-    )
-    const link = screen.getByRole('link', { name: 'New post' })
-    expect(link).toBeInTheDocument()
-    expect(link).toHaveAttribute('href', '/admin/posts/new')
-  })
-
   it('renders the post table', () => {
-    renderApp(
-      <PostsPageView posts={mockPosts} title="Posts" newPostLabel="New post" />,
-    )
+    renderApp(<PostsPageView posts={mockPosts} title="Posts" />)
     expect(screen.getByTestId('post-table')).toBeInTheDocument()
   })
 })

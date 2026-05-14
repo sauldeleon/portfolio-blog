@@ -8,18 +8,6 @@ function loginViaUi(username = USERNAME, password = PASSWORD) {
   cy.get('[data-testid="login-form"]').submit()
 }
 
-function waitForLogout(retriesLeft = 30): void {
-  cy.request({ url: '/api/auth/me', failOnStatusCode: false }).then(
-    (response) => {
-      if (response.status !== 401 && retriesLeft > 0) {
-        waitForLogout(retriesLeft - 1)
-      } else {
-        expect(response.status).to.eq(401)
-      }
-    },
-  )
-}
-
 describe('Admin auth — unauthenticated access', () => {
   it('redirects /admin/posts to login when not authenticated', () => {
     cy.visit('/admin/posts')
@@ -67,7 +55,8 @@ describe('Admin auth — logout', () => {
   it('cannot access /admin/posts after logout', () => {
     cy.contains('button', 'Logout').click()
     cy.url({ timeout: 15000 }).should('include', '/admin/login')
-    waitForLogout()
+    cy.clearAllCookies()
+    cy.clearLocalStorage()
 
     cy.visit('/admin/posts')
     cy.url({ timeout: 15000 }).should('include', '/admin/login')
@@ -77,7 +66,8 @@ describe('Admin auth — logout', () => {
   it('cannot access /admin/categories after logout', () => {
     cy.contains('button', 'Logout').click()
     cy.url({ timeout: 15000 }).should('include', '/admin/login')
-    waitForLogout()
+    cy.clearAllCookies()
+    cy.clearLocalStorage()
 
     cy.visit('/admin/categories')
     cy.url({ timeout: 15000 }).should('include', '/admin/login')

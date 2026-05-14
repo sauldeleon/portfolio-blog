@@ -31,6 +31,9 @@ jest.mock('@web/i18n/client', () => ({
         'posts.delete': 'Delete',
         'posts.deleteConfirm': 'Delete this post?',
         'posts.empty': 'No posts found',
+        'posts.newPost': 'New post',
+        'confirmDelete.confirm': 'Confirm delete',
+        'confirmDelete.cancel': 'Cancel delete',
       }
       return translations[key] ?? key
     },
@@ -68,7 +71,6 @@ describe('PostTable', () => {
       refresh: mockRefresh,
       push: mockPush,
     })
-    jest.spyOn(window, 'confirm').mockReturnValue(true)
     global.fetch = jest.fn().mockResolvedValue({ ok: true })
   })
 
@@ -241,11 +243,12 @@ describe('PostTable', () => {
     expect(mockRefresh).toHaveBeenCalled()
   })
 
-  it('clicking delete with confirm=true calls DELETE and refreshes', async () => {
-    jest.spyOn(window, 'confirm').mockReturnValue(true)
+  it('clicking delete opens modal and confirming calls DELETE and refreshes', async () => {
     const post = makePost({ id: 'del123' })
     renderApp(<PostTable posts={[post]} />)
     fireEvent.click(screen.getByTestId('delete-button'))
+    expect(screen.getByTestId('confirm-delete-confirm')).toBeInTheDocument()
+    fireEvent.click(screen.getByTestId('confirm-delete-confirm'))
     await waitFor(() => expect(global.fetch).toHaveBeenCalled())
     expect(global.fetch).toHaveBeenCalledWith('/api/posts/del123', {
       method: 'DELETE',
@@ -253,12 +256,12 @@ describe('PostTable', () => {
     expect(mockRefresh).toHaveBeenCalled()
   })
 
-  it('clicking delete with confirm=false does NOT call fetch', async () => {
-    jest.spyOn(window, 'confirm').mockReturnValue(false)
+  it('clicking delete opens modal and cancelling does NOT call fetch', () => {
     const post = makePost({ id: 'del456' })
     renderApp(<PostTable posts={[post]} />)
     fireEvent.click(screen.getByTestId('delete-button'))
-    await waitFor(() => expect(window.confirm).toHaveBeenCalled())
+    expect(screen.getByTestId('confirm-delete-cancel')).toBeInTheDocument()
+    fireEvent.click(screen.getByTestId('confirm-delete-cancel'))
     expect(global.fetch).not.toHaveBeenCalled()
   })
 
@@ -322,5 +325,11 @@ describe('PostTable', () => {
     })
     expect(screen.queryByTestId('post-row')).not.toBeInTheDocument()
     expect(screen.getByText('No posts found')).toBeInTheDocument()
+  })
+
+  it('new post button navigates to /admin/posts/new on click', () => {
+    renderApp(<PostTable posts={[]} />)
+    fireEvent.click(screen.getByTestId('new-post-button'))
+    expect(mockPush).toHaveBeenCalledWith('/admin/posts/new')
   })
 })

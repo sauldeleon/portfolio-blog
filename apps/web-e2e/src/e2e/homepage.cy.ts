@@ -65,6 +65,7 @@ describe('Home page', () => {
 
   it('should not show the cookie banner', () => {
     cy.setCookie('cookie-consent', 'true')
+    cy.reload()
     getTitle({ timeout: 6000 }).contains('Saúl de León Guerrero')
     cy.get('.CookieConsent').should('not.exist')
   })

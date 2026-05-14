@@ -18,9 +18,21 @@ export const StyledToolbar = styled.div`
   flex-wrap: wrap;
 `
 
+export const StyledLeftGroup = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+`
+
 export const StyledFilterTabs = styled.div`
   display: flex;
   gap: 0.25rem;
+`
+
+export const StyledNewPostButton = styled(Button)`
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 `
 
 export const StyledFilterTab = styled(Button).attrs({ variant: 'label' })``

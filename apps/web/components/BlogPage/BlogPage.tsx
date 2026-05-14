@@ -7,7 +7,10 @@ import { Pagination } from '@sdlgr/pagination'
 import { PostCard } from '@sdlgr/post-card'
 
 import { getServerTranslation } from '@web/i18n/server'
-import { getCategories } from '@web/lib/db/queries/categories'
+import {
+  getCategories,
+  getCategoryByLocaleSlug,
+} from '@web/lib/db/queries/categories'
 import { getPublishedPostsPaginated } from '@web/lib/db/queries/posts'
 import { getPostCountPerTag } from '@web/lib/db/queries/tags'
 import { Locale } from '@web/lib/db/schema'
@@ -46,16 +49,21 @@ export async function BlogPage({
   const currentPage = Math.max(1, parseInt(page, 10) || 1)
   const locale = dateLocales[lng] ?? enUS
 
+  const canonicalCategory = category
+    ? ((await getCategoryByLocaleSlug(category, lng))?.canonicalSlug ??
+      category)
+    : undefined
+
   const [postsResult, categories, tags] = await Promise.all([
     getPublishedPostsPaginated({
       locale: lng,
       page: currentPage,
       limit: POSTS_PER_PAGE,
-      category,
+      category: canonicalCategory,
       tag,
       q,
     }),
-    getCategories(),
+    getCategories(lng),
     getPostCountPerTag(),
   ])
 
@@ -71,13 +79,13 @@ export async function BlogPage({
         <CategoryFilter
           categories={categories.map((cat) => ({
             id: cat.id,
-            slug: cat.slug,
+            slug: cat.localeSlug,
             name: `${cat.name} (${cat.postCount})`,
             description: cat.description,
           }))}
           activeCategory={category ?? null}
           allLabel={t('allCategories')}
-          label={t('categories')}
+          label={t('categoriesLabel')}
         />
         <TagFilter
           tags={tags}

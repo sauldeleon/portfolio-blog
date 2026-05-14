@@ -2,7 +2,7 @@ import { screen } from '@testing-library/react'
 
 import { renderApp } from '@sdlgr/test-utils'
 
-import type { CategoryWithCount } from '@web/lib/db/queries/categories'
+import type { CategoryForAdmin } from '@web/lib/db/queries/categories'
 
 import { CategoriesPageView } from './CategoriesPageView'
 
@@ -16,8 +16,38 @@ jest.mock('next/navigation', () => ({
   useRouter: jest.fn().mockReturnValue({ refresh: jest.fn() }),
 }))
 
-const mockCategories: CategoryWithCount[] = [
-  { slug: 'engineering', name: 'Engineering', description: null, postCount: 3 },
+jest.mock('next/link', () => {
+  const React = require('react')
+  const MockLink = React.forwardRef(
+    (
+      { href, children, ...props }: { href: string; children: React.ReactNode },
+      ref: React.Ref<HTMLAnchorElement>,
+    ) => (
+      <a ref={ref} href={href} {...props}>
+        {children}
+      </a>
+    ),
+  )
+  MockLink.displayName = 'MockLink'
+  return MockLink
+})
+
+const mockCategories: CategoryForAdmin[] = [
+  {
+    id: 1,
+    slug: 'engineering',
+    postCount: 3,
+    publishedPostCount: 2,
+    translations: [
+      {
+        categorySlug: 'engineering',
+        locale: 'en',
+        name: 'Engineering',
+        description: null,
+        slug: 'engineering',
+      },
+    ],
+  },
 ]
 
 describe('CategoriesPageView', () => {

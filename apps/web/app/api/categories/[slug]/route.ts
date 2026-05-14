@@ -5,16 +5,18 @@ import { auth } from '@web/lib/auth/config'
 import {
   deleteCategory,
   getCategoryBySlug,
-  updateCategoryBySlug,
+  upsertCategoryTranslation,
 } from '@web/lib/db/queries/categories'
 import { getPublishedPostCountByCategory } from '@web/lib/db/queries/posts'
 
-const updateCategorySchema = z.object({
-  slug: z
-    .never({ message: 'Slug is immutable and cannot be changed' })
-    .optional(),
+const updateTranslationSchema = z.object({
+  locale: z.enum(['en', 'es']),
   name: z.string().min(1).optional(),
-  description: z.string().optional(),
+  description: z.string().nullable().optional(),
+  slug: z
+    .string()
+    .regex(/^[\p{L}\p{N}-]+$/u, 'Slug must be lowercase with hyphens')
+    .optional(),
 })
 
 export async function PUT(
@@ -35,7 +37,7 @@ export async function PUT(
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
   }
 
-  const parsed = updateCategorySchema.safeParse(body)
+  const parsed = updateTranslationSchema.safeParse(body)
   if (!parsed.success) {
     return NextResponse.json({ error: parsed.error.issues }, { status: 400 })
   }
@@ -45,14 +47,17 @@ export async function PUT(
     return NextResponse.json({ error: 'Category not found' }, { status: 404 })
   }
 
-  const data = parsed.data
-  const category = await updateCategoryBySlug(slug, {
-    name: data.name ?? existing.name,
-    description:
-      data.description !== undefined ? data.description : existing.description,
+  const { locale, name, description, slug: localeSlug } = parsed.data
+
+  const translation = await upsertCategoryTranslation({
+    categorySlug: slug,
+    locale,
+    name: name ?? slug,
+    description: description !== undefined ? description : null,
+    slug: localeSlug ?? slug,
   })
 
-  return NextResponse.json(category)
+  return NextResponse.json(translation)
 }
 
 export async function DELETE(

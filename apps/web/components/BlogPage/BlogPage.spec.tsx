@@ -4,6 +4,7 @@ import { Locale } from '@web/lib/db/schema'
 
 const mockGetPublishedPostsPaginated = jest.fn()
 const mockGetCategories = jest.fn()
+const mockGetCategoryByLocaleSlug = jest.fn()
 const mockGetPostCountPerTag = jest.fn()
 const mockGetServerTranslation = jest.fn()
 
@@ -12,6 +13,7 @@ jest.mock('@web/lib/db/queries/posts', () => ({
 }))
 jest.mock('@web/lib/db/queries/categories', () => ({
   getCategories: mockGetCategories,
+  getCategoryByLocaleSlug: mockGetCategoryByLocaleSlug,
 }))
 jest.mock('@web/lib/db/queries/tags', () => ({
   getPostCountPerTag: mockGetPostCountPerTag,
@@ -49,6 +51,16 @@ const mockPost = {
   coverImage: null,
 }
 
+const mockCategory = {
+  id: 1,
+  slug: 'engineering',
+  name: 'Engineering',
+  description: 'Posts about engineering',
+  localeSlug: 'engineering',
+  postCount: 5,
+  publishedPostCount: 3,
+}
+
 function mockT(key: string) {
   return key
 }
@@ -56,14 +68,8 @@ function mockT(key: string) {
 describe('BlogPage', () => {
   beforeEach(() => {
     mockGetServerTranslation.mockResolvedValue({ t: mockT })
-    mockGetCategories.mockResolvedValue([
-      {
-        id: 1,
-        slug: 'engineering',
-        name: 'Engineering',
-        description: 'Posts about engineering',
-      },
-    ])
+    mockGetCategories.mockResolvedValue([mockCategory])
+    mockGetCategoryByLocaleSlug.mockResolvedValue(null)
     mockGetPostCountPerTag.mockResolvedValue([])
   })
 
@@ -101,14 +107,21 @@ describe('BlogPage', () => {
     expect(screen.getByTestId('pagination')).toBeInTheDocument()
   })
 
-  it('passes category and tag filters to query', async () => {
+  it('resolves locale slug to canonical and passes canonical to query', async () => {
     mockGetPublishedPostsPaginated.mockResolvedValue({ data: [], total: 0 })
+    mockGetCategoryByLocaleSlug.mockResolvedValue({
+      canonicalSlug: 'engineering',
+    })
     await BlogPage({
       lng: 'en',
       category: 'engineering',
       tag: 'react',
       page: '2',
     })
+    expect(mockGetCategoryByLocaleSlug).toHaveBeenCalledWith(
+      'engineering',
+      'en',
+    )
     expect(mockGetPublishedPostsPaginated).toHaveBeenCalledWith(
       expect.objectContaining({
         locale: 'en',
@@ -116,6 +129,24 @@ describe('BlogPage', () => {
         tag: 'react',
         page: 2,
       }),
+    )
+  })
+
+  it('falls back to raw locale slug when reverse-lookup returns null', async () => {
+    mockGetPublishedPostsPaginated.mockResolvedValue({ data: [], total: 0 })
+    mockGetCategoryByLocaleSlug.mockResolvedValue(null)
+    await BlogPage({ lng: 'en', category: 'unknown-cat' })
+    expect(mockGetPublishedPostsPaginated).toHaveBeenCalledWith(
+      expect.objectContaining({ category: 'unknown-cat' }),
+    )
+  })
+
+  it('passes undefined category when no category filter', async () => {
+    mockGetPublishedPostsPaginated.mockResolvedValue({ data: [], total: 0 })
+    await BlogPage({ lng: 'en' })
+    expect(mockGetCategoryByLocaleSlug).not.toHaveBeenCalled()
+    expect(mockGetPublishedPostsPaginated).toHaveBeenCalledWith(
+      expect.objectContaining({ category: undefined }),
     )
   })
 

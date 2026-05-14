@@ -1,11 +1,11 @@
 import { render, screen } from '@testing-library/react'
 
-import type { CategoryWithCount } from '@web/lib/db/queries/categories'
+import type { CategoryForAdmin } from '@web/lib/db/queries/categories'
 
 import { CategoriesPageView } from './components/CategoriesPageView'
 import AdminCategoriesPage from './page.next'
 
-const mockGetCategories = jest.fn()
+const mockGetCategoriesForAdmin = jest.fn()
 const mockRequireAdminSession = jest.fn()
 
 jest.mock('@web/lib/auth/requireAdminSession', () => ({
@@ -13,7 +13,8 @@ jest.mock('@web/lib/auth/requireAdminSession', () => ({
 }))
 
 jest.mock('@web/lib/db/queries/categories', () => ({
-  getCategories: (...args: unknown[]) => mockGetCategories(...args),
+  getCategoriesForAdmin: (...args: unknown[]) =>
+    mockGetCategoriesForAdmin(...args),
 }))
 
 jest.mock('@web/i18n/server', () => ({
@@ -38,15 +39,29 @@ jest.mock('./components/CategoriesPageView', () => {
   }
 })
 
-const mockCategories: CategoryWithCount[] = [
-  { slug: 'engineering', name: 'Engineering', description: null, postCount: 3 },
+const mockCategories: CategoryForAdmin[] = [
+  {
+    id: 1,
+    slug: 'engineering',
+    postCount: 3,
+    publishedPostCount: 2,
+    translations: [
+      {
+        categorySlug: 'engineering',
+        locale: 'en',
+        name: 'Engineering',
+        description: null,
+        slug: 'engineering',
+      },
+    ],
+  },
 ]
 
 describe('AdminCategoriesPage', () => {
   beforeEach(() => {
     jest.clearAllMocks()
     mockRequireAdminSession.mockResolvedValue({ user: { name: 'admin' } })
-    mockGetCategories.mockResolvedValue(mockCategories)
+    mockGetCategoriesForAdmin.mockResolvedValue(mockCategories)
   })
 
   it('renders CategoriesPageView with fetched categories', async () => {
@@ -74,6 +89,6 @@ describe('AdminCategoriesPage', () => {
     mockRequireAdminSession.mockRejectedValue(redirectError)
 
     await expect(AdminCategoriesPage()).rejects.toBe(redirectError)
-    expect(mockGetCategories).not.toHaveBeenCalled()
+    expect(mockGetCategoriesForAdmin).not.toHaveBeenCalled()
   })
 })

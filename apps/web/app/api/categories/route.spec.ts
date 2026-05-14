@@ -5,12 +5,14 @@ const mockAuth = jest.fn()
 const mockGetCategories = jest.fn()
 const mockGetCategoryBySlug = jest.fn()
 const mockCreateCategory = jest.fn()
+const mockCreateCategoryTranslation = jest.fn()
 
 jest.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
 jest.mock('@web/lib/db/queries/categories', () => ({
   getCategories: mockGetCategories,
   getCategoryBySlug: mockGetCategoryBySlug,
   createCategory: mockCreateCategory,
+  createCategoryTranslation: mockCreateCategoryTranslation,
 }))
 
 const { GET, POST } = require('./route') as {
@@ -18,11 +20,20 @@ const { GET, POST } = require('./route') as {
   POST: (req: Request) => Promise<Response>
 }
 
-const mockCategory = {
-  id: 1,
-  slug: 'engineering',
+const mockCategory = { id: 1, slug: 'engineering' }
+const mockTranslationEN = {
+  categorySlug: 'engineering',
+  locale: 'en',
   name: 'Engineering',
   description: null,
+  slug: 'engineering',
+}
+const mockTranslationES = {
+  categorySlug: 'engineering',
+  locale: 'es',
+  name: 'Ingeniería',
+  description: null,
+  slug: 'ingenieria',
 }
 
 function makeRequest(body: unknown): Request {
@@ -31,6 +42,15 @@ function makeRequest(body: unknown): Request {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   })
+}
+
+function makeValidBody(overrides?: object) {
+  return {
+    translations: {
+      en: { name: 'Engineering', slug: 'engineering' },
+    },
+    ...overrides,
+  }
 }
 
 describe('GET /api/categories', () => {
@@ -65,7 +85,7 @@ describe('POST /api/categories', () => {
 
   it('returns 401 when not authenticated', async () => {
     mockAuth.mockResolvedValue(null)
-    const response = await POST(makeRequest({}))
+    const response = await POST(makeRequest(makeValidBody()))
     expect(response.status).toBe(401)
   })
 
@@ -81,59 +101,112 @@ describe('POST /api/categories', () => {
     expect(body).toEqual({ error: 'Invalid JSON' })
   })
 
-  it('returns 400 when slug has invalid format', async () => {
+  it('returns 400 when translations is missing', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    const response = await POST(makeRequest({}))
+    expect(response.status).toBe(400)
+  })
+
+  it('returns 400 when en translation is missing', async () => {
     mockAuth.mockResolvedValue({ user: { name: 'admin' } })
     const response = await POST(
-      makeRequest({ slug: 'INVALID SLUG!', name: 'Test' }),
+      makeRequest({
+        translations: { es: { name: 'Ingeniería', slug: 'ingenieria' } },
+      }),
     )
     expect(response.status).toBe(400)
   })
 
-  it('returns 400 when name is missing', async () => {
+  it('returns 400 when en slug has invalid format', async () => {
     mockAuth.mockResolvedValue({ user: { name: 'admin' } })
-    const response = await POST(makeRequest({ slug: 'valid-slug' }))
+    const response = await POST(
+      makeRequest({
+        translations: { en: { name: 'Test', slug: 'INVALID SLUG!' } },
+      }),
+    )
+    expect(response.status).toBe(400)
+  })
+
+  it('returns 400 when en name is missing', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    const response = await POST(
+      makeRequest({ translations: { en: { slug: 'valid-slug' } } }),
+    )
     expect(response.status).toBe(400)
   })
 
   it('returns 409 when slug already exists', async () => {
     mockAuth.mockResolvedValue({ user: { name: 'admin' } })
     mockGetCategoryBySlug.mockResolvedValue(mockCategory)
-    const response = await POST(
-      makeRequest({ slug: 'engineering', name: 'Engineering' }),
-    )
+    const response = await POST(makeRequest(makeValidBody()))
     expect(response.status).toBe(409)
     const body = (await response.json()) as { error: string }
     expect(body.error).toMatch(/already exists/)
   })
 
-  it('creates category and returns 201', async () => {
+  it('creates category with EN translation and returns 201', async () => {
     mockAuth.mockResolvedValue({ user: { name: 'admin' } })
     mockGetCategoryBySlug.mockResolvedValue(null)
     mockCreateCategory.mockResolvedValue(mockCategory)
-    const response = await POST(
-      makeRequest({ slug: 'engineering', name: 'Engineering' }),
-    )
+    mockCreateCategoryTranslation.mockResolvedValue(mockTranslationEN)
+    const response = await POST(makeRequest(makeValidBody()))
     expect(response.status).toBe(201)
     const body = await response.json()
-    expect(body).toMatchObject({ slug: 'engineering', name: 'Engineering' })
+    expect(body).toMatchObject({ slug: 'engineering' })
+    expect(mockCreateCategory).toHaveBeenCalledWith('engineering')
+    expect(mockCreateCategoryTranslation).toHaveBeenCalledTimes(1)
+    expect(mockCreateCategoryTranslation).toHaveBeenCalledWith(
+      expect.objectContaining({
+        locale: 'en',
+        name: 'Engineering',
+        slug: 'engineering',
+      }),
+    )
   })
 
-  it('creates category with optional description', async () => {
+  it('creates category with EN and ES translations and returns 201', async () => {
     mockAuth.mockResolvedValue({ user: { name: 'admin' } })
     mockGetCategoryBySlug.mockResolvedValue(null)
-    mockCreateCategory.mockResolvedValue({
-      ...mockCategory,
+    mockCreateCategory.mockResolvedValue(mockCategory)
+    mockCreateCategoryTranslation
+      .mockResolvedValueOnce(mockTranslationEN)
+      .mockResolvedValueOnce(mockTranslationES)
+    const response = await POST(
+      makeRequest({
+        translations: {
+          en: { name: 'Engineering', slug: 'engineering' },
+          es: { name: 'Ingeniería', slug: 'ingenieria' },
+        },
+      }),
+    )
+    expect(response.status).toBe(201)
+    expect(mockCreateCategoryTranslation).toHaveBeenCalledTimes(2)
+    expect(mockCreateCategoryTranslation).toHaveBeenCalledWith(
+      expect.objectContaining({
+        locale: 'es',
+        name: 'Ingeniería',
+        slug: 'ingenieria',
+      }),
+    )
+  })
+
+  it('creates category with description', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockGetCategoryBySlug.mockResolvedValue(null)
+    mockCreateCategory.mockResolvedValue(mockCategory)
+    mockCreateCategoryTranslation.mockResolvedValue({
+      ...mockTranslationEN,
       description: 'Desc',
     })
     const response = await POST(
       makeRequest({
-        slug: 'engineering',
-        name: 'Engineering',
-        description: 'Desc',
+        translations: {
+          en: { name: 'Engineering', slug: 'engineering', description: 'Desc' },
+        },
       }),
     )
     expect(response.status).toBe(201)
-    expect(mockCreateCategory).toHaveBeenCalledWith(
+    expect(mockCreateCategoryTranslation).toHaveBeenCalledWith(
       expect.objectContaining({ description: 'Desc' }),
     )
   })

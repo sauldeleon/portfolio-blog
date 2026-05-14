@@ -40,6 +40,10 @@
     "deleteConfirm": "Delete this post?",
     "empty": "No posts found"
   },
+  "confirmDelete": {
+    "confirm": "Delete",
+    "cancel": "Cancel"
+  },
   "categories": {
     "title": "Categories",
     "newCategory": "New category",
@@ -56,9 +60,24 @@
     "delete": "Delete",
     "deleteConfirm": "Delete this category?",
     "deleteBlocked": "Cannot delete: category has published posts",
+    "deleteTooltip": "{{count}} published post(s) use this category",
     "empty": "No categories found",
     "slugPlaceholder": "my-category",
     "namePlaceholder": "Category name",
-    "add": "Add"
+    "add": "Add",
+    "new": {
+      "title": "New Category"
+    },
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "e.g. Engineering",
+      "slug": "Slug",
+      "slugHelper": "Auto-generated from name. Only lowercase letters, numbers and hyphens.",
+      "description": "Description",
+      "descriptionPlaceholder": "Optional",
+      "create": "Create category",
+      "back": "← Back to categories",
+      "error": "Something went wrong, please try again"
+    }
   }
 }

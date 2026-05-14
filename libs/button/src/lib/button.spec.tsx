@@ -28,6 +28,36 @@ describe('Button', () => {
     expect(baseElement).toMatchSnapshot()
   })
 
+  it('should render variant inverted with size sm', () => {
+    const { baseElement } = renderWithTheme(
+      <Button variant="inverted" size="sm">
+        Click me
+      </Button>,
+    )
+    expect(screen.getByText('Click me')).toBeInTheDocument()
+    expect(baseElement).toMatchSnapshot()
+  })
+
+  it('should render variant inverted with size lg', () => {
+    const { baseElement } = renderWithTheme(
+      <Button variant="inverted" size="lg">
+        Click me
+      </Button>,
+    )
+    expect(screen.getByText('Click me')).toBeInTheDocument()
+    expect(baseElement).toMatchSnapshot()
+  })
+
+  it('should render variant contained with size sm', () => {
+    const { baseElement } = renderWithTheme(
+      <Button variant="contained" size="sm">
+        Click me
+      </Button>,
+    )
+    expect(screen.getByText('Click me')).toBeInTheDocument()
+    expect(baseElement).toMatchSnapshot()
+  })
+
   it('should render variant label as active', () => {
     const { baseElement } = renderWithTheme(
       <Button variant="label" active>

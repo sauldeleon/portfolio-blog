@@ -1,7 +1,4 @@
-import { AnchorHTMLAttributes } from 'react'
 import styled from 'styled-components'
-
-import { Button } from '@sdlgr/button'
 
 export const StyledPage = styled.div`
   display: flex;
@@ -24,20 +21,4 @@ export const StyledHeading = styled.h1`
   letter-spacing: 0.16em;
   color: ${({ theme }) => theme.colors.white};
   margin: 0;
-`
-
-export const StyledNewPostLink = styled(Button).attrs({
-  variant: 'inverted',
-  as: 'a',
-})<AnchorHTMLAttributes<HTMLAnchorElement>>`
-  display: inline-flex;
-  padding: 0.5rem 1rem;
-  font-family: inherit;
-  font-size: 0.6rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  text-decoration: none;
-  transition:
-    background 0.15s,
-    color 0.15s;
 `
