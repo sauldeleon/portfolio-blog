@@ -2,7 +2,12 @@ import { act, fireEvent, render, screen } from '@testing-library/react'
 
 import { RenderProviders, renderApp } from '@sdlgr/test-utils'
 
-import { CopyCodeBlock, CustomImage, MarkdownPreview } from './MarkdownPreview'
+import {
+  CopyCodeBlock,
+  CustomImage,
+  Embed,
+  MarkdownPreview,
+} from './MarkdownPreview'
 
 const mockSerializePreview = jest.fn()
 
@@ -26,10 +31,12 @@ jest.mock('next-mdx-remote', () => ({
     components?: {
       pre?: React.ElementType<React.HTMLAttributes<HTMLPreElement>>
       img?: React.ElementType<React.ImgHTMLAttributes<HTMLImageElement>>
+      Embed?: React.ElementType<{ type?: string; url?: string }>
     }
   }) => {
     const Pre = components?.pre
     const Img = components?.img
+    const EmbedComp = components?.Embed
     return (
       <div data-testid="mdx-content">
         {compiledSource}
@@ -39,6 +46,9 @@ jest.mock('next-mdx-remote', () => ({
           </Pre>
         )}
         {Img && <Img src="https://picsum.photos/id/11/800/400" alt="test" />}
+        {EmbedComp && (
+          <EmbedComp type="youtube" url="https://www.youtube.com/embed/abc" />
+        )}
       </div>
     )
   },
@@ -152,6 +162,15 @@ describe('MarkdownPreview', () => {
     })
     expect(screen.queryByTestId('preview-loading')).not.toBeInTheDocument()
     expect(screen.queryByTestId('markdown-preview')).not.toBeInTheDocument()
+  })
+
+  it('renders Embed component when present in compiled MDX', async () => {
+    renderApp(<MarkdownPreview content="# Hello" loadingLabel="Rendering…" />)
+    await act(async () => {
+      jest.advanceTimersByTime(500)
+      await Promise.resolve()
+    })
+    expect(screen.getByTestId('embed-wrapper')).toBeInTheDocument()
   })
 })
 
@@ -329,5 +348,112 @@ describe('CustomImage', () => {
     expect(
       img.compareDocumentPosition(caption) & Node.DOCUMENT_POSITION_PRECEDING,
     ).toBeTruthy()
+  })
+
+  it('does not open modal when expand param is absent', () => {
+    renderApp(
+      <CustomImage src="https://picsum.photos/id/11/800/400" alt="A dog" />,
+    )
+    fireEvent.click(screen.getByTestId('image-wrapper'))
+    expect(screen.queryByTestId('image-modal')).not.toBeInTheDocument()
+  })
+
+  it('opens modal when expand=true and image wrapper is clicked', () => {
+    renderApp(
+      <CustomImage
+        src="https://picsum.photos/id/11/800/400"
+        alt="expand=true&alt=A dog"
+      />,
+    )
+    expect(screen.queryByTestId('image-modal')).not.toBeInTheDocument()
+    fireEvent.click(screen.getByTestId('image-wrapper'))
+    expect(screen.getByTestId('image-modal')).toBeInTheDocument()
+  })
+
+  it('closes modal when overlay is clicked', () => {
+    renderApp(
+      <CustomImage
+        src="https://picsum.photos/id/11/800/400"
+        alt="expand=true&alt=A dog"
+      />,
+    )
+    fireEvent.click(screen.getByTestId('image-wrapper'))
+    fireEvent.click(screen.getByTestId('image-modal'))
+    expect(screen.queryByTestId('image-modal')).not.toBeInTheDocument()
+  })
+
+  it('closes modal when close button is clicked', () => {
+    renderApp(
+      <CustomImage
+        src="https://picsum.photos/id/11/800/400"
+        alt="expand=true&alt=A dog"
+      />,
+    )
+    fireEvent.click(screen.getByTestId('image-wrapper'))
+    fireEvent.click(screen.getByRole('button', { name: 'Close' }))
+    expect(screen.queryByTestId('image-modal')).not.toBeInTheDocument()
+  })
+
+  it('stops propagation on modal content click so overlay does not close', () => {
+    renderApp(
+      <CustomImage
+        src="https://picsum.photos/id/11/800/400"
+        alt="expand=true&alt=A dog"
+      />,
+    )
+    fireEvent.click(screen.getByTestId('image-wrapper'))
+    const images = screen.getAllByRole('img')
+    fireEvent.click(images[1])
+    expect(screen.getByTestId('image-modal')).toBeInTheDocument()
+  })
+
+  it('shows caption in modal when caption is present', () => {
+    renderApp(
+      <CustomImage
+        src="https://picsum.photos/id/11/800/400"
+        alt="expand=true&caption=Forest road&alt=A forest"
+      />,
+    )
+    fireEvent.click(screen.getByTestId('image-wrapper'))
+    const captions = screen.getAllByText('Forest road')
+    expect(captions.length).toBeGreaterThan(1)
+  })
+
+  it('shows open original link in modal', () => {
+    renderApp(
+      <CustomImage
+        src="https://picsum.photos/id/11/800/400"
+        alt="expand=true&alt=A dog"
+      />,
+    )
+    fireEvent.click(screen.getByTestId('image-wrapper'))
+    expect(screen.getByRole('link', { name: 'Open original' })).toHaveAttribute(
+      'href',
+      'https://picsum.photos/id/11/800/400',
+    )
+  })
+})
+
+describe('Embed', () => {
+  it('renders nothing when url is not provided', () => {
+    const { container } = renderApp(<Embed />)
+    expect(container).toBeEmptyDOMElement()
+  })
+
+  it('renders iframe with given url', () => {
+    renderApp(<Embed type="youtube" url="https://www.youtube.com/embed/abc" />)
+    const iframe = screen.getByTitle('youtube')
+    expect(iframe).toBeInTheDocument()
+    expect(iframe).toHaveAttribute('src', 'https://www.youtube.com/embed/abc')
+  })
+
+  it('uses embed as fallback title when type is not provided', () => {
+    renderApp(<Embed url="https://example.com" />)
+    expect(screen.getByTitle('embed')).toBeInTheDocument()
+  })
+
+  it('renders embed-wrapper test id', () => {
+    renderApp(<Embed type="maps" url="https://maps.example.com" />)
+    expect(screen.getByTestId('embed-wrapper')).toBeInTheDocument()
   })
 })

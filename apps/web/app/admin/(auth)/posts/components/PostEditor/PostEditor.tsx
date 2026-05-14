@@ -21,11 +21,11 @@ import {
   StyledHeaderLeft,
   StyledHeading,
   StyledHelper,
-  StyledMarkdownHint,
   StyledInput,
   StyledLabel,
   StyledLocaleTab,
   StyledLocaleTabs,
+  StyledMarkdownHint,
   StyledMetaGrid,
   StyledMetadataSection,
   StyledPageHeader,
@@ -512,9 +512,32 @@ align         left | right             (default: none)
 caption       text                     (default: none)
 caption-pos   top | bottom             (default: bottom)
 alt           accessible description   (default: "")
+expand        true                     (default: false — click to enlarge)
 
 Example:
-![size=small&align=right&caption=My photo&alt=A forest path](https://...)`}</pre>
+![size=small&align=right&caption=My photo&alt=A forest path&expand=true](https://...)`}</pre>
+            </StyledMarkdownHint>
+            <StyledMarkdownHint>
+              <summary>Embed syntax</summary>
+              <pre>{`Use a fenced code block with the embed type as language:
+
+\`\`\`youtube
+https://www.youtube.com/embed/<video-id>
+\`\`\`
+
+\`\`\`maps
+https://www.google.com/maps/embed?pb=...
+\`\`\`
+
+\`\`\`openstreetmap
+https://www.openstreetmap.org/export/embed.html?...
+\`\`\`
+
+\`\`\`wikiloc
+https://www.wikiloc.com/wikiloc/embedv2.do?id=<trail-id>&elevation=on&images=on&maptype=H
+\`\`\`
+
+Supported types: youtube · maps · openstreetmap · wikiloc`}</pre>
             </StyledMarkdownHint>
           </StyledFieldGroup>
         </StyledEditorPane>

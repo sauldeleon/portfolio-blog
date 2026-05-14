@@ -203,6 +203,7 @@ export const StyledLoading = styled.div`
 export const StyledImageWrapper = styled.div<{
   $align?: string | null
   $size?: string | null
+  $expandable?: boolean
 }>`
   margin: 1.75rem 0;
 
@@ -210,18 +211,20 @@ export const StyledImageWrapper = styled.div<{
     const width =
       $size === 'small' ? '16rem' : $size === 'medium' ? '28rem' : '100%'
 
-    if ($align === 'right') return css`
-      float: right;
-      clear: right;
-      width: ${width};
-      margin: 0 0 1.5rem 1.5rem;
-    `
-    if ($align === 'left') return css`
-      float: left;
-      clear: left;
-      width: ${width};
-      margin: 0 1.5rem 1.5rem 0;
-    `
+    if ($align === 'right')
+      return css`
+        float: right;
+        clear: right;
+        width: ${width};
+        margin: 0 0 1.5rem 1.5rem;
+      `
+    if ($align === 'left')
+      return css`
+        float: left;
+        clear: left;
+        width: ${width};
+        margin: 0 1.5rem 1.5rem 0;
+      `
     return css`
       width: ${width};
       ${$size ? 'margin: 1.75rem auto;' : ''}
@@ -234,6 +237,16 @@ export const StyledImageWrapper = styled.div<{
     height: auto;
     border-radius: 3px;
   }
+
+  ${({ $expandable }) =>
+    $expandable &&
+    css`
+      cursor: zoom-in;
+
+      &:hover {
+        opacity: 0.85;
+      }
+    `}
 `
 
 export const StyledCaption = styled.figcaption`
@@ -243,4 +256,77 @@ export const StyledCaption = styled.figcaption`
   margin: 0.4rem 0;
   font-style: italic;
   letter-spacing: 0.02em;
+`
+
+export const StyledModalOverlay = styled.div`
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.88);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+`
+
+export const StyledModalContent = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  max-width: 90vw;
+`
+
+export const StyledModalClose = styled.button`
+  position: absolute;
+  top: -1.75rem;
+  right: -0.5rem;
+  background: transparent;
+  border: none;
+  color: rgba(251, 251, 251, 0.6);
+  font-size: 1.25rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0.25rem;
+
+  &:hover {
+    color: rgba(251, 251, 251, 1);
+  }
+`
+
+export const StyledModalCaption = styled.figcaption`
+  font-size: 0.75rem;
+  color: rgba(251, 251, 251, 0.55);
+  text-align: center;
+  font-style: italic;
+`
+
+export const StyledModalDownload = styled.a`
+  font-size: 0.65rem;
+  color: rgba(251, 251, 251, 0.35);
+  text-decoration: underline;
+
+  &:hover {
+    color: rgba(251, 251, 251, 0.75);
+  }
+`
+
+export const StyledEmbedWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  height: 0;
+  margin: 1.75rem 0;
+  border-radius: 3px;
+  overflow: hidden;
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
 `
