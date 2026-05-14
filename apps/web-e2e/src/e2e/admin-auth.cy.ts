@@ -8,6 +8,12 @@ function loginViaUi(username = USERNAME, password = PASSWORD) {
   cy.get('[data-testid="login-form"]').submit()
 }
 
+function waitForLogout() {
+  cy.request({ url: '/api/auth/me', failOnStatusCode: false })
+    .its('status')
+    .should('eq', 401)
+}
+
 function loginWithSession(username = USERNAME, password = PASSWORD) {
   cy.session(
     ['admin-session', username],
@@ -73,6 +79,7 @@ describe('Admin auth — logout', () => {
   it('cannot access /admin/posts after logout', () => {
     cy.contains('button', 'Logout').click()
     cy.url({ timeout: 15000 }).should('include', '/admin/login')
+    waitForLogout()
 
     cy.visit('/admin/posts')
     cy.url({ timeout: 15000 }).should('include', '/admin/login')
@@ -82,6 +89,7 @@ describe('Admin auth — logout', () => {
   it('cannot access /admin/categories after logout', () => {
     cy.contains('button', 'Logout').click()
     cy.url({ timeout: 15000 }).should('include', '/admin/login')
+    waitForLogout()
 
     cy.visit('/admin/categories')
     cy.url({ timeout: 15000 }).should('include', '/admin/login')
