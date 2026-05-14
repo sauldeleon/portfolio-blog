@@ -1,8 +1,8 @@
-import { act, render, screen } from '@testing-library/react'
+import { act, fireEvent, render, screen } from '@testing-library/react'
 
 import { RenderProviders, renderApp } from '@sdlgr/test-utils'
 
-import { MarkdownPreview } from './MarkdownPreview'
+import { CopyCodeBlock, MarkdownPreview } from './MarkdownPreview'
 
 const mockSerializePreview = jest.fn()
 
@@ -11,9 +11,27 @@ jest.mock('../../actions/serializePreview', () => ({
 }))
 
 jest.mock('next-mdx-remote', () => ({
-  MDXRemote: ({ compiledSource }: { compiledSource: string }) => (
-    <div data-testid="mdx-content">{compiledSource}</div>
-  ),
+  MDXRemote: ({
+    compiledSource,
+    components,
+  }: {
+    compiledSource: string
+    components?: {
+      pre?: React.ElementType<React.HTMLAttributes<HTMLPreElement>>
+    }
+  }) => {
+    const Pre = components?.pre
+    return (
+      <div data-testid="mdx-content">
+        {compiledSource}
+        {Pre && (
+          <Pre>
+            <code>const x = 1</code>
+          </Pre>
+        )}
+      </div>
+    )
+  },
 }))
 
 const fakeSerialized = {
@@ -124,5 +142,83 @@ describe('MarkdownPreview', () => {
     })
     expect(screen.queryByTestId('preview-loading')).not.toBeInTheDocument()
     expect(screen.queryByTestId('markdown-preview')).not.toBeInTheDocument()
+  })
+})
+
+describe('CopyCodeBlock', () => {
+  const mockWriteText = jest.fn()
+
+  beforeEach(() => {
+    jest.useFakeTimers()
+    mockWriteText.mockReset()
+    mockWriteText.mockResolvedValue(undefined)
+    Object.assign(navigator, { clipboard: { writeText: mockWriteText } })
+  })
+
+  afterEach(() => {
+    jest.useRealTimers()
+  })
+
+  it('renders children inside a pre element with a Copy button', () => {
+    renderApp(
+      <CopyCodeBlock>
+        <code>const x = 1</code>
+      </CopyCodeBlock>,
+    )
+    expect(screen.getByRole('button', { name: 'Copy' })).toBeInTheDocument()
+    expect(screen.getByText('const x = 1')).toBeInTheDocument()
+  })
+
+  it('copies code text to clipboard on click', async () => {
+    renderApp(
+      <CopyCodeBlock>
+        <code>const x = 1</code>
+      </CopyCodeBlock>,
+    )
+    fireEvent.click(screen.getByRole('button', { name: 'Copy' }))
+    expect(mockWriteText).toHaveBeenCalledWith('const x = 1')
+    await act(async () => {
+      await Promise.resolve()
+    })
+  })
+
+  it('falls back to empty string when pre has no text content', async () => {
+    renderApp(<CopyCodeBlock />)
+    fireEvent.click(screen.getByRole('button', { name: 'Copy' }))
+    expect(mockWriteText).toHaveBeenCalledWith('')
+    await act(async () => {
+      await Promise.resolve()
+    })
+  })
+
+  it('shows Copied! immediately after click', async () => {
+    renderApp(
+      <CopyCodeBlock>
+        <code>const x = 1</code>
+      </CopyCodeBlock>,
+    )
+    fireEvent.click(screen.getByRole('button', { name: 'Copy' }))
+    await act(async () => {
+      await Promise.resolve()
+    })
+    expect(screen.getByRole('button')).toHaveTextContent('Copied!')
+  })
+
+  it('reverts button label to Copy after 2000ms', async () => {
+    renderApp(
+      <CopyCodeBlock>
+        <code>const x = 1</code>
+      </CopyCodeBlock>,
+    )
+    fireEvent.click(screen.getByRole('button', { name: 'Copy' }))
+    await act(async () => {
+      await Promise.resolve()
+    })
+    expect(screen.getByRole('button')).toHaveTextContent('Copied!')
+
+    await act(async () => {
+      jest.advanceTimersByTime(2000)
+    })
+    expect(screen.getByRole('button')).toHaveTextContent('Copy')
   })
 })
