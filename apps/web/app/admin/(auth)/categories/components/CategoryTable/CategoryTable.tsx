@@ -4,18 +4,18 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 import { useClientTranslation } from '@web/i18n/client'
-import type { CategoryWithCount } from '@web/lib/db/queries/categories'
+import type { CategoryForAdmin } from '@web/lib/db/queries/categories'
+import { slugify } from '@web/utils/slugify'
 
 import {
   StyledActions,
   StyledCancelButton,
-  StyledCreateError,
-  StyledCreateForm,
-  StyledCreateInput,
   StyledDeleteButton,
   StyledEditButton,
   StyledEditInput,
   StyledEmpty,
+  StyledLocaleTab,
+  StyledLocaleTabs,
   StyledName,
   StyledNewButton,
   StyledPostCount,
@@ -33,74 +33,94 @@ import {
 } from './CategoryTable.styles'
 
 interface CategoryTableProps {
-  categories: CategoryWithCount[]
+  categories: CategoryForAdmin[]
+}
+
+function getTranslation(cat: CategoryForAdmin, locale: 'en' | 'es') {
+  return cat.translations.find((t) => t.locale === locale)
+}
+
+function getDisplayName(cat: CategoryForAdmin): string {
+  return getTranslation(cat, 'en')?.name ?? cat.slug
 }
 
 export function CategoryTable({ categories }: CategoryTableProps) {
   const { t } = useClientTranslation('admin')
   const router = useRouter()
   const [search, setSearch] = useState('')
-  const [creating, setCreating] = useState(false)
-  const [newSlug, setNewSlug] = useState('')
-  const [newName, setNewName] = useState('')
-  const [createError, setCreateError] = useState<string | null>(null)
   const [editSlug, setEditSlug] = useState<string | null>(null)
+  const [editLocale, setEditLocale] = useState<'en' | 'es'>('en')
   const [editName, setEditName] = useState('')
+  const [editDescription, setEditDescription] = useState('')
+  const [editLocaleSlug, setEditLocaleSlug] = useState('')
+  const [editSlugManuallyEdited, setEditSlugManuallyEdited] = useState(false)
 
   const filtered = categories.filter((c) => {
     const q = search.toLowerCase()
-    return c.name.toLowerCase().includes(q) || c.slug.includes(q)
+    return getDisplayName(c).toLowerCase().includes(q) || c.slug.includes(q)
   })
 
-  async function handleCreate(e: React.FormEvent) {
-    e.preventDefault()
-    const res = await fetch('/api/categories', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ slug: newSlug, name: newName }),
-    })
-    if (!res.ok) {
-      const data = await res.json()
-      setCreateError(
-        typeof data.error === 'string' ? data.error : t('categories.empty'),
-      )
-      return
-    }
-    setNewSlug('')
-    setNewName('')
-    setCreateError(null)
-    setCreating(false)
-    router.refresh()
+  function handleStartEdit(cat: CategoryForAdmin) {
+    const tr = getTranslation(cat, 'en')
+    setEditSlug(cat.slug)
+    setEditLocale('en')
+    setEditName(tr?.name ?? '')
+    setEditDescription(tr?.description ?? '')
+    setEditLocaleSlug(tr?.slug ?? cat.slug)
+    setEditSlugManuallyEdited(false)
   }
 
-  function handleStartEdit(cat: CategoryWithCount) {
-    setEditSlug(cat.slug)
-    setEditName(cat.name)
+  function handleSwitchLocale(locale: 'en' | 'es') {
+    // editSlug is always set from a slug in the current categories array
+    const cat = categories.find((c) => c.slug === editSlug)!
+    const tr = getTranslation(cat, locale)
+    setEditLocale(locale)
+    setEditName(tr?.name ?? '')
+    setEditDescription(tr?.description ?? '')
+    setEditLocaleSlug(tr?.slug ?? cat.slug)
+    setEditSlugManuallyEdited(false)
   }
 
   function handleCancelEdit() {
     setEditSlug(null)
+    setEditLocale('en')
     setEditName('')
+    setEditDescription('')
+    setEditLocaleSlug('')
+    setEditSlugManuallyEdited(false)
+  }
+
+  function handleEditNameChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const val = e.target.value
+    setEditName(val)
+    if (!editSlugManuallyEdited) {
+      setEditLocaleSlug(slugify(val))
+    }
+  }
+
+  function handleEditSlugChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setEditLocaleSlug(e.target.value)
+    setEditSlugManuallyEdited(true)
   }
 
   async function handleSaveEdit(slug: string) {
     await fetch(`/api/categories/${slug}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: editName }),
+      body: JSON.stringify({
+        locale: editLocale,
+        name: editName,
+        description: editDescription || null,
+        slug: editLocaleSlug || slug,
+      }),
     })
-    setEditSlug(null)
-    setEditName('')
+    handleCancelEdit()
     router.refresh()
   }
 
   async function handleDelete(slug: string) {
     if (!window.confirm(t('categories.deleteConfirm'))) return
-    const res = await fetch(`/api/categories/${slug}`, { method: 'DELETE' })
-    if (res.status === 409) {
-      window.alert(t('categories.deleteBlocked'))
-      return
-    }
+    await fetch(`/api/categories/${slug}`, { method: 'DELETE' })
     router.refresh()
   }
 
@@ -114,51 +134,15 @@ export function CategoryTable({ categories }: CategoryTableProps) {
           onChange={(e) => setSearch(e.target.value)}
           data-testid="search-input"
         />
-        {!creating && (
-          <StyledNewButton
-            onClick={() => setCreating(true)}
-            data-testid="new-category-button"
-          >
-            {t('categories.newCategory')}
-          </StyledNewButton>
-        )}
+        <StyledNewButton
+          variant="inverted"
+          size="sm"
+          onClick={() => router.push('/admin/categories/new')}
+          data-testid="new-category-button"
+        >
+          {t('categories.newCategory')}
+        </StyledNewButton>
       </StyledToolbar>
-
-      {creating && (
-        <StyledCreateForm onSubmit={handleCreate} data-testid="create-form">
-          <StyledCreateInput
-            type="text"
-            placeholder={t('categories.slugPlaceholder')}
-            value={newSlug}
-            onChange={(e) => setNewSlug(e.target.value)}
-            required
-            data-testid="new-slug-input"
-          />
-          <StyledCreateInput
-            type="text"
-            placeholder={t('categories.namePlaceholder')}
-            value={newName}
-            onChange={(e) => setNewName(e.target.value)}
-            required
-            data-testid="new-name-input"
-          />
-          <StyledSaveButton type="submit" data-testid="create-submit">
-            {t('categories.add')}
-          </StyledSaveButton>
-          <StyledCancelButton
-            type="button"
-            onClick={() => setCreating(false)}
-            data-testid="create-cancel"
-          >
-            {t('categories.cancel')}
-          </StyledCancelButton>
-          {createError && (
-            <StyledCreateError data-testid="create-error">
-              {createError}
-            </StyledCreateError>
-          )}
-        </StyledCreateForm>
-      )}
 
       <StyledTable>
         <StyledThead>
@@ -181,14 +165,32 @@ export function CategoryTable({ categories }: CategoryTableProps) {
             <StyledTr key={cat.slug} data-testid="category-row">
               <StyledTd>
                 {editSlug === cat.slug ? (
-                  <StyledEditInput
-                    type="text"
-                    value={editName}
-                    onChange={(e) => setEditName(e.target.value)}
-                    data-testid="edit-name-input"
-                  />
+                  <>
+                    <StyledLocaleTabs>
+                      <StyledLocaleTab
+                        $active={editLocale === 'en'}
+                        onClick={() => handleSwitchLocale('en')}
+                        data-testid="locale-tab-en"
+                      >
+                        EN
+                      </StyledLocaleTab>
+                      <StyledLocaleTab
+                        $active={editLocale === 'es'}
+                        onClick={() => handleSwitchLocale('es')}
+                        data-testid="locale-tab-es"
+                      >
+                        ES
+                      </StyledLocaleTab>
+                    </StyledLocaleTabs>
+                    <StyledEditInput
+                      type="text"
+                      value={editName}
+                      onChange={handleEditNameChange}
+                      data-testid="edit-name-input"
+                    />
+                  </>
                 ) : (
-                  <StyledName>{cat.name}</StyledName>
+                  <StyledName>{getDisplayName(cat)}</StyledName>
                 )}
               </StyledTd>
               <StyledTd>
@@ -201,6 +203,22 @@ export function CategoryTable({ categories }: CategoryTableProps) {
                 <StyledActions>
                   {editSlug === cat.slug ? (
                     <>
+                      <StyledEditInput
+                        type="text"
+                        value={editDescription}
+                        onChange={(e) => setEditDescription(e.target.value)}
+                        placeholder={t(
+                          'categories.form.descriptionPlaceholder',
+                        )}
+                        data-testid="edit-description-input"
+                      />
+                      <StyledEditInput
+                        type="text"
+                        value={editLocaleSlug}
+                        onChange={handleEditSlugChange}
+                        placeholder={t('categories.form.slug')}
+                        data-testid="edit-slug-input"
+                      />
                       <StyledSaveButton
                         onClick={() => handleSaveEdit(cat.slug)}
                         data-testid="save-button"
@@ -223,7 +241,19 @@ export function CategoryTable({ categories }: CategoryTableProps) {
                         {t('categories.edit')}
                       </StyledEditButton>
                       <StyledDeleteButton
-                        onClick={() => handleDelete(cat.slug)}
+                        onClick={
+                          cat.publishedPostCount > 0
+                            ? undefined
+                            : () => handleDelete(cat.slug)
+                        }
+                        disabled={cat.publishedPostCount > 0}
+                        title={
+                          cat.publishedPostCount > 0
+                            ? t('categories.deleteTooltip', {
+                                count: cat.publishedPostCount,
+                              })
+                            : undefined
+                        }
                         data-testid="delete-button"
                       >
                         {t('categories.delete')}

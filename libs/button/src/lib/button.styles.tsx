@@ -8,6 +8,22 @@ const sharedButtonStyles = css`
   cursor: pointer;
 `
 
+type ButtonSize = 'sm' | 'md' | 'lg'
+
+const buttonSizeStyles: Record<ButtonSize, ReturnType<typeof css>> = {
+  sm: css`
+    padding: 0.5rem 1rem;
+    font-size: 0.6rem;
+  `,
+  md: css`
+    padding: 15px 20px;
+  `,
+  lg: css`
+    padding: 1.25rem 2rem;
+    font-size: 1rem;
+  `,
+}
+
 export const StyledTextButton = styled.button`
   ${sharedButtonStyles}
   padding: 0;
@@ -23,18 +39,18 @@ export const StyledTextButton = styled.button`
   ${({ theme }) => theme.helpers.focusVisible};
 `
 
-export const StyledContainedButton = styled.button`
+export const StyledContainedButton = styled.button<{ $size?: ButtonSize }>`
   ${sharedButtonStyles}
   border: 1px solid ${({ theme }) => theme.colors.white};
-  padding: 15px 20px;
+  ${({ $size = 'md' }) => buttonSizeStyles[$size]}
 `
 
-export const StyledInvertedButton = styled.button`
+export const StyledInvertedButton = styled.button<{ $size?: ButtonSize }>`
   ${sharedButtonStyles}
   border: 1px solid ${({ theme }) => theme.colors.white};
   background-color: ${({ theme }) => theme.colors.white};
   color: ${({ theme }) => theme.colors.black};
-  padding: 15px 20px;
+  ${({ $size = 'md' }) => buttonSizeStyles[$size]}
 
   &:hover {
     background-color: transparent;

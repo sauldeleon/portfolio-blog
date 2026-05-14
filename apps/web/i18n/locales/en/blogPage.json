@@ -5,7 +5,7 @@
   "noResults": "No posts found",
   "readMore": "Read more",
   "readingTime": "{{count}} min read",
-  "categories": "Categories",
+  "categoriesLabel": "Categories",
   "tags": "Tags",
   "allCategories": "All categories",
   "allTags": "All tags",

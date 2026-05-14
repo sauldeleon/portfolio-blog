@@ -16,6 +16,8 @@ import {
   StyledFilterTabs,
   StyledLangChip,
   StyledLangChips,
+  StyledLeftGroup,
+  StyledNewPostButton,
   StyledPublishButton,
   StyledSearchInput,
   StyledStatusBadge,
@@ -84,27 +86,37 @@ export function PostTable({ posts }: PostTableProps) {
   return (
     <StyledWrapper data-testid="post-table">
       <StyledToolbar>
-        <StyledFilterTabs data-testid="filter-tabs">
-          {STATUS_FILTERS.map((s) => (
-            <StyledFilterTab
-              key={s}
-              active={filter === s}
-              onClick={() => setFilter(s)}
-              aria-pressed={filter === s}
-              data-testid={`filter-${s}`}
-            >
-              {t(`posts.filters.${s}`)}
-              <StyledCount>({countFor(s)})</StyledCount>
-            </StyledFilterTab>
-          ))}
-        </StyledFilterTabs>
-        <StyledSearchInput
-          type="search"
-          placeholder={t('posts.searchPlaceholder')}
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          data-testid="search-input"
-        />
+        <StyledLeftGroup>
+          <StyledSearchInput
+            type="search"
+            placeholder={t('posts.searchPlaceholder')}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            data-testid="search-input"
+          />
+          <StyledFilterTabs data-testid="filter-tabs">
+            {STATUS_FILTERS.map((s) => (
+              <StyledFilterTab
+                key={s}
+                active={filter === s}
+                onClick={() => setFilter(s)}
+                aria-pressed={filter === s}
+                data-testid={`filter-${s}`}
+              >
+                {t(`posts.filters.${s}`)}
+                <StyledCount>({countFor(s)})</StyledCount>
+              </StyledFilterTab>
+            ))}
+          </StyledFilterTabs>
+        </StyledLeftGroup>
+        <StyledNewPostButton
+          variant="inverted"
+          size="sm"
+          onClick={() => router.push('/admin/posts/new')}
+          data-testid="new-post-button"
+        >
+          {t('posts.newPost')}
+        </StyledNewPostButton>
       </StyledToolbar>
 
       <StyledTable>

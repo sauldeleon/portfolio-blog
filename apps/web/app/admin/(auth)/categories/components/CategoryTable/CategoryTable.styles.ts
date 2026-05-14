@@ -40,53 +40,9 @@ export const StyledSearchInput = styled.input`
   }
 `
 
-export const StyledNewButton = styled(Button).attrs({ variant: 'inverted' })`
-  display: inline-flex;
-  padding: 0.5rem 1rem;
-  font-family: inherit;
-  font-size: 0.6rem;
+export const StyledNewButton = styled(Button)`
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  transition:
-    background 0.15s,
-    color 0.15s;
-`
-
-export const StyledCreateForm = styled.form`
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 1rem 0;
-  border-bottom: 1px solid rgba(251, 251, 251, 0.08);
-  flex-wrap: wrap;
-`
-
-export const StyledCreateInput = styled.input`
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid rgba(251, 251, 251, 0.2);
-  padding: 0.375rem 0;
-  color: ${({ theme }) => theme.colors.white};
-  font-family: inherit;
-  font-size: 0.75rem;
-  outline: none;
-  min-width: 160px;
-  transition: border-color 0.2s;
-
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.white};
-    opacity: 0.25;
-  }
-
-  &:focus {
-    border-bottom-color: ${({ theme }) => theme.colors.green};
-  }
-`
-
-export const StyledCreateError = styled.span`
-  font-size: 0.65rem;
-  color: ${({ theme }) => theme.colors.orange};
-  flex-basis: 100%;
 `
 
 export const StyledTable = styled.table`
@@ -227,8 +183,13 @@ export const StyledDeleteButton = styled.button`
   ${actionButtonBase}
   color: ${({ theme }) => theme.colors.orange};
 
-  &:hover {
+  &:hover:not(:disabled) {
     border-color: ${({ theme }) => theme.colors.orange};
+  }
+
+  &:disabled {
+    opacity: 0.2;
+    cursor: not-allowed;
   }
 `
 
@@ -239,4 +200,34 @@ export const StyledEmpty = styled.div`
   opacity: 0.3;
   text-transform: uppercase;
   letter-spacing: 0.12em;
+`
+
+export const StyledLocaleTabs = styled.div`
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 0.375rem;
+`
+
+export const StyledLocaleTab = styled.button<{ $active?: boolean }>`
+  background: transparent;
+  border: 1px solid
+    ${({ theme, $active }) =>
+      $active ? theme.colors.green : 'rgba(251,251,251,0.2)'};
+  color: ${({ theme, $active }) =>
+    $active ? theme.colors.green : theme.colors.white};
+  padding: 0.1rem 0.4rem;
+  font-family: inherit;
+  font-size: 0.55rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  opacity: ${({ $active }) => ($active ? 1 : 0.4)};
+  transition:
+    border-color 0.15s,
+    color 0.15s,
+    opacity 0.15s;
+
+  &:hover {
+    opacity: 1;
+  }
 `

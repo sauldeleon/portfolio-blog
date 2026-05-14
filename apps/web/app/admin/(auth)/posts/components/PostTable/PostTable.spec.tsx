@@ -31,6 +31,7 @@ jest.mock('@web/i18n/client', () => ({
         'posts.delete': 'Delete',
         'posts.deleteConfirm': 'Delete this post?',
         'posts.empty': 'No posts found',
+        'posts.newPost': 'New post',
       }
       return translations[key] ?? key
     },
@@ -322,5 +323,11 @@ describe('PostTable', () => {
     })
     expect(screen.queryByTestId('post-row')).not.toBeInTheDocument()
     expect(screen.getByText('No posts found')).toBeInTheDocument()
+  })
+
+  it('new post button navigates to /admin/posts/new on click', () => {
+    renderApp(<PostTable posts={[]} />)
+    fireEvent.click(screen.getByTestId('new-post-button'))
+    expect(mockPush).toHaveBeenCalledWith('/admin/posts/new')
   })
 })

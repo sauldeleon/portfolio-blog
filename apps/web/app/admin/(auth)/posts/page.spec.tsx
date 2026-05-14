@@ -78,11 +78,11 @@ describe('AdminPostsPage', () => {
     expect(mockRequireAdminSession).toHaveBeenCalledTimes(1)
   })
 
-  it('passes translated strings to PostsPageView', async () => {
+  it('passes translated title to PostsPageView', async () => {
     const ui = await AdminPostsPage()
     render(ui)
     expect(PostsPageView).toHaveBeenCalledWith(
-      expect.objectContaining({ title: 'Posts', newPostLabel: 'New post' }),
+      expect.objectContaining({ title: 'Posts' }),
       undefined,
     )
   })

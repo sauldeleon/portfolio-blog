@@ -7,23 +7,32 @@ import {
   StyledTextButton,
 } from './button.styles'
 
+export type ButtonSize = 'sm' | 'md' | 'lg'
+
 export type ButtonProps = DetailedHTMLProps<
   ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement
-> & { active?: boolean; variant?: 'text' | 'contained' | 'inverted' | 'label' }
+> & {
+  active?: boolean
+  variant?: 'text' | 'contained' | 'inverted' | 'label'
+  size?: ButtonSize
+}
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ active = false, children, variant = 'text', ...props }, forwardedRef) => {
+  (
+    { active = false, children, variant = 'text', size = 'md', ...props },
+    forwardedRef,
+  ) => {
     if (variant === 'contained') {
       return (
-        <StyledContainedButton {...props} ref={forwardedRef}>
+        <StyledContainedButton $size={size} {...props} ref={forwardedRef}>
           {children}
         </StyledContainedButton>
       )
     }
     if (variant === 'inverted') {
       return (
-        <StyledInvertedButton {...props} ref={forwardedRef}>
+        <StyledInvertedButton $size={size} {...props} ref={forwardedRef}>
           {children}
         </StyledInvertedButton>
       )

@@ -1,6 +1,6 @@
 'use client'
 
-import type { CategoryWithCount } from '@web/lib/db/queries/categories'
+import type { CategoryForAdmin } from '@web/lib/db/queries/categories'
 
 import { CategoryTable } from '../CategoryTable'
 import {
@@ -10,7 +10,7 @@ import {
 } from './CategoriesPageView.styles'
 
 interface CategoriesPageViewProps {
-  categories: CategoryWithCount[]
+  categories: CategoryForAdmin[]
   title: string
 }
 

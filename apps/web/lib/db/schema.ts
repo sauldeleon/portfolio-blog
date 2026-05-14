@@ -12,9 +12,24 @@ import {
 export const categories = pgTable('categories', {
   id: serial('id').primaryKey(),
   slug: text('slug').notNull().unique(),
-  name: text('name').notNull(),
-  description: text('description'),
 })
+
+export const categoryTranslations = pgTable(
+  'category_translations',
+  {
+    categorySlug: text('category_slug')
+      .notNull()
+      .references(() => categories.slug, { onDelete: 'cascade' }),
+    locale: text('locale', { enum: ['en', 'es'] }).notNull(),
+    name: text('name').notNull(),
+    description: text('description'),
+    slug: text('slug').notNull(), // locale-specific URL slug
+  },
+  (t) => [
+    primaryKey({ columns: [t.categorySlug, t.locale] }),
+    unique().on(t.locale, t.slug),
+  ],
+)
 
 export const posts = pgTable(
   'posts',
@@ -65,6 +80,8 @@ export const postTranslations = pgTable(
 
 export type Category = typeof categories.$inferSelect
 export type NewCategory = typeof categories.$inferInsert
+export type CategoryTranslation = typeof categoryTranslations.$inferSelect
+export type NewCategoryTranslation = typeof categoryTranslations.$inferInsert
 export type Post = typeof posts.$inferSelect
 export type NewPost = typeof posts.$inferInsert
 export type PostTranslation = typeof postTranslations.$inferSelect

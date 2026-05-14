@@ -1,12 +1,15 @@
 import { db } from '../index'
 import {
   createCategory,
+  createCategoryTranslation,
   deleteCategory,
   getCategories,
+  getCategoriesForAdmin,
   getCategoryById,
+  getCategoryByLocaleSlug,
   getCategoryBySlug,
-  updateCategoryById,
-  updateCategoryBySlug,
+  getCategoryTranslations,
+  upsertCategoryTranslation,
 } from './categories'
 
 jest.mock('../index', () => ({
@@ -38,6 +41,7 @@ function makeChain(resolved: unknown) {
     'values',
     'set',
     'returning',
+    'onConflictDoUpdate',
   ]
   for (const m of methods) {
     chain[m] = jest.fn().mockReturnValue(chain)
@@ -49,11 +53,20 @@ function makeChain(resolved: unknown) {
   return chain
 }
 
-const mockCategory = {
-  id: 1,
-  slug: 'engineering',
+const mockCategory = { id: 1, slug: 'engineering' }
+const mockTranslationEN = {
+  categorySlug: 'engineering',
+  locale: 'en' as const,
   name: 'Engineering',
   description: null,
+  slug: 'engineering',
+}
+const mockTranslationES = {
+  categorySlug: 'engineering',
+  locale: 'es' as const,
+  name: 'Ingeniería',
+  description: null,
+  slug: 'ingenieria',
 }
 
 beforeEach(() => {
@@ -61,19 +74,64 @@ beforeEach(() => {
 })
 
 describe('getCategories', () => {
-  it('returns categories with post counts', async () => {
-    const row = { ...mockCategory, postCount: 5 }
+  it('returns categories with post counts and locale name', async () => {
+    const row = {
+      id: 1,
+      slug: 'engineering',
+      name: 'Engineering',
+      description: null,
+      localeSlug: 'engineering',
+      postCount: 5,
+      publishedPostCount: 3,
+    }
     mockDb.select.mockReturnValue(makeChain([row]))
-    const result = await getCategories()
+    const result = await getCategories('en')
     expect(result).toEqual([row])
     expect(mockDb.select).toHaveBeenCalled()
   })
 
-  it('returns category with 0 post count when no posts', async () => {
-    const row = { ...mockCategory, postCount: 0 }
-    mockDb.select.mockReturnValue(makeChain([row]))
-    const result = await getCategories()
-    expect(result[0].postCount).toBe(0)
+  it('defaults to en locale', async () => {
+    mockDb.select.mockReturnValue(makeChain([]))
+    await getCategories()
+    expect(mockDb.select).toHaveBeenCalled()
+  })
+
+  it('returns empty array when no categories', async () => {
+    mockDb.select.mockReturnValue(makeChain([]))
+    const result = await getCategories('en')
+    expect(result).toEqual([])
+  })
+})
+
+describe('getCategoriesForAdmin', () => {
+  it('returns categories with translations grouped', async () => {
+    const countRow = {
+      id: 1,
+      slug: 'engineering',
+      postCount: 5,
+      publishedPostCount: 3,
+    }
+    mockDb.select
+      .mockReturnValueOnce(makeChain([countRow]))
+      .mockReturnValueOnce(makeChain([mockTranslationEN, mockTranslationES]))
+    const result = await getCategoriesForAdmin()
+    expect(result).toHaveLength(1)
+    expect(result[0].slug).toBe('engineering')
+    expect(result[0].translations).toHaveLength(2)
+    expect(result[0].translations[0].locale).toBe('en')
+    expect(result[0].translations[1].locale).toBe('es')
+  })
+
+  it('returns empty translations array when none exist', async () => {
+    mockDb.select
+      .mockReturnValueOnce(
+        makeChain([
+          { id: 1, slug: 'new-cat', postCount: 0, publishedPostCount: 0 },
+        ]),
+      )
+      .mockReturnValueOnce(makeChain([]))
+    const result = await getCategoriesForAdmin()
+    expect(result[0].translations).toEqual([])
   })
 })
 
@@ -105,44 +163,62 @@ describe('getCategoryBySlug', () => {
   })
 })
 
+describe('getCategoryByLocaleSlug', () => {
+  it('returns canonical slug when found', async () => {
+    mockDb.select.mockReturnValue(makeChain([{ canonicalSlug: 'engineering' }]))
+    const result = await getCategoryByLocaleSlug('ingenieria', 'es')
+    expect(result).toEqual({ canonicalSlug: 'engineering' })
+  })
+
+  it('returns null when not found', async () => {
+    mockDb.select.mockReturnValue(makeChain([]))
+    const result = await getCategoryByLocaleSlug('nada', 'es')
+    expect(result).toBeNull()
+  })
+})
+
+describe('getCategoryTranslations', () => {
+  it('returns all translations for a category', async () => {
+    mockDb.select.mockReturnValue(
+      makeChain([mockTranslationEN, mockTranslationES]),
+    )
+    const result = await getCategoryTranslations('engineering')
+    expect(result).toHaveLength(2)
+    expect(result[0].locale).toBe('en')
+    expect(result[1].locale).toBe('es')
+  })
+
+  it('returns empty array when no translations', async () => {
+    mockDb.select.mockReturnValue(makeChain([]))
+    const result = await getCategoryTranslations('empty')
+    expect(result).toEqual([])
+  })
+})
+
 describe('createCategory', () => {
-  it('inserts and returns new category', async () => {
+  it('inserts canonical slug and returns the row', async () => {
     mockDb.insert.mockReturnValue(makeChain([mockCategory]))
-    const result = await createCategory(mockCategory)
+    const result = await createCategory('engineering')
     expect(result).toEqual(mockCategory)
     expect(mockDb.insert).toHaveBeenCalled()
   })
 })
 
-describe('updateCategoryBySlug', () => {
-  it('updates name and description, returns updated row', async () => {
-    const updated = { ...mockCategory, name: 'Updated Name' }
-    mockDb.update.mockReturnValue(makeChain([updated]))
-    const result = await updateCategoryBySlug('engineering', {
-      name: 'Updated Name',
-    })
-    expect(result).toMatchObject({ name: 'Updated Name' })
-  })
-
-  it('returns null when category not found', async () => {
-    mockDb.update.mockReturnValue(makeChain([]))
-    const result = await updateCategoryBySlug('nonexistent', { name: 'X' })
-    expect(result).toBeNull()
+describe('createCategoryTranslation', () => {
+  it('inserts translation and returns it', async () => {
+    mockDb.insert.mockReturnValue(makeChain([mockTranslationEN]))
+    const result = await createCategoryTranslation(mockTranslationEN)
+    expect(result.name).toBe('Engineering')
+    expect(result.locale).toBe('en')
   })
 })
 
-describe('updateCategoryById', () => {
-  it('updates name and description by id, returns updated row', async () => {
-    const updated = { ...mockCategory, name: 'Updated Name' }
-    mockDb.update.mockReturnValue(makeChain([updated]))
-    const result = await updateCategoryById(1, { name: 'Updated Name' })
-    expect(result).toMatchObject({ name: 'Updated Name' })
-  })
-
-  it('returns null when category not found', async () => {
-    mockDb.update.mockReturnValue(makeChain([]))
-    const result = await updateCategoryById(99, { name: 'X' })
-    expect(result).toBeNull()
+describe('upsertCategoryTranslation', () => {
+  it('upserts and returns the translation', async () => {
+    const updated = { ...mockTranslationEN, name: 'Engineering Updated' }
+    mockDb.insert.mockReturnValue(makeChain([updated]))
+    const result = await upsertCategoryTranslation(updated)
+    expect(result.name).toBe('Engineering Updated')
   })
 })
 
