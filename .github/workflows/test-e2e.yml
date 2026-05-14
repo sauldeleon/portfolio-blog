@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: vercel-preview-url
-        uses: zentered/vercel-preview-url@v1.1.9
+        uses: zentered/vercel-preview-url@v1.4.0
         id: vercel_preview_url
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN  }}
@@ -15,7 +15,7 @@ jobs:
           vercel_project_id: ${{ secrets.VERCEL_PROJECT_ID }}
       - name: Output Vercel Preview URL
         run: echo "The preview url is -> https://${{ steps.vercel_preview_url.outputs.preview_url }}"
-      - uses: UnlyEd/github-action-await-vercel@v1.2.42
+      - uses: UnlyEd/github-action-await-vercel@v2.0
         id: await-vercel-preview-ready
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
@@ -25,15 +25,15 @@ jobs:
       - name: Display deployment status
         run: 'echo The deployment at ${{ fromJson(steps.await-vercel-preview-ready.outputs.deploymentDetails).url }} is ${{ fromJson(steps.await-vercel-preview-ready.outputs.deploymentDetails).readyState }}'
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
       - name: Install
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: 'yarn'
       - name: Cypress run
         if: steps.vercel_preview_url.outcome == 'success'
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v7
         with:
           working-directory: apps/web-e2e
           wait-on: 'https://${{ steps.vercel_preview_url.outputs.preview_url }}'
