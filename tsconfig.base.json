@@ -29,6 +29,7 @@
       "@sdlgr/main-theme": ["./libs/main-theme/src/index.ts"],
       "@sdlgr/mocks": ["./libs/mocks/src/index.ts"],
       "@sdlgr/modal": ["./libs/modal/src/index.ts"],
+      "@sdlgr/input": ["./libs/input/src/index.ts"],
       "@sdlgr/select": ["./libs/select/src/index.ts"],
       "@sdlgr/storage": ["./libs/storage/src/index.ts"],
       "@sdlgr/test-utils": ["./libs/test-utils/src/index.ts"],

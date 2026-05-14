@@ -3,6 +3,13 @@
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
+import {
+  FieldGroup,
+  FieldHelper,
+  FieldLabel,
+  Input,
+  Textarea,
+} from '@sdlgr/input'
 import { Select } from '@sdlgr/select'
 
 import { useClientTranslation } from '@web/i18n/client'
@@ -18,13 +25,9 @@ import {
   StyledEditorLayout,
   StyledEditorPane,
   StyledError,
-  StyledFieldGroup,
   StyledFormActions,
   StyledHeaderLeft,
   StyledHeading,
-  StyledHelper,
-  StyledInput,
-  StyledLabel,
   StyledLocaleTab,
   StyledLocaleTabs,
   StyledMarkdownHint,
@@ -36,7 +39,6 @@ import {
   StyledPublishButton,
   StyledSaveButton,
   StyledStatusBadge,
-  StyledTextarea,
   StyledTitleRow,
   StyledWrapper,
 } from './PostEditor.styles'
@@ -364,11 +366,11 @@ export function PostEditor({ post, categories, author }: PostEditorProps) {
 
       <StyledEditorLayout>
         <StyledEditorPane>
-          <StyledFieldGroup>
-            <StyledLabel htmlFor={`title-${activeLocale}`}>
+          <FieldGroup>
+            <FieldLabel htmlFor={`title-${activeLocale}`} required>
               {t('postEditor.fields.title')}
-            </StyledLabel>
-            <StyledInput
+            </FieldLabel>
+            <Input
               id={`title-${activeLocale}`}
               type="text"
               value={currentLocale.title}
@@ -376,13 +378,13 @@ export function PostEditor({ post, categories, author }: PostEditorProps) {
               placeholder={t('postEditor.fields.titlePlaceholder')}
               data-testid="title-input"
             />
-          </StyledFieldGroup>
+          </FieldGroup>
 
-          <StyledFieldGroup>
-            <StyledLabel htmlFor={`slug-${activeLocale}`}>
+          <FieldGroup>
+            <FieldLabel htmlFor={`slug-${activeLocale}`} required>
               {t('postEditor.fields.slug')}
-            </StyledLabel>
-            <StyledInput
+            </FieldLabel>
+            <Input
               id={`slug-${activeLocale}`}
               type="text"
               value={currentLocale.slug}
@@ -390,14 +392,14 @@ export function PostEditor({ post, categories, author }: PostEditorProps) {
               placeholder={t('postEditor.fields.slugHelper')}
               data-testid="slug-input"
             />
-            <StyledHelper>{t('postEditor.fields.slugHelper')}</StyledHelper>
-          </StyledFieldGroup>
+            <FieldHelper>{t('postEditor.fields.slugHelper')}</FieldHelper>
+          </FieldGroup>
 
-          <StyledFieldGroup>
-            <StyledLabel htmlFor={`excerpt-${activeLocale}`}>
+          <FieldGroup>
+            <FieldLabel htmlFor={`excerpt-${activeLocale}`}>
               {t('postEditor.fields.excerpt')}
-            </StyledLabel>
-            <StyledTextarea
+            </FieldLabel>
+            <Textarea
               id={`excerpt-${activeLocale}`}
               value={currentLocale.excerpt}
               onChange={(e) =>
@@ -407,14 +409,14 @@ export function PostEditor({ post, categories, author }: PostEditorProps) {
               rows={3}
               data-testid="excerpt-input"
             />
-          </StyledFieldGroup>
+          </FieldGroup>
 
           <StyledMetadataSection>
             <StyledMetaGrid>
-              <StyledFieldGroup>
-                <StyledLabel htmlFor="meta-category">
+              <FieldGroup>
+                <FieldLabel htmlFor="meta-category" required>
                   {t('postEditor.fields.category')}
-                </StyledLabel>
+                </FieldLabel>
                 <Select
                   id="meta-category"
                   value={category}
@@ -425,13 +427,13 @@ export function PostEditor({ post, categories, author }: PostEditorProps) {
                   }))}
                   data-testid="category-select"
                 />
-              </StyledFieldGroup>
+              </FieldGroup>
 
-              <StyledFieldGroup>
-                <StyledLabel htmlFor="meta-tags">
+              <FieldGroup>
+                <FieldLabel htmlFor="meta-tags">
                   {t('postEditor.fields.tags')}
-                </StyledLabel>
-                <StyledInput
+                </FieldLabel>
+                <Input
                   id="meta-tags"
                   type="text"
                   value={tags}
@@ -439,14 +441,14 @@ export function PostEditor({ post, categories, author }: PostEditorProps) {
                   placeholder={t('postEditor.fields.tagsPlaceholder')}
                   data-testid="tags-input"
                 />
-                <StyledHelper>{t('postEditor.fields.tagsHelper')}</StyledHelper>
-              </StyledFieldGroup>
+                <FieldHelper>{t('postEditor.fields.tagsHelper')}</FieldHelper>
+              </FieldGroup>
 
-              <StyledFieldGroup>
-                <StyledLabel htmlFor="meta-cover">
+              <FieldGroup>
+                <FieldLabel htmlFor="meta-cover">
                   {t('postEditor.fields.coverImage')}
-                </StyledLabel>
-                <StyledInput
+                </FieldLabel>
+                <Input
                   id="meta-cover"
                   type="text"
                   value={coverImage}
@@ -454,13 +456,13 @@ export function PostEditor({ post, categories, author }: PostEditorProps) {
                   placeholder={t('postEditor.fields.coverImagePlaceholder')}
                   data-testid="cover-image-input"
                 />
-              </StyledFieldGroup>
+              </FieldGroup>
 
-              <StyledFieldGroup>
-                <StyledLabel htmlFor="meta-series-id">
+              <FieldGroup>
+                <FieldLabel htmlFor="meta-series-id">
                   {t('postEditor.fields.seriesId')}
-                </StyledLabel>
-                <StyledInput
+                </FieldLabel>
+                <Input
                   id="meta-series-id"
                   type="text"
                   value={seriesId}
@@ -468,13 +470,13 @@ export function PostEditor({ post, categories, author }: PostEditorProps) {
                   placeholder={t('postEditor.fields.seriesIdPlaceholder')}
                   data-testid="series-id-input"
                 />
-              </StyledFieldGroup>
+              </FieldGroup>
 
-              <StyledFieldGroup>
-                <StyledLabel htmlFor="meta-series-order">
+              <FieldGroup>
+                <FieldLabel htmlFor="meta-series-order">
                   {t('postEditor.fields.seriesOrder')}
-                </StyledLabel>
-                <StyledInput
+                </FieldLabel>
+                <Input
                   id="meta-series-order"
                   type="number"
                   value={seriesOrder}
@@ -482,14 +484,14 @@ export function PostEditor({ post, categories, author }: PostEditorProps) {
                   placeholder={t('postEditor.fields.seriesOrderPlaceholder')}
                   data-testid="series-order-input"
                 />
-              </StyledFieldGroup>
+              </FieldGroup>
             </StyledMetaGrid>
           </StyledMetadataSection>
 
-          <StyledFieldGroup>
-            <StyledLabel htmlFor={`content-${activeLocale}`}>
+          <FieldGroup>
+            <FieldLabel htmlFor={`content-${activeLocale}`} required>
               {t('postEditor.fields.content')}
-            </StyledLabel>
+            </FieldLabel>
             <StyledContentTextarea
               id={`content-${activeLocale}`}
               value={currentLocale.content}
@@ -535,7 +537,7 @@ https://www.wikiloc.com/wikiloc/embedv2.do?id=<trail-id>&elevation=on&images=on&
 
 Supported types: youtube · maps · openstreetmap · wikiloc`}</pre>
             </StyledMarkdownHint>
-          </StyledFieldGroup>
+          </FieldGroup>
         </StyledEditorPane>
 
         <StyledPreviewPane data-testid="preview-pane">

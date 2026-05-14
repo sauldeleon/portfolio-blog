@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components'
 
 import { Button } from '@sdlgr/button'
+import { Textarea } from '@sdlgr/input'
 
 export const StyledWrapper = styled.div`
   display: flex;
@@ -199,74 +200,10 @@ export const StyledPreviewLabel = styled.span`
   margin-bottom: 0.5rem;
 `
 
-export const StyledFieldGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.375rem;
-`
-
-export const StyledLabel = styled.label`
-  font-size: 0.6rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: ${({ theme }) => theme.colors.white};
-  opacity: 0.5;
-`
-
-export const StyledInput = styled.input`
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid rgba(251, 251, 251, 0.2);
-  padding: 0.5rem 0;
-  color: ${({ theme }) => theme.colors.white};
-  font-family: inherit;
-  font-size: 0.875rem;
-  outline: none;
-  transition: border-color 0.2s;
-
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.white};
-    opacity: 0.25;
-  }
-
-  &:focus {
-    border-bottom-color: ${({ theme }) => theme.colors.green};
-  }
-`
-
-export const StyledTextarea = styled.textarea`
-  background: transparent;
-  border: 1px solid rgba(251, 251, 251, 0.2);
-  border-radius: 2px;
-  padding: 0.5rem;
-  color: ${({ theme }) => theme.colors.white};
-  font-family: inherit;
-  font-size: 0.8rem;
-  outline: none;
-  resize: vertical;
-  transition: border-color 0.2s;
-  line-height: 1.6;
-
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.white};
-    opacity: 0.25;
-  }
-
-  &:focus {
-    border-color: ${({ theme }) => theme.colors.green};
-  }
-`
-
-export const StyledContentTextarea = styled(StyledTextarea)`
+export const StyledContentTextarea = styled(Textarea)`
   min-height: 400px;
   font-family: 'Courier New', monospace;
   font-size: 0.75rem;
-`
-
-export const StyledHelper = styled.p`
-  font-size: 0.65rem;
-  opacity: 0.35;
-  margin: 0;
 `
 
 export const StyledMarkdownHint = styled.details`
