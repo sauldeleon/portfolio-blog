@@ -6,6 +6,7 @@ import {
   getPostById,
   getPostByPreviewToken,
   getPostBySlug,
+  getPostForEdit,
   getPostTranslations,
   getPostsBySeries,
   getPublishedPostCountByCategory,
@@ -496,5 +497,21 @@ describe('getPublishedPostCountByCategory', () => {
     mockDb.select.mockReturnValue(makeChain([]))
     const result = await getPublishedPostCountByCategory('nonexistent')
     expect(result).toBe(0)
+  })
+})
+
+describe('getPostForEdit', () => {
+  it('returns post with translations when found', async () => {
+    mockDb.select
+      .mockReturnValueOnce(makeChain([mockPost]))
+      .mockReturnValueOnce(makeChain([mockTranslation]))
+    const result = await getPostForEdit(mockPost.id)
+    expect(result).toEqual({ post: mockPost, translations: [mockTranslation] })
+  })
+
+  it('returns null when post not found', async () => {
+    mockDb.select.mockReturnValueOnce(makeChain([]))
+    const result = await getPostForEdit('nonexistent')
+    expect(result).toBeNull()
   })
 })

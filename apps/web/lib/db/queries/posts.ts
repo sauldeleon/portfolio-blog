@@ -412,6 +412,20 @@ export async function getPostTranslations(
     .where(eq(postTranslations.postId, postId))
 }
 
+export async function getPostForEdit(
+  id: string,
+): Promise<PostWithTranslations | null> {
+  const postRows = await db
+    .select()
+    .from(posts)
+    .where(and(eq(posts.id, id), isNull(posts.deletedAt)))
+
+  if (!postRows[0]) return null
+
+  const translationRows = await getPostTranslations(id)
+  return { post: postRows[0], translations: translationRows }
+}
+
 export type PaginatedPostsParams = {
   locale: Locale
   page: number

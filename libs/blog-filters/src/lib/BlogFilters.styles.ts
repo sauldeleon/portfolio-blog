@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { Button } from '@sdlgr/button'
 
@@ -30,4 +30,13 @@ export const StyledChipList = styled.ul`
   max-width: 100%;
 `
 
-export const StyledChip = styled(Button).attrs({ variant: 'label' })``
+export const StyledChip = styled(Button).attrs({ variant: 'label' })<{
+  $small?: boolean
+}>`
+  ${({ $small }) =>
+    $small &&
+    css`
+      font-size: 0.55rem;
+      padding: 0.125rem 0.4rem;
+    `}
+`

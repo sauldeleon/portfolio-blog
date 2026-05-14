@@ -6,6 +6,7 @@ import { PostHero } from '@sdlgr/post-hero'
 import { TableOfContents } from '@sdlgr/table-of-contents'
 
 import { RelatedPosts } from '@web/components/RelatedPosts/RelatedPosts'
+import { SeriesIndicator } from '@web/components/SeriesIndicator/SeriesIndicator'
 import { getServerTranslation } from '@web/i18n/server'
 import { getPostById, getPublishedPosts } from '@web/lib/db/queries/posts'
 import { Locale } from '@web/lib/db/schema'
@@ -110,6 +111,14 @@ export default async function BlogPostPage({ params }: RouteProps) {
           copiedLabel: t('codeCopied'),
         })}
       </article>
+      {post.seriesId && (
+        <SeriesIndicator
+          postId={post.id}
+          seriesId={post.seriesId}
+          seriesOrder={post.seriesOrder ?? null}
+          lng={lng}
+        />
+      )}
       <RelatedPosts postId={post.id} lng={lng} />
     </main>
   )

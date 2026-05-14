@@ -12,6 +12,8 @@
   "pagination.previous": "Anterior",
   "pagination.next": "Siguiente",
   "relatedPosts": "Publicaciones relacionadas",
+  "seriesIndicator.part": "Parte {{order}} de la serie",
+  "seriesIndicator.heading": "Serie: {{seriesId}}",
   "toc": "Tabla de contenidos",
   "copyCode": "Copiar",
   "codeCopied": "¡Copiado!"

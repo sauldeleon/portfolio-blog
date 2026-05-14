@@ -62,10 +62,10 @@ const updatePostSchema = z.object({
   category: z.string().min(1).optional(),
   tags: z.array(z.string()).optional(),
   status: z.enum(['draft', 'published', 'archived']).optional(),
-  coverImage: z.string().optional(),
+  coverImage: z.string().nullable().optional(),
   scheduledAt: z.string().optional(),
-  seriesId: z.string().optional(),
-  seriesOrder: z.number().int().optional(),
+  seriesId: z.string().nullable().optional(),
+  seriesOrder: z.number().int().nullable().optional(),
   translations: z
     .object({
       en: translationUpdateSchema.optional(),
