@@ -40,19 +40,24 @@ describe('authorizeCredentials', () => {
   it('returns null when username is missing', async () => {
     const result = await authorizeCredentials({ password: 'pass' })
     expect(result).toBeNull()
+    expect(mockCompare).not.toHaveBeenCalled()
   })
 
   it('returns null when password is missing', async () => {
     const result = await authorizeCredentials({ username: 'admin' })
     expect(result).toBeNull()
+    expect(mockCompare).not.toHaveBeenCalled()
   })
 
   it('returns null when username does not match ADMIN_USERNAME', async () => {
+    mockCompare.mockResolvedValue(false)
     const result = await authorizeCredentials({
       username: 'wrong',
       password: 'pass',
     })
     expect(result).toBeNull()
+    // bcrypt must always run to prevent timing-based username enumeration
+    expect(mockCompare).toHaveBeenCalledTimes(1)
   })
 
   it('returns null when ADMIN_PASSWORD_HASH is not set', async () => {
@@ -62,6 +67,7 @@ describe('authorizeCredentials', () => {
       password: 'pass',
     })
     expect(result).toBeNull()
+    expect(mockCompare).not.toHaveBeenCalled()
   })
 
   it('returns null when bcrypt compare fails', async () => {
