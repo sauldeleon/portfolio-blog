@@ -234,28 +234,6 @@ export const StyledInput = styled.input`
   }
 `
 
-export const StyledSelect = styled.select`
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid rgba(251, 251, 251, 0.2);
-  padding: 0.5rem 0;
-  color: ${({ theme }) => theme.colors.white};
-  font-family: inherit;
-  font-size: 0.875rem;
-  outline: none;
-  transition: border-color 0.2s;
-  cursor: pointer;
-
-  option {
-    background: #111;
-    color: ${({ theme }) => theme.colors.white};
-  }
-
-  &:focus {
-    border-bottom-color: ${({ theme }) => theme.colors.green};
-  }
-`
-
 export const StyledTextarea = styled.textarea`
   background: transparent;
   border: 1px solid rgba(251, 251, 251, 0.2);

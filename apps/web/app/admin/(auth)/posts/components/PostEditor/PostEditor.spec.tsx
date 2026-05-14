@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen, waitFor, within } from '@testing-library/react'
 import { useRouter } from 'next/navigation'
 
 import { renderApp } from '@sdlgr/test-utils'
@@ -557,9 +557,16 @@ describe('PostEditor', () => {
   })
 
   describe('categories dropdown', () => {
-    it('renders categories in select', () => {
+    it('renders category select', () => {
       renderApp(<PostEditor categories={mockCategories} author="Admin" />)
       expect(screen.getByTestId('category-select')).toBeInTheDocument()
+    })
+
+    it('shows category options when opened', () => {
+      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      fireEvent.click(
+        within(screen.getByTestId('category-select')).getByRole('button'),
+      )
       expect(
         screen.getByRole('option', { name: 'Engineering' }),
       ).toBeInTheDocument()
@@ -568,10 +575,13 @@ describe('PostEditor', () => {
 
     it('allows selecting a category', () => {
       renderApp(<PostEditor categories={mockCategories} author="Admin" />)
-      fireEvent.change(screen.getByTestId('category-select'), {
-        target: { value: 'design' },
-      })
-      expect(screen.getByTestId('category-select')).toHaveValue('design')
+      fireEvent.click(
+        within(screen.getByTestId('category-select')).getByRole('button'),
+      )
+      fireEvent.click(screen.getByRole('option', { name: 'Design' }))
+      expect(
+        within(screen.getByTestId('category-select')).getByRole('button'),
+      ).toHaveTextContent('Design')
     })
   })
 })

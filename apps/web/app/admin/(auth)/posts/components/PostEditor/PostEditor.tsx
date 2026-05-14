@@ -3,6 +3,8 @@
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
+import { Select } from '@sdlgr/select'
+
 import { useClientTranslation } from '@web/i18n/client'
 import type { PostStatus } from '@web/lib/db/schema'
 import { slugify } from '@web/utils/slugify'
@@ -33,7 +35,6 @@ import {
   StyledPreviewPane,
   StyledPublishButton,
   StyledSaveButton,
-  StyledSelect,
   StyledStatusBadge,
   StyledTextarea,
   StyledTitleRow,
@@ -414,21 +415,16 @@ export function PostEditor({ post, categories, author }: PostEditorProps) {
                 <StyledLabel htmlFor="meta-category">
                   {t('postEditor.fields.category')}
                 </StyledLabel>
-                <StyledSelect
+                <Select
                   id="meta-category"
                   value={category}
-                  onChange={(e) => setCategory(e.target.value)}
+                  onChange={setCategory}
+                  options={categories.map((cat) => ({
+                    value: cat.slug,
+                    label: cat.name,
+                  }))}
                   data-testid="category-select"
-                >
-                  <option value="" disabled>
-                    —
-                  </option>
-                  {categories.map((cat) => (
-                    <option key={cat.slug} value={cat.slug}>
-                      {cat.name}
-                    </option>
-                  ))}
-                </StyledSelect>
+                />
               </StyledFieldGroup>
 
               <StyledFieldGroup>
