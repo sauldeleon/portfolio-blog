@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 
-import { buttonLabelStyles } from '@sdlgr/button'
+import { Button } from '@sdlgr/button'
 
 export const StyledWrapper = styled.div`
   display: flex;
@@ -23,9 +23,7 @@ export const StyledFilterTabs = styled.div`
   gap: 0.25rem;
 `
 
-export const StyledFilterTab = styled.button<{ $active: boolean }>`
-  ${buttonLabelStyles}
-`
+export const StyledFilterTab = styled(Button).attrs({ variant: 'label' })``
 
 export const StyledCount = styled.span`
   opacity: 0.5;

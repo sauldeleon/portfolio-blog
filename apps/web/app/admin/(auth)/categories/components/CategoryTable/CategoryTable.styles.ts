@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
+import { Button } from '@sdlgr/button'
+
 export const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -38,26 +40,16 @@ export const StyledSearchInput = styled.input`
   }
 `
 
-export const StyledNewButton = styled.button`
+export const StyledNewButton = styled(Button).attrs({ variant: 'inverted' })`
   display: inline-flex;
-  align-items: center;
-  border: 1px solid ${({ theme }) => theme.colors.white};
-  background: ${({ theme }) => theme.colors.white};
-  color: ${({ theme }) => theme.colors.black};
   padding: 0.5rem 1rem;
   font-family: inherit;
   font-size: 0.6rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  cursor: pointer;
   transition:
     background 0.15s,
     color 0.15s;
-
-  &:hover {
-    background: transparent;
-    color: ${({ theme }) => theme.colors.white};
-  }
 `
 
 export const StyledCreateForm = styled.form`

@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import styled from 'styled-components'
 
+import { Button } from '@sdlgr/button'
+
 export const StyledNav = styled.nav`
   display: flex;
   align-items: center;
@@ -51,20 +53,20 @@ export const StyledDivider = styled.span`
   margin: 0 0.5rem;
 `
 
-export const StyledLogoutButton = styled.button`
-  background: transparent;
-  border: none;
+export const StyledLogoutButton = styled(Button).attrs({ variant: 'text' })`
   padding: 0.375rem 0.75rem;
   font-family: inherit;
   font-size: 0.6rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: ${({ theme }) => theme.colors.white};
   opacity: 0.4;
-  cursor: pointer;
   transition:
     color 0.15s,
     opacity 0.15s;
+
+  &::after {
+    display: none;
+  }
 
   &:hover {
     color: ${({ theme }) => theme.colors.orange};

@@ -49,7 +49,7 @@ export function TagFilter({
         <li>
           <StyledChip
             onClick={() => handleSelect(null)}
-            $active={activeTag === null}
+            active={activeTag === null}
             aria-current={activeTag === null ? true : undefined}
           >
             {allLabel}
@@ -59,7 +59,7 @@ export function TagFilter({
           <li key={tag}>
             <StyledChip
               onClick={() => handleSelect(tag)}
-              $active={tag === activeTag}
+              active={tag === activeTag}
               aria-current={tag === activeTag ? true : undefined}
             >
               {tag} ({count})

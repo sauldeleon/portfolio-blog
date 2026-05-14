@@ -51,7 +51,7 @@ export function CategoryFilter({
         <li>
           <StyledChip
             onClick={() => handleSelect(null)}
-            $active={activeCategory === null}
+            active={activeCategory === null}
             aria-current={activeCategory === null ? true : undefined}
           >
             {allLabel}
@@ -61,7 +61,7 @@ export function CategoryFilter({
           <li key={cat.slug}>
             <StyledChip
               onClick={() => handleSelect(cat.slug)}
-              $active={cat.slug === activeCategory}
+              active={cat.slug === activeCategory}
               aria-current={cat.slug === activeCategory ? true : undefined}
             >
               {cat.name}

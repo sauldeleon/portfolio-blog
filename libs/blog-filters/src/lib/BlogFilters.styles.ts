@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { buttonLabelStyles } from '@sdlgr/button'
+import { Button } from '@sdlgr/button'
 
 export const StyledFilterNav = styled.nav`
   min-width: 0;
@@ -30,6 +30,4 @@ export const StyledChipList = styled.ul`
   max-width: 100%;
 `
 
-export const StyledChip = styled.button<{ $active: boolean }>`
-  ${buttonLabelStyles}
-`
+export const StyledChip = styled(Button).attrs({ variant: 'label' })``

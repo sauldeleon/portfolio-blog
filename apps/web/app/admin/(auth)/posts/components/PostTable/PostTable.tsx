@@ -88,7 +88,7 @@ export function PostTable({ posts }: PostTableProps) {
           {STATUS_FILTERS.map((s) => (
             <StyledFilterTab
               key={s}
-              $active={filter === s}
+              active={filter === s}
               onClick={() => setFilter(s)}
               aria-pressed={filter === s}
               data-testid={`filter-${s}`}

@@ -54,18 +54,18 @@ export const StyledInput = styled.input`
   }
 `
 
-export const StyledToggleButton = styled.button`
-  background: none;
-  border: none;
+export const StyledToggleButton = styled(Button).attrs({ variant: 'text' })`
   padding: 0.25rem;
-  cursor: pointer;
-  color: ${({ theme }) => theme.colors.white};
   opacity: 0.4;
   font-size: 0.75rem;
   font-family: inherit;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   transition: opacity 0.2s;
+
+  &::after {
+    display: none;
+  }
 
   &:hover {
     opacity: 0.8;
