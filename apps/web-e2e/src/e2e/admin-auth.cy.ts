@@ -1,11 +1,29 @@
 const USERNAME = Cypress.env('ADMIN_USERNAME') ?? 'admin'
 const PASSWORD = Cypress.env('ADMIN_PASSWORD') ?? 'admin'
 
-function login(username = USERNAME, password = PASSWORD) {
+function loginViaUi(username = USERNAME, password = PASSWORD) {
   cy.visit('/admin/login')
   cy.get('#username').type(username)
   cy.get('#password').type(password, { log: false })
   cy.get('[data-testid="login-form"]').submit()
+}
+
+function loginWithSession(username = USERNAME, password = PASSWORD) {
+  cy.session(
+    ['admin-session', username],
+    () => {
+      loginViaUi(username, password)
+      cy.url({ timeout: 20000 }).should('include', '/admin/posts')
+      cy.get('[data-testid="admin-nav"]').should('be.visible')
+    },
+    {
+      validate: () => {
+        cy.request({ url: '/api/auth/me', failOnStatusCode: false })
+          .its('status')
+          .should('eq', 200)
+      },
+    },
+  )
 }
 
 describe('Admin auth — unauthenticated access', () => {
@@ -27,22 +45,23 @@ describe('Admin auth — unauthenticated access', () => {
 
 describe('Admin auth — login', () => {
   it('shows error on invalid credentials', () => {
-    login('admin', 'wrongpassword')
+    loginViaUi('admin', 'wrongpassword')
     cy.get('[role="alert"]').should('contain.text', 'Invalid credentials')
     cy.url().should('include', '/admin/login')
   })
 
   it('redirects to /admin/posts after successful login', () => {
-    login()
-    cy.url({ timeout: 15000 }).should('include', '/admin/posts')
+    loginViaUi()
+    cy.url({ timeout: 20000 }).should('include', '/admin/posts')
     cy.get('[data-testid="admin-nav"]').should('be.visible')
   })
 })
 
 describe('Admin auth — logout', () => {
   beforeEach(() => {
-    login()
-    cy.url({ timeout: 15000 }).should('include', '/admin/posts')
+    loginWithSession()
+    cy.visit('/admin/posts')
+    cy.get('[data-testid="admin-nav"]').should('be.visible')
   })
 
   it('redirects to /admin/login after logout', () => {

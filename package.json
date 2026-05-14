@@ -13,6 +13,7 @@
   "scripts": {
     "nx": "nx",
     "start:web": "nx serve web",
+    "start:web:e2e": "node scripts/start-web-e2e.mjs",
     "build": "nx build",
     "build:all": "NODE_ENV=production nx run-many --target=build --all --prod",
     "build:web": "NODE_ENV=production yarn build web --prod",
