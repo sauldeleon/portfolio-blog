@@ -8,26 +8,14 @@ function loginViaUi(username = USERNAME, password = PASSWORD) {
   cy.get('[data-testid="login-form"]').submit()
 }
 
-function waitForLogout() {
-  cy.request({ url: '/api/auth/me', failOnStatusCode: false })
-    .its('status')
-    .should('eq', 401)
-}
-
-function loginWithSession(username = USERNAME, password = PASSWORD) {
-  cy.session(
-    ['admin-session', username],
-    () => {
-      loginViaUi(username, password)
-      cy.url({ timeout: 20000 }).should('include', '/admin/posts')
-      cy.get('[data-testid="admin-nav"]').should('be.visible')
-    },
-    {
-      validate: () => {
-        cy.request({ url: '/api/auth/me', failOnStatusCode: false })
-          .its('status')
-          .should('eq', 200)
-      },
+function waitForLogout(retriesLeft = 30): void {
+  cy.request({ url: '/api/auth/me', failOnStatusCode: false }).then(
+    (response) => {
+      if (response.status !== 401 && retriesLeft > 0) {
+        waitForLogout(retriesLeft - 1)
+      } else {
+        expect(response.status).to.eq(401)
+      }
     },
   )
 }
@@ -65,8 +53,8 @@ describe('Admin auth — login', () => {
 
 describe('Admin auth — logout', () => {
   beforeEach(() => {
-    loginWithSession()
-    cy.visit('/admin/posts')
+    loginViaUi()
+    cy.url({ timeout: 20000 }).should('include', '/admin/posts')
     cy.get('[data-testid="admin-nav"]').should('be.visible')
   })
 
