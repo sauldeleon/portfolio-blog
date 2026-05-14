@@ -39,18 +39,18 @@ export const StyledTextButton = styled.button`
   ${({ theme }) => theme.helpers.focusVisible};
 `
 
-export const StyledContainedButton = styled.button<{ $size?: ButtonSize }>`
+export const StyledContainedButton = styled.button<{ $size: ButtonSize }>`
   ${sharedButtonStyles}
   border: 1px solid ${({ theme }) => theme.colors.white};
-  ${({ $size = 'md' }) => buttonSizeStyles[$size]}
+  ${({ $size }) => buttonSizeStyles[$size]}
 `
 
-export const StyledInvertedButton = styled.button<{ $size?: ButtonSize }>`
+export const StyledInvertedButton = styled.button<{ $size: ButtonSize }>`
   ${sharedButtonStyles}
   border: 1px solid ${({ theme }) => theme.colors.white};
   background-color: ${({ theme }) => theme.colors.white};
   color: ${({ theme }) => theme.colors.black};
-  ${({ $size = 'md' }) => buttonSizeStyles[$size]}
+  ${({ $size }) => buttonSizeStyles[$size]}
 
   &:hover {
     background-color: transparent;
