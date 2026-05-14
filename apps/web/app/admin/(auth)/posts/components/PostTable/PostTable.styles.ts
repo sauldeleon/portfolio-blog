@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components'
 
 import { Button } from '@sdlgr/button'
+import { Input } from '@sdlgr/input'
 
 export const StyledWrapper = styled.div`
   display: flex;
@@ -42,26 +43,10 @@ export const StyledCount = styled.span`
   margin-left: 0.25rem;
 `
 
-export const StyledSearchInput = styled.input`
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid rgba(251, 251, 251, 0.2);
-  padding: 0.375rem 0;
-  color: ${({ theme }) => theme.colors.white};
-  font-family: inherit;
+export const StyledSearchInput = styled(Input)`
   font-size: 0.75rem;
-  outline: none;
   width: 220px;
-  transition: border-color 0.2s;
-
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.white};
-    opacity: 0.25;
-  }
-
-  &:focus {
-    border-bottom-color: ${({ theme }) => theme.colors.green};
-  }
+  padding: 0.375rem 0;
 `
 
 export const StyledTable = styled.table`
