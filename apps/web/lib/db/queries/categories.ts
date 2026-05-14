@@ -4,6 +4,7 @@ import { db } from '../index'
 import { type NewCategory, categories, posts } from '../schema'
 
 export type CategoryWithCount = {
+  id: number
   slug: string
   name: string
   description: string | null
@@ -13,6 +14,7 @@ export type CategoryWithCount = {
 export async function getCategories(): Promise<CategoryWithCount[]> {
   return db
     .select({
+      id: categories.id,
       slug: categories.slug,
       name: categories.name,
       description: categories.description,
@@ -23,7 +25,12 @@ export async function getCategories(): Promise<CategoryWithCount[]> {
       posts,
       and(eq(posts.category, categories.slug), isNull(posts.deletedAt)),
     )
-    .groupBy(categories.slug)
+    .groupBy(
+      categories.id,
+      categories.slug,
+      categories.name,
+      categories.description,
+    )
     .orderBy(asc(categories.name))
 }
 

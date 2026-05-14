@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Callout matches snapshot 1`] = `
+.c0 {
+  border-left: 4px solid #98DFD6;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+}
+
+<body>
+  <div>
+    <div
+      class="c0"
+      data-testid="callout"
+      data-type="tip"
+    >
+      Snapshot content
+    </div>
+  </div>
+</body>
+`;

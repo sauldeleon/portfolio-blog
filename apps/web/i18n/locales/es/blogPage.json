@@ -1,0 +1,12 @@
+{
+  "title": "Blog",
+  "noResults": "No se encontraron publicaciones",
+  "readMore": "Leer más",
+  "readingTime": "{{count}} min de lectura",
+  "categories": "Categorías",
+  "tags": "Etiquetas",
+  "allCategories": "Todas las categorías",
+  "allTags": "Todas las etiquetas",
+  "pagination.previous": "Anterior",
+  "pagination.next": "Siguiente"
+}

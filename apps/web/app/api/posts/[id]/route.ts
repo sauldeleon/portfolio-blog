@@ -11,7 +11,7 @@ import {
   updatePost,
   updateTranslation,
 } from '../../../../lib/db/queries/posts'
-import { computeReadingTime } from '../../../../utils/readingTime'
+import { computeReadingTime } from '../../../../utils/computeReadingTime'
 
 const CACHE_HEADERS = {
   'Cache-Control': 's-maxage=60, stale-while-revalidate=3600',

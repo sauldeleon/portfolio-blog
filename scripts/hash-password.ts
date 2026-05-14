@@ -1,11 +1,18 @@
 import bcrypt from 'bcryptjs'
+import * as readline from 'readline'
 
-const password = process.argv[2]
-if (!password) {
-  console.error('Usage: yarn hash:password <password>')
-  process.exit(1)
-}
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+})
 
-bcrypt.hash(password, 12).then((hash) => {
-  console.log(hash)
+rl.question('Password: ', (password) => {
+  rl.close()
+  if (!password) {
+    console.error('Password cannot be empty')
+    process.exit(1)
+  }
+  bcrypt.hash(password, 12).then((hash) => {
+    console.log(Buffer.from(hash).toString('base64'))
+  })
 })

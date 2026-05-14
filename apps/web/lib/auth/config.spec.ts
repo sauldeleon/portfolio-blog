@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs'
 
-import { authorizeCredentials } from './config'
+import { authorizeCredentials, resolveAuthSecret } from './config'
 
 jest.mock('next-auth', () => ({
   __esModule: true,
@@ -28,7 +28,7 @@ describe('authorizeCredentials', () => {
     process.env = {
       ...originalEnv,
       ADMIN_USERNAME: 'admin',
-      ADMIN_PASSWORD_HASH: '$2b$10$testhash',
+      ADMIN_PASSWORD_HASH: 'JDJiJDEwJHRlc3RoYXNo', // base64('$2b$10$testhash')
     }
     jest.clearAllMocks()
   })
@@ -40,19 +40,24 @@ describe('authorizeCredentials', () => {
   it('returns null when username is missing', async () => {
     const result = await authorizeCredentials({ password: 'pass' })
     expect(result).toBeNull()
+    expect(mockCompare).not.toHaveBeenCalled()
   })
 
   it('returns null when password is missing', async () => {
     const result = await authorizeCredentials({ username: 'admin' })
     expect(result).toBeNull()
+    expect(mockCompare).not.toHaveBeenCalled()
   })
 
   it('returns null when username does not match ADMIN_USERNAME', async () => {
+    mockCompare.mockResolvedValue(false)
     const result = await authorizeCredentials({
       username: 'wrong',
       password: 'pass',
     })
     expect(result).toBeNull()
+    // bcrypt must always run to prevent timing-based username enumeration
+    expect(mockCompare).toHaveBeenCalledTimes(1)
   })
 
   it('returns null when ADMIN_PASSWORD_HASH is not set', async () => {
@@ -62,6 +67,7 @@ describe('authorizeCredentials', () => {
       password: 'pass',
     })
     expect(result).toBeNull()
+    expect(mockCompare).not.toHaveBeenCalled()
   })
 
   it('returns null when bcrypt compare fails', async () => {
@@ -80,5 +86,31 @@ describe('authorizeCredentials', () => {
       password: 'correct',
     })
     expect(result).toEqual({ id: 'admin', name: 'admin' })
+  })
+})
+
+describe('resolveAuthSecret', () => {
+  const originalEnv = process.env
+
+  beforeEach(() => {
+    process.env = { ...originalEnv }
+  })
+
+  afterEach(() => {
+    process.env = originalEnv
+  })
+
+  it('uses AUTH_SECRET when available', () => {
+    process.env.AUTH_SECRET = 'auth-secret'
+    process.env.NEXTAUTH_SECRET = 'nextauth-secret'
+
+    expect(resolveAuthSecret()).toBe('auth-secret')
+  })
+
+  it('falls back to NEXTAUTH_SECRET', () => {
+    delete process.env.AUTH_SECRET
+    process.env.NEXTAUTH_SECRET = 'nextauth-secret'
+
+    expect(resolveAuthSecret()).toBe('nextauth-secret')
   })
 })

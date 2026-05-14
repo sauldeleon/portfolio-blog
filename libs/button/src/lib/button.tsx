@@ -3,16 +3,17 @@ import { ButtonHTMLAttributes, DetailedHTMLProps, forwardRef } from 'react'
 import {
   StyledContainedButton,
   StyledInvertedButton,
+  StyledLabelButton,
   StyledTextButton,
 } from './button.styles'
 
 export type ButtonProps = DetailedHTMLProps<
   ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement
-> & { variant?: 'text' | 'contained' | 'inverted' }
+> & { active?: boolean; variant?: 'text' | 'contained' | 'inverted' | 'label' }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ children, variant = 'text', ...props }, forwardedRef) => {
+  ({ active = false, children, variant = 'text', ...props }, forwardedRef) => {
     if (variant === 'contained') {
       return (
         <StyledContainedButton {...props} ref={forwardedRef}>
@@ -25,6 +26,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         <StyledInvertedButton {...props} ref={forwardedRef}>
           {children}
         </StyledInvertedButton>
+      )
+    }
+    if (variant === 'label') {
+      return (
+        <StyledLabelButton {...props} ref={forwardedRef} $active={active}>
+          {children}
+        </StyledLabelButton>
       )
     }
     return (

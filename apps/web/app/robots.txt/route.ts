@@ -6,6 +6,7 @@ export function GET(): NextResponse {
   const content = [
     'User-agent: *',
     'Content-Signal: ai-train=no, search=yes, ai-input=no',
+    'Disallow: /admin/',
     'Allow: /',
     '',
     `Sitemap: ${publicUrl('/sitemap.xml')}`,

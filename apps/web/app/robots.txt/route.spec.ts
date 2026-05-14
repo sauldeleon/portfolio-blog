@@ -15,8 +15,8 @@ describe('GET /robots.txt', () => {
     expect(text).toContain(
       'Content-Signal: ai-train=no, search=yes, ai-input=no',
     )
+    expect(text).toContain('Disallow: /admin/')
     expect(text).toContain('Allow: /')
-    expect(text).not.toContain('Disallow: /*/contact/')
     expect(text).toContain('Sitemap: https://test.url/sitemap.xml')
     expect(text).toContain('Host: https://test.url')
   })

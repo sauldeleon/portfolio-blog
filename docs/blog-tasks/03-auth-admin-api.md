@@ -23,15 +23,16 @@ Single-admin blog. No user DB needed. Credentials stored in env vars. next-auth 
 ```
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD_HASH=<bcrypt hash>
-NEXTAUTH_SECRET=<random 32-char string>
+AUTH_SECRET=<random 32-char string>
 NEXTAUTH_URL=http://localhost:4200   # dev only — production uses live URL
 ```
 
 ### Vercel env var setup (do before deploying)
 
-- [ ] Generate `NEXTAUTH_SECRET`: `openssl rand -hex 32`
+- [ ] Generate `AUTH_SECRET`: `openssl rand -hex 32`
 - [ ] Add to Vercel Dashboard → project → **Settings** → **Environment Variables**:
-  - `NEXTAUTH_SECRET` — same generated value for all environments
+  - `AUTH_SECRET` — same generated value for all environments
+  - `NEXTAUTH_SECRET` — optional legacy fallback; use the same value if present
   - `NEXTAUTH_URL` — set to `https://sauldeleon.com` for **Production**, `https://<preview-url>` for **Preview**, `http://localhost:4200` for **Development**
   - `ADMIN_USERNAME` — your admin username
   - `ADMIN_PASSWORD_HASH` — bcrypt hash from `yarn tsx scripts/hash-password.ts`

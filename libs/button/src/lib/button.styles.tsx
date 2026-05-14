@@ -46,3 +46,48 @@ export const StyledInvertedButton = styled.button`
     cursor: not-allowed;
   }
 `
+
+export const buttonLabelStyles = css<{ $active?: boolean }>`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  flex: 0 0 auto;
+  min-height: 1.75rem;
+  background: transparent;
+  border: 1px solid
+    ${({ $active, theme }) => ($active ? theme.colors.green : 'transparent')};
+  padding: 0.375rem 0.75rem;
+  font-family: inherit;
+  font-size: 0.65rem;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  color: ${({ $active, theme }) =>
+    $active ? theme.colors.green : theme.colors.white};
+  opacity: ${({ $active }) => ($active ? 1 : 0.45)};
+  white-space: nowrap;
+  transition:
+    opacity 0.15s,
+    border-color 0.15s,
+    color 0.15s,
+    background 0.15s;
+
+  &:hover {
+    opacity: 1;
+    color: ${({ theme }) => theme.colors.green};
+    border-color: rgba(152, 223, 214, 0.45);
+  }
+
+  &:disabled {
+    opacity: 0.2;
+    cursor: not-allowed;
+  }
+
+  ${({ theme }) => theme.helpers.focusVisible};
+`
+
+export const StyledLabelButton = styled.button<{ $active: boolean }>`
+  ${buttonLabelStyles}
+`

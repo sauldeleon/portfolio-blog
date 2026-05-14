@@ -8,17 +8,26 @@ export async function authorizeCredentials(
   const username = credentials?.username as string | undefined
   const password = credentials?.password as string | undefined
 
-  if (
-    !username ||
-    !password ||
-    username !== process.env.ADMIN_USERNAME ||
-    !process.env.ADMIN_PASSWORD_HASH
-  ) {
+  if (!username || !password || !process.env.ADMIN_PASSWORD_HASH) {
     return null
   }
 
-  const valid = await bcrypt.compare(password, process.env.ADMIN_PASSWORD_HASH)
-  return valid ? { id: 'admin', name: username } : null
+  const hash = Buffer.from(process.env.ADMIN_PASSWORD_HASH, 'base64').toString(
+    'utf8',
+  )
+
+  // Always run bcrypt regardless of username match to prevent timing-based enumeration
+  const passwordValid = await bcrypt.compare(password, hash)
+
+  if (username !== process.env.ADMIN_USERNAME || !passwordValid) {
+    return null
+  }
+
+  return { id: 'admin', name: username }
+}
+
+export function resolveAuthSecret() {
+  return process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET
 }
 
 export const authConfig: NextAuthConfig = {
@@ -31,8 +40,10 @@ export const authConfig: NextAuthConfig = {
       authorize: authorizeCredentials,
     }),
   ],
-  session: { strategy: 'jwt' },
+  secret: resolveAuthSecret(),
+  session: { strategy: 'jwt', maxAge: 8 * 60 * 60 },
   pages: { signIn: '/admin/login' },
+  trustHost: true,
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth(authConfig)
