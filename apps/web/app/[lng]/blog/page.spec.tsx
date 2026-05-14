@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react'
 
 import { BlogPage } from '@web/components/BlogPage/BlogPage'
+import { Locale } from '@web/lib/db/schema'
 
 import Page, { generateMetadata } from './page.next'
 
@@ -15,11 +16,20 @@ jest.mock('@web/components/BlogPage/BlogPage', () => {
   }
 })
 
-function makeParams(lng: string) {
+jest.mock('@web/i18n/server', () => ({
+  getServerTranslation: jest.fn(),
+}))
+
+function makeParams(lng: Locale) {
   return { params: Promise.resolve({ lng }), searchParams: Promise.resolve({}) }
 }
 
 describe('[lng]/blog — page', () => {
+  beforeEach(() => {
+    const { getServerTranslation } = require('@web/i18n/server')
+    getServerTranslation.mockResolvedValue({ t: (key: string) => key })
+  })
+
   it('renders BlogPage', async () => {
     const ui = await Page(makeParams('en'))
     render(ui)
@@ -44,10 +54,15 @@ describe('[lng]/blog — page', () => {
 })
 
 describe('[lng]/blog — metadata', () => {
+  beforeEach(() => {
+    const { getServerTranslation } = require('@web/i18n/server')
+    getServerTranslation.mockResolvedValue({ t: (key: string) => key })
+  })
+
   it('returns correct metadata for English', async () => {
     expect(await generateMetadata(makeParams('en'))).toEqual({
-      title: 'Blog',
-      robots: { index: false, follow: false },
+      title: 'meta.title',
+      description: 'meta.description',
       alternates: {
         canonical: 'https://www.sawl.dev/en/blog/',
         languages: {
@@ -62,8 +77,8 @@ describe('[lng]/blog — metadata', () => {
 
   it('returns correct metadata for Spanish', async () => {
     expect(await generateMetadata(makeParams('es'))).toEqual({
-      title: 'Blog',
-      robots: { index: false, follow: false },
+      title: 'meta.title',
+      description: 'meta.description',
       alternates: {
         canonical: 'https://www.sawl.dev/es/blog/',
         languages: {

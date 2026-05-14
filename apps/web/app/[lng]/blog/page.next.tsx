@@ -1,4 +1,5 @@
 import { BlogPage } from '@web/components/BlogPage/BlogPage'
+import { getServerTranslation } from '@web/i18n/server'
 import { Locale } from '@web/lib/db/schema'
 import { buildAlternates } from '@web/utils/metadata/inLanguage'
 
@@ -14,9 +15,11 @@ interface RouteProps {
 
 export async function generateMetadata({ params }: RouteProps) {
   const { lng } = await params
+  const { t } = await getServerTranslation({ ns: 'blogPage', language: lng })
+
   return {
-    title: 'Blog',
-    robots: { index: false, follow: false },
+    title: t('meta.title'),
+    description: t('meta.description'),
     alternates: buildAlternates(lng, 'blog/'),
   }
 }

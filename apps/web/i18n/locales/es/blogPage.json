@@ -1,5 +1,7 @@
 {
   "title": "Blog",
+  "meta.title": "Blog — Saúl de León",
+  "meta.description": "Artículos sobre desarrollo web, ingeniería de software y tecnología.",
   "noResults": "No se encontraron publicaciones",
   "readMore": "Leer más",
   "readingTime": "{{count}} min de lectura",
@@ -8,5 +10,9 @@
   "allCategories": "Todas las categorías",
   "allTags": "Todas las etiquetas",
   "pagination.previous": "Anterior",
-  "pagination.next": "Siguiente"
+  "pagination.next": "Siguiente",
+  "relatedPosts": "Publicaciones relacionadas",
+  "toc": "Tabla de contenidos",
+  "copyCode": "Copiar",
+  "codeCopied": "¡Copiado!"
 }

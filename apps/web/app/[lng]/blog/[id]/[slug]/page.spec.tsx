@@ -16,6 +16,11 @@ jest.mock('@web/lib/db/queries/posts', () => ({
   getPublishedPosts: mockGetPublishedPosts,
 }))
 
+const mockGetServerTranslation = jest.fn()
+jest.mock('@web/i18n/server', () => ({
+  getServerTranslation: mockGetServerTranslation,
+}))
+
 jest.mock('@sdlgr/post-hero', () => {
   const React = require('react')
   return {
@@ -27,8 +32,30 @@ jest.mock('@sdlgr/post-hero', () => {
   }
 })
 
+jest.mock('@sdlgr/table-of-contents', () => ({
+  TableOfContents: ({ label }: { label: string }) => (
+    <nav data-testid="toc">{label}</nav>
+  ),
+}))
+
 jest.mock('@web/lib/mdx/renderMDX', () => ({
   renderMDX: jest.fn().mockReturnValue(null),
+}))
+
+jest.mock('@web/lib/mdx/remarkHeadings', () => ({
+  extractToc: jest.fn().mockReturnValue([]),
+}))
+
+jest.mock('@web/components/RelatedPosts/RelatedPosts', () => ({
+  RelatedPosts: () => <div data-testid="related-posts" />,
+}))
+
+jest.mock('@web/utils/metadata/inLanguage', () => ({
+  buildAlternates: jest
+    .fn()
+    .mockReturnValue({ canonical: 'https://test', languages: {} }),
+  ogLocale: jest.fn().mockReturnValue('en_US'),
+  ogLocaleAlternate: jest.fn().mockReturnValue(['es_ES']),
 }))
 
 jest.mock('date-fns', () => ({
@@ -40,6 +67,7 @@ const publishedPost = {
   slug: 'my-test-post',
   status: 'published' as const,
   title: 'My Test Post',
+  excerpt: 'A great post about testing',
   coverImage: 'blog/cover',
   category: 'Tech',
   author: 'Jane Doe',
@@ -50,6 +78,7 @@ const publishedPost = {
 describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
   beforeEach(() => {
     jest.clearAllMocks()
+    mockGetServerTranslation.mockResolvedValue({ t: (key: string) => key })
   })
 
   it('calls notFound when post is null', async () => {
@@ -97,6 +126,52 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
     expect(screen.getByTestId('post-hero')).toBeInTheDocument()
   })
 
+  it('renders RelatedPosts section', async () => {
+    mockGetPostById.mockResolvedValue(publishedPost)
+    const { default: BlogPostPage } = require('./page.next')
+    const ui = await BlogPostPage({
+      params: Promise.resolve({
+        lng: 'en',
+        id: '01JXYZ',
+        slug: 'my-test-post',
+      }),
+    })
+    render(ui)
+    expect(screen.getByTestId('related-posts')).toBeInTheDocument()
+  })
+
+  it('renders TOC when entries exist', async () => {
+    const { extractToc } = require('@web/lib/mdx/remarkHeadings')
+    extractToc.mockReturnValue([{ depth: 2, text: 'Intro', id: 'intro' }])
+    mockGetPostById.mockResolvedValue(publishedPost)
+    const { default: BlogPostPage } = require('./page.next')
+    const ui = await BlogPostPage({
+      params: Promise.resolve({
+        lng: 'en',
+        id: '01JXYZ',
+        slug: 'my-test-post',
+      }),
+    })
+    render(ui)
+    expect(screen.getByTestId('toc')).toBeInTheDocument()
+  })
+
+  it('does not render TOC when no entries', async () => {
+    const { extractToc } = require('@web/lib/mdx/remarkHeadings')
+    extractToc.mockReturnValue([])
+    mockGetPostById.mockResolvedValue(publishedPost)
+    const { default: BlogPostPage } = require('./page.next')
+    const ui = await BlogPostPage({
+      params: Promise.resolve({
+        lng: 'en',
+        id: '01JXYZ',
+        slug: 'my-test-post',
+      }),
+    })
+    render(ui)
+    expect(screen.queryByTestId('toc')).not.toBeInTheDocument()
+  })
+
   it('handles publishedAt null', async () => {
     mockGetPostById.mockResolvedValue({ ...publishedPost, publishedAt: null })
     const { default: BlogPostPage } = require('./page.next')
@@ -140,5 +215,80 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
     const { generateStaticParams } = require('./page.next')
     const params = await generateStaticParams()
     expect(params).toEqual([])
+  })
+
+  describe('generateMetadata', () => {
+    it('returns empty object when post not found', async () => {
+      mockGetPostById.mockResolvedValue(null)
+      const { generateMetadata } = require('./page.next')
+      const meta = await generateMetadata({
+        params: Promise.resolve({ lng: 'en', id: 'unknown', slug: 'x' }),
+      })
+      expect(meta).toEqual({})
+    })
+
+    it('returns empty object when post is draft', async () => {
+      mockGetPostById.mockResolvedValue({ ...publishedPost, status: 'draft' })
+      const { generateMetadata } = require('./page.next')
+      const meta = await generateMetadata({
+        params: Promise.resolve({ lng: 'en', id: '01JXYZ', slug: 'x' }),
+      })
+      expect(meta).toEqual({})
+    })
+
+    it('returns title and description for published post', async () => {
+      mockGetPostById.mockResolvedValue(publishedPost)
+      const { generateMetadata } = require('./page.next')
+      const meta = await generateMetadata({
+        params: Promise.resolve({
+          lng: 'en',
+          id: '01JXYZ',
+          slug: 'my-test-post',
+        }),
+      })
+      expect(meta.title).toBe('My Test Post')
+      expect(meta.description).toBe('A great post about testing')
+    })
+
+    it('uses alt post slug when available', async () => {
+      mockGetPostById
+        .mockResolvedValueOnce(publishedPost)
+        .mockResolvedValueOnce({ ...publishedPost, slug: 'mi-post-de-prueba' })
+      const { generateMetadata } = require('./page.next')
+      const meta = await generateMetadata({
+        params: Promise.resolve({
+          lng: 'en',
+          id: '01JXYZ',
+          slug: 'my-test-post',
+        }),
+      })
+      expect(meta.alternates.languages['es-ES']).toContain('mi-post-de-prueba')
+    })
+
+    it('falls back to own slug when alt post not found', async () => {
+      mockGetPostById
+        .mockResolvedValueOnce(publishedPost)
+        .mockResolvedValueOnce(null)
+      const { generateMetadata } = require('./page.next')
+      const meta = await generateMetadata({
+        params: Promise.resolve({
+          lng: 'en',
+          id: '01JXYZ',
+          slug: 'my-test-post',
+        }),
+      })
+      expect(meta.alternates.languages['es-ES']).toContain('my-test-post')
+    })
+
+    it('generates correct alternates for es locale', async () => {
+      mockGetPostById
+        .mockResolvedValueOnce({ ...publishedPost, slug: 'mi-post' })
+        .mockResolvedValueOnce(publishedPost)
+      const { generateMetadata } = require('./page.next')
+      const meta = await generateMetadata({
+        params: Promise.resolve({ lng: 'es', id: '01JXYZ', slug: 'mi-post' }),
+      })
+      expect(meta.title).toBe('My Test Post')
+    })
   })
 })
