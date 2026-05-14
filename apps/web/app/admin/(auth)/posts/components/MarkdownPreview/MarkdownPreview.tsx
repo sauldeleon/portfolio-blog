@@ -2,13 +2,16 @@
 
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote'
 import { MDXRemote } from 'next-mdx-remote'
+import Image from 'next/image'
 import type { ComponentPropsWithoutRef } from 'react'
 import { useEffect, useRef, useState } from 'react'
 
 import { serializePreview } from '../../actions/serializePreview'
 import {
+  StyledCaption,
   StyledCodeWrapper,
   StyledCopyButton,
+  StyledImageWrapper,
   StyledLoading,
   StyledPreviewWrapper,
 } from './MarkdownPreview.styles'
@@ -49,7 +52,44 @@ export function CopyCodeBlock({
   )
 }
 
-const MDX_COMPONENTS = { pre: CopyCodeBlock }
+export function CustomImage({ src, alt }: { src?: string; alt?: string }) {
+  if (!src) return null
+
+  const options = alt?.includes('=') ? new URLSearchParams(alt) : null
+  const size = options?.get('size')
+  const align = options?.get('align')
+  const caption = options?.get('caption')
+  const captionPos = options?.get('caption-pos') ?? 'bottom'
+  const cleanAlt = options?.get('alt') ?? (options ? '' : (alt ?? ''))
+
+  const sizes =
+    size === 'small'
+      ? '256px'
+      : size === 'medium'
+        ? '448px'
+        : '(max-width: 1440px) 100vw, 1440px'
+
+  return (
+    <StyledImageWrapper $align={align} $size={size}>
+      {caption && captionPos === 'top' && (
+        <StyledCaption>{caption}</StyledCaption>
+      )}
+      <Image
+        src={src}
+        alt={cleanAlt}
+        width={0}
+        height={0}
+        sizes={sizes}
+        style={{ width: '100%', height: 'auto' }}
+      />
+      {caption && captionPos !== 'top' && (
+        <StyledCaption>{caption}</StyledCaption>
+      )}
+    </StyledImageWrapper>
+  )
+}
+
+const MDX_COMPONENTS = { pre: CopyCodeBlock, img: CustomImage }
 
 export function MarkdownPreview({
   content,

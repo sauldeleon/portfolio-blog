@@ -2,12 +2,19 @@ import { act, fireEvent, render, screen } from '@testing-library/react'
 
 import { RenderProviders, renderApp } from '@sdlgr/test-utils'
 
-import { CopyCodeBlock, MarkdownPreview } from './MarkdownPreview'
+import { CopyCodeBlock, CustomImage, MarkdownPreview } from './MarkdownPreview'
 
 const mockSerializePreview = jest.fn()
 
 jest.mock('../../actions/serializePreview', () => ({
   serializePreview: (...args: unknown[]) => mockSerializePreview(...args),
+}))
+
+jest.mock('next/image', () => ({
+  __esModule: true,
+  default: ({ src, alt }: { src: string; alt: string }) => (
+    <img src={src} alt={alt} />
+  ),
 }))
 
 jest.mock('next-mdx-remote', () => ({
@@ -18,9 +25,11 @@ jest.mock('next-mdx-remote', () => ({
     compiledSource: string
     components?: {
       pre?: React.ElementType<React.HTMLAttributes<HTMLPreElement>>
+      img?: React.ElementType<React.ImgHTMLAttributes<HTMLImageElement>>
     }
   }) => {
     const Pre = components?.pre
+    const Img = components?.img
     return (
       <div data-testid="mdx-content">
         {compiledSource}
@@ -29,6 +38,7 @@ jest.mock('next-mdx-remote', () => ({
             <code>const x = 1</code>
           </Pre>
         )}
+        {Img && <Img src="https://picsum.photos/id/11/800/400" alt="test" />}
       </div>
     )
   },
@@ -220,5 +230,104 @@ describe('CopyCodeBlock', () => {
       jest.advanceTimersByTime(2000)
     })
     expect(screen.getByRole('button')).toHaveTextContent('Copy')
+  })
+})
+
+describe('CustomImage', () => {
+  it('renders nothing when src is not provided', () => {
+    const { container } = renderApp(<CustomImage />)
+    expect(container).toBeEmptyDOMElement()
+  })
+
+  it('renders image with empty alt when alt is not provided', () => {
+    renderApp(<CustomImage src="https://picsum.photos/id/11/800/400" />)
+    expect(screen.getByAltText('')).toBeInTheDocument()
+  })
+
+  it('uses plain alt text as-is when no params present', () => {
+    renderApp(
+      <CustomImage src="https://picsum.photos/id/11/800/400" alt="A dog" />,
+    )
+    expect(screen.getByRole('img', { name: 'A dog' })).toBeInTheDocument()
+  })
+
+  it('renders with size=small and empty alt when no alt param', () => {
+    renderApp(
+      <CustomImage
+        src="https://picsum.photos/id/11/800/400"
+        alt="size=small"
+      />,
+    )
+    expect(screen.getByAltText('')).toBeInTheDocument()
+  })
+
+  it('renders with size=medium', () => {
+    renderApp(
+      <CustomImage
+        src="https://picsum.photos/id/11/800/400"
+        alt="size=medium"
+      />,
+    )
+    expect(screen.getByAltText('')).toBeInTheDocument()
+  })
+
+  it('renders with align=left', () => {
+    renderApp(
+      <CustomImage
+        src="https://picsum.photos/id/11/800/400"
+        alt="size=small&align=left"
+      />,
+    )
+    expect(screen.getByAltText('')).toBeInTheDocument()
+  })
+
+  it('renders with align=right', () => {
+    renderApp(
+      <CustomImage
+        src="https://picsum.photos/id/11/800/400"
+        alt="size=small&align=right"
+      />,
+    )
+    expect(screen.getByAltText('')).toBeInTheDocument()
+  })
+
+  it('extracts clean alt text from alt param', () => {
+    renderApp(
+      <CustomImage
+        src="https://picsum.photos/id/11/800/400"
+        alt="size=small&alt=My photo"
+      />,
+    )
+    expect(screen.getByRole('img', { name: 'My photo' })).toBeInTheDocument()
+  })
+
+  it('renders caption below image by default', () => {
+    renderApp(
+      <CustomImage
+        src="https://picsum.photos/id/11/800/400"
+        alt="caption=Photo by Unsplash&alt=A forest"
+      />,
+    )
+    const caption = screen.getByText('Photo by Unsplash')
+    const img = screen.getByRole('img', { name: 'A forest' })
+    expect(caption).toBeInTheDocument()
+    expect(
+      img.compareDocumentPosition(caption) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy()
+  })
+
+  it('renders caption above image when caption-pos=top', () => {
+    renderApp(
+      <CustomImage
+        src="https://picsum.photos/id/11/800/400"
+        alt="caption=Photo by Unsplash&caption-pos=top&alt=A forest"
+      />,
+    )
+    const caption = screen.getByText('Photo by Unsplash')
+    const img = screen.getByRole('img', { name: 'A forest' })
+    expect(caption).toBeInTheDocument()
+    expect(
+      img.compareDocumentPosition(caption) & Node.DOCUMENT_POSITION_PRECEDING,
+    ).toBeTruthy()
   })
 })

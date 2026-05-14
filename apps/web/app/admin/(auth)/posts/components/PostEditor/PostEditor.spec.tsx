@@ -129,6 +129,11 @@ describe('PostEditor', () => {
       expect(screen.getByTestId('slug-input')).toHaveValue('')
     })
 
+    it('renders image syntax hint below content field', () => {
+      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      expect(screen.getByText('Image syntax')).toBeInTheDocument()
+    })
+
     it('shows draft status badge', () => {
       renderApp(<PostEditor categories={mockCategories} author="Admin" />)
       expect(screen.getByTestId('status-badge')).toHaveTextContent('Draft')

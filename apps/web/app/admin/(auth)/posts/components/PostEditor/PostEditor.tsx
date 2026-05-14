@@ -21,6 +21,7 @@ import {
   StyledHeaderLeft,
   StyledHeading,
   StyledHelper,
+  StyledMarkdownHint,
   StyledInput,
   StyledLabel,
   StyledLocaleTab,
@@ -407,6 +408,88 @@ export function PostEditor({ post, categories, author }: PostEditorProps) {
             />
           </StyledFieldGroup>
 
+          <StyledMetadataSection>
+            <StyledMetaGrid>
+              <StyledFieldGroup>
+                <StyledLabel htmlFor="meta-category">
+                  {t('postEditor.fields.category')}
+                </StyledLabel>
+                <StyledSelect
+                  id="meta-category"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  data-testid="category-select"
+                >
+                  <option value="" disabled>
+                    —
+                  </option>
+                  {categories.map((cat) => (
+                    <option key={cat.slug} value={cat.slug}>
+                      {cat.name}
+                    </option>
+                  ))}
+                </StyledSelect>
+              </StyledFieldGroup>
+
+              <StyledFieldGroup>
+                <StyledLabel htmlFor="meta-tags">
+                  {t('postEditor.fields.tags')}
+                </StyledLabel>
+                <StyledInput
+                  id="meta-tags"
+                  type="text"
+                  value={tags}
+                  onChange={(e) => setTags(e.target.value)}
+                  placeholder={t('postEditor.fields.tagsPlaceholder')}
+                  data-testid="tags-input"
+                />
+                <StyledHelper>{t('postEditor.fields.tagsHelper')}</StyledHelper>
+              </StyledFieldGroup>
+
+              <StyledFieldGroup>
+                <StyledLabel htmlFor="meta-cover">
+                  {t('postEditor.fields.coverImage')}
+                </StyledLabel>
+                <StyledInput
+                  id="meta-cover"
+                  type="text"
+                  value={coverImage}
+                  onChange={(e) => setCoverImage(e.target.value)}
+                  placeholder={t('postEditor.fields.coverImagePlaceholder')}
+                  data-testid="cover-image-input"
+                />
+              </StyledFieldGroup>
+
+              <StyledFieldGroup>
+                <StyledLabel htmlFor="meta-series-id">
+                  {t('postEditor.fields.seriesId')}
+                </StyledLabel>
+                <StyledInput
+                  id="meta-series-id"
+                  type="text"
+                  value={seriesId}
+                  onChange={(e) => setSeriesId(e.target.value)}
+                  placeholder={t('postEditor.fields.seriesIdPlaceholder')}
+                  data-testid="series-id-input"
+                />
+              </StyledFieldGroup>
+
+              <StyledFieldGroup>
+                <StyledLabel htmlFor="meta-series-order">
+                  {t('postEditor.fields.seriesOrder')}
+                </StyledLabel>
+                <StyledInput
+                  id="meta-series-order"
+                  type="number"
+                  value={seriesOrder}
+                  onChange={(e) => setSeriesOrder(e.target.value)}
+                  placeholder={t('postEditor.fields.seriesOrderPlaceholder')}
+                  data-testid="series-order-input"
+                />
+              </StyledFieldGroup>
+            </StyledMetaGrid>
+          </StyledMetadataSection>
+
           <StyledFieldGroup>
             <StyledLabel htmlFor={`content-${activeLocale}`}>
               {t('postEditor.fields.content')}
@@ -420,6 +503,19 @@ export function PostEditor({ post, categories, author }: PostEditorProps) {
               placeholder={t('postEditor.fields.contentPlaceholder')}
               data-testid="content-input"
             />
+            <StyledMarkdownHint>
+              <summary>Image syntax</summary>
+              <pre>{`![params](url)  — all params optional
+
+size          small | medium           (default: full width)
+align         left | right             (default: none)
+caption       text                     (default: none)
+caption-pos   top | bottom             (default: bottom)
+alt           accessible description   (default: "")
+
+Example:
+![size=small&align=right&caption=My photo&alt=A forest path](https://...)`}</pre>
+            </StyledMarkdownHint>
           </StyledFieldGroup>
         </StyledEditorPane>
 
@@ -431,88 +527,6 @@ export function PostEditor({ post, categories, author }: PostEditorProps) {
           />
         </StyledPreviewPane>
       </StyledEditorLayout>
-
-      <StyledMetadataSection>
-        <StyledMetaGrid>
-          <StyledFieldGroup>
-            <StyledLabel htmlFor="meta-category">
-              {t('postEditor.fields.category')}
-            </StyledLabel>
-            <StyledSelect
-              id="meta-category"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              data-testid="category-select"
-            >
-              <option value="" disabled>
-                —
-              </option>
-              {categories.map((cat) => (
-                <option key={cat.slug} value={cat.slug}>
-                  {cat.name}
-                </option>
-              ))}
-            </StyledSelect>
-          </StyledFieldGroup>
-
-          <StyledFieldGroup>
-            <StyledLabel htmlFor="meta-tags">
-              {t('postEditor.fields.tags')}
-            </StyledLabel>
-            <StyledInput
-              id="meta-tags"
-              type="text"
-              value={tags}
-              onChange={(e) => setTags(e.target.value)}
-              placeholder={t('postEditor.fields.tagsPlaceholder')}
-              data-testid="tags-input"
-            />
-            <StyledHelper>{t('postEditor.fields.tagsHelper')}</StyledHelper>
-          </StyledFieldGroup>
-
-          <StyledFieldGroup>
-            <StyledLabel htmlFor="meta-cover">
-              {t('postEditor.fields.coverImage')}
-            </StyledLabel>
-            <StyledInput
-              id="meta-cover"
-              type="text"
-              value={coverImage}
-              onChange={(e) => setCoverImage(e.target.value)}
-              placeholder={t('postEditor.fields.coverImagePlaceholder')}
-              data-testid="cover-image-input"
-            />
-          </StyledFieldGroup>
-
-          <StyledFieldGroup>
-            <StyledLabel htmlFor="meta-series-id">
-              {t('postEditor.fields.seriesId')}
-            </StyledLabel>
-            <StyledInput
-              id="meta-series-id"
-              type="text"
-              value={seriesId}
-              onChange={(e) => setSeriesId(e.target.value)}
-              placeholder={t('postEditor.fields.seriesIdPlaceholder')}
-              data-testid="series-id-input"
-            />
-          </StyledFieldGroup>
-
-          <StyledFieldGroup>
-            <StyledLabel htmlFor="meta-series-order">
-              {t('postEditor.fields.seriesOrder')}
-            </StyledLabel>
-            <StyledInput
-              id="meta-series-order"
-              type="number"
-              value={seriesOrder}
-              onChange={(e) => setSeriesOrder(e.target.value)}
-              placeholder={t('postEditor.fields.seriesOrderPlaceholder')}
-              data-testid="series-order-input"
-            />
-          </StyledFieldGroup>
-        </StyledMetaGrid>
-      </StyledMetadataSection>
 
       <StyledFormActions>
         {error && <StyledError data-testid="editor-error">{error}</StyledError>}

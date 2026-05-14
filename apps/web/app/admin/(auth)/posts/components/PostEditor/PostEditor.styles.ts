@@ -291,9 +291,51 @@ export const StyledHelper = styled.p`
   margin: 0;
 `
 
+export const StyledMarkdownHint = styled.details`
+  margin-top: 0.5rem;
+
+  summary {
+    font-size: 0.6rem;
+    color: rgba(251, 251, 251, 0.3);
+    cursor: pointer;
+    user-select: none;
+    list-style: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+
+    &::before {
+      content: '▶';
+      font-size: 0.45rem;
+      transition: transform 0.15s;
+    }
+
+    &:hover {
+      color: rgba(251, 251, 251, 0.5);
+    }
+  }
+
+  &[open] summary::before {
+    transform: rotate(90deg);
+  }
+
+  pre {
+    margin-top: 0.5rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.6rem;
+    color: rgba(251, 251, 251, 0.4);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(251, 251, 251, 0.06);
+    border-radius: 3px;
+    padding: 0.5rem 0.75rem;
+    line-height: 1.8;
+    white-space: pre;
+    overflow-x: auto;
+  }
+`
+
 export const StyledMetadataSection = styled.div`
-  margin-top: 2rem;
-  padding-top: 1.5rem;
+  padding-top: 1.25rem;
   border-top: 1px solid rgba(251, 251, 251, 0.08);
   display: flex;
   flex-direction: column;
@@ -307,10 +349,6 @@ export const StyledMetaGrid = styled.div`
 
   @media (width >= 600px) {
     grid-template-columns: 1fr 1fr;
-  }
-
-  @media (width >= 900px) {
-    grid-template-columns: 1fr 1fr 1fr;
   }
 `
 

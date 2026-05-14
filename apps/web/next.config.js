@@ -80,6 +80,7 @@ const nextConfig = {
     remotePatterns: [
       { hostname: 'localhost' },
       { hostname: 'res.cloudinary.com' },
+      { hostname: 'picsum.photos' },
     ],
     disableStaticImages: true,
   },

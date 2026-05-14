@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const StyledPreviewWrapper = styled.div`
   font-size: 0.68rem;
@@ -198,4 +198,49 @@ export const StyledLoading = styled.div`
   letter-spacing: 0.1em;
   opacity: 0.3;
   padding-top: 0.5rem;
+`
+
+export const StyledImageWrapper = styled.div<{
+  $align?: string | null
+  $size?: string | null
+}>`
+  margin: 1.75rem 0;
+
+  ${({ $size, $align }) => {
+    const width =
+      $size === 'small' ? '16rem' : $size === 'medium' ? '28rem' : '100%'
+
+    if ($align === 'right') return css`
+      float: right;
+      clear: right;
+      width: ${width};
+      margin: 0 0 1.5rem 1.5rem;
+    `
+    if ($align === 'left') return css`
+      float: left;
+      clear: left;
+      width: ${width};
+      margin: 0 1.5rem 1.5rem 0;
+    `
+    return css`
+      width: ${width};
+      ${$size ? 'margin: 1.75rem auto;' : ''}
+    `
+  }}
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 3px;
+  }
+`
+
+export const StyledCaption = styled.figcaption`
+  font-size: 0.65rem;
+  color: rgba(251, 251, 251, 0.45);
+  text-align: center;
+  margin: 0.4rem 0;
+  font-style: italic;
+  letter-spacing: 0.02em;
 `
