@@ -40,6 +40,10 @@
     "deleteConfirm": "Delete this post?",
     "empty": "No posts found"
   },
+  "confirmDelete": {
+    "confirm": "Delete",
+    "cancel": "Cancel"
+  },
   "categories": {
     "title": "Categories",
     "newCategory": "New category",

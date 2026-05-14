@@ -25,6 +25,8 @@ jest.mock('@web/i18n/client', () => ({
         'categories.cancel': 'Cancel',
         'categories.delete': 'Delete',
         'categories.deleteConfirm': 'Delete this category?',
+        'confirmDelete.confirm': 'Confirm delete',
+        'confirmDelete.cancel': 'Cancel delete',
         'categories.deleteTooltip': `${opts?.['count']} published post(s) use this category`,
         'categories.empty': 'No categories found',
         'categories.form.descriptionPlaceholder': 'Optional',
@@ -65,7 +67,6 @@ describe('CategoryTable', () => {
       refresh: mockRefresh,
       push: mockPush,
     })
-    jest.spyOn(window, 'confirm').mockReturnValue(true)
     global.fetch = jest.fn().mockResolvedValue({ ok: true, status: 200 })
   })
 
@@ -512,14 +513,15 @@ describe('CategoryTable', () => {
     expect(screen.getByTestId('delete-button')).not.toHaveAttribute('title')
   })
 
-  it('delete with confirm=true calls DELETE and refreshes', async () => {
-    jest.spyOn(window, 'confirm').mockReturnValue(true)
+  it('delete opens modal and confirming calls DELETE and refreshes', async () => {
     renderApp(
       <CategoryTable
         categories={[makeCategory({ slug: 'del-me', publishedPostCount: 0 })]}
       />,
     )
     fireEvent.click(screen.getByTestId('delete-button'))
+    expect(screen.getByTestId('confirm-delete-confirm')).toBeInTheDocument()
+    fireEvent.click(screen.getByTestId('confirm-delete-confirm'))
     await waitFor(() => expect(global.fetch).toHaveBeenCalled())
     expect(global.fetch).toHaveBeenCalledWith('/api/categories/del-me', {
       method: 'DELETE',
@@ -527,13 +529,13 @@ describe('CategoryTable', () => {
     expect(mockRefresh).toHaveBeenCalled()
   })
 
-  it('delete with confirm=false does not call fetch', async () => {
-    jest.spyOn(window, 'confirm').mockReturnValue(false)
+  it('delete opens modal and cancelling does not call fetch', () => {
     renderApp(
       <CategoryTable categories={[makeCategory({ publishedPostCount: 0 })]} />,
     )
     fireEvent.click(screen.getByTestId('delete-button'))
-    await waitFor(() => expect(window.confirm).toHaveBeenCalled())
+    expect(screen.getByTestId('confirm-delete-cancel')).toBeInTheDocument()
+    fireEvent.click(screen.getByTestId('confirm-delete-cancel'))
     expect(global.fetch).not.toHaveBeenCalled()
   })
 

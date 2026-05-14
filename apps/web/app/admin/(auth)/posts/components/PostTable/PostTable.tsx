@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
+import { ConfirmDeleteModal } from '@web/app/admin/(auth)/components/ConfirmDeleteModal'
 import { useClientTranslation } from '@web/i18n/client'
 import type { AdminPost } from '@web/lib/db/queries/posts'
 
@@ -44,6 +45,7 @@ export function PostTable({ posts }: PostTableProps) {
   const { t } = useClientTranslation('admin')
   const [filter, setFilter] = useState<StatusFilter>('all')
   const [search, setSearch] = useState('')
+  const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null)
   const router = useRouter()
 
   const countFor = (status: StatusFilter) =>
@@ -59,11 +61,19 @@ export function PostTable({ posts }: PostTableProps) {
     return matchesStatus && matchesSearch
   })
 
-  async function handleDelete(e: React.MouseEvent, id: string) {
+  function handleDelete(e: React.MouseEvent, id: string) {
     e.stopPropagation()
-    if (!window.confirm(t('posts.deleteConfirm'))) return
-    await fetch(`/api/posts/${id}`, { method: 'DELETE' })
+    setDeleteTargetId(id)
+  }
+
+  async function handleConfirmDelete() {
+    await fetch(`/api/posts/${deleteTargetId!}`, { method: 'DELETE' })
+    setDeleteTargetId(null)
     router.refresh()
+  }
+
+  function handleCancelDelete() {
+    setDeleteTargetId(null)
   }
 
   async function handleTogglePublish(e: React.MouseEvent, post: AdminPost) {
@@ -206,6 +216,12 @@ export function PostTable({ posts }: PostTableProps) {
           ))}
         </StyledTbody>
       </StyledTable>
+      <ConfirmDeleteModal
+        isOpen={deleteTargetId !== null}
+        message={t('posts.deleteConfirm')}
+        onConfirm={handleConfirmDelete}
+        onCancel={handleCancelDelete}
+      />
     </StyledWrapper>
   )
 }

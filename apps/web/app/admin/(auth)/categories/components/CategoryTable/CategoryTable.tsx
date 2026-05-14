@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
+import { ConfirmDeleteModal } from '@web/app/admin/(auth)/components/ConfirmDeleteModal'
 import { useClientTranslation } from '@web/i18n/client'
 import type { CategoryForAdmin } from '@web/lib/db/queries/categories'
 import { slugify } from '@web/utils/slugify'
@@ -54,6 +55,7 @@ export function CategoryTable({ categories }: CategoryTableProps) {
   const [editDescription, setEditDescription] = useState('')
   const [editLocaleSlug, setEditLocaleSlug] = useState('')
   const [editSlugManuallyEdited, setEditSlugManuallyEdited] = useState(false)
+  const [deleteTargetSlug, setDeleteTargetSlug] = useState<string | null>(null)
 
   const filtered = categories.filter((c) => {
     const q = search.toLowerCase()
@@ -118,10 +120,18 @@ export function CategoryTable({ categories }: CategoryTableProps) {
     router.refresh()
   }
 
-  async function handleDelete(slug: string) {
-    if (!window.confirm(t('categories.deleteConfirm'))) return
-    await fetch(`/api/categories/${slug}`, { method: 'DELETE' })
+  function handleDelete(slug: string) {
+    setDeleteTargetSlug(slug)
+  }
+
+  async function handleConfirmDelete() {
+    await fetch(`/api/categories/${deleteTargetSlug!}`, { method: 'DELETE' })
+    setDeleteTargetSlug(null)
     router.refresh()
+  }
+
+  function handleCancelDelete() {
+    setDeleteTargetSlug(null)
   }
 
   return (
@@ -266,6 +276,12 @@ export function CategoryTable({ categories }: CategoryTableProps) {
           ))}
         </StyledTbody>
       </StyledTable>
+      <ConfirmDeleteModal
+        isOpen={deleteTargetSlug !== null}
+        message={t('categories.deleteConfirm')}
+        onConfirm={handleConfirmDelete}
+        onCancel={handleCancelDelete}
+      />
     </StyledWrapper>
   )
 }
