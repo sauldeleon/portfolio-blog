@@ -15,6 +15,7 @@ const isStaticExport = process.env.EXPORT_STATIC_FILES === 'true'
  **/
 const nextConfig = {
   nx: {},
+  serverExternalPackages: ['shiki', 'rehype-pretty-code', 'remark-gfm'],
   output: isStaticExport ? 'export' : undefined,
   async headers() {
     if (isStaticExport) return []
@@ -79,6 +80,7 @@ const nextConfig = {
     remotePatterns: [
       { hostname: 'localhost' },
       { hostname: 'res.cloudinary.com' },
+      { hostname: 'picsum.photos' },
     ],
     disableStaticImages: true,
   },

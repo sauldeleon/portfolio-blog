@@ -34,17 +34,13 @@ export const StyledHeadingAccent = styled.div`
 `
 
 export const StyledFilters = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 1.25rem;
   margin-bottom: 2.75rem;
   padding: 1rem 0;
   border-top: 1px solid rgba(251, 251, 251, 0.08);
   border-bottom: 1px solid rgba(251, 251, 251, 0.08);
-
-  @media (width >= 768px) {
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  }
 `
 
 export const StyledGrid = styled.section`

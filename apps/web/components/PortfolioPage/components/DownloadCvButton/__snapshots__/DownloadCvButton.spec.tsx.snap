@@ -13,7 +13,7 @@ exports[`DownloadCvButton should render disabled when PDF not yet generated 1`] 
   padding: 15px 20px;
 }
 
-.c0:hover {
+.c0:hover:not(:disabled) {
   background-color: transparent;
   color: #FBFBFB;
 }

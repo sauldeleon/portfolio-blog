@@ -5,11 +5,12 @@ import { auth } from '../../../../lib/auth/config'
 import { getCategoryBySlug } from '../../../../lib/db/queries/categories'
 import {
   getPostById,
+  getPostStatus,
   getPostTranslations,
   slugExistsForLocale,
   softDeletePost,
   updatePost,
-  updateTranslation,
+  upsertTranslation,
 } from '../../../../lib/db/queries/posts'
 import { computeReadingTime } from '../../../../utils/computeReadingTime'
 
@@ -52,20 +53,20 @@ export async function GET(
 }
 
 const translationUpdateSchema = z.object({
-  title: z.string().min(1).optional(),
-  slug: z.string().min(1).optional(),
-  excerpt: z.string().min(1).optional(),
-  content: z.string().min(1).optional(),
+  title: z.string().min(1),
+  slug: z.string().min(1),
+  excerpt: z.string().min(1),
+  content: z.string().min(1),
 })
 
 const updatePostSchema = z.object({
   category: z.string().min(1).optional(),
   tags: z.array(z.string()).optional(),
   status: z.enum(['draft', 'published', 'archived']).optional(),
-  coverImage: z.string().optional(),
+  coverImage: z.string().nullable().optional(),
   scheduledAt: z.string().optional(),
-  seriesId: z.string().optional(),
-  seriesOrder: z.number().int().optional(),
+  seriesId: z.string().nullable().optional(),
+  seriesOrder: z.number().int().nullable().optional(),
   translations: z
     .object({
       en: translationUpdateSchema.optional(),
@@ -135,8 +136,17 @@ export async function PUT(
   }
 
   const { translations, scheduledAt, ...postData } = data
+
+  const publishedAtUpdate =
+    data.status === 'published'
+      ? { publishedAt: new Date() }
+      : data.status === 'draft' || data.status === 'archived'
+        ? { publishedAt: null }
+        : {}
+
   const post = await updatePost(id, {
     ...postData,
+    ...publishedAtUpdate,
     ...(scheduledAt !== undefined
       ? { scheduledAt: scheduledAt ? new Date(scheduledAt) : null }
       : {}),
@@ -150,7 +160,7 @@ export async function PUT(
     for (const [locale, t] of Object.entries(translations) as Array<
       ['en' | 'es', z.infer<typeof translationUpdateSchema>]
     >) {
-      await updateTranslation(id, locale, t)
+      await upsertTranslation(id, locale, t)
     }
   }
 
@@ -167,6 +177,15 @@ export async function DELETE(
   }
 
   const { id } = await params
+
+  const status = await getPostStatus(id)
+  if (status === 'published') {
+    return NextResponse.json(
+      { error: 'Cannot archive a published post. Unpublish it first.' },
+      { status: 422 },
+    )
+  }
+
   await softDeletePost(id)
   return new NextResponse(null, { status: 204 })
 }

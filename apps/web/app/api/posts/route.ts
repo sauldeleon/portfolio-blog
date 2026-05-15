@@ -87,10 +87,14 @@ const createPostSchema = z.object({
   seriesId: z.string().optional(),
   seriesOrder: z.number().int().optional(),
   scheduledAt: z.string().optional(),
-  translations: z.object({
-    en: translationSchema,
-    es: translationSchema.optional(),
-  }),
+  translations: z
+    .object({
+      en: translationSchema.optional(),
+      es: translationSchema.optional(),
+    })
+    .refine((t) => t.en || t.es, {
+      message: 'At least one translation required',
+    }),
 })
 
 export async function POST(request: Request) {
@@ -118,7 +122,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Unknown category' }, { status: 422 })
   }
 
-  if (data.status === 'published' && !data.translations.es) {
+  if (
+    data.status === 'published' &&
+    !(data.translations.en && data.translations.es)
+  ) {
     return NextResponse.json(
       { error: 'Both translations required for published status' },
       { status: 422 },
@@ -149,7 +156,7 @@ export async function POST(request: Request) {
       previewToken: crypto.randomUUID(),
     },
     {
-      en: data.translations.en,
+      ...(data.translations.en ? { en: data.translations.en } : {}),
       ...(data.translations.es ? { es: data.translations.es } : {}),
     },
   )

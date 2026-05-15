@@ -270,7 +270,19 @@ describe('POST /api/posts', () => {
     expect(body.error).toMatch(/unknown category/i)
   })
 
-  it('returns 422 when publishing without ES translation', async () => {
+  it('returns 400 when no translations provided', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    const response = await POST(
+      makeRequest({
+        category: 'engineering',
+        author: 'admin',
+        translations: {},
+      }),
+    )
+    expect(response.status).toBe(400)
+  })
+
+  it('returns 422 when publishing with only EN translation', async () => {
     mockAuth.mockResolvedValue({ user: { name: 'admin' } })
     mockGetCategoryBySlug.mockResolvedValue(mockCategory)
     const response = await POST(
@@ -279,6 +291,22 @@ describe('POST /api/posts', () => {
         author: 'admin',
         status: 'published',
         translations: { en: validTranslations.en },
+      }),
+    )
+    expect(response.status).toBe(422)
+    const body = (await response.json()) as { error: string }
+    expect(body.error).toMatch(/both translations/i)
+  })
+
+  it('returns 422 when publishing with only ES translation', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockGetCategoryBySlug.mockResolvedValue(mockCategory)
+    const response = await POST(
+      makeRequest({
+        category: 'engineering',
+        author: 'admin',
+        status: 'published',
+        translations: { es: validTranslations.es },
       }),
     )
     expect(response.status).toBe(422)
@@ -337,6 +365,25 @@ describe('POST /api/posts', () => {
         en: validTranslations.en,
         es: validTranslations.es,
       }),
+    )
+  })
+
+  it('creates post with ES-only translation', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockGetCategoryBySlug.mockResolvedValue(mockCategory)
+    mockSlugExistsForLocale.mockResolvedValue(false)
+    mockCreatePost.mockResolvedValue(mockPost)
+    const response = await POST(
+      makeRequest({
+        category: 'engineering',
+        author: 'admin',
+        translations: { es: validTranslations.es },
+      }),
+    )
+    expect(response.status).toBe(201)
+    expect(mockCreatePost).toHaveBeenCalledWith(
+      expect.objectContaining({ category: 'engineering' }),
+      { es: validTranslations.es },
     )
   })
 

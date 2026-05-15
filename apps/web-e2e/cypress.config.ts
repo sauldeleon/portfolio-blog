@@ -1,4 +1,5 @@
 import { defineConfig } from 'cypress'
+import { execSync } from 'node:child_process'
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 
@@ -10,6 +11,14 @@ function loadE2eEnvFile(projectRoot: string) {
 
   if (existsSync(envFilePath) && loadEnvFile) {
     loadEnvFile(envFilePath)
+  }
+}
+
+function getCommitHash(): string {
+  try {
+    return execSync('git rev-parse --short HEAD').toString().trim()
+  } catch {
+    return 'local'
   }
 }
 
@@ -52,6 +61,10 @@ export default defineConfig({
         ...config.env,
         ...getCypressEnv(),
       }
+
+      on('task', {
+        getCommitHash: () => getCommitHash(),
+      })
 
       const webpackPreprocessor = require('@cypress/webpack-preprocessor')
       on(

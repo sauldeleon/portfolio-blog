@@ -53,6 +53,7 @@ export type AdminPost = {
   publishedAt: Date | null
   createdAt: Date
   updatedAt: Date
+  deletedAt: Date | null
   previewToken: string | null
   titleEn: string | null
   slugEn: string | null
@@ -194,6 +195,17 @@ export async function getAllSeries(): Promise<SeriesSummary[]> {
     .orderBy(asc(posts.seriesId)) as Promise<SeriesSummary[]>
 }
 
+export async function getAllSeriesAdmin(): Promise<string[]> {
+  const rows = await db
+    .select({ seriesId: posts.seriesId })
+    .from(posts)
+    .where(and(isNotNull(posts.seriesId), isNull(posts.deletedAt)))
+    .groupBy(posts.seriesId)
+    .orderBy(asc(posts.seriesId))
+
+  return rows.map((r) => r.seriesId as string)
+}
+
 export async function getPostsBySeries(
   seriesId: string,
   locale: Locale,
@@ -258,6 +270,7 @@ export async function getAllPosts(): Promise<AdminPost[]> {
     published_at: Date | null
     created_at: Date
     updated_at: Date
+    deleted_at: Date | null
     preview_token: string | null
     title_en: string | null
     slug_en: string | null
@@ -270,7 +283,7 @@ export async function getAllPosts(): Promise<AdminPost[]> {
       SELECT
         p.id, p.category, p.tags, p.status,
         p.cover_image, p.series_id, p.series_order,
-        p.scheduled_at, p.published_at, p.created_at, p.updated_at,
+        p.scheduled_at, p.published_at, p.created_at, p.updated_at, p.deleted_at,
         p.preview_token,
         en_t.title AS title_en, en_t.slug AS slug_en,
         es_t.title AS title_es, es_t.slug AS slug_es
@@ -297,6 +310,7 @@ export async function getAllPosts(): Promise<AdminPost[]> {
     publishedAt: r.published_at,
     createdAt: r.created_at,
     updatedAt: r.updated_at,
+    deletedAt: r.deleted_at,
     previewToken: r.preview_token,
     titleEn: r.title_en,
     slugEn: r.slug_en,
@@ -315,7 +329,7 @@ export type TranslationInput = {
 
 export async function createPost(
   data: NewPostInput,
-  translations: { en: TranslationInput; es?: TranslationInput },
+  translations: { en?: TranslationInput; es?: TranslationInput },
 ): Promise<typeof posts.$inferSelect> {
   return db.transaction(async (tx) => {
     const id = ulid()
@@ -350,36 +364,43 @@ export async function updatePost(
   return post ?? null
 }
 
-export async function updateTranslation(
+export async function upsertTranslation(
   postId: string,
   locale: Locale,
-  data: Partial<TranslationInput>,
-): Promise<typeof postTranslations.$inferSelect | null> {
+  data: TranslationInput,
+): Promise<typeof postTranslations.$inferSelect> {
   const [row] = await db
-    .update(postTranslations)
-    .set(data)
-    .where(
-      and(
-        eq(postTranslations.postId, postId),
-        eq(postTranslations.locale, locale),
-      ),
-    )
+    .insert(postTranslations)
+    .values({ postId, locale, ...data })
+    .onConflictDoUpdate({
+      target: [postTranslations.postId, postTranslations.locale],
+      set: data,
+    })
     .returning()
 
-  return row ?? null
+  return row
+}
+
+export async function getPostStatus(id: string): Promise<PostStatus | null> {
+  const [row] = await db
+    .select({ status: posts.status })
+    .from(posts)
+    .where(eq(posts.id, id))
+    .limit(1)
+  return row?.status ?? null
 }
 
 export async function softDeletePost(id: string): Promise<void> {
   await db
     .update(posts)
-    .set({ deletedAt: new Date(), status: 'archived', updatedAt: new Date() })
+    .set({ status: 'archived', updatedAt: new Date() })
     .where(eq(posts.id, id))
 }
 
 export async function restorePost(id: string): Promise<void> {
   await db
     .update(posts)
-    .set({ deletedAt: null, status: 'draft', updatedAt: new Date() })
+    .set({ status: 'draft', updatedAt: new Date() })
     .where(eq(posts.id, id))
 }
 
@@ -410,6 +431,20 @@ export async function getPostTranslations(
     .select()
     .from(postTranslations)
     .where(eq(postTranslations.postId, postId))
+}
+
+export async function getPostForEdit(
+  id: string,
+): Promise<PostWithTranslations | null> {
+  const postRows = await db
+    .select()
+    .from(posts)
+    .where(and(eq(posts.id, id), isNull(posts.deletedAt)))
+
+  if (!postRows[0]) return null
+
+  const translationRows = await getPostTranslations(id)
+  return { post: postRows[0], translations: translationRows }
 }
 
 export type PaginatedPostsParams = {

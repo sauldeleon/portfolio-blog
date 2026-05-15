@@ -20,6 +20,9 @@ jest.mock('@web/i18n/client', () => ({
         'posts.table.category': 'Category',
         'posts.table.translations': 'Translations',
         'posts.table.published': 'Published',
+        'posts.table.createdAt': 'Created',
+        'posts.table.updatedAt': 'Updated',
+        'posts.table.deletedAt': 'Deleted',
         'posts.table.actions': 'Actions',
         'posts.filters.all': 'All',
         'posts.filters.published': 'Published',
@@ -28,8 +31,10 @@ jest.mock('@web/i18n/client', () => ({
         'posts.edit': 'Edit',
         'posts.publish': 'Publish',
         'posts.unpublish': 'Unpublish',
-        'posts.delete': 'Delete',
-        'posts.deleteConfirm': 'Delete this post?',
+        'posts.archive': 'Archive',
+        'posts.unarchive': 'Unarchive',
+        'posts.archiveConfirm': 'Archive this post? You can restore it later.',
+        'posts.archiveDisabledPublished': 'Unpublish the post before archiving',
         'posts.empty': 'No posts found',
         'posts.newPost': 'New post',
         'confirmDelete.confirm': 'Confirm delete',
@@ -56,6 +61,7 @@ const makePost = (overrides: Partial<AdminPost> = {}): AdminPost => ({
   publishedAt: null,
   createdAt: new Date('2024-01-01'),
   updatedAt: new Date('2024-01-01'),
+  deletedAt: null,
   previewToken: 'tok',
   titleEn: 'Test Post',
   slugEn: 'test-post',
@@ -217,7 +223,7 @@ describe('PostTable', () => {
     renderApp(<PostTable posts={[post]} />)
     fireEvent.click(screen.getByTestId('publish-button'))
     await waitFor(() => expect(global.fetch).toHaveBeenCalled())
-    expect(global.fetch).toHaveBeenCalledWith('/api/posts/abc123', {
+    expect(global.fetch).toHaveBeenCalledWith('/api/posts/abc123/', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: expect.stringContaining('"status":"published"'),
@@ -235,7 +241,7 @@ describe('PostTable', () => {
     renderApp(<PostTable posts={[post]} />)
     fireEvent.click(screen.getByTestId('publish-button'))
     await waitFor(() => expect(global.fetch).toHaveBeenCalled())
-    expect(global.fetch).toHaveBeenCalledWith('/api/posts/pub123', {
+    expect(global.fetch).toHaveBeenCalledWith('/api/posts/pub123/', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: expect.stringContaining('"status":"draft"'),
@@ -250,10 +256,22 @@ describe('PostTable', () => {
     expect(screen.getByTestId('confirm-delete-confirm')).toBeInTheDocument()
     fireEvent.click(screen.getByTestId('confirm-delete-confirm'))
     await waitFor(() => expect(global.fetch).toHaveBeenCalled())
-    expect(global.fetch).toHaveBeenCalledWith('/api/posts/del123', {
+    expect(global.fetch).toHaveBeenCalledWith('/api/posts/del123/', {
       method: 'DELETE',
     })
     expect(mockRefresh).toHaveBeenCalled()
+  })
+
+  it('delete button is disabled for published post', () => {
+    const post = makePost({ status: 'published' })
+    renderApp(<PostTable posts={[post]} />)
+    expect(screen.getByTestId('delete-button')).toBeDisabled()
+  })
+
+  it('delete button is enabled for draft post', () => {
+    const post = makePost({ status: 'draft' })
+    renderApp(<PostTable posts={[post]} />)
+    expect(screen.getByTestId('delete-button')).not.toBeDisabled()
   })
 
   it('clicking delete opens modal and cancelling does NOT call fetch', () => {
@@ -317,6 +335,43 @@ describe('PostTable', () => {
     expect(screen.getByTestId('post-row')).toBeInTheDocument()
   })
 
+  it('shows unarchive button for archived post', () => {
+    const post = makePost({ status: 'archived' })
+    renderApp(<PostTable posts={[post]} />)
+    expect(screen.getByTestId('unarchive-button')).toBeInTheDocument()
+    expect(screen.queryByTestId('delete-button')).not.toBeInTheDocument()
+  })
+
+  it('publish button is disabled for archived post', () => {
+    const post = makePost({
+      status: 'archived',
+      titleEn: 'Post',
+      titleEs: 'Post',
+    })
+    renderApp(<PostTable posts={[post]} />)
+    expect(screen.getByTestId('publish-button')).toBeDisabled()
+  })
+
+  it('clicking unarchive calls PUT with draft status and refreshes', async () => {
+    const post = makePost({ id: 'arc123', status: 'archived' })
+    renderApp(<PostTable posts={[post]} />)
+    fireEvent.click(screen.getByTestId('unarchive-button'))
+    await waitFor(() => expect(global.fetch).toHaveBeenCalled())
+    expect(global.fetch).toHaveBeenCalledWith('/api/posts/arc123/', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: expect.stringContaining('"status":"draft"'),
+    })
+    expect(mockRefresh).toHaveBeenCalled()
+  })
+
+  it('shows archive button for draft post (not unarchive)', () => {
+    const post = makePost({ status: 'draft' })
+    renderApp(<PostTable posts={[post]} />)
+    expect(screen.getByTestId('delete-button')).toBeInTheDocument()
+    expect(screen.queryByTestId('unarchive-button')).not.toBeInTheDocument()
+  })
+
   it('shows empty state when no posts match search', () => {
     const post = makePost({ titleEn: 'React Basics', titleEs: null })
     renderApp(<PostTable posts={[post]} />)
@@ -331,5 +386,44 @@ describe('PostTable', () => {
     renderApp(<PostTable posts={[]} />)
     fireEvent.click(screen.getByTestId('new-post-button'))
     expect(mockPush).toHaveBeenCalledWith('/admin/posts/new')
+  })
+
+  it('displays formatted createdAt date', () => {
+    const post = makePost({ createdAt: new Date('2024-03-10') })
+    renderApp(<PostTable posts={[post]} />)
+    const rows = screen.getAllByTestId('post-row')
+    // eslint-disable-next-line testing-library/no-node-access
+    const cells = rows[0].querySelectorAll('td')
+    expect(cells[5].textContent).toBeTruthy()
+    expect(cells[5].textContent).not.toBe('—')
+  })
+
+  it('displays em dash when deletedAt is null', () => {
+    const post = makePost({ deletedAt: null })
+    renderApp(<PostTable posts={[post]} />)
+    const rows = screen.getAllByTestId('post-row')
+    // eslint-disable-next-line testing-library/no-node-access
+    const cells = rows[0].querySelectorAll('td')
+    expect(cells[7].textContent).toBe('—')
+  })
+
+  it('displays formatted deletedAt date when set', () => {
+    const post = makePost({ deletedAt: new Date('2024-05-01') })
+    renderApp(<PostTable posts={[post]} />)
+    const rows = screen.getAllByTestId('post-row')
+    // eslint-disable-next-line testing-library/no-node-access
+    const cells = rows[0].querySelectorAll('td')
+    expect(cells[7].textContent).not.toBe('—')
+    expect(cells[7].textContent).toBeTruthy()
+  })
+
+  it('displays formatted updatedAt date', () => {
+    const post = makePost({ updatedAt: new Date('2024-04-20') })
+    renderApp(<PostTable posts={[post]} />)
+    const rows = screen.getAllByTestId('post-row')
+    // eslint-disable-next-line testing-library/no-node-access
+    const cells = rows[0].querySelectorAll('td')
+    expect(cells[6].textContent).toBeTruthy()
+    expect(cells[6].textContent).not.toBe('—')
   })
 })

@@ -1,15 +1,17 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { neon } from '@neondatabase/serverless'
-import { drizzle } from 'drizzle-orm/neon-http'
+import { Pool } from '@neondatabase/serverless'
+import { drizzle } from 'drizzle-orm/neon-serverless'
 
 import * as schema from './schema'
 
-// Lazy init — avoids calling neon() at module evaluation time (build fails without DATABASE_URL)
+// Lazy init — avoids creating Pool at module evaluation time (build fails without DATABASE_URL)
 let _db: ReturnType<typeof drizzle> | null = null
 
 export function getDb() {
   if (!_db) {
-    _db = drizzle(neon(process.env.DATABASE_URL!), { schema })
+    _db = drizzle(new Pool({ connectionString: process.env.DATABASE_URL! }), {
+      schema,
+    })
   }
   return _db
 }

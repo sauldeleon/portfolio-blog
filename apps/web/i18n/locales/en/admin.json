@@ -25,6 +25,9 @@
       "category": "Category",
       "translations": "Translations",
       "published": "Published",
+      "createdAt": "Created",
+      "updatedAt": "Updated",
+      "deletedAt": "Deleted",
       "actions": "Actions"
     },
     "filters": {
@@ -36,13 +39,66 @@
     "edit": "Edit",
     "publish": "Publish",
     "unpublish": "Unpublish",
-    "delete": "Delete",
-    "deleteConfirm": "Delete this post?",
+    "archive": "Archive",
+    "unarchive": "Unarchive",
+    "archiveConfirm": "Archive this post? You can restore it later.",
+    "archiveDisabledPublished": "Unpublish the post before archiving",
     "empty": "No posts found"
   },
   "confirmDelete": {
-    "confirm": "Delete",
+    "confirm": "Confirm",
     "cancel": "Cancel"
+  },
+  "postEditor": {
+    "newTitle": "New Post",
+    "editTitle": "Edit Post",
+    "back": "← Back to posts",
+    "tabs": {
+      "en": "EN",
+      "es": "ES"
+    },
+    "fields": {
+      "title": "Title",
+      "titlePlaceholder": "Post title",
+      "slug": "Slug",
+      "slugHelper": "Auto-generated from title. Only lowercase letters, numbers and hyphens.",
+      "excerpt": "Excerpt",
+      "excerptPlaceholder": "Brief description…",
+      "content": "Content",
+      "contentPlaceholder": "Write your post in Markdown…",
+      "category": "Category",
+      "tags": "Tags",
+      "tagsPlaceholder": "react, nextjs, typescript",
+      "tagsHelper": "Comma-separated",
+      "seriesId": "Series ID",
+      "seriesIdPlaceholder": "e.g. react-hooks-series",
+      "seriesOrder": "Series Order",
+      "seriesOrderPlaceholder": "1",
+      "coverImage": "Cover Image",
+      "coverImagePlaceholder": "Cloudinary public ID",
+      "author": "Author",
+      "authorPlaceholder": "Author name",
+      "authorUseDefault": "Use default author"
+    },
+    "status": {
+      "draft": "Draft",
+      "published": "Published",
+      "archived": "Archived"
+    },
+    "actions": {
+      "save": "Save",
+      "saving": "Saving…",
+      "publish": "Publish",
+      "publishDisabledMissingTranslations": "Both EN and ES translations required to publish",
+      "publishDisabledArchived": "Unarchive first to publish",
+      "unpublish": "Unpublish",
+      "archive": "Archive",
+      "archiveDisabledPublished": "Unpublish first to archive",
+      "unarchive": "Unarchive"
+    },
+    "preview": "Preview",
+    "previewLoading": "Rendering…",
+    "error": "Something went wrong, please try again"
   },
   "categories": {
     "title": "Categories",

@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 import { Button } from '@sdlgr/button'
+import { Input } from '@sdlgr/input'
 
 export const StyledWrapper = styled.div`
   display: flex;
@@ -18,26 +19,10 @@ export const StyledToolbar = styled.div`
   flex-wrap: wrap;
 `
 
-export const StyledSearchInput = styled.input`
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid rgba(251, 251, 251, 0.2);
-  padding: 0.375rem 0;
-  color: ${({ theme }) => theme.colors.white};
-  font-family: inherit;
+export const StyledSearchInput = styled(Input)`
   font-size: 0.75rem;
-  outline: none;
   width: 220px;
-  transition: border-color 0.2s;
-
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.white};
-    opacity: 0.25;
-  }
-
-  &:focus {
-    border-bottom-color: ${({ theme }) => theme.colors.green};
-  }
+  padding: 0.375rem 0;
 `
 
 export const StyledNewButton = styled(Button)`
@@ -115,15 +100,10 @@ export const StyledPostCount = styled.span`
   opacity: 0.6;
 `
 
-export const StyledEditInput = styled.input`
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.green};
+export const StyledEditInput = styled(Input)`
+  border-bottom-color: ${({ theme }) => theme.colors.green};
   padding: 0.25rem 0;
-  color: ${({ theme }) => theme.colors.white};
-  font-family: inherit;
   font-size: 0.8rem;
-  outline: none;
   width: 100%;
 `
 

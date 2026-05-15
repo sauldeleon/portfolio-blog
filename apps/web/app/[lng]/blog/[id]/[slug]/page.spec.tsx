@@ -50,6 +50,10 @@ jest.mock('@web/components/RelatedPosts/RelatedPosts', () => ({
   RelatedPosts: () => <div data-testid="related-posts" />,
 }))
 
+jest.mock('@web/components/SeriesIndicator/SeriesIndicator', () => ({
+  SeriesIndicator: () => <div data-testid="series-indicator" />,
+}))
+
 jest.mock('@web/utils/metadata/inLanguage', () => ({
   buildAlternates: jest
     .fn()
@@ -138,6 +142,56 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
     })
     render(ui)
     expect(screen.getByTestId('related-posts')).toBeInTheDocument()
+  })
+
+  it('renders SeriesIndicator when post has seriesId but no seriesOrder', async () => {
+    mockGetPostById.mockResolvedValue({
+      ...publishedPost,
+      seriesId: 'my-series',
+      seriesOrder: null,
+    })
+    const { default: BlogPostPage } = require('./page.next')
+    const ui = await BlogPostPage({
+      params: Promise.resolve({
+        lng: 'en',
+        id: '01JXYZ',
+        slug: 'my-test-post',
+      }),
+    })
+    render(ui)
+    expect(screen.getByTestId('series-indicator')).toBeInTheDocument()
+  })
+
+  it('renders SeriesIndicator when post has a seriesId', async () => {
+    mockGetPostById.mockResolvedValue({
+      ...publishedPost,
+      seriesId: 'my-series',
+      seriesOrder: 1,
+    })
+    const { default: BlogPostPage } = require('./page.next')
+    const ui = await BlogPostPage({
+      params: Promise.resolve({
+        lng: 'en',
+        id: '01JXYZ',
+        slug: 'my-test-post',
+      }),
+    })
+    render(ui)
+    expect(screen.getByTestId('series-indicator')).toBeInTheDocument()
+  })
+
+  it('does not render SeriesIndicator when post has no seriesId', async () => {
+    mockGetPostById.mockResolvedValue({ ...publishedPost, seriesId: null })
+    const { default: BlogPostPage } = require('./page.next')
+    const ui = await BlogPostPage({
+      params: Promise.resolve({
+        lng: 'en',
+        id: '01JXYZ',
+        slug: 'my-test-post',
+      }),
+    })
+    render(ui)
+    expect(screen.queryByTestId('series-indicator')).not.toBeInTheDocument()
   })
 
   it('renders TOC when entries exist', async () => {

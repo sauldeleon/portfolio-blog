@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 import { Button } from '@sdlgr/button'
+import { Input, Textarea } from '@sdlgr/input'
 
 export const StyledForm = styled.form`
   display: flex;
@@ -23,53 +24,16 @@ export const StyledLabel = styled.label`
   opacity: 0.5;
 `
 
-export const StyledInput = styled.input`
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid rgba(251, 251, 251, 0.2);
-  padding: 0.5rem 0;
-  color: ${({ theme }) => theme.colors.white};
-  font-family: inherit;
-  font-size: 0.875rem;
-  outline: none;
-  transition: border-color 0.2s;
-
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.white};
-    opacity: 0.25;
-  }
-
-  &:focus {
-    border-bottom-color: ${({ theme }) => theme.colors.green};
-  }
-
+export const StyledInput = styled(Input)`
   &[aria-readonly='true'] {
     opacity: 0.4;
     cursor: default;
   }
 `
 
-export const StyledTextarea = styled.textarea`
-  background: transparent;
-  border: 1px solid rgba(251, 251, 251, 0.2);
-  border-radius: 2px;
-  padding: 0.5rem;
-  color: ${({ theme }) => theme.colors.white};
-  font-family: inherit;
+export const StyledTextarea = styled(Textarea)`
   font-size: 0.875rem;
-  outline: none;
-  resize: vertical;
   min-height: 80px;
-  transition: border-color 0.2s;
-
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.white};
-    opacity: 0.25;
-  }
-
-  &:focus {
-    border-color: ${({ theme }) => theme.colors.green};
-  }
 `
 
 export const StyledHelper = styled.p`

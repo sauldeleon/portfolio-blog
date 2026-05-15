@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 import { Button } from '@sdlgr/button'
+import { Input } from '@sdlgr/input'
 
 export const StyledForm = styled.form`
   display: flex;
@@ -33,24 +34,23 @@ export const StyledInputRow = styled.div`
   }
 `
 
-export const StyledInput = styled.input`
+export const StyledInput = styled(Input)`
   flex: 1;
-  background: transparent;
-  border: none;
+  border-bottom: none;
   padding: 0.625rem 0;
-  color: ${({ theme }) => theme.colors.white};
-  font-family: inherit;
   font-size: 0.9rem;
-  outline: none;
 
   &::placeholder {
-    color: ${({ theme }) => theme.colors.white};
     opacity: 0.2;
   }
 
   &:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 1000px ${({ theme }) => theme.colors.black} inset;
     -webkit-text-fill-color: ${({ theme }) => theme.colors.white};
+  }
+
+  &:focus {
+    border-bottom-color: transparent;
   }
 `
 

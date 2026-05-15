@@ -80,7 +80,7 @@ export async function BlogPage({
           categories={categories.map((cat) => ({
             id: cat.id,
             slug: cat.localeSlug,
-            name: `${cat.name} (${cat.postCount})`,
+            name: `${cat.name} (${cat.publishedPostCount})`,
             description: cat.description,
           }))}
           activeCategory={category ?? null}

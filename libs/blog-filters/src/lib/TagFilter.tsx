@@ -48,6 +48,7 @@ export function TagFilter({
       <StyledChipList>
         <li>
           <StyledChip
+            $small
             onClick={() => handleSelect(null)}
             active={activeTag === null}
             aria-current={activeTag === null ? true : undefined}
@@ -58,6 +59,7 @@ export function TagFilter({
         {tags.map(({ tag, count }) => (
           <li key={tag}>
             <StyledChip
+              $small
               onClick={() => handleSelect(tag)}
               active={tag === activeTag}
               aria-current={tag === activeTag ? true : undefined}

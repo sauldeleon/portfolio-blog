@@ -68,6 +68,19 @@ describe('CategoryForm', () => {
     expect(screen.getByTestId('submit-button')).toBeInTheDocument()
   })
 
+  it('submit button is disabled when name and slug are empty', () => {
+    setup()
+    expect(screen.getByTestId('submit-button')).toBeDisabled()
+  })
+
+  it('submit button is enabled when name is filled (slug auto-generates)', () => {
+    setup()
+    fireEvent.change(screen.getByTestId('name-input'), {
+      target: { value: 'Engineering' },
+    })
+    expect(screen.getByTestId('submit-button')).not.toBeDisabled()
+  })
+
   it('auto-generates slug from name as user types', () => {
     setup()
     fireEvent.change(screen.getByTestId('name-input'), {
@@ -163,6 +176,24 @@ describe('CategoryForm', () => {
       ok: false,
       status: 400,
       json: async () => ({ error: [{ message: 'invalid' }] }),
+    })
+    setup()
+    fireEvent.change(screen.getByTestId('name-input'), {
+      target: { value: 'Engineering' },
+    })
+    fireEvent.click(screen.getByTestId('submit-button'))
+    expect(await screen.findByTestId('form-error')).toHaveTextContent(
+      'Something went wrong, please try again',
+    )
+  })
+
+  it('shows fallback error when API returns non-JSON body', async () => {
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: false,
+      status: 500,
+      json: async () => {
+        throw new SyntaxError('Unexpected end of JSON input')
+      },
     })
     setup()
     fireEvent.change(screen.getByTestId('name-input'), {

@@ -29,6 +29,8 @@
       "@sdlgr/main-theme": ["./libs/main-theme/src/index.ts"],
       "@sdlgr/mocks": ["./libs/mocks/src/index.ts"],
       "@sdlgr/modal": ["./libs/modal/src/index.ts"],
+      "@sdlgr/input": ["./libs/input/src/index.ts"],
+      "@sdlgr/select": ["./libs/select/src/index.ts"],
       "@sdlgr/storage": ["./libs/storage/src/index.ts"],
       "@sdlgr/test-utils": ["./libs/test-utils/src/index.ts"],
       "@sdlgr/typography": ["./libs/typography/src/index.ts"],
@@ -42,6 +44,8 @@
       "@sdlgr/code-block": ["./libs/code-block/src/index.ts"],
       "@sdlgr/table-of-contents": ["./libs/table-of-contents/src/index.ts"],
       "@sdlgr/visually-hidden": ["./libs/visually-hidden/src/index.ts"],
+      "@sdlgr/combobox": ["./libs/combobox/src/index.ts"],
+      "@sdlgr/checkbox": ["./libs/checkbox/src/index.ts"],
       "@web/*": ["./apps/web/*"]
     }
   },

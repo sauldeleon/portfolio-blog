@@ -1,7 +1,10 @@
 'use client'
 
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 
 import { useClientTranslation } from '@web/i18n/client'
 import { slugify } from '@web/utils/slugify'
@@ -21,6 +24,13 @@ import {
   StyledTextarea,
 } from './CategoryForm.styles'
 
+const categoryFormSchema = z.object({
+  name: z.string().min(1),
+  slug: z.string().min(1),
+})
+
+type CategoryFormValues = z.infer<typeof categoryFormSchema>
+
 export interface CategoryFormProps {
   title: string
   backLabel: string
@@ -34,6 +44,14 @@ export function CategoryForm({ title, backLabel }: CategoryFormProps) {
   const [description, setDescription] = useState('')
   const [slugManuallyEdited, setSlugManuallyEdited] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  useForm<CategoryFormValues>({
+    resolver: zodResolver(categoryFormSchema),
+    mode: 'onChange',
+    values: { name, slug },
+  })
+
+  const canSubmit = categoryFormSchema.safeParse({ name, slug }).success
 
   function handleNameChange(e: React.ChangeEvent<HTMLInputElement>) {
     const val = e.target.value
@@ -60,7 +78,12 @@ export function CategoryForm({ title, backLabel }: CategoryFormProps) {
       }),
     })
     if (!res.ok) {
-      const data = (await res.json()) as { error?: unknown }
+      let data: { error?: unknown } = {}
+      try {
+        data = (await res.json()) as { error?: unknown }
+      } catch {
+        // empty or non-JSON body
+      }
       setError(
         typeof data.error === 'string'
           ? data.error
@@ -133,7 +156,11 @@ export function CategoryForm({ title, backLabel }: CategoryFormProps) {
         {error && <StyledError data-testid="form-error">{error}</StyledError>}
 
         <StyledActions>
-          <StyledSubmitButton type="submit" data-testid="submit-button">
+          <StyledSubmitButton
+            type="submit"
+            disabled={!canSubmit}
+            data-testid="submit-button"
+          >
             {t('categories.form.create')}
           </StyledSubmitButton>
           <StyledBackLink

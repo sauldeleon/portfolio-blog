@@ -120,6 +120,7 @@ exports[`PostCard matches snapshot 1`] = `
   color: #FFDD83;
   text-decoration: none;
   display: inline-block;
+  align-self: flex-start;
   margin-top: 0.75rem;
   position: relative;
 }

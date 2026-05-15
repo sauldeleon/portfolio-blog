@@ -36,7 +36,7 @@ exports[`Button should render variant inverted 1`] = `
   padding: 15px 20px;
 }
 
-.c0:hover {
+.c0:hover:not(:disabled) {
   background-color: transparent;
   color: #FBFBFB;
 }
@@ -71,7 +71,7 @@ exports[`Button should render variant inverted with size lg 1`] = `
   font-size: 1rem;
 }
 
-.c0:hover {
+.c0:hover:not(:disabled) {
   background-color: transparent;
   color: #FBFBFB;
 }
@@ -106,7 +106,7 @@ exports[`Button should render variant inverted with size sm 1`] = `
   font-size: 0.6rem;
 }
 
-.c0:hover {
+.c0:hover:not(:disabled) {
   background-color: transparent;
   color: #FBFBFB;
 }
