@@ -32,6 +32,12 @@ export function AdminNav() {
       >
         {t('nav.categories')}
       </StyledNavLink>
+      <StyledNavLink
+        href="/admin/images"
+        $active={pathname.startsWith('/admin/images')}
+      >
+        {t('nav.images')}
+      </StyledNavLink>
       <StyledDivider aria-hidden />
       <form action={logoutAction}>
         <StyledLogoutButton type="submit">{t('nav.logout')}</StyledLogoutButton>

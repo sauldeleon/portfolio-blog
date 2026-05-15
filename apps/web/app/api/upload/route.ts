@@ -41,7 +41,17 @@ export async function POST(request: Request) {
   }
 
   const altText = (formData.get('altText') as string | null) ?? ''
+  const name = (formData.get('name') as string | null) ?? ''
   const buffer = Buffer.from(await file.arrayBuffer())
-  const result = await uploadImage(buffer, file.type, altText)
-  return NextResponse.json(result, { status: 201 })
+  try {
+    const result = await uploadImage(
+      buffer,
+      file.type,
+      altText,
+      name || undefined,
+    )
+    return NextResponse.json(result, { status: 201 })
+  } catch {
+    return NextResponse.json({ error: 'Upload failed' }, { status: 500 })
+  }
 }

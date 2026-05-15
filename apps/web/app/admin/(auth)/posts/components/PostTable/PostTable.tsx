@@ -1,5 +1,7 @@
 'use client'
 
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
@@ -9,6 +11,7 @@ import type { AdminPost } from '@web/lib/db/queries/posts'
 
 import {
   StyledActions,
+  StyledButtonGroup,
   StyledCount,
   StyledDeleteButton,
   StyledEmDash,
@@ -20,6 +23,7 @@ import {
   StyledLeftGroup,
   StyledNewPostButton,
   StyledPublishButton,
+  StyledRefreshButton,
   StyledSearchInput,
   StyledStatusBadge,
   StyledTable,
@@ -35,6 +39,28 @@ import {
 
 type StatusFilter = 'all' | 'published' | 'draft' | 'archived'
 
+type RawAdminPost = Omit<
+  AdminPost,
+  'publishedAt' | 'createdAt' | 'updatedAt' | 'deletedAt' | 'scheduledAt'
+> & {
+  publishedAt: string | null
+  createdAt: string
+  updatedAt: string
+  deletedAt: string | null
+  scheduledAt: string | null
+}
+
+function deserializePost(p: RawAdminPost): AdminPost {
+  return {
+    ...p,
+    publishedAt: p.publishedAt ? new Date(p.publishedAt) : null,
+    createdAt: new Date(p.createdAt),
+    updatedAt: new Date(p.updatedAt),
+    deletedAt: p.deletedAt ? new Date(p.deletedAt) : null,
+    scheduledAt: p.scheduledAt ? new Date(p.scheduledAt) : null,
+  }
+}
+
 const STATUS_FILTERS: StatusFilter[] = ['all', 'published', 'draft', 'archived']
 
 interface PostTableProps {
@@ -43,17 +69,33 @@ interface PostTableProps {
 
 export function PostTable({ posts }: PostTableProps) {
   const { t } = useClientTranslation('admin')
+  const queryClient = useQueryClient()
   const [filter, setFilter] = useState<StatusFilter>('all')
   const [search, setSearch] = useState('')
   const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null)
   const router = useRouter()
 
+  const QUERY_KEY = ['admin-posts'] as const
+
+  const { data: items, refetch } = useQuery({
+    queryKey: QUERY_KEY,
+    queryFn: async () => {
+      const { data } = await axios.get<{ data: RawAdminPost[] }>(
+        '/api/posts?status=all',
+      )
+      return data.data.map(deserializePost)
+    },
+    initialData: posts,
+    staleTime: Infinity,
+    gcTime: 0,
+  })
+
   const countFor = (status: StatusFilter) =>
     status === 'all'
-      ? posts.length
-      : posts.filter((p) => p.status === status).length
+      ? items.length
+      : items.filter((p) => p.status === status).length
 
-  const filtered = posts.filter((p) => {
+  const filtered = items.filter((p) => {
     const matchesStatus = filter === 'all' || p.status === filter
     const searchLower = search.toLowerCase()
     const title = p.titleEn ?? p.titleEs ?? ''
@@ -67,9 +109,16 @@ export function PostTable({ posts }: PostTableProps) {
   }
 
   async function handleConfirmDelete() {
-    await fetch(`/api/posts/${deleteTargetId!}/`, { method: 'DELETE' })
+    /* istanbul ignore next */
+    if (!deleteTargetId) return
+    const id = deleteTargetId
+    await axios.delete(`/api/posts/${id}/`)
     setDeleteTargetId(null)
-    router.refresh()
+    queryClient.setQueryData<AdminPost[]>(QUERY_KEY, (old) => {
+      /* istanbul ignore next */
+      if (!old) return []
+      return old.map((p) => (p.id === id ? { ...p, status: 'archived' } : p))
+    })
   }
 
   function handleCancelDelete() {
@@ -78,25 +127,32 @@ export function PostTable({ posts }: PostTableProps) {
 
   async function handleUnarchive(e: React.MouseEvent, id: string) {
     e.stopPropagation()
-    await fetch(`/api/posts/${id}/`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ status: 'draft' }),
+    await axios.put(`/api/posts/${id}/`, { status: 'draft' })
+    queryClient.setQueryData<AdminPost[]>(QUERY_KEY, (old) => {
+      /* istanbul ignore next */
+      if (!old) return []
+      return old.map((p) => (p.id === id ? { ...p, status: 'draft' } : p))
     })
-    router.refresh()
   }
 
   async function handleTogglePublish(e: React.MouseEvent, post: AdminPost) {
     e.stopPropagation()
     const isPublished = post.status === 'published'
-    await fetch(`/api/posts/${post.id}/`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(
-        isPublished ? { status: 'draft' } : { status: 'published' },
-      ),
+    const newStatus = isPublished ? 'draft' : 'published'
+    await axios.put(`/api/posts/${post.id}/`, { status: newStatus })
+    queryClient.setQueryData<AdminPost[]>(QUERY_KEY, (old) => {
+      /* istanbul ignore next */
+      if (!old) return []
+      return old.map((p) =>
+        p.id === post.id
+          ? {
+              ...p,
+              status: newStatus,
+              publishedAt: newStatus === 'published' ? new Date() : null,
+            }
+          : p,
+      )
     })
-    router.refresh()
   }
 
   const canPublish = (post: AdminPost) => !!(post.titleEn && post.titleEs)
@@ -127,14 +183,24 @@ export function PostTable({ posts }: PostTableProps) {
             ))}
           </StyledFilterTabs>
         </StyledLeftGroup>
-        <StyledNewPostButton
-          variant="inverted"
-          size="sm"
-          onClick={() => router.push('/admin/posts/new')}
-          data-testid="new-post-button"
-        >
-          {t('posts.newPost')}
-        </StyledNewPostButton>
+        <StyledButtonGroup>
+          <StyledRefreshButton
+            variant="contained"
+            size="sm"
+            onClick={() => void refetch()}
+            data-testid="refresh-button"
+          >
+            {t('refresh')}
+          </StyledRefreshButton>
+          <StyledNewPostButton
+            variant="inverted"
+            size="sm"
+            onClick={() => router.push('/admin/posts/new')}
+            data-testid="new-post-button"
+          >
+            {t('posts.newPost')}
+          </StyledNewPostButton>
+        </StyledButtonGroup>
       </StyledToolbar>
 
       <StyledTable>

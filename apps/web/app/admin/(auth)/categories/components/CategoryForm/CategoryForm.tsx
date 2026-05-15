@@ -1,6 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import axios, { isAxiosError } from 'axios'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -68,31 +69,24 @@ export function CategoryForm({ title, backLabel }: CategoryFormProps) {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    const res = await fetch('/api/categories', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
+    try {
+      await axios.post('/api/categories', {
         translations: {
           en: { name, slug, description: description || undefined },
         },
-      }),
-    })
-    if (!res.ok) {
-      let data: { error?: unknown } = {}
-      try {
-        data = (await res.json()) as { error?: unknown }
-      } catch {
-        // empty or non-JSON body
+      })
+      router.push('/admin/categories')
+      router.refresh()
+    } catch (err) {
+      if (isAxiosError(err)) {
+        const errData = err.response?.data as { error?: unknown } | undefined
+        setError(
+          typeof errData?.error === 'string'
+            ? errData.error
+            : t('categories.form.error'),
+        )
       }
-      setError(
-        typeof data.error === 'string'
-          ? data.error
-          : t('categories.form.error'),
-      )
-      return
     }
-    router.push('/admin/categories')
-    router.refresh()
   }
 
   return (

@@ -1,4 +1,5 @@
 import { fireEvent, screen, waitFor, within } from '@testing-library/react'
+import axios, { AxiosError } from 'axios'
 import { useRouter } from 'next/navigation'
 
 import { renderApp } from '@sdlgr/test-utils'
@@ -55,6 +56,7 @@ jest.mock('@web/i18n/client', () => ({
         'postEditor.preview': 'Preview',
         'postEditor.previewLoading': 'Rendering…',
         'postEditor.error': 'Something went wrong',
+        'images.picker.title': 'Insert Image',
       }
       return translations[key] ?? key
     },
@@ -69,6 +71,54 @@ jest.mock('../MarkdownPreview', () => ({
   MarkdownPreview: ({ content }: { content: string }) => (
     <div data-testid="markdown-preview">{content}</div>
   ),
+}))
+
+jest.mock('../ImagePicker', () => ({
+  ImagePicker: ({
+    open,
+    onClose,
+    onPick,
+  }: {
+    open: boolean
+    onClose: () => void
+    onPick: (image: {
+      publicId: string
+      url: string
+      width: number
+      height: number
+      format: string
+      createdAt: string
+      bytes: number
+    }) => void
+  }) =>
+    open ? (
+      <div data-testid="image-picker-mock">
+        <button
+          type="button"
+          data-testid="image-picker-insert"
+          onClick={() =>
+            onPick({
+              publicId: 'sawl.dev - blog/img',
+              url: 'https://example.com/img.jpg',
+              width: 800,
+              height: 600,
+              format: 'jpg',
+              createdAt: '2024-01-01T00:00:00Z',
+              bytes: 12345,
+            })
+          }
+        >
+          Insert
+        </button>
+        <button
+          type="button"
+          data-testid="image-picker-close"
+          onClick={onClose}
+        >
+          Close
+        </button>
+      </div>
+    ) : null,
 }))
 
 jest.mock('@web/utils/slugify', () => ({
@@ -222,10 +272,8 @@ describe('PostEditor', () => {
       push: mockPush,
       refresh: mockRefresh,
     })
-    global.fetch = jest.fn().mockResolvedValue({
-      ok: true,
-      json: async () => ({ id: 'new-post-id' }),
-    })
+    jest.spyOn(axios, 'post').mockResolvedValue({ data: { id: 'new-post-id' } })
+    jest.spyOn(axios, 'put').mockResolvedValue({ data: {} })
   })
 
   function fillMandatoryFields() {
@@ -339,10 +387,10 @@ describe('PostEditor', () => {
       renderApp(<PostEditor categories={mockCategories} author="Admin" />)
       fillMandatoryFields()
       fireEvent.click(screen.getByTestId('save-button'))
-      await waitFor(() => expect(global.fetch).toHaveBeenCalled())
-      const body = JSON.parse(
-        (global.fetch as jest.Mock).mock.calls[0][1].body as string,
-      ) as { translations: Record<string, unknown> }
+      await waitFor(() => expect(axios.post).toHaveBeenCalled())
+      const body = (axios.post as jest.Mock).mock.calls[0][1] as {
+        translations: Record<string, unknown>
+      }
       expect(body.translations).toHaveProperty('en')
       expect(body.translations).not.toHaveProperty('es')
     })
@@ -365,10 +413,10 @@ describe('PostEditor', () => {
         }),
       )
       fireEvent.click(screen.getByTestId('save-button'))
-      await waitFor(() => expect(global.fetch).toHaveBeenCalled())
-      const body = JSON.parse(
-        (global.fetch as jest.Mock).mock.calls[0][1].body as string,
-      ) as { translations: Record<string, unknown> }
+      await waitFor(() => expect(axios.post).toHaveBeenCalled())
+      const body = (axios.post as jest.Mock).mock.calls[0][1] as {
+        translations: Record<string, unknown>
+      }
       expect(body.translations).toHaveProperty('es')
       expect(body.translations).not.toHaveProperty('en')
     })
@@ -377,36 +425,38 @@ describe('PostEditor', () => {
       renderApp(<PostEditor categories={mockCategories} author="Admin" />)
       fillMandatoryFields()
       fireEvent.click(screen.getByTestId('save-button'))
-      await waitFor(() => expect(global.fetch).toHaveBeenCalled())
-      expect(global.fetch).toHaveBeenCalledWith(
-        '/api/posts/',
-        expect.objectContaining({ method: 'POST' }),
-      )
+      await waitFor(() => expect(axios.post).toHaveBeenCalled())
+      expect(axios.post).toHaveBeenCalledWith('/api/posts/', expect.any(Object))
       expect(mockPush).toHaveBeenCalledWith('/admin/posts/new-post-id')
     })
 
     it('shows saving state while fetch is pending', async () => {
-      let resolveFetch!: (v: unknown) => void
-      global.fetch = jest.fn().mockReturnValue(
+      let resolvePost!: (v: unknown) => void
+      jest.spyOn(axios, 'post').mockReturnValue(
         new Promise((res) => {
-          resolveFetch = res
+          resolvePost = res
         }),
       )
       renderApp(<PostEditor categories={mockCategories} author="Admin" />)
       fillMandatoryFields()
       fireEvent.click(screen.getByTestId('save-button'))
       expect(screen.getByTestId('save-button')).toHaveTextContent('Saving…')
-      resolveFetch({ ok: true, json: async () => ({ id: 'x' }) })
+      resolvePost({ data: { id: 'x' } })
       await waitFor(() =>
         expect(screen.getByTestId('save-button')).toHaveTextContent('Save'),
       )
     })
 
     it('shows error when API fails with string error', async () => {
-      global.fetch = jest.fn().mockResolvedValue({
-        ok: false,
-        json: async () => ({ error: 'Category not found' }),
-      })
+      jest.spyOn(axios, 'post').mockRejectedValue(
+        new AxiosError('error', '400', undefined, undefined, {
+          status: 400,
+          data: { error: 'Category not found' },
+          statusText: 'Bad Request',
+          headers: {},
+          config: {} as never,
+        }),
+      )
       renderApp(<PostEditor categories={mockCategories} author="Admin" />)
       fillMandatoryFields()
       fireEvent.click(screen.getByTestId('save-button'))
@@ -416,10 +466,15 @@ describe('PostEditor', () => {
     })
 
     it('shows fallback error when API error is not string', async () => {
-      global.fetch = jest.fn().mockResolvedValue({
-        ok: false,
-        json: async () => ({ error: [{ message: 'invalid' }] }),
-      })
+      jest.spyOn(axios, 'post').mockRejectedValue(
+        new AxiosError('error', '400', undefined, undefined, {
+          status: 400,
+          data: { error: [{ message: 'invalid' }] },
+          statusText: 'Bad Request',
+          headers: {},
+          config: {} as never,
+        }),
+      )
       renderApp(<PostEditor categories={mockCategories} author="Admin" />)
       fillMandatoryFields()
       fireEvent.click(screen.getByTestId('save-button'))
@@ -429,12 +484,15 @@ describe('PostEditor', () => {
     })
 
     it('shows fallback error when API returns non-JSON body', async () => {
-      global.fetch = jest.fn().mockResolvedValue({
-        ok: false,
-        json: async () => {
-          throw new SyntaxError('Unexpected end of JSON input')
-        },
-      })
+      jest.spyOn(axios, 'post').mockRejectedValue(
+        new AxiosError('error', '500', undefined, undefined, {
+          status: 500,
+          data: null,
+          statusText: 'Internal Server Error',
+          headers: {},
+          config: {} as never,
+        }),
+      )
       renderApp(<PostEditor categories={mockCategories} author="Admin" />)
       fillMandatoryFields()
       fireEvent.click(screen.getByTestId('save-button'))
@@ -443,13 +501,22 @@ describe('PostEditor', () => {
       )
     })
 
+    it('silently ignores non-axios errors on save', async () => {
+      jest.spyOn(axios, 'post').mockRejectedValue(new Error('Network timeout'))
+      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      fillMandatoryFields()
+      fireEvent.click(screen.getByTestId('save-button'))
+      await waitFor(() => expect(axios.post).toHaveBeenCalled())
+      expect(screen.queryByTestId('editor-error')).not.toBeInTheDocument()
+    })
+
     it('sends archived status when archive button clicked', async () => {
       renderApp(<PostEditor categories={mockCategories} author="Admin" />)
       fireEvent.click(screen.getByTestId('archive-button'))
-      await waitFor(() => expect(global.fetch).toHaveBeenCalled())
-      const body = JSON.parse(
-        (global.fetch as jest.Mock).mock.calls[0][1].body as string,
-      ) as { status: string }
+      await waitFor(() => expect(axios.post).toHaveBeenCalled())
+      const body = (axios.post as jest.Mock).mock.calls[0][1] as {
+        status: string
+      }
       expect(body.status).toBe('archived')
     })
 
@@ -477,13 +544,10 @@ describe('PostEditor', () => {
       expect(screen.getByTestId('title-input')).toHaveValue('English Title')
     })
 
-    it('tags, category, cover image, series fields are editable', () => {
+    it('tags, category, series fields are editable', () => {
       renderApp(<PostEditor categories={mockCategories} author="Admin" />)
       fireEvent.change(screen.getByTestId('tags-input'), {
         target: { value: 'react, nextjs' },
-      })
-      fireEvent.change(screen.getByTestId('cover-image-input'), {
-        target: { value: 'cover/image' },
       })
       fireEvent.change(screen.getByTestId('series-id-input'), {
         target: { value: 'my-series' },
@@ -492,7 +556,6 @@ describe('PostEditor', () => {
         target: { value: '3' },
       })
       expect(screen.getByTestId('tags-input')).toHaveValue('react, nextjs')
-      expect(screen.getByTestId('cover-image-input')).toHaveValue('cover/image')
       expect(screen.getByTestId('series-id-input')).toHaveValue('my-series')
       expect(screen.getByTestId('series-order-input')).toHaveValue(3)
     })
@@ -520,9 +583,8 @@ describe('PostEditor', () => {
     it('includes optional fields in POST body when filled', async () => {
       renderApp(<PostEditor categories={mockCategories} author="Admin" />)
       fillMandatoryFields()
-      fireEvent.change(screen.getByTestId('cover-image-input'), {
-        target: { value: 'cover/img' },
-      })
+      fireEvent.click(screen.getByTestId('cover-image-input'))
+      fireEvent.click(screen.getByTestId('image-picker-insert'))
       fireEvent.change(screen.getByTestId('series-id-input'), {
         target: { value: 'my-series' },
       })
@@ -530,11 +592,12 @@ describe('PostEditor', () => {
         target: { value: '2' },
       })
       fireEvent.click(screen.getByTestId('save-button'))
-      await waitFor(() => expect(global.fetch).toHaveBeenCalled())
-      const body = JSON.parse(
-        (global.fetch as jest.Mock).mock.calls[0][1].body as string,
-      ) as Record<string, unknown>
-      expect(body).toHaveProperty('coverImage', 'cover/img')
+      await waitFor(() => expect(axios.post).toHaveBeenCalled())
+      const body = (axios.post as jest.Mock).mock.calls[0][1] as Record<
+        string,
+        unknown
+      >
+      expect(body).toHaveProperty('coverImage', 'sawl.dev - blog/img')
       expect(body).toHaveProperty('seriesId', 'my-series')
       expect(body).toHaveProperty('seriesOrder', 2)
     })
@@ -556,6 +619,60 @@ describe('PostEditor', () => {
         />,
       )
       expect(screen.getByTestId('series-id-input')).toBeInTheDocument()
+    })
+
+    describe('image picker', () => {
+      it('opens picker in insert mode when open-image-picker-button clicked', () => {
+        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        fireEvent.click(screen.getByTestId('open-image-picker-button'))
+        expect(screen.getByTestId('image-picker-mock')).toBeInTheDocument()
+      })
+
+      it('opens picker in cover mode when cover-image-input clicked', () => {
+        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        fireEvent.click(screen.getByTestId('cover-image-input'))
+        expect(screen.getByTestId('image-picker-mock')).toBeInTheDocument()
+      })
+
+      it('closes picker when close button clicked', () => {
+        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        fireEvent.click(screen.getByTestId('open-image-picker-button'))
+        fireEvent.click(screen.getByTestId('image-picker-close'))
+        expect(
+          screen.queryByTestId('image-picker-mock'),
+        ).not.toBeInTheDocument()
+      })
+
+      it('inserts markdown into content and closes picker in insert mode', () => {
+        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        fireEvent.click(screen.getByTestId('open-image-picker-button'))
+        fireEvent.click(screen.getByTestId('image-picker-insert'))
+        expect(screen.getByTestId('content-input')).toHaveValue(
+          '![](https://example.com/img.jpg)',
+        )
+        expect(
+          screen.queryByTestId('image-picker-mock'),
+        ).not.toBeInTheDocument()
+      })
+
+      it('fills cover image field and closes picker in cover mode', () => {
+        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        fireEvent.click(screen.getByTestId('cover-image-input'))
+        fireEvent.click(screen.getByTestId('image-picker-insert'))
+        expect(screen.getByTestId('cover-image-input')).toHaveValue(
+          'sawl.dev - blog/img',
+        )
+        expect(
+          screen.queryByTestId('image-picker-mock'),
+        ).not.toBeInTheDocument()
+      })
+
+      it('cover-image-input is read-only', () => {
+        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        expect(screen.getByTestId('cover-image-input')).toHaveAttribute(
+          'readonly',
+        )
+      })
     })
 
     describe('author field', () => {
@@ -589,10 +706,11 @@ describe('PostEditor', () => {
         renderApp(<PostEditor categories={mockCategories} author="Admin" />)
         fillMandatoryFields()
         fireEvent.click(screen.getByTestId('save-button'))
-        await waitFor(() => expect(global.fetch).toHaveBeenCalled())
-        const body = JSON.parse(
-          (global.fetch as jest.Mock).mock.calls[0][1].body as string,
-        ) as Record<string, unknown>
+        await waitFor(() => expect(axios.post).toHaveBeenCalled())
+        const body = (axios.post as jest.Mock).mock.calls[0][1] as Record<
+          string,
+          unknown
+        >
         expect(body).toHaveProperty('author', 'Saúl de León')
       })
 
@@ -604,10 +722,11 @@ describe('PostEditor', () => {
         })
         fillMandatoryFields()
         fireEvent.click(screen.getByTestId('save-button'))
-        await waitFor(() => expect(global.fetch).toHaveBeenCalled())
-        const body = JSON.parse(
-          (global.fetch as jest.Mock).mock.calls[0][1].body as string,
-        ) as Record<string, unknown>
+        await waitFor(() => expect(axios.post).toHaveBeenCalled())
+        const body = (axios.post as jest.Mock).mock.calls[0][1] as Record<
+          string,
+          unknown
+        >
         expect(body).toHaveProperty('author', 'Jane Doe')
       })
 
@@ -618,10 +737,11 @@ describe('PostEditor', () => {
         fireEvent.click(screen.getByTestId('author-use-default-checkbox'))
         fillMandatoryFields()
         fireEvent.click(screen.getByTestId('save-button'))
-        await waitFor(() => expect(global.fetch).toHaveBeenCalled())
-        const body = JSON.parse(
-          (global.fetch as jest.Mock).mock.calls[0][1].body as string,
-        ) as Record<string, unknown>
+        await waitFor(() => expect(axios.post).toHaveBeenCalled())
+        const body = (axios.post as jest.Mock).mock.calls[0][1] as Record<
+          string,
+          unknown
+        >
         expect(body).toHaveProperty('author', 'Fallback Author')
       })
 
@@ -721,18 +841,14 @@ describe('PostEditor', () => {
         />,
       )
       fireEvent.click(screen.getByTestId('publish-button'))
-      await waitFor(() => expect(global.fetch).toHaveBeenCalled())
-      const body = JSON.parse(
-        (global.fetch as jest.Mock).mock.calls[0][1].body as string,
-      ) as { status: string }
+      await waitFor(() => expect(axios.put).toHaveBeenCalled())
+      const body = (axios.put as jest.Mock).mock.calls[0][1] as {
+        status: string
+      }
       expect(body.status).toBe('published')
     })
 
     it('PUT body contains only active locale translation', async () => {
-      global.fetch = jest.fn().mockResolvedValue({
-        ok: true,
-        json: async () => ({}),
-      })
       renderApp(
         <PostEditor
           post={mockExistingPost}
@@ -741,19 +857,15 @@ describe('PostEditor', () => {
         />,
       )
       fireEvent.click(screen.getByTestId('save-button'))
-      await waitFor(() => expect(global.fetch).toHaveBeenCalled())
-      const body = JSON.parse(
-        (global.fetch as jest.Mock).mock.calls[0][1].body as string,
-      ) as { translations: Record<string, unknown> }
+      await waitFor(() => expect(axios.put).toHaveBeenCalled())
+      const body = (axios.put as jest.Mock).mock.calls[0][1] as {
+        translations: Record<string, unknown>
+      }
       expect(body.translations).toHaveProperty('en')
       expect(body.translations).not.toHaveProperty('es')
     })
 
     it('saves via PUT to /api/posts/:id', async () => {
-      global.fetch = jest.fn().mockResolvedValue({
-        ok: true,
-        json: async () => ({ id: 'post123', status: 'draft' }),
-      })
       renderApp(
         <PostEditor
           post={mockExistingPost}
@@ -762,10 +874,10 @@ describe('PostEditor', () => {
         />,
       )
       fireEvent.click(screen.getByTestId('save-button'))
-      await waitFor(() => expect(global.fetch).toHaveBeenCalled())
-      expect(global.fetch).toHaveBeenCalledWith(
+      await waitFor(() => expect(axios.put).toHaveBeenCalled())
+      expect(axios.put).toHaveBeenCalledWith(
         '/api/posts/post123/',
-        expect.objectContaining({ method: 'PUT' }),
+        expect.any(Object),
       )
       expect(mockRefresh).toHaveBeenCalled()
     })
@@ -775,10 +887,6 @@ describe('PostEditor', () => {
         post: { ...mockExistingPost!.post, status: 'published' },
         translations: mockExistingPost!.translations,
       }
-      global.fetch = jest.fn().mockResolvedValue({
-        ok: true,
-        json: async () => ({ id: 'post123', status: 'draft' }),
-      })
       renderApp(
         <PostEditor
           post={publishedPost}
@@ -830,10 +938,6 @@ describe('PostEditor', () => {
         post: { ...mockExistingPost!.post, status: 'archived' },
         translations: mockExistingPost!.translations,
       }
-      global.fetch = jest.fn().mockResolvedValue({
-        ok: true,
-        json: async () => ({}),
-      })
       renderApp(
         <PostEditor
           post={archivedPost}
@@ -842,18 +946,14 @@ describe('PostEditor', () => {
         />,
       )
       fireEvent.click(screen.getByTestId('unarchive-button'))
-      await waitFor(() => expect(global.fetch).toHaveBeenCalled())
-      const body = JSON.parse(
-        (global.fetch as jest.Mock).mock.calls[0][1].body as string,
-      ) as { status: string }
+      await waitFor(() => expect(axios.put).toHaveBeenCalled())
+      const body = (axios.put as jest.Mock).mock.calls[0][1] as {
+        status: string
+      }
       expect(body.status).toBe('draft')
     })
 
     it('does not navigate after successful PUT', async () => {
-      global.fetch = jest.fn().mockResolvedValue({
-        ok: true,
-        json: async () => ({}),
-      })
       renderApp(
         <PostEditor
           post={mockExistingPost}
@@ -889,10 +989,6 @@ describe('PostEditor', () => {
     })
 
     it('includes tags as array in PUT body uppercased', async () => {
-      global.fetch = jest.fn().mockResolvedValue({
-        ok: true,
-        json: async () => ({}),
-      })
       renderApp(
         <PostEditor
           post={mockExistingPost}
@@ -901,10 +997,10 @@ describe('PostEditor', () => {
         />,
       )
       fireEvent.click(screen.getByTestId('save-button'))
-      await waitFor(() => expect(global.fetch).toHaveBeenCalled())
-      const body = JSON.parse(
-        (global.fetch as jest.Mock).mock.calls[0][1].body as string,
-      ) as { tags: string[] }
+      await waitFor(() => expect(axios.put).toHaveBeenCalled())
+      const body = (axios.put as jest.Mock).mock.calls[0][1] as {
+        tags: string[]
+      }
       expect(body.tags).toEqual(['REACT', 'NEXTJS'])
     })
   })

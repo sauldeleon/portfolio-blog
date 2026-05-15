@@ -64,7 +64,7 @@ export const StyledComboboxWrapper = styled.div`
   .combobox__input-container {
     color: ${({ theme }) => theme.colors.white};
     font-family: inherit;
-    font-size: 0.875rem;
+    font-size: 0.7rem;
     margin: 0;
     padding: 0;
     text-align: left;
@@ -78,7 +78,7 @@ export const StyledComboboxWrapper = styled.div`
     color: ${({ theme }) => theme.colors.white};
     opacity: 0.25;
     font-family: inherit;
-    font-size: 0.875rem;
+    font-size: 0.7rem;
     margin: 0;
   }
 

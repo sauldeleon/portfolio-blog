@@ -50,21 +50,24 @@ describe('Admin posts — create and archive', () => {
     cy.get('[data-testid="publish-button"]').should('not.be.disabled')
 
     // Go back to posts list
+    cy.intercept('GET', /\/api\/posts/).as('postsList')
     cy.get('[data-testid="back-link"]').click()
     cy.url({ timeout: 10000 }).should('include', '/admin/posts')
+    cy.get('[data-testid="refresh-button"]').click()
+    cy.wait('@postsList')
 
-    // Archive the post
+    // Archive the post — stays in list as archived (optimistic update)
     cy.contains('[data-testid="post-row"]', enTitle)
       .find('[data-testid="delete-button"]')
       .click()
     cy.get('[data-testid="confirm-delete-confirm"]').click()
 
-    // Post is still visible but as archived — unarchive button appears
+    // Post still visible, now shows unarchive button
     cy.contains('[data-testid="post-row"]', enTitle)
       .find('[data-testid="unarchive-button"]')
       .should('be.visible')
 
-    // Unarchive to restore draft, then archive again for cleanup
+    // Unarchive → row reverts to draft, then archive again for cleanup
     cy.contains('[data-testid="post-row"]', enTitle)
       .find('[data-testid="unarchive-button"]')
       .click()

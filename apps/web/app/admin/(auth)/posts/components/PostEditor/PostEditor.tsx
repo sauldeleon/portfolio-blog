@@ -1,8 +1,9 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import axios, { isAxiosError } from 'axios'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -18,9 +19,11 @@ import {
 import { Select } from '@sdlgr/select'
 
 import { useClientTranslation } from '@web/i18n/client'
+import type { CloudinaryImage } from '@web/lib/cloudinary/images'
 import type { PostStatus } from '@web/lib/db/schema'
 import { slugify } from '@web/utils/slugify'
 
+import { ImagePicker } from '../ImagePicker'
 import { MarkdownPreview } from '../MarkdownPreview'
 import {
   StyledActions,
@@ -33,6 +36,7 @@ import {
   StyledFormActions,
   StyledHeaderLeft,
   StyledHeading,
+  StyledImagePickerButton,
   StyledLocaleTab,
   StyledLocaleTabs,
   StyledMarkdownHint,
@@ -181,6 +185,30 @@ export function PostEditor({
   }).success
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [isPickerOpen, setIsPickerOpen] = useState(false)
+  const [pickerMode, setPickerMode] = useState<'insert' | 'cover'>('insert')
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+
+  function insertAtCursor(markdown: string) {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const el = textareaRef.current!
+    const start = el.selectionStart
+    const end = el.selectionEnd
+    const newContent =
+      currentLocale.content.slice(0, start) +
+      markdown +
+      currentLocale.content.slice(end)
+    updateLocale(activeLocale, { content: newContent })
+  }
+
+  function handlePick(image: CloudinaryImage) {
+    if (pickerMode === 'insert') {
+      insertAtCursor(`![](${image.url})`)
+    } else {
+      setCoverImage(image.publicId)
+    }
+    setIsPickerOpen(false)
+  }
 
   function updateLocale(locale: Locale, patch: Partial<LocaleState>) {
     setLocales((prev) => ({ ...prev, [locale]: { ...prev[locale], ...patch } }))
@@ -259,33 +287,26 @@ export function PostEditor({
 
     try {
       const url = post ? `/api/posts/${post.post.id}/` : '/api/posts/'
-      const method = post ? 'PUT' : 'POST'
-
-      const res = await fetch(url, {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(buildBody(targetStatus)),
-      })
-
-      if (!res.ok) {
-        let data: { error?: unknown } = {}
-        try {
-          data = (await res.json()) as { error?: unknown }
-        } catch {
-          // empty or non-JSON body
-        }
-        setError(
-          typeof data.error === 'string' ? data.error : t('postEditor.error'),
-        )
-        return
-      }
 
       if (!post) {
-        const created = (await res.json()) as { id: string }
+        const { data: created } = await axios.post<{ id: string }>(
+          url,
+          buildBody(targetStatus),
+        )
         router.push(`/admin/posts/${created.id}`)
       } else {
+        await axios.put(url, buildBody(targetStatus))
         setStatus(targetStatus)
         router.refresh()
+      }
+    } catch (err) {
+      if (isAxiosError(err)) {
+        const errData = err.response?.data as { error?: unknown } | undefined
+        setError(
+          typeof errData?.error === 'string'
+            ? errData.error
+            : t('postEditor.error'),
+        )
       }
     } finally {
       setSaving(false)
@@ -493,7 +514,12 @@ export function PostEditor({
                   id="meta-cover"
                   type="text"
                   value={coverImage}
-                  onChange={(e) => setCoverImage(e.target.value)}
+                  readOnly
+                  onClick={() => {
+                    setPickerMode('cover')
+                    setIsPickerOpen(true)
+                  }}
+                  style={{ cursor: 'pointer' }}
                   placeholder={t('postEditor.fields.coverImagePlaceholder')}
                   data-testid="cover-image-input"
                 />
@@ -560,6 +586,16 @@ export function PostEditor({
             <FieldLabel htmlFor={`content-${activeLocale}`} required>
               {t('postEditor.fields.content')}
             </FieldLabel>
+            <StyledImagePickerButton
+              type="button"
+              onClick={() => {
+                setPickerMode('insert')
+                setIsPickerOpen(true)
+              }}
+              data-testid="open-image-picker-button"
+            >
+              {t('images.picker.title')}
+            </StyledImagePickerButton>
             <StyledContentTextarea
               id={`content-${activeLocale}`}
               value={currentLocale.content}
@@ -568,6 +604,7 @@ export function PostEditor({
               }
               placeholder={t('postEditor.fields.contentPlaceholder')}
               data-testid="content-input"
+              ref={textareaRef}
             />
             <StyledMarkdownHint>
               <summary>Image syntax</summary>
@@ -620,6 +657,12 @@ Supported types: youtube · maps · openstreetmap · wikiloc`}</pre>
       <StyledFormActions>
         {error && <StyledError data-testid="editor-error">{error}</StyledError>}
       </StyledFormActions>
+
+      <ImagePicker
+        open={isPickerOpen}
+        onClose={() => setIsPickerOpen(false)}
+        onPick={handlePick}
+      />
     </StyledWrapper>
   )
 }

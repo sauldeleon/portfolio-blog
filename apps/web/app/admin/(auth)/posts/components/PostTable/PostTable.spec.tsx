@@ -1,4 +1,5 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react'
+import axios from 'axios'
 import { useRouter } from 'next/navigation'
 
 import { renderApp } from '@sdlgr/test-utils'
@@ -37,6 +38,7 @@ jest.mock('@web/i18n/client', () => ({
         'posts.archiveDisabledPublished': 'Unpublish the post before archiving',
         'posts.empty': 'No posts found',
         'posts.newPost': 'New post',
+        refresh: 'Refresh',
         'confirmDelete.confirm': 'Confirm delete',
         'confirmDelete.cancel': 'Cancel delete',
       }
@@ -77,7 +79,9 @@ describe('PostTable', () => {
       refresh: mockRefresh,
       push: mockPush,
     })
-    global.fetch = jest.fn().mockResolvedValue({ ok: true })
+    jest.spyOn(axios, 'get').mockResolvedValue({ data: { data: [] } })
+    jest.spyOn(axios, 'put').mockResolvedValue({ data: {} })
+    jest.spyOn(axios, 'delete').mockResolvedValue({ data: {} })
   })
 
   it('renders all posts initially', () => {
@@ -222,13 +226,15 @@ describe('PostTable', () => {
     })
     renderApp(<PostTable posts={[post]} />)
     fireEvent.click(screen.getByTestId('publish-button'))
-    await waitFor(() => expect(global.fetch).toHaveBeenCalled())
-    expect(global.fetch).toHaveBeenCalledWith('/api/posts/abc123/', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: expect.stringContaining('"status":"published"'),
+    await waitFor(() => expect(axios.put).toHaveBeenCalled())
+    expect(axios.put).toHaveBeenCalledWith('/api/posts/abc123/', {
+      status: 'published',
     })
-    expect(mockRefresh).toHaveBeenCalled()
+    await waitFor(() =>
+      expect(screen.getByTestId('publish-button')).toHaveTextContent(
+        'Unpublish',
+      ),
+    )
   })
 
   it('clicking unpublish calls PUT /api/posts/:id with draft status', async () => {
@@ -240,26 +246,25 @@ describe('PostTable', () => {
     })
     renderApp(<PostTable posts={[post]} />)
     fireEvent.click(screen.getByTestId('publish-button'))
-    await waitFor(() => expect(global.fetch).toHaveBeenCalled())
-    expect(global.fetch).toHaveBeenCalledWith('/api/posts/pub123/', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: expect.stringContaining('"status":"draft"'),
+    await waitFor(() => expect(axios.put).toHaveBeenCalled())
+    expect(axios.put).toHaveBeenCalledWith('/api/posts/pub123/', {
+      status: 'draft',
     })
-    expect(mockRefresh).toHaveBeenCalled()
+    await waitFor(() =>
+      expect(screen.getByTestId('publish-button')).toHaveTextContent('Publish'),
+    )
   })
 
-  it('clicking delete opens modal and confirming calls DELETE and refreshes', async () => {
+  it('clicking delete opens modal and confirming calls DELETE and shows post as archived', async () => {
     const post = makePost({ id: 'del123' })
     renderApp(<PostTable posts={[post]} />)
     fireEvent.click(screen.getByTestId('delete-button'))
     expect(screen.getByTestId('confirm-delete-confirm')).toBeInTheDocument()
     fireEvent.click(screen.getByTestId('confirm-delete-confirm'))
-    await waitFor(() => expect(global.fetch).toHaveBeenCalled())
-    expect(global.fetch).toHaveBeenCalledWith('/api/posts/del123/', {
-      method: 'DELETE',
-    })
-    expect(mockRefresh).toHaveBeenCalled()
+    await waitFor(() => expect(axios.delete).toHaveBeenCalled())
+    expect(axios.delete).toHaveBeenCalledWith('/api/posts/del123/')
+    expect(await screen.findByTestId('unarchive-button')).toBeInTheDocument()
+    expect(screen.getByTestId('post-row')).toBeInTheDocument()
   })
 
   it('delete button is disabled for published post', () => {
@@ -280,7 +285,7 @@ describe('PostTable', () => {
     fireEvent.click(screen.getByTestId('delete-button'))
     expect(screen.getByTestId('confirm-delete-cancel')).toBeInTheDocument()
     fireEvent.click(screen.getByTestId('confirm-delete-cancel'))
-    expect(global.fetch).not.toHaveBeenCalled()
+    expect(axios.delete).not.toHaveBeenCalled()
   })
 
   it('clicking a row navigates to the post edit page', () => {
@@ -352,17 +357,17 @@ describe('PostTable', () => {
     expect(screen.getByTestId('publish-button')).toBeDisabled()
   })
 
-  it('clicking unarchive calls PUT with draft status and refreshes', async () => {
+  it('clicking unarchive calls PUT with draft status and updates UI', async () => {
     const post = makePost({ id: 'arc123', status: 'archived' })
     renderApp(<PostTable posts={[post]} />)
     fireEvent.click(screen.getByTestId('unarchive-button'))
-    await waitFor(() => expect(global.fetch).toHaveBeenCalled())
-    expect(global.fetch).toHaveBeenCalledWith('/api/posts/arc123/', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: expect.stringContaining('"status":"draft"'),
+    await waitFor(() => expect(axios.put).toHaveBeenCalled())
+    expect(axios.put).toHaveBeenCalledWith('/api/posts/arc123/', {
+      status: 'draft',
     })
-    expect(mockRefresh).toHaveBeenCalled()
+    await waitFor(() =>
+      expect(screen.queryByTestId('unarchive-button')).not.toBeInTheDocument(),
+    )
   })
 
   it('shows archive button for draft post (not unarchive)', () => {
@@ -386,6 +391,28 @@ describe('PostTable', () => {
     renderApp(<PostTable posts={[]} />)
     fireEvent.click(screen.getByTestId('new-post-button'))
     expect(mockPush).toHaveBeenCalledWith('/admin/posts/new')
+  })
+
+  it('refresh button fetches posts from API', async () => {
+    const freshPost = makePost({ titleEn: 'Fresh Post' })
+    jest.spyOn(axios, 'get').mockResolvedValueOnce({
+      data: {
+        data: [
+          {
+            ...freshPost,
+            createdAt: freshPost.createdAt.toISOString(),
+            updatedAt: freshPost.updatedAt.toISOString(),
+            publishedAt: null,
+            deletedAt: null,
+            scheduledAt: null,
+          },
+        ],
+      },
+    })
+    renderApp(<PostTable posts={[]} />)
+    fireEvent.click(screen.getByTestId('refresh-button'))
+    expect(await screen.findByText('Fresh Post')).toBeInTheDocument()
+    expect(axios.get).toHaveBeenCalledWith('/api/posts?status=all')
   })
 
   it('displays formatted createdAt date', () => {
@@ -425,5 +452,70 @@ describe('PostTable', () => {
     const cells = rows[0].querySelectorAll('td')
     expect(cells[6].textContent).toBeTruthy()
     expect(cells[6].textContent).not.toBe('—')
+  })
+
+  it('refresh deserializes non-null publishedAt, deletedAt, scheduledAt', async () => {
+    const freshPost = makePost({ titleEn: 'Fresh Post' })
+    jest.spyOn(axios, 'get').mockResolvedValueOnce({
+      data: {
+        data: [
+          {
+            ...freshPost,
+            createdAt: freshPost.createdAt.toISOString(),
+            updatedAt: freshPost.updatedAt.toISOString(),
+            publishedAt: '2024-06-01T00:00:00Z',
+            deletedAt: '2024-07-01T00:00:00Z',
+            scheduledAt: '2024-08-01T00:00:00Z',
+          },
+        ],
+      },
+    })
+    renderApp(<PostTable posts={[]} />)
+    fireEvent.click(screen.getByTestId('refresh-button'))
+    expect(await screen.findByText('Fresh Post')).toBeInTheDocument()
+  })
+
+  it('archiving one post keeps other posts visible', async () => {
+    const post1 = makePost({ id: 'del123', titleEn: 'Post One' })
+    const post2 = makePost({ id: 'other', titleEn: 'Post Two' })
+    renderApp(<PostTable posts={[post1, post2]} />)
+    fireEvent.click(screen.getAllByTestId('delete-button')[0])
+    fireEvent.click(screen.getByTestId('confirm-delete-confirm'))
+    await waitFor(() => expect(axios.delete).toHaveBeenCalled())
+    expect(screen.getByText('Post Two')).toBeInTheDocument()
+  })
+
+  it('publishing one post keeps other posts unchanged', async () => {
+    const post1 = makePost({
+      id: 'pub123',
+      titleEn: 'Post One',
+      titleEs: 'Post Uno',
+    })
+    const post2 = makePost({
+      id: 'other',
+      titleEn: 'Post Two',
+      titleEs: 'Post Dos',
+    })
+    renderApp(<PostTable posts={[post1, post2]} />)
+    fireEvent.click(screen.getAllByTestId('publish-button')[0])
+    await waitFor(() => expect(axios.put).toHaveBeenCalled())
+    expect(screen.getByText('Post Two')).toBeInTheDocument()
+  })
+
+  it('unarchiving one post keeps other posts unchanged', async () => {
+    const post1 = makePost({
+      id: 'arc123',
+      status: 'archived',
+      titleEn: 'Post One',
+    })
+    const post2 = makePost({
+      id: 'other',
+      status: 'archived',
+      titleEn: 'Post Two',
+    })
+    renderApp(<PostTable posts={[post1, post2]} />)
+    fireEvent.click(screen.getAllByTestId('unarchive-button')[0])
+    await waitFor(() => expect(axios.put).toHaveBeenCalled())
+    expect(screen.getByText('Post Two')).toBeInTheDocument()
   })
 })

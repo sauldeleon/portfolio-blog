@@ -13,8 +13,10 @@
   "nav": {
     "posts": "Posts",
     "categories": "Categories",
+    "images": "Images",
     "logout": "Logout"
   },
+  "refresh": "Refresh",
   "posts": {
     "title": "Posts",
     "newPost": "New post",
@@ -99,6 +101,39 @@
     "preview": "Preview",
     "previewLoading": "Rendering…",
     "error": "Something went wrong, please try again"
+  },
+  "images": {
+    "title": "Images",
+    "uploadButton": "Upload Image",
+    "emptyState": "No images yet. Upload your first image.",
+    "deleteConfirm": "Delete this image? This cannot be undone.",
+    "copyUrl": "Copy URL",
+    "copied": "Copied!",
+    "delete": "Delete",
+    "rename": "Rename",
+    "renameModal": {
+      "title": "Rename Image",
+      "label": "New name",
+      "placeholder": "Image name",
+      "save": "Save",
+      "saving": "Saving…",
+      "error": "Rename failed, please try again"
+    },
+    "upload": {
+      "title": "Upload Image",
+      "dropzone": "Drop an image here, or click to select",
+      "dropzoneActive": "Drop it!",
+      "uploading": "Uploading…",
+      "error": "Upload failed, please try again",
+      "namePlaceholder": "Image name (optional)",
+      "uploadButton": "Upload"
+    },
+    "picker": {
+      "title": "Insert Image",
+      "search": "Search images…",
+      "empty": "No images found.",
+      "loading": "Loading…"
+    }
   },
   "categories": {
     "title": "Categories",

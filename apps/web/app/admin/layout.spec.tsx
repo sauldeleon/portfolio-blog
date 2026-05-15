@@ -2,6 +2,10 @@ import { render, screen } from '@testing-library/react'
 
 import AdminLayout from './layout.next'
 
+jest.mock('./components/AdminQueryProvider', () => ({
+  AdminQueryProvider: ({ children }: { children: React.ReactNode }) => children,
+}))
+
 jest.mock('i18next', () => ({
   dir: jest.fn().mockReturnValue('ltr'),
 }))

@@ -3,6 +3,7 @@
  */
 const mockAuth = jest.fn()
 const mockGetCategories = jest.fn()
+const mockGetCategoriesForAdmin = jest.fn()
 const mockGetCategoryBySlug = jest.fn()
 const mockCreateCategory = jest.fn()
 const mockCreateCategoryTranslation = jest.fn()
@@ -10,13 +11,14 @@ const mockCreateCategoryTranslation = jest.fn()
 jest.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
 jest.mock('@web/lib/db/queries/categories', () => ({
   getCategories: mockGetCategories,
+  getCategoriesForAdmin: mockGetCategoriesForAdmin,
   getCategoryBySlug: mockGetCategoryBySlug,
   createCategory: mockCreateCategory,
   createCategoryTranslation: mockCreateCategoryTranslation,
 }))
 
 const { GET, POST } = require('./route') as {
-  GET: () => Promise<Response>
+  GET: (req: Request) => Promise<Response>
   POST: (req: Request) => Promise<Response>
 }
 
@@ -34,6 +36,10 @@ const mockTranslationES = {
   name: 'Ingeniería',
   description: null,
   slug: 'ingenieria',
+}
+
+function makeGetRequest(url = 'http://localhost/api/categories'): Request {
+  return new Request(url)
 }
 
 function makeRequest(body: unknown): Request {
@@ -60,7 +66,7 @@ describe('GET /api/categories', () => {
 
   it('returns categories with cache headers', async () => {
     mockGetCategories.mockResolvedValue([mockCategory])
-    const response = await GET()
+    const response = await GET(makeGetRequest())
     expect(response.status).toBe(200)
     const body = await response.json()
     expect(body).toEqual({ data: [mockCategory] })
@@ -71,10 +77,30 @@ describe('GET /api/categories', () => {
 
   it('returns empty array when no categories', async () => {
     mockGetCategories.mockResolvedValue([])
-    const response = await GET()
+    const response = await GET(makeGetRequest())
     expect(response.status).toBe(200)
     const body = await response.json()
     expect(body).toEqual({ data: [] })
+  })
+
+  it('returns 401 for admin request when not authenticated', async () => {
+    mockAuth.mockResolvedValue(null)
+    const response = await GET(
+      makeGetRequest('http://localhost/api/categories?admin=1'),
+    )
+    expect(response.status).toBe(401)
+  })
+
+  it('returns admin categories for authenticated admin request', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockGetCategoriesForAdmin.mockResolvedValue([mockCategory])
+    const response = await GET(
+      makeGetRequest('http://localhost/api/categories?admin=1'),
+    )
+    expect(response.status).toBe(200)
+    const body = await response.json()
+    expect(body).toEqual({ data: [mockCategory] })
+    expect(response.headers.get('Cache-Control')).toBeNull()
   })
 })
 

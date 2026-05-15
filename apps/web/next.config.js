@@ -77,11 +77,7 @@ const nextConfig = {
     // This value is set by default to 3600 seconds because our images don't change too often.
     deviceSizes: [576, 768, 1200, 2400],
     minimumCacheTTL: 3600,
-    remotePatterns: [
-      { hostname: 'localhost' },
-      { hostname: 'res.cloudinary.com' },
-      { hostname: 'picsum.photos' },
-    ],
+    remotePatterns: [{ hostname: '**' }],
     disableStaticImages: true,
   },
   productionBrowserSourceMaps: true,

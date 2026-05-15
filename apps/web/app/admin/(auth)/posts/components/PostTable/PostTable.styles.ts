@@ -36,6 +36,23 @@ export const StyledNewPostButton = styled(Button)`
   letter-spacing: 0.1em;
 `
 
+export const StyledRefreshButton = styled(Button)`
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: ${({ theme }) => theme.colors.green};
+  border-color: ${({ theme }) => theme.colors.green};
+
+  &:hover {
+    opacity: 0.6;
+  }
+`
+
+export const StyledButtonGroup = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+`
+
 export const StyledFilterTab = styled(Button).attrs({ variant: 'label' })``
 
 export const StyledCount = styled.span`

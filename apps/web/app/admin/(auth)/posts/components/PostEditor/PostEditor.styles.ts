@@ -287,3 +287,25 @@ export const StyledError = styled.p`
   margin: 0;
   width: 100%;
 `
+
+export const StyledImagePickerButton = styled(Button).attrs({
+  variant: 'contained',
+  size: 'sm',
+})`
+  align-self: flex-start;
+  border-color: rgba(251, 251, 251, 0.15);
+  color: ${({ theme }) => theme.colors.white};
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.3rem 0.75rem;
+  opacity: 0.7;
+  transition:
+    opacity 0.15s,
+    border-color 0.15s;
+
+  &:hover {
+    opacity: 1;
+    border-color: ${({ theme }) => theme.colors.green};
+  }
+`

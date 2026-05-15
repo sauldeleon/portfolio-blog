@@ -1,15 +1,21 @@
 'use client'
 
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 import { ConfirmDeleteModal } from '@web/app/admin/(auth)/components/ConfirmDeleteModal'
 import { useClientTranslation } from '@web/i18n/client'
-import type { CategoryForAdmin } from '@web/lib/db/queries/categories'
+import type {
+  CategoryForAdmin,
+  CategoryTranslation,
+} from '@web/lib/db/queries/categories'
 import { slugify } from '@web/utils/slugify'
 
 import {
   StyledActions,
+  StyledButtonGroup,
   StyledCancelButton,
   StyledDeleteButton,
   StyledEditButton,
@@ -20,6 +26,7 @@ import {
   StyledName,
   StyledNewButton,
   StyledPostCount,
+  StyledRefreshButton,
   StyledSaveButton,
   StyledSearchInput,
   StyledSlug,
@@ -45,8 +52,11 @@ function getDisplayName(cat: CategoryForAdmin): string {
   return getTranslation(cat, 'en')?.name ?? cat.slug
 }
 
+const QUERY_KEY = ['admin-categories'] as const
+
 export function CategoryTable({ categories }: CategoryTableProps) {
   const { t } = useClientTranslation('admin')
+  const queryClient = useQueryClient()
   const router = useRouter()
   const [search, setSearch] = useState('')
   const [editSlug, setEditSlug] = useState<string | null>(null)
@@ -57,7 +67,20 @@ export function CategoryTable({ categories }: CategoryTableProps) {
   const [editSlugManuallyEdited, setEditSlugManuallyEdited] = useState(false)
   const [deleteTargetSlug, setDeleteTargetSlug] = useState<string | null>(null)
 
-  const filtered = categories.filter((c) => {
+  const { data: items, refetch } = useQuery({
+    queryKey: QUERY_KEY,
+    queryFn: async () => {
+      const { data } = await axios.get<{ data: CategoryForAdmin[] }>(
+        '/api/categories?admin=1',
+      )
+      return data.data
+    },
+    initialData: categories,
+    staleTime: Infinity,
+    gcTime: 0,
+  })
+
+  const filtered = items.filter((c) => {
     const q = search.toLowerCase()
     return getDisplayName(c).toLowerCase().includes(q) || c.slug.includes(q)
   })
@@ -73,8 +96,9 @@ export function CategoryTable({ categories }: CategoryTableProps) {
   }
 
   function handleSwitchLocale(locale: 'en' | 'es') {
-    // editSlug is always set from a slug in the current categories array
-    const cat = categories.find((c) => c.slug === editSlug)!
+    const cat = items.find((c) => c.slug === editSlug)
+    /* istanbul ignore next */
+    if (!cat) return
     const tr = getTranslation(cat, locale)
     setEditLocale(locale)
     setEditName(tr?.name ?? '')
@@ -106,18 +130,34 @@ export function CategoryTable({ categories }: CategoryTableProps) {
   }
 
   async function handleSaveEdit(slug: string) {
-    await fetch(`/api/categories/${slug}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        locale: editLocale,
-        name: editName,
-        description: editDescription || null,
-        slug: editLocaleSlug || slug,
-      }),
+    await axios.put(`/api/categories/${slug}`, {
+      locale: editLocale,
+      name: editName,
+      description: editDescription || null,
+      slug: editLocaleSlug || slug,
+    })
+    const updatedTranslation: CategoryTranslation = {
+      categorySlug: slug,
+      locale: editLocale,
+      name: editName,
+      description: editDescription || null,
+      slug: editLocaleSlug || slug,
+    }
+    queryClient.setQueryData<CategoryForAdmin[]>(QUERY_KEY, (old) => {
+      /* istanbul ignore next */
+      if (!old) return []
+      return old.map((c) => {
+        if (c.slug !== slug) return c
+        const otherTranslations = c.translations.filter(
+          (tr) => tr.locale !== editLocale,
+        )
+        return {
+          ...c,
+          translations: [...otherTranslations, updatedTranslation],
+        }
+      })
     })
     handleCancelEdit()
-    router.refresh()
   }
 
   function handleDelete(slug: string) {
@@ -125,9 +165,16 @@ export function CategoryTable({ categories }: CategoryTableProps) {
   }
 
   async function handleConfirmDelete() {
-    await fetch(`/api/categories/${deleteTargetSlug!}`, { method: 'DELETE' })
+    /* istanbul ignore next */
+    if (!deleteTargetSlug) return
+    const slug = deleteTargetSlug
+    await axios.delete(`/api/categories/${slug}`)
     setDeleteTargetSlug(null)
-    router.refresh()
+    queryClient.setQueryData<CategoryForAdmin[]>(QUERY_KEY, (old) => {
+      /* istanbul ignore next */
+      if (!old) return []
+      return old.filter((c) => c.slug !== slug)
+    })
   }
 
   function handleCancelDelete() {
@@ -144,14 +191,24 @@ export function CategoryTable({ categories }: CategoryTableProps) {
           onChange={(e) => setSearch(e.target.value)}
           data-testid="search-input"
         />
-        <StyledNewButton
-          variant="inverted"
-          size="sm"
-          onClick={() => router.push('/admin/categories/new')}
-          data-testid="new-category-button"
-        >
-          {t('categories.newCategory')}
-        </StyledNewButton>
+        <StyledButtonGroup>
+          <StyledRefreshButton
+            variant="contained"
+            size="sm"
+            onClick={() => void refetch()}
+            data-testid="refresh-button"
+          >
+            {t('refresh')}
+          </StyledRefreshButton>
+          <StyledNewButton
+            variant="inverted"
+            size="sm"
+            onClick={() => router.push('/admin/categories/new')}
+            data-testid="new-category-button"
+          >
+            {t('categories.newCategory')}
+          </StyledNewButton>
+        </StyledButtonGroup>
       </StyledToolbar>
 
       <StyledTable>
