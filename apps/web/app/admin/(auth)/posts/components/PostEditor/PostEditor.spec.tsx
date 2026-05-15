@@ -764,7 +764,7 @@ describe('PostEditor', () => {
       fireEvent.click(screen.getByTestId('save-button'))
       await waitFor(() => expect(global.fetch).toHaveBeenCalled())
       expect(global.fetch).toHaveBeenCalledWith(
-        '/api/posts/post123',
+        '/api/posts/post123/',
         expect.objectContaining({ method: 'PUT' }),
       )
       expect(mockRefresh).toHaveBeenCalled()

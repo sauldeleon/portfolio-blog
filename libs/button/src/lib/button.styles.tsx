@@ -52,7 +52,7 @@ export const StyledInvertedButton = styled.button<{ $size: ButtonSize }>`
   color: ${({ theme }) => theme.colors.black};
   ${({ $size }) => buttonSizeStyles[$size]}
 
-  &:hover {
+  &:hover:not(:disabled) {
     background-color: transparent;
     color: ${({ theme }) => theme.colors.white};
   }
