@@ -6,6 +6,8 @@ import EditPostPage from './page.next'
 const mockRequireAdminSession = jest.fn()
 const mockGetPostForEdit = jest.fn()
 const mockGetCategoriesForAdmin = jest.fn()
+const mockGetAllTagsAdmin = jest.fn()
+const mockGetAllSeriesAdmin = jest.fn()
 const mockNotFound = jest.fn()
 
 jest.mock('@web/lib/auth/requireAdminSession', () => ({
@@ -14,11 +16,16 @@ jest.mock('@web/lib/auth/requireAdminSession', () => ({
 
 jest.mock('@web/lib/db/queries/posts', () => ({
   getPostForEdit: (...args: unknown[]) => mockGetPostForEdit(...args),
+  getAllSeriesAdmin: (...args: unknown[]) => mockGetAllSeriesAdmin(...args),
 }))
 
 jest.mock('@web/lib/db/queries/categories', () => ({
   getCategoriesForAdmin: (...args: unknown[]) =>
     mockGetCategoriesForAdmin(...args),
+}))
+
+jest.mock('@web/lib/db/queries/tags', () => ({
+  getAllTagsAdmin: (...args: unknown[]) => mockGetAllTagsAdmin(...args),
 }))
 
 jest.mock('next/navigation', () => ({
@@ -91,6 +98,8 @@ describe('EditPostPage', () => {
     })
     mockGetPostForEdit.mockResolvedValue(mockPostData)
     mockGetCategoriesForAdmin.mockResolvedValue(mockCategories)
+    mockGetAllTagsAdmin.mockResolvedValue(['react', 'typescript'])
+    mockGetAllSeriesAdmin.mockResolvedValue(['my-series'])
   })
 
   it('renders PostEditor with post data', async () => {
@@ -203,6 +212,20 @@ describe('EditPostPage', () => {
     expect(PostEditor).toHaveBeenCalledWith(
       expect.objectContaining({
         categories: [{ slug: 'design', name: 'design' }],
+      }),
+      undefined,
+    )
+  })
+
+  it('passes allTags and series to PostEditor', async () => {
+    const ui = await EditPostPage({
+      params: Promise.resolve({ id: 'post123' }),
+    })
+    render(ui)
+    expect(PostEditor).toHaveBeenCalledWith(
+      expect.objectContaining({
+        allTags: ['react', 'typescript'],
+        series: ['my-series'],
       }),
       undefined,
     )

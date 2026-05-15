@@ -1,8 +1,8 @@
-const mockNeon = jest.fn(() => jest.fn())
+const mockPool = jest.fn(() => ({}))
 const mockDrizzle = jest.fn(() => ({ _mock: true }))
 
-jest.mock('@neondatabase/serverless', () => ({ neon: mockNeon }))
-jest.mock('drizzle-orm/neon-http', () => ({ drizzle: mockDrizzle }))
+jest.mock('@neondatabase/serverless', () => ({ Pool: mockPool }))
+jest.mock('drizzle-orm/neon-serverless', () => ({ drizzle: mockDrizzle }))
 jest.mock('./schema', () => ({}))
 
 describe('db', () => {
@@ -11,15 +11,15 @@ describe('db', () => {
     jest.clearAllMocks()
   })
 
-  it('does not call neon() at module load time', () => {
+  it('does not call Pool() at module load time', () => {
     require('./index')
-    expect(mockNeon).not.toHaveBeenCalled()
+    expect(mockPool).not.toHaveBeenCalled()
   })
 
   it('getDb() initialises drizzle lazily on first call', () => {
     const { getDb } = require('./index') as typeof import('./index')
     getDb()
-    expect(mockNeon).toHaveBeenCalledTimes(1)
+    expect(mockPool).toHaveBeenCalledTimes(1)
     expect(mockDrizzle).toHaveBeenCalledTimes(1)
   })
 
@@ -28,7 +28,7 @@ describe('db', () => {
     const a = getDb()
     const b = getDb()
     expect(a).toBe(b)
-    expect(mockNeon).toHaveBeenCalledTimes(1)
+    expect(mockPool).toHaveBeenCalledTimes(1)
   })
 
   it('db proxy forwards property access to the drizzle instance', () => {

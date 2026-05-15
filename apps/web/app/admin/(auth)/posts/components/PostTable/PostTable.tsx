@@ -67,7 +67,7 @@ export function PostTable({ posts }: PostTableProps) {
   }
 
   async function handleConfirmDelete() {
-    await fetch(`/api/posts/${deleteTargetId!}`, { method: 'DELETE' })
+    await fetch(`/api/posts/${deleteTargetId!}/`, { method: 'DELETE' })
     setDeleteTargetId(null)
     router.refresh()
   }
@@ -76,16 +76,24 @@ export function PostTable({ posts }: PostTableProps) {
     setDeleteTargetId(null)
   }
 
+  async function handleUnarchive(e: React.MouseEvent, id: string) {
+    e.stopPropagation()
+    await fetch(`/api/posts/${id}/`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: 'draft' }),
+    })
+    router.refresh()
+  }
+
   async function handleTogglePublish(e: React.MouseEvent, post: AdminPost) {
     e.stopPropagation()
     const isPublished = post.status === 'published'
-    await fetch(`/api/posts/${post.id}`, {
+    await fetch(`/api/posts/${post.id}/`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(
-        isPublished
-          ? { status: 'draft', publishedAt: null }
-          : { status: 'published', publishedAt: new Date().toISOString() },
+        isPublished ? { status: 'draft' } : { status: 'published' },
       ),
     })
     router.refresh()
@@ -137,13 +145,16 @@ export function PostTable({ posts }: PostTableProps) {
             <StyledTh>{t('posts.table.category')}</StyledTh>
             <StyledTh>{t('posts.table.translations')}</StyledTh>
             <StyledTh>{t('posts.table.published')}</StyledTh>
+            <StyledTh>{t('posts.table.createdAt')}</StyledTh>
+            <StyledTh>{t('posts.table.updatedAt')}</StyledTh>
+            <StyledTh>{t('posts.table.deletedAt')}</StyledTh>
             <StyledTh>{t('posts.table.actions')}</StyledTh>
           </tr>
         </StyledThead>
         <StyledTbody>
           {filtered.length === 0 && (
             <tr>
-              <StyledTd colSpan={6}>
+              <StyledTd colSpan={9}>
                 <StyledEmpty>{t('posts.empty')}</StyledEmpty>
               </StyledTd>
             </tr>
@@ -193,23 +204,54 @@ export function PostTable({ posts }: PostTableProps) {
                 )}
               </StyledTd>
               <StyledTd>
+                {new Date(post.createdAt).toLocaleDateString()}
+              </StyledTd>
+              <StyledTd>
+                {new Date(post.updatedAt).toLocaleDateString()}
+              </StyledTd>
+              <StyledTd>
+                {post.deletedAt ? (
+                  new Date(post.deletedAt).toLocaleDateString()
+                ) : (
+                  <StyledEmDash>—</StyledEmDash>
+                )}
+              </StyledTd>
+              <StyledTd>
                 <StyledActions>
                   <StyledPublishButton
                     $published={post.status === 'published'}
                     onClick={(e) => handleTogglePublish(e, post)}
-                    disabled={post.status !== 'published' && !canPublish(post)}
+                    disabled={
+                      post.status === 'archived' ||
+                      (post.status !== 'published' && !canPublish(post))
+                    }
                     data-testid="publish-button"
                   >
                     {post.status === 'published'
                       ? t('posts.unpublish')
                       : t('posts.publish')}
                   </StyledPublishButton>
-                  <StyledDeleteButton
-                    onClick={(e) => handleDelete(e, post.id)}
-                    data-testid="delete-button"
-                  >
-                    {t('posts.delete')}
-                  </StyledDeleteButton>
+                  {post.status === 'archived' ? (
+                    <StyledDeleteButton
+                      onClick={(e) => handleUnarchive(e, post.id)}
+                      data-testid="unarchive-button"
+                    >
+                      {t('posts.unarchive')}
+                    </StyledDeleteButton>
+                  ) : (
+                    <StyledDeleteButton
+                      onClick={(e) => handleDelete(e, post.id)}
+                      disabled={post.status === 'published'}
+                      title={
+                        post.status === 'published'
+                          ? t('posts.archiveDisabledPublished')
+                          : undefined
+                      }
+                      data-testid="delete-button"
+                    >
+                      {t('posts.archive')}
+                    </StyledDeleteButton>
+                  )}
                 </StyledActions>
               </StyledTd>
             </StyledTr>
@@ -218,7 +260,7 @@ export function PostTable({ posts }: PostTableProps) {
       </StyledTable>
       <ConfirmDeleteModal
         isOpen={deleteTargetId !== null}
-        message={t('posts.deleteConfirm')}
+        message={t('posts.archiveConfirm')}
         onConfirm={handleConfirmDelete}
         onCancel={handleCancelDelete}
       />

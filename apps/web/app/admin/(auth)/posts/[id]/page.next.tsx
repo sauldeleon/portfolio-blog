@@ -2,7 +2,8 @@ import { notFound } from 'next/navigation'
 
 import { requireAdminSession } from '@web/lib/auth/requireAdminSession'
 import { getCategoriesForAdmin } from '@web/lib/db/queries/categories'
-import { getPostForEdit } from '@web/lib/db/queries/posts'
+import { getAllSeriesAdmin, getPostForEdit } from '@web/lib/db/queries/posts'
+import { getAllTagsAdmin } from '@web/lib/db/queries/tags'
 
 import { PostEditor } from '../components/PostEditor'
 
@@ -14,11 +15,14 @@ interface EditPostPageProps {
 
 export default async function EditPostPage({ params }: EditPostPageProps) {
   const { id } = await params
-  const [session, postData, categoriesForAdmin] = await Promise.all([
-    requireAdminSession(),
-    getPostForEdit(id),
-    getCategoriesForAdmin(),
-  ])
+  const [session, postData, categoriesForAdmin, allTags, series] =
+    await Promise.all([
+      requireAdminSession(),
+      getPostForEdit(id),
+      getCategoriesForAdmin(),
+      getAllTagsAdmin(),
+      getAllSeriesAdmin(),
+    ])
 
   if (!postData) return notFound()
 
@@ -55,6 +59,12 @@ export default async function EditPostPage({ params }: EditPostPageProps) {
   }
 
   return (
-    <PostEditor post={editorPost} categories={categories} author={author} />
+    <PostEditor
+      post={editorPost}
+      categories={categories}
+      author={author}
+      allTags={allTags}
+      series={series}
+    />
   )
 }

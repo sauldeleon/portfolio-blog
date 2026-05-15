@@ -25,6 +25,9 @@
       "category": "Category",
       "translations": "Translations",
       "published": "Published",
+      "createdAt": "Created",
+      "updatedAt": "Updated",
+      "deletedAt": "Deleted",
       "actions": "Actions"
     },
     "filters": {
@@ -36,12 +39,14 @@
     "edit": "Edit",
     "publish": "Publish",
     "unpublish": "Unpublish",
-    "delete": "Delete",
-    "deleteConfirm": "Delete this post?",
+    "archive": "Archive",
+    "unarchive": "Unarchive",
+    "archiveConfirm": "Archive this post? You can restore it later.",
+    "archiveDisabledPublished": "Unpublish the post before archiving",
     "empty": "No posts found"
   },
   "confirmDelete": {
-    "confirm": "Delete",
+    "confirm": "Confirm",
     "cancel": "Cancel"
   },
   "postEditor": {
@@ -70,7 +75,10 @@
       "seriesOrder": "Series Order",
       "seriesOrderPlaceholder": "1",
       "coverImage": "Cover Image",
-      "coverImagePlaceholder": "Cloudinary public ID"
+      "coverImagePlaceholder": "Cloudinary public ID",
+      "author": "Author",
+      "authorPlaceholder": "Author name",
+      "authorUseDefault": "Use default author"
     },
     "status": {
       "draft": "Draft",

@@ -106,6 +106,7 @@ export const StyledReadMore = styled(Link)`
   color: ${({ theme }) => theme.colors.yellow};
   text-decoration: none;
   display: inline-block;
+  align-self: flex-start;
   margin-top: 0.75rem;
   position: relative;
 

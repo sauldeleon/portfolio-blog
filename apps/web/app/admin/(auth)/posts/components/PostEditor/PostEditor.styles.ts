@@ -108,6 +108,10 @@ export const StyledSaveButton = styled(Button).attrs({ variant: 'inverted' })`
   font-size: 0.65rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
+
+  &:disabled {
+    pointer-events: none;
+  }
 `
 
 export const StyledPublishButton = styled.button<{ $published: boolean }>`

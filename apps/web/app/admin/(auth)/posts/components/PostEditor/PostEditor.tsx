@@ -1,8 +1,13 @@
 'use client'
 
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 
+import { Checkbox } from '@sdlgr/checkbox'
+import { Combobox } from '@sdlgr/combobox'
 import {
   FieldGroup,
   FieldHelper,
@@ -42,6 +47,8 @@ import {
   StyledTitleRow,
   StyledWrapper,
 } from './PostEditor.styles'
+
+const DEFAULT_AUTHOR = 'Saúl de León'
 
 type Locale = 'en' | 'es'
 
@@ -92,7 +99,19 @@ export interface PostEditorProps {
   }
   categories: PostEditorCategory[]
   author: string
+  allTags?: string[]
+  series?: string[]
 }
+
+const postFormSchema = z.object({
+  title: z.string().min(1),
+  slug: z.string().min(1),
+  excerpt: z.string().min(1),
+  content: z.string().min(1),
+  category: z.string().min(1),
+})
+
+type PostFormValues = z.infer<typeof postFormSchema>
 
 function findTranslation(
   translations: PostEditorTranslation[],
@@ -112,7 +131,13 @@ function translationToState(t: PostEditorTranslation | undefined): LocaleState {
   }
 }
 
-export function PostEditor({ post, categories, author }: PostEditorProps) {
+export function PostEditor({
+  post,
+  categories,
+  author,
+  allTags,
+  series,
+}: PostEditorProps) {
   const { t } = useClientTranslation('admin')
   const router = useRouter()
 
@@ -124,16 +149,38 @@ export function PostEditor({ post, categories, author }: PostEditorProps) {
     es: translationToState(findTranslation(post?.translations ?? [], 'es')),
   })
   const [category, setCategory] = useState(post?.post.category ?? '')
-  const [tags, setTags] = useState(post?.post.tags.join(', ') ?? '')
+  const [tags, setTags] = useState<string[]>(post?.post.tags ?? [])
   const [seriesId, setSeriesId] = useState(post?.post.seriesId ?? '')
   const [seriesOrder, setSeriesOrder] = useState(
     post?.post.seriesOrder != null ? String(post.post.seriesOrder) : '',
   )
   const [coverImage, setCoverImage] = useState(post?.post.coverImage ?? '')
-  const [saving, setSaving] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [useDefaultAuthor, setUseDefaultAuthor] = useState(true)
+  const [customAuthor, setCustomAuthor] = useState('')
 
   const currentLocale = locales[activeLocale]
+
+  useForm<PostFormValues>({
+    resolver: zodResolver(postFormSchema),
+    mode: 'onChange',
+    values: {
+      title: currentLocale.title,
+      slug: currentLocale.slug,
+      excerpt: currentLocale.excerpt,
+      content: currentLocale.content,
+      category,
+    },
+  })
+
+  const canSave = postFormSchema.safeParse({
+    title: currentLocale.title,
+    slug: currentLocale.slug,
+    excerpt: currentLocale.excerpt,
+    content: currentLocale.content,
+    category,
+  }).success
+  const [saving, setSaving] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   function updateLocale(locale: Locale, patch: Partial<LocaleState>) {
     setLocales((prev) => ({ ...prev, [locale]: { ...prev[locale], ...patch } }))
@@ -151,7 +198,8 @@ export function PostEditor({ post, categories, author }: PostEditorProps) {
     updateLocale(activeLocale, { slug: value, slugEdited: true })
   }
 
-  const hasBothTranslations = !!(locales.en.title && locales.es.title)
+  const savedLocales = new Set(post?.translations.map((tr) => tr.locale) ?? [])
+  const hasBothTranslations = savedLocales.has('en') && savedLocales.has('es')
 
   function canPublish(): boolean {
     return hasBothTranslations
@@ -162,30 +210,16 @@ export function PostEditor({ post, categories, author }: PostEditorProps) {
   }
 
   function buildBody(targetStatus: PostStatus) {
-    const tagsArray = tags
-      .split(',')
-      .map((tag) => tag.trim())
-      .filter(Boolean)
+    const tagsArray = tags.map((tag) => tag.toUpperCase())
 
-    const enTranslation = {
-      title: locales.en.title,
-      slug: locales.en.slug,
-      excerpt: locales.en.excerpt,
-      content: locales.en.content,
+    const translations = {
+      [activeLocale]: {
+        title: locales[activeLocale].title,
+        slug: locales[activeLocale].slug,
+        excerpt: locales[activeLocale].excerpt,
+        content: locales[activeLocale].content,
+      },
     }
-
-    const esHasContent = !!(locales.es.title || locales.es.content)
-    const esTranslation = esHasContent
-      ? {
-          title: locales.es.title,
-          slug: locales.es.slug,
-          excerpt: locales.es.excerpt,
-          content: locales.es.content,
-        }
-      : undefined
-
-    const translations: Record<string, unknown> = { en: enTranslation }
-    if (esTranslation) translations.es = esTranslation
 
     const coverImageValue = coverImage.trim() || null
     const seriesIdValue = seriesId.trim() || null
@@ -205,10 +239,12 @@ export function PostEditor({ post, categories, author }: PostEditorProps) {
       }
     }
 
+    const resolvedAuthor = useDefaultAuthor ? DEFAULT_AUTHOR : customAuthor
+
     return {
       category,
       tags: tagsArray,
-      author,
+      author: resolvedAuthor || author,
       status: targetStatus,
       ...(coverImageValue ? { coverImage: coverImageValue } : {}),
       ...(seriesIdValue ? { seriesId: seriesIdValue } : {}),
@@ -222,7 +258,7 @@ export function PostEditor({ post, categories, author }: PostEditorProps) {
     setError(null)
 
     try {
-      const url = post ? `/api/posts/${post.post.id}` : '/api/posts'
+      const url = post ? `/api/posts/${post.post.id}/` : '/api/posts/'
       const method = post ? 'PUT' : 'POST'
 
       const res = await fetch(url, {
@@ -232,7 +268,12 @@ export function PostEditor({ post, categories, author }: PostEditorProps) {
       })
 
       if (!res.ok) {
-        const data = (await res.json()) as { error?: unknown }
+        let data: { error?: unknown } = {}
+        try {
+          data = (await res.json()) as { error?: unknown }
+        } catch {
+          // empty or non-JSON body
+        }
         setError(
           typeof data.error === 'string' ? data.error : t('postEditor.error'),
         )
@@ -275,7 +316,7 @@ export function PostEditor({ post, categories, author }: PostEditorProps) {
         <StyledActions>
           <StyledSaveButton
             onClick={() => handleSave()}
-            disabled={saving}
+            disabled={saving || !canSave}
             data-testid="save-button"
           >
             {saving
@@ -396,7 +437,7 @@ export function PostEditor({ post, categories, author }: PostEditorProps) {
           </FieldGroup>
 
           <FieldGroup>
-            <FieldLabel htmlFor={`excerpt-${activeLocale}`}>
+            <FieldLabel htmlFor={`excerpt-${activeLocale}`} required>
               {t('postEditor.fields.excerpt')}
             </FieldLabel>
             <Textarea
@@ -433,12 +474,12 @@ export function PostEditor({ post, categories, author }: PostEditorProps) {
                 <FieldLabel htmlFor="meta-tags">
                   {t('postEditor.fields.tags')}
                 </FieldLabel>
-                <Input
-                  id="meta-tags"
-                  type="text"
+                <Combobox
                   value={tags}
-                  onChange={(e) => setTags(e.target.value)}
+                  onChange={setTags}
+                  options={allTags ?? []}
                   placeholder={t('postEditor.fields.tagsPlaceholder')}
+                  isValidNewOption={(v) => /^[\p{L}\p{N}\s-]+$/u.test(v.trim())}
                   data-testid="tags-input"
                 />
                 <FieldHelper>{t('postEditor.fields.tagsHelper')}</FieldHelper>
@@ -462,11 +503,14 @@ export function PostEditor({ post, categories, author }: PostEditorProps) {
                 <FieldLabel htmlFor="meta-series-id">
                   {t('postEditor.fields.seriesId')}
                 </FieldLabel>
-                <Input
+                <Select
                   id="meta-series-id"
-                  type="text"
                   value={seriesId}
-                  onChange={(e) => setSeriesId(e.target.value)}
+                  onChange={setSeriesId}
+                  options={(series ?? []).map((s) => ({ value: s, label: s }))}
+                  isSearchable
+                  isCreatable
+                  isClearable
                   placeholder={t('postEditor.fields.seriesIdPlaceholder')}
                   data-testid="series-id-input"
                 />
@@ -485,6 +529,30 @@ export function PostEditor({ post, categories, author }: PostEditorProps) {
                   data-testid="series-order-input"
                 />
               </FieldGroup>
+
+              {!post && (
+                <FieldGroup>
+                  <FieldLabel htmlFor="meta-author">
+                    {t('postEditor.fields.author')}
+                  </FieldLabel>
+                  <Input
+                    id="meta-author"
+                    type="text"
+                    value={useDefaultAuthor ? DEFAULT_AUTHOR : customAuthor}
+                    onChange={(e) => setCustomAuthor(e.target.value)}
+                    placeholder={t('postEditor.fields.authorPlaceholder')}
+                    disabled={useDefaultAuthor}
+                    data-testid="author-input"
+                  />
+                  <Checkbox
+                    id="author-use-default"
+                    label={t('postEditor.fields.authorUseDefault')}
+                    checked={useDefaultAuthor}
+                    onChange={setUseDefaultAuthor}
+                    data-testid="author-use-default-checkbox"
+                  />
+                </FieldGroup>
+              )}
             </StyledMetaGrid>
           </StyledMetadataSection>
 

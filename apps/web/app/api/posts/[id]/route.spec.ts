@@ -7,7 +7,8 @@ const mockGetPostById = jest.fn()
 const mockSlugExistsForLocale = jest.fn()
 const mockGetPostTranslations = jest.fn()
 const mockUpdatePost = jest.fn()
-const mockUpdateTranslation = jest.fn()
+const mockUpsertTranslation = jest.fn()
+const mockGetPostStatus = jest.fn()
 const mockSoftDeletePost = jest.fn()
 
 jest.mock('../../../../lib/auth/config', () => ({ auth: mockAuth }))
@@ -19,7 +20,8 @@ jest.mock('../../../../lib/db/queries/posts', () => ({
   slugExistsForLocale: mockSlugExistsForLocale,
   getPostTranslations: mockGetPostTranslations,
   updatePost: mockUpdatePost,
-  updateTranslation: mockUpdateTranslation,
+  upsertTranslation: mockUpsertTranslation,
+  getPostStatus: mockGetPostStatus,
   softDeletePost: mockSoftDeletePost,
 }))
 
@@ -213,7 +215,16 @@ describe('PUT /api/posts/[id]', () => {
     mockAuth.mockResolvedValue({ user: { name: 'admin' } })
     mockSlugExistsForLocale.mockResolvedValue(true)
     const response = await PUT(
-      makePutRequest({ translations: { en: { slug: 'taken-slug' } } }),
+      makePutRequest({
+        translations: {
+          en: {
+            title: 'Title',
+            slug: 'taken-slug',
+            excerpt: 'excerpt',
+            content: 'content',
+          },
+        },
+      }),
       makeParams('01JWTEST000000000000000000'),
     )
     expect(response.status).toBe(409)
@@ -255,6 +266,38 @@ describe('PUT /api/posts/[id]', () => {
     expect(response.status).toBe(404)
   })
 
+  it('sets publishedAt when status changes to published', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockGetPostTranslations.mockResolvedValue([
+      { locale: 'en' },
+      { locale: 'es' },
+    ])
+    mockUpdatePost.mockResolvedValue({ ...mockPost, status: 'published' })
+    await PUT(makePutRequest({ status: 'published' }), makeParams('id'))
+    expect(mockUpdatePost).toHaveBeenCalledWith(
+      'id',
+      expect.objectContaining({ publishedAt: expect.any(Date) }),
+    )
+  })
+
+  it('clears publishedAt when status changes to draft', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockUpdatePost.mockResolvedValue({ ...mockPost, status: 'draft' })
+    await PUT(makePutRequest({ status: 'draft' }), makeParams('id'))
+    expect(mockUpdatePost).toHaveBeenCalledWith(
+      'id',
+      expect.objectContaining({ publishedAt: null }),
+    )
+  })
+
+  it('does not touch publishedAt when status not provided', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockUpdatePost.mockResolvedValue(mockPost)
+    await PUT(makePutRequest({ tags: ['react'] }), makeParams('id'))
+    const callArg = mockUpdatePost.mock.calls[0][1] as Record<string, unknown>
+    expect(callArg).not.toHaveProperty('publishedAt')
+  })
+
   it('updates post metadata and returns 200', async () => {
     mockAuth.mockResolvedValue({ user: { name: 'admin' } })
     mockUpdatePost.mockResolvedValue({ ...mockPost, tags: ['react'] })
@@ -266,20 +309,26 @@ describe('PUT /api/posts/[id]', () => {
     expect(mockUpdatePost).toHaveBeenCalled()
   })
 
-  it('updates translations when provided', async () => {
+  it('upserts translations when provided', async () => {
     mockAuth.mockResolvedValue({ user: { name: 'admin' } })
     mockSlugExistsForLocale.mockResolvedValue(false)
     mockUpdatePost.mockResolvedValue(mockPost)
-    mockUpdateTranslation.mockResolvedValue({})
+    mockUpsertTranslation.mockResolvedValue({})
+    const enTranslation = {
+      title: 'New Title',
+      slug: 'new-title',
+      excerpt: 'excerpt',
+      content: 'content',
+    }
     const response = await PUT(
-      makePutRequest({ translations: { en: { title: 'New Title' } } }),
+      makePutRequest({ translations: { en: enTranslation } }),
       makeParams('01JWTEST000000000000000000'),
     )
     expect(response.status).toBe(200)
-    expect(mockUpdateTranslation).toHaveBeenCalledWith(
+    expect(mockUpsertTranslation).toHaveBeenCalledWith(
       '01JWTEST000000000000000000',
       'en',
-      { title: 'New Title' },
+      enTranslation,
     )
   })
 
@@ -339,7 +388,7 @@ describe('PUT /api/posts/[id]', () => {
     mockSlugExistsForLocale.mockResolvedValue(false)
     mockGetPostTranslations.mockResolvedValue([{ locale: 'en' }])
     mockUpdatePost.mockResolvedValue({ ...mockPost, status: 'published' })
-    mockUpdateTranslation.mockResolvedValue({})
+    mockUpsertTranslation.mockResolvedValue({})
     const response = await PUT(
       makePutRequest({
         status: 'published',
@@ -367,8 +416,22 @@ describe('DELETE /api/posts/[id]', () => {
     expect(response.status).toBe(401)
   })
 
+  it('returns 422 when post is published', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockGetPostStatus.mockResolvedValue('published')
+    const response = await DELETE(
+      new Request('http://localhost/api/posts/id', { method: 'DELETE' }),
+      makeParams('id'),
+    )
+    expect(response.status).toBe(422)
+    const body = (await response.json()) as { error: string }
+    expect(body.error).toMatch(/unpublish|archive/i)
+    expect(mockSoftDeletePost).not.toHaveBeenCalled()
+  })
+
   it('soft-deletes post and returns 204', async () => {
     mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockGetPostStatus.mockResolvedValue('draft')
     mockSoftDeletePost.mockResolvedValue(undefined)
     const response = await DELETE(
       new Request('http://localhost/api/posts/id', { method: 'DELETE' }),

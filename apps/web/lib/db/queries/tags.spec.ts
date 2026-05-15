@@ -1,5 +1,5 @@
 import { db } from '../index'
-import { getAllTags, getPostCountPerTag } from './tags'
+import { getAllTags, getAllTagsAdmin, getPostCountPerTag } from './tags'
 
 jest.mock('../index', () => ({
   db: {
@@ -58,6 +58,26 @@ describe('getAllTags', () => {
     const result = await getAllTags()
     expect(result).toEqual(['next', 'react'])
     expect(result).toHaveLength(2)
+  })
+})
+
+describe('getAllTagsAdmin', () => {
+  it('returns deduplicated sorted tags from all non-deleted posts', async () => {
+    mockDb.select.mockReturnValue(
+      makeChain([
+        { tag: 'typescript' },
+        { tag: 'javascript' },
+        { tag: 'typescript' },
+      ]),
+    )
+    const result = await getAllTagsAdmin()
+    expect(result).toEqual(['javascript', 'typescript'])
+  })
+
+  it('returns empty array when no posts', async () => {
+    mockDb.select.mockReturnValue(makeChain([]))
+    const result = await getAllTagsAdmin()
+    expect(result).toEqual([])
   })
 })
 

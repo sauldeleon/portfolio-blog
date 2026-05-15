@@ -3,10 +3,12 @@ import {
   createPost,
   getAllPosts,
   getAllSeries,
+  getAllSeriesAdmin,
   getPostById,
   getPostByPreviewToken,
   getPostBySlug,
   getPostForEdit,
+  getPostStatus,
   getPostTranslations,
   getPostsBySeries,
   getPublishedPostCountByCategory,
@@ -17,7 +19,7 @@ import {
   slugExistsForLocale,
   softDeletePost,
   updatePost,
-  updateTranslation,
+  upsertTranslation,
 } from './posts'
 
 jest.mock('../index', () => ({
@@ -55,6 +57,7 @@ function makeChain(resolved: unknown) {
     'groupBy',
     'values',
     'set',
+    'onConflictDoUpdate',
     'returning',
   ]
   for (const m of methods) {
@@ -264,6 +267,7 @@ describe('getAllPosts', () => {
       published_at: null,
       created_at: new Date('2024-01-01'),
       updated_at: new Date('2024-01-01'),
+      deleted_at: null,
       preview_token: null,
       title_en: 'Test Post',
       slug_en: 'test-post',
@@ -318,25 +322,36 @@ describe('updatePost', () => {
   })
 })
 
-describe('updateTranslation', () => {
-  it('updates translation fields', async () => {
-    const updated = { ...mockTranslation, title: 'New Title' }
-    mockDb.update.mockReturnValue(makeChain([updated]))
-    const result = await updateTranslation('01JWTEST000000000000000000', 'en', {
+describe('upsertTranslation', () => {
+  it('inserts or updates translation and returns the row', async () => {
+    const upserted = { ...mockTranslation, title: 'New Title' }
+    mockDb.insert.mockReturnValue(makeChain([upserted]))
+    const result = await upsertTranslation('01JWTEST000000000000000000', 'en', {
       title: 'New Title',
+      slug: 'new-title',
+      excerpt: 'excerpt',
+      content: 'content',
     })
     expect(result).toMatchObject({ title: 'New Title' })
   })
+})
 
-  it('returns null when translation not found', async () => {
-    mockDb.update.mockReturnValue(makeChain([]))
-    const result = await updateTranslation('nonexistent', 'en', { title: 'X' })
+describe('getPostStatus', () => {
+  it('returns status when post exists', async () => {
+    mockDb.select.mockReturnValue(makeChain([{ status: 'published' }]))
+    const result = await getPostStatus('01JWTEST000000000000000000')
+    expect(result).toBe('published')
+  })
+
+  it('returns null when post not found', async () => {
+    mockDb.select.mockReturnValue(makeChain([]))
+    const result = await getPostStatus('nonexistent')
     expect(result).toBeNull()
   })
 })
 
 describe('softDeletePost', () => {
-  it('sets deletedAt and status=archived atomically', async () => {
+  it('sets status=archived without touching deletedAt', async () => {
     const chain = makeChain(undefined)
     const mockSet = chain.set as jest.Mock
     mockDb.update.mockReturnValue(chain)
@@ -345,16 +360,14 @@ describe('softDeletePost', () => {
 
     expect(mockDb.update).toHaveBeenCalled()
     expect(mockSet).toHaveBeenCalledWith(
-      expect.objectContaining({
-        status: 'archived',
-        deletedAt: expect.any(Date),
-      }),
+      expect.objectContaining({ status: 'archived' }),
     )
+    expect(mockSet.mock.calls[0][0]).not.toHaveProperty('deletedAt')
   })
 })
 
 describe('restorePost', () => {
-  it('clears deletedAt and sets status=draft', async () => {
+  it('sets status=draft without touching deletedAt', async () => {
     const chain = makeChain(undefined)
     const mockSet = chain.set as jest.Mock
     mockDb.update.mockReturnValue(chain)
@@ -363,8 +376,9 @@ describe('restorePost', () => {
 
     expect(mockDb.update).toHaveBeenCalled()
     expect(mockSet).toHaveBeenCalledWith(
-      expect.objectContaining({ status: 'draft', deletedAt: null }),
+      expect.objectContaining({ status: 'draft' }),
     )
+    expect(mockSet.mock.calls[0][0]).not.toHaveProperty('deletedAt')
   })
 })
 
@@ -513,5 +527,24 @@ describe('getPostForEdit', () => {
     mockDb.select.mockReturnValueOnce(makeChain([]))
     const result = await getPostForEdit('nonexistent')
     expect(result).toBeNull()
+  })
+})
+
+describe('getAllSeriesAdmin', () => {
+  it('returns distinct series ids from all non-deleted posts', async () => {
+    mockDb.select.mockReturnValue(
+      makeChain([
+        { seriesId: 'building-a-blog' },
+        { seriesId: 'react-patterns' },
+      ]),
+    )
+    const result = await getAllSeriesAdmin()
+    expect(result).toEqual(['building-a-blog', 'react-patterns'])
+  })
+
+  it('returns empty array when no series exist', async () => {
+    mockDb.select.mockReturnValue(makeChain([]))
+    const result = await getAllSeriesAdmin()
+    expect(result).toEqual([])
   })
 })

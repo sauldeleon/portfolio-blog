@@ -1,8 +1,27 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 
 import { RenderProviders } from '@sdlgr/test-utils'
 
 import { Select } from './select'
+
+const mockReactSelect = jest.fn()
+const mockCreatableReactSelect = jest.fn()
+
+jest.mock('react-select', () => ({
+  __esModule: true,
+  default: (props: Record<string, unknown>) => {
+    mockReactSelect(props)
+    return null
+  },
+}))
+
+jest.mock('react-select/creatable', () => ({
+  __esModule: true,
+  default: (props: Record<string, unknown>) => {
+    mockCreatableReactSelect(props)
+    return null
+  },
+}))
 
 const options = [
   { value: 'engineering', label: 'Engineering' },
@@ -10,128 +29,154 @@ const options = [
   { value: 'travel', label: 'Travel', disabled: true },
 ]
 
-function renderSelect(props?: Partial<React.ComponentProps<typeof Select>>) {
+function renderSelect(
+  overrides?: Partial<React.ComponentProps<typeof Select>>,
+) {
   const onChange = jest.fn()
-  const view = render(
+  render(
     <Select
       value=""
       onChange={onChange}
       options={options}
       data-testid="select"
-      {...props}
+      {...overrides}
     />,
     { wrapper: RenderProviders },
   )
-  return { ...view, onChange }
+  return { onChange }
 }
 
 describe('Select', () => {
-  it('shows placeholder when no value selected', () => {
+  beforeEach(() => {
+    mockReactSelect.mockClear()
+    mockCreatableReactSelect.mockClear()
+  })
+
+  it('renders wrapper with data-testid', () => {
     renderSelect()
-    expect(screen.getByRole('button')).toHaveTextContent('—')
+    expect(screen.getByTestId('select')).toBeInTheDocument()
   })
 
-  it('shows custom placeholder', () => {
-    renderSelect({ placeholder: 'Pick one' })
-    expect(screen.getByRole('button')).toHaveTextContent('Pick one')
+  it('passes null as value when value is empty string', () => {
+    renderSelect({ value: '' })
+    expect(mockReactSelect).toHaveBeenCalledWith(
+      expect.objectContaining({ value: null }),
+    )
   })
 
-  it('shows selected label when value matches an option', () => {
+  it('synthesizes selected option when value not in options (e.g. newly created)', () => {
+    renderSelect({ value: 'custom-new-value' })
+    expect(mockReactSelect).toHaveBeenCalledWith(
+      expect.objectContaining({
+        value: {
+          value: 'custom-new-value',
+          label: 'custom-new-value',
+          isDisabled: undefined,
+        },
+      }),
+    )
+  })
+
+  it('passes matched option object as value', () => {
     renderSelect({ value: 'engineering' })
-    expect(screen.getByRole('button')).toHaveTextContent('Engineering')
+    expect(mockReactSelect).toHaveBeenCalledWith(
+      expect.objectContaining({
+        value: {
+          value: 'engineering',
+          label: 'Engineering',
+          isDisabled: undefined,
+        },
+      }),
+    )
   })
 
-  it('dropdown is not visible initially', () => {
+  it('maps disabled options to isDisabled true', () => {
     renderSelect()
-    expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
+    expect(mockReactSelect).toHaveBeenCalledWith(
+      expect.objectContaining({
+        options: expect.arrayContaining([
+          { value: 'travel', label: 'Travel', isDisabled: true },
+        ]),
+      }),
+    )
   })
 
-  it('opens dropdown on trigger click', () => {
-    renderSelect()
-    fireEvent.click(screen.getByRole('button'))
-    expect(screen.getByRole('listbox')).toBeInTheDocument()
-  })
-
-  it('renders all options in the dropdown', () => {
-    renderSelect()
-    fireEvent.click(screen.getByRole('button'))
-    expect(
-      screen.getByRole('option', { name: 'Engineering' }),
-    ).toBeInTheDocument()
-    expect(screen.getByRole('option', { name: 'Design' })).toBeInTheDocument()
-    expect(screen.getByRole('option', { name: 'Travel' })).toBeInTheDocument()
-  })
-
-  it('calls onChange and closes dropdown on option click', () => {
+  it('calls onChange with string value when option selected', () => {
     const { onChange } = renderSelect()
-    fireEvent.click(screen.getByRole('button'))
-    fireEvent.click(screen.getByRole('option', { name: 'Engineering' }))
+    const { onChange: rsOnChange } = mockReactSelect.mock.calls[0][0] as {
+      onChange: (option: { value: string; label: string } | null) => void
+    }
+    rsOnChange({ value: 'engineering', label: 'Engineering' })
     expect(onChange).toHaveBeenCalledWith('engineering')
-    expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
   })
 
-  it('does not call onChange on disabled option click', () => {
+  it('calls onChange with empty string when cleared', () => {
     const { onChange } = renderSelect()
-    fireEvent.click(screen.getByRole('button'))
-    fireEvent.click(screen.getByRole('option', { name: 'Travel' }))
-    expect(onChange).not.toHaveBeenCalled()
-    expect(screen.getByRole('listbox')).toBeInTheDocument()
+    const { onChange: rsOnChange } = mockReactSelect.mock.calls[0][0] as {
+      onChange: (option: { value: string; label: string } | null) => void
+    }
+    rsOnChange(null)
+    expect(onChange).toHaveBeenCalledWith('')
   })
 
-  it('toggles dropdown closed on second trigger click', () => {
+  it('passes isClearable false by default', () => {
     renderSelect()
-    fireEvent.click(screen.getByRole('button'))
-    expect(screen.getByRole('listbox')).toBeInTheDocument()
-    fireEvent.click(screen.getByRole('button'))
-    expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
-  })
-
-  it('closes dropdown on outside click', () => {
-    renderSelect()
-    fireEvent.click(screen.getByRole('button'))
-    expect(screen.getByRole('listbox')).toBeInTheDocument()
-    fireEvent.mouseDown(document.body)
-    expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
-  })
-
-  it('marks selected option with aria-selected', () => {
-    renderSelect({ value: 'design' })
-    fireEvent.click(screen.getByRole('button'))
-    expect(screen.getByRole('option', { name: 'Design' })).toHaveAttribute(
-      'aria-selected',
-      'true',
-    )
-    expect(screen.getByRole('option', { name: 'Engineering' })).toHaveAttribute(
-      'aria-selected',
-      'false',
+    expect(mockReactSelect).toHaveBeenCalledWith(
+      expect.objectContaining({ isClearable: false }),
     )
   })
 
-  it('forwards id to trigger button', () => {
+  it('passes isClearable true when set', () => {
+    renderSelect({ isClearable: true })
+    expect(mockReactSelect).toHaveBeenCalledWith(
+      expect.objectContaining({ isClearable: true }),
+    )
+  })
+
+  it('passes custom placeholder', () => {
+    renderSelect({ placeholder: 'Pick one' })
+    expect(mockReactSelect).toHaveBeenCalledWith(
+      expect.objectContaining({ placeholder: 'Pick one' }),
+    )
+  })
+
+  it('passes default placeholder when none specified', () => {
+    renderSelect({ placeholder: undefined })
+    expect(mockReactSelect).toHaveBeenCalledWith(
+      expect.objectContaining({ placeholder: '—' }),
+    )
+  })
+
+  it('forwards id as inputId', () => {
     renderSelect({ id: 'my-select' })
-    expect(screen.getByRole('button')).toHaveAttribute('id', 'my-select')
+    expect(mockReactSelect).toHaveBeenCalledWith(
+      expect.objectContaining({ inputId: 'my-select' }),
+    )
   })
 
-  it('forwards data-testid to wrapper', () => {
-    renderSelect({ 'data-testid': 'custom-select' })
-    expect(screen.getByTestId('custom-select')).toBeInTheDocument()
-  })
-
-  it('sets aria-expanded false when closed', () => {
+  it('uses ReactSelect by default when isCreatable is false', () => {
     renderSelect()
-    expect(screen.getByRole('button')).toHaveAttribute('aria-expanded', 'false')
+    expect(mockReactSelect).toHaveBeenCalled()
+    expect(mockCreatableReactSelect).not.toHaveBeenCalled()
   })
 
-  it('sets aria-expanded true when open', () => {
-    renderSelect()
-    fireEvent.click(screen.getByRole('button'))
-    expect(screen.getByRole('button')).toHaveAttribute('aria-expanded', 'true')
+  it('uses CreatableReactSelect when isCreatable is true', () => {
+    renderSelect({ isCreatable: true })
+    expect(mockCreatableReactSelect).toHaveBeenCalled()
+    expect(mockReactSelect).not.toHaveBeenCalled()
   })
 
-  it('does not close on click inside wrapper', () => {
+  it('passes isSearchable false by default', () => {
     renderSelect()
-    fireEvent.click(screen.getByRole('button'))
-    fireEvent.mouseDown(screen.getByRole('listbox'))
-    expect(screen.getByRole('listbox')).toBeInTheDocument()
+    expect(mockReactSelect).toHaveBeenCalledWith(
+      expect.objectContaining({ isSearchable: false }),
+    )
+  })
+
+  it('passes isSearchable true when set', () => {
+    renderSelect({ isSearchable: true })
+    expect(mockReactSelect).toHaveBeenCalledWith(
+      expect.objectContaining({ isSearchable: true }),
+    )
   })
 })

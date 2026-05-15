@@ -36,6 +36,9 @@ jest.mock('@web/i18n/client', () => ({
         'postEditor.fields.seriesOrderPlaceholder': '1',
         'postEditor.fields.coverImage': 'Cover Image',
         'postEditor.fields.coverImagePlaceholder': 'Cloudinary public ID',
+        'postEditor.fields.author': 'Author',
+        'postEditor.fields.authorPlaceholder': 'Author name',
+        'postEditor.fields.authorUseDefault': 'Use default author',
         'postEditor.status.draft': 'Draft',
         'postEditor.status.published': 'Published',
         'postEditor.status.archived': 'Archived',
@@ -70,6 +73,112 @@ jest.mock('../MarkdownPreview', () => ({
 
 jest.mock('@web/utils/slugify', () => ({
   slugify: (text: string) => text.toLowerCase().replace(/\s+/g, '-'),
+}))
+
+jest.mock('@sdlgr/checkbox', () => ({
+  Checkbox: ({
+    id,
+    label,
+    checked,
+    onChange,
+    'data-testid': testId,
+    disabled,
+  }: {
+    id: string
+    label?: string
+    checked: boolean
+    onChange: (checked: boolean) => void
+    'data-testid'?: string
+    disabled?: boolean
+  }) => (
+    <label htmlFor={id}>
+      <input
+        type="checkbox"
+        id={id}
+        checked={checked}
+        onChange={(e) => onChange(e.target.checked)}
+        disabled={disabled}
+        data-testid={testId}
+      />
+      {label && <span>{label}</span>}
+    </label>
+  ),
+}))
+
+jest.mock('@sdlgr/combobox', () => ({
+  Combobox: ({
+    value,
+    onChange,
+    'data-testid': testId,
+    placeholder,
+    isValidNewOption,
+  }: {
+    value: string[]
+    onChange: (values: string[]) => void
+    'data-testid'?: string
+    placeholder?: string
+    isValidNewOption?: (v: string) => boolean
+  }) => (
+    <input
+      data-testid={testId}
+      value={value.join(', ')}
+      placeholder={placeholder}
+      onChange={(e) => {
+        const raw = e.target.value
+        const entries = raw
+          .split(',')
+          .map((s) => s.trim())
+          .filter(Boolean)
+        const valid = entries.filter((v) =>
+          isValidNewOption ? isValidNewOption(v) : true,
+        )
+        onChange(valid)
+      }}
+    />
+  ),
+}))
+
+jest.mock('@sdlgr/select', () => ({
+  Select: ({
+    value,
+    onChange,
+    options,
+    'data-testid': testId,
+    isSearchable,
+    isCreatable,
+  }: {
+    value: string
+    onChange: (v: string) => void
+    options: Array<{ value: string; label: string }>
+    'data-testid'?: string
+    isSearchable?: boolean
+    isCreatable?: boolean
+  }) => {
+    if (isSearchable || isCreatable) {
+      return (
+        <input
+          data-testid={testId}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+        />
+      )
+    }
+    const currentLabel = options.find((o) => o.value === value)?.label ?? ''
+    return (
+      <div data-testid={testId}>
+        <button type="button">{currentLabel}</button>
+        {options.map((opt) => (
+          <div
+            key={opt.value}
+            role="option"
+            onClick={() => onChange(opt.value)}
+          >
+            {opt.label}
+          </div>
+        ))}
+      </div>
+    )
+  },
 }))
 
 const mockCategories: PostEditorProps['categories'] = [
@@ -119,7 +228,35 @@ describe('PostEditor', () => {
     })
   })
 
+  function fillMandatoryFields() {
+    fireEvent.change(screen.getByTestId('title-input'), {
+      target: { value: 'My Post' },
+    })
+    fireEvent.change(screen.getByTestId('excerpt-input'), {
+      target: { value: 'A brief description' },
+    })
+    fireEvent.change(screen.getByTestId('content-input'), {
+      target: { value: '# Content' },
+    })
+    fireEvent.click(
+      within(screen.getByTestId('category-select')).getByRole('option', {
+        name: 'Engineering',
+      }),
+    )
+  }
+
   describe('new post', () => {
+    it('save button is disabled when mandatory fields are empty', () => {
+      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      expect(screen.getByTestId('save-button')).toBeDisabled()
+    })
+
+    it('save button is enabled when title, excerpt, content, and category are filled', () => {
+      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      fillMandatoryFields()
+      expect(screen.getByTestId('save-button')).not.toBeDisabled()
+    })
+
     it('renders new post title and empty fields', () => {
       renderApp(<PostEditor categories={mockCategories} author="Admin" />)
       expect(
@@ -167,32 +304,82 @@ describe('PostEditor', () => {
       expect(screen.getByTestId('slug-input')).toHaveValue('custom-slug')
     })
 
-    it('publish button disabled when missing translations', () => {
+    it('publish button disabled when no translations saved in DB', () => {
       renderApp(<PostEditor categories={mockCategories} author="Admin" />)
       expect(screen.getByTestId('publish-button')).toBeDisabled()
     })
 
-    it('publish button enabled when both titles present', () => {
+    it('save button is disabled when ES tab active and fields are empty', () => {
       renderApp(<PostEditor categories={mockCategories} author="Admin" />)
-      fireEvent.change(screen.getByTestId('title-input'), {
-        target: { value: 'My Post' },
-      })
+      fireEvent.click(screen.getByTestId('locale-tab-es'))
+      expect(screen.getByTestId('save-button')).toBeDisabled()
+    })
+
+    it('save button is enabled when ES tab active and fields are filled', () => {
+      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
       fireEvent.click(screen.getByTestId('locale-tab-es'))
       fireEvent.change(screen.getByTestId('title-input'), {
         target: { value: 'Mi Post' },
       })
-      expect(screen.getByTestId('publish-button')).not.toBeDisabled()
+      fireEvent.change(screen.getByTestId('excerpt-input'), {
+        target: { value: 'Un extracto' },
+      })
+      fireEvent.change(screen.getByTestId('content-input'), {
+        target: { value: '# Hola' },
+      })
+      fireEvent.click(
+        within(screen.getByTestId('category-select')).getByRole('option', {
+          name: 'Engineering',
+        }),
+      )
+      expect(screen.getByTestId('save-button')).not.toBeDisabled()
+    })
+
+    it('POST body contains only active locale translation', async () => {
+      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      fillMandatoryFields()
+      fireEvent.click(screen.getByTestId('save-button'))
+      await waitFor(() => expect(global.fetch).toHaveBeenCalled())
+      const body = JSON.parse(
+        (global.fetch as jest.Mock).mock.calls[0][1].body as string,
+      ) as { translations: Record<string, unknown> }
+      expect(body.translations).toHaveProperty('en')
+      expect(body.translations).not.toHaveProperty('es')
+    })
+
+    it('POST body contains ES translation when ES tab active', async () => {
+      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      fireEvent.click(screen.getByTestId('locale-tab-es'))
+      fireEvent.change(screen.getByTestId('title-input'), {
+        target: { value: 'Mi Post' },
+      })
+      fireEvent.change(screen.getByTestId('excerpt-input'), {
+        target: { value: 'Un extracto' },
+      })
+      fireEvent.change(screen.getByTestId('content-input'), {
+        target: { value: '# Hola' },
+      })
+      fireEvent.click(
+        within(screen.getByTestId('category-select')).getByRole('option', {
+          name: 'Engineering',
+        }),
+      )
+      fireEvent.click(screen.getByTestId('save-button'))
+      await waitFor(() => expect(global.fetch).toHaveBeenCalled())
+      const body = JSON.parse(
+        (global.fetch as jest.Mock).mock.calls[0][1].body as string,
+      ) as { translations: Record<string, unknown> }
+      expect(body.translations).toHaveProperty('es')
+      expect(body.translations).not.toHaveProperty('en')
     })
 
     it('creates new post via POST and navigates to edit page', async () => {
       renderApp(<PostEditor categories={mockCategories} author="Admin" />)
-      fireEvent.change(screen.getByTestId('title-input'), {
-        target: { value: 'My Post' },
-      })
+      fillMandatoryFields()
       fireEvent.click(screen.getByTestId('save-button'))
       await waitFor(() => expect(global.fetch).toHaveBeenCalled())
       expect(global.fetch).toHaveBeenCalledWith(
-        '/api/posts',
+        '/api/posts/',
         expect.objectContaining({ method: 'POST' }),
       )
       expect(mockPush).toHaveBeenCalledWith('/admin/posts/new-post-id')
@@ -206,6 +393,7 @@ describe('PostEditor', () => {
         }),
       )
       renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      fillMandatoryFields()
       fireEvent.click(screen.getByTestId('save-button'))
       expect(screen.getByTestId('save-button')).toHaveTextContent('Saving…')
       resolveFetch({ ok: true, json: async () => ({ id: 'x' }) })
@@ -220,6 +408,7 @@ describe('PostEditor', () => {
         json: async () => ({ error: 'Category not found' }),
       })
       renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      fillMandatoryFields()
       fireEvent.click(screen.getByTestId('save-button'))
       expect(await screen.findByTestId('editor-error')).toHaveTextContent(
         'Category not found',
@@ -232,27 +421,26 @@ describe('PostEditor', () => {
         json: async () => ({ error: [{ message: 'invalid' }] }),
       })
       renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      fillMandatoryFields()
       fireEvent.click(screen.getByTestId('save-button'))
       expect(await screen.findByTestId('editor-error')).toHaveTextContent(
         'Something went wrong',
       )
     })
 
-    it('sends publish status when publish button clicked', async () => {
+    it('shows fallback error when API returns non-JSON body', async () => {
+      global.fetch = jest.fn().mockResolvedValue({
+        ok: false,
+        json: async () => {
+          throw new SyntaxError('Unexpected end of JSON input')
+        },
+      })
       renderApp(<PostEditor categories={mockCategories} author="Admin" />)
-      fireEvent.change(screen.getByTestId('title-input'), {
-        target: { value: 'My Post' },
-      })
-      fireEvent.click(screen.getByTestId('locale-tab-es'))
-      fireEvent.change(screen.getByTestId('title-input'), {
-        target: { value: 'Mi Post' },
-      })
-      fireEvent.click(screen.getByTestId('publish-button'))
-      await waitFor(() => expect(global.fetch).toHaveBeenCalled())
-      const body = JSON.parse(
-        (global.fetch as jest.Mock).mock.calls[0][1].body as string,
-      ) as { status: string }
-      expect(body.status).toBe('published')
+      fillMandatoryFields()
+      fireEvent.click(screen.getByTestId('save-button'))
+      expect(await screen.findByTestId('editor-error')).toHaveTextContent(
+        'Something went wrong',
+      )
     })
 
     it('sends archived status when archive button clicked', async () => {
@@ -331,6 +519,7 @@ describe('PostEditor', () => {
 
     it('includes optional fields in POST body when filled', async () => {
       renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      fillMandatoryFields()
       fireEvent.change(screen.getByTestId('cover-image-input'), {
         target: { value: 'cover/img' },
       })
@@ -348,6 +537,107 @@ describe('PostEditor', () => {
       expect(body).toHaveProperty('coverImage', 'cover/img')
       expect(body).toHaveProperty('seriesId', 'my-series')
       expect(body).toHaveProperty('seriesOrder', 2)
+    })
+
+    it('tag isValidNewOption filters out invalid tags', () => {
+      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      fireEvent.change(screen.getByTestId('tags-input'), {
+        target: { value: 'valid-tag, invalid!@#, another' },
+      })
+      expect(screen.getByTestId('tags-input')).toHaveValue('valid-tag, another')
+    })
+
+    it('renders series options when series prop provided', () => {
+      renderApp(
+        <PostEditor
+          categories={mockCategories}
+          author="Admin"
+          series={['series-a', 'series-b']}
+        />,
+      )
+      expect(screen.getByTestId('series-id-input')).toBeInTheDocument()
+    })
+
+    describe('author field', () => {
+      it('renders author input with default value when checkbox checked', () => {
+        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        expect(screen.getByTestId('author-input')).toHaveValue('Saúl de León')
+        expect(screen.getByTestId('author-input')).toBeDisabled()
+      })
+
+      it('author checkbox is checked by default', () => {
+        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        expect(screen.getByTestId('author-use-default-checkbox')).toBeChecked()
+      })
+
+      it('unchecking checkbox enables author input', () => {
+        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        fireEvent.click(screen.getByTestId('author-use-default-checkbox'))
+        expect(screen.getByTestId('author-input')).not.toBeDisabled()
+      })
+
+      it('allows typing custom author when unchecked', () => {
+        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        fireEvent.click(screen.getByTestId('author-use-default-checkbox'))
+        fireEvent.change(screen.getByTestId('author-input'), {
+          target: { value: 'Jane Doe' },
+        })
+        expect(screen.getByTestId('author-input')).toHaveValue('Jane Doe')
+      })
+
+      it('POST body uses default author when checkbox checked', async () => {
+        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        fillMandatoryFields()
+        fireEvent.click(screen.getByTestId('save-button'))
+        await waitFor(() => expect(global.fetch).toHaveBeenCalled())
+        const body = JSON.parse(
+          (global.fetch as jest.Mock).mock.calls[0][1].body as string,
+        ) as Record<string, unknown>
+        expect(body).toHaveProperty('author', 'Saúl de León')
+      })
+
+      it('POST body uses custom author when checkbox unchecked and name typed', async () => {
+        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        fireEvent.click(screen.getByTestId('author-use-default-checkbox'))
+        fireEvent.change(screen.getByTestId('author-input'), {
+          target: { value: 'Jane Doe' },
+        })
+        fillMandatoryFields()
+        fireEvent.click(screen.getByTestId('save-button'))
+        await waitFor(() => expect(global.fetch).toHaveBeenCalled())
+        const body = JSON.parse(
+          (global.fetch as jest.Mock).mock.calls[0][1].body as string,
+        ) as Record<string, unknown>
+        expect(body).toHaveProperty('author', 'Jane Doe')
+      })
+
+      it('POST body falls back to author prop when unchecked and input empty', async () => {
+        renderApp(
+          <PostEditor categories={mockCategories} author="Fallback Author" />,
+        )
+        fireEvent.click(screen.getByTestId('author-use-default-checkbox'))
+        fillMandatoryFields()
+        fireEvent.click(screen.getByTestId('save-button'))
+        await waitFor(() => expect(global.fetch).toHaveBeenCalled())
+        const body = JSON.parse(
+          (global.fetch as jest.Mock).mock.calls[0][1].body as string,
+        ) as Record<string, unknown>
+        expect(body).toHaveProperty('author', 'Fallback Author')
+      })
+
+      it('author field is not rendered for existing posts', () => {
+        renderApp(
+          <PostEditor
+            post={mockExistingPost}
+            categories={mockCategories}
+            author="Admin"
+          />,
+        )
+        expect(screen.queryByTestId('author-input')).not.toBeInTheDocument()
+        expect(
+          screen.queryByTestId('author-use-default-checkbox'),
+        ).not.toBeInTheDocument()
+      })
     })
   })
 
@@ -394,6 +684,69 @@ describe('PostEditor', () => {
       fireEvent.click(screen.getByTestId('locale-tab-es'))
       expect(screen.getByTestId('title-input')).toHaveValue('Mi Post')
       expect(screen.getByTestId('content-input')).toHaveValue('# Hola')
+    })
+
+    it('publish button enabled when both translations saved in DB', () => {
+      renderApp(
+        <PostEditor
+          post={mockExistingPost}
+          categories={mockCategories}
+          author="Admin"
+        />,
+      )
+      expect(screen.getByTestId('publish-button')).not.toBeDisabled()
+    })
+
+    it('publish button disabled when only one translation saved in DB', () => {
+      const enOnlyPost: PostEditorProps['post'] = {
+        post: mockExistingPost!.post,
+        translations: [mockExistingPost!.translations[0]],
+      }
+      renderApp(
+        <PostEditor
+          post={enOnlyPost}
+          categories={mockCategories}
+          author="Admin"
+        />,
+      )
+      expect(screen.getByTestId('publish-button')).toBeDisabled()
+    })
+
+    it('sends publish status when publish button clicked', async () => {
+      renderApp(
+        <PostEditor
+          post={mockExistingPost}
+          categories={mockCategories}
+          author="Admin"
+        />,
+      )
+      fireEvent.click(screen.getByTestId('publish-button'))
+      await waitFor(() => expect(global.fetch).toHaveBeenCalled())
+      const body = JSON.parse(
+        (global.fetch as jest.Mock).mock.calls[0][1].body as string,
+      ) as { status: string }
+      expect(body.status).toBe('published')
+    })
+
+    it('PUT body contains only active locale translation', async () => {
+      global.fetch = jest.fn().mockResolvedValue({
+        ok: true,
+        json: async () => ({}),
+      })
+      renderApp(
+        <PostEditor
+          post={mockExistingPost}
+          categories={mockCategories}
+          author="Admin"
+        />,
+      )
+      fireEvent.click(screen.getByTestId('save-button'))
+      await waitFor(() => expect(global.fetch).toHaveBeenCalled())
+      const body = JSON.parse(
+        (global.fetch as jest.Mock).mock.calls[0][1].body as string,
+      ) as { translations: Record<string, unknown> }
+      expect(body.translations).toHaveProperty('en')
+      expect(body.translations).not.toHaveProperty('es')
     })
 
     it('saves via PUT to /api/posts/:id', async () => {
@@ -535,7 +888,7 @@ describe('PostEditor', () => {
       expect(screen.getByTestId('cover-image-input')).toHaveValue('')
     })
 
-    it('includes tags as array in PUT body', async () => {
+    it('includes tags as array in PUT body uppercased', async () => {
       global.fetch = jest.fn().mockResolvedValue({
         ok: true,
         json: async () => ({}),
@@ -552,7 +905,7 @@ describe('PostEditor', () => {
       const body = JSON.parse(
         (global.fetch as jest.Mock).mock.calls[0][1].body as string,
       ) as { tags: string[] }
-      expect(body.tags).toEqual(['react', 'nextjs'])
+      expect(body.tags).toEqual(['REACT', 'NEXTJS'])
     })
   })
 

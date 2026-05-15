@@ -1,14 +1,9 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import ReactSelect from 'react-select'
+import CreatableReactSelect from 'react-select/creatable'
 
-import {
-  StyledChevron,
-  StyledDropdown,
-  StyledOption,
-  StyledTrigger,
-  StyledWrapper,
-} from './select.styles'
+import { StyledSelectWrapper } from './select.styles'
 
 export interface SelectOption {
   value: string
@@ -22,7 +17,16 @@ export interface SelectProps {
   options: SelectOption[]
   placeholder?: string
   id?: string
+  isSearchable?: boolean
+  isCreatable?: boolean
+  isClearable?: boolean
   'data-testid'?: string
+}
+
+type RsOption = {
+  value: string
+  label: string
+  isDisabled: boolean | undefined
 }
 
 export function Select({
@@ -31,68 +35,40 @@ export function Select({
   options,
   placeholder = '—',
   id,
+  isSearchable = false,
+  isCreatable = false,
+  isClearable = false,
   'data-testid': testId,
 }: SelectProps) {
-  const [open, setOpen] = useState(false)
-  const wrapperRef = useRef<HTMLDivElement>(null)
+  const rsOptions: RsOption[] = options.map((o) => ({
+    value: o.value,
+    label: o.label,
+    isDisabled: o.disabled,
+  }))
 
-  const selected = options.find((o) => o.value === value)
+  const selected =
+    rsOptions.find((o) => o.value === value) ??
+    (value ? { value, label: value, isDisabled: undefined } : null)
 
-  useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (
-        wrapperRef.current &&
-        !wrapperRef.current.contains(e.target as Node)
-      ) {
-        setOpen(false)
-      }
-    }
-    if (open) {
-      document.addEventListener('mousedown', handleClickOutside)
-    }
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [open])
-
-  function handleSelect(optionValue: string) {
-    onChange(optionValue)
-    setOpen(false)
+  const commonProps = {
+    inputId: id,
+    unstyled: true,
+    classNamePrefix: 'select',
+    options: rsOptions,
+    value: selected,
+    onChange: (option: RsOption | null) => onChange(option?.value ?? ''),
+    placeholder,
+    isSearchable,
+    isClearable,
   }
 
   return (
-    <StyledWrapper ref={wrapperRef} data-testid={testId}>
-      <StyledTrigger
-        id={id}
-        type="button"
-        onClick={() => setOpen((prev) => !prev)}
-        $open={open}
-        $hasValue={!!selected}
-        aria-haspopup="listbox"
-        aria-expanded={open}
-      >
-        <span>{selected ? selected.label : placeholder}</span>
-        <StyledChevron $open={open}>▾</StyledChevron>
-      </StyledTrigger>
-
-      {open && (
-        <StyledDropdown role="listbox">
-          {options.map((opt) => (
-            <StyledOption
-              key={opt.value}
-              role="option"
-              aria-selected={opt.value === value}
-              $selected={opt.value === value}
-              $disabled={opt.disabled}
-              onClick={() => {
-                if (!opt.disabled) handleSelect(opt.value)
-              }}
-            >
-              {opt.label}
-            </StyledOption>
-          ))}
-        </StyledDropdown>
+    <StyledSelectWrapper data-testid={testId}>
+      {isCreatable ? (
+        <CreatableReactSelect {...commonProps} />
+      ) : (
+        <ReactSelect {...commonProps} />
       )}
-    </StyledWrapper>
+    </StyledSelectWrapper>
   )
 }

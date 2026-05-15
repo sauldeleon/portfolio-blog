@@ -208,7 +208,7 @@ export const StyledDeleteButton = styled.button`
   color: ${({ theme }) => theme.colors.orange};
   border-color: transparent;
 
-  &:hover {
+  &:hover:not(:disabled) {
     border-color: ${({ theme }) => theme.colors.orange};
   }
 `

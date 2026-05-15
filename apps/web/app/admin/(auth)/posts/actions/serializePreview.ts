@@ -5,6 +5,7 @@ import { serialize } from 'next-mdx-remote/serialize'
 import rehypePrettyCode from 'rehype-pretty-code'
 import remarkGfm from 'remark-gfm'
 
+import { rehypeUnwrapImages } from './rehypeUnwrapImages'
 import { remarkEmbeds } from './remarkEmbeds'
 
 export async function serializePreview(
@@ -14,6 +15,7 @@ export async function serializePreview(
     mdxOptions: {
       remarkPlugins: [remarkGfm, remarkEmbeds],
       rehypePlugins: [
+        rehypeUnwrapImages,
         [
           rehypePrettyCode,
           {
