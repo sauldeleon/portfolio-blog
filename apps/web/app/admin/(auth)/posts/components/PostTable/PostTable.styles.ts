@@ -186,28 +186,13 @@ export const StyledActions = styled.div`
   gap: 0.5rem;
 `
 
-const actionButtonBase = css`
-  background: transparent;
-  border: 1px solid transparent;
-  padding: 0.25rem 0.625rem;
+export const StyledPublishButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'xs',
+})<{ $published: boolean }>`
   font-family: inherit;
-  font-size: 0.6rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  cursor: pointer;
-  transition:
-    border-color 0.15s,
-    color 0.15s,
-    opacity 0.15s;
-
-  &:disabled {
-    opacity: 0.2;
-    cursor: not-allowed;
-  }
-`
-
-export const StyledPublishButton = styled.button<{ $published: boolean }>`
-  ${actionButtonBase}
   color: ${({ $published, theme }) =>
     $published ? theme.colors.white : theme.colors.green};
   border-color: ${({ $published, theme }) =>
@@ -220,10 +205,14 @@ export const StyledPublishButton = styled.button<{ $published: boolean }>`
   }
 `
 
-export const StyledDeleteButton = styled.button`
-  ${actionButtonBase}
+export const StyledDeleteButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'xs',
+})`
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   color: ${({ theme }) => theme.colors.orange};
-  border-color: transparent;
 
   &:hover:not(:disabled) {
     border-color: ${({ theme }) => theme.colors.orange};

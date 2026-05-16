@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
+import { Button } from '@sdlgr/button'
+
 export const StyledSidebar = styled.div<{ $open: boolean }>`
   position: fixed;
   right: 0;
@@ -32,16 +34,16 @@ export const StyledTitle = styled.h2`
   color: ${({ theme }) => theme.colors.white};
 `
 
-export const StyledCloseButton = styled.button`
-  background: transparent;
-  border: none;
+export const StyledCloseButton = styled(Button).attrs({ variant: 'text' })`
   color: ${({ theme }) => theme.colors.white};
   opacity: 0.5;
-  cursor: pointer;
   font-size: 1rem;
   padding: 0.25rem;
   line-height: 1;
-  font-family: inherit;
+
+  &::after {
+    display: none;
+  }
 
   &:hover {
     opacity: 1;
@@ -87,17 +89,16 @@ export const StyledGrid = styled.div`
   gap: 0.75rem;
 `
 
-export const StyledImageItem = styled.button`
+export const StyledImageItem = styled(Button).attrs({ variant: 'ghost' })`
   background: rgba(251, 251, 251, 0.03);
   border: 1px solid rgba(251, 251, 251, 0.08);
   border-radius: 2px;
   overflow: hidden;
-  cursor: pointer;
   padding: 0;
   text-align: left;
   transition: border-color 0.15s;
-  display: flex;
   flex-direction: column;
+  align-items: unset;
 
   &:hover {
     border-color: ${({ theme }) => theme.colors.green};

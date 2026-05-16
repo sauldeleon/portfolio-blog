@@ -1,6 +1,8 @@
 import { Modal as ModalOverlays } from 'react-overlays'
 import styled from 'styled-components'
 
+import { Button } from '@sdlgr/button'
+
 export const StyledBackdrop = styled.div`
   position: fixed;
   z-index: 1040;
@@ -54,24 +56,15 @@ export const StyledButtons = styled.div`
   gap: 0.75rem;
 `
 
-const actionButtonBase = `
-  background: transparent;
-  border: 1px solid transparent;
+export const StyledCancelButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'xs',
+})`
   padding: 0.375rem 0.875rem;
-  font-family: inherit;
-  font-size: 0.6rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  cursor: pointer;
-  transition:
-    border-color 0.15s,
-    color 0.15s;
-`
-
-export const StyledCancelButton = styled.button`
-  ${actionButtonBase}
   color: ${({ theme }) => theme.colors.white};
   opacity: 0.5;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 
   &:hover {
     opacity: 1;
@@ -79,12 +72,18 @@ export const StyledCancelButton = styled.button`
   }
 `
 
-export const StyledConfirmButton = styled.button`
-  ${actionButtonBase}
+export const StyledConfirmButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'xs',
+})`
+  padding: 0.375rem 0.875rem;
   color: ${({ theme }) => theme.colors.orange};
   border-color: ${({ theme }) => theme.colors.orange};
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 
   &:hover {
     box-shadow: 0 0 8px 1px rgba(176, 75, 47, 0.4);
+    border-color: ${({ theme }) => theme.colors.orange};
   }
 `

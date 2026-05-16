@@ -1,6 +1,8 @@
 import { Modal as ModalOverlays } from 'react-overlays'
 import styled from 'styled-components'
 
+import { Button } from '@sdlgr/button'
+
 export const StyledBackdrop = styled.div`
   position: fixed;
   z-index: 1040;
@@ -80,14 +82,12 @@ export const StyledActions = styled.div`
   gap: 0.5rem;
 `
 
-export const StyledSaveButton = styled.button`
-  background: transparent;
-  border: 1px solid ${({ theme }) => theme.colors.green};
-  border-radius: 2px;
-  padding: 0.5rem 1rem;
+export const StyledSaveButton = styled(Button).attrs({
+  variant: 'contained',
+  size: 'sm',
+})`
   color: ${({ theme }) => theme.colors.green};
-  font-size: 0.75rem;
-  cursor: pointer;
+  border-color: ${({ theme }) => theme.colors.green};
   transition:
     background 0.15s,
     color 0.15s;
@@ -103,15 +103,13 @@ export const StyledSaveButton = styled.button`
   }
 `
 
-export const StyledCancelButton = styled.button`
-  background: transparent;
-  border: 1px solid rgba(251, 251, 251, 0.2);
-  border-radius: 2px;
-  padding: 0.5rem 1rem;
+export const StyledCancelButton = styled(Button).attrs({
+  variant: 'contained',
+  size: 'sm',
+})`
+  border-color: rgba(251, 251, 251, 0.2);
   color: ${({ theme }) => theme.colors.white};
   opacity: 0.5;
-  font-size: 0.75rem;
-  cursor: pointer;
   transition: opacity 0.15s;
 
   &:hover {

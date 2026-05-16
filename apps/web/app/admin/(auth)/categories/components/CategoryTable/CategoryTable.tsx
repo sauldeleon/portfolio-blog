@@ -235,14 +235,14 @@ export function CategoryTable({ categories }: CategoryTableProps) {
                   <>
                     <StyledLocaleTabs>
                       <StyledLocaleTab
-                        $active={editLocale === 'en'}
+                        active={editLocale === 'en'}
                         onClick={() => handleSwitchLocale('en')}
                         data-testid="locale-tab-en"
                       >
                         EN
                       </StyledLocaleTab>
                       <StyledLocaleTab
-                        $active={editLocale === 'es'}
+                        active={editLocale === 'es'}
                         onClick={() => handleSwitchLocale('es')}
                         data-testid="locale-tab-es"
                       >

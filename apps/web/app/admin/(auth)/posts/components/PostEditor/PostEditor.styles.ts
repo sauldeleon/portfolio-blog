@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 import { Button } from '@sdlgr/button'
 import { Textarea } from '@sdlgr/input'
@@ -82,26 +82,6 @@ export const StyledActions = styled.div`
   flex-wrap: wrap;
 `
 
-const actionButtonBase = css`
-  background: transparent;
-  border: 1px solid transparent;
-  padding: 0.375rem 0.875rem;
-  font-family: inherit;
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  cursor: pointer;
-  transition:
-    border-color 0.15s,
-    color 0.15s,
-    opacity 0.15s;
-
-  &:disabled {
-    opacity: 0.2;
-    cursor: not-allowed;
-  }
-`
-
 export const StyledSaveButton = styled(Button).attrs({ variant: 'inverted' })`
   padding: 0.375rem 0.875rem;
   font-family: inherit;
@@ -114,8 +94,13 @@ export const StyledSaveButton = styled(Button).attrs({ variant: 'inverted' })`
   }
 `
 
-export const StyledPublishButton = styled.button<{ $published: boolean }>`
-  ${actionButtonBase}
+export const StyledPublishButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'xs',
+})<{ $published: boolean }>`
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   color: ${({ $published, theme }) =>
     $published ? theme.colors.white : theme.colors.green};
   border-color: ${({ $published, theme }) =>
@@ -123,17 +108,25 @@ export const StyledPublishButton = styled.button<{ $published: boolean }>`
 
   &:hover:not(:disabled) {
     opacity: 0.8;
+    border-color: ${({ $published, theme }) =>
+      $published ? 'rgba(251,251,251,0.3)' : theme.colors.green};
   }
 `
 
-export const StyledArchiveButton = styled.button`
-  ${actionButtonBase}
+export const StyledArchiveButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'xs',
+})`
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   color: ${({ theme }) => theme.colors.white};
   opacity: 0.45;
   border-color: rgba(251, 251, 251, 0.2);
 
   &:hover:not(:disabled) {
     opacity: 0.8;
+    border-color: rgba(251, 251, 251, 0.2);
   }
 `
 
@@ -144,28 +137,29 @@ export const StyledLocaleTabs = styled.div`
   margin-bottom: 1.5rem;
 `
 
-export const StyledLocaleTab = styled.button<{ $active: boolean }>`
-  background: transparent;
+export const StyledLocaleTab = styled(Button).attrs({
+  variant: 'ghost',
+})<{ $active: boolean }>`
   border: none;
   border-bottom: 2px solid
     ${({ $active, theme }) => ($active ? theme.colors.green : 'transparent')};
   padding: 0.5rem 1rem;
-  font-family: inherit;
   font-size: 0.65rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: ${({ $active, theme }) =>
     $active ? theme.colors.green : theme.colors.white};
   opacity: ${({ $active }) => ($active ? 1 : 0.4)};
-  cursor: pointer;
   transition:
     border-color 0.15s,
     color 0.15s,
     opacity 0.15s;
   margin-bottom: -1px;
 
-  &:hover {
+  &:hover:not(:disabled) {
     opacity: 1;
+    border-color: ${({ $active, theme }) =>
+      $active ? theme.colors.green : 'transparent'};
   }
 `
 

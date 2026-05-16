@@ -1,6 +1,8 @@
 import { Modal as ModalOverlays } from 'react-overlays'
 import styled from 'styled-components'
 
+import { Button } from '@sdlgr/button'
+
 export const StyledBackdrop = styled.div`
   position: fixed;
   z-index: 1040;
@@ -114,18 +116,16 @@ export const StyledNameInput = styled.input`
   }
 `
 
-export const StyledUploadButton = styled.button`
-  background: transparent;
-  border: 1px solid ${({ theme }) => theme.colors.green};
-  border-radius: 2px;
-  padding: 0.5rem 1rem;
+export const StyledUploadButton = styled(Button).attrs({
+  variant: 'contained',
+  size: 'sm',
+})`
+  align-self: flex-start;
   color: ${({ theme }) => theme.colors.green};
-  font-size: 0.75rem;
-  cursor: pointer;
+  border-color: ${({ theme }) => theme.colors.green};
   transition:
     background 0.15s,
     color 0.15s;
-  align-self: flex-start;
 
   &:hover {
     background: ${({ theme }) => theme.colors.green};
