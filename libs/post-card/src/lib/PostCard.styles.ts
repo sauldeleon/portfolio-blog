@@ -13,7 +13,7 @@ export const StyledCard = styled.article`
   }
 `
 
-export const StyledCover = styled.div`
+export const StyledCover = styled.div<{ $fit?: 'cover' | 'contain' }>`
   aspect-ratio: 16 / 9;
   overflow: hidden;
   background-color: #0d0d0d;
@@ -21,7 +21,7 @@ export const StyledCover = styled.div`
   img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: ${({ $fit }) => $fit ?? 'cover'};
     transition: transform 0.4s ease;
     display: block;
   }

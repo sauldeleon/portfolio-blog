@@ -15,6 +15,13 @@
       "when": 1778593000000,
       "tag": "0001_category_translations",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1747440000000,
+      "tag": "0002_series_and_cover_fit",
+      "breakpoints": true
     }
   ]
 }

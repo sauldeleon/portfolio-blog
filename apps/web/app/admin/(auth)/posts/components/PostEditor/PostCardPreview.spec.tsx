@@ -27,6 +27,7 @@ jest.mock('@sdlgr/post-card', () => ({
       data-reading-time={props.readingTime}
       data-category={props.category}
       data-cover={props.coverImagePublicId}
+      data-cover-fit={props.coverImageFit}
       data-lng={props.lng}
     />
   ),
@@ -106,5 +107,20 @@ describe('PostCardPreview', () => {
   it('passes null coverImagePublicId when coverImage is empty', () => {
     renderApp(<PostCardPreview {...defaultProps} coverImage="" />)
     expect(screen.getByTestId('post-card')).not.toHaveAttribute('data-cover')
+  })
+
+  it('passes coverImageFit to PostCard when provided', () => {
+    renderApp(<PostCardPreview {...defaultProps} coverImageFit="contain" />)
+    expect(screen.getByTestId('post-card')).toHaveAttribute(
+      'data-cover-fit',
+      'contain',
+    )
+  })
+
+  it('does not pass coverImageFit when not provided', () => {
+    renderApp(<PostCardPreview {...defaultProps} />)
+    expect(screen.getByTestId('post-card')).not.toHaveAttribute(
+      'data-cover-fit',
+    )
   })
 })

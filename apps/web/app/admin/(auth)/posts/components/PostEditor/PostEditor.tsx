@@ -93,9 +93,15 @@ export interface PostEditorPost {
   tags: string[]
   status: PostStatus
   coverImage: string | null
+  coverImageFit: 'cover' | 'contain' | null
   seriesId: string | null
   seriesOrder: number | null
   author: string
+}
+
+export type PostEditorSeries = {
+  id: string
+  translations: Array<{ locale: string; title: string }>
 }
 
 export interface PostEditorProps {
@@ -106,7 +112,7 @@ export interface PostEditorProps {
   categories: PostEditorCategory[]
   author: string
   allTags?: string[]
-  series?: string[]
+  series?: PostEditorSeries[]
 }
 
 const postFormSchema = z.object({
@@ -160,7 +166,22 @@ export function PostEditor({
   const [seriesOrder, setSeriesOrder] = useState(
     post?.post.seriesOrder != null ? String(post.post.seriesOrder) : '',
   )
+  const [seriesTitles, setSeriesTitles] = useState<Record<Locale, string>>(
+    () => {
+      const initialId = post?.post.seriesId
+      if (!initialId) return { en: '', es: '' }
+      const found = (series ?? []).find((s) => s.id === initialId)
+      if (!found) return { en: '', es: '' }
+      return {
+        en: found.translations.find((tr) => tr.locale === 'en')?.title ?? '',
+        es: found.translations.find((tr) => tr.locale === 'es')?.title ?? '',
+      }
+    },
+  )
   const [coverImage, setCoverImage] = useState(post?.post.coverImage ?? '')
+  const [coverImageFit, setCoverImageFit] = useState<'cover' | 'contain'>(
+    post?.post.coverImageFit ?? 'cover',
+  )
   const [useDefaultAuthor, setUseDefaultAuthor] = useState(true)
   const [customAuthor, setCustomAuthor] = useState('')
 
@@ -190,6 +211,23 @@ export function PostEditor({
   const [isPickerOpen, setIsPickerOpen] = useState(false)
   const [pickerMode, setPickerMode] = useState<'insert' | 'cover'>('insert')
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+
+  function handleSeriesIdChange(newId: string) {
+    setSeriesId(newId)
+    if (!newId) {
+      setSeriesTitles({ en: '', es: '' })
+      return
+    }
+    const found = (series ?? []).find((s) => s.id === newId)
+    if (found) {
+      setSeriesTitles({
+        en: found.translations.find((tr) => tr.locale === 'en')?.title ?? '',
+        es: found.translations.find((tr) => tr.locale === 'es')?.title ?? '',
+      })
+    } else {
+      setSeriesTitles({ en: '', es: '' })
+    }
+  }
 
   function insertAtCursor(markdown: string) {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -257,14 +295,23 @@ export function PostEditor({
       ? parseInt(seriesOrder.trim(), 10)
       : null
 
+    const seriesTitlesValue = seriesIdValue
+      ? {
+          ...(seriesTitles.en.trim() ? { en: seriesTitles.en.trim() } : {}),
+          ...(seriesTitles.es.trim() ? { es: seriesTitles.es.trim() } : {}),
+        }
+      : undefined
+
     if (post) {
       return {
         category,
         tags: tagsArray,
         status: targetStatus,
         coverImage: coverImageValue,
+        coverImageFit,
         seriesId: seriesIdValue,
         seriesOrder: seriesOrderValue,
+        ...(seriesTitlesValue ? { seriesTitles: seriesTitlesValue } : {}),
         translations,
       }
     }
@@ -277,8 +324,10 @@ export function PostEditor({
       author: resolvedAuthor || author,
       status: targetStatus,
       ...(coverImageValue ? { coverImage: coverImageValue } : {}),
+      coverImageFit,
       ...(seriesIdValue ? { seriesId: seriesIdValue } : {}),
       ...(seriesOrderValue != null ? { seriesOrder: seriesOrderValue } : {}),
+      ...(seriesTitlesValue ? { seriesTitles: seriesTitlesValue } : {}),
       translations,
     }
   }
@@ -530,8 +579,11 @@ export function PostEditor({
                 <Select
                   id="meta-series-id"
                   value={seriesId}
-                  onChange={setSeriesId}
-                  options={(series ?? []).map((s) => ({ value: s, label: s }))}
+                  onChange={handleSeriesIdChange}
+                  options={(series ?? []).map((s) => ({
+                    value: s.id,
+                    label: s.id,
+                  }))}
                   isSearchable
                   isCreatable
                   isClearable
@@ -539,6 +591,51 @@ export function PostEditor({
                   data-testid="series-id-input"
                 />
               </FieldGroup>
+
+              {seriesId && (
+                <>
+                  <FieldGroup>
+                    <FieldLabel htmlFor="meta-series-title-en">
+                      {t('postEditor.fields.seriesTitleEn')}
+                    </FieldLabel>
+                    <Input
+                      id="meta-series-title-en"
+                      type="text"
+                      value={seriesTitles.en}
+                      onChange={(e) =>
+                        setSeriesTitles((prev) => ({
+                          ...prev,
+                          en: e.target.value,
+                        }))
+                      }
+                      placeholder={t(
+                        'postEditor.fields.seriesTitlePlaceholder',
+                      )}
+                      data-testid="series-title-en-input"
+                    />
+                  </FieldGroup>
+                  <FieldGroup>
+                    <FieldLabel htmlFor="meta-series-title-es">
+                      {t('postEditor.fields.seriesTitleEs')}
+                    </FieldLabel>
+                    <Input
+                      id="meta-series-title-es"
+                      type="text"
+                      value={seriesTitles.es}
+                      onChange={(e) =>
+                        setSeriesTitles((prev) => ({
+                          ...prev,
+                          es: e.target.value,
+                        }))
+                      }
+                      placeholder={t(
+                        'postEditor.fields.seriesTitlePlaceholder',
+                      )}
+                      data-testid="series-title-es-input"
+                    />
+                  </FieldGroup>
+                </>
+              )}
 
               <FieldGroup>
                 <FieldLabel htmlFor="meta-series-order">
@@ -551,6 +648,28 @@ export function PostEditor({
                   onChange={(e) => setSeriesOrder(e.target.value)}
                   placeholder={t('postEditor.fields.seriesOrderPlaceholder')}
                   data-testid="series-order-input"
+                />
+              </FieldGroup>
+
+              <FieldGroup>
+                <FieldLabel htmlFor="meta-cover-image-fit">
+                  {t('postEditor.fields.coverImageFit')}
+                </FieldLabel>
+                <Select
+                  id="meta-cover-image-fit"
+                  value={coverImageFit}
+                  onChange={(v) => setCoverImageFit(v as 'cover' | 'contain')}
+                  options={[
+                    {
+                      value: 'cover',
+                      label: t('postEditor.fields.coverImageFitCover'),
+                    },
+                    {
+                      value: 'contain',
+                      label: t('postEditor.fields.coverImageFitContain'),
+                    },
+                  ]}
+                  data-testid="cover-image-fit-select"
                 />
               </FieldGroup>
 
@@ -652,6 +771,7 @@ Supported types: youtube · maps · openstreetmap · wikiloc`}</pre>
             }
             tags={tags}
             coverImage={coverImage}
+            coverImageFit={coverImageFit}
             author={previewAuthor}
             lng={activeLocale}
           />

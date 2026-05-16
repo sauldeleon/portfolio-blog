@@ -77,6 +77,17 @@ describe('PostCard', () => {
     expect(screen.queryByRole('img')).toBeNull()
   })
 
+  it('renders with coverImageFit contain without errors', () => {
+    renderWithTheme(
+      <PostCard
+        {...defaultProps}
+        coverImagePublicId="blog/img"
+        coverImageFit="contain"
+      />,
+    )
+    expect(screen.getByAltText('Test Post Title')).toBeInTheDocument()
+  })
+
   it('renders read more link with correct href', () => {
     renderWithTheme(<PostCard {...defaultProps} />)
     expect(screen.getByRole('link', { name: 'Read more' })).toHaveAttribute(

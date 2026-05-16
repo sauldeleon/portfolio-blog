@@ -27,6 +27,7 @@ export type PublicPost = {
   tags: string[]
   status: PostStatus
   coverImage: string | null
+  coverImageFit: 'cover' | 'contain' | null
   seriesId: string | null
   seriesOrder: number | null
   publishedAt: Date | null
@@ -47,6 +48,7 @@ export type AdminPost = {
   tags: string[]
   status: PostStatus
   coverImage: string | null
+  coverImageFit: 'cover' | 'contain' | null
   seriesId: string | null
   seriesOrder: number | null
   scheduledAt: Date | null
@@ -67,6 +69,7 @@ const publicFields = {
   tags: posts.tags,
   status: posts.status,
   coverImage: posts.coverImage,
+  coverImageFit: posts.coverImageFit,
   seriesId: posts.seriesId,
   seriesOrder: posts.seriesOrder,
   publishedAt: posts.publishedAt,
@@ -264,6 +267,7 @@ export async function getAllPosts(): Promise<AdminPost[]> {
     tags: string[]
     status: PostStatus
     cover_image: string | null
+    cover_image_fit: 'cover' | 'contain' | null
     series_id: string | null
     series_order: number | null
     scheduled_at: Date | null
@@ -282,7 +286,7 @@ export async function getAllPosts(): Promise<AdminPost[]> {
     sql`
       SELECT
         p.id, p.category, p.tags, p.status,
-        p.cover_image, p.series_id, p.series_order,
+        p.cover_image, p.cover_image_fit, p.series_id, p.series_order,
         p.scheduled_at, p.published_at, p.created_at, p.updated_at, p.deleted_at,
         p.preview_token,
         en_t.title AS title_en, en_t.slug AS slug_en,
@@ -303,6 +307,7 @@ export async function getAllPosts(): Promise<AdminPost[]> {
     tags: r.tags,
     status: r.status,
     coverImage: r.cover_image,
+    coverImageFit: r.cover_image_fit,
     seriesId: r.series_id,
     seriesOrder: r.series_order,
     scheduledAt: r.scheduled_at,

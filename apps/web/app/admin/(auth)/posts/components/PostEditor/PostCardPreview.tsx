@@ -13,6 +13,7 @@ interface PostCardPreviewProps {
   categoryName: string
   tags: string[]
   coverImage: string
+  coverImageFit?: 'cover' | 'contain'
   author: string
   lng: string
 }
@@ -25,6 +26,7 @@ export function PostCardPreview({
   categoryName,
   tags,
   coverImage,
+  coverImageFit,
   author,
   lng,
 }: PostCardPreviewProps) {
@@ -66,6 +68,7 @@ export function PostCardPreview({
             category={categoryName}
             tags={tags}
             coverImagePublicId={coverImage || null}
+            coverImageFit={coverImageFit}
             lng={lng}
             readMoreLabel="Read more"
           />

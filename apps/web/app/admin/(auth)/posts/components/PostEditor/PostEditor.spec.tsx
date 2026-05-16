@@ -33,10 +33,16 @@ jest.mock('@web/i18n/client', () => ({
         'postEditor.fields.tagsHelper': 'Comma-separated',
         'postEditor.fields.seriesId': 'Series ID',
         'postEditor.fields.seriesIdPlaceholder': 'e.g. react-hooks-series',
+        'postEditor.fields.seriesTitleEn': 'Series title (EN)',
+        'postEditor.fields.seriesTitleEs': 'Series title (ES)',
+        'postEditor.fields.seriesTitlePlaceholder': 'Series title',
         'postEditor.fields.seriesOrder': 'Series Order',
         'postEditor.fields.seriesOrderPlaceholder': '1',
         'postEditor.fields.coverImage': 'Cover Image',
         'postEditor.fields.coverImagePlaceholder': 'Cloudinary public ID',
+        'postEditor.fields.coverImageFit': 'Cover image fit',
+        'postEditor.fields.coverImageFitCover': 'Cover (fill)',
+        'postEditor.fields.coverImageFitContain': 'Contain (full image)',
         'postEditor.fields.author': 'Author',
         'postEditor.fields.authorPlaceholder': 'Author name',
         'postEditor.fields.authorUseDefault': 'Use default author',
@@ -283,6 +289,7 @@ const mockExistingPost: PostEditorProps['post'] = {
     tags: ['react', 'nextjs'],
     status: 'draft',
     coverImage: 'cover/img',
+    coverImageFit: 'cover',
     seriesId: 'series-1',
     seriesOrder: 2,
     author: 'Admin',
@@ -655,10 +662,137 @@ describe('PostEditor', () => {
         <PostEditor
           categories={mockCategories}
           author="Admin"
-          series={['series-a', 'series-b']}
+          series={[
+            { id: 'series-a', translations: [] },
+            { id: 'series-b', translations: [] },
+          ]}
         />,
       )
       expect(screen.getByTestId('series-id-input')).toBeInTheDocument()
+    })
+
+    it('shows coverImageFit select', () => {
+      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      expect(screen.getByTestId('cover-image-fit-select')).toBeInTheDocument()
+    })
+
+    it('coverImageFit defaults to cover', () => {
+      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      expect(
+        within(screen.getByTestId('cover-image-fit-select')).getByRole(
+          'button',
+        ),
+      ).toHaveTextContent('Cover (fill)')
+    })
+
+    it('POST body includes coverImageFit', async () => {
+      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      fillMandatoryFields()
+      fireEvent.click(screen.getByTestId('save-button'))
+      await waitFor(() => expect(axios.post).toHaveBeenCalled())
+      const body = (axios.post as jest.Mock).mock.calls[0][1] as Record<
+        string,
+        unknown
+      >
+      expect(body).toHaveProperty('coverImageFit', 'cover')
+    })
+
+    it('POST body includes changed coverImageFit', async () => {
+      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      fillMandatoryFields()
+      fireEvent.click(
+        within(screen.getByTestId('cover-image-fit-select')).getByRole(
+          'option',
+          { name: 'Contain (full image)' },
+        ),
+      )
+      fireEvent.click(screen.getByTestId('save-button'))
+      await waitFor(() => expect(axios.post).toHaveBeenCalled())
+      const body = (axios.post as jest.Mock).mock.calls[0][1] as Record<
+        string,
+        unknown
+      >
+      expect(body).toHaveProperty('coverImageFit', 'contain')
+    })
+
+    it('series title inputs hidden when no series ID', () => {
+      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      expect(
+        screen.queryByTestId('series-title-en-input'),
+      ).not.toBeInTheDocument()
+      expect(
+        screen.queryByTestId('series-title-es-input'),
+      ).not.toBeInTheDocument()
+    })
+
+    it('series title inputs shown when series ID set', () => {
+      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      fireEvent.change(screen.getByTestId('series-id-input'), {
+        target: { value: 'my-series' },
+      })
+      expect(screen.getByTestId('series-title-en-input')).toBeInTheDocument()
+      expect(screen.getByTestId('series-title-es-input')).toBeInTheDocument()
+    })
+
+    it('series title prefilled from series prop when series ID matches', () => {
+      renderApp(
+        <PostEditor
+          categories={mockCategories}
+          author="Admin"
+          series={[
+            {
+              id: 'my-series',
+              translations: [
+                { locale: 'en', title: 'My EN Series' },
+                { locale: 'es', title: 'My ES Series' },
+              ],
+            },
+          ]}
+        />,
+      )
+      fireEvent.change(screen.getByTestId('series-id-input'), {
+        target: { value: 'my-series' },
+      })
+      expect(screen.getByTestId('series-title-en-input')).toHaveValue(
+        'My EN Series',
+      )
+      expect(screen.getByTestId('series-title-es-input')).toHaveValue(
+        'My ES Series',
+      )
+    })
+
+    it('series titles cleared when series ID cleared', () => {
+      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      fireEvent.change(screen.getByTestId('series-id-input'), {
+        target: { value: 'my-series' },
+      })
+      fireEvent.change(screen.getByTestId('series-title-en-input'), {
+        target: { value: 'Some Title' },
+      })
+      fireEvent.change(screen.getByTestId('series-id-input'), {
+        target: { value: '' },
+      })
+      expect(
+        screen.queryByTestId('series-title-en-input'),
+      ).not.toBeInTheDocument()
+    })
+
+    it('POST body includes seriesTitles when series ID and title set', async () => {
+      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      fillMandatoryFields()
+      fireEvent.change(screen.getByTestId('series-id-input'), {
+        target: { value: 'my-series' },
+      })
+      fireEvent.change(screen.getByTestId('series-title-en-input'), {
+        target: { value: 'My Series Title' },
+      })
+      fireEvent.click(screen.getByTestId('save-button'))
+      await waitFor(() => expect(axios.post).toHaveBeenCalled())
+      const body = (axios.post as jest.Mock).mock.calls[0][1] as Record<
+        string,
+        unknown
+      >
+      expect(body).toHaveProperty('seriesTitles', { en: 'My Series Title' })
     })
 
     describe('author field', () => {
@@ -959,6 +1093,7 @@ describe('PostEditor', () => {
           seriesId: null,
           seriesOrder: null,
           coverImage: null,
+          coverImageFit: null,
         },
         translations: mockExistingPost!.translations,
       }
@@ -972,6 +1107,48 @@ describe('PostEditor', () => {
       expect(screen.getByTestId('series-id-input')).toHaveValue('')
       expect(screen.getByTestId('series-order-input')).toHaveValue(null)
       expect(screen.getByTestId('cover-image-input')).toHaveValue('')
+    })
+
+    it('PUT body includes coverImageFit', async () => {
+      renderApp(
+        <PostEditor
+          post={mockExistingPost}
+          categories={mockCategories}
+          author="Admin"
+        />,
+      )
+      fireEvent.click(screen.getByTestId('save-button'))
+      await waitFor(() => expect(axios.put).toHaveBeenCalled())
+      const body = (axios.put as jest.Mock).mock.calls[0][1] as Record<
+        string,
+        unknown
+      >
+      expect(body).toHaveProperty('coverImageFit', 'cover')
+    })
+
+    it('pre-fills series titles from series prop when editing', () => {
+      renderApp(
+        <PostEditor
+          post={mockExistingPost}
+          categories={mockCategories}
+          author="Admin"
+          series={[
+            {
+              id: 'series-1',
+              translations: [
+                { locale: 'en', title: 'Series One EN' },
+                { locale: 'es', title: 'Series One ES' },
+              ],
+            },
+          ]}
+        />,
+      )
+      expect(screen.getByTestId('series-title-en-input')).toHaveValue(
+        'Series One EN',
+      )
+      expect(screen.getByTestId('series-title-es-input')).toHaveValue(
+        'Series One ES',
+      )
     })
 
     it('includes tags as array in PUT body uppercased', async () => {

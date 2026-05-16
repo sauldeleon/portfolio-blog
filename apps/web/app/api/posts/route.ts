@@ -9,6 +9,7 @@ import {
   getPublishedPostsPaginated,
   slugExistsForLocale,
 } from '@web/lib/db/queries/posts'
+import { upsertSeriesTranslation } from '@web/lib/db/queries/series'
 import { computeReadingTime } from '@web/utils/computeReadingTime'
 
 const CACHE_HEADERS = {
@@ -84,8 +85,12 @@ const createPostSchema = z.object({
   author: z.string().min(1),
   status: z.enum(['draft', 'published', 'archived']).default('draft'),
   coverImage: z.string().optional(),
+  coverImageFit: z.enum(['cover', 'contain']).optional(),
   seriesId: z.string().optional(),
   seriesOrder: z.number().int().optional(),
+  seriesTitles: z
+    .object({ en: z.string().optional(), es: z.string().optional() })
+    .optional(),
   scheduledAt: z.string().optional(),
   translations: z
     .object({
@@ -150,6 +155,7 @@ export async function POST(request: Request) {
       author: data.author,
       status: data.status,
       coverImage: data.coverImage ?? null,
+      coverImageFit: data.coverImageFit ?? null,
       seriesId: data.seriesId ?? null,
       seriesOrder: data.seriesOrder ?? null,
       scheduledAt: data.scheduledAt ? new Date(data.scheduledAt) : null,
@@ -160,6 +166,16 @@ export async function POST(request: Request) {
       ...(data.translations.es ? { es: data.translations.es } : {}),
     },
   )
+
+  if (data.seriesId && data.seriesTitles) {
+    for (const [locale, title] of Object.entries(data.seriesTitles) as Array<
+      ['en' | 'es', string | undefined]
+    >) {
+      if (title) {
+        await upsertSeriesTranslation(data.seriesId, locale, title)
+      }
+    }
+  }
 
   return NextResponse.json(post, { status: 201 })
 }

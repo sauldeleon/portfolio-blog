@@ -13,6 +13,7 @@ import {
   updatePost,
   upsertTranslation,
 } from '@web/lib/db/queries/posts'
+import { upsertSeriesTranslation } from '@web/lib/db/queries/series'
 import { computeReadingTime } from '@web/utils/computeReadingTime'
 
 const CACHE_HEADERS = {
@@ -65,9 +66,13 @@ const updatePostSchema = z.object({
   tags: z.array(z.string()).optional(),
   status: z.enum(['draft', 'published', 'archived']).optional(),
   coverImage: z.string().nullable().optional(),
+  coverImageFit: z.enum(['cover', 'contain']).nullable().optional(),
   scheduledAt: z.string().optional(),
   seriesId: z.string().nullable().optional(),
   seriesOrder: z.number().int().nullable().optional(),
+  seriesTitles: z
+    .object({ en: z.string().optional(), es: z.string().optional() })
+    .optional(),
   translations: z
     .object({
       en: translationUpdateSchema.optional(),
@@ -170,6 +175,18 @@ export async function PUT(
       ['en' | 'es', z.infer<typeof translationUpdateSchema>]
     >) {
       await upsertTranslation(id, locale, t)
+    }
+  }
+
+  const resolvedSeriesId =
+    data.seriesId !== undefined ? data.seriesId : post.seriesId
+  if (resolvedSeriesId && data.seriesTitles) {
+    for (const [locale, title] of Object.entries(data.seriesTitles) as Array<
+      ['en' | 'es', string | undefined]
+    >) {
+      if (title) {
+        await upsertSeriesTranslation(resolvedSeriesId, locale, title)
+      }
     }
   }
 
