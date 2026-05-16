@@ -316,7 +316,6 @@ export function PostTable({ posts }: PostTableProps) {
               <StyledTd>
                 <StyledActions>
                   <StyledPublishButton
-                    $published={post.status === 'published'}
                     onClick={(e) => handleTogglePublish(e, post)}
                     disabled={
                       post.status === 'archived' ||

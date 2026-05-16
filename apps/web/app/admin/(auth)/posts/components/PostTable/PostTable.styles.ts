@@ -189,18 +189,15 @@ export const StyledActions = styled.div`
 export const StyledPublishButton = styled(Button).attrs({
   variant: 'ghost',
   size: 'xs',
-})<{ $published: boolean }>`
+})`
   font-family: inherit;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: ${({ $published, theme }) =>
-    $published ? theme.colors.white : theme.colors.green};
-  border-color: ${({ $published, theme }) =>
-    $published ? 'rgba(251,251,251,0.2)' : theme.colors.green};
+  color: ${({ theme }) => theme.colors.green};
+  border-color: ${({ theme }) => theme.colors.green};
 
   &:hover:not(:disabled) {
-    border-color: ${({ $published, theme }) =>
-      $published ? theme.colors.white : theme.colors.green};
+    border-color: ${({ theme }) => theme.colors.green};
     opacity: 0.8;
   }
 `
