@@ -1,8 +1,8 @@
-import { NextRequest } from 'next/server'
-
 /**
  * @jest-environment node
  */
+import { NextRequest } from 'next/server'
+
 const mockAuth = jest.fn()
 const mockListImages = jest.fn()
 const mockRenameImage = jest.fn()

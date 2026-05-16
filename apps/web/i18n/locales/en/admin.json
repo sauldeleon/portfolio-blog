@@ -79,7 +79,8 @@
       "seriesOrder": "Series Order",
       "seriesOrderPlaceholder": "1",
       "coverImage": "Cover Image",
-      "coverImagePlaceholder": "Cloudinary public ID",
+      "coverImagePlaceholder": "No cover image selected",
+      "coverImageClear": "Remove cover image",
       "author": "Author",
       "authorPlaceholder": "Author name",
       "authorUseDefault": "Use default author"
@@ -102,6 +103,7 @@
     },
     "preview": "Preview",
     "previewLoading": "Rendering…",
+    "cardPreview": "Card preview",
     "error": "Something went wrong, please try again"
   },
   "images": {

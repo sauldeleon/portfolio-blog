@@ -125,6 +125,46 @@ jest.mock('@web/utils/slugify', () => ({
   slugify: (text: string) => text.toLowerCase().replace(/\s+/g, '-'),
 }))
 
+jest.mock('./PostCardPreview', () => ({
+  PostCardPreview: () => <div data-testid="post-card-preview-mock" />,
+}))
+
+jest.mock('./CoverImageInput', () => ({
+  CoverImageInput: ({
+    value,
+    onPick,
+    onClear,
+    label,
+  }: {
+    value: string
+    onPick: () => void
+    onClear: () => void
+    label: string
+    placeholder: string
+    clearTitle: string
+  }) => (
+    <div>
+      <span>{label}</span>
+      <input
+        data-testid="cover-image-input"
+        value={value}
+        readOnly
+        onClick={onPick}
+        onChange={() => undefined}
+      />
+      {value && (
+        <button
+          type="button"
+          data-testid="clear-cover-image-button"
+          onClick={onClear}
+        >
+          ×
+        </button>
+      )}
+    </div>
+  ),
+}))
+
 jest.mock('@sdlgr/checkbox', () => ({
   Checkbox: ({
     id,
@@ -619,60 +659,6 @@ describe('PostEditor', () => {
         />,
       )
       expect(screen.getByTestId('series-id-input')).toBeInTheDocument()
-    })
-
-    describe('image picker', () => {
-      it('opens picker in insert mode when open-image-picker-button clicked', () => {
-        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
-        fireEvent.click(screen.getByTestId('open-image-picker-button'))
-        expect(screen.getByTestId('image-picker-mock')).toBeInTheDocument()
-      })
-
-      it('opens picker in cover mode when cover-image-input clicked', () => {
-        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
-        fireEvent.click(screen.getByTestId('cover-image-input'))
-        expect(screen.getByTestId('image-picker-mock')).toBeInTheDocument()
-      })
-
-      it('closes picker when close button clicked', () => {
-        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
-        fireEvent.click(screen.getByTestId('open-image-picker-button'))
-        fireEvent.click(screen.getByTestId('image-picker-close'))
-        expect(
-          screen.queryByTestId('image-picker-mock'),
-        ).not.toBeInTheDocument()
-      })
-
-      it('inserts markdown into content and closes picker in insert mode', () => {
-        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
-        fireEvent.click(screen.getByTestId('open-image-picker-button'))
-        fireEvent.click(screen.getByTestId('image-picker-insert'))
-        expect(screen.getByTestId('content-input')).toHaveValue(
-          '![](https://example.com/img.jpg)',
-        )
-        expect(
-          screen.queryByTestId('image-picker-mock'),
-        ).not.toBeInTheDocument()
-      })
-
-      it('fills cover image field and closes picker in cover mode', () => {
-        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
-        fireEvent.click(screen.getByTestId('cover-image-input'))
-        fireEvent.click(screen.getByTestId('image-picker-insert'))
-        expect(screen.getByTestId('cover-image-input')).toHaveValue(
-          'sawl.dev - blog/img',
-        )
-        expect(
-          screen.queryByTestId('image-picker-mock'),
-        ).not.toBeInTheDocument()
-      })
-
-      it('cover-image-input is read-only', () => {
-        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
-        expect(screen.getByTestId('cover-image-input')).toHaveAttribute(
-          'readonly',
-        )
-      })
     })
 
     describe('author field', () => {

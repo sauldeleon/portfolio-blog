@@ -211,6 +211,44 @@ jest.mock('@web/utils/slugify', () => ({
   slugify: (text: string) => text.toLowerCase().replace(/\s+/g, '-'),
 }))
 
+jest.mock('./PostCardPreview', () => ({
+  PostCardPreview: () => <div data-testid="post-card-preview-mock" />,
+}))
+
+jest.mock('./CoverImageInput', () => ({
+  CoverImageInput: ({
+    value,
+    onPick,
+    onClear,
+  }: {
+    value: string
+    onPick: () => void
+    onClear: () => void
+    label: string
+    placeholder: string
+    clearTitle: string
+  }) => (
+    <div>
+      <input
+        data-testid="cover-image-input"
+        value={value}
+        readOnly
+        onClick={onPick}
+        onChange={() => undefined}
+      />
+      {value && (
+        <button
+          type="button"
+          data-testid="clear-cover-image-button"
+          onClick={onClear}
+        >
+          ×
+        </button>
+      )}
+    </div>
+  ),
+}))
+
 const mockCategories: PostEditorProps['categories'] = [
   { slug: 'engineering', name: 'Engineering' },
 ]
@@ -248,6 +286,34 @@ describe('PostEditor — image picker', () => {
     expect(textarea.value).toContain(
       '![](https://res.cloudinary.com/test/img.jpg)',
     )
+  })
+
+  it('opens picker in cover mode when cover-image-input clicked', () => {
+    renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+    fireEvent.click(screen.getByTestId('cover-image-input'))
+    expect(screen.getByTestId('image-picker')).toBeInTheDocument()
+  })
+
+  it('fills cover image field and closes picker in cover mode', () => {
+    renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+    fireEvent.click(screen.getByTestId('cover-image-input'))
+    fireEvent.click(screen.getByTestId('picker-insert'))
+    expect(screen.getByTestId('cover-image-input')).toHaveValue('test/img')
+    expect(screen.queryByTestId('image-picker')).not.toBeInTheDocument()
+  })
+
+  it('cover-image-input is read-only', () => {
+    renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+    expect(screen.getByTestId('cover-image-input')).toHaveAttribute('readonly')
+  })
+
+  it('clears cover image when clear button clicked', () => {
+    renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+    fireEvent.click(screen.getByTestId('cover-image-input'))
+    fireEvent.click(screen.getByTestId('picker-insert'))
+    expect(screen.getByTestId('cover-image-input')).toHaveValue('test/img')
+    fireEvent.click(screen.getByTestId('clear-cover-image-button'))
+    expect(screen.getByTestId('cover-image-input')).toHaveValue('')
   })
 })
 

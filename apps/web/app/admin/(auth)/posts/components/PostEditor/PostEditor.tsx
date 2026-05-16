@@ -25,6 +25,8 @@ import { slugify } from '@web/utils/slugify'
 
 import { ImagePicker } from '../ImagePicker'
 import { MarkdownPreview } from '../MarkdownPreview'
+import { CoverImageInput } from './CoverImageInput'
+import { PostCardPreview } from './PostCardPreview'
 import {
   StyledActions,
   StyledArchiveButton,
@@ -281,6 +283,12 @@ export function PostEditor({
     }
   }
 
+  const previewAuthor = post
+    ? post.post.author
+    : useDefaultAuthor
+      ? DEFAULT_AUTHOR
+      : customAuthor || author
+
   async function handleSave(targetStatus: PostStatus = status) {
     setSaving(true)
     setError(null)
@@ -503,24 +511,17 @@ export function PostEditor({
                 <FieldHelper>{t('postEditor.fields.tagsHelper')}</FieldHelper>
               </FieldGroup>
 
-              <FieldGroup>
-                <FieldLabel htmlFor="meta-cover">
-                  {t('postEditor.fields.coverImage')}
-                </FieldLabel>
-                <Input
-                  id="meta-cover"
-                  type="text"
-                  value={coverImage}
-                  readOnly
-                  onClick={() => {
-                    setPickerMode('cover')
-                    setIsPickerOpen(true)
-                  }}
-                  style={{ cursor: 'pointer' }}
-                  placeholder={t('postEditor.fields.coverImagePlaceholder')}
-                  data-testid="cover-image-input"
-                />
-              </FieldGroup>
+              <CoverImageInput
+                label={t('postEditor.fields.coverImage')}
+                placeholder={t('postEditor.fields.coverImagePlaceholder')}
+                clearTitle={t('postEditor.fields.coverImageClear')}
+                value={coverImage}
+                onPick={() => {
+                  setPickerMode('cover')
+                  setIsPickerOpen(true)
+                }}
+                onClear={() => setCoverImage('')}
+              />
 
               <FieldGroup>
                 <FieldLabel htmlFor="meta-series-id">
@@ -640,6 +641,20 @@ https://www.wikiloc.com/wikiloc/embedv2.do?id=<trail-id>&elevation=on&images=on&
 Supported types: youtube · maps · openstreetmap · wikiloc`}</pre>
             </StyledMarkdownHint>
           </FieldGroup>
+
+          <PostCardPreview
+            title={currentLocale.title}
+            slug={currentLocale.slug}
+            excerpt={currentLocale.excerpt}
+            content={currentLocale.content}
+            categoryName={
+              categories.find((c) => c.slug === category)?.name ?? ''
+            }
+            tags={tags}
+            coverImage={coverImage}
+            author={previewAuthor}
+            lng={activeLocale}
+          />
         </StyledEditorPane>
 
         <StyledPreviewPane data-testid="preview-pane">
