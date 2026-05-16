@@ -1,18 +1,19 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
-import { auth } from '../../../../lib/auth/config'
-import { getCategoryBySlug } from '../../../../lib/db/queries/categories'
+import { auth } from '@web/lib/auth/config'
+import { getCategoryBySlug } from '@web/lib/db/queries/categories'
 import {
   getPostById,
   getPostStatus,
   getPostTranslations,
+  hardDeletePost,
   slugExistsForLocale,
   softDeletePost,
   updatePost,
   upsertTranslation,
-} from '../../../../lib/db/queries/posts'
-import { computeReadingTime } from '../../../../utils/computeReadingTime'
+} from '@web/lib/db/queries/posts'
+import { computeReadingTime } from '@web/utils/computeReadingTime'
 
 const CACHE_HEADERS = {
   'Cache-Control': 's-maxage=60, stale-while-revalidate=3600',
@@ -144,9 +145,17 @@ export async function PUT(
         ? { publishedAt: null }
         : {}
 
+  const deletedAtUpdate =
+    data.status === 'archived'
+      ? { deletedAt: new Date() }
+      : data.status === 'draft'
+        ? { deletedAt: null }
+        : {}
+
   const post = await updatePost(id, {
     ...postData,
     ...publishedAtUpdate,
+    ...deletedAtUpdate,
     ...(scheduledAt !== undefined
       ? { scheduledAt: scheduledAt ? new Date(scheduledAt) : null }
       : {}),
@@ -168,7 +177,7 @@ export async function PUT(
 }
 
 export async function DELETE(
-  _request: Request,
+  request: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
   const session = await auth()
@@ -177,8 +186,22 @@ export async function DELETE(
   }
 
   const { id } = await params
+  const { searchParams } = new URL(request.url)
+  const hard = searchParams.get('hard') === 'true'
 
   const status = await getPostStatus(id)
+
+  if (hard) {
+    if (status !== 'archived') {
+      return NextResponse.json(
+        { error: 'Only archived posts can be permanently deleted.' },
+        { status: 422 },
+      )
+    }
+    await hardDeletePost(id)
+    return new NextResponse(null, { status: 204 })
+  }
+
   if (status === 'published') {
     return NextResponse.json(
       { error: 'Cannot archive a published post. Unpublish it first.' },

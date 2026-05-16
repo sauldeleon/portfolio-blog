@@ -205,7 +205,23 @@ export const StyledPublishButton = styled(Button).attrs({
   }
 `
 
-export const StyledDeleteButton = styled(Button).attrs({
+export const StyledArchiveButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'xs',
+})`
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: ${({ theme }) => theme.colors.green};
+  border-color: ${({ theme }) => theme.colors.green};
+
+  &:hover:not(:disabled) {
+    opacity: 0.8;
+    border-color: ${({ theme }) => theme.colors.green};
+  }
+`
+
+export const StyledHardDeleteButton = styled(Button).attrs({
   variant: 'ghost',
   size: 'xs',
 })`

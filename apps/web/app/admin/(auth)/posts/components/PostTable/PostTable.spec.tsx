@@ -23,7 +23,7 @@ jest.mock('@web/i18n/client', () => ({
         'posts.table.published': 'Published',
         'posts.table.createdAt': 'Created',
         'posts.table.updatedAt': 'Updated',
-        'posts.table.deletedAt': 'Deleted',
+        'posts.table.archived': 'Archived',
         'posts.table.actions': 'Actions',
         'posts.filters.all': 'All',
         'posts.filters.published': 'Published',
@@ -34,7 +34,10 @@ jest.mock('@web/i18n/client', () => ({
         'posts.unpublish': 'Unpublish',
         'posts.archive': 'Archive',
         'posts.unarchive': 'Unarchive',
+        'posts.hardDelete': 'Delete',
         'posts.archiveConfirm': 'Archive this post? You can restore it later.',
+        'posts.hardDeleteConfirm':
+          'Permanently delete this post? This cannot be undone.',
         'posts.archiveDisabledPublished': 'Unpublish the post before archiving',
         'posts.empty': 'No posts found',
         'posts.newPost': 'New post',
@@ -121,7 +124,31 @@ describe('PostTable', () => {
     expect(screen.queryByText('Published Post')).not.toBeInTheDocument()
   })
 
-  it('clicking all shows all posts', () => {
+  it('filter tabs: clicking archived shows only archived posts', () => {
+    const posts = [
+      makePost({ id: '01', titleEn: 'Draft Post', status: 'draft' }),
+      makePost({ id: '02', titleEn: 'Archived Post', status: 'archived' }),
+    ]
+    renderApp(<PostTable posts={posts} />)
+    fireEvent.click(screen.getByTestId('filter-archived'))
+    const rows = screen.getAllByTestId('post-row')
+    expect(rows).toHaveLength(1)
+    expect(screen.getByText('Archived Post')).toBeInTheDocument()
+    expect(screen.queryByText('Draft Post')).not.toBeInTheDocument()
+  })
+
+  it('all tab excludes archived posts', () => {
+    const posts = [
+      makePost({ id: '01', titleEn: 'Draft Post', status: 'draft' }),
+      makePost({ id: '02', titleEn: 'Archived Post', status: 'archived' }),
+    ]
+    renderApp(<PostTable posts={posts} />)
+    expect(screen.getAllByTestId('post-row')).toHaveLength(1)
+    expect(screen.getByText('Draft Post')).toBeInTheDocument()
+    expect(screen.queryByText('Archived Post')).not.toBeInTheDocument()
+  })
+
+  it('clicking all shows all non-archived posts', () => {
     const posts = [
       makePost({ id: '01', titleEn: 'Draft Post', status: 'draft' }),
       makePost({ id: '02', titleEn: 'Published Post', status: 'published' }),
@@ -255,34 +282,46 @@ describe('PostTable', () => {
     )
   })
 
-  it('clicking delete opens modal and confirming calls DELETE and shows post as archived', async () => {
+  it('clicking archive button opens modal and confirming calls DELETE and removes post from all-tab', async () => {
     const post = makePost({ id: 'del123' })
     renderApp(<PostTable posts={[post]} />)
-    fireEvent.click(screen.getByTestId('delete-button'))
+    fireEvent.click(screen.getByTestId('archive-button'))
     expect(screen.getByTestId('confirm-delete-confirm')).toBeInTheDocument()
     fireEvent.click(screen.getByTestId('confirm-delete-confirm'))
     await waitFor(() => expect(axios.delete).toHaveBeenCalled())
     expect(axios.delete).toHaveBeenCalledWith('/api/posts/del123/')
-    expect(await screen.findByTestId('unarchive-button')).toBeInTheDocument()
-    expect(screen.getByTestId('post-row')).toBeInTheDocument()
+    await waitFor(() =>
+      expect(screen.queryByTestId('post-row')).not.toBeInTheDocument(),
+    )
   })
 
-  it('delete button is disabled for published post', () => {
+  it('clicking archive and confirming moves post to archived tab', async () => {
+    const post = makePost({ id: 'del123' })
+    renderApp(<PostTable posts={[post]} />)
+    fireEvent.click(screen.getByTestId('archive-button'))
+    fireEvent.click(screen.getByTestId('confirm-delete-confirm'))
+    await waitFor(() => expect(axios.delete).toHaveBeenCalled())
+    fireEvent.click(screen.getByTestId('filter-archived'))
+    expect(await screen.findByTestId('unarchive-button')).toBeInTheDocument()
+    expect(screen.getByTestId('hard-delete-button')).toBeInTheDocument()
+  })
+
+  it('archive button is disabled for published post', () => {
     const post = makePost({ status: 'published' })
     renderApp(<PostTable posts={[post]} />)
-    expect(screen.getByTestId('delete-button')).toBeDisabled()
+    expect(screen.getByTestId('archive-button')).toBeDisabled()
   })
 
-  it('delete button is enabled for draft post', () => {
+  it('archive button is enabled for draft post', () => {
     const post = makePost({ status: 'draft' })
     renderApp(<PostTable posts={[post]} />)
-    expect(screen.getByTestId('delete-button')).not.toBeDisabled()
+    expect(screen.getByTestId('archive-button')).not.toBeDisabled()
   })
 
-  it('clicking delete opens modal and cancelling does NOT call fetch', () => {
+  it('clicking archive button opens modal and cancelling does NOT call fetch', () => {
     const post = makePost({ id: 'del456' })
     renderApp(<PostTable posts={[post]} />)
-    fireEvent.click(screen.getByTestId('delete-button'))
+    fireEvent.click(screen.getByTestId('archive-button'))
     expect(screen.getByTestId('confirm-delete-cancel')).toBeInTheDocument()
     fireEvent.click(screen.getByTestId('confirm-delete-cancel'))
     expect(axios.delete).not.toHaveBeenCalled()
@@ -337,14 +376,17 @@ describe('PostTable', () => {
   it('renders archived status badge', () => {
     const post = makePost({ status: 'archived' })
     renderApp(<PostTable posts={[post]} />)
+    fireEvent.click(screen.getByTestId('filter-archived'))
     expect(screen.getByTestId('post-row')).toBeInTheDocument()
   })
 
-  it('shows unarchive button for archived post', () => {
+  it('shows unarchive and hard-delete buttons for archived post', () => {
     const post = makePost({ status: 'archived' })
     renderApp(<PostTable posts={[post]} />)
+    fireEvent.click(screen.getByTestId('filter-archived'))
     expect(screen.getByTestId('unarchive-button')).toBeInTheDocument()
-    expect(screen.queryByTestId('delete-button')).not.toBeInTheDocument()
+    expect(screen.getByTestId('hard-delete-button')).toBeInTheDocument()
+    expect(screen.queryByTestId('archive-button')).not.toBeInTheDocument()
   })
 
   it('publish button is disabled for archived post', () => {
@@ -354,12 +396,14 @@ describe('PostTable', () => {
       titleEs: 'Post',
     })
     renderApp(<PostTable posts={[post]} />)
+    fireEvent.click(screen.getByTestId('filter-archived'))
     expect(screen.getByTestId('publish-button')).toBeDisabled()
   })
 
   it('clicking unarchive calls PUT with draft status and updates UI', async () => {
     const post = makePost({ id: 'arc123', status: 'archived' })
     renderApp(<PostTable posts={[post]} />)
+    fireEvent.click(screen.getByTestId('filter-archived'))
     fireEvent.click(screen.getByTestId('unarchive-button'))
     await waitFor(() => expect(axios.put).toHaveBeenCalled())
     expect(axios.put).toHaveBeenCalledWith('/api/posts/arc123/', {
@@ -373,7 +417,7 @@ describe('PostTable', () => {
   it('shows archive button for draft post (not unarchive)', () => {
     const post = makePost({ status: 'draft' })
     renderApp(<PostTable posts={[post]} />)
-    expect(screen.getByTestId('delete-button')).toBeInTheDocument()
+    expect(screen.getByTestId('archive-button')).toBeInTheDocument()
     expect(screen.queryByTestId('unarchive-button')).not.toBeInTheDocument()
   })
 
@@ -435,8 +479,12 @@ describe('PostTable', () => {
   })
 
   it('displays formatted deletedAt date when set', () => {
-    const post = makePost({ deletedAt: new Date('2024-05-01') })
+    const post = makePost({
+      status: 'archived',
+      deletedAt: new Date('2024-05-01'),
+    })
     renderApp(<PostTable posts={[post]} />)
+    fireEvent.click(screen.getByTestId('filter-archived'))
     const rows = screen.getAllByTestId('post-row')
     // eslint-disable-next-line testing-library/no-node-access
     const cells = rows[0].querySelectorAll('td')
@@ -479,7 +527,7 @@ describe('PostTable', () => {
     const post1 = makePost({ id: 'del123', titleEn: 'Post One' })
     const post2 = makePost({ id: 'other', titleEn: 'Post Two' })
     renderApp(<PostTable posts={[post1, post2]} />)
-    fireEvent.click(screen.getAllByTestId('delete-button')[0])
+    fireEvent.click(screen.getAllByTestId('archive-button')[0])
     fireEvent.click(screen.getByTestId('confirm-delete-confirm'))
     await waitFor(() => expect(axios.delete).toHaveBeenCalled())
     expect(screen.getByText('Post Two')).toBeInTheDocument()
@@ -514,8 +562,58 @@ describe('PostTable', () => {
       titleEn: 'Post Two',
     })
     renderApp(<PostTable posts={[post1, post2]} />)
+    fireEvent.click(screen.getByTestId('filter-archived'))
     fireEvent.click(screen.getAllByTestId('unarchive-button')[0])
     await waitFor(() => expect(axios.put).toHaveBeenCalled())
     expect(screen.getByText('Post Two')).toBeInTheDocument()
+  })
+
+  it('hard delete button opens confirm modal', () => {
+    const post = makePost({ status: 'archived' })
+    renderApp(<PostTable posts={[post]} />)
+    fireEvent.click(screen.getByTestId('filter-archived'))
+    fireEvent.click(screen.getByTestId('hard-delete-button'))
+    expect(screen.getByTestId('confirm-delete-confirm')).toBeInTheDocument()
+  })
+
+  it('confirming hard delete calls DELETE with ?hard=true and removes post', async () => {
+    const post = makePost({ id: 'hd123', status: 'archived' })
+    renderApp(<PostTable posts={[post]} />)
+    fireEvent.click(screen.getByTestId('filter-archived'))
+    fireEvent.click(screen.getByTestId('hard-delete-button'))
+    fireEvent.click(screen.getByTestId('confirm-delete-confirm'))
+    await waitFor(() => expect(axios.delete).toHaveBeenCalled())
+    expect(axios.delete).toHaveBeenCalledWith('/api/posts/hd123/?hard=true')
+    await waitFor(() =>
+      expect(screen.queryByTestId('post-row')).not.toBeInTheDocument(),
+    )
+  })
+
+  it('cancelling hard delete does not call API', () => {
+    const post = makePost({ status: 'archived' })
+    renderApp(<PostTable posts={[post]} />)
+    fireEvent.click(screen.getByTestId('filter-archived'))
+    fireEvent.click(screen.getByTestId('hard-delete-button'))
+    fireEvent.click(screen.getByTestId('confirm-delete-cancel'))
+    expect(axios.delete).not.toHaveBeenCalled()
+  })
+
+  it('hard deleting one post keeps other archived posts visible', async () => {
+    const post1 = makePost({
+      id: 'hd123',
+      status: 'archived',
+      titleEn: 'To Delete',
+    })
+    const post2 = makePost({
+      id: 'other',
+      status: 'archived',
+      titleEn: 'Keep This',
+    })
+    renderApp(<PostTable posts={[post1, post2]} />)
+    fireEvent.click(screen.getByTestId('filter-archived'))
+    fireEvent.click(screen.getAllByTestId('hard-delete-button')[0])
+    fireEvent.click(screen.getByTestId('confirm-delete-confirm'))
+    await waitFor(() => expect(axios.delete).toHaveBeenCalled())
+    expect(screen.getByText('Keep This')).toBeInTheDocument()
   })
 })

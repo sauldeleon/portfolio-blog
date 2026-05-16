@@ -29,7 +29,7 @@
       "published": "Published",
       "createdAt": "Created",
       "updatedAt": "Updated",
-      "deletedAt": "Deleted",
+      "archived": "Archived",
       "actions": "Actions"
     },
     "filters": {
@@ -45,6 +45,8 @@
     "unarchive": "Unarchive",
     "archiveConfirm": "Archive this post? You can restore it later.",
     "archiveDisabledPublished": "Unpublish the post before archiving",
+    "hardDelete": "Delete",
+    "hardDeleteConfirm": "Permanently delete this post? This cannot be undone.",
     "empty": "No posts found"
   },
   "confirmDelete": {

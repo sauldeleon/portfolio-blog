@@ -290,7 +290,6 @@ export async function getAllPosts(): Promise<AdminPost[]> {
       FROM posts p
       LEFT JOIN post_translations en_t ON en_t.post_id = p.id AND en_t.locale = 'en'
       LEFT JOIN post_translations es_t ON es_t.post_id = p.id AND es_t.locale = 'es'
-      WHERE p.deleted_at IS NULL
       ORDER BY p.created_at DESC
     `,
   )
@@ -393,14 +392,18 @@ export async function getPostStatus(id: string): Promise<PostStatus | null> {
 export async function softDeletePost(id: string): Promise<void> {
   await db
     .update(posts)
-    .set({ status: 'archived', updatedAt: new Date() })
+    .set({ status: 'archived', deletedAt: new Date(), updatedAt: new Date() })
     .where(eq(posts.id, id))
+}
+
+export async function hardDeletePost(id: string): Promise<void> {
+  await db.delete(posts).where(eq(posts.id, id))
 }
 
 export async function restorePost(id: string): Promise<void> {
   await db
     .update(posts)
-    .set({ status: 'draft', updatedAt: new Date() })
+    .set({ status: 'draft', deletedAt: null, updatedAt: new Date() })
     .where(eq(posts.id, id))
 }
 
@@ -436,10 +439,7 @@ export async function getPostTranslations(
 export async function getPostForEdit(
   id: string,
 ): Promise<PostWithTranslations | null> {
-  const postRows = await db
-    .select()
-    .from(posts)
-    .where(and(eq(posts.id, id), isNull(posts.deletedAt)))
+  const postRows = await db.select().from(posts).where(eq(posts.id, id))
 
   if (!postRows[0]) return null
 

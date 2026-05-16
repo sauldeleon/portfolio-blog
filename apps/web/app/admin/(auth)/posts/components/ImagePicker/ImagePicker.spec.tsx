@@ -98,11 +98,9 @@ beforeAll(() => {
 describe('ImagePicker', () => {
   beforeEach(() => {
     jest.clearAllMocks()
-    jest
-      .spyOn(axios, 'get')
-      .mockResolvedValue({
-        data: { images: mockImages, nextCursor: undefined },
-      })
+    jest.spyOn(axios, 'get').mockResolvedValue({
+      data: { images: mockImages, nextCursor: undefined },
+    })
   })
 
   it('sidebar has correct transform when open', async () => {

@@ -11,13 +11,14 @@ import type { AdminPost } from '@web/lib/db/queries/posts'
 
 import {
   StyledActions,
+  StyledArchiveButton,
   StyledButtonGroup,
   StyledCount,
-  StyledDeleteButton,
   StyledEmDash,
   StyledEmpty,
   StyledFilterTab,
   StyledFilterTabs,
+  StyledHardDeleteButton,
   StyledLangChip,
   StyledLangChips,
   StyledLeftGroup,
@@ -72,7 +73,10 @@ export function PostTable({ posts }: PostTableProps) {
   const queryClient = useQueryClient()
   const [filter, setFilter] = useState<StatusFilter>('all')
   const [search, setSearch] = useState('')
-  const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null)
+  const [archiveTargetId, setArchiveTargetId] = useState<string | null>(null)
+  const [hardDeleteTargetId, setHardDeleteTargetId] = useState<string | null>(
+    null,
+  )
   const router = useRouter()
 
   const QUERY_KEY = ['admin-posts'] as const
@@ -92,37 +96,62 @@ export function PostTable({ posts }: PostTableProps) {
 
   const countFor = (status: StatusFilter) =>
     status === 'all'
-      ? items.length
+      ? items.filter((p) => p.status !== 'archived').length
       : items.filter((p) => p.status === status).length
 
   const filtered = items.filter((p) => {
-    const matchesStatus = filter === 'all' || p.status === filter
+    const matchesStatus =
+      filter === 'all' ? p.status !== 'archived' : p.status === filter
     const searchLower = search.toLowerCase()
     const title = p.titleEn ?? p.titleEs ?? ''
     const matchesSearch = title.toLowerCase().includes(searchLower)
     return matchesStatus && matchesSearch
   })
 
-  function handleDelete(e: React.MouseEvent, id: string) {
+  function handleArchive(e: React.MouseEvent, id: string) {
     e.stopPropagation()
-    setDeleteTargetId(id)
+    setArchiveTargetId(id)
   }
 
-  async function handleConfirmDelete() {
+  async function handleConfirmArchive() {
     /* istanbul ignore next */
-    if (!deleteTargetId) return
-    const id = deleteTargetId
+    if (!archiveTargetId) return
+    const id = archiveTargetId
     await axios.delete(`/api/posts/${id}/`)
-    setDeleteTargetId(null)
+    setArchiveTargetId(null)
     queryClient.setQueryData<AdminPost[]>(QUERY_KEY, (old) => {
       /* istanbul ignore next */
       if (!old) return []
-      return old.map((p) => (p.id === id ? { ...p, status: 'archived' } : p))
+      return old.map((p) =>
+        p.id === id ? { ...p, status: 'archived', deletedAt: new Date() } : p,
+      )
     })
   }
 
-  function handleCancelDelete() {
-    setDeleteTargetId(null)
+  function handleCancelArchive() {
+    setArchiveTargetId(null)
+  }
+
+  function handleHardDelete(e: React.MouseEvent, id: string) {
+    e.stopPropagation()
+    setHardDeleteTargetId(id)
+  }
+
+  async function handleConfirmHardDelete() {
+    /* istanbul ignore next */
+    if (!hardDeleteTargetId) return
+    const id = hardDeleteTargetId
+    await axios.delete(`/api/posts/${id}/?hard=true`)
+    setHardDeleteTargetId(null)
+    queryClient.setQueryData<AdminPost[]>(QUERY_KEY, (old) => {
+      /* istanbul ignore next */
+      if (!old) return []
+      return old.filter((p) => p.id !== id)
+    })
+  }
+
+  function handleCancelHardDelete() {
+    setHardDeleteTargetId(null)
   }
 
   async function handleUnarchive(e: React.MouseEvent, id: string) {
@@ -131,7 +160,9 @@ export function PostTable({ posts }: PostTableProps) {
     queryClient.setQueryData<AdminPost[]>(QUERY_KEY, (old) => {
       /* istanbul ignore next */
       if (!old) return []
-      return old.map((p) => (p.id === id ? { ...p, status: 'draft' } : p))
+      return old.map((p) =>
+        p.id === id ? { ...p, status: 'draft', deletedAt: null } : p,
+      )
     })
   }
 
@@ -213,7 +244,7 @@ export function PostTable({ posts }: PostTableProps) {
             <StyledTh>{t('posts.table.published')}</StyledTh>
             <StyledTh>{t('posts.table.createdAt')}</StyledTh>
             <StyledTh>{t('posts.table.updatedAt')}</StyledTh>
-            <StyledTh>{t('posts.table.deletedAt')}</StyledTh>
+            <StyledTh>{t('posts.table.archived')}</StyledTh>
             <StyledTh>{t('posts.table.actions')}</StyledTh>
           </tr>
         </StyledThead>
@@ -298,25 +329,33 @@ export function PostTable({ posts }: PostTableProps) {
                       : t('posts.publish')}
                   </StyledPublishButton>
                   {post.status === 'archived' ? (
-                    <StyledDeleteButton
-                      onClick={(e) => handleUnarchive(e, post.id)}
-                      data-testid="unarchive-button"
-                    >
-                      {t('posts.unarchive')}
-                    </StyledDeleteButton>
+                    <>
+                      <StyledArchiveButton
+                        onClick={(e) => handleUnarchive(e, post.id)}
+                        data-testid="unarchive-button"
+                      >
+                        {t('posts.unarchive')}
+                      </StyledArchiveButton>
+                      <StyledHardDeleteButton
+                        onClick={(e) => handleHardDelete(e, post.id)}
+                        data-testid="hard-delete-button"
+                      >
+                        {t('posts.hardDelete')}
+                      </StyledHardDeleteButton>
+                    </>
                   ) : (
-                    <StyledDeleteButton
-                      onClick={(e) => handleDelete(e, post.id)}
+                    <StyledArchiveButton
+                      onClick={(e) => handleArchive(e, post.id)}
                       disabled={post.status === 'published'}
                       title={
                         post.status === 'published'
                           ? t('posts.archiveDisabledPublished')
                           : undefined
                       }
-                      data-testid="delete-button"
+                      data-testid="archive-button"
                     >
                       {t('posts.archive')}
-                    </StyledDeleteButton>
+                    </StyledArchiveButton>
                   )}
                 </StyledActions>
               </StyledTd>
@@ -324,11 +363,19 @@ export function PostTable({ posts }: PostTableProps) {
           ))}
         </StyledTbody>
       </StyledTable>
+
       <ConfirmDeleteModal
-        isOpen={deleteTargetId !== null}
+        isOpen={archiveTargetId !== null}
         message={t('posts.archiveConfirm')}
-        onConfirm={handleConfirmDelete}
-        onCancel={handleCancelDelete}
+        onConfirm={handleConfirmArchive}
+        onCancel={handleCancelArchive}
+        variant="warning"
+      />
+      <ConfirmDeleteModal
+        isOpen={hardDeleteTargetId !== null}
+        message={t('posts.hardDeleteConfirm')}
+        onConfirm={handleConfirmHardDelete}
+        onCancel={handleCancelHardDelete}
       />
     </StyledWrapper>
   )

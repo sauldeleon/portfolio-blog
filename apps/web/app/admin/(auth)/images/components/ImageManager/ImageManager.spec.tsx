@@ -86,8 +86,8 @@ jest.mock('../ImageUploadModal', () => ({
         </button>
         <button
           data-testid="mock-upload"
-          onClick={() =>
-            onUploaded({
+          onClick={() => {
+            const img = {
               publicId: 'sawl.dev - blog/new',
               url: 'https://res.cloudinary.com/demo/new.jpg',
               width: 100,
@@ -95,8 +95,9 @@ jest.mock('../ImageUploadModal', () => ({
               format: 'jpg',
               createdAt: '2024-01-02T00:00:00Z',
               bytes: 999,
-            })
-          }
+            }
+            onUploaded(img)
+          }}
         >
           Upload
         </button>
@@ -275,8 +276,8 @@ describe('ImageManager', () => {
     fireEvent.click(screen.getByTestId('upload-button'))
     fireEvent.click(screen.getByTestId('mock-upload'))
     expect(
-        await screen.findByTestId('image-card-sawl.dev - blog/new'),
-      ).toBeInTheDocument()
+      await screen.findByTestId('image-card-sawl.dev - blog/new'),
+    ).toBeInTheDocument()
     expect(screen.queryByTestId('upload-modal')).not.toBeInTheDocument()
   })
 
@@ -328,8 +329,8 @@ describe('ImageManager', () => {
     expect(await screen.findByTestId('image-grid')).toBeInTheDocument()
     fireEvent.click(screen.getByTestId('refresh-button'))
     expect(
-        await screen.findByTestId('image-card-sawl.dev - blog/fresh'),
-      ).toBeInTheDocument()
+      await screen.findByTestId('image-card-sawl.dev - blog/fresh'),
+    ).toBeInTheDocument()
     expect(axios.get).toHaveBeenCalledTimes(2)
   })
 
@@ -377,8 +378,8 @@ describe('ImageManager', () => {
       expect(screen.queryByTestId('edit-modal')).not.toBeInTheDocument(),
     )
     expect(
-        await screen.findByTestId('image-card-sawl.dev - blog/new-name'),
-      ).toBeInTheDocument()
+      await screen.findByTestId('image-card-sawl.dev - blog/new-name'),
+    ).toBeInTheDocument()
   })
 
   it('shows error in edit modal when rename fails', async () => {

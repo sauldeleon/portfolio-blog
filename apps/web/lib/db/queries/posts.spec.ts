@@ -15,6 +15,7 @@ import {
   getPublishedPosts,
   getPublishedPostsPaginated,
   getRelatedPosts,
+  hardDeletePost,
   restorePost,
   slugExistsForLocale,
   softDeletePost,
@@ -351,7 +352,7 @@ describe('getPostStatus', () => {
 })
 
 describe('softDeletePost', () => {
-  it('sets status=archived without touching deletedAt', async () => {
+  it('sets status=archived and sets deletedAt', async () => {
     const chain = makeChain(undefined)
     const mockSet = chain.set as jest.Mock
     mockDb.update.mockReturnValue(chain)
@@ -362,12 +363,26 @@ describe('softDeletePost', () => {
     expect(mockSet).toHaveBeenCalledWith(
       expect.objectContaining({ status: 'archived' }),
     )
-    expect(mockSet.mock.calls[0][0]).not.toHaveProperty('deletedAt')
+    expect(mockSet.mock.calls[0][0]).toHaveProperty('deletedAt')
+    expect(mockSet.mock.calls[0][0].deletedAt).toBeInstanceOf(Date)
+  })
+})
+
+describe('hardDeletePost', () => {
+  it('permanently deletes a post by id', async () => {
+    const chain = makeChain(undefined)
+    const mockWhere = chain.where as jest.Mock
+    mockDb.delete.mockReturnValue(chain)
+
+    await hardDeletePost('01JWTEST000000000000000000')
+
+    expect(mockDb.delete).toHaveBeenCalled()
+    expect(mockWhere).toHaveBeenCalled()
   })
 })
 
 describe('restorePost', () => {
-  it('sets status=draft without touching deletedAt', async () => {
+  it('sets status=draft and clears deletedAt', async () => {
     const chain = makeChain(undefined)
     const mockSet = chain.set as jest.Mock
     mockDb.update.mockReturnValue(chain)
@@ -376,9 +391,8 @@ describe('restorePost', () => {
 
     expect(mockDb.update).toHaveBeenCalled()
     expect(mockSet).toHaveBeenCalledWith(
-      expect.objectContaining({ status: 'draft' }),
+      expect.objectContaining({ status: 'draft', deletedAt: null }),
     )
-    expect(mockSet.mock.calls[0][0]).not.toHaveProperty('deletedAt')
   })
 })
 
