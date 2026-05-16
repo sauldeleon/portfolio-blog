@@ -82,10 +82,12 @@ export const StyledActions = styled.div`
   flex-wrap: wrap;
 `
 
-export const StyledSaveButton = styled(Button).attrs({ variant: 'inverted' })`
-  padding: 0.375rem 0.875rem;
+export const StyledSaveButton = styled(Button).attrs({
+  variant: 'inverted',
+  size: 'xs',
+})`
+  padding: 0.25rem 0.875rem;
   font-family: inherit;
-  font-size: 0.65rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 
@@ -97,19 +99,16 @@ export const StyledSaveButton = styled(Button).attrs({ variant: 'inverted' })`
 export const StyledPublishButton = styled(Button).attrs({
   variant: 'ghost',
   size: 'xs',
-})<{ $published: boolean }>`
+})`
   font-family: inherit;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: ${({ $published, theme }) =>
-    $published ? theme.colors.white : theme.colors.green};
-  border-color: ${({ $published, theme }) =>
-    $published ? 'rgba(251,251,251,0.3)' : theme.colors.green};
+  color: ${({ theme }) => theme.colors.green};
+  border-color: ${({ theme }) => theme.colors.green};
 
   &:hover:not(:disabled) {
     opacity: 0.8;
-    border-color: ${({ $published, theme }) =>
-      $published ? 'rgba(251,251,251,0.3)' : theme.colors.green};
+    border-color: ${({ theme }) => theme.colors.green};
   }
 `
 
@@ -120,13 +119,12 @@ export const StyledArchiveButton = styled(Button).attrs({
   font-family: inherit;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: ${({ theme }) => theme.colors.white};
-  opacity: 0.45;
-  border-color: rgba(251, 251, 251, 0.2);
+  color: ${({ theme }) => theme.colors.orange};
+  border-color: ${({ theme }) => theme.colors.orange};
 
   &:hover:not(:disabled) {
     opacity: 0.8;
-    border-color: rgba(251, 251, 251, 0.2);
+    border-color: ${({ theme }) => theme.colors.orange};
   }
 `
 

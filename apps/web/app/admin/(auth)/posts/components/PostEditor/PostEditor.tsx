@@ -347,7 +347,6 @@ export function PostEditor({
 
           {status !== 'published' && status !== 'archived' && (
             <StyledPublishButton
-              $published={false}
               onClick={() => handleSave('published')}
               disabled={saving || !canPublish()}
               title={
@@ -364,7 +363,6 @@ export function PostEditor({
           {status === 'published' && (
             <>
               <StyledPublishButton
-                $published
                 onClick={() => handleSave('draft')}
                 disabled={saving}
                 data-testid="unpublish-button"
@@ -384,7 +382,6 @@ export function PostEditor({
           {status === 'archived' && (
             <>
               <StyledPublishButton
-                $published={false}
                 onClick={() => handleSave('draft')}
                 disabled={saving}
                 data-testid="unarchive-button"
