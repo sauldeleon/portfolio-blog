@@ -10,12 +10,13 @@ const mockUpdatePost = jest.fn()
 const mockUpsertTranslation = jest.fn()
 const mockGetPostStatus = jest.fn()
 const mockSoftDeletePost = jest.fn()
+const mockHardDeletePost = jest.fn()
 
-jest.mock('../../../../lib/auth/config', () => ({ auth: mockAuth }))
-jest.mock('../../../../lib/db/queries/categories', () => ({
+jest.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
+jest.mock('@web/lib/db/queries/categories', () => ({
   getCategoryBySlug: mockGetCategoryBySlug,
 }))
-jest.mock('../../../../lib/db/queries/posts', () => ({
+jest.mock('@web/lib/db/queries/posts', () => ({
   getPostById: mockGetPostById,
   slugExistsForLocale: mockSlugExistsForLocale,
   getPostTranslations: mockGetPostTranslations,
@@ -23,6 +24,7 @@ jest.mock('../../../../lib/db/queries/posts', () => ({
   upsertTranslation: mockUpsertTranslation,
   getPostStatus: mockGetPostStatus,
   softDeletePost: mockSoftDeletePost,
+  hardDeletePost: mockHardDeletePost,
 }))
 
 const { DELETE, GET, PUT } = require('./route') as {
@@ -383,6 +385,34 @@ describe('PUT /api/posts/[id]', () => {
     expect(response.status).toBe(200)
   })
 
+  it('sets deletedAt when status changes to archived', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockUpdatePost.mockResolvedValue({ ...mockPost, status: 'archived' })
+    await PUT(makePutRequest({ status: 'archived' }), makeParams('id'))
+    expect(mockUpdatePost).toHaveBeenCalledWith(
+      'id',
+      expect.objectContaining({ deletedAt: expect.any(Date) }),
+    )
+  })
+
+  it('clears deletedAt when status changes to draft', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockUpdatePost.mockResolvedValue({ ...mockPost, status: 'draft' })
+    await PUT(makePutRequest({ status: 'draft' }), makeParams('id'))
+    expect(mockUpdatePost).toHaveBeenCalledWith(
+      'id',
+      expect.objectContaining({ deletedAt: null }),
+    )
+  })
+
+  it('does not touch deletedAt when status not provided', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockUpdatePost.mockResolvedValue(mockPost)
+    await PUT(makePutRequest({ tags: ['react'] }), makeParams('id'))
+    const callArg = mockUpdatePost.mock.calls[0][1] as Record<string, unknown>
+    expect(callArg).not.toHaveProperty('deletedAt')
+  })
+
   it('succeeds publishing when missing locale is covered by update', async () => {
     mockAuth.mockResolvedValue({ user: { name: 'admin' } })
     mockSlugExistsForLocale.mockResolvedValue(false)
@@ -441,6 +471,51 @@ describe('DELETE /api/posts/[id]', () => {
     expect(mockSoftDeletePost).toHaveBeenCalledWith(
       '01JWTEST000000000000000000',
     )
+  })
+
+  it('hard-deletes archived post and returns 204', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockGetPostStatus.mockResolvedValue('archived')
+    mockHardDeletePost.mockResolvedValue(undefined)
+    const response = await DELETE(
+      new Request('http://localhost/api/posts/id?hard=true', {
+        method: 'DELETE',
+      }),
+      makeParams('01JWTEST000000000000000000'),
+    )
+    expect(response.status).toBe(204)
+    expect(mockHardDeletePost).toHaveBeenCalledWith(
+      '01JWTEST000000000000000000',
+    )
+    expect(mockSoftDeletePost).not.toHaveBeenCalled()
+  })
+
+  it('returns 422 when hard-deleting a non-archived post', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockGetPostStatus.mockResolvedValue('draft')
+    const response = await DELETE(
+      new Request('http://localhost/api/posts/id?hard=true', {
+        method: 'DELETE',
+      }),
+      makeParams('id'),
+    )
+    expect(response.status).toBe(422)
+    const body = (await response.json()) as { error: string }
+    expect(body.error).toMatch(/archived/i)
+    expect(mockHardDeletePost).not.toHaveBeenCalled()
+  })
+
+  it('returns 422 when hard-deleting a published post', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockGetPostStatus.mockResolvedValue('published')
+    const response = await DELETE(
+      new Request('http://localhost/api/posts/id?hard=true', {
+        method: 'DELETE',
+      }),
+      makeParams('id'),
+    )
+    expect(response.status).toBe(422)
+    expect(mockHardDeletePost).not.toHaveBeenCalled()
   })
 })
 

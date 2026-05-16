@@ -16,6 +16,7 @@ const { uploadImage } = require('./upload') as {
     buffer: Buffer,
     mimeType: string,
     altText: string,
+    name?: string,
   ) => Promise<import('./upload').UploadResult>
 }
 
@@ -24,12 +25,15 @@ const mockCloudinaryResult = {
   public_id: 'sawl.dev - blog/sample',
   width: 800,
   height: 600,
+  format: 'jpg',
+  created_at: '2024-01-01T00:00:00Z',
+  bytes: 12345,
 }
 
 describe('uploadImage', () => {
   beforeEach(() => {
     jest.clearAllMocks()
-    process.env.CLOUDINARY_CLOUD_NAME = 'test-cloud'
+    process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME = 'test-cloud'
     process.env.CLOUDINARY_API_KEY = 'test-key'
     process.env.CLOUDINARY_API_SECRET = 'test-secret'
   })
@@ -65,8 +69,31 @@ describe('uploadImage', () => {
       publicId: mockCloudinaryResult.public_id,
       width: 800,
       height: 600,
+      format: 'jpg',
+      createdAt: '2024-01-01T00:00:00Z',
+      bytes: 12345,
       altText: 'my alt',
     })
+  })
+
+  it('passes public_id when name is provided', async () => {
+    mockUpload.mockResolvedValue(mockCloudinaryResult)
+    const buffer = Buffer.from('imgdata')
+    await uploadImage(buffer, 'image/jpeg', 'alt text', 'my-custom-name')
+    expect(mockUpload).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({ public_id: 'my-custom-name' }),
+    )
+  })
+
+  it('does not pass public_id when name is not provided', async () => {
+    mockUpload.mockResolvedValue(mockCloudinaryResult)
+    const buffer = Buffer.from('imgdata')
+    await uploadImage(buffer, 'image/jpeg', 'alt text')
+    expect(mockUpload).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.not.objectContaining({ public_id: expect.anything() }),
+    )
   })
 
   it('propagates cloudinary upload errors', async () => {

@@ -13,8 +13,10 @@
   "nav": {
     "posts": "Posts",
     "categories": "Categories",
+    "images": "Images",
     "logout": "Logout"
   },
+  "refresh": "Refresh",
   "posts": {
     "title": "Posts",
     "newPost": "New post",
@@ -27,7 +29,7 @@
       "published": "Published",
       "createdAt": "Created",
       "updatedAt": "Updated",
-      "deletedAt": "Deleted",
+      "archived": "Archived",
       "actions": "Actions"
     },
     "filters": {
@@ -43,6 +45,8 @@
     "unarchive": "Unarchive",
     "archiveConfirm": "Archive this post? You can restore it later.",
     "archiveDisabledPublished": "Unpublish the post before archiving",
+    "hardDelete": "Delete",
+    "hardDeleteConfirm": "Permanently delete this post? This cannot be undone.",
     "empty": "No posts found"
   },
   "confirmDelete": {
@@ -72,10 +76,17 @@
       "tagsHelper": "Comma-separated",
       "seriesId": "Series ID",
       "seriesIdPlaceholder": "e.g. react-hooks-series",
+      "seriesTitleEn": "Series title (EN)",
+      "seriesTitleEs": "Series title (ES)",
+      "seriesTitlePlaceholder": "Series title",
       "seriesOrder": "Series Order",
       "seriesOrderPlaceholder": "1",
       "coverImage": "Cover Image",
-      "coverImagePlaceholder": "Cloudinary public ID",
+      "coverImagePlaceholder": "No cover image selected",
+      "coverImageClear": "Remove cover image",
+      "coverImageFit": "Cover image fit",
+      "coverImageFitCover": "Cover (fill)",
+      "coverImageFitContain": "Contain (full image)",
       "author": "Author",
       "authorPlaceholder": "Author name",
       "authorUseDefault": "Use default author"
@@ -98,7 +109,41 @@
     },
     "preview": "Preview",
     "previewLoading": "Rendering…",
+    "cardPreview": "Card preview",
     "error": "Something went wrong, please try again"
+  },
+  "images": {
+    "title": "Images",
+    "uploadButton": "Upload Image",
+    "emptyState": "No images yet. Upload your first image.",
+    "deleteConfirm": "Delete this image? This cannot be undone.",
+    "copyUrl": "Copy URL",
+    "copied": "Copied!",
+    "delete": "Delete",
+    "rename": "Rename",
+    "renameModal": {
+      "title": "Rename Image",
+      "label": "New name",
+      "placeholder": "Image name",
+      "save": "Save",
+      "saving": "Saving…",
+      "error": "Rename failed, please try again"
+    },
+    "upload": {
+      "title": "Upload Image",
+      "dropzone": "Drop an image here, or click to select",
+      "dropzoneActive": "Drop it!",
+      "uploading": "Uploading…",
+      "error": "Upload failed, please try again",
+      "namePlaceholder": "Image name (optional)",
+      "uploadButton": "Upload"
+    },
+    "picker": {
+      "title": "Insert Image",
+      "search": "Search images…",
+      "empty": "No images found.",
+      "loading": "Loading…"
+    }
   },
   "categories": {
     "title": "Categories",

@@ -29,6 +29,7 @@ const mockPosts: AdminPost[] = [
     publishedAt: null,
     createdAt: new Date('2024-01-01'),
     updatedAt: new Date('2024-01-01'),
+    deletedAt: null,
     previewToken: 'tok',
     titleEn: 'Test Post',
     slugEn: 'test-post',

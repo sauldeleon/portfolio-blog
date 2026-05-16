@@ -1,5 +1,7 @@
 'use client'
 
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
@@ -9,17 +11,20 @@ import type { AdminPost } from '@web/lib/db/queries/posts'
 
 import {
   StyledActions,
+  StyledArchiveButton,
+  StyledButtonGroup,
   StyledCount,
-  StyledDeleteButton,
   StyledEmDash,
   StyledEmpty,
   StyledFilterTab,
   StyledFilterTabs,
+  StyledHardDeleteButton,
   StyledLangChip,
   StyledLangChips,
   StyledLeftGroup,
   StyledNewPostButton,
   StyledPublishButton,
+  StyledRefreshButton,
   StyledSearchInput,
   StyledStatusBadge,
   StyledTable,
@@ -35,6 +40,28 @@ import {
 
 type StatusFilter = 'all' | 'published' | 'draft' | 'archived'
 
+type RawAdminPost = Omit<
+  AdminPost,
+  'publishedAt' | 'createdAt' | 'updatedAt' | 'deletedAt' | 'scheduledAt'
+> & {
+  publishedAt: string | null
+  createdAt: string
+  updatedAt: string
+  deletedAt: string | null
+  scheduledAt: string | null
+}
+
+function deserializePost(p: RawAdminPost): AdminPost {
+  return {
+    ...p,
+    publishedAt: p.publishedAt ? new Date(p.publishedAt) : null,
+    createdAt: new Date(p.createdAt),
+    updatedAt: new Date(p.updatedAt),
+    deletedAt: p.deletedAt ? new Date(p.deletedAt) : null,
+    scheduledAt: p.scheduledAt ? new Date(p.scheduledAt) : null,
+  }
+}
+
 const STATUS_FILTERS: StatusFilter[] = ['all', 'published', 'draft', 'archived']
 
 interface PostTableProps {
@@ -43,60 +70,120 @@ interface PostTableProps {
 
 export function PostTable({ posts }: PostTableProps) {
   const { t } = useClientTranslation('admin')
+  const queryClient = useQueryClient()
   const [filter, setFilter] = useState<StatusFilter>('all')
   const [search, setSearch] = useState('')
-  const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null)
+  const [archiveTargetId, setArchiveTargetId] = useState<string | null>(null)
+  const [hardDeleteTargetId, setHardDeleteTargetId] = useState<string | null>(
+    null,
+  )
   const router = useRouter()
+
+  const QUERY_KEY = ['admin-posts'] as const
+
+  const { data: items, refetch } = useQuery({
+    queryKey: QUERY_KEY,
+    queryFn: async () => {
+      const { data } = await axios.get<{ data: RawAdminPost[] }>(
+        '/api/posts?status=all',
+      )
+      return data.data.map(deserializePost)
+    },
+    initialData: posts,
+    staleTime: Infinity,
+    gcTime: 0,
+  })
 
   const countFor = (status: StatusFilter) =>
     status === 'all'
-      ? posts.length
-      : posts.filter((p) => p.status === status).length
+      ? items.filter((p) => p.status !== 'archived').length
+      : items.filter((p) => p.status === status).length
 
-  const filtered = posts.filter((p) => {
-    const matchesStatus = filter === 'all' || p.status === filter
+  const filtered = items.filter((p) => {
+    const matchesStatus =
+      filter === 'all' ? p.status !== 'archived' : p.status === filter
     const searchLower = search.toLowerCase()
     const title = p.titleEn ?? p.titleEs ?? ''
     const matchesSearch = title.toLowerCase().includes(searchLower)
     return matchesStatus && matchesSearch
   })
 
-  function handleDelete(e: React.MouseEvent, id: string) {
+  function handleArchive(e: React.MouseEvent, id: string) {
     e.stopPropagation()
-    setDeleteTargetId(id)
+    setArchiveTargetId(id)
   }
 
-  async function handleConfirmDelete() {
-    await fetch(`/api/posts/${deleteTargetId!}/`, { method: 'DELETE' })
-    setDeleteTargetId(null)
-    router.refresh()
+  async function handleConfirmArchive() {
+    /* istanbul ignore next */
+    if (!archiveTargetId) return
+    const id = archiveTargetId
+    await axios.delete(`/api/posts/${id}/`)
+    setArchiveTargetId(null)
+    queryClient.setQueryData<AdminPost[]>(QUERY_KEY, (old) => {
+      /* istanbul ignore next */
+      if (!old) return []
+      return old.map((p) =>
+        p.id === id ? { ...p, status: 'archived', deletedAt: new Date() } : p,
+      )
+    })
   }
 
-  function handleCancelDelete() {
-    setDeleteTargetId(null)
+  function handleCancelArchive() {
+    setArchiveTargetId(null)
+  }
+
+  function handleHardDelete(e: React.MouseEvent, id: string) {
+    e.stopPropagation()
+    setHardDeleteTargetId(id)
+  }
+
+  async function handleConfirmHardDelete() {
+    /* istanbul ignore next */
+    if (!hardDeleteTargetId) return
+    const id = hardDeleteTargetId
+    await axios.delete(`/api/posts/${id}/?hard=true`)
+    setHardDeleteTargetId(null)
+    queryClient.setQueryData<AdminPost[]>(QUERY_KEY, (old) => {
+      /* istanbul ignore next */
+      if (!old) return []
+      return old.filter((p) => p.id !== id)
+    })
+  }
+
+  function handleCancelHardDelete() {
+    setHardDeleteTargetId(null)
   }
 
   async function handleUnarchive(e: React.MouseEvent, id: string) {
     e.stopPropagation()
-    await fetch(`/api/posts/${id}/`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ status: 'draft' }),
+    await axios.put(`/api/posts/${id}/`, { status: 'draft' })
+    queryClient.setQueryData<AdminPost[]>(QUERY_KEY, (old) => {
+      /* istanbul ignore next */
+      if (!old) return []
+      return old.map((p) =>
+        p.id === id ? { ...p, status: 'draft', deletedAt: null } : p,
+      )
     })
-    router.refresh()
   }
 
   async function handleTogglePublish(e: React.MouseEvent, post: AdminPost) {
     e.stopPropagation()
     const isPublished = post.status === 'published'
-    await fetch(`/api/posts/${post.id}/`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(
-        isPublished ? { status: 'draft' } : { status: 'published' },
-      ),
+    const newStatus = isPublished ? 'draft' : 'published'
+    await axios.put(`/api/posts/${post.id}/`, { status: newStatus })
+    queryClient.setQueryData<AdminPost[]>(QUERY_KEY, (old) => {
+      /* istanbul ignore next */
+      if (!old) return []
+      return old.map((p) =>
+        p.id === post.id
+          ? {
+              ...p,
+              status: newStatus,
+              publishedAt: newStatus === 'published' ? new Date() : null,
+            }
+          : p,
+      )
     })
-    router.refresh()
   }
 
   const canPublish = (post: AdminPost) => !!(post.titleEn && post.titleEs)
@@ -127,14 +214,24 @@ export function PostTable({ posts }: PostTableProps) {
             ))}
           </StyledFilterTabs>
         </StyledLeftGroup>
-        <StyledNewPostButton
-          variant="inverted"
-          size="sm"
-          onClick={() => router.push('/admin/posts/new')}
-          data-testid="new-post-button"
-        >
-          {t('posts.newPost')}
-        </StyledNewPostButton>
+        <StyledButtonGroup>
+          <StyledRefreshButton
+            variant="contained"
+            size="sm"
+            onClick={() => void refetch()}
+            data-testid="refresh-button"
+          >
+            {t('refresh')}
+          </StyledRefreshButton>
+          <StyledNewPostButton
+            variant="inverted"
+            size="sm"
+            onClick={() => router.push('/admin/posts/new')}
+            data-testid="new-post-button"
+          >
+            {t('posts.newPost')}
+          </StyledNewPostButton>
+        </StyledButtonGroup>
       </StyledToolbar>
 
       <StyledTable>
@@ -147,7 +244,7 @@ export function PostTable({ posts }: PostTableProps) {
             <StyledTh>{t('posts.table.published')}</StyledTh>
             <StyledTh>{t('posts.table.createdAt')}</StyledTh>
             <StyledTh>{t('posts.table.updatedAt')}</StyledTh>
-            <StyledTh>{t('posts.table.deletedAt')}</StyledTh>
+            <StyledTh>{t('posts.table.archived')}</StyledTh>
             <StyledTh>{t('posts.table.actions')}</StyledTh>
           </tr>
         </StyledThead>
@@ -218,39 +315,47 @@ export function PostTable({ posts }: PostTableProps) {
               </StyledTd>
               <StyledTd>
                 <StyledActions>
-                  <StyledPublishButton
-                    $published={post.status === 'published'}
-                    onClick={(e) => handleTogglePublish(e, post)}
-                    disabled={
-                      post.status === 'archived' ||
-                      (post.status !== 'published' && !canPublish(post))
-                    }
-                    data-testid="publish-button"
-                  >
-                    {post.status === 'published'
-                      ? t('posts.unpublish')
-                      : t('posts.publish')}
-                  </StyledPublishButton>
-                  {post.status === 'archived' ? (
-                    <StyledDeleteButton
-                      onClick={(e) => handleUnarchive(e, post.id)}
-                      data-testid="unarchive-button"
+                  {post.status !== 'archived' && (
+                    <StyledPublishButton
+                      onClick={(e) => handleTogglePublish(e, post)}
+                      disabled={
+                        post.status !== 'published' && !canPublish(post)
+                      }
+                      data-testid="publish-button"
                     >
-                      {t('posts.unarchive')}
-                    </StyledDeleteButton>
+                      {post.status === 'published'
+                        ? t('posts.unpublish')
+                        : t('posts.publish')}
+                    </StyledPublishButton>
+                  )}
+                  {post.status === 'archived' ? (
+                    <>
+                      <StyledArchiveButton
+                        onClick={(e) => handleUnarchive(e, post.id)}
+                        data-testid="unarchive-button"
+                      >
+                        {t('posts.unarchive')}
+                      </StyledArchiveButton>
+                      <StyledHardDeleteButton
+                        onClick={(e) => handleHardDelete(e, post.id)}
+                        data-testid="hard-delete-button"
+                      >
+                        {t('posts.hardDelete')}
+                      </StyledHardDeleteButton>
+                    </>
                   ) : (
-                    <StyledDeleteButton
-                      onClick={(e) => handleDelete(e, post.id)}
+                    <StyledArchiveButton
+                      onClick={(e) => handleArchive(e, post.id)}
                       disabled={post.status === 'published'}
                       title={
                         post.status === 'published'
                           ? t('posts.archiveDisabledPublished')
                           : undefined
                       }
-                      data-testid="delete-button"
+                      data-testid="archive-button"
                     >
                       {t('posts.archive')}
-                    </StyledDeleteButton>
+                    </StyledArchiveButton>
                   )}
                 </StyledActions>
               </StyledTd>
@@ -258,11 +363,19 @@ export function PostTable({ posts }: PostTableProps) {
           ))}
         </StyledTbody>
       </StyledTable>
+
       <ConfirmDeleteModal
-        isOpen={deleteTargetId !== null}
+        isOpen={archiveTargetId !== null}
         message={t('posts.archiveConfirm')}
-        onConfirm={handleConfirmDelete}
-        onCancel={handleCancelDelete}
+        onConfirm={handleConfirmArchive}
+        onCancel={handleCancelArchive}
+        variant="warning"
+      />
+      <ConfirmDeleteModal
+        isOpen={hardDeleteTargetId !== null}
+        message={t('posts.hardDeleteConfirm')}
+        onConfirm={handleConfirmHardDelete}
+        onCancel={handleCancelHardDelete}
       />
     </StyledWrapper>
   )

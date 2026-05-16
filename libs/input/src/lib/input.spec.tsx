@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+import { createRef } from 'react'
 
 import { RenderProviders } from '@sdlgr/test-utils'
 
@@ -78,6 +79,12 @@ describe('Textarea', () => {
       'rows',
       '5',
     )
+  })
+
+  it('forwards ref to the textarea element', () => {
+    const ref = createRef<HTMLTextAreaElement>()
+    wrap(<Textarea ref={ref} data-testid="ta-ref" />)
+    expect(ref.current).toBeInstanceOf(HTMLTextAreaElement)
   })
 })
 

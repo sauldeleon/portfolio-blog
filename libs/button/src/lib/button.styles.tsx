@@ -8,9 +8,13 @@ const sharedButtonStyles = css`
   cursor: pointer;
 `
 
-type ButtonSize = 'sm' | 'md' | 'lg'
+type ButtonSize = 'xs' | 'sm' | 'md' | 'lg'
 
 const buttonSizeStyles: Record<ButtonSize, ReturnType<typeof css>> = {
+  xs: css`
+    padding: 0.25rem 0.625rem;
+    font-size: 0.6rem;
+  `,
   sm: css`
     padding: 0.5rem 1rem;
     font-size: 0.6rem;
@@ -61,6 +65,25 @@ export const StyledInvertedButton = styled.button<{ $size: ButtonSize }>`
     opacity: 0.6;
     cursor: not-allowed;
   }
+`
+
+export const StyledGhostButton = styled.button<{ $size: ButtonSize }>`
+  ${sharedButtonStyles}
+  background: transparent;
+  border: 1px solid transparent;
+  font-family: inherit;
+  ${({ $size }) => buttonSizeStyles[$size]}
+
+  &:hover:not(:disabled) {
+    border-color: currentColor;
+  }
+
+  &:disabled {
+    opacity: 0.2;
+    cursor: not-allowed;
+  }
+
+  ${({ theme }) => theme.helpers.focusVisible}
 `
 
 export const buttonLabelStyles = css<{ $active?: boolean }>`

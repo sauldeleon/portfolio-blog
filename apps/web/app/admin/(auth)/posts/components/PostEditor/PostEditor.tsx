@@ -1,8 +1,9 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import axios, { isAxiosError } from 'axios'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -18,10 +19,14 @@ import {
 import { Select } from '@sdlgr/select'
 
 import { useClientTranslation } from '@web/i18n/client'
+import type { CloudinaryImage } from '@web/lib/cloudinary/images'
 import type { PostStatus } from '@web/lib/db/schema'
 import { slugify } from '@web/utils/slugify'
 
+import { ImagePicker } from '../ImagePicker'
 import { MarkdownPreview } from '../MarkdownPreview'
+import { CoverImageInput } from './CoverImageInput'
+import { PostCardPreview } from './PostCardPreview'
 import {
   StyledActions,
   StyledArchiveButton,
@@ -33,6 +38,7 @@ import {
   StyledFormActions,
   StyledHeaderLeft,
   StyledHeading,
+  StyledImagePickerButton,
   StyledLocaleTab,
   StyledLocaleTabs,
   StyledMarkdownHint,
@@ -87,9 +93,15 @@ export interface PostEditorPost {
   tags: string[]
   status: PostStatus
   coverImage: string | null
+  coverImageFit: 'cover' | 'contain' | null
   seriesId: string | null
   seriesOrder: number | null
   author: string
+}
+
+export type PostEditorSeries = {
+  id: string
+  translations: Array<{ locale: string; title: string }>
 }
 
 export interface PostEditorProps {
@@ -100,7 +112,7 @@ export interface PostEditorProps {
   categories: PostEditorCategory[]
   author: string
   allTags?: string[]
-  series?: string[]
+  series?: PostEditorSeries[]
 }
 
 const postFormSchema = z.object({
@@ -154,7 +166,22 @@ export function PostEditor({
   const [seriesOrder, setSeriesOrder] = useState(
     post?.post.seriesOrder != null ? String(post.post.seriesOrder) : '',
   )
+  const [seriesTitles, setSeriesTitles] = useState<Record<Locale, string>>(
+    () => {
+      const initialId = post?.post.seriesId
+      if (!initialId) return { en: '', es: '' }
+      const found = (series ?? []).find((s) => s.id === initialId)
+      if (!found) return { en: '', es: '' }
+      return {
+        en: found.translations.find((tr) => tr.locale === 'en')?.title ?? '',
+        es: found.translations.find((tr) => tr.locale === 'es')?.title ?? '',
+      }
+    },
+  )
   const [coverImage, setCoverImage] = useState(post?.post.coverImage ?? '')
+  const [coverImageFit, setCoverImageFit] = useState<'cover' | 'contain'>(
+    post?.post.coverImageFit ?? 'cover',
+  )
   const [useDefaultAuthor, setUseDefaultAuthor] = useState(true)
   const [customAuthor, setCustomAuthor] = useState('')
 
@@ -181,6 +208,47 @@ export function PostEditor({
   }).success
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [isPickerOpen, setIsPickerOpen] = useState(false)
+  const [pickerMode, setPickerMode] = useState<'insert' | 'cover'>('insert')
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+
+  function handleSeriesIdChange(newId: string) {
+    setSeriesId(newId)
+    if (!newId) {
+      setSeriesTitles({ en: '', es: '' })
+      return
+    }
+    const found = (series ?? []).find((s) => s.id === newId)
+    if (found) {
+      setSeriesTitles({
+        en: found.translations.find((tr) => tr.locale === 'en')?.title ?? '',
+        es: found.translations.find((tr) => tr.locale === 'es')?.title ?? '',
+      })
+    } else {
+      setSeriesTitles({ en: '', es: '' })
+    }
+  }
+
+  function insertAtCursor(markdown: string) {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const el = textareaRef.current!
+    const start = el.selectionStart
+    const end = el.selectionEnd
+    const newContent =
+      currentLocale.content.slice(0, start) +
+      markdown +
+      currentLocale.content.slice(end)
+    updateLocale(activeLocale, { content: newContent })
+  }
+
+  function handlePick(image: CloudinaryImage) {
+    if (pickerMode === 'insert') {
+      insertAtCursor(`![](${image.url})`)
+    } else {
+      setCoverImage(image.publicId)
+    }
+    setIsPickerOpen(false)
+  }
 
   function updateLocale(locale: Locale, patch: Partial<LocaleState>) {
     setLocales((prev) => ({ ...prev, [locale]: { ...prev[locale], ...patch } }))
@@ -227,14 +295,23 @@ export function PostEditor({
       ? parseInt(seriesOrder.trim(), 10)
       : null
 
+    const seriesTitlesValue = seriesIdValue
+      ? {
+          ...(seriesTitles.en.trim() ? { en: seriesTitles.en.trim() } : {}),
+          ...(seriesTitles.es.trim() ? { es: seriesTitles.es.trim() } : {}),
+        }
+      : undefined
+
     if (post) {
       return {
         category,
         tags: tagsArray,
         status: targetStatus,
         coverImage: coverImageValue,
+        coverImageFit,
         seriesId: seriesIdValue,
         seriesOrder: seriesOrderValue,
+        ...(seriesTitlesValue ? { seriesTitles: seriesTitlesValue } : {}),
         translations,
       }
     }
@@ -247,11 +324,19 @@ export function PostEditor({
       author: resolvedAuthor || author,
       status: targetStatus,
       ...(coverImageValue ? { coverImage: coverImageValue } : {}),
+      coverImageFit,
       ...(seriesIdValue ? { seriesId: seriesIdValue } : {}),
       ...(seriesOrderValue != null ? { seriesOrder: seriesOrderValue } : {}),
+      ...(seriesTitlesValue ? { seriesTitles: seriesTitlesValue } : {}),
       translations,
     }
   }
+
+  const previewAuthor = post
+    ? post.post.author
+    : useDefaultAuthor
+      ? DEFAULT_AUTHOR
+      : customAuthor || author
 
   async function handleSave(targetStatus: PostStatus = status) {
     setSaving(true)
@@ -259,33 +344,26 @@ export function PostEditor({
 
     try {
       const url = post ? `/api/posts/${post.post.id}/` : '/api/posts/'
-      const method = post ? 'PUT' : 'POST'
-
-      const res = await fetch(url, {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(buildBody(targetStatus)),
-      })
-
-      if (!res.ok) {
-        let data: { error?: unknown } = {}
-        try {
-          data = (await res.json()) as { error?: unknown }
-        } catch {
-          // empty or non-JSON body
-        }
-        setError(
-          typeof data.error === 'string' ? data.error : t('postEditor.error'),
-        )
-        return
-      }
 
       if (!post) {
-        const created = (await res.json()) as { id: string }
+        const { data: created } = await axios.post<{ id: string }>(
+          url,
+          buildBody(targetStatus),
+        )
         router.push(`/admin/posts/${created.id}`)
       } else {
+        await axios.put(url, buildBody(targetStatus))
         setStatus(targetStatus)
         router.refresh()
+      }
+    } catch (err) {
+      if (isAxiosError(err)) {
+        const errData = err.response?.data as { error?: unknown } | undefined
+        setError(
+          typeof errData?.error === 'string'
+            ? errData.error
+            : t('postEditor.error'),
+        )
       }
     } finally {
       setSaving(false)
@@ -326,7 +404,6 @@ export function PostEditor({
 
           {status !== 'published' && status !== 'archived' && (
             <StyledPublishButton
-              $published={false}
               onClick={() => handleSave('published')}
               disabled={saving || !canPublish()}
               title={
@@ -343,7 +420,6 @@ export function PostEditor({
           {status === 'published' && (
             <>
               <StyledPublishButton
-                $published
                 onClick={() => handleSave('draft')}
                 disabled={saving}
                 data-testid="unpublish-button"
@@ -363,7 +439,6 @@ export function PostEditor({
           {status === 'archived' && (
             <>
               <StyledPublishButton
-                $published={false}
                 onClick={() => handleSave('draft')}
                 disabled={saving}
                 data-testid="unarchive-button"
@@ -485,19 +560,17 @@ export function PostEditor({
                 <FieldHelper>{t('postEditor.fields.tagsHelper')}</FieldHelper>
               </FieldGroup>
 
-              <FieldGroup>
-                <FieldLabel htmlFor="meta-cover">
-                  {t('postEditor.fields.coverImage')}
-                </FieldLabel>
-                <Input
-                  id="meta-cover"
-                  type="text"
-                  value={coverImage}
-                  onChange={(e) => setCoverImage(e.target.value)}
-                  placeholder={t('postEditor.fields.coverImagePlaceholder')}
-                  data-testid="cover-image-input"
-                />
-              </FieldGroup>
+              <CoverImageInput
+                label={t('postEditor.fields.coverImage')}
+                placeholder={t('postEditor.fields.coverImagePlaceholder')}
+                clearTitle={t('postEditor.fields.coverImageClear')}
+                value={coverImage}
+                onPick={() => {
+                  setPickerMode('cover')
+                  setIsPickerOpen(true)
+                }}
+                onClear={() => setCoverImage('')}
+              />
 
               <FieldGroup>
                 <FieldLabel htmlFor="meta-series-id">
@@ -506,8 +579,11 @@ export function PostEditor({
                 <Select
                   id="meta-series-id"
                   value={seriesId}
-                  onChange={setSeriesId}
-                  options={(series ?? []).map((s) => ({ value: s, label: s }))}
+                  onChange={handleSeriesIdChange}
+                  options={(series ?? []).map((s) => ({
+                    value: s.id,
+                    label: s.id,
+                  }))}
                   isSearchable
                   isCreatable
                   isClearable
@@ -515,6 +591,51 @@ export function PostEditor({
                   data-testid="series-id-input"
                 />
               </FieldGroup>
+
+              {seriesId && (
+                <>
+                  <FieldGroup>
+                    <FieldLabel htmlFor="meta-series-title-en">
+                      {t('postEditor.fields.seriesTitleEn')}
+                    </FieldLabel>
+                    <Input
+                      id="meta-series-title-en"
+                      type="text"
+                      value={seriesTitles.en}
+                      onChange={(e) =>
+                        setSeriesTitles((prev) => ({
+                          ...prev,
+                          en: e.target.value,
+                        }))
+                      }
+                      placeholder={t(
+                        'postEditor.fields.seriesTitlePlaceholder',
+                      )}
+                      data-testid="series-title-en-input"
+                    />
+                  </FieldGroup>
+                  <FieldGroup>
+                    <FieldLabel htmlFor="meta-series-title-es">
+                      {t('postEditor.fields.seriesTitleEs')}
+                    </FieldLabel>
+                    <Input
+                      id="meta-series-title-es"
+                      type="text"
+                      value={seriesTitles.es}
+                      onChange={(e) =>
+                        setSeriesTitles((prev) => ({
+                          ...prev,
+                          es: e.target.value,
+                        }))
+                      }
+                      placeholder={t(
+                        'postEditor.fields.seriesTitlePlaceholder',
+                      )}
+                      data-testid="series-title-es-input"
+                    />
+                  </FieldGroup>
+                </>
+              )}
 
               <FieldGroup>
                 <FieldLabel htmlFor="meta-series-order">
@@ -527,6 +648,28 @@ export function PostEditor({
                   onChange={(e) => setSeriesOrder(e.target.value)}
                   placeholder={t('postEditor.fields.seriesOrderPlaceholder')}
                   data-testid="series-order-input"
+                />
+              </FieldGroup>
+
+              <FieldGroup>
+                <FieldLabel htmlFor="meta-cover-image-fit">
+                  {t('postEditor.fields.coverImageFit')}
+                </FieldLabel>
+                <Select
+                  id="meta-cover-image-fit"
+                  value={coverImageFit}
+                  onChange={(v) => setCoverImageFit(v as 'cover' | 'contain')}
+                  options={[
+                    {
+                      value: 'cover',
+                      label: t('postEditor.fields.coverImageFitCover'),
+                    },
+                    {
+                      value: 'contain',
+                      label: t('postEditor.fields.coverImageFitContain'),
+                    },
+                  ]}
+                  data-testid="cover-image-fit-select"
                 />
               </FieldGroup>
 
@@ -560,6 +703,16 @@ export function PostEditor({
             <FieldLabel htmlFor={`content-${activeLocale}`} required>
               {t('postEditor.fields.content')}
             </FieldLabel>
+            <StyledImagePickerButton
+              type="button"
+              onClick={() => {
+                setPickerMode('insert')
+                setIsPickerOpen(true)
+              }}
+              data-testid="open-image-picker-button"
+            >
+              {t('images.picker.title')}
+            </StyledImagePickerButton>
             <StyledContentTextarea
               id={`content-${activeLocale}`}
               value={currentLocale.content}
@@ -568,6 +721,7 @@ export function PostEditor({
               }
               placeholder={t('postEditor.fields.contentPlaceholder')}
               data-testid="content-input"
+              ref={textareaRef}
             />
             <StyledMarkdownHint>
               <summary>Image syntax</summary>
@@ -606,6 +760,21 @@ https://www.wikiloc.com/wikiloc/embedv2.do?id=<trail-id>&elevation=on&images=on&
 Supported types: youtube · maps · openstreetmap · wikiloc`}</pre>
             </StyledMarkdownHint>
           </FieldGroup>
+
+          <PostCardPreview
+            title={currentLocale.title}
+            slug={currentLocale.slug}
+            excerpt={currentLocale.excerpt}
+            content={currentLocale.content}
+            categoryName={
+              categories.find((c) => c.slug === category)?.name ?? ''
+            }
+            tags={tags}
+            coverImage={coverImage}
+            coverImageFit={coverImageFit}
+            author={previewAuthor}
+            lng={activeLocale}
+          />
         </StyledEditorPane>
 
         <StyledPreviewPane data-testid="preview-pane">
@@ -620,6 +789,12 @@ Supported types: youtube · maps · openstreetmap · wikiloc`}</pre>
       <StyledFormActions>
         {error && <StyledError data-testid="editor-error">{error}</StyledError>}
       </StyledFormActions>
+
+      <ImagePicker
+        open={isPickerOpen}
+        onClose={() => setIsPickerOpen(false)}
+        onPick={handlePick}
+      />
     </StyledWrapper>
   )
 }

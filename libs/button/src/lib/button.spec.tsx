@@ -77,4 +77,62 @@ describe('Button', () => {
     expect(screen.getByText('Published')).toBeInTheDocument()
     expect(baseElement).toMatchSnapshot()
   })
+
+  it('should render variant ghost', () => {
+    const { baseElement } = renderWithTheme(
+      <Button variant="ghost">Action</Button>,
+    )
+    expect(screen.getByText('Action')).toBeInTheDocument()
+    expect(baseElement).toMatchSnapshot()
+  })
+
+  it('should render variant ghost with size xs', () => {
+    const { baseElement } = renderWithTheme(
+      <Button variant="ghost" size="xs">
+        Action
+      </Button>,
+    )
+    expect(screen.getByText('Action')).toBeInTheDocument()
+    expect(baseElement).toMatchSnapshot()
+  })
+
+  it('should render variant ghost with size sm', () => {
+    const { baseElement } = renderWithTheme(
+      <Button variant="ghost" size="sm">
+        Action
+      </Button>,
+    )
+    expect(screen.getByText('Action')).toBeInTheDocument()
+    expect(baseElement).toMatchSnapshot()
+  })
+
+  it('should render variant ghost with size lg', () => {
+    const { baseElement } = renderWithTheme(
+      <Button variant="ghost" size="lg">
+        Action
+      </Button>,
+    )
+    expect(screen.getByText('Action')).toBeInTheDocument()
+    expect(baseElement).toMatchSnapshot()
+  })
+
+  it('should render contained with size xs', () => {
+    const { baseElement } = renderWithTheme(
+      <Button variant="contained" size="xs">
+        Click me
+      </Button>,
+    )
+    expect(screen.getByText('Click me')).toBeInTheDocument()
+    expect(baseElement).toMatchSnapshot()
+  })
+
+  it('should render inverted with size xs', () => {
+    const { baseElement } = renderWithTheme(
+      <Button variant="inverted" size="xs">
+        Click me
+      </Button>,
+    )
+    expect(screen.getByText('Click me')).toBeInTheDocument()
+    expect(baseElement).toMatchSnapshot()
+  })
 })

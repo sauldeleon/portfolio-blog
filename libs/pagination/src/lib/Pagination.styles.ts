@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
+import { Button } from '@sdlgr/button'
+
 export const StyledNav = styled.nav`
   display: flex;
   align-items: center;
@@ -7,17 +9,17 @@ export const StyledNav = styled.nav`
   flex-wrap: wrap;
 `
 
-export const StyledPageButton = styled.button<{ $current?: boolean }>`
+export const StyledPageButton = styled(Button).attrs({ variant: 'ghost' })<{
+  $current?: boolean
+}>`
   ${({ theme }) => theme.typography.body.S}
   padding: 0.375rem 0.875rem;
-  border: 1px solid
-    ${({ $current, theme }) =>
-      $current ? theme.colors.green : 'rgba(251, 251, 251, 0.2)'};
+  border-color: ${({ $current, theme }) =>
+    $current ? theme.colors.green : 'rgba(251, 251, 251, 0.2)'};
   background: ${({ $current, theme }) =>
     $current ? theme.colors.green : 'transparent'};
   color: ${({ $current, theme }) =>
     $current ? theme.colors.black : theme.colors.white};
-  cursor: pointer;
   transition:
     border-color 0.15s ease,
     background 0.15s ease;
@@ -30,6 +32,5 @@ export const StyledPageButton = styled.button<{ $current?: boolean }>`
 
   &:disabled {
     opacity: 0.3;
-    cursor: not-allowed;
   }
 `

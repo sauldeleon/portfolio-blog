@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
+import { Button } from '@sdlgr/button'
+
 export const StyledCodeBlock = styled.div`
   position: relative;
   margin: 1.5rem 0;
@@ -32,17 +34,17 @@ export const StyledLang = styled.span`
   text-transform: lowercase;
 `
 
-export const StyledCopyButton = styled.button`
+export const StyledCopyButton = styled(Button).attrs({ variant: 'text' })`
   font-family: var(--font-roboto-mono, monospace);
   font-size: 0.7rem;
-  background: none;
-  border: none;
-  cursor: pointer;
   color: ${({ theme }) => theme.colors.green};
   padding: 0.125rem 0.375rem;
   opacity: 0.7;
-  transition: opacity 0.15s;
   margin-left: auto;
+
+  &::after {
+    display: none;
+  }
 
   &:hover {
     opacity: 1;

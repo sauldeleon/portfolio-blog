@@ -1,0 +1,1 @@
+export { AdminQueryProvider } from './AdminQueryProvider'

@@ -30,6 +30,23 @@ export const StyledNewButton = styled(Button)`
   letter-spacing: 0.1em;
 `
 
+export const StyledRefreshButton = styled(Button)`
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: ${({ theme }) => theme.colors.green};
+  border-color: ${({ theme }) => theme.colors.green};
+
+  &:hover {
+    opacity: 0.6;
+  }
+`
+
+export const StyledButtonGroup = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+`
+
 export const StyledTable = styled.table`
   width: 100%;
   border-collapse: collapse;
@@ -114,24 +131,14 @@ export const StyledActions = styled.div`
   gap: 0.5rem;
 `
 
-const actionButtonBase = `
-  background: transparent;
-  border: 1px solid transparent;
-  padding: 0.25rem 0.625rem;
-  font-family: inherit;
-  font-size: 0.6rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  cursor: pointer;
-  transition:
-    border-color 0.15s,
-    color 0.15s;
-`
-
-export const StyledEditButton = styled.button`
-  ${actionButtonBase}
+export const StyledEditButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'xs',
+})`
   color: ${({ theme }) => theme.colors.white};
   opacity: 0.5;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 
   &:hover {
     border-color: ${({ theme }) => theme.colors.white};
@@ -139,37 +146,44 @@ export const StyledEditButton = styled.button`
   }
 `
 
-export const StyledSaveButton = styled.button`
-  ${actionButtonBase}
+export const StyledSaveButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'xs',
+})`
   color: ${({ theme }) => theme.colors.green};
   border-color: ${({ theme }) => theme.colors.green};
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 
   &:hover {
     opacity: 0.8;
   }
 `
 
-export const StyledCancelButton = styled.button`
-  ${actionButtonBase}
+export const StyledCancelButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'xs',
+})`
   color: ${({ theme }) => theme.colors.white};
   opacity: 0.4;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 
   &:hover {
     opacity: 1;
   }
 `
 
-export const StyledDeleteButton = styled.button`
-  ${actionButtonBase}
+export const StyledDeleteButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'xs',
+})`
   color: ${({ theme }) => theme.colors.orange};
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 
   &:hover:not(:disabled) {
     border-color: ${({ theme }) => theme.colors.orange};
-  }
-
-  &:disabled {
-    opacity: 0.2;
-    cursor: not-allowed;
   }
 `
 
@@ -188,26 +202,21 @@ export const StyledLocaleTabs = styled.div`
   margin-bottom: 0.375rem;
 `
 
-export const StyledLocaleTab = styled.button<{ $active?: boolean }>`
-  background: transparent;
-  border: 1px solid
-    ${({ theme, $active }) =>
-      $active ? theme.colors.green : 'rgba(251,251,251,0.2)'};
-  color: ${({ theme, $active }) =>
-    $active ? theme.colors.green : theme.colors.white};
+export const StyledLocaleTab = styled(Button).attrs({ variant: 'label' })`
+  min-height: unset;
   padding: 0.1rem 0.4rem;
-  font-family: inherit;
   font-size: 0.55rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  cursor: pointer;
-  opacity: ${({ $active }) => ($active ? 1 : 0.4)};
-  transition:
-    border-color 0.15s,
-    color 0.15s,
-    opacity 0.15s;
+  border-color: ${({ active, theme }) =>
+    active ? theme.colors.green : 'rgba(251,251,251,0.2)'};
+  color: ${({ active, theme }) =>
+    active ? theme.colors.green : theme.colors.white};
+  opacity: ${({ active }) => (active ? 1 : 0.4)};
 
   &:hover {
+    border-color: ${({ active, theme }) =>
+      active ? theme.colors.green : 'rgba(251,251,251,0.4)'};
     opacity: 1;
+    color: ${({ active, theme }) =>
+      active ? theme.colors.green : theme.colors.white};
   }
 `

@@ -1,4 +1,5 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react'
+import axios, { AxiosError } from 'axios'
 import { useRouter } from 'next/navigation'
 
 import { renderApp } from '@sdlgr/test-utils'
@@ -49,7 +50,7 @@ describe('CategoryForm', () => {
       back: mockBack,
       refresh: mockRefresh,
     })
-    global.fetch = jest.fn().mockResolvedValue({ ok: true, status: 201 })
+    jest.spyOn(axios, 'post').mockResolvedValue({ data: {} })
   })
 
   it('renders title and back link', () => {
@@ -112,19 +113,15 @@ describe('CategoryForm', () => {
       target: { value: 'Tech content' },
     })
     fireEvent.click(screen.getByTestId('submit-button'))
-    await waitFor(() => expect(global.fetch).toHaveBeenCalled())
-    expect(global.fetch).toHaveBeenCalledWith('/api/categories', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        translations: {
-          en: {
-            name: 'Engineering',
-            slug: 'engineering',
-            description: 'Tech content',
-          },
+    await waitFor(() => expect(axios.post).toHaveBeenCalled())
+    expect(axios.post).toHaveBeenCalledWith('/api/categories', {
+      translations: {
+        en: {
+          name: 'Engineering',
+          slug: 'engineering',
+          description: 'Tech content',
         },
-      }),
+      },
     })
   })
 
@@ -134,11 +131,10 @@ describe('CategoryForm', () => {
       target: { value: 'Engineering' },
     })
     fireEvent.click(screen.getByTestId('submit-button'))
-    await waitFor(() => expect(global.fetch).toHaveBeenCalled())
-    const body = JSON.parse(
-      ((global.fetch as jest.Mock).mock.calls[0] as [string, RequestInit])[1]
-        .body as string,
-    ) as { translations: { en: { description?: string } } }
+    await waitFor(() => expect(axios.post).toHaveBeenCalled())
+    const body = (axios.post as jest.Mock).mock.calls[0][1] as {
+      translations: { en: { description?: string } }
+    }
     expect(body.translations.en.description).toBeUndefined()
   })
 
@@ -152,14 +148,19 @@ describe('CategoryForm', () => {
       expect(mockPush).toHaveBeenCalledWith('/admin/categories'),
     )
     expect(mockRefresh).toHaveBeenCalled()
+    expect(axios.post).toHaveBeenCalled()
   })
 
   it('shows string error message on API failure', async () => {
-    global.fetch = jest.fn().mockResolvedValue({
-      ok: false,
-      status: 409,
-      json: async () => ({ error: 'Slug already exists' }),
-    })
+    jest.spyOn(axios, 'post').mockRejectedValue(
+      new AxiosError('error', '409', undefined, undefined, {
+        status: 409,
+        data: { error: 'Slug already exists' },
+        statusText: 'Conflict',
+        headers: {},
+        config: {} as never,
+      }),
+    )
     setup()
     fireEvent.change(screen.getByTestId('name-input'), {
       target: { value: 'Engineering' },
@@ -172,11 +173,15 @@ describe('CategoryForm', () => {
   })
 
   it('shows fallback error when API error is not a string', async () => {
-    global.fetch = jest.fn().mockResolvedValue({
-      ok: false,
-      status: 400,
-      json: async () => ({ error: [{ message: 'invalid' }] }),
-    })
+    jest.spyOn(axios, 'post').mockRejectedValue(
+      new AxiosError('error', '400', undefined, undefined, {
+        status: 400,
+        data: { error: [{ message: 'invalid' }] },
+        statusText: 'Bad Request',
+        headers: {},
+        config: {} as never,
+      }),
+    )
     setup()
     fireEvent.change(screen.getByTestId('name-input'), {
       target: { value: 'Engineering' },
@@ -188,13 +193,15 @@ describe('CategoryForm', () => {
   })
 
   it('shows fallback error when API returns non-JSON body', async () => {
-    global.fetch = jest.fn().mockResolvedValue({
-      ok: false,
-      status: 500,
-      json: async () => {
-        throw new SyntaxError('Unexpected end of JSON input')
-      },
-    })
+    jest.spyOn(axios, 'post').mockRejectedValue(
+      new AxiosError('error', '500', undefined, undefined, {
+        status: 500,
+        data: null,
+        statusText: 'Internal Server Error',
+        headers: {},
+        config: {} as never,
+      }),
+    )
     setup()
     fireEvent.change(screen.getByTestId('name-input'), {
       target: { value: 'Engineering' },
@@ -203,6 +210,18 @@ describe('CategoryForm', () => {
     expect(await screen.findByTestId('form-error')).toHaveTextContent(
       'Something went wrong, please try again',
     )
+  })
+
+  it('silently ignores non-axios errors', async () => {
+    jest.spyOn(axios, 'post').mockRejectedValue(new Error('Network timeout'))
+    setup()
+    fireEvent.change(screen.getByTestId('name-input'), {
+      target: { value: 'Engineering' },
+    })
+    fireEvent.click(screen.getByTestId('submit-button'))
+    await waitFor(() => expect(axios.post).toHaveBeenCalled())
+    expect(screen.queryByTestId('form-error')).not.toBeInTheDocument()
+    expect(mockPush).not.toHaveBeenCalled()
   })
 
   it('back link calls router.back()', () => {

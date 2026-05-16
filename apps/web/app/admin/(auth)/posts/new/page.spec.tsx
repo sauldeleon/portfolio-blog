@@ -6,7 +6,7 @@ import NewPostPage from './page.next'
 const mockRequireAdminSession = jest.fn()
 const mockGetCategoriesForAdmin = jest.fn()
 const mockGetAllTagsAdmin = jest.fn()
-const mockGetAllSeriesAdmin = jest.fn()
+const mockGetAllSeriesWithTranslations = jest.fn()
 
 jest.mock('@web/lib/auth/requireAdminSession', () => ({
   requireAdminSession: (...args: unknown[]) => mockRequireAdminSession(...args),
@@ -21,8 +21,9 @@ jest.mock('@web/lib/db/queries/tags', () => ({
   getAllTagsAdmin: (...args: unknown[]) => mockGetAllTagsAdmin(...args),
 }))
 
-jest.mock('@web/lib/db/queries/posts', () => ({
-  getAllSeriesAdmin: (...args: unknown[]) => mockGetAllSeriesAdmin(...args),
+jest.mock('@web/lib/db/queries/series', () => ({
+  getAllSeriesWithTranslations: (...args: unknown[]) =>
+    mockGetAllSeriesWithTranslations(...args),
 }))
 
 jest.mock('../components/PostEditor', () => {
@@ -69,7 +70,9 @@ describe('NewPostPage', () => {
     })
     mockGetCategoriesForAdmin.mockResolvedValue(mockCategories)
     mockGetAllTagsAdmin.mockResolvedValue(['react', 'typescript'])
-    mockGetAllSeriesAdmin.mockResolvedValue(['my-series'])
+    mockGetAllSeriesWithTranslations.mockResolvedValue([
+      { id: 'my-series', translations: [] },
+    ])
   })
 
   it('renders PostEditor', async () => {
@@ -168,7 +171,7 @@ describe('NewPostPage', () => {
     expect(PostEditor).toHaveBeenCalledWith(
       expect.objectContaining({
         allTags: ['react', 'typescript'],
-        series: ['my-series'],
+        series: [{ id: 'my-series', translations: [] }],
       }),
       undefined,
     )

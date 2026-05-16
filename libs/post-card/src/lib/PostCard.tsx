@@ -30,6 +30,7 @@ export interface PostCardProps {
   category: string
   tags: string[]
   coverImagePublicId: string | null
+  coverImageFit?: 'cover' | 'contain'
   lng: string
   readMoreLabel: string
 }
@@ -45,6 +46,7 @@ export function PostCard({
   category,
   tags,
   coverImagePublicId,
+  coverImageFit,
   lng,
   readMoreLabel,
 }: PostCardProps) {
@@ -53,7 +55,7 @@ export function PostCard({
 
   return (
     <StyledCard>
-      <StyledCover>
+      <StyledCover $fit={coverImageFit}>
         {coverImagePublicId ? (
           <CldImage
             src={coverImagePublicId}

@@ -81,4 +81,30 @@ describe('ConfirmDeleteModal', () => {
     fireEvent.click(screen.getByTestId('confirm-delete-cancel'))
     expect(onCancel).toHaveBeenCalledTimes(1)
   })
+
+  it('renders with danger variant by default', () => {
+    renderApp(
+      <ConfirmDeleteModal
+        isOpen
+        message="Delete this?"
+        onConfirm={jest.fn()}
+        onCancel={jest.fn()}
+      />,
+    )
+    expect(screen.getByTestId('confirm-delete-confirm')).toBeInTheDocument()
+  })
+
+  it('renders with warning variant when specified', () => {
+    renderApp(
+      <ConfirmDeleteModal
+        isOpen
+        message="Archive this?"
+        onConfirm={jest.fn()}
+        onCancel={jest.fn()}
+        variant="warning"
+      />,
+    )
+    expect(screen.getByText('Archive this?')).toBeInTheDocument()
+    expect(screen.getByTestId('confirm-delete-confirm')).toBeInTheDocument()
+  })
 })

@@ -3,7 +3,7 @@
  */
 const mockGetRelatedPosts = jest.fn()
 
-jest.mock('../../../../../lib/db/queries/posts', () => ({
+jest.mock('@web/lib/db/queries/posts', () => ({
   getRelatedPosts: mockGetRelatedPosts,
 }))
 
