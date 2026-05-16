@@ -315,18 +315,19 @@ export function PostTable({ posts }: PostTableProps) {
               </StyledTd>
               <StyledTd>
                 <StyledActions>
-                  <StyledPublishButton
-                    onClick={(e) => handleTogglePublish(e, post)}
-                    disabled={
-                      post.status === 'archived' ||
-                      (post.status !== 'published' && !canPublish(post))
-                    }
-                    data-testid="publish-button"
-                  >
-                    {post.status === 'published'
-                      ? t('posts.unpublish')
-                      : t('posts.publish')}
-                  </StyledPublishButton>
+                  {post.status !== 'archived' && (
+                    <StyledPublishButton
+                      onClick={(e) => handleTogglePublish(e, post)}
+                      disabled={
+                        post.status !== 'published' && !canPublish(post)
+                      }
+                      data-testid="publish-button"
+                    >
+                      {post.status === 'published'
+                        ? t('posts.unpublish')
+                        : t('posts.publish')}
+                    </StyledPublishButton>
+                  )}
                   {post.status === 'archived' ? (
                     <>
                       <StyledArchiveButton

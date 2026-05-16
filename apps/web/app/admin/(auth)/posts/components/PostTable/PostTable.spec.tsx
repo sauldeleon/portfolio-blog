@@ -389,7 +389,7 @@ describe('PostTable', () => {
     expect(screen.queryByTestId('archive-button')).not.toBeInTheDocument()
   })
 
-  it('publish button is disabled for archived post', () => {
+  it('publish button is not shown for archived post', () => {
     const post = makePost({
       status: 'archived',
       titleEn: 'Post',
@@ -397,7 +397,7 @@ describe('PostTable', () => {
     })
     renderApp(<PostTable posts={[post]} />)
     fireEvent.click(screen.getByTestId('filter-archived'))
-    expect(screen.getByTestId('publish-button')).toBeDisabled()
+    expect(screen.queryByTestId('publish-button')).not.toBeInTheDocument()
   })
 
   it('clicking unarchive calls PUT with draft status and updates UI', async () => {
