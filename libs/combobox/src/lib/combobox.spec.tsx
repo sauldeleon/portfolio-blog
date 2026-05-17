@@ -99,20 +99,71 @@ describe('Combobox', () => {
     )
   })
 
-  it('passes isValidNewOption when provided', () => {
-    const isValidNewOption = jest.fn().mockReturnValue(true)
-    renderCombobox({ isValidNewOption })
-    expect(mockCreatableSelect).toHaveBeenCalledWith(
-      expect.objectContaining({ isValidNewOption }),
-    )
-  })
+  function getIsValidNewOption() {
+    const props = mockCreatableSelect.mock.calls[0][0] as {
+      isValidNewOption: (
+        inputValue: string,
+        _val: unknown,
+        opts: Array<{ value: string; label: string }>,
+      ) => boolean
+    }
+    return props.isValidNewOption
+  }
 
-  it('does not pass isValidNewOption when not provided', () => {
+  const opts = [
+    { value: 'TYPESCRIPT', label: 'TYPESCRIPT' },
+    { value: 'REACT', label: 'REACT' },
+  ]
+
+  it('always passes isValidNewOption to CreatableSelect', () => {
     renderCombobox()
     const props = mockCreatableSelect.mock.calls[0][0] as Record<
       string,
       unknown
     >
-    expect(props).not.toHaveProperty('isValidNewOption')
+    expect(props).toHaveProperty('isValidNewOption')
+    expect(typeof props.isValidNewOption).toBe('function')
+  })
+
+  it('returns false for blank input', () => {
+    renderCombobox()
+    const fn = getIsValidNewOption()
+    expect(fn('', null, opts)).toBe(false)
+    expect(fn('   ', null, opts)).toBe(false)
+  })
+
+  it('returns false when option already exists (exact match)', () => {
+    renderCombobox()
+    const fn = getIsValidNewOption()
+    expect(fn('TYPESCRIPT', null, opts)).toBe(false)
+  })
+
+  it('returns false when option already exists (case-insensitive match)', () => {
+    renderCombobox()
+    const fn = getIsValidNewOption()
+    expect(fn('typescript', null, opts)).toBe(false)
+    expect(fn('TypeScript', null, opts)).toBe(false)
+  })
+
+  it('returns true for a new value not in options when no consumer validator', () => {
+    renderCombobox()
+    const fn = getIsValidNewOption()
+    expect(fn('vue', null, opts)).toBe(true)
+  })
+
+  it('delegates to consumer isValidNewOption for format validation', () => {
+    const isValidNewOption = jest.fn().mockReturnValue(false)
+    renderCombobox({ isValidNewOption })
+    const fn = getIsValidNewOption()
+    expect(fn('vue', null, opts)).toBe(false)
+    expect(isValidNewOption).toHaveBeenCalledWith('vue')
+  })
+
+  it('passes trimmed value to consumer isValidNewOption', () => {
+    const isValidNewOption = jest.fn().mockReturnValue(true)
+    renderCombobox({ isValidNewOption })
+    const fn = getIsValidNewOption()
+    fn('  vue  ', null, opts)
+    expect(isValidNewOption).toHaveBeenCalledWith('vue')
   })
 })

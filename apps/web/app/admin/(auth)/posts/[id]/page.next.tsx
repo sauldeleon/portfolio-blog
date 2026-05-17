@@ -2,7 +2,8 @@ import { notFound } from 'next/navigation'
 
 import { requireAdminSession } from '@web/lib/auth/requireAdminSession'
 import { getCategoriesForAdmin } from '@web/lib/db/queries/categories'
-import { getAllSeriesAdmin, getPostForEdit } from '@web/lib/db/queries/posts'
+import { getPostForEdit } from '@web/lib/db/queries/posts'
+import { getAllSeriesWithTranslations } from '@web/lib/db/queries/series'
 import { getAllTagsAdmin } from '@web/lib/db/queries/tags'
 
 import { PostEditor } from '../components/PostEditor'
@@ -21,7 +22,7 @@ export default async function EditPostPage({ params }: EditPostPageProps) {
       getPostForEdit(id),
       getCategoriesForAdmin(),
       getAllTagsAdmin(),
-      getAllSeriesAdmin(),
+      getAllSeriesWithTranslations(),
     ])
 
   if (!postData) return notFound()
@@ -45,6 +46,7 @@ export default async function EditPostPage({ params }: EditPostPageProps) {
       tags: postData.post.tags,
       status: postData.post.status,
       coverImage: postData.post.coverImage,
+      coverImageFit: postData.post.coverImageFit,
       seriesId: postData.post.seriesId,
       seriesOrder: postData.post.seriesOrder,
       author: postData.post.author,

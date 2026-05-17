@@ -7,6 +7,7 @@ import { MainLayout } from '@web/components/MainLayout/MainLayout'
 import StyledComponentsRegistry from '@web/components/StyledComponentsRegistry/StyledComponentsRegistry'
 
 import '../globals.css'
+import { AdminQueryProvider } from './components/AdminQueryProvider'
 import { StyledAdminLayout } from './layout.styles'
 
 interface AdminLayoutProps {
@@ -19,11 +20,13 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       <body>
         <StyledComponentsRegistry>
           <LanguageContextProvider value={{ language: 'en' }}>
-            <MainLayout>
-              <StyledAdminLayout data-testid="admin-layout">
-                {children}
-              </StyledAdminLayout>
-            </MainLayout>
+            <AdminQueryProvider>
+              <MainLayout>
+                <StyledAdminLayout data-testid="admin-layout">
+                  {children}
+                </StyledAdminLayout>
+              </MainLayout>
+            </AdminQueryProvider>
           </LanguageContextProvider>
         </StyledComponentsRegistry>
       </body>

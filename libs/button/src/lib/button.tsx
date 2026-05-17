@@ -2,19 +2,20 @@ import { ButtonHTMLAttributes, DetailedHTMLProps, forwardRef } from 'react'
 
 import {
   StyledContainedButton,
+  StyledGhostButton,
   StyledInvertedButton,
   StyledLabelButton,
   StyledTextButton,
 } from './button.styles'
 
-export type ButtonSize = 'sm' | 'md' | 'lg'
+export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg'
 
 export type ButtonProps = DetailedHTMLProps<
   ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement
 > & {
   active?: boolean
-  variant?: 'text' | 'contained' | 'inverted' | 'label'
+  variant?: 'text' | 'contained' | 'inverted' | 'label' | 'ghost'
   size?: ButtonSize
 }
 
@@ -42,6 +43,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         <StyledLabelButton {...props} ref={forwardedRef} $active={active}>
           {children}
         </StyledLabelButton>
+      )
+    }
+    if (variant === 'ghost') {
+      return (
+        <StyledGhostButton $size={size} {...props} ref={forwardedRef}>
+          {children}
+        </StyledGhostButton>
       )
     }
     return (

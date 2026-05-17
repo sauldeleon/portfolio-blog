@@ -6,6 +6,7 @@ import {
   createCategory,
   createCategoryTranslation,
   getCategories,
+  getCategoriesForAdmin,
   getCategoryBySlug,
 } from '@web/lib/db/queries/categories'
 
@@ -13,7 +14,17 @@ const CACHE_HEADERS = {
   'Cache-Control': 's-maxage=60, stale-while-revalidate=3600',
 }
 
-export async function GET() {
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url)
+
+  if (searchParams.get('admin') === '1') {
+    const session = await auth()
+    if (!session)
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    const categories = await getCategoriesForAdmin()
+    return NextResponse.json({ data: categories })
+  }
+
   const categories = await getCategories()
   return NextResponse.json({ data: categories }, { headers: CACHE_HEADERS })
 }

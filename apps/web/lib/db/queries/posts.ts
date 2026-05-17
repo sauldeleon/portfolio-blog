@@ -19,6 +19,7 @@ import {
   type PostStatus,
   postTranslations,
   posts,
+  seriesTranslations,
 } from '../schema'
 
 export type PublicPost = {
@@ -27,8 +28,10 @@ export type PublicPost = {
   tags: string[]
   status: PostStatus
   coverImage: string | null
+  coverImageFit: 'cover' | 'contain' | null
   seriesId: string | null
   seriesOrder: number | null
+  seriesTitle: string | null
   publishedAt: Date | null
   createdAt: Date
   updatedAt: Date
@@ -47,6 +50,7 @@ export type AdminPost = {
   tags: string[]
   status: PostStatus
   coverImage: string | null
+  coverImageFit: 'cover' | 'contain' | null
   seriesId: string | null
   seriesOrder: number | null
   scheduledAt: Date | null
@@ -67,8 +71,10 @@ const publicFields = {
   tags: posts.tags,
   status: posts.status,
   coverImage: posts.coverImage,
+  coverImageFit: posts.coverImageFit,
   seriesId: posts.seriesId,
   seriesOrder: posts.seriesOrder,
+  seriesTitle: seriesTranslations.title,
   publishedAt: posts.publishedAt,
   createdAt: posts.createdAt,
   updatedAt: posts.updatedAt,
@@ -94,6 +100,13 @@ export async function getPublishedPosts(locale: Locale): Promise<PublicPost[]> {
         eq(postTranslations.locale, locale),
       ),
     )
+    .leftJoin(
+      seriesTranslations,
+      and(
+        eq(seriesTranslations.seriesId, posts.seriesId),
+        eq(seriesTranslations.locale, locale),
+      ),
+    )
     .where(and(eq(posts.status, 'published'), isNull(posts.deletedAt)))
     .orderBy(desc(posts.publishedAt))
 }
@@ -110,6 +123,13 @@ export async function getPostById(
       and(
         eq(postTranslations.postId, posts.id),
         eq(postTranslations.locale, locale),
+      ),
+    )
+    .leftJoin(
+      seriesTranslations,
+      and(
+        eq(seriesTranslations.seriesId, posts.seriesId),
+        eq(seriesTranslations.locale, locale),
       ),
     )
     .where(and(eq(posts.id, id), isNull(posts.deletedAt)))
@@ -129,6 +149,13 @@ export async function getPostBySlug(
       and(
         eq(postTranslations.postId, posts.id),
         eq(postTranslations.locale, locale),
+      ),
+    )
+    .leftJoin(
+      seriesTranslations,
+      and(
+        eq(seriesTranslations.seriesId, posts.seriesId),
+        eq(seriesTranslations.locale, locale),
       ),
     )
     .where(
@@ -158,6 +185,13 @@ export async function getRelatedPosts(
       and(
         eq(postTranslations.postId, posts.id),
         eq(postTranslations.locale, locale),
+      ),
+    )
+    .leftJoin(
+      seriesTranslations,
+      and(
+        eq(seriesTranslations.seriesId, posts.seriesId),
+        eq(seriesTranslations.locale, locale),
       ),
     )
     .where(
@@ -220,6 +254,13 @@ export async function getPostsBySeries(
         eq(postTranslations.locale, locale),
       ),
     )
+    .leftJoin(
+      seriesTranslations,
+      and(
+        eq(seriesTranslations.seriesId, posts.seriesId),
+        eq(seriesTranslations.locale, locale),
+      ),
+    )
     .where(
       and(
         eq(posts.seriesId, seriesId),
@@ -264,6 +305,7 @@ export async function getAllPosts(): Promise<AdminPost[]> {
     tags: string[]
     status: PostStatus
     cover_image: string | null
+    cover_image_fit: 'cover' | 'contain' | null
     series_id: string | null
     series_order: number | null
     scheduled_at: Date | null
@@ -282,7 +324,7 @@ export async function getAllPosts(): Promise<AdminPost[]> {
     sql`
       SELECT
         p.id, p.category, p.tags, p.status,
-        p.cover_image, p.series_id, p.series_order,
+        p.cover_image, p.cover_image_fit, p.series_id, p.series_order,
         p.scheduled_at, p.published_at, p.created_at, p.updated_at, p.deleted_at,
         p.preview_token,
         en_t.title AS title_en, en_t.slug AS slug_en,
@@ -290,7 +332,6 @@ export async function getAllPosts(): Promise<AdminPost[]> {
       FROM posts p
       LEFT JOIN post_translations en_t ON en_t.post_id = p.id AND en_t.locale = 'en'
       LEFT JOIN post_translations es_t ON es_t.post_id = p.id AND es_t.locale = 'es'
-      WHERE p.deleted_at IS NULL
       ORDER BY p.created_at DESC
     `,
   )
@@ -304,6 +345,7 @@ export async function getAllPosts(): Promise<AdminPost[]> {
     tags: r.tags,
     status: r.status,
     coverImage: r.cover_image,
+    coverImageFit: r.cover_image_fit,
     seriesId: r.series_id,
     seriesOrder: r.series_order,
     scheduledAt: r.scheduled_at,
@@ -393,14 +435,18 @@ export async function getPostStatus(id: string): Promise<PostStatus | null> {
 export async function softDeletePost(id: string): Promise<void> {
   await db
     .update(posts)
-    .set({ status: 'archived', updatedAt: new Date() })
+    .set({ status: 'archived', deletedAt: new Date(), updatedAt: new Date() })
     .where(eq(posts.id, id))
+}
+
+export async function hardDeletePost(id: string): Promise<void> {
+  await db.delete(posts).where(eq(posts.id, id))
 }
 
 export async function restorePost(id: string): Promise<void> {
   await db
     .update(posts)
-    .set({ status: 'draft', updatedAt: new Date() })
+    .set({ status: 'draft', deletedAt: null, updatedAt: new Date() })
     .where(eq(posts.id, id))
 }
 
@@ -436,10 +482,7 @@ export async function getPostTranslations(
 export async function getPostForEdit(
   id: string,
 ): Promise<PostWithTranslations | null> {
-  const postRows = await db
-    .select()
-    .from(posts)
-    .where(and(eq(posts.id, id), isNull(posts.deletedAt)))
+  const postRows = await db.select().from(posts).where(eq(posts.id, id))
 
   if (!postRows[0]) return null
 
@@ -485,11 +528,17 @@ export async function getPublishedPostsPaginated(
       : undefined,
   )
 
+  const seriesJoinCondition = and(
+    eq(seriesTranslations.seriesId, posts.seriesId),
+    eq(seriesTranslations.locale, locale),
+  )
+
   const [data, countRows] = await Promise.all([
     db
       .select(publicFieldsWithContent)
       .from(posts)
       .innerJoin(postTranslations, joinCondition)
+      .leftJoin(seriesTranslations, seriesJoinCondition)
       .where(whereConditions)
       .orderBy(desc(posts.publishedAt))
       .limit(limit)

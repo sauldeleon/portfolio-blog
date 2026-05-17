@@ -24,6 +24,7 @@ const mockUploadResult = {
 function makeFormDataRequest(opts: {
   file?: { content: string; name: string; type: string } | null
   altText?: string
+  name?: string
 }): Request {
   const req = new Request('http://localhost/api/upload', { method: 'POST' })
   const fd = new FormData()
@@ -35,6 +36,9 @@ function makeFormDataRequest(opts: {
   }
   if (opts.altText !== undefined) {
     fd.append('altText', opts.altText)
+  }
+  if (opts.name !== undefined) {
+    fd.append('name', opts.name)
   }
   jest.spyOn(Request.prototype, 'formData').mockResolvedValueOnce(fd)
   return req
@@ -111,6 +115,41 @@ describe('POST /api/upload', () => {
       expect.any(Buffer),
       'image/jpeg',
       'test alt',
+      undefined,
+    )
+  })
+
+  it('passes name to uploadImage when name is in FormData', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockUploadImage.mockResolvedValue(mockUploadResult)
+    await POST(
+      makeFormDataRequest({
+        file: { content: 'imgdata', name: 'photo.jpg', type: 'image/jpeg' },
+        name: 'my-custom-name',
+      }),
+    )
+    expect(mockUploadImage).toHaveBeenCalledWith(
+      expect.any(Buffer),
+      'image/jpeg',
+      '',
+      'my-custom-name',
+    )
+  })
+
+  it('passes undefined as name when name is empty string in FormData', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockUploadImage.mockResolvedValue(mockUploadResult)
+    await POST(
+      makeFormDataRequest({
+        file: { content: 'imgdata', name: 'photo.jpg', type: 'image/jpeg' },
+        name: '',
+      }),
+    )
+    expect(mockUploadImage).toHaveBeenCalledWith(
+      expect.any(Buffer),
+      'image/jpeg',
+      '',
+      undefined,
     )
   })
 
@@ -126,7 +165,21 @@ describe('POST /api/upload', () => {
       expect.any(Buffer),
       'image/png',
       '',
+      undefined,
     )
+  })
+
+  it('returns 500 when uploadImage throws', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockUploadImage.mockRejectedValue(new Error('Cloudinary error'))
+    const response = await POST(
+      makeFormDataRequest({
+        file: { content: 'data', name: 'photo.jpg', type: 'image/jpeg' },
+      }),
+    )
+    expect(response.status).toBe(500)
+    const body = (await response.json()) as { error: string }
+    expect(body.error).toBe('Upload failed')
   })
 
   it('accepts image/webp and image/gif', async () => {

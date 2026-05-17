@@ -1,6 +1,6 @@
 import { requireAdminSession } from '@web/lib/auth/requireAdminSession'
 import { getCategoriesForAdmin } from '@web/lib/db/queries/categories'
-import { getAllSeriesAdmin } from '@web/lib/db/queries/posts'
+import { getAllSeriesWithTranslations } from '@web/lib/db/queries/series'
 import { getAllTagsAdmin } from '@web/lib/db/queries/tags'
 
 import { PostEditor } from '../components/PostEditor'
@@ -12,7 +12,7 @@ export default async function NewPostPage() {
   const [categoriesForAdmin, allTags, series] = await Promise.all([
     getCategoriesForAdmin(),
     getAllTagsAdmin(),
-    getAllSeriesAdmin(),
+    getAllSeriesWithTranslations(),
   ])
 
   const categories = categoriesForAdmin.map((cat) => ({

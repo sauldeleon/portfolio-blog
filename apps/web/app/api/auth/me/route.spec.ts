@@ -3,7 +3,7 @@
  */
 const mockAuth = jest.fn()
 
-jest.mock('../../../../lib/auth/config', () => ({
+jest.mock('@web/lib/auth/config', () => ({
   auth: mockAuth,
 }))
 

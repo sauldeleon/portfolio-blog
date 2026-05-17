@@ -5,6 +5,9 @@ export interface UploadResult {
   publicId: string
   width: number
   height: number
+  format: string
+  createdAt: string
+  bytes: number
   altText: string
 }
 
@@ -12,9 +15,10 @@ export async function uploadImage(
   buffer: Buffer,
   mimeType: string,
   altText: string,
+  name?: string,
 ): Promise<UploadResult> {
   cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET,
   })
@@ -23,6 +27,7 @@ export async function uploadImage(
   const result = await cloudinary.uploader.upload(dataUri, {
     folder: 'sawl.dev - blog',
     context: { alt: altText },
+    ...(name ? { public_id: name } : {}),
   })
 
   return {
@@ -30,6 +35,9 @@ export async function uploadImage(
     publicId: result.public_id,
     width: result.width,
     height: result.height,
+    format: result.format,
+    createdAt: result.created_at,
+    bytes: result.bytes,
     altText,
   }
 }

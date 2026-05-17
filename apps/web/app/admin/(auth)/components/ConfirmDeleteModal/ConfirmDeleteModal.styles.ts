@@ -1,6 +1,10 @@
 import { Modal as ModalOverlays } from 'react-overlays'
 import styled from 'styled-components'
 
+import { Button } from '@sdlgr/button'
+
+export type ModalVariant = 'danger' | 'warning'
+
 export const StyledBackdrop = styled.div`
   position: fixed;
   z-index: 1040;
@@ -12,15 +16,21 @@ export const StyledBackdrop = styled.div`
   opacity: 0.7;
 `
 
-export const StyledModal = styled(ModalOverlays)`
+export const StyledModal = styled(ModalOverlays)<{ $variant: ModalVariant }>`
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   position: fixed;
   z-index: 1040;
-  border: 1px solid ${({ theme }) => theme.colors.orange};
-  box-shadow: 0 0 16px 4px rgba(176, 75, 47, 0.5);
+  border: 1px solid
+    ${({ $variant, theme }) =>
+      $variant === 'warning' ? theme.colors.green : theme.colors.orange};
+  box-shadow: 0 0 16px 4px
+    ${({ $variant }) =>
+      $variant === 'warning'
+        ? 'rgba(152, 223, 214, 0.5)'
+        : 'rgba(176, 75, 47, 0.5)'};
   border-radius: 2px;
   background-color: ${({ theme }) => theme.colors.black};
 
@@ -54,24 +64,15 @@ export const StyledButtons = styled.div`
   gap: 0.75rem;
 `
 
-const actionButtonBase = `
-  background: transparent;
-  border: 1px solid transparent;
+export const StyledCancelButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'xs',
+})`
   padding: 0.375rem 0.875rem;
-  font-family: inherit;
-  font-size: 0.6rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  cursor: pointer;
-  transition:
-    border-color 0.15s,
-    color 0.15s;
-`
-
-export const StyledCancelButton = styled.button`
-  ${actionButtonBase}
   color: ${({ theme }) => theme.colors.white};
   opacity: 0.5;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 
   &:hover {
     opacity: 1;
@@ -79,12 +80,25 @@ export const StyledCancelButton = styled.button`
   }
 `
 
-export const StyledConfirmButton = styled.button`
-  ${actionButtonBase}
-  color: ${({ theme }) => theme.colors.orange};
-  border-color: ${({ theme }) => theme.colors.orange};
+export const StyledConfirmButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'xs',
+})<{ $variant: ModalVariant }>`
+  padding: 0.375rem 0.875rem;
+  color: ${({ $variant, theme }) =>
+    $variant === 'warning' ? theme.colors.green : theme.colors.orange};
+  border-color: ${({ $variant, theme }) =>
+    $variant === 'warning' ? theme.colors.green : theme.colors.orange};
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 
   &:hover {
-    box-shadow: 0 0 8px 1px rgba(176, 75, 47, 0.4);
+    box-shadow: 0 0 8px 1px
+      ${({ $variant }) =>
+        $variant === 'warning'
+          ? 'rgba(152, 223, 214, 0.4)'
+          : 'rgba(176, 75, 47, 0.4)'};
+    border-color: ${({ $variant, theme }) =>
+      $variant === 'warning' ? theme.colors.green : theme.colors.orange};
   }
 `

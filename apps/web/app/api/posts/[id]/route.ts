@@ -1,18 +1,24 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
-import { auth } from '../../../../lib/auth/config'
-import { getCategoryBySlug } from '../../../../lib/db/queries/categories'
+import { auth } from '@web/lib/auth/config'
+import { getCategoryBySlug } from '@web/lib/db/queries/categories'
 import {
   getPostById,
   getPostStatus,
   getPostTranslations,
+  hardDeletePost,
   slugExistsForLocale,
   softDeletePost,
   updatePost,
   upsertTranslation,
-} from '../../../../lib/db/queries/posts'
-import { computeReadingTime } from '../../../../utils/computeReadingTime'
+} from '@web/lib/db/queries/posts'
+import {
+  ensureSeries,
+  seriesOrderExistsForSeries,
+  upsertSeriesTranslation,
+} from '@web/lib/db/queries/series'
+import { computeReadingTime } from '@web/utils/computeReadingTime'
 
 const CACHE_HEADERS = {
   'Cache-Control': 's-maxage=60, stale-while-revalidate=3600',
@@ -64,9 +70,13 @@ const updatePostSchema = z.object({
   tags: z.array(z.string()).optional(),
   status: z.enum(['draft', 'published', 'archived']).optional(),
   coverImage: z.string().nullable().optional(),
+  coverImageFit: z.enum(['cover', 'contain']).nullable().optional(),
   scheduledAt: z.string().optional(),
   seriesId: z.string().nullable().optional(),
   seriesOrder: z.number().int().nullable().optional(),
+  seriesTitles: z
+    .object({ en: z.string().optional(), es: z.string().optional() })
+    .optional(),
   translations: z
     .object({
       en: translationUpdateSchema.optional(),
@@ -144,9 +154,37 @@ export async function PUT(
         ? { publishedAt: null }
         : {}
 
+  const deletedAtUpdate =
+    data.status === 'archived'
+      ? { deletedAt: new Date() }
+      : data.status === 'draft'
+        ? { deletedAt: null }
+        : {}
+
+  if (data.seriesId) {
+    await ensureSeries(data.seriesId)
+  }
+
+  if (data.seriesId && data.seriesOrder != null) {
+    const orderTaken = await seriesOrderExistsForSeries(
+      data.seriesId,
+      data.seriesOrder,
+      id,
+    )
+    if (orderTaken) {
+      return NextResponse.json(
+        {
+          error: `Order ${data.seriesOrder} is already taken in this series`,
+        },
+        { status: 422 },
+      )
+    }
+  }
+
   const post = await updatePost(id, {
     ...postData,
     ...publishedAtUpdate,
+    ...deletedAtUpdate,
     ...(scheduledAt !== undefined
       ? { scheduledAt: scheduledAt ? new Date(scheduledAt) : null }
       : {}),
@@ -164,11 +202,24 @@ export async function PUT(
     }
   }
 
+  const resolvedSeriesId =
+    data.seriesId !== undefined ? data.seriesId : post.seriesId
+  if (resolvedSeriesId && data.seriesTitles) {
+    for (const [locale, title] of Object.entries(data.seriesTitles) as Array<
+      ['en' | 'es', string | undefined]
+    >) {
+      /* istanbul ignore next */
+      if (title) {
+        await upsertSeriesTranslation(resolvedSeriesId, locale, title)
+      }
+    }
+  }
+
   return NextResponse.json(post)
 }
 
 export async function DELETE(
-  _request: Request,
+  request: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
   const session = await auth()
@@ -177,8 +228,22 @@ export async function DELETE(
   }
 
   const { id } = await params
+  const { searchParams } = new URL(request.url)
+  const hard = searchParams.get('hard') === 'true'
 
   const status = await getPostStatus(id)
+
+  if (hard) {
+    if (status !== 'archived') {
+      return NextResponse.json(
+        { error: 'Only archived posts can be permanently deleted.' },
+        { status: 422 },
+      )
+    }
+    await hardDeletePost(id)
+    return new NextResponse(null, { status: 204 })
+  }
+
   if (status === 'published') {
     return NextResponse.json(
       { error: 'Cannot archive a published post. Unpublish it first.' },

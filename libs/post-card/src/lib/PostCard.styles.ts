@@ -13,7 +13,7 @@ export const StyledCard = styled.article`
   }
 `
 
-export const StyledCover = styled.div`
+export const StyledCover = styled.div<{ $fit?: 'cover' | 'contain' }>`
   aspect-ratio: 16 / 9;
   overflow: hidden;
   background-color: #0d0d0d;
@@ -21,7 +21,7 @@ export const StyledCover = styled.div`
   img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: ${({ $fit }) => $fit ?? 'cover'};
     transition: transform 0.4s ease;
     display: block;
   }
@@ -94,6 +94,15 @@ export const StyledTag = styled.li`
   padding: 0.125rem 0.5rem;
   border: 1px solid ${({ theme }) => theme.colors.green};
   color: ${({ theme }) => theme.colors.green};
+`
+
+export const StyledSeriesBadge = styled.div`
+  ${({ theme }) => theme.typography.body.XS}
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: ${({ theme }) => theme.colors.yellow};
+  opacity: 0.75;
 `
 
 export const StyledMoreTags = styled.span`

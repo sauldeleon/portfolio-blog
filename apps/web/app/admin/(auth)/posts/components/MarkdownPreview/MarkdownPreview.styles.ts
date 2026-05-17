@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components'
 
+import { Button } from '@sdlgr/button'
+
 export const StyledPreviewWrapper = styled.div`
   font-size: 0.68rem;
   line-height: 1.7;
@@ -164,19 +166,18 @@ export const StyledCodeWrapper = styled.div`
   position: relative;
 `
 
-export const StyledCopyButton = styled.button`
+export const StyledCopyButton = styled(Button).attrs({ variant: 'ghost' })`
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
   background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(251, 251, 251, 0.1);
+  border-color: rgba(251, 251, 251, 0.1);
   border-radius: 2px;
   color: rgba(251, 251, 251, 0.35);
   font-family: var(--font-roboto-mono), monospace;
   font-size: 0.58rem;
   line-height: 1;
   padding: 0.25rem 0.5rem;
-  cursor: pointer;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   z-index: 1;
@@ -185,7 +186,7 @@ export const StyledCopyButton = styled.button`
     background 0.15s,
     border-color 0.15s;
 
-  &:hover {
+  &:hover:not(:disabled) {
     background: rgba(255, 255, 255, 0.1);
     border-color: rgba(251, 251, 251, 0.2);
     color: rgba(251, 251, 251, 0.65);
@@ -278,17 +279,18 @@ export const StyledModalContent = styled.div`
   max-width: 90vw;
 `
 
-export const StyledModalClose = styled.button`
+export const StyledModalClose = styled(Button).attrs({ variant: 'text' })`
   position: absolute;
   top: -1.75rem;
   right: -0.5rem;
-  background: transparent;
-  border: none;
   color: rgba(251, 251, 251, 0.6);
   font-size: 1.25rem;
-  cursor: pointer;
   line-height: 1;
   padding: 0.25rem;
+
+  &::after {
+    display: none;
+  }
 
   &:hover {
     color: rgba(251, 251, 251, 1);

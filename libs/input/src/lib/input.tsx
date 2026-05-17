@@ -1,8 +1,9 @@
-import type {
-  HTMLAttributes,
-  InputHTMLAttributes,
-  LabelHTMLAttributes,
-  TextareaHTMLAttributes,
+import {
+  type HTMLAttributes,
+  type InputHTMLAttributes,
+  type LabelHTMLAttributes,
+  type TextareaHTMLAttributes,
+  forwardRef,
 } from 'react'
 
 import {
@@ -37,9 +38,11 @@ export function Input(props: InputHTMLAttributes<HTMLInputElement>) {
   return <StyledInput {...props} />
 }
 
-export function Textarea(props: TextareaHTMLAttributes<HTMLTextAreaElement>) {
-  return <StyledTextarea {...props} />
-}
+export const Textarea = forwardRef<
+  HTMLTextAreaElement,
+  TextareaHTMLAttributes<HTMLTextAreaElement>
+>((props, ref) => <StyledTextarea {...props} ref={ref} />)
+Textarea.displayName = 'Textarea'
 
 export function FieldHelper(props: HTMLAttributes<HTMLParagraphElement>) {
   return <StyledHelper {...props} />

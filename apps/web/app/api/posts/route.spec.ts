@@ -7,6 +7,9 @@ const mockSlugExistsForLocale = jest.fn()
 const mockCreatePost = jest.fn()
 const mockGetPublishedPostsPaginated = jest.fn()
 const mockGetAllPosts = jest.fn()
+const mockEnsureSeries = jest.fn()
+const mockUpsertSeriesTranslation = jest.fn()
+const mockSeriesOrderExistsForSeries = jest.fn()
 
 jest.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
 jest.mock('@web/lib/db/queries/categories', () => ({
@@ -17,6 +20,12 @@ jest.mock('@web/lib/db/queries/posts', () => ({
   slugExistsForLocale: mockSlugExistsForLocale,
   getPublishedPostsPaginated: mockGetPublishedPostsPaginated,
   getAllPosts: mockGetAllPosts,
+}))
+jest.mock('@web/lib/db/queries/series', () => ({
+  ensureSeries: mockEnsureSeries,
+  upsertSeriesTranslation: mockUpsertSeriesTranslation,
+  seriesOrderExistsForSeries: (...args: unknown[]) =>
+    mockSeriesOrderExistsForSeries(...args),
 }))
 
 const { GET, POST } = require('./route') as {
@@ -406,6 +415,108 @@ describe('POST /api/posts', () => {
       }),
       expect.any(Object),
     )
+  })
+
+  it('calls ensureSeries before createPost when seriesId provided', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockGetCategoryBySlug.mockResolvedValue(mockCategory)
+    mockSlugExistsForLocale.mockResolvedValue(false)
+    mockCreatePost.mockResolvedValue(mockPost)
+    mockEnsureSeries.mockResolvedValue(undefined)
+    await POST(
+      makeRequest({
+        category: 'engineering',
+        author: 'admin',
+        seriesId: 'my-series',
+        translations: { en: validTranslations.en },
+      }),
+    )
+    expect(mockEnsureSeries).toHaveBeenCalledWith('my-series')
+    const ensureOrder = mockEnsureSeries.mock.invocationCallOrder[0]
+    const createOrder = mockCreatePost.mock.invocationCallOrder[0]
+    expect(ensureOrder).toBeLessThan(createOrder)
+  })
+
+  it('does not call ensureSeries when no seriesId', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockGetCategoryBySlug.mockResolvedValue(mockCategory)
+    mockSlugExistsForLocale.mockResolvedValue(false)
+    mockCreatePost.mockResolvedValue(mockPost)
+    await POST(
+      makeRequest({
+        category: 'engineering',
+        author: 'admin',
+        translations: { en: validTranslations.en },
+      }),
+    )
+    expect(mockEnsureSeries).not.toHaveBeenCalled()
+  })
+
+  it('calls upsertSeriesTranslation for each locale when seriesTitles provided', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockGetCategoryBySlug.mockResolvedValue(mockCategory)
+    mockSlugExistsForLocale.mockResolvedValue(false)
+    mockCreatePost.mockResolvedValue(mockPost)
+    mockEnsureSeries.mockResolvedValue(undefined)
+    mockUpsertSeriesTranslation.mockResolvedValue(undefined)
+    await POST(
+      makeRequest({
+        category: 'engineering',
+        author: 'admin',
+        seriesId: 'my-series',
+        seriesTitles: { en: 'My Series', es: 'Mi Serie' },
+        translations: { en: validTranslations.en },
+      }),
+    )
+    expect(mockUpsertSeriesTranslation).toHaveBeenCalledWith(
+      'my-series',
+      'en',
+      'My Series',
+    )
+    expect(mockUpsertSeriesTranslation).toHaveBeenCalledWith(
+      'my-series',
+      'es',
+      'Mi Serie',
+    )
+  })
+
+  it('returns 422 when seriesOrder is already taken', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockGetCategoryBySlug.mockResolvedValue(mockCategory)
+    mockSlugExistsForLocale.mockResolvedValue(false)
+    mockEnsureSeries.mockResolvedValue(undefined)
+    mockSeriesOrderExistsForSeries.mockResolvedValue(true)
+    const res = await POST(
+      makeRequest({
+        category: 'engineering',
+        author: 'admin',
+        seriesId: 'my-series',
+        seriesOrder: 2,
+        translations: { en: validTranslations.en },
+      }),
+    )
+    expect(res.status).toBe(422)
+    const body = (await res.json()) as { error: string }
+    expect(body.error).toMatch(/already taken/)
+  })
+
+  it('creates post when seriesId and seriesOrder provided and order is available', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockGetCategoryBySlug.mockResolvedValue(mockCategory)
+    mockSlugExistsForLocale.mockResolvedValue(false)
+    mockCreatePost.mockResolvedValue(mockPost)
+    mockEnsureSeries.mockResolvedValue(undefined)
+    mockSeriesOrderExistsForSeries.mockResolvedValue(false)
+    const res = await POST(
+      makeRequest({
+        category: 'engineering',
+        author: 'admin',
+        seriesId: 'my-series',
+        seriesOrder: 2,
+        translations: { en: validTranslations.en },
+      }),
+    )
+    expect(res.status).toBe(201)
   })
 })
 

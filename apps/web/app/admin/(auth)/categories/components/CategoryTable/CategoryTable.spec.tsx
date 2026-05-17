@@ -1,4 +1,5 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react'
+import axios from 'axios'
 import { useRouter } from 'next/navigation'
 
 import { renderApp } from '@sdlgr/test-utils'
@@ -16,6 +17,7 @@ jest.mock('@web/i18n/client', () => ({
       const translations: Record<string, string> = {
         'categories.searchPlaceholder': 'Search categories…',
         'categories.newCategory': 'New category',
+        refresh: 'Refresh',
         'categories.table.name': 'Name',
         'categories.table.slug': 'Slug',
         'categories.table.posts': 'Posts',
@@ -67,7 +69,9 @@ describe('CategoryTable', () => {
       refresh: mockRefresh,
       push: mockPush,
     })
-    global.fetch = jest.fn().mockResolvedValue({ ok: true, status: 200 })
+    jest.spyOn(axios, 'get').mockResolvedValue({ data: { data: [] } })
+    jest.spyOn(axios, 'put').mockResolvedValue({ data: {} })
+    jest.spyOn(axios, 'delete').mockResolvedValue({ data: {} })
   })
 
   it('renders all category rows', () => {
@@ -183,6 +187,17 @@ describe('CategoryTable', () => {
     renderApp(<CategoryTable categories={[]} />)
     fireEvent.click(screen.getByTestId('new-category-button'))
     expect(mockPush).toHaveBeenCalledWith('/admin/categories/new')
+  })
+
+  it('refresh button fetches categories from API', async () => {
+    const freshCategory = makeCategory({ slug: 'fresh', translations: [] })
+    jest.spyOn(axios, 'get').mockResolvedValueOnce({
+      data: { data: [freshCategory] },
+    })
+    renderApp(<CategoryTable categories={[]} />)
+    fireEvent.click(screen.getByTestId('refresh-button'))
+    expect(await screen.findByTestId('category-row')).toBeInTheDocument()
+    expect(axios.get).toHaveBeenCalledWith('/api/categories?admin=1')
   })
 
   it('entering edit mode shows locale tabs, name/description/slug inputs and Save/Cancel', () => {
@@ -313,19 +328,16 @@ describe('CategoryTable', () => {
       target: { value: 'Tech articles' },
     })
     fireEvent.click(screen.getByTestId('save-button'))
-    await waitFor(() => expect(global.fetch).toHaveBeenCalled())
-    expect(global.fetch).toHaveBeenCalledWith('/api/categories/eng', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        locale: 'en',
-        name: 'Engenharia',
-        description: 'Tech articles',
-        slug: 'engenharia',
-      }),
+    await waitFor(() => expect(axios.put).toHaveBeenCalled())
+    expect(axios.put).toHaveBeenCalledWith('/api/categories/eng', {
+      locale: 'en',
+      name: 'Engenharia',
+      description: 'Tech articles',
+      slug: 'engenharia',
     })
-    await waitFor(() => expect(mockRefresh).toHaveBeenCalled())
-    expect(screen.queryByTestId('edit-name-input')).not.toBeInTheDocument()
+    await waitFor(() =>
+      expect(screen.queryByTestId('edit-name-input')).not.toBeInTheDocument(),
+    )
   })
 
   it('saving with updated locale slug sends new slug', async () => {
@@ -335,16 +347,12 @@ describe('CategoryTable', () => {
       target: { value: 'eng-new' },
     })
     fireEvent.click(screen.getByTestId('save-button'))
-    await waitFor(() => expect(global.fetch).toHaveBeenCalled())
-    expect(global.fetch).toHaveBeenCalledWith('/api/categories/engineering', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        locale: 'en',
-        name: 'Engineering',
-        description: null,
-        slug: 'eng-new',
-      }),
+    await waitFor(() => expect(axios.put).toHaveBeenCalled())
+    expect(axios.put).toHaveBeenCalledWith('/api/categories/engineering', {
+      locale: 'en',
+      name: 'Engineering',
+      description: null,
+      slug: 'eng-new',
     })
   })
 
@@ -396,16 +404,12 @@ describe('CategoryTable', () => {
     )
     fireEvent.click(screen.getByTestId('edit-button'))
     fireEvent.click(screen.getByTestId('save-button'))
-    await waitFor(() => expect(global.fetch).toHaveBeenCalled())
-    expect(global.fetch).toHaveBeenCalledWith('/api/categories/eng', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        locale: 'en',
-        name: 'Engineering',
-        description: null,
-        slug: 'eng',
-      }),
+    await waitFor(() => expect(axios.put).toHaveBeenCalled())
+    expect(axios.put).toHaveBeenCalledWith('/api/categories/eng', {
+      locale: 'en',
+      name: 'Engineering',
+      description: null,
+      slug: 'eng',
     })
   })
 
@@ -433,16 +437,12 @@ describe('CategoryTable', () => {
       target: { value: '' },
     })
     fireEvent.click(screen.getByTestId('save-button'))
-    await waitFor(() => expect(global.fetch).toHaveBeenCalled())
-    expect(global.fetch).toHaveBeenCalledWith('/api/categories/eng', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        locale: 'en',
-        name: 'Engineering',
-        description: null,
-        slug: 'eng',
-      }),
+    await waitFor(() => expect(axios.put).toHaveBeenCalled())
+    expect(axios.put).toHaveBeenCalledWith('/api/categories/eng', {
+      locale: 'en',
+      name: 'Engineering',
+      description: null,
+      slug: 'eng',
     })
   })
 
@@ -469,16 +469,12 @@ describe('CategoryTable', () => {
     fireEvent.click(screen.getByTestId('edit-button'))
     fireEvent.click(screen.getByTestId('locale-tab-es'))
     fireEvent.click(screen.getByTestId('save-button'))
-    await waitFor(() => expect(global.fetch).toHaveBeenCalled())
-    expect(global.fetch).toHaveBeenCalledWith('/api/categories/engineering', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        locale: 'es',
-        name: 'Ingeniería',
-        description: null,
-        slug: 'ingenieria',
-      }),
+    await waitFor(() => expect(axios.put).toHaveBeenCalled())
+    expect(axios.put).toHaveBeenCalledWith('/api/categories/engineering', {
+      locale: 'es',
+      name: 'Ingeniería',
+      description: null,
+      slug: 'ingenieria',
     })
   })
 
@@ -513,7 +509,7 @@ describe('CategoryTable', () => {
     expect(screen.getByTestId('delete-button')).not.toHaveAttribute('title')
   })
 
-  it('delete opens modal and confirming calls DELETE and refreshes', async () => {
+  it('delete opens modal and confirming calls DELETE and removes row', async () => {
     renderApp(
       <CategoryTable
         categories={[makeCategory({ slug: 'del-me', publishedPostCount: 0 })]}
@@ -522,11 +518,11 @@ describe('CategoryTable', () => {
     fireEvent.click(screen.getByTestId('delete-button'))
     expect(screen.getByTestId('confirm-delete-confirm')).toBeInTheDocument()
     fireEvent.click(screen.getByTestId('confirm-delete-confirm'))
-    await waitFor(() => expect(global.fetch).toHaveBeenCalled())
-    expect(global.fetch).toHaveBeenCalledWith('/api/categories/del-me', {
-      method: 'DELETE',
-    })
-    expect(mockRefresh).toHaveBeenCalled()
+    await waitFor(() => expect(axios.delete).toHaveBeenCalled())
+    expect(axios.delete).toHaveBeenCalledWith('/api/categories/del-me')
+    await waitFor(() =>
+      expect(screen.queryByTestId('category-row')).not.toBeInTheDocument(),
+    )
   })
 
   it('delete opens modal and cancelling does not call fetch', () => {
@@ -536,7 +532,7 @@ describe('CategoryTable', () => {
     fireEvent.click(screen.getByTestId('delete-button'))
     expect(screen.getByTestId('confirm-delete-cancel')).toBeInTheDocument()
     fireEvent.click(screen.getByTestId('confirm-delete-cancel'))
-    expect(global.fetch).not.toHaveBeenCalled()
+    expect(axios.delete).not.toHaveBeenCalled()
   })
 
   it('renders post count', () => {
@@ -570,6 +566,41 @@ describe('CategoryTable', () => {
       target: { value: 'New Name' },
     })
     expect(screen.getByTestId('edit-slug-input')).toHaveValue('custom-slug')
+  })
+
+  it('saving edit updates only the edited category, keeps others unchanged', async () => {
+    const cat1 = makeCategory({
+      slug: 'eng',
+      translations: [
+        {
+          categorySlug: 'eng',
+          locale: 'en' as const,
+          name: 'Engineering',
+          description: null,
+          slug: 'eng',
+        },
+      ],
+    })
+    const cat2 = makeCategory({
+      slug: 'design',
+      translations: [
+        {
+          categorySlug: 'design',
+          locale: 'en' as const,
+          name: 'Design',
+          description: null,
+          slug: 'design',
+        },
+      ],
+    })
+    renderApp(<CategoryTable categories={[cat1, cat2]} />)
+    fireEvent.click(screen.getAllByTestId('edit-button')[0])
+    fireEvent.change(screen.getByTestId('edit-name-input'), {
+      target: { value: 'Engineering Updated' },
+    })
+    fireEvent.click(screen.getByTestId('save-button'))
+    await waitFor(() => expect(axios.put).toHaveBeenCalled())
+    expect(screen.getByText('Design')).toBeInTheDocument()
   })
 
   it('resets auto-slug on locale switch', () => {

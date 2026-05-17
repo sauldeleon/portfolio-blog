@@ -31,7 +31,7 @@ export const StyledInput = styled.input`
   padding: 0.5rem 0;
   color: ${({ theme }) => theme.colors.white};
   font-family: inherit;
-  font-size: 0.875rem;
+  font-size: 0.7rem;
   outline: none;
   transition: border-color 0.2s;
 

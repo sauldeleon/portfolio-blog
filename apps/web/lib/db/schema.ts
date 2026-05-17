@@ -31,6 +31,22 @@ export const categoryTranslations = pgTable(
   ],
 )
 
+export const series = pgTable('series', {
+  id: text('id').primaryKey(),
+})
+
+export const seriesTranslations = pgTable(
+  'series_translations',
+  {
+    seriesId: text('series_id')
+      .notNull()
+      .references(() => series.id, { onDelete: 'cascade' }),
+    locale: text('locale', { enum: ['en', 'es'] }).notNull(),
+    title: text('title').notNull(),
+  },
+  (t) => [primaryKey({ columns: [t.seriesId, t.locale] })],
+)
+
 export const posts = pgTable(
   'posts',
   {
@@ -44,7 +60,10 @@ export const posts = pgTable(
       .notNull()
       .default('draft'),
     coverImage: text('cover_image'),
-    seriesId: text('series_id'),
+    coverImageFit: text('cover_image_fit', { enum: ['cover', 'contain'] }),
+    seriesId: text('series_id').references(() => series.id, {
+      onDelete: 'set null',
+    }),
     seriesOrder: integer('series_order'),
     scheduledAt: timestamp('scheduled_at', { withTimezone: true }),
     publishedAt: timestamp('published_at', { withTimezone: true }),
@@ -82,9 +101,14 @@ export type Category = typeof categories.$inferSelect
 export type NewCategory = typeof categories.$inferInsert
 export type CategoryTranslation = typeof categoryTranslations.$inferSelect
 export type NewCategoryTranslation = typeof categoryTranslations.$inferInsert
+export type Series = typeof series.$inferSelect
+export type NewSeries = typeof series.$inferInsert
+export type SeriesTranslation = typeof seriesTranslations.$inferSelect
+export type NewSeriesTranslation = typeof seriesTranslations.$inferInsert
 export type Post = typeof posts.$inferSelect
 export type NewPost = typeof posts.$inferInsert
 export type PostTranslation = typeof postTranslations.$inferSelect
 export type NewPostTranslation = typeof postTranslations.$inferInsert
 export type Locale = 'en' | 'es'
 export type PostStatus = 'draft' | 'published' | 'archived'
+export type CoverImageFit = 'cover' | 'contain'

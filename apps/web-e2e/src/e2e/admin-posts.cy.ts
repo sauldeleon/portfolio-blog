@@ -1,6 +1,6 @@
 import { loginViaUi } from '../support/login'
 
-describe('Admin posts — create and archive', () => {
+describe('Admin posts — create, archive, and hard delete', () => {
   let commitHash: string
 
   before(() => {
@@ -15,7 +15,7 @@ describe('Admin posts — create and archive', () => {
     cy.get('[data-testid="admin-nav"]').should('be.visible')
   })
 
-  it('creates a post with both locales and then archives it', () => {
+  it('creates a post with both locales, archives it, then permanently deletes it', () => {
     const uid = `${commitHash}-${Date.now()}`
     const enTitle = `e2e post ${uid}`
     const esTitle = `e2e post es ${uid}`
@@ -50,28 +50,32 @@ describe('Admin posts — create and archive', () => {
     cy.get('[data-testid="publish-button"]').should('not.be.disabled')
 
     // Go back to posts list
+    cy.intercept('GET', /\/api\/posts/).as('postsList')
     cy.get('[data-testid="back-link"]').click()
     cy.url({ timeout: 10000 }).should('include', '/admin/posts')
+    cy.get('[data-testid="refresh-button"]').click()
+    cy.wait('@postsList')
 
-    // Archive the post
+    // Archive the post — disappears from 'all' tab (optimistic update)
     cy.contains('[data-testid="post-row"]', enTitle)
-      .find('[data-testid="delete-button"]')
+      .find('[data-testid="archive-button"]')
       .click()
     cy.get('[data-testid="confirm-delete-confirm"]').click()
 
-    // Post is still visible but as archived — unarchive button appears
-    cy.contains('[data-testid="post-row"]', enTitle)
-      .find('[data-testid="unarchive-button"]')
-      .should('be.visible')
+    // Post no longer visible in 'all' tab
+    cy.contains('[data-testid="post-row"]', enTitle).should('not.exist')
 
-    // Unarchive to restore draft, then archive again for cleanup
+    // Navigate to archived tab to find the archived post
+    cy.get('[data-testid="filter-archived"]').click()
+    cy.contains('[data-testid="post-row"]', enTitle).should('be.visible')
+
+    // Hard delete the archived post
     cy.contains('[data-testid="post-row"]', enTitle)
-      .find('[data-testid="unarchive-button"]')
-      .click()
-    cy.contains('[data-testid="post-row"]', enTitle)
-      .find('[data-testid="delete-button"]')
-      .should('be.visible')
+      .find('[data-testid="hard-delete-button"]')
       .click()
     cy.get('[data-testid="confirm-delete-confirm"]').click()
+
+    // Post permanently deleted — no longer in archived tab
+    cy.contains('[data-testid="post-row"]', enTitle).should('not.exist')
   })
 })

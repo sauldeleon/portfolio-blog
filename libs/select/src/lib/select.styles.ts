@@ -29,14 +29,14 @@ export const StyledSelectWrapper = styled.div`
   .select__single-value {
     color: ${({ theme }) => theme.colors.white};
     font-family: inherit;
-    font-size: 0.875rem;
+    font-size: 0.7rem;
     margin: 0;
   }
 
   .select__input-container {
     color: ${({ theme }) => theme.colors.white};
     font-family: inherit;
-    font-size: 0.875rem;
+    font-size: 0.7rem;
     margin: 0;
     padding: 0;
   }
@@ -45,7 +45,7 @@ export const StyledSelectWrapper = styled.div`
     color: ${({ theme }) => theme.colors.white};
     opacity: 0.25;
     font-family: inherit;
-    font-size: 0.875rem;
+    font-size: 0.7rem;
     margin: 0;
   }
 

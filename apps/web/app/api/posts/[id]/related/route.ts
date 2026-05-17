@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
-import { getRelatedPosts } from '../../../../../lib/db/queries/posts'
-import { computeReadingTime } from '../../../../../utils/computeReadingTime'
+import { getRelatedPosts } from '@web/lib/db/queries/posts'
+import { computeReadingTime } from '@web/utils/computeReadingTime'
 
 const CACHE_HEADERS = {
   'Cache-Control': 's-maxage=60, stale-while-revalidate=3600',

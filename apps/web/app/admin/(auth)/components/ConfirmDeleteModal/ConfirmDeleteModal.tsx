@@ -5,6 +5,7 @@ import { RenderModalBackdropProps } from 'react-overlays/Modal'
 import { useClientTranslation } from '@web/i18n/client'
 
 import {
+  type ModalVariant,
   StyledBackdrop,
   StyledButtons,
   StyledCancelButton,
@@ -19,6 +20,7 @@ export interface ConfirmDeleteModalProps {
   message: string
   onConfirm: () => void
   onCancel: () => void
+  variant?: ModalVariant
 }
 
 export function ConfirmDeleteModal({
@@ -26,6 +28,7 @@ export function ConfirmDeleteModal({
   message,
   onConfirm,
   onCancel,
+  variant = 'danger',
 }: ConfirmDeleteModalProps) {
   const { t } = useClientTranslation('admin')
 
@@ -33,6 +36,7 @@ export function ConfirmDeleteModal({
     <StyledModal
       show={isOpen}
       onHide={onCancel}
+      $variant={variant}
       renderBackdrop={(props: RenderModalBackdropProps) => (
         <StyledBackdrop {...props} />
       )}
@@ -48,6 +52,7 @@ export function ConfirmDeleteModal({
             {t('confirmDelete.cancel')}
           </StyledCancelButton>
           <StyledConfirmButton
+            $variant={variant}
             onClick={onConfirm}
             data-testid="confirm-delete-confirm"
           >
