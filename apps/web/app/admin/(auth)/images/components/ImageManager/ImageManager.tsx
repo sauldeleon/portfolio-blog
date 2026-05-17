@@ -50,8 +50,11 @@ export function ImageManager() {
     },
   })
 
-  const displayError =
-    !isLoading && (isError || deleteError) ? t('images.upload.error') : null
+  const displayError = !isLoading
+    ? isError
+      ? t('images.listError')
+      : (deleteError ?? null)
+    : null
 
   const editTarget = images.find((img) => img.publicId === editTargetId) ?? null
 
@@ -106,7 +109,7 @@ export function ImageManager() {
         return old.filter((img) => img.publicId !== id)
       })
     } catch {
-      setDeleteError(t('images.upload.error'))
+      setDeleteError(t('images.deleteError'))
     }
   }
 

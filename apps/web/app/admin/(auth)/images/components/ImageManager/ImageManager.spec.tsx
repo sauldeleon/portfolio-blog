@@ -30,6 +30,8 @@ jest.mock('@web/i18n/client', () => ({
         'images.emptyState': 'No images yet. Upload your first image.',
         'images.deleteConfirm': 'Delete this image? This cannot be undone.',
         'images.upload.error': 'Upload failed, please try again',
+        'images.listError': 'Failed to load images, please try again',
+        'images.deleteError': 'Delete failed, please try again',
         'images.picker.loading': 'Loading…',
         'images.renameModal.error': 'Rename failed, please try again',
         'confirmDelete.cancel': 'Cancel',
@@ -241,7 +243,7 @@ describe('ImageManager', () => {
     renderApp(<ImageManager />)
     expect(await screen.findByTestId('error-state')).toBeInTheDocument()
     expect(screen.getByTestId('error-state')).toHaveTextContent(
-      'Upload failed, please try again',
+      'Failed to load images, please try again',
     )
   })
 
@@ -343,6 +345,9 @@ describe('ImageManager', () => {
     fireEvent.click(screen.getByTestId('delete-sawl.dev - blog/photo1'))
     fireEvent.click(screen.getByTestId('confirm-delete-confirm'))
     expect(await screen.findByTestId('error-state')).toBeInTheDocument()
+    expect(screen.getByTestId('error-state')).toHaveTextContent(
+      'Delete failed, please try again',
+    )
   })
 
   it('opens edit modal when rename clicked', async () => {

@@ -129,6 +129,8 @@
       "saving": "Saving…",
       "error": "Rename failed, please try again"
     },
+    "listError": "Failed to load images, please try again",
+    "deleteError": "Delete failed, please try again",
     "upload": {
       "title": "Upload Image",
       "dropzone": "Drop an image here, or click to select",
