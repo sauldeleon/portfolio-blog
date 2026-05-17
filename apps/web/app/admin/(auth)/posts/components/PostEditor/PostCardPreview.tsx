@@ -14,6 +14,8 @@ interface PostCardPreviewProps {
   tags: string[]
   coverImage: string
   coverImageFit?: 'cover' | 'contain'
+  seriesTitle?: string
+  seriesOrder?: number | null
   author: string
   lng: string
 }
@@ -27,6 +29,8 @@ export function PostCardPreview({
   tags,
   coverImage,
   coverImageFit,
+  seriesTitle,
+  seriesOrder,
   author,
   lng,
 }: PostCardPreviewProps) {
@@ -69,6 +73,8 @@ export function PostCardPreview({
             tags={tags}
             coverImagePublicId={coverImage || null}
             coverImageFit={coverImageFit}
+            seriesTitle={seriesTitle || null}
+            seriesOrder={seriesOrder}
             lng={lng}
             readMoreLabel="Read more"
           />

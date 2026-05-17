@@ -46,6 +46,8 @@ export async function RelatedPosts({ postId, lng }: RelatedPostsProps) {
             category={post.category}
             tags={post.tags}
             coverImagePublicId={post.coverImage}
+            seriesTitle={post.seriesTitle}
+            seriesOrder={post.seriesOrder}
             lng={lng}
             readMoreLabel={t('readMore')}
           />

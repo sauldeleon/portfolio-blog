@@ -12,6 +12,7 @@ import {
   StyledMoreTags,
   StyledPlaceholder,
   StyledReadMore,
+  StyledSeriesBadge,
   StyledTag,
   StyledTagList,
   StyledTitle,
@@ -31,6 +32,8 @@ export interface PostCardProps {
   tags: string[]
   coverImagePublicId: string | null
   coverImageFit?: 'cover' | 'contain'
+  seriesTitle?: string | null
+  seriesOrder?: number | null
   lng: string
   readMoreLabel: string
 }
@@ -47,6 +50,8 @@ export function PostCard({
   tags,
   coverImagePublicId,
   coverImageFit,
+  seriesTitle,
+  seriesOrder,
   lng,
   readMoreLabel,
 }: PostCardProps) {
@@ -69,6 +74,12 @@ export function PostCard({
       </StyledCover>
       <StyledBody>
         <StyledCategory>{category}</StyledCategory>
+        {seriesTitle && (
+          <StyledSeriesBadge data-testid="series-badge">
+            <span>{seriesTitle}</span>
+            {seriesOrder != null && <span>#{seriesOrder}</span>}
+          </StyledSeriesBadge>
+        )}
         <StyledTitle>{title}</StyledTitle>
         <StyledExcerpt>{excerpt}</StyledExcerpt>
         <StyledMeta>

@@ -11,6 +11,8 @@ const mockUpsertTranslation = jest.fn()
 const mockGetPostStatus = jest.fn()
 const mockSoftDeletePost = jest.fn()
 const mockHardDeletePost = jest.fn()
+const mockEnsureSeries = jest.fn()
+const mockUpsertSeriesTranslation = jest.fn()
 
 jest.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
 jest.mock('@web/lib/db/queries/categories', () => ({
@@ -25,6 +27,10 @@ jest.mock('@web/lib/db/queries/posts', () => ({
   getPostStatus: mockGetPostStatus,
   softDeletePost: mockSoftDeletePost,
   hardDeletePost: mockHardDeletePost,
+}))
+jest.mock('@web/lib/db/queries/series', () => ({
+  ensureSeries: mockEnsureSeries,
+  upsertSeriesTranslation: mockUpsertSeriesTranslation,
 }))
 
 const { DELETE, GET, PUT } = require('./route') as {
@@ -429,6 +435,48 @@ describe('PUT /api/posts/[id]', () => {
       makeParams('id'),
     )
     expect(response.status).toBe(200)
+  })
+
+  it('calls ensureSeries before updatePost when seriesId provided', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockUpdatePost.mockResolvedValue(mockPost)
+    mockEnsureSeries.mockResolvedValue(undefined)
+    await PUT(makePutRequest({ seriesId: 'my-series' }), makeParams('id'))
+    expect(mockEnsureSeries).toHaveBeenCalledWith('my-series')
+    const ensureOrder = mockEnsureSeries.mock.invocationCallOrder[0]
+    const updateOrder = mockUpdatePost.mock.invocationCallOrder[0]
+    expect(ensureOrder).toBeLessThan(updateOrder)
+  })
+
+  it('does not call ensureSeries when seriesId is null', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockUpdatePost.mockResolvedValue(mockPost)
+    await PUT(makePutRequest({ seriesId: null }), makeParams('id'))
+    expect(mockEnsureSeries).not.toHaveBeenCalled()
+  })
+
+  it('calls upsertSeriesTranslation for each locale when seriesTitles provided', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockUpdatePost.mockResolvedValue({ ...mockPost, seriesId: 'my-series' })
+    mockEnsureSeries.mockResolvedValue(undefined)
+    mockUpsertSeriesTranslation.mockResolvedValue(undefined)
+    await PUT(
+      makePutRequest({
+        seriesId: 'my-series',
+        seriesTitles: { en: 'My Series', es: 'Mi Serie' },
+      }),
+      makeParams('id'),
+    )
+    expect(mockUpsertSeriesTranslation).toHaveBeenCalledWith(
+      'my-series',
+      'en',
+      'My Series',
+    )
+    expect(mockUpsertSeriesTranslation).toHaveBeenCalledWith(
+      'my-series',
+      'es',
+      'Mi Serie',
+    )
   })
 })
 

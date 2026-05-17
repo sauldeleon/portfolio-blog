@@ -101,6 +101,7 @@ export interface PostEditorPost {
 
 export type PostEditorSeries = {
   id: string
+  nextOrder: number
   translations: Array<{ locale: string; title: string }>
 }
 
@@ -224,8 +225,12 @@ export function PostEditor({
         en: found.translations.find((tr) => tr.locale === 'en')?.title ?? '',
         es: found.translations.find((tr) => tr.locale === 'es')?.title ?? '',
       })
+      if (!post) {
+        setSeriesOrder(String(found.nextOrder))
+      }
     } else {
       setSeriesTitles({ en: '', es: '' })
+      setSeriesOrder('1')
     }
   }
 
@@ -593,48 +598,24 @@ export function PostEditor({
               </FieldGroup>
 
               {seriesId && (
-                <>
-                  <FieldGroup>
-                    <FieldLabel htmlFor="meta-series-title-en">
-                      {t('postEditor.fields.seriesTitleEn')}
-                    </FieldLabel>
-                    <Input
-                      id="meta-series-title-en"
-                      type="text"
-                      value={seriesTitles.en}
-                      onChange={(e) =>
-                        setSeriesTitles((prev) => ({
-                          ...prev,
-                          en: e.target.value,
-                        }))
-                      }
-                      placeholder={t(
-                        'postEditor.fields.seriesTitlePlaceholder',
-                      )}
-                      data-testid="series-title-en-input"
-                    />
-                  </FieldGroup>
-                  <FieldGroup>
-                    <FieldLabel htmlFor="meta-series-title-es">
-                      {t('postEditor.fields.seriesTitleEs')}
-                    </FieldLabel>
-                    <Input
-                      id="meta-series-title-es"
-                      type="text"
-                      value={seriesTitles.es}
-                      onChange={(e) =>
-                        setSeriesTitles((prev) => ({
-                          ...prev,
-                          es: e.target.value,
-                        }))
-                      }
-                      placeholder={t(
-                        'postEditor.fields.seriesTitlePlaceholder',
-                      )}
-                      data-testid="series-title-es-input"
-                    />
-                  </FieldGroup>
-                </>
+                <FieldGroup>
+                  <FieldLabel htmlFor={`meta-series-title-${activeLocale}`}>
+                    {t('postEditor.fields.seriesTitle')}
+                  </FieldLabel>
+                  <Input
+                    id={`meta-series-title-${activeLocale}`}
+                    type="text"
+                    value={seriesTitles[activeLocale]}
+                    onChange={(e) =>
+                      setSeriesTitles((prev) => ({
+                        ...prev,
+                        [activeLocale]: e.target.value,
+                      }))
+                    }
+                    placeholder={t('postEditor.fields.seriesTitlePlaceholder')}
+                    data-testid="series-title-input"
+                  />
+                </FieldGroup>
               )}
 
               <FieldGroup>
@@ -772,6 +753,10 @@ Supported types: youtube · maps · openstreetmap · wikiloc`}</pre>
             tags={tags}
             coverImage={coverImage}
             coverImageFit={coverImageFit}
+            seriesTitle={seriesTitles[activeLocale] || undefined}
+            seriesOrder={
+              seriesOrder.trim() ? parseInt(seriesOrder.trim(), 10) : null
+            }
             author={previewAuthor}
             lng={activeLocale}
           />

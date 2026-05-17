@@ -61,7 +61,9 @@ export const posts = pgTable(
       .default('draft'),
     coverImage: text('cover_image'),
     coverImageFit: text('cover_image_fit', { enum: ['cover', 'contain'] }),
-    seriesId: text('series_id'),
+    seriesId: text('series_id').references(() => series.id, {
+      onDelete: 'set null',
+    }),
     seriesOrder: integer('series_order'),
     scheduledAt: timestamp('scheduled_at', { withTimezone: true }),
     publishedAt: timestamp('published_at', { withTimezone: true }),

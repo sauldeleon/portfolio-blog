@@ -9,7 +9,11 @@ import {
   getPublishedPostsPaginated,
   slugExistsForLocale,
 } from '@web/lib/db/queries/posts'
-import { upsertSeriesTranslation } from '@web/lib/db/queries/series'
+import {
+  ensureSeries,
+  seriesOrderExistsForSeries,
+  upsertSeriesTranslation,
+} from '@web/lib/db/queries/series'
 import { computeReadingTime } from '@web/utils/computeReadingTime'
 
 const CACHE_HEADERS = {
@@ -144,6 +148,25 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { error: `Slug '${t.slug}' already taken for locale '${locale}'` },
         { status: 409 },
+      )
+    }
+  }
+
+  if (data.seriesId) {
+    await ensureSeries(data.seriesId)
+  }
+
+  if (data.seriesId && data.seriesOrder != null) {
+    const orderTaken = await seriesOrderExistsForSeries(
+      data.seriesId,
+      data.seriesOrder,
+    )
+    if (orderTaken) {
+      return NextResponse.json(
+        {
+          error: `Order ${data.seriesOrder} is already taken in this series`,
+        },
+        { status: 422 },
       )
     }
   }

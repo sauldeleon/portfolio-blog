@@ -101,9 +101,53 @@ describe('PostCard', () => {
     expect(screen.queryByRole('time')).toBeNull()
   })
 
+  it('renders series badge when seriesTitle provided', () => {
+    renderWithTheme(
+      <PostCard {...defaultProps} seriesTitle="React Series" seriesOrder={2} />,
+    )
+    expect(screen.getByTestId('series-badge')).toBeInTheDocument()
+    expect(screen.getByText('React Series')).toBeInTheDocument()
+    expect(screen.getByText('#2')).toBeInTheDocument()
+  })
+
+  it('does not render series badge when seriesTitle is null', () => {
+    renderWithTheme(<PostCard {...defaultProps} seriesTitle={null} />)
+    expect(screen.queryByTestId('series-badge')).not.toBeInTheDocument()
+  })
+
+  it('does not render series badge when seriesTitle is undefined', () => {
+    renderWithTheme(<PostCard {...defaultProps} />)
+    expect(screen.queryByTestId('series-badge')).not.toBeInTheDocument()
+  })
+
+  it('renders series badge without order when seriesOrder is null', () => {
+    renderWithTheme(
+      <PostCard
+        {...defaultProps}
+        seriesTitle="React Series"
+        seriesOrder={null}
+      />,
+    )
+    expect(screen.getByTestId('series-badge')).toBeInTheDocument()
+    expect(screen.getByText('React Series')).toBeInTheDocument()
+    expect(screen.queryByText(/#\d/)).not.toBeInTheDocument()
+  })
+
   it('matches snapshot', () => {
     const { baseElement } = renderWithTheme(
       <PostCard {...defaultProps} coverImagePublicId="blog/cover" />,
+    )
+    expect(baseElement).toMatchSnapshot()
+  })
+
+  it('matches snapshot with series badge', () => {
+    const { baseElement } = renderWithTheme(
+      <PostCard
+        {...defaultProps}
+        coverImagePublicId="blog/cover"
+        seriesTitle="React Series"
+        seriesOrder={2}
+      />,
     )
     expect(baseElement).toMatchSnapshot()
   })

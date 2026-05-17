@@ -116,6 +116,8 @@ export async function BlogPage({
               }
               author={post.author}
               lng={lng}
+              seriesTitle={post.seriesTitle}
+              seriesOrder={post.seriesOrder}
               readMoreLabel={t('readMore')}
             />
           ))}

@@ -33,8 +33,7 @@ jest.mock('@web/i18n/client', () => ({
         'postEditor.fields.tagsHelper': 'Comma-separated',
         'postEditor.fields.seriesId': 'Series ID',
         'postEditor.fields.seriesIdPlaceholder': 'e.g. react-hooks-series',
-        'postEditor.fields.seriesTitleEn': 'Series title (EN)',
-        'postEditor.fields.seriesTitleEs': 'Series title (ES)',
+        'postEditor.fields.seriesTitle': 'Series title',
         'postEditor.fields.seriesTitlePlaceholder': 'Series title',
         'postEditor.fields.seriesOrder': 'Series Order',
         'postEditor.fields.seriesOrderPlaceholder': '1',
@@ -715,26 +714,20 @@ describe('PostEditor', () => {
       expect(body).toHaveProperty('coverImageFit', 'contain')
     })
 
-    it('series title inputs hidden when no series ID', () => {
+    it('series title input hidden when no series ID', () => {
       renderApp(<PostEditor categories={mockCategories} author="Admin" />)
-      expect(
-        screen.queryByTestId('series-title-en-input'),
-      ).not.toBeInTheDocument()
-      expect(
-        screen.queryByTestId('series-title-es-input'),
-      ).not.toBeInTheDocument()
+      expect(screen.queryByTestId('series-title-input')).not.toBeInTheDocument()
     })
 
-    it('series title inputs shown when series ID set', () => {
+    it('series title input shown for active locale when series ID set', () => {
       renderApp(<PostEditor categories={mockCategories} author="Admin" />)
       fireEvent.change(screen.getByTestId('series-id-input'), {
         target: { value: 'my-series' },
       })
-      expect(screen.getByTestId('series-title-en-input')).toBeInTheDocument()
-      expect(screen.getByTestId('series-title-es-input')).toBeInTheDocument()
+      expect(screen.getByTestId('series-title-input')).toBeInTheDocument()
     })
 
-    it('series title prefilled from series prop when series ID matches', () => {
+    it('series title prefilled from series prop for active locale when series ID matches', () => {
       renderApp(
         <PostEditor
           categories={mockCategories}
@@ -742,6 +735,7 @@ describe('PostEditor', () => {
           series={[
             {
               id: 'my-series',
+              nextOrder: 3,
               translations: [
                 { locale: 'en', title: 'My EN Series' },
                 { locale: 'es', title: 'My ES Series' },
@@ -753,28 +747,49 @@ describe('PostEditor', () => {
       fireEvent.change(screen.getByTestId('series-id-input'), {
         target: { value: 'my-series' },
       })
-      expect(screen.getByTestId('series-title-en-input')).toHaveValue(
+      expect(screen.getByTestId('series-title-input')).toHaveValue(
         'My EN Series',
       )
-      expect(screen.getByTestId('series-title-es-input')).toHaveValue(
+      fireEvent.click(screen.getByTestId('locale-tab-es'))
+      expect(screen.getByTestId('series-title-input')).toHaveValue(
         'My ES Series',
       )
     })
 
-    it('series titles cleared when series ID cleared', () => {
+    it('series title input hidden when series ID cleared', () => {
       renderApp(<PostEditor categories={mockCategories} author="Admin" />)
       fireEvent.change(screen.getByTestId('series-id-input'), {
         target: { value: 'my-series' },
       })
-      fireEvent.change(screen.getByTestId('series-title-en-input'), {
+      fireEvent.change(screen.getByTestId('series-title-input'), {
         target: { value: 'Some Title' },
       })
       fireEvent.change(screen.getByTestId('series-id-input'), {
         target: { value: '' },
       })
-      expect(
-        screen.queryByTestId('series-title-en-input'),
-      ).not.toBeInTheDocument()
+      expect(screen.queryByTestId('series-title-input')).not.toBeInTheDocument()
+    })
+
+    it('auto-fills seriesOrder with nextOrder when known series selected (new post)', () => {
+      renderApp(
+        <PostEditor
+          categories={mockCategories}
+          author="Admin"
+          series={[{ id: 'my-series', nextOrder: 3, translations: [] }]}
+        />,
+      )
+      fireEvent.change(screen.getByTestId('series-id-input'), {
+        target: { value: 'my-series' },
+      })
+      expect(screen.getByTestId('series-order-input')).toHaveValue(3)
+    })
+
+    it('auto-fills seriesOrder with 1 when new series created', () => {
+      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      fireEvent.change(screen.getByTestId('series-id-input'), {
+        target: { value: 'brand-new-series' },
+      })
+      expect(screen.getByTestId('series-order-input')).toHaveValue(1)
     })
 
     it('POST body includes seriesTitles when series ID and title set', async () => {
@@ -783,7 +798,7 @@ describe('PostEditor', () => {
       fireEvent.change(screen.getByTestId('series-id-input'), {
         target: { value: 'my-series' },
       })
-      fireEvent.change(screen.getByTestId('series-title-en-input'), {
+      fireEvent.change(screen.getByTestId('series-title-input'), {
         target: { value: 'My Series Title' },
       })
       fireEvent.click(screen.getByTestId('save-button'))
@@ -1126,7 +1141,7 @@ describe('PostEditor', () => {
       expect(body).toHaveProperty('coverImageFit', 'cover')
     })
 
-    it('pre-fills series titles from series prop when editing', () => {
+    it('pre-fills series title from series prop for active locale when editing', () => {
       renderApp(
         <PostEditor
           post={mockExistingPost}
@@ -1135,6 +1150,7 @@ describe('PostEditor', () => {
           series={[
             {
               id: 'series-1',
+              nextOrder: 3,
               translations: [
                 { locale: 'en', title: 'Series One EN' },
                 { locale: 'es', title: 'Series One ES' },
@@ -1143,10 +1159,11 @@ describe('PostEditor', () => {
           ]}
         />,
       )
-      expect(screen.getByTestId('series-title-en-input')).toHaveValue(
+      expect(screen.getByTestId('series-title-input')).toHaveValue(
         'Series One EN',
       )
-      expect(screen.getByTestId('series-title-es-input')).toHaveValue(
+      fireEvent.click(screen.getByTestId('locale-tab-es'))
+      expect(screen.getByTestId('series-title-input')).toHaveValue(
         'Series One ES',
       )
     })

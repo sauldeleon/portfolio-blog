@@ -28,6 +28,8 @@ jest.mock('@sdlgr/post-card', () => ({
       data-category={props.category}
       data-cover={props.coverImagePublicId}
       data-cover-fit={props.coverImageFit}
+      data-series-title={props.seriesTitle}
+      data-series-order={props.seriesOrder}
       data-lng={props.lng}
     />
   ),
@@ -121,6 +123,31 @@ describe('PostCardPreview', () => {
     renderApp(<PostCardPreview {...defaultProps} />)
     expect(screen.getByTestId('post-card')).not.toHaveAttribute(
       'data-cover-fit',
+    )
+  })
+
+  it('passes seriesTitle and seriesOrder to PostCard when provided', () => {
+    renderApp(
+      <PostCardPreview
+        {...defaultProps}
+        seriesTitle="My Series"
+        seriesOrder={2}
+      />,
+    )
+    expect(screen.getByTestId('post-card')).toHaveAttribute(
+      'data-series-title',
+      'My Series',
+    )
+    expect(screen.getByTestId('post-card')).toHaveAttribute(
+      'data-series-order',
+      '2',
+    )
+  })
+
+  it('does not pass seriesTitle when not provided', () => {
+    renderApp(<PostCardPreview {...defaultProps} />)
+    expect(screen.getByTestId('post-card')).not.toHaveAttribute(
+      'data-series-title',
     )
   })
 })

@@ -19,6 +19,7 @@ import {
   type PostStatus,
   postTranslations,
   posts,
+  seriesTranslations,
 } from '../schema'
 
 export type PublicPost = {
@@ -30,6 +31,7 @@ export type PublicPost = {
   coverImageFit: 'cover' | 'contain' | null
   seriesId: string | null
   seriesOrder: number | null
+  seriesTitle: string | null
   publishedAt: Date | null
   createdAt: Date
   updatedAt: Date
@@ -72,6 +74,7 @@ const publicFields = {
   coverImageFit: posts.coverImageFit,
   seriesId: posts.seriesId,
   seriesOrder: posts.seriesOrder,
+  seriesTitle: seriesTranslations.title,
   publishedAt: posts.publishedAt,
   createdAt: posts.createdAt,
   updatedAt: posts.updatedAt,
@@ -97,6 +100,13 @@ export async function getPublishedPosts(locale: Locale): Promise<PublicPost[]> {
         eq(postTranslations.locale, locale),
       ),
     )
+    .leftJoin(
+      seriesTranslations,
+      and(
+        eq(seriesTranslations.seriesId, posts.seriesId),
+        eq(seriesTranslations.locale, locale),
+      ),
+    )
     .where(and(eq(posts.status, 'published'), isNull(posts.deletedAt)))
     .orderBy(desc(posts.publishedAt))
 }
@@ -113,6 +123,13 @@ export async function getPostById(
       and(
         eq(postTranslations.postId, posts.id),
         eq(postTranslations.locale, locale),
+      ),
+    )
+    .leftJoin(
+      seriesTranslations,
+      and(
+        eq(seriesTranslations.seriesId, posts.seriesId),
+        eq(seriesTranslations.locale, locale),
       ),
     )
     .where(and(eq(posts.id, id), isNull(posts.deletedAt)))
@@ -132,6 +149,13 @@ export async function getPostBySlug(
       and(
         eq(postTranslations.postId, posts.id),
         eq(postTranslations.locale, locale),
+      ),
+    )
+    .leftJoin(
+      seriesTranslations,
+      and(
+        eq(seriesTranslations.seriesId, posts.seriesId),
+        eq(seriesTranslations.locale, locale),
       ),
     )
     .where(
@@ -161,6 +185,13 @@ export async function getRelatedPosts(
       and(
         eq(postTranslations.postId, posts.id),
         eq(postTranslations.locale, locale),
+      ),
+    )
+    .leftJoin(
+      seriesTranslations,
+      and(
+        eq(seriesTranslations.seriesId, posts.seriesId),
+        eq(seriesTranslations.locale, locale),
       ),
     )
     .where(
@@ -221,6 +252,13 @@ export async function getPostsBySeries(
       and(
         eq(postTranslations.postId, posts.id),
         eq(postTranslations.locale, locale),
+      ),
+    )
+    .leftJoin(
+      seriesTranslations,
+      and(
+        eq(seriesTranslations.seriesId, posts.seriesId),
+        eq(seriesTranslations.locale, locale),
       ),
     )
     .where(
@@ -490,11 +528,17 @@ export async function getPublishedPostsPaginated(
       : undefined,
   )
 
+  const seriesJoinCondition = and(
+    eq(seriesTranslations.seriesId, posts.seriesId),
+    eq(seriesTranslations.locale, locale),
+  )
+
   const [data, countRows] = await Promise.all([
     db
       .select(publicFieldsWithContent)
       .from(posts)
       .innerJoin(postTranslations, joinCondition)
+      .leftJoin(seriesTranslations, seriesJoinCondition)
       .where(whereConditions)
       .orderBy(desc(posts.publishedAt))
       .limit(limit)

@@ -1,5 +1,10 @@
 import { db } from '../index'
-import { getAllSeriesWithTranslations, upsertSeriesTranslation } from './series'
+import {
+  ensureSeries,
+  getAllSeriesWithTranslations,
+  seriesOrderExistsForSeries,
+  upsertSeriesTranslation,
+} from './series'
 
 jest.mock('../index', () => ({
   db: {
@@ -19,6 +24,9 @@ function makeChain(resolved: unknown) {
     'from',
     'leftJoin',
     'orderBy',
+    'where',
+    'groupBy',
+    'limit',
     'values',
     'onConflictDoNothing',
     'onConflictDoUpdate',
@@ -39,23 +47,33 @@ beforeEach(() => {
 
 describe('getAllSeriesWithTranslations', () => {
   it('returns empty array when no series exist', async () => {
-    mockDb.select.mockReturnValue(makeChain([]))
+    mockDb.select
+      .mockReturnValueOnce(makeChain([]))
+      .mockReturnValueOnce(makeChain([]))
     const result = await getAllSeriesWithTranslations()
     expect(result).toEqual([])
   })
 
-  it('returns series with their translations grouped', async () => {
-    mockDb.select.mockReturnValue(
-      makeChain([
-        { id: 'series-a', locale: 'en', title: 'Series A EN' },
-        { id: 'series-a', locale: 'es', title: 'Series A ES' },
-        { id: 'series-b', locale: 'en', title: 'Series B EN' },
-      ]),
-    )
+  it('returns series with their translations and nextOrder grouped', async () => {
+    mockDb.select
+      .mockReturnValueOnce(
+        makeChain([
+          { id: 'series-a', locale: 'en', title: 'Series A EN' },
+          { id: 'series-a', locale: 'es', title: 'Series A ES' },
+          { id: 'series-b', locale: 'en', title: 'Series B EN' },
+        ]),
+      )
+      .mockReturnValueOnce(
+        makeChain([
+          { seriesId: 'series-a', maxOrder: 2 },
+          { seriesId: 'series-b', maxOrder: 0 },
+        ]),
+      )
     const result = await getAllSeriesWithTranslations()
     expect(result).toHaveLength(2)
     expect(result[0]).toEqual({
       id: 'series-a',
+      nextOrder: 3,
       translations: [
         { locale: 'en', title: 'Series A EN' },
         { locale: 'es', title: 'Series A ES' },
@@ -63,17 +81,66 @@ describe('getAllSeriesWithTranslations', () => {
     })
     expect(result[1]).toEqual({
       id: 'series-b',
+      nextOrder: 1,
       translations: [{ locale: 'en', title: 'Series B EN' }],
     })
   })
 
+  it('defaults nextOrder to 1 when series has no posts', async () => {
+    mockDb.select
+      .mockReturnValueOnce(
+        makeChain([{ id: 'series-a', locale: 'en', title: 'Series A EN' }]),
+      )
+      .mockReturnValueOnce(makeChain([]))
+    const result = await getAllSeriesWithTranslations()
+    expect(result[0].nextOrder).toBe(1)
+  })
+
   it('returns series with empty translations when locale/title are null', async () => {
-    mockDb.select.mockReturnValue(
-      makeChain([{ id: 'series-a', locale: null, title: null }]),
-    )
+    mockDb.select
+      .mockReturnValueOnce(
+        makeChain([{ id: 'series-a', locale: null, title: null }]),
+      )
+      .mockReturnValueOnce(makeChain([]))
     const result = await getAllSeriesWithTranslations()
     expect(result).toHaveLength(1)
-    expect(result[0]).toEqual({ id: 'series-a', translations: [] })
+    expect(result[0]).toEqual({
+      id: 'series-a',
+      nextOrder: 1,
+      translations: [],
+    })
+  })
+})
+
+describe('seriesOrderExistsForSeries', () => {
+  it('returns true when a post with that order exists', async () => {
+    mockDb.select.mockReturnValue(makeChain([{ id: 'post-1' }]))
+    const result = await seriesOrderExistsForSeries('my-series', 1)
+    expect(result).toBe(true)
+  })
+
+  it('returns false when no post with that order exists', async () => {
+    mockDb.select.mockReturnValue(makeChain([]))
+    const result = await seriesOrderExistsForSeries('my-series', 2)
+    expect(result).toBe(false)
+  })
+
+  it('accepts excludePostId to exclude current post from check', async () => {
+    mockDb.select.mockReturnValue(makeChain([]))
+    await seriesOrderExistsForSeries('my-series', 1, 'post-abc')
+    expect(mockDb.select).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe('ensureSeries', () => {
+  it('inserts series with onConflictDoNothing', async () => {
+    const insertChain = makeChain([])
+    mockDb.insert.mockReturnValue(insertChain)
+
+    await ensureSeries('my-series')
+
+    expect(mockDb.insert).toHaveBeenCalledTimes(1)
+    expect(insertChain.onConflictDoNothing).toHaveBeenCalledTimes(1)
   })
 })
 

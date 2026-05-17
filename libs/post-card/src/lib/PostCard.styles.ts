@@ -96,6 +96,15 @@ export const StyledTag = styled.li`
   color: ${({ theme }) => theme.colors.green};
 `
 
+export const StyledSeriesBadge = styled.div`
+  ${({ theme }) => theme.typography.body.XS}
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: ${({ theme }) => theme.colors.yellow};
+  opacity: 0.75;
+`
+
 export const StyledMoreTags = styled.span`
   ${({ theme }) => theme.typography.body.XS}
   opacity: 0.5;
