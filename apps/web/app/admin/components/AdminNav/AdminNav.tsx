@@ -33,6 +33,12 @@ export function AdminNav() {
         {t('nav.categories')}
       </StyledNavLink>
       <StyledNavLink
+        href="/admin/series"
+        $active={pathname.startsWith('/admin/series')}
+      >
+        {t('nav.series')}
+      </StyledNavLink>
+      <StyledNavLink
         href="/admin/images"
         $active={pathname.startsWith('/admin/images')}
       >

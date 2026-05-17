@@ -105,5 +105,16 @@ describe('Admin posts — series order auto-assignment', () => {
       cy.get('[data-testid="confirm-delete-confirm"]').click()
       cy.contains('[data-testid="post-row"]', title).should('not.exist')
     }
+
+    // --- Clean up: delete the series (posts are gone, postCount should be 0) ---
+    cy.contains('[data-testid="admin-nav"] a', 'Series').click()
+    cy.url({ timeout: 10000 }).should('include', '/admin/series')
+    cy.get('[data-testid="refresh-button"]').click()
+    cy.contains('[data-testid="series-row"]', seriesId)
+      .find('[data-testid="delete-button"]')
+      .should('not.be.disabled')
+      .click()
+    cy.get('[data-testid="confirm-delete-confirm"]').click()
+    cy.contains('[data-testid="series-row"]', seriesId).should('not.exist')
   })
 })

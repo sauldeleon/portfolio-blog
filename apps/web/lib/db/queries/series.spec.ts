@@ -2,6 +2,8 @@ import { db } from '../index'
 import {
   ensureSeries,
   getAllSeriesWithTranslations,
+  getPostsForSeries,
+  getSeriesForAdmin,
   seriesOrderExistsForSeries,
   upsertSeriesTranslation,
 } from './series'
@@ -109,6 +111,66 @@ describe('getAllSeriesWithTranslations', () => {
       nextOrder: 1,
       translations: [],
     })
+  })
+})
+
+describe('getSeriesForAdmin', () => {
+  it('returns empty array when no series exist', async () => {
+    mockDb.select
+      .mockReturnValueOnce(makeChain([]))
+      .mockReturnValueOnce(makeChain([]))
+    const result = await getSeriesForAdmin()
+    expect(result).toEqual([])
+  })
+
+  it('returns series with translations and postCount grouped', async () => {
+    mockDb.select
+      .mockReturnValueOnce(
+        makeChain([
+          { id: 'series-a', locale: 'en', title: 'Series A EN' },
+          { id: 'series-a', locale: 'es', title: 'Series A ES' },
+          { id: 'series-b', locale: null, title: null },
+        ]),
+      )
+      .mockReturnValueOnce(makeChain([{ seriesId: 'series-a', postCount: 3 }]))
+    const result = await getSeriesForAdmin()
+    expect(result).toHaveLength(2)
+    expect(result[0]).toEqual({
+      id: 'series-a',
+      postCount: 3,
+      translations: [
+        { locale: 'en', title: 'Series A EN' },
+        { locale: 'es', title: 'Series A ES' },
+      ],
+    })
+    expect(result[1]).toEqual({
+      id: 'series-b',
+      postCount: 0,
+      translations: [],
+    })
+  })
+
+  it('defaults postCount to 0 when series has no posts', async () => {
+    mockDb.select
+      .mockReturnValueOnce(
+        makeChain([{ id: 'series-a', locale: 'en', title: 'Series A' }]),
+      )
+      .mockReturnValueOnce(makeChain([]))
+    const result = await getSeriesForAdmin()
+    expect(result[0].postCount).toBe(0)
+  })
+})
+
+describe('getPostsForSeries', () => {
+  it('returns posts for the given series ordered by seriesOrder', async () => {
+    const mockPosts = [
+      { id: 'post-1', seriesOrder: 1, enSlug: 'my-post', enTitle: 'My Post' },
+      { id: 'post-2', seriesOrder: 2, enSlug: null, enTitle: null },
+    ]
+    mockDb.select.mockReturnValue(makeChain(mockPosts))
+    const result = await getPostsForSeries('my-series')
+    expect(result).toEqual(mockPosts)
+    expect(mockDb.select).toHaveBeenCalledTimes(1)
   })
 })
 

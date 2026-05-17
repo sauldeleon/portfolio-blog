@@ -662,8 +662,8 @@ describe('PostEditor', () => {
           categories={mockCategories}
           author="Admin"
           series={[
-            { id: 'series-a', translations: [] },
-            { id: 'series-b', translations: [] },
+            { id: 'series-a', nextOrder: 1, translations: [] },
+            { id: 'series-b', nextOrder: 1, translations: [] },
           ]}
         />,
       )
@@ -790,6 +790,31 @@ describe('PostEditor', () => {
         target: { value: 'brand-new-series' },
       })
       expect(screen.getByTestId('series-order-input')).toHaveValue(1)
+    })
+
+    it('pre-fills EN and ES series titles from translations when series selected via input', () => {
+      renderApp(
+        <PostEditor
+          categories={mockCategories}
+          author="Admin"
+          series={[
+            {
+              id: 'my-series',
+              nextOrder: 3,
+              translations: [
+                { locale: 'en', title: 'My EN Series' },
+                { locale: 'es', title: 'My ES Series' },
+              ],
+            },
+          ]}
+        />,
+      )
+      fireEvent.change(screen.getByTestId('series-id-input'), {
+        target: { value: 'my-series' },
+      })
+      expect(screen.getByTestId('series-title-input')).toHaveValue(
+        'My EN Series',
+      )
     })
 
     it('POST body includes seriesTitles when series ID and title set', async () => {
@@ -1166,6 +1191,129 @@ describe('PostEditor', () => {
       expect(screen.getByTestId('series-title-input')).toHaveValue(
         'Series One ES',
       )
+    })
+
+    it('does not auto-fill seriesOrder when editing existing post and known series selected', () => {
+      renderApp(
+        <PostEditor
+          post={mockExistingPost}
+          categories={mockCategories}
+          author="Admin"
+          series={[
+            { id: 'series-1', nextOrder: 5, translations: [] },
+            { id: 'series-2', nextOrder: 7, translations: [] },
+          ]}
+        />,
+      )
+      // order was pre-filled from post (2); selecting a different series should NOT override
+      fireEvent.change(screen.getByTestId('series-id-input'), {
+        target: { value: 'series-2' },
+      })
+      expect(screen.getByTestId('series-order-input')).toHaveValue(2)
+    })
+
+    it('auto-fills seriesOrder when editing post with no existing series and known series selected', () => {
+      renderApp(
+        <PostEditor
+          post={{
+            ...mockExistingPost,
+            post: {
+              ...mockExistingPost.post,
+              seriesId: null,
+              seriesOrder: null,
+            },
+          }}
+          categories={mockCategories}
+          author="Admin"
+          series={[{ id: 'series-1', nextOrder: 2, translations: [] }]}
+        />,
+      )
+      fireEvent.change(screen.getByTestId('series-id-input'), {
+        target: { value: 'series-1' },
+      })
+      expect(screen.getByTestId('series-order-input')).toHaveValue(2)
+    })
+
+    it('PUT body omits seriesTitles when no series ID set', async () => {
+      renderApp(
+        <PostEditor
+          post={{
+            ...mockExistingPost,
+            post: {
+              ...mockExistingPost.post,
+              seriesId: null,
+              seriesOrder: null,
+            },
+          }}
+          categories={mockCategories}
+          author="Admin"
+        />,
+      )
+      fireEvent.click(screen.getByTestId('save-button'))
+      await waitFor(() => expect(axios.put).toHaveBeenCalled())
+      const body = (axios.put as jest.Mock).mock.calls[0][1] as Record<
+        string,
+        unknown
+      >
+      expect(body).not.toHaveProperty('seriesTitles')
+    })
+
+    it('pre-fills series title as empty when series found but has no translation for locale', () => {
+      renderApp(
+        <PostEditor
+          post={mockExistingPost}
+          categories={mockCategories}
+          author="Admin"
+          series={[
+            {
+              id: 'series-1',
+              nextOrder: 3,
+              translations: [],
+            },
+          ]}
+        />,
+      )
+      expect(screen.getByTestId('series-title-input')).toHaveValue('')
+    })
+
+    it('PUT body omits en from seriesTitles when series has no EN translation', async () => {
+      renderApp(
+        <PostEditor
+          post={mockExistingPost}
+          categories={mockCategories}
+          author="Admin"
+          series={[{ id: 'series-1', nextOrder: 3, translations: [] }]}
+        />,
+      )
+      fireEvent.click(screen.getByTestId('save-button'))
+      await waitFor(() => expect(axios.put).toHaveBeenCalled())
+      const body = (axios.put as jest.Mock).mock.calls[0][1] as {
+        seriesTitles: Record<string, string>
+      }
+      expect(body.seriesTitles).not.toHaveProperty('en')
+    })
+
+    it('PUT body includes ES series title when present', async () => {
+      renderApp(
+        <PostEditor
+          post={mockExistingPost}
+          categories={mockCategories}
+          author="Admin"
+          series={[
+            {
+              id: 'series-1',
+              nextOrder: 3,
+              translations: [{ locale: 'es', title: 'Mi Serie' }],
+            },
+          ]}
+        />,
+      )
+      fireEvent.click(screen.getByTestId('save-button'))
+      await waitFor(() => expect(axios.put).toHaveBeenCalled())
+      const body = (axios.put as jest.Mock).mock.calls[0][1] as {
+        seriesTitles: Record<string, string>
+      }
+      expect(body.seriesTitles).toHaveProperty('es', 'Mi Serie')
     })
 
     it('includes tags as array in PUT body uppercased', async () => {

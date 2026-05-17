@@ -13,6 +13,7 @@ const mockSoftDeletePost = jest.fn()
 const mockHardDeletePost = jest.fn()
 const mockEnsureSeries = jest.fn()
 const mockUpsertSeriesTranslation = jest.fn()
+const mockSeriesOrderExistsForSeries = jest.fn()
 
 jest.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
 jest.mock('@web/lib/db/queries/categories', () => ({
@@ -31,6 +32,8 @@ jest.mock('@web/lib/db/queries/posts', () => ({
 jest.mock('@web/lib/db/queries/series', () => ({
   ensureSeries: mockEnsureSeries,
   upsertSeriesTranslation: mockUpsertSeriesTranslation,
+  seriesOrderExistsForSeries: (...args: unknown[]) =>
+    mockSeriesOrderExistsForSeries(...args),
 }))
 
 const { DELETE, GET, PUT } = require('./route') as {
@@ -477,6 +480,31 @@ describe('PUT /api/posts/[id]', () => {
       'es',
       'Mi Serie',
     )
+  })
+
+  it('returns 422 when seriesOrder is already taken', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockEnsureSeries.mockResolvedValue(undefined)
+    mockSeriesOrderExistsForSeries.mockResolvedValue(true)
+    const res = await PUT(
+      makePutRequest({ seriesId: 'my-series', seriesOrder: 2 }),
+      makeParams('post-123'),
+    )
+    expect(res.status).toBe(422)
+    const body = (await res.json()) as { error: string }
+    expect(body.error).toMatch(/already taken/)
+  })
+
+  it('updates post when seriesId and seriesOrder provided and order is available', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockUpdatePost.mockResolvedValue(mockPost)
+    mockEnsureSeries.mockResolvedValue(undefined)
+    mockSeriesOrderExistsForSeries.mockResolvedValue(false)
+    const res = await PUT(
+      makePutRequest({ seriesId: 'my-series', seriesOrder: 2 }),
+      makeParams('post-123'),
+    )
+    expect(res.status).toBe(200)
   })
 })
 

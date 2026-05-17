@@ -13,6 +13,7 @@
   "nav": {
     "posts": "Posts",
     "categories": "Categories",
+    "series": "Series",
     "images": "Images",
     "logout": "Logout"
   },
@@ -177,6 +178,42 @@
       "descriptionPlaceholder": "Optional",
       "create": "Create category",
       "back": "← Back to categories",
+      "error": "Something went wrong, please try again"
+    }
+  },
+  "series": {
+    "title": "Series",
+    "newSeries": "New series",
+    "searchPlaceholder": "Search series…",
+    "empty": "No series found",
+    "postsLoading": "Loading posts…",
+    "viewPost": "View",
+    "removeFromSeries": "Remove from series",
+    "edit": "Edit",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "deleteConfirm": "Delete this series? This cannot be undone.",
+    "deleteTooltip": "Cannot delete — {{count}} post(s) use this series",
+    "table": {
+      "id": "ID",
+      "title": "Title",
+      "posts": "Posts",
+      "order": "Order",
+      "published": "Published",
+      "actions": "Actions"
+    },
+    "form": {
+      "createTitle": "New series",
+      "back": "← Back to series",
+      "id": "Series ID",
+      "idPlaceholder": "my-series",
+      "idHelper": "Unique identifier, letters/numbers/hyphens. Auto-generated from title.",
+      "enTitle": "English title",
+      "enTitlePlaceholder": "My series title",
+      "esTitle": "Spanish title (optional)",
+      "esTitlePlaceholder": "Título de la serie",
+      "create": "Create series",
       "error": "Something went wrong, please try again"
     }
   }

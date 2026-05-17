@@ -225,7 +225,7 @@ export function PostEditor({
         en: found.translations.find((tr) => tr.locale === 'en')?.title ?? '',
         es: found.translations.find((tr) => tr.locale === 'es')?.title ?? '',
       })
-      if (!post) {
+      if (!post || !post.post.seriesId) {
         setSeriesOrder(String(found.nextOrder))
       }
     } else {

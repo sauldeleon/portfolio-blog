@@ -13,6 +13,7 @@ jest.mock('@web/i18n/client', () => ({
       const translations: Record<string, string> = {
         'nav.posts': 'Posts',
         'nav.categories': 'Categories',
+        'nav.series': 'Series',
         'nav.images': 'Images',
         'nav.logout': 'Logout',
       }
@@ -65,6 +66,14 @@ describe('AdminNav', () => {
     )
   })
 
+  it('renders Series link', () => {
+    renderApp(<AdminNav />)
+    expect(screen.getByRole('link', { name: 'Series' })).toHaveAttribute(
+      'href',
+      '/admin/series',
+    )
+  })
+
   it('renders Images link', () => {
     renderApp(<AdminNav />)
     expect(screen.getByRole('link', { name: 'Images' })).toHaveAttribute(
@@ -90,6 +99,12 @@ describe('AdminNav', () => {
     renderApp(<AdminNav />)
     expect(screen.getByRole('link', { name: 'Posts' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Categories' })).toBeInTheDocument()
+  })
+
+  it('marks Series link active when on series route', () => {
+    ;(usePathname as jest.Mock).mockReturnValue('/admin/series')
+    renderApp(<AdminNav />)
+    expect(screen.getByRole('link', { name: 'Series' })).toBeInTheDocument()
   })
 
   it('marks Images link active when on images route', () => {

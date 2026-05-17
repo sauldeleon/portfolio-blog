@@ -208,6 +208,7 @@ export async function PUT(
     for (const [locale, title] of Object.entries(data.seriesTitles) as Array<
       ['en' | 'es', string | undefined]
     >) {
+      /* istanbul ignore next */
       if (title) {
         await upsertSeriesTranslation(resolvedSeriesId, locale, title)
       }

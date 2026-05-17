@@ -9,6 +9,7 @@ const mockGetPublishedPostsPaginated = jest.fn()
 const mockGetAllPosts = jest.fn()
 const mockEnsureSeries = jest.fn()
 const mockUpsertSeriesTranslation = jest.fn()
+const mockSeriesOrderExistsForSeries = jest.fn()
 
 jest.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
 jest.mock('@web/lib/db/queries/categories', () => ({
@@ -23,6 +24,8 @@ jest.mock('@web/lib/db/queries/posts', () => ({
 jest.mock('@web/lib/db/queries/series', () => ({
   ensureSeries: mockEnsureSeries,
   upsertSeriesTranslation: mockUpsertSeriesTranslation,
+  seriesOrderExistsForSeries: (...args: unknown[]) =>
+    mockSeriesOrderExistsForSeries(...args),
 }))
 
 const { GET, POST } = require('./route') as {
@@ -475,6 +478,45 @@ describe('POST /api/posts', () => {
       'es',
       'Mi Serie',
     )
+  })
+
+  it('returns 422 when seriesOrder is already taken', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockGetCategoryBySlug.mockResolvedValue(mockCategory)
+    mockSlugExistsForLocale.mockResolvedValue(false)
+    mockEnsureSeries.mockResolvedValue(undefined)
+    mockSeriesOrderExistsForSeries.mockResolvedValue(true)
+    const res = await POST(
+      makeRequest({
+        category: 'engineering',
+        author: 'admin',
+        seriesId: 'my-series',
+        seriesOrder: 2,
+        translations: { en: validTranslations.en },
+      }),
+    )
+    expect(res.status).toBe(422)
+    const body = (await res.json()) as { error: string }
+    expect(body.error).toMatch(/already taken/)
+  })
+
+  it('creates post when seriesId and seriesOrder provided and order is available', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockGetCategoryBySlug.mockResolvedValue(mockCategory)
+    mockSlugExistsForLocale.mockResolvedValue(false)
+    mockCreatePost.mockResolvedValue(mockPost)
+    mockEnsureSeries.mockResolvedValue(undefined)
+    mockSeriesOrderExistsForSeries.mockResolvedValue(false)
+    const res = await POST(
+      makeRequest({
+        category: 'engineering',
+        author: 'admin',
+        seriesId: 'my-series',
+        seriesOrder: 2,
+        translations: { en: validTranslations.en },
+      }),
+    )
+    expect(res.status).toBe(201)
   })
 })
 

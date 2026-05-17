@@ -1,7 +1,59 @@
-import { and, eq, isNotNull, ne, sql } from 'drizzle-orm'
+import { and, asc, count, eq, isNotNull, isNull, ne, sql } from 'drizzle-orm'
 
 import { db } from '../index'
-import { type Locale, posts, series, seriesTranslations } from '../schema'
+import {
+  type Locale,
+  postTranslations,
+  posts,
+  series,
+  seriesTranslations,
+} from '../schema'
+
+export type SeriesForAdmin = {
+  id: string
+  postCount: number
+  translations: Array<{ locale: string; title: string }>
+}
+
+export async function getSeriesForAdmin(): Promise<SeriesForAdmin[]> {
+  const [rows, postCountRows] = await Promise.all([
+    db
+      .select({
+        id: series.id,
+        locale: seriesTranslations.locale,
+        title: seriesTranslations.title,
+      })
+      .from(series)
+      .leftJoin(seriesTranslations, eq(seriesTranslations.seriesId, series.id))
+      .orderBy(series.id),
+    db
+      .select({ seriesId: posts.seriesId, postCount: count() })
+      .from(posts)
+      .where(isNotNull(posts.seriesId))
+      .groupBy(posts.seriesId),
+  ])
+
+  const postCountMap = new Map<string, number>(
+    postCountRows.map((r) => [r.seriesId!, r.postCount]),
+  )
+
+  const map = new Map<string, SeriesForAdmin>()
+  for (const row of rows) {
+    if (!map.has(row.id)) {
+      map.set(row.id, {
+        id: row.id,
+        postCount: postCountMap.get(row.id) ?? 0,
+        translations: [],
+      })
+    }
+    if (row.locale && row.title) {
+      map
+        .get(row.id)!
+        .translations.push({ locale: row.locale, title: row.title })
+    }
+  }
+  return Array.from(map.values())
+}
 
 export type SeriesWithTranslations = {
   id: string
@@ -70,6 +122,35 @@ export async function seriesOrderExistsForSeries(
     .where(and(...conditions))
     .limit(1)
   return rows.length > 0
+}
+
+export type PostInSeries = {
+  id: string
+  seriesOrder: number | null
+  enTitle: string | null
+  publishedAt: Date | null
+}
+
+export async function getPostsForSeries(
+  seriesId: string,
+): Promise<PostInSeries[]> {
+  return db
+    .select({
+      id: posts.id,
+      seriesOrder: posts.seriesOrder,
+      enTitle: postTranslations.title,
+      publishedAt: posts.publishedAt,
+    })
+    .from(posts)
+    .leftJoin(
+      postTranslations,
+      and(
+        eq(postTranslations.postId, posts.id),
+        eq(postTranslations.locale, 'en'),
+      ),
+    )
+    .where(and(eq(posts.seriesId, seriesId), isNull(posts.deletedAt)))
+    .orderBy(asc(posts.seriesOrder))
 }
 
 export async function ensureSeries(seriesId: string): Promise<void> {

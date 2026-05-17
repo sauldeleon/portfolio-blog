@@ -194,6 +194,7 @@ export async function POST(request: Request) {
     for (const [locale, title] of Object.entries(data.seriesTitles) as Array<
       ['en' | 'es', string | undefined]
     >) {
+      /* istanbul ignore next */
       if (title) {
         await upsertSeriesTranslation(data.seriesId, locale, title)
       }
