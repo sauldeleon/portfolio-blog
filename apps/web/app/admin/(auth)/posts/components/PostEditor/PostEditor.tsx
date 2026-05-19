@@ -9,6 +9,7 @@ import { z } from 'zod'
 
 import { Checkbox } from '@sdlgr/checkbox'
 import { Combobox } from '@sdlgr/combobox'
+import { DateTimePicker } from '@sdlgr/date-picker'
 import {
   FieldGroup,
   FieldHelper,
@@ -16,11 +17,13 @@ import {
   Input,
   Textarea,
 } from '@sdlgr/input'
+import { PostHero } from '@sdlgr/post-hero'
 import { Select } from '@sdlgr/select'
 
 import { useClientTranslation } from '@web/i18n/client'
 import type { CloudinaryImage } from '@web/lib/cloudinary/images'
 import type { PostStatus } from '@web/lib/db/schema'
+import { computeReadingTime } from '@web/utils/computeReadingTime'
 import { slugify } from '@web/utils/slugify'
 
 import { ImagePicker } from '../ImagePicker'
@@ -45,7 +48,6 @@ import {
   StyledMetaGrid,
   StyledMetadataSection,
   StyledPageHeader,
-  StyledPreviewLabel,
   StyledPreviewPane,
   StyledPublishButton,
   StyledSaveButton,
@@ -53,6 +55,7 @@ import {
   StyledTitleRow,
   StyledWrapper,
 } from './PostEditor.styles'
+import { PreviewSectionLabel } from './PreviewSectionLabel'
 
 const DEFAULT_AUTHOR = 'Saúl de León'
 
@@ -89,6 +92,7 @@ export interface PostEditorTranslation {
 
 export interface PostEditorPost {
   id: string
+  postNumber?: number | null
   category: string
   tags: string[]
   status: PostStatus
@@ -96,6 +100,7 @@ export interface PostEditorPost {
   coverImageFit: 'cover' | 'contain' | null
   seriesId: string | null
   seriesOrder: number | null
+  scheduledAt: Date | null
   author: string
 }
 
@@ -183,8 +188,12 @@ export function PostEditor({
   const [coverImageFit, setCoverImageFit] = useState<'cover' | 'contain'>(
     post?.post.coverImageFit ?? 'cover',
   )
+  const [scheduledAt, setScheduledAt] = useState<Date | null>(
+    post?.post.scheduledAt ?? null,
+  )
   const [useDefaultAuthor, setUseDefaultAuthor] = useState(true)
   const [customAuthor, setCustomAuthor] = useState('')
+  const [editAuthor, setEditAuthor] = useState(post?.post.author ?? '')
 
   const currentLocale = locales[activeLocale]
 
@@ -295,6 +304,7 @@ export function PostEditor({
     }
 
     const coverImageValue = coverImage.trim() || null
+    const scheduledAtValue = scheduledAt ? scheduledAt.toISOString() : null
     const seriesIdValue = seriesId.trim() || null
     const seriesOrderValue = seriesOrder.trim()
       ? parseInt(seriesOrder.trim(), 10)
@@ -310,12 +320,14 @@ export function PostEditor({
     if (post) {
       return {
         category,
+        author: editAuthor.trim() || post.post.author,
         tags: tagsArray,
         status: targetStatus,
         coverImage: coverImageValue,
         coverImageFit,
         seriesId: seriesIdValue,
         seriesOrder: seriesOrderValue,
+        scheduledAt: scheduledAtValue,
         ...(seriesTitlesValue ? { seriesTitles: seriesTitlesValue } : {}),
         translations,
       }
@@ -332,6 +344,7 @@ export function PostEditor({
       coverImageFit,
       ...(seriesIdValue ? { seriesId: seriesIdValue } : {}),
       ...(seriesOrderValue != null ? { seriesOrder: seriesOrderValue } : {}),
+      scheduledAt: scheduledAtValue,
       ...(seriesTitlesValue ? { seriesTitles: seriesTitlesValue } : {}),
       translations,
     }
@@ -633,6 +646,16 @@ export function PostEditor({
               </FieldGroup>
 
               <FieldGroup>
+                <FieldLabel>{t('postEditor.fields.scheduledAt')}</FieldLabel>
+                <DateTimePicker
+                  value={scheduledAt}
+                  onChange={setScheduledAt}
+                  placeholder={t('postEditor.fields.scheduledAtPlaceholder')}
+                  data-testid="scheduled-at-picker"
+                />
+              </FieldGroup>
+
+              <FieldGroup>
                 <FieldLabel htmlFor="meta-cover-image-fit">
                   {t('postEditor.fields.coverImageFit')}
                 </FieldLabel>
@@ -654,7 +677,21 @@ export function PostEditor({
                 />
               </FieldGroup>
 
-              {!post && (
+              {post ? (
+                <FieldGroup>
+                  <FieldLabel htmlFor="meta-author">
+                    {t('postEditor.fields.author')}
+                  </FieldLabel>
+                  <Input
+                    id="meta-author"
+                    type="text"
+                    value={editAuthor}
+                    onChange={(e) => setEditAuthor(e.target.value)}
+                    placeholder={t('postEditor.fields.authorPlaceholder')}
+                    data-testid="author-input"
+                  />
+                </FieldGroup>
+              ) : (
                 <FieldGroup>
                   <FieldLabel htmlFor="meta-author">
                     {t('postEditor.fields.author')}
@@ -742,6 +779,34 @@ Supported types: youtube · maps · openstreetmap · wikiloc`}</pre>
             </StyledMarkdownHint>
           </FieldGroup>
 
+          {currentLocale.title && (
+            <>
+              <PreviewSectionLabel>
+                {t('postEditor.heroPreview')}
+              </PreviewSectionLabel>
+              <PostHero
+                title={currentLocale.title}
+                coverImagePublicId={coverImage || null}
+                coverImageFit={coverImageFit}
+                category={
+                  categories.find((c) => c.slug === category)?.name ?? ''
+                }
+                tags={tags}
+                author={previewAuthor}
+                publishedAt={new Date().toLocaleDateString()}
+                readingTime={computeReadingTime(currentLocale.content)}
+                lng={activeLocale}
+                seriesTitle={seriesTitles[activeLocale] || null}
+                seriesOrder={
+                  seriesOrder.trim() ? parseInt(seriesOrder.trim(), 10) : null
+                }
+                url={`/${activeLocale}/blog/${post?.post.postNumber ?? 'preview'}/${currentLocale.slug || 'preview'}`}
+                shareLabel={t('postEditor.share')}
+                copyLinkLabel={t('postEditor.shareCopyLink')}
+                copiedLabel={t('postEditor.shareCopied')}
+              />
+            </>
+          )}
           <PostCardPreview
             title={currentLocale.title}
             slug={currentLocale.slug}
@@ -759,11 +824,12 @@ Supported types: youtube · maps · openstreetmap · wikiloc`}</pre>
             }
             author={previewAuthor}
             lng={activeLocale}
+            postNumber={post?.post.postNumber ?? undefined}
           />
         </StyledEditorPane>
 
         <StyledPreviewPane data-testid="preview-pane">
-          <StyledPreviewLabel>{t('postEditor.preview')}</StyledPreviewLabel>
+          <PreviewSectionLabel>{t('postEditor.preview')}</PreviewSectionLabel>
           <MarkdownPreview
             content={currentLocale.content}
             loadingLabel={t('postEditor.previewLoading')}

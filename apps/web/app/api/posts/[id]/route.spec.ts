@@ -380,6 +380,26 @@ describe('PUT /api/posts/[id]', () => {
     )
   })
 
+  it('passes null scheduledAt when null provided', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockUpdatePost.mockResolvedValue(mockPost)
+    await PUT(makePutRequest({ scheduledAt: null }), makeParams('id'))
+    expect(mockUpdatePost).toHaveBeenCalledWith(
+      'id',
+      expect.objectContaining({ scheduledAt: null }),
+    )
+  })
+
+  it('passes author when provided', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockUpdatePost.mockResolvedValue(mockPost)
+    await PUT(makePutRequest({ author: 'Jane Doe' }), makeParams('id'))
+    expect(mockUpdatePost).toHaveBeenCalledWith(
+      'id',
+      expect.objectContaining({ author: 'Jane Doe' }),
+    )
+  })
+
   it('succeeds publishing when both translations exist in DB', async () => {
     mockAuth.mockResolvedValue({ user: { name: 'admin' } })
     mockGetPostTranslations.mockResolvedValue([

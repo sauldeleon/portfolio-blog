@@ -33,6 +33,7 @@ export async function RelatedPosts({ postId, lng }: RelatedPostsProps) {
           <PostCard
             key={post.id}
             id={post.id}
+            postNumber={post.postNumber}
             slug={post.slug}
             title={post.title}
             excerpt={post.excerpt}

@@ -5,6 +5,7 @@ import {
   getAllSeries,
   getAllSeriesAdmin,
   getPostById,
+  getPostByNumber,
   getPostByPreviewToken,
   getPostBySlug,
   getPostForEdit,
@@ -15,6 +16,7 @@ import {
   getPublishedPosts,
   getPublishedPostsPaginated,
   getRelatedPosts,
+  getScheduledPostsToPublish,
   hardDeletePost,
   restorePost,
   slugExistsForLocale,
@@ -165,6 +167,22 @@ describe('getPostBySlug', () => {
   })
 })
 
+describe('getPostByNumber', () => {
+  it('returns post when postNumber matches', async () => {
+    mockDb.select.mockReturnValue(
+      makeChain([{ ...mockPublicPost, content: '# Hello' }]),
+    )
+    const result = await getPostByNumber(1, 'en')
+    expect(result).toMatchObject({ id: '01JWTEST000000000000000000' })
+  })
+
+  it('returns null when postNumber not found', async () => {
+    mockDb.select.mockReturnValue(makeChain([]))
+    const result = await getPostByNumber(999, 'en')
+    expect(result).toBeNull()
+  })
+})
+
 describe('getRelatedPosts', () => {
   it('returns related posts in same category', async () => {
     const relatedPost = {
@@ -188,6 +206,25 @@ describe('getRelatedPosts', () => {
     mockDb.select.mockReturnValue(makeChain([]))
     const result = await getRelatedPosts('nonexistent', 'en')
     expect(result).toEqual([])
+  })
+
+  it('returns at most 3 randomly shuffled posts when more are available', async () => {
+    const allRelated = [1, 2, 3, 4, 5].map((n) => ({
+      ...mockPublicPost,
+      id: `01JWOTHER${String(n).padStart(17, '0')}`,
+      slug: `related-${n}`,
+      content: `# Related ${n}`,
+    }))
+    mockDb.select
+      .mockReturnValueOnce(
+        makeChain([{ ...mockPublicPost, content: '# Hello' }]),
+      )
+      .mockReturnValueOnce(makeChain(allRelated))
+    const randomSpy = jest.spyOn(Math, 'random').mockReturnValue(0)
+    const result = await getRelatedPosts('01JWTEST000000000000000000', 'en')
+    randomSpy.mockRestore()
+    expect(result).toHaveLength(3)
+    result.forEach((post) => expect(allRelated).toContainEqual(post))
   })
 })
 
@@ -560,5 +597,31 @@ describe('getAllSeriesAdmin', () => {
     mockDb.select.mockReturnValue(makeChain([]))
     const result = await getAllSeriesAdmin()
     expect(result).toEqual([])
+  })
+})
+
+describe('getScheduledPostsToPublish', () => {
+  it('returns scheduled posts ready to publish', async () => {
+    const scheduledAt = new Date('2024-01-10T12:00:00Z')
+    mockDb.execute.mockResolvedValue({
+      rows: [{ id: '01JWTEST000000000000000000', scheduled_at: scheduledAt }],
+    })
+    const result = await getScheduledPostsToPublish()
+    expect(result).toEqual([{ id: '01JWTEST000000000000000000', scheduledAt }])
+  })
+
+  it('returns empty array when no posts are ready', async () => {
+    mockDb.execute.mockResolvedValue({ rows: [] })
+    const result = await getScheduledPostsToPublish()
+    expect(result).toEqual([])
+  })
+
+  it('maps scheduled_at to scheduledAt camelCase', async () => {
+    const date = new Date('2024-06-01T08:00:00Z')
+    mockDb.execute.mockResolvedValue({
+      rows: [{ id: 'abc', scheduled_at: date }],
+    })
+    const result = await getScheduledPostsToPublish()
+    expect(result[0].scheduledAt).toBe(date)
   })
 })

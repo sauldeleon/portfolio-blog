@@ -64,7 +64,7 @@ export const StyledExcerpt = styled.p`
   margin: 0;
   opacity: 0.6;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
   flex: 1;
@@ -103,6 +103,8 @@ export const StyledSeriesBadge = styled.div`
   gap: 0.375rem;
   color: ${({ theme }) => theme.colors.yellow};
   opacity: 0.75;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 `
 
 export const StyledMoreTags = styled.span`

@@ -12,15 +12,15 @@ import {
 export interface CodeBlockProps {
   children?: React.ReactNode
   'data-language'?: string
-  copyLabel: string
-  copiedLabel: string
+  copyLabel?: string
+  copiedLabel?: string
 }
 
 export function CodeBlock({
   children,
   'data-language': language,
-  copyLabel,
-  copiedLabel,
+  copyLabel = 'Copy',
+  copiedLabel = 'Copied!',
 }: CodeBlockProps) {
   const [copied, setCopied] = useState(false)
   const preRef = useRef<HTMLPreElement>(null)

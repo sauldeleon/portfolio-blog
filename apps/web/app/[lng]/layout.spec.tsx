@@ -63,6 +63,18 @@ describe('[lng] route - layout', () => {
         'link[rel="dns-prefetch"][href="https://www.googletagmanager.com"]',
       ),
     ).not.toBeNull()
+    expect(
+      // eslint-disable-next-line testing-library/no-node-access
+      document.querySelector(
+        'link[rel="alternate"][type="application/rss+xml"][href="/feed.xml"]',
+      ),
+    ).not.toBeNull()
+    expect(
+      // eslint-disable-next-line testing-library/no-node-access
+      document.querySelector(
+        'link[rel="alternate"][type="application/rss+xml"][href="/feed.es.xml"]',
+      ),
+    ).not.toBeNull()
   })
 
   it('should render successfully in Spanish', async () => {

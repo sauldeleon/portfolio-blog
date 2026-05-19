@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`PortfolioPage should render successfully 1`] = `
-.c40 {
+.c41 {
   display: flex;
   align-items: center;
   gap: 5px;
@@ -11,7 +11,7 @@ exports[`PortfolioPage should render successfully 1`] = `
   padding: 15px 20px;
 }
 
-.c13 {
+.c14 {
   font-family: var(--font-roboto-mono);
   font-weight: 400;
   color: #FBFBFB;
@@ -20,7 +20,7 @@ exports[`PortfolioPage should render successfully 1`] = `
   margin: 0;
 }
 
-.c27 {
+.c28 {
   font-family: var(--font-roboto-mono);
   font-weight: 400;
   color: #FBFBFB;
@@ -29,7 +29,7 @@ exports[`PortfolioPage should render successfully 1`] = `
   margin: 0;
 }
 
-.c10 {
+.c11 {
   font-family: var(--font-roboto-mono);
   font-weight: 400;
   color: #FBFBFB;
@@ -38,25 +38,25 @@ exports[`PortfolioPage should render successfully 1`] = `
   white-space: pre-line;
 }
 
-.c10 ul,
-.c10 ol {
+.c11 ul,
+.c11 ol {
   margin-left: 40px;
   margin-bottom: 10px;
 }
 
-.c10 ul {
+.c11 ul {
   list-style: outside disc;
 }
 
-.c10 ol {
+.c11 ol {
   list-style: decimal;
 }
 
-.c10 li {
+.c11 li {
   padding-left: 10px;
 }
 
-.c18 {
+.c19 {
   font-family: var(--font-roboto-mono);
   font-weight: 500;
   color: #FBFBFB;
@@ -65,25 +65,25 @@ exports[`PortfolioPage should render successfully 1`] = `
   white-space: pre-line;
 }
 
-.c18 ul,
-.c18 ol {
+.c19 ul,
+.c19 ol {
   margin-left: 40px;
   margin-bottom: 10px;
 }
 
-.c18 ul {
+.c19 ul {
   list-style: outside disc;
 }
 
-.c18 ol {
+.c19 ol {
   list-style: decimal;
 }
 
-.c18 li {
+.c19 li {
   padding-left: 10px;
 }
 
-.c7 {
+.c8 {
   font-family: var(--font-roboto-mono);
   font-weight: 500;
   color: #FBFBFB;
@@ -92,7 +92,7 @@ exports[`PortfolioPage should render successfully 1`] = `
   text-transform: uppercase;
 }
 
-.c0 {
+.c1 {
   margin-top: 60px;
   width: 100%;
   max-width: 1440px;
@@ -104,7 +104,7 @@ exports[`PortfolioPage should render successfully 1`] = `
   flex-direction: row;
 }
 
-.c1 {
+.c2 {
   display: none;
   filter: url(#fancy-goo);
   width: 12px;
@@ -115,12 +115,12 @@ exports[`PortfolioPage should render successfully 1`] = `
   transition: opacity 0.15s ease-out;
 }
 
-.c3 {
+.c4 {
   margin-left: -8px;
   width: 100%;
 }
 
-.c2 {
+.c3 {
   position: sticky;
   top: calc(100vh - 100px);
   margin-bottom: 50px;
@@ -141,7 +141,7 @@ exports[`PortfolioPage should render successfully 1`] = `
   transform: translateY(0px);
 }
 
-.c39 {
+.c40 {
   max-width: 1440px;
   width: 100%;
   display: flex;
@@ -153,26 +153,30 @@ exports[`PortfolioPage should render successfully 1`] = `
   padding-right: calc(1rem - 8px);
 }
 
-.c42 {
+.c43 {
   color: currentColor;
 }
 
-.c41 {
+.c42 {
   padding: 10px;
   width: 100%;
 }
 
-.c41:hover {
+.c42:hover {
   color: #000000;
   background: #FBFBFB;
 }
 
-.c36 {
+.c0 {
+  display: none;
+}
+
+.c37 {
   position: relative;
   position: relative;
 }
 
-.c36::after {
+.c37::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -182,52 +186,52 @@ exports[`PortfolioPage should render successfully 1`] = `
   background-color: currentColor;
 }
 
-.c36::after {
+.c37::after {
   transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.25s ease-out;
 }
 
-.c36:hover::after {
+.c37:hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
 
-.c36:hover,
-.c36:active,
-.c36:focus {
+.c37:hover,
+.c37:active,
+.c37:focus {
   text-decoration: none;
 }
 
-.c36:focus-visible {
+.c37:focus-visible {
   outline: #FBFBFB auto 1px;
 }
 
-.c33 {
+.c34 {
   font-size: 20px;
   margin-bottom: 20px;
   font-family: var(--font-roboto-mono);
   font-weight: 400;
 }
 
-.c34 {
+.c35 {
   margin-bottom: 50px;
 }
 
-.c35 {
+.c36 {
   font-size: 16px;
   text-indent: -20px;
   padding-left: 20px;
 }
 
-.c35:before {
+.c36:before {
   content: '·';
   font-size: 30px;
   vertical-align: middle;
   line-height: 20px;
 }
 
-.c38 {
+.c39 {
   font-family: var(--font-roboto-mono);
   font-weight: 400;
   color: #FBFBFB;
@@ -235,11 +239,11 @@ exports[`PortfolioPage should render successfully 1`] = `
   line-height: normal;
 }
 
-.c37 {
+.c38 {
   font-weight: bold;
 }
 
-.c4 {
+.c5 {
   border: 3px solid #FBFBFB;
   border-bottom: none;
   padding: 1rem;
@@ -248,36 +252,36 @@ exports[`PortfolioPage should render successfully 1`] = `
   flex-direction: column;
 }
 
-.c5 {
+.c6 {
   display: flex;
   width: 100%;
   justify-content: space-between;
   align-items: flex-start;
 }
 
-.c8 {
+.c9 {
   font-size: 16px;
   margin-bottom: 20px;
   width: 100%;
 }
 
-.c6 {
+.c7 {
   flex-direction: column-reverse;
   font-size: 16px;
 }
 
-.c9 {
+.c10 {
   text-transform: uppercase;
   margin-bottom: 30px;
   width: 100%;
   text-align: right;
 }
 
-.c11 {
+.c12 {
   font-size: 16px;
 }
 
-.c12 {
+.c13 {
   overflow: hidden;
   border-radius: 50%;
   width: 60px;
@@ -285,14 +289,14 @@ exports[`PortfolioPage should render successfully 1`] = `
   height: 60px;
 }
 
-.c14 {
+.c15 {
   margin-top: 25px;
   margin-left: 20px;
   font-size: 1.5rem;
   font-weight: 500;
 }
 
-.c15 {
+.c16 {
   position: relative;
   border: 3px solid #FBFBFB;
   border-bottom: none;
@@ -303,67 +307,57 @@ exports[`PortfolioPage should render successfully 1`] = `
   flex-direction: column;
 }
 
-.c15:last-child {
+.c16:last-child {
   border-bottom: 3px solid #FBFBFB;
 }
 
-.c16 {
+.c17 {
   margin-bottom: 20px;
 }
 
-.c17 {
+.c18 {
   width: 100%;
   padding: 0px;
 }
 
-.c19 {
+.c20 {
   font-size: 20px;
 }
 
-.c20 {
+.c21 {
   margin-top: 40px;
 }
 
-.c21 {
+.c22 {
   margin-top: 20px;
 }
 
-.c22 {
+.c23 {
   font-weight: 500;
   display: flex;
   line-height: 20px;
   margin-bottom: 10px;
 }
 
-.c22 svg {
+.c23 svg {
   margin-right: 10px;
 }
 
-.c23 {
+.c24 {
   padding-left: 0px;
 }
 
-.c24 {
+.c25 {
   font-size: 16px;
   text-indent: -20px;
   padding-left: 20px;
 }
 
-.c24:before {
+.c25:before {
   content: '·';
   font-size: 30px;
   vertical-align: middle;
   line-height: 20px;
-}
-
-.c25 {
-  font-family: var(--font-roboto-mono);
-  font-weight: 400;
-  color: #FBFBFB;
-  font-size: 0.9rem;
-  line-height: normal;
-  font-size: 16px;
-  font-weight: bold;
 }
 
 .c26 {
@@ -373,40 +367,50 @@ exports[`PortfolioPage should render successfully 1`] = `
   font-size: 0.9rem;
   line-height: normal;
   font-size: 16px;
+  font-weight: bold;
 }
 
-.c28 {
+.c27 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-size: 16px;
+}
+
+.c29 {
   font-family: var(--font-roboto-mono);
   font-weight: 500;
   font-size: 20px;
   margin-bottom: 30px;
 }
 
-.c29 {
+.c30 {
   font-size: 16px;
   margin-bottom: 20px;
   font-family: var(--font-roboto-mono);
   font-weight: 400;
 }
 
-.c30 {
+.c31 {
   margin-bottom: 50px;
 }
 
-.c31 {
+.c32 {
   font-size: 16px;
   text-indent: -20px;
   padding-left: 20px;
 }
 
-.c31:before {
+.c32:before {
   content: '·';
   font-size: 30px;
   vertical-align: middle;
   line-height: 20px;
 }
 
-.c32 {
+.c33 {
   font-family: var(--font-roboto-mono);
   font-weight: 400;
   color: #FBFBFB;
@@ -417,21 +421,21 @@ exports[`PortfolioPage should render successfully 1`] = `
 }
 
 @media (width >= 1024px) {
-  .c0 {
+  .c1 {
     padding-left: 2rem;
     padding-right: 2rem;
   }
 }
 
 @media (width >= 768px) {
-  .c1 {
+  .c2 {
     display: block;
     opacity: 0;
   }
 }
 
 @media (width >= 768px) {
-  .c39 {
+  .c40 {
     flex-direction: row;
     align-items: stretch;
     gap: 16px;
@@ -439,7 +443,7 @@ exports[`PortfolioPage should render successfully 1`] = `
 }
 
 @media (width >= 1024px) {
-  .c39 {
+  .c40 {
     padding-left: 2rem;
     padding-right: 2rem;
     margin-left: -16px;
@@ -447,45 +451,45 @@ exports[`PortfolioPage should render successfully 1`] = `
 }
 
 @media (width >= 768px) {
-  .c41 {
+  .c42 {
     width: fit-content;
     padding: 15px 20px;
   }
 }
 
 @media (width >= 1024px) {
-  .c4 {
+  .c5 {
     padding: 3rem;
   }
 }
 
 @media (width >= 768px) {
-  .c8 {
+  .c9 {
     font-size: 20px;
   }
 }
 
 @media (width >= 768px) {
-  .c6 {
+  .c7 {
     flex-direction: row;
     font-size: 20px;
   }
 }
 
 @media (width >= 768px) {
-  .c9 {
+  .c10 {
     margin-bottom: 50px;
   }
 }
 
 @media (width >= 1024px) {
-  .c11 {
+  .c12 {
     font-size: 20px;
   }
 }
 
 @media (width >= 768px) {
-  .c12 {
+  .c13 {
     width: 180px;
     min-width: 180px;
     height: 180px;
@@ -493,7 +497,7 @@ exports[`PortfolioPage should render successfully 1`] = `
 }
 
 @media (width >= 1024px) {
-  .c12 {
+  .c13 {
     width: 310px;
     min-width: 310px;
     height: 310px;
@@ -501,7 +505,7 @@ exports[`PortfolioPage should render successfully 1`] = `
 }
 
 @media (width >= 768px) {
-  .c14 {
+  .c15 {
     margin-top: 40px;
     margin-top: 100px;
     margin-left: 40px;
@@ -511,7 +515,7 @@ exports[`PortfolioPage should render successfully 1`] = `
 }
 
 @media (width >= 1024px) {
-  .c14 {
+  .c15 {
     margin-top: 160px;
     margin-left: 80px;
     font-size: 4rem;
@@ -520,7 +524,7 @@ exports[`PortfolioPage should render successfully 1`] = `
 }
 
 @media (width >= 1024px) {
-  .c15 {
+  .c16 {
     flex-direction: row;
     justify-content: space-between;
     padding: 3rem;
@@ -528,38 +532,38 @@ exports[`PortfolioPage should render successfully 1`] = `
 }
 
 @media (width >= 1024px) {
-  .c16 {
+  .c17 {
     margin-bottom: 0px;
   }
 }
 
 @media (width >= 1024px) {
-  .c17 {
+  .c18 {
     padding: 0px 20px;
     max-width: 900px;
   }
 }
 
 @media (width >= 1024px) {
-  .c19 {
+  .c20 {
     font-size: 30px;
   }
 }
 
 @media (width >= 1024px) {
-  .c23 {
+  .c24 {
     padding-left: 25px;
   }
 }
 
 @media (width >= 1024px) {
-  .c28 {
+  .c29 {
     font-size: 30px;
   }
 }
 
 @media (width >= 1024px) {
-  .c29 {
+  .c30 {
     font-size: 20px;
   }
 }
@@ -567,7 +571,7 @@ exports[`PortfolioPage should render successfully 1`] = `
 <body>
   <div>
     <svg
-      style="display: none;"
+      class="c0"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -595,14 +599,14 @@ exports[`PortfolioPage should render successfully 1`] = `
       </defs>
     </svg>
     <div
-      class="c0"
+      class="c1"
     >
       <div
-        class="c1"
+        class="c2"
         data-testid="scrollColumn"
       >
         <button
-          class="c2"
+          class="c3"
           data-testid="scrollToTop"
         >
           <svg
@@ -620,40 +624,40 @@ exports[`PortfolioPage should render successfully 1`] = `
         </button>
       </div>
       <div
-        class="c3"
+        class="c4"
       >
         <section
-          class="c4"
+          class="c5"
         >
           <div
-            class="c5 c6"
+            class="c6 c7"
           >
             <div
-              class="c7 c8"
+              class="c8 c9"
             >
               Software engineer
             </div>
             <div
-              class="c9"
+              class="c10"
             >
               <p
-                class="c10 c11"
+                class="c11 c12"
               >
                 Based in Asturias, Spain
               </p>
               <p
-                class="c10 c11"
+                class="c11 c12"
               >
                 sauldeleonguerrero@gmail.com
               </p>
             </div>
           </div>
           <div
-            class="c5"
+            class="c6"
           >
             <img
               alt="My profile picture"
-              class="c12"
+              class="c13"
               data-nimg="1"
               decoding="async"
               height="310"
@@ -664,38 +668,38 @@ exports[`PortfolioPage should render successfully 1`] = `
               width="310"
             />
             <h1
-              class="c13 c14"
+              class="c14 c15"
             >
               Saúl de León Guerrero
             </h1>
           </div>
         </section>
         <section
-          class="c15"
+          class="c16"
         >
           <div
-            class="c7 c16"
+            class="c8 c17"
           >
             Profile
           </div>
           <div
-            class="c17"
+            class="c18"
           >
             <p
-              class="c18 c19"
+              class="c19 c20"
             >
               Experienced Software Engineer skilled in translating code into polished and efficient digital solutions. With a meticulous attention to detail, I specialize in developing software that not only fulfills functional requirements but also results into a smooth and user-friendly experience.
             </p>
             <div
-              class="c7 c20"
+              class="c8 c21"
             >
               Skills
             </div>
             <div
-              class="c21"
+              class="c22"
             >
               <p
-                class="c10 c22"
+                class="c11 c23"
               >
                 <svg
                   fill="currentColor"
@@ -711,92 +715,92 @@ exports[`PortfolioPage should render successfully 1`] = `
                 Front End
               </p>
               <ul
-                class="c23"
+                class="c24"
               >
                 <li
-                  class="c24"
+                  class="c25"
                 >
                   SPA using 
                   <b
-                    class="c25"
+                    class="c26"
                   >
                     React 18
                   </b>
                    and 
                   <b
-                    class="c25"
+                    class="c26"
                   >
                     yarn
                   </b>
                    as the main package manager.
                 </li>
                 <li
-                  class="c24"
+                  class="c25"
                 >
                   SSR using 
                   <b
-                    class="c25"
+                    class="c26"
                   >
                     Next.JS 14-16
                   </b>
                    with experience in both the new App router system and the legacy Pages Router.
                 </li>
                 <li
-                  class="c24"
+                  class="c25"
                 >
                   Testing: Primarily using 
                   <b
-                    class="c25"
+                    class="c26"
                   >
                     Jest
                   </b>
                    for unit testing. 
                   <b
-                    class="c25"
+                    class="c26"
                   >
                     Cypress
                   </b>
                    for e2e testing
                 </li>
                 <li
-                  class="c24"
+                  class="c25"
                 >
                   Usage of &lt;/bold&gt;Storybook&lt;/bold&gt; for documenting components, design systems and applications
                 </li>
                 <li
-                  class="c24"
+                  class="c25"
                 >
                   Use of CSS-in-JS libraries such as 
                   <b
-                    class="c25"
+                    class="c26"
                   >
                     Emotion
                   </b>
                    or 
                   <b
-                    class="c25"
+                    class="c26"
                   >
                     Styled-Components
                   </b>
                   .
                 </li>
                 <li
-                  class="c24"
+                  class="c25"
                 >
                   Preference for projects in 
                   <b
-                    class="c25"
+                    class="c26"
                   >
                     Typescript
                   </b>
                   .
                 </li>
                 <li
-                  class="c24"
+                  class="c25"
                 >
                   Experience with 
                   <b
-                    class="c25"
+                    class="c26"
                   >
                     monorepos
                   </b>
@@ -805,10 +809,10 @@ exports[`PortfolioPage should render successfully 1`] = `
               </ul>
             </div>
             <div
-              class="c21"
+              class="c22"
             >
               <p
-                class="c10 c22"
+                class="c11 c23"
               >
                 <svg
                   fill="currentColor"
@@ -825,77 +829,77 @@ exports[`PortfolioPage should render successfully 1`] = `
                 Back End
               </p>
               <ul
-                class="c23"
+                class="c24"
               >
                 <li
-                  class="c24"
+                  class="c25"
                 >
                   <b
-                    class="c25"
+                    class="c26"
                   >
                     REST
                   </b>
                    applications in node.js using 
                   <b
-                    class="c25"
+                    class="c26"
                   >
                     express
                   </b>
                    and 
                   <b
-                    class="c25"
+                    class="c26"
                   >
                     bottle.js
                   </b>
                    for dependency injection. 
                   <b
-                    class="c25"
+                    class="c26"
                   >
                     Sequelize
                   </b>
                    and 
                   <b
-                    class="c25"
+                    class="c26"
                   >
                     mongoose
                   </b>
                    for integration with different databases.
                 </li>
                 <li
-                  class="c24"
+                  class="c25"
                 >
                   Java development experience with 
                   <b
-                    class="c25"
+                    class="c26"
                   >
                     Spring Framework
                   </b>
                    (Boot, Core, Security, MVC). Use of 
                   <b
-                    class="c25"
+                    class="c26"
                   >
                     Hibernate
                   </b>
                    for integration with Oracle, MySQL, MongoDB... Experience with Apache Tiles and JMX, integrations with 
                   <b
-                    class="c25"
+                    class="c26"
                   >
                     Kafka
                   </b>
                   .
                 </li>
                 <li
-                  class="c24"
+                  class="c25"
                 >
                   Development of 
                   <b
-                    class="c25"
+                    class="c26"
                   >
                     Perl
                   </b>
                    applications using 
                   <b
-                    class="c25"
+                    class="c26"
                   >
                     Catalyst
                   </b>
@@ -904,10 +908,10 @@ exports[`PortfolioPage should render successfully 1`] = `
               </ul>
             </div>
             <div
-              class="c21"
+              class="c22"
             >
               <p
-                class="c10 c22"
+                class="c11 c23"
               >
                 <svg
                   fill="none"
@@ -927,37 +931,37 @@ exports[`PortfolioPage should render successfully 1`] = `
                 Mobile Apps
               </p>
               <ul
-                class="c23"
+                class="c24"
               >
                 <li
-                  class="c24"
+                  class="c25"
                 >
                   Experience with 
                   <b
-                    class="c25"
+                    class="c26"
                   >
                     EXPO
                   </b>
                    over 
                   <b
-                    class="c25"
+                    class="c26"
                   >
                     React Native
                   </b>
                    for developing native applications.
                 </li>
                 <li
-                  class="c24"
+                  class="c25"
                 >
                   Basic knowledge of 
                   <b
-                    class="c25"
+                    class="c26"
                   >
                     IONIC
                   </b>
                    and 
                   <b
-                    class="c25"
+                    class="c26"
                   >
                     Cordova
                   </b>
@@ -966,10 +970,10 @@ exports[`PortfolioPage should render successfully 1`] = `
               </ul>
             </div>
             <div
-              class="c21"
+              class="c22"
             >
               <p
-                class="c10 c22"
+                class="c11 c23"
               >
                 <svg
                   fill="none"
@@ -1009,25 +1013,25 @@ exports[`PortfolioPage should render successfully 1`] = `
                 Databases
               </p>
               <ul
-                class="c23"
+                class="c24"
               >
                 <li
-                  class="c24"
+                  class="c25"
                 >
                   Course 
                   <i
-                    class="c26"
+                    class="c27"
                   >
                     M101J, MongoDB for Java Developers
                   </i>
                    offered by MongoDB Inc. Experience with integrating MongoDB with Java, Perl, and Node.js.
                 </li>
                 <li
-                  class="c24"
+                  class="c25"
                 >
                   Experience with Oracle, PostgreSQL (including the 
                   <b
-                    class="c25"
+                    class="c26"
                   >
                     PostGIS
                   </b>
@@ -1036,10 +1040,10 @@ exports[`PortfolioPage should render successfully 1`] = `
               </ul>
             </div>
             <div
-              class="c21"
+              class="c22"
             >
               <p
-                class="c10 c22"
+                class="c11 c23"
               >
                 <svg
                   fill="currentColor"
@@ -1057,31 +1061,31 @@ exports[`PortfolioPage should render successfully 1`] = `
                 Others
               </p>
               <ul
-                class="c23"
+                class="c24"
               >
                 <li
-                  class="c24"
+                  class="c25"
                 >
                   Working environment on Windows, Unix, or Mac.
                 </li>
                 <li
-                  class="c24"
+                  class="c25"
                 >
                   Experience with 
                   <b
-                    class="c25"
+                    class="c26"
                   >
                     Gitlab Pipelines
                   </b>
                   , 
                   <b
-                    class="c25"
+                    class="c26"
                   >
                     Github Actions
                   </b>
                   , and 
                   <b
-                    class="c25"
+                    class="c26"
                   >
                     Jenkins
                   </b>
@@ -1092,90 +1096,90 @@ exports[`PortfolioPage should render successfully 1`] = `
           </div>
         </section>
         <section
-          class="c15"
+          class="c16"
         >
           <div
-            class="c7 c16"
+            class="c8 c17"
           >
             Working Experience
           </div>
           <div
-            class="c17"
+            class="c18"
           >
             <div>
               <h1
-                class="c27 c28"
+                class="c28 c29"
               >
                 Bonhams
                  - 
                 Front-end React Developer.
               </h1>
               <div
-                class="c7 c29"
+                class="c8 c30"
               >
                 February 2022
               </div>
               <ul
-                class="c30"
+                class="c31"
               >
                 <li
-                  class="c31"
+                  class="c32"
                 >
                   Part of the team responsible for migrating the legacy website to a cutting-edge 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Next.JS Typescript
                   </b>
                    application within an 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     NX
                   </b>
                    monorepo. Instrumental in developing a comprehensive Design System from the ground up using 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Styled Components
                   </b>
                   . Additionally, involved in creating new applications for clients and internal administration, including an 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     EXPO
                   </b>
                    mobile app for iOS and Android.
                 </li>
                 <li
-                  class="c31"
+                  class="c32"
                 >
                   Proficiently employed 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Jest
                   </b>
                    and 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     MSW
                   </b>
                    for thorough unit and integration testing, while utilizing 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Cypress
                   </b>
                    for end-to-end testing.
                 </li>
                 <li
-                  class="c31"
+                  class="c32"
                 >
                   Helped at the implementation of a robust 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     CI/CD
                   </b>
@@ -1185,89 +1189,89 @@ exports[`PortfolioPage should render successfully 1`] = `
             </div>
             <div>
               <h1
-                class="c27 c28"
+                class="c28 c29"
               >
                 Smart Protection
                  - 
                 Front-end React Developer.
               </h1>
               <div
-                class="c7 c29"
+                class="c8 c30"
               >
                 February 2021 - February 2022
               </div>
               <ul
-                class="c30"
+                class="c31"
               >
                 <li
-                  class="c31"
+                  class="c32"
                 >
                   Responsible for spearheading the development of back-office applications, catering to the internal administrative requirements of the company's business data.
                 </li>
                 <li
-                  class="c31"
+                  class="c32"
                 >
                   Initiated the creation of a comprehensive monorepo from the ground up using 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Yarn Workspaces
                   </b>
                   , ensuring the development of full 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     TypeScript
                   </b>
                    applications.
                 </li>
                 <li
-                  class="c31"
+                  class="c32"
                 >
                   Implemented a robust Test-Driven Development (TDD) approach using 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Jest
                   </b>
                    and 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     React Testing Library
                   </b>
                   .
                 </li>
                 <li
-                  class="c31"
+                  class="c32"
                 >
                   Implemented a sophisticated design system, utilizing a customized library of components using 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Emotion.JS
                   </b>
                    alongside 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Storybook
                   </b>
                    for comprehensive documentation.
                 </li>
                 <li
-                  class="c31"
+                  class="c32"
                 >
                   Established and optimized the frontend pipeline in 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Jenkins
                   </b>
                   , utilizing parallel optimization for multiple stages.
                 </li>
                 <li
-                  class="c31"
+                  class="c32"
                 >
                   Basic knowledge in utilizing Terraform for storing environment variables in AWS.
                 </li>
@@ -1275,73 +1279,73 @@ exports[`PortfolioPage should render successfully 1`] = `
             </div>
             <div>
               <h1
-                class="c27 c28"
+                class="c28 c29"
               >
                 ING
                  - 
                 Front-end Developer.
               </h1>
               <div
-                class="c7 c29"
+                class="c8 c30"
               >
                 August 2020 - February 2021
               </div>
               <ul
-                class="c30"
+                class="c31"
               >
                 <li
-                  class="c31"
+                  class="c32"
                 >
                   Contributed to an international project, focusing on web development based on WebComponents, specifically 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     LitElement
                   </b>
                   , and 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Redux
                   </b>
                   , with seamless communication with REST APIs.
                 </li>
                 <li
-                  class="c31"
+                  class="c32"
                 >
                   Adopted a Test-Driven Development (TDD) approach using 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Karma
                   </b>
                    with 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Mocha
                   </b>
                    for comprehensive unit testing.
                 </li>
                 <li
-                  class="c31"
+                  class="c32"
                 >
                   Conducted end-to-end testing using 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Cucumber
                   </b>
                    and 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     WebdriverIO
                   </b>
                    for thorough functionality testing.
                 </li>
                 <li
-                  class="c31"
+                  class="c32"
                 >
                   Possesses a strong background in pairing code review experience, serving as an approver of the main repository to ensure the validation of merges into the master branch.
                 </li>
@@ -1349,37 +1353,37 @@ exports[`PortfolioPage should render successfully 1`] = `
             </div>
             <div>
               <h1
-                class="c27 c28"
+                class="c28 c29"
               >
                 Keytree
                  - 
                 Front-end Developer.
               </h1>
               <div
-                class="c7 c29"
+                class="c8 c30"
               >
                 October 2017 - August 2020
               </div>
               <ul
-                class="c30"
+                class="c31"
               >
                 <li
-                  class="c31"
+                  class="c32"
                 >
                   Involved in the development of multiple 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     React.JS
                   </b>
                    web applications, utilizing REST services provided by the Gateway service, primarily based on SAP, Java, or Node.js backend services.
                 </li>
                 <li
-                  class="c31"
+                  class="c32"
                 >
                   Took on the role of a front-end developer lead for an 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Angular JS
                   </b>
@@ -1389,50 +1393,50 @@ exports[`PortfolioPage should render successfully 1`] = `
             </div>
             <div>
               <h1
-                class="c27 c28"
+                class="c28 c29"
               >
                 Babel S.I
                  - 
                 Full Stack Developer.
               </h1>
               <div
-                class="c7 c29"
+                class="c8 c30"
               >
                 April 2017 - September 2017
               </div>
               <ul
-                class="c30"
+                class="c31"
               >
                 <li
-                  class="c31"
+                  class="c32"
                 >
                   Contributed to the Mobile Development Center, focusing on the main project, an 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     IONIC
                   </b>
                    app with 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Angular JS
                   </b>
                   . Involved in the development of an instant messaging system using 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Socket.io
                   </b>
                    and 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Node.js
                   </b>
                   . Integrated 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Spring Boot
                   </b>
@@ -1442,160 +1446,160 @@ exports[`PortfolioPage should render successfully 1`] = `
             </div>
             <div>
               <h1
-                class="c27 c28"
+                class="c28 c29"
               >
                 Ioon Technologies
                  - 
                 Scrum Master and Full Stack Developer.
               </h1>
               <div
-                class="c7 c29"
+                class="c8 c30"
               >
                 January 2016 - April 2017
               </div>
               <ul
-                class="c30"
+                class="c31"
               >
                 <li
-                  class="c31"
+                  class="c32"
                 >
                   Served as the CTO from November 2016 to April 2017. Acted as the Scrum Master of the main I+D+i project, utilizing 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Java 1.7
                   </b>
                   , 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Spring 4
                   </b>
                   , 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     GWT 1.7
                   </b>
                   , 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Hibernate 5
                   </b>
                   , and 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     MySQL 5.6
                   </b>
                   . Implemented 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     IONIC 2
                   </b>
                    and 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Angular
                   </b>
                    for mobile development.
                 </li>
                 <li
-                  class="c31"
+                  class="c32"
                 >
                   Implemented an 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Arduino
                   </b>
                    monitoring system for real-time information within the application.
                 </li>
                 <li
-                  class="c31"
+                  class="c32"
                 >
                   Demonstrated proficiency in utilizing 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Maven
                   </b>
                   , 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Sonarqube
                   </b>
                   , and 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     JUnit
                   </b>
                   , along with 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Mockito
                   </b>
                    for testing and validating clean code.
                 </li>
                 <li
-                  class="c31"
+                  class="c32"
                 >
                   Involved in front-end development for various customers, employing 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     CSS3
                   </b>
                   , 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     jQuery
                   </b>
                   , and 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     HTML5
                   </b>
                   .
                 </li>
                 <li
-                  class="c31"
+                  class="c32"
                 >
                   Worked as a 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Java
                   </b>
                    consultant, focusing on back-end developments in PSA Peugeot-Citroën. Involved in incident resolution and new functionalities development, utilizing 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Spring 3 MVC
                   </b>
                   , 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Hibernate
                   </b>
                   , 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Struts 2
                   </b>
                    and DB 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Oracle
                   </b>
@@ -1605,56 +1609,56 @@ exports[`PortfolioPage should render successfully 1`] = `
             </div>
             <div>
               <h1
-                class="c27 c28"
+                class="c28 c29"
               >
                 Clarive
                  - 
                 Full Stack Developer.
               </h1>
               <div
-                class="c7 c29"
+                class="c8 c30"
               >
                 January 2014 - January 2016
               </div>
               <ul
-                class="c30"
+                class="c31"
               >
                 <li
-                  class="c31"
+                  class="c32"
                 >
                   Involved in back-end development using 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Perl
                   </b>
                    and the Catalyst Framework, alongside various CPAN modules for seamless database integration, including 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Oracle
                   </b>
                    and 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     MongoDB
                   </b>
                   .
                 </li>
                 <li
-                  class="c31"
+                  class="c32"
                 >
                   Utilized the 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     ExtJS
                   </b>
                    Framework for front-end development.
                 </li>
                 <li
-                  class="c31"
+                  class="c32"
                 >
                   Integrated SOAP webservices for streamlined communication.
                 </li>
@@ -1662,55 +1666,55 @@ exports[`PortfolioPage should render successfully 1`] = `
             </div>
             <div>
               <h1
-                class="c27 c28"
+                class="c28 c29"
               >
                 idealista.com
                  - 
                 Back-end Developer.
               </h1>
               <div
-                class="c7 c29"
+                class="c8 c30"
               >
                 September 2013 - December 2013
               </div>
               <ul
-                class="c30"
+                class="c31"
               >
                 <li
-                  class="c31"
+                  class="c32"
                 >
                   Involved in back-end development following an Agile (Scrum) methodology.
                 </li>
                 <li
-                  class="c31"
+                  class="c32"
                 >
                   Utilized 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Spring 3
                   </b>
                    and 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     JPA
                   </b>
                   , incorporating 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Hibernate
                   </b>
                    with both 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     MongoDB
                   </b>
                    and 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Oracle
                   </b>
@@ -1720,54 +1724,54 @@ exports[`PortfolioPage should render successfully 1`] = `
             </div>
             <div>
               <h1
-                class="c27 c28"
+                class="c28 c29"
               >
                 Incita Security
                  - 
                 Security Consultant and Web Developer.
               </h1>
               <div
-                class="c7 c29"
+                class="c8 c30"
               >
                 November 2012 - September 2013
               </div>
               <ul
-                class="c30"
+                class="c31"
               >
                 <li
-                  class="c31"
+                  class="c32"
                 >
                   Actively involved in SIEM management, utilizing tools such as ArcSight and OSSIM, and proficient in Shell script development.
                 </li>
                 <li
-                  class="c31"
+                  class="c32"
                 >
                   Demonstrated proficiency in using 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     Python
                   </b>
                    and PHP 5.3, with 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     MySQL 5.1
                   </b>
                    for robust database management.
                 </li>
                 <li
-                  class="c31"
+                  class="c32"
                 >
                   Employed 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     CSS3
                   </b>
                    and 
                   <b
-                    class="c32"
+                    class="c33"
                   >
                     JavaScript
                   </b>
@@ -1778,37 +1782,37 @@ exports[`PortfolioPage should render successfully 1`] = `
           </div>
         </section>
         <section
-          class="c15"
+          class="c16"
         >
           <div
-            class="c7 c16"
+            class="c8 c17"
           >
             Other
           </div>
           <div
-            class="c17"
+            class="c18"
           >
             <div>
               <div
-                class="c7 c33"
+                class="c8 c34"
               >
                 Bachelor thesis
                  
               </div>
               <ul
-                class="c34"
+                class="c35"
               >
                 <li
-                  class="c35"
+                  class="c36"
                 >
                   Development of a support tool for students related to Data Structures for the verification and derivation of iterative algorithms using semantic tableaux with a graphical interface in Java.
                 </li>
                 <li
-                  class="c35"
+                  class="c36"
                 >
                   This work resulted in two 
                   <a
-                    class="c36 c37"
+                    class="c37 c38"
                     data-testid="plain-anchor"
                     href="https://rd.springer.com/chapter/10.1007/978-3-642-21350-2_29#page-1"
                     rel="noreferrer"
@@ -1822,11 +1826,11 @@ exports[`PortfolioPage should render successfully 1`] = `
             </div>
             <div>
               <div
-                class="c7 c33"
+                class="c8 c34"
               >
                 Collaborative activities with the 
                 <i
-                  class="c38"
+                  class="c39"
                 >
                   Departamento de Sistemas Informáticos y Computación
                 </i>
@@ -1835,15 +1839,15 @@ exports[`PortfolioPage should render successfully 1`] = `
                 2011 - 2012
               </div>
               <ul
-                class="c34"
+                class="c35"
               >
                 <li
-                  class="c35"
+                  class="c36"
                 >
                   Maintenance of the Virtual Area by updating the database with information related to classes and publications.
                 </li>
                 <li
-                  class="c35"
+                  class="c36"
                 >
                   Development of an application for counting students attending classes for obtaining statistics.
                 </li>
@@ -1851,17 +1855,17 @@ exports[`PortfolioPage should render successfully 1`] = `
             </div>
             <div>
               <div
-                class="c7 c33"
+                class="c8 c34"
               >
                 This Portfolio.
                  
                 2022 - Until I throw it out the window
               </div>
               <ul
-                class="c34"
+                class="c35"
               >
                 <li
-                  class="c35"
+                  class="c36"
                 >
                   Check the 'About' link in the footer of this website.
                 </li>
@@ -1869,17 +1873,17 @@ exports[`PortfolioPage should render successfully 1`] = `
             </div>
             <div>
               <div
-                class="c7 c33"
+                class="c8 c34"
               >
                 MATHS Academy Teacher.
                  
                 2009 - 2013
               </div>
               <ul
-                class="c34"
+                class="c35"
               >
                 <li
-                  class="c35"
+                  class="c36"
                 >
                   Taught 1st and 2nd-year Computer Engineering classes in Java and OOP.
                 </li>
@@ -1887,17 +1891,17 @@ exports[`PortfolioPage should render successfully 1`] = `
             </div>
             <div>
               <div
-                class="c7 c33"
+                class="c8 c34"
               >
                 Tutor.
                  
                 2004 - 2016
               </div>
               <ul
-                class="c34"
+                class="c35"
               >
                 <li
-                  class="c35"
+                  class="c36"
                 >
                   Private tutor for school and high school students in mathematics, physics, and chemistry. Strong teaching abilities.
                 </li>
@@ -1908,7 +1912,7 @@ exports[`PortfolioPage should render successfully 1`] = `
       </div>
     </div>
     <div
-      class="c39"
+      class="c40"
     >
       <div
         data-testid="mock-download-cv-button"
@@ -1916,7 +1920,7 @@ exports[`PortfolioPage should render successfully 1`] = `
         Download CV
       </div>
       <button
-        class="c40 c41"
+        class="c41 c42"
       >
         <svg
           fill="none"
@@ -1956,7 +1960,7 @@ exports[`PortfolioPage should render successfully 1`] = `
           />
         </svg>
         <div
-          class="c7 c42"
+          class="c8 c43"
         >
           Share with a friend
         </div>

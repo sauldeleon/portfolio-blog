@@ -39,6 +39,8 @@ jest.mock('@web/i18n/client', () => ({
         'postEditor.fields.seriesOrderPlaceholder': '1',
         'postEditor.fields.coverImage': 'Cover Image',
         'postEditor.fields.coverImagePlaceholder': 'Cloudinary public ID',
+        'postEditor.fields.scheduledAt': 'Schedule Publish',
+        'postEditor.fields.scheduledAtPlaceholder': 'Not scheduled',
         'postEditor.fields.coverImageFit': 'Cover image fit',
         'postEditor.fields.coverImageFitCover': 'Cover (fill)',
         'postEditor.fields.coverImageFitContain': 'Contain (full image)',
@@ -128,6 +130,43 @@ jest.mock('../ImagePicker', () => ({
 
 jest.mock('@web/utils/slugify', () => ({
   slugify: (text: string) => text.toLowerCase().replace(/\s+/g, '-'),
+}))
+
+jest.mock('@sdlgr/date-picker', () => ({
+  DateTimePicker: ({
+    value,
+    onChange,
+    placeholder,
+    'data-testid': testId,
+  }: {
+    value: Date | null
+    onChange: (date: Date | null) => void
+    placeholder?: string
+    'data-testid'?: string
+  }) => (
+    <div data-testid={testId}>
+      <button
+        type="button"
+        data-testid={`${testId}-set`}
+        onClick={() => onChange(new Date('2024-06-15T00:00:00.000Z'))}
+      >
+        Set Date
+      </button>
+      <button
+        type="button"
+        data-testid={`${testId}-clear`}
+        onClick={() => onChange(null)}
+      >
+        Clear
+      </button>
+      {value && (
+        <span data-testid={`${testId}-value`}>{value.toISOString()}</span>
+      )}
+      {!value && placeholder && (
+        <span data-testid={`${testId}-placeholder`}>{placeholder}</span>
+      )}
+    </div>
+  ),
 }))
 
 jest.mock('./PostCardPreview', () => ({
@@ -284,6 +323,7 @@ const mockCategories: PostEditorProps['categories'] = [
 const mockExistingPost: PostEditorProps['post'] = {
   post: {
     id: 'post123',
+    postNumber: 7,
     category: 'engineering',
     tags: ['react', 'nextjs'],
     status: 'draft',
@@ -291,6 +331,7 @@ const mockExistingPost: PostEditorProps['post'] = {
     coverImageFit: 'cover',
     seriesId: 'series-1',
     seriesOrder: 2,
+    scheduledAt: null,
     author: 'Admin',
   },
   translations: [
@@ -835,6 +876,58 @@ describe('PostEditor', () => {
       expect(body).toHaveProperty('seriesTitles', { en: 'My Series Title' })
     })
 
+    describe('scheduledAt field', () => {
+      it('renders scheduledAt picker', () => {
+        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        expect(screen.getByTestId('scheduled-at-picker')).toBeInTheDocument()
+      })
+
+      it('scheduledAt is null by default', () => {
+        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        expect(
+          screen.queryByTestId('scheduled-at-picker-value'),
+        ).not.toBeInTheDocument()
+      })
+
+      it('POST body includes scheduledAt as null when not set', async () => {
+        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        fillMandatoryFields()
+        fireEvent.click(screen.getByTestId('save-button'))
+        await waitFor(() => expect(axios.post).toHaveBeenCalled())
+        const body = (axios.post as jest.Mock).mock.calls[0][1] as Record<
+          string,
+          unknown
+        >
+        expect(body).toHaveProperty('scheduledAt', null)
+      })
+
+      it('POST body includes scheduledAt as ISO string when set', async () => {
+        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        fillMandatoryFields()
+        fireEvent.click(screen.getByTestId('scheduled-at-picker-set'))
+        fireEvent.click(screen.getByTestId('save-button'))
+        await waitFor(() => expect(axios.post).toHaveBeenCalled())
+        const body = (axios.post as jest.Mock).mock.calls[0][1] as Record<
+          string,
+          unknown
+        >
+        expect(body).toHaveProperty('scheduledAt', '2024-06-15T00:00:00.000Z')
+      })
+
+      it('scheduledAt can be cleared', async () => {
+        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        fillMandatoryFields()
+        fireEvent.click(screen.getByTestId('scheduled-at-picker-set'))
+        expect(
+          screen.getByTestId('scheduled-at-picker-value'),
+        ).toBeInTheDocument()
+        fireEvent.click(screen.getByTestId('scheduled-at-picker-clear'))
+        expect(
+          screen.queryByTestId('scheduled-at-picker-value'),
+        ).not.toBeInTheDocument()
+      })
+    })
+
     describe('author field', () => {
       it('renders author input with default value when checkbox checked', () => {
         renderApp(<PostEditor categories={mockCategories} author="Admin" />)
@@ -905,7 +998,7 @@ describe('PostEditor', () => {
         expect(body).toHaveProperty('author', 'Fallback Author')
       })
 
-      it('author field is not rendered for existing posts', () => {
+      it('author field is rendered for existing posts without checkbox', () => {
         renderApp(
           <PostEditor
             post={mockExistingPost}
@@ -913,7 +1006,7 @@ describe('PostEditor', () => {
             author="Admin"
           />,
         )
-        expect(screen.queryByTestId('author-input')).not.toBeInTheDocument()
+        expect(screen.getByTestId('author-input')).toBeInTheDocument()
         expect(
           screen.queryByTestId('author-use-default-checkbox'),
         ).not.toBeInTheDocument()
@@ -1316,6 +1409,107 @@ describe('PostEditor', () => {
       expect(body.seriesTitles).toHaveProperty('es', 'Mi Serie')
     })
 
+    it('pre-fills author input from existing post', () => {
+      renderApp(
+        <PostEditor
+          post={mockExistingPost}
+          categories={mockCategories}
+          author="Admin"
+        />,
+      )
+      expect(screen.getByTestId('author-input')).toHaveValue('Admin')
+    })
+
+    it('allows editing author in edit mode', () => {
+      renderApp(
+        <PostEditor
+          post={mockExistingPost}
+          categories={mockCategories}
+          author="Admin"
+        />,
+      )
+      fireEvent.change(screen.getByTestId('author-input'), {
+        target: { value: 'Jane Doe' },
+      })
+      expect(screen.getByTestId('author-input')).toHaveValue('Jane Doe')
+    })
+
+    it('PUT body includes updated author', async () => {
+      renderApp(
+        <PostEditor
+          post={mockExistingPost}
+          categories={mockCategories}
+          author="Admin"
+        />,
+      )
+      fireEvent.change(screen.getByTestId('author-input'), {
+        target: { value: 'Jane Doe' },
+      })
+      fireEvent.click(screen.getByTestId('save-button'))
+      await waitFor(() => expect(axios.put).toHaveBeenCalled())
+      const body = (axios.put as jest.Mock).mock.calls[0][1] as Record<
+        string,
+        unknown
+      >
+      expect(body).toHaveProperty('author', 'Jane Doe')
+    })
+
+    it('PUT body falls back to original author when input cleared', async () => {
+      renderApp(
+        <PostEditor
+          post={mockExistingPost}
+          categories={mockCategories}
+          author="Admin"
+        />,
+      )
+      fireEvent.change(screen.getByTestId('author-input'), {
+        target: { value: '' },
+      })
+      fireEvent.click(screen.getByTestId('save-button'))
+      await waitFor(() => expect(axios.put).toHaveBeenCalled())
+      const body = (axios.put as jest.Mock).mock.calls[0][1] as Record<
+        string,
+        unknown
+      >
+      expect(body).toHaveProperty('author', 'Admin')
+    })
+
+    it('PUT body includes scheduledAt as null when not set', async () => {
+      renderApp(
+        <PostEditor
+          post={mockExistingPost}
+          categories={mockCategories}
+          author="Admin"
+        />,
+      )
+      fireEvent.click(screen.getByTestId('save-button'))
+      await waitFor(() => expect(axios.put).toHaveBeenCalled())
+      const body = (axios.put as jest.Mock).mock.calls[0][1] as Record<
+        string,
+        unknown
+      >
+      expect(body).toHaveProperty('scheduledAt', null)
+    })
+
+    it('pre-fills scheduledAt when existing post has scheduledAt', () => {
+      renderApp(
+        <PostEditor
+          post={{
+            ...mockExistingPost,
+            post: {
+              ...mockExistingPost!.post,
+              scheduledAt: new Date('2024-08-01T09:00:00.000Z'),
+            },
+          }}
+          categories={mockCategories}
+          author="Admin"
+        />,
+      )
+      expect(
+        screen.getByTestId('scheduled-at-picker-value'),
+      ).toBeInTheDocument()
+    })
+
     it('includes tags as array in PUT body uppercased', async () => {
       renderApp(
         <PostEditor
@@ -1330,6 +1524,24 @@ describe('PostEditor', () => {
         tags: string[]
       }
       expect(body.tags).toEqual(['REACT', 'NEXTJS'])
+    })
+
+    it('renders hero preview with fallback slug in url when translation slug is empty', () => {
+      const postEmptySlug: PostEditorProps['post'] = {
+        post: mockExistingPost!.post,
+        translations: [
+          { ...mockExistingPost!.translations[0], slug: '' },
+          mockExistingPost!.translations[1],
+        ],
+      }
+      renderApp(
+        <PostEditor
+          post={postEmptySlug}
+          categories={mockCategories}
+          author="Admin"
+        />,
+      )
+      expect(screen.getByTestId('reading-time')).toBeInTheDocument()
     })
   })
 

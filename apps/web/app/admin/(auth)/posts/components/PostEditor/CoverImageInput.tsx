@@ -1,4 +1,10 @@
-import { FieldGroup, FieldLabel, Input } from '@sdlgr/input'
+import { FieldGroup, FieldLabel } from '@sdlgr/input'
+
+import {
+  StyledClearButton,
+  StyledInputWrapper,
+  StyledPickerInput,
+} from './CoverImageInput.styles'
 
 interface CoverImageInputProps {
   label: string
@@ -22,46 +28,28 @@ export function CoverImageInput({
   return (
     <FieldGroup>
       <FieldLabel htmlFor="meta-cover">{label}</FieldLabel>
-      <div style={{ position: 'relative' }}>
-        <Input
+      <StyledInputWrapper>
+        <StyledPickerInput
           id="meta-cover"
           type="text"
           value={displayValue}
           readOnly
           onClick={onPick}
-          style={{
-            cursor: 'pointer',
-            width: '100%',
-            boxSizing: 'border-box',
-            paddingRight: value ? '1.5rem' : undefined,
-          }}
+          $hasValue={!!value}
           placeholder={placeholder}
           data-testid="cover-image-input"
         />
         {value && (
-          <button
+          <StyledClearButton
             type="button"
             onClick={onClear}
             title={clearTitle}
             data-testid="clear-cover-image-button"
-            style={{
-              position: 'absolute',
-              right: '0.5rem',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              color: 'rgba(251,251,251,0.5)',
-              fontSize: '0.9rem',
-              lineHeight: '1',
-              padding: '0.2rem 0.3rem',
-            }}
           >
             ×
-          </button>
+          </StyledClearButton>
         )}
-      </div>
+      </StyledInputWrapper>
     </FieldGroup>
   )
 }

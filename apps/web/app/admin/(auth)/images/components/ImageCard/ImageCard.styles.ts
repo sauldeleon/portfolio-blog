@@ -72,26 +72,23 @@ const actionButtonBase = `
 export const StyledCopyButton = styled(Button).attrs({
   variant: 'contained',
   size: 'sm',
+  colorScheme: 'success',
 })`
   ${actionButtonBase}
-  color: ${({ theme }) => theme.colors.green};
-  border-color: ${({ theme }) => theme.colors.green};
 `
 
 export const StyledEditButton = styled(Button).attrs({
   variant: 'contained',
   size: 'sm',
+  colorScheme: 'success',
 })`
   ${actionButtonBase}
-  color: ${({ theme }) => theme.colors.green};
-  border-color: ${({ theme }) => theme.colors.green};
 `
 
 export const StyledDeleteButton = styled(Button).attrs({
   variant: 'contained',
   size: 'sm',
+  colorScheme: 'danger',
 })`
   ${actionButtonBase}
-  color: ${({ theme }) => theme.colors.orange};
-  border-color: ${({ theme }) => theme.colors.orange};
 `

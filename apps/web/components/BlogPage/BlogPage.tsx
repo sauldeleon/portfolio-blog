@@ -102,10 +102,12 @@ export async function BlogPage({
             <PostCard
               key={post.id}
               id={post.id}
+              postNumber={post.postNumber}
               slug={post.slug}
               title={post.title}
               excerpt={post.excerpt}
               coverImagePublicId={post.coverImage}
+              coverImageFit={post.coverImageFit ?? undefined}
               category={post.category}
               tags={post.tags}
               readingTime={computeReadingTime(post.content)}

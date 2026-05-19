@@ -30,7 +30,7 @@ export const StyledLink = styled.a<{ $depth: number; $active: boolean }>`
   color: ${({ theme, $active }) =>
     $active ? theme.colors.green : theme.colors.white};
   text-decoration: none;
-  padding-left: ${({ $depth }) => ($depth - 2) * 0.75}rem;
+  padding-left: ${({ $depth }) => Math.max(0, $depth - 2) * 0.75}rem;
   opacity: ${({ $active }) => ($active ? 1 : 0.6)};
   transition:
     color 0.15s,

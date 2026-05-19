@@ -30,11 +30,11 @@ export const StyledNewButton = styled(Button)`
   letter-spacing: 0.1em;
 `
 
-export const StyledRefreshButton = styled(Button)`
+export const StyledRefreshButton = styled(Button).attrs({
+  colorScheme: 'success',
+})`
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: ${({ theme }) => theme.colors.green};
-  border-color: ${({ theme }) => theme.colors.green};
 
   &:hover {
     opacity: 0.6;
@@ -134,29 +134,19 @@ export const StyledActions = styled.div`
 export const StyledEditButton = styled(Button).attrs({
   variant: 'ghost',
   size: 'xs',
+  colorScheme: 'success',
 })`
-  color: ${({ theme }) => theme.colors.green};
-  border-color: ${({ theme }) => theme.colors.green};
   text-transform: uppercase;
   letter-spacing: 0.08em;
-
-  &:hover {
-    opacity: 0.8;
-  }
 `
 
 export const StyledSaveButton = styled(Button).attrs({
   variant: 'ghost',
   size: 'xs',
+  colorScheme: 'success',
 })`
-  color: ${({ theme }) => theme.colors.green};
-  border-color: ${({ theme }) => theme.colors.green};
   text-transform: uppercase;
   letter-spacing: 0.08em;
-
-  &:hover {
-    opacity: 0.8;
-  }
 `
 
 export const StyledCancelButton = styled(Button).attrs({
@@ -178,9 +168,8 @@ export const StyledCancelButton = styled(Button).attrs({
 export const StyledDeleteButton = styled(Button).attrs({
   variant: 'ghost',
   size: 'xs',
+  colorScheme: 'danger',
 })`
-  color: ${({ theme }) => theme.colors.orange};
-  border-color: ${({ theme }) => theme.colors.orange};
   opacity: 0.6;
   text-transform: uppercase;
   letter-spacing: 0.08em;

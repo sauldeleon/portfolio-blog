@@ -126,3 +126,7 @@ export const StyledShareButton = styled(Button)`
     padding: 15px 20px;
   }
 `
+
+export const StyledSvgFilters = styled.svg`
+  display: none;
+`

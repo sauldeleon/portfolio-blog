@@ -119,10 +119,9 @@ export const StyledNameInput = styled.input`
 export const StyledUploadButton = styled(Button).attrs({
   variant: 'contained',
   size: 'sm',
+  colorScheme: 'success',
 })`
   align-self: flex-start;
-  color: ${({ theme }) => theme.colors.green};
-  border-color: ${({ theme }) => theme.colors.green};
   transition:
     background 0.15s,
     color 0.15s;

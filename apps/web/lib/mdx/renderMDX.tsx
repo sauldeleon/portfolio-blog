@@ -1,8 +1,11 @@
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import rehypePrettyCode from 'rehype-pretty-code'
+import remarkGfm from 'remark-gfm'
 
 import { type MdxComponentLabels, createMdxComponents } from './components'
 import { rehypeHeadingIds } from './rehypeHeadingIds'
+import { rehypeUnwrapImages } from './rehypeUnwrapImages'
+import { remarkEmbeds } from './remarkEmbeds'
 
 export function renderMDX(source: string, labels?: MdxComponentLabels) {
   const components = labels
@@ -15,7 +18,9 @@ export function renderMDX(source: string, labels?: MdxComponentLabels) {
       components={components}
       options={{
         mdxOptions: {
+          remarkPlugins: [remarkGfm, remarkEmbeds],
           rehypePlugins: [
+            rehypeUnwrapImages,
             rehypeHeadingIds,
             [
               rehypePrettyCode,

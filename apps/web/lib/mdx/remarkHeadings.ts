@@ -30,7 +30,7 @@ export function extractToc(source: string): TocEntry[] {
   const entries: TocEntry[] = []
 
   visit(tree, 'heading', (node: Heading) => {
-    if (node.depth < 2 || node.depth > 4) return
+    if (node.depth < 1 || node.depth > 4) return
     const text = extractText(node)
     if (!text) return
     entries.push({ depth: node.depth, text, id: slugifyHeading(text) })

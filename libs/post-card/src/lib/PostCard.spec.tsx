@@ -6,6 +6,7 @@ import { PostCard } from './PostCard'
 
 const defaultProps = {
   id: '01JWTEST000000000000000000',
+  postNumber: 1,
   slug: 'test-post',
   title: 'Test Post Title',
   excerpt: 'This is an excerpt.',
@@ -92,7 +93,15 @@ describe('PostCard', () => {
     renderWithTheme(<PostCard {...defaultProps} />)
     expect(screen.getByRole('link', { name: 'Read more' })).toHaveAttribute(
       'href',
-      '/en/blog/01JWTEST000000000000000000/test-post',
+      '/en/blog/1/test-post',
+    )
+  })
+
+  it('renders read more link with href="#" when postNumber is undefined', () => {
+    renderWithTheme(<PostCard {...defaultProps} postNumber={undefined} />)
+    expect(screen.getByRole('link', { name: 'Read more' })).toHaveAttribute(
+      'href',
+      '#',
     )
   })
 

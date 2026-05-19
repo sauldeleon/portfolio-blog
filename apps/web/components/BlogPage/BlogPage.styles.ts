@@ -18,9 +18,13 @@ export const StyledHeading = styled.h1`
   font-family: var(--font-roboto-mono);
   font-weight: 400;
   color: #fbfbfb;
-  font-size: 2rem;
+  font-size: 1.5rem;
   line-height: normal;
   margin: 0 0 0.75rem;
+
+  @media (width >= 768px) {
+    font-size: 2rem;
+  }
 
   @media (width >= 1024px) {
     font-size: 3rem;

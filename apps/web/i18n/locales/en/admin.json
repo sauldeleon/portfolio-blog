@@ -28,6 +28,7 @@
       "category": "Category",
       "translations": "Translations",
       "published": "Published",
+      "scheduledAt": "Scheduled",
       "createdAt": "Created",
       "updatedAt": "Updated",
       "archived": "Archived",
@@ -48,6 +49,11 @@
     "archiveDisabledPublished": "Unpublish the post before archiving",
     "hardDelete": "Delete",
     "hardDeleteConfirm": "Permanently delete this post? This cannot be undone.",
+    "bulkPublishConfirm": "Publish selected posts? Only eligible (draft with both translations) will be published.",
+    "bulkUnpublishConfirm": "Unpublish selected posts? Only currently published posts will be affected.",
+    "bulkArchiveConfirm": "Archive selected posts? Only draft posts will be archived. You can restore them later.",
+    "bulkUnarchiveConfirm": "Unarchive selected posts? They will be restored as drafts.",
+    "bulkDeleteConfirm": "Permanently delete selected posts? This cannot be undone.",
     "empty": "No posts found"
   },
   "confirmDelete": {
@@ -87,6 +93,8 @@
       "coverImageFit": "Cover image fit",
       "coverImageFitCover": "Cover (fill)",
       "coverImageFitContain": "Contain (full image)",
+      "scheduledAt": "Schedule Publish",
+      "scheduledAtPlaceholder": "Not scheduled",
       "author": "Author",
       "authorPlaceholder": "Author name",
       "authorUseDefault": "Use default author"
@@ -109,7 +117,11 @@
     },
     "preview": "Preview",
     "previewLoading": "Rendering…",
+    "heroPreview": "Hero preview",
     "cardPreview": "Card preview",
+    "share": "Share",
+    "shareCopyLink": "Copy link",
+    "shareCopied": "Copied!",
     "error": "Something went wrong, please try again"
   },
   "images": {

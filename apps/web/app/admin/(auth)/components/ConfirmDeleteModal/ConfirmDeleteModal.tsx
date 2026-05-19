@@ -53,6 +53,7 @@ export function ConfirmDeleteModal({
           </StyledCancelButton>
           <StyledConfirmButton
             $variant={variant}
+            colorScheme={variant === 'warning' ? 'success' : 'danger'}
             onClick={onConfirm}
             data-testid="confirm-delete-confirm"
           >

@@ -1,4 +1,14 @@
-import styled, { css } from 'styled-components'
+import styled, { DefaultTheme, css } from 'styled-components'
+
+export type ButtonColorScheme = 'success' | 'danger' | 'warning'
+
+type ButtonSize = 'xs' | 'sm' | 'md' | 'lg'
+
+function schemeColor(theme: DefaultTheme, scheme: ButtonColorScheme): string {
+  if (scheme === 'success') return theme.colors.green
+  if (scheme === 'danger') return theme.colors.orange
+  return theme.colors.yellow
+}
 
 const sharedButtonStyles = css`
   display: flex;
@@ -7,8 +17,6 @@ const sharedButtonStyles = css`
   background: transparent;
   cursor: pointer;
 `
-
-type ButtonSize = 'xs' | 'sm' | 'md' | 'lg'
 
 const buttonSizeStyles: Record<ButtonSize, ReturnType<typeof css>> = {
   xs: css`
@@ -43,10 +51,19 @@ export const StyledTextButton = styled.button`
   ${({ theme }) => theme.helpers.focusVisible};
 `
 
-export const StyledContainedButton = styled.button<{ $size: ButtonSize }>`
+export const StyledContainedButton = styled.button<{
+  $size: ButtonSize
+  $colorScheme?: ButtonColorScheme
+}>`
   ${sharedButtonStyles}
   border: 1px solid ${({ theme }) => theme.colors.white};
   ${({ $size }) => buttonSizeStyles[$size]}
+  ${({ theme, $colorScheme }) =>
+    $colorScheme &&
+    css`
+      color: ${schemeColor(theme, $colorScheme)};
+      border-color: ${schemeColor(theme, $colorScheme)};
+    `}
 `
 
 export const StyledInvertedButton = styled.button<{ $size: ButtonSize }>`
@@ -67,7 +84,10 @@ export const StyledInvertedButton = styled.button<{ $size: ButtonSize }>`
   }
 `
 
-export const StyledGhostButton = styled.button<{ $size: ButtonSize }>`
+export const StyledGhostButton = styled.button<{
+  $size: ButtonSize
+  $colorScheme?: ButtonColorScheme
+}>`
   ${sharedButtonStyles}
   background: transparent;
   border: 1px solid transparent;
@@ -84,6 +104,16 @@ export const StyledGhostButton = styled.button<{ $size: ButtonSize }>`
   }
 
   ${({ theme }) => theme.helpers.focusVisible}
+  ${({ theme, $colorScheme }) =>
+    $colorScheme &&
+    css`
+      color: ${schemeColor(theme, $colorScheme)};
+      border-color: ${schemeColor(theme, $colorScheme)};
+      &:hover:not(:disabled) {
+        border-color: ${schemeColor(theme, $colorScheme)};
+        opacity: 0.8;
+      }
+    `}
 `
 
 export const buttonLabelStyles = css<{ $active?: boolean }>`

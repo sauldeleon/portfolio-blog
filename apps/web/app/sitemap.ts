@@ -27,7 +27,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const lng = languages[i]
       for (const post of postsByLocale[i]) {
         blogRoutes.push({
-          url: publicUrl(`/${lng}/blog/${post.id}/${post.slug}`),
+          url: publicUrl(`/${lng}/blog/${post.postNumber}/${post.slug}`),
           lastModified: post.updatedAt ?? LAST_MODIFIED,
         })
       }

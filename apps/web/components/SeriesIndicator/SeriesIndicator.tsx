@@ -1,16 +1,7 @@
 import { getServerTranslation } from '@web/i18n/server'
 import { getPostsBySeries } from '@web/lib/db/queries/posts'
 
-import {
-  StyledCurrentLabel,
-  StyledHeading,
-  StyledItem,
-  StyledLink,
-  StyledList,
-  StyledOrder,
-  StyledPartLabel,
-  StyledSection,
-} from './SeriesIndicator.styles'
+import { SeriesIndicatorUI } from './SeriesIndicatorUI'
 
 export interface SeriesIndicatorProps {
   postId: string
@@ -30,35 +21,29 @@ export async function SeriesIndicator({
 
   if (seriesPosts.length === 0) return null
 
+  const heading = t('seriesIndicator.heading', { seriesId })
+  const partLabel =
+    seriesOrder != null
+      ? t('seriesIndicator.part', { order: seriesOrder })
+      : null
+
+  const posts = seriesPosts.map(
+    ({ id, postNumber, title, slug, seriesOrder: order }) => ({
+      id,
+      postNumber,
+      title,
+      slug,
+      seriesOrder: order,
+    }),
+  )
+
   return (
-    <StyledSection aria-label={t('seriesIndicator.heading', { seriesId })}>
-      <StyledHeading>
-        {t('seriesIndicator.heading', { seriesId })}
-      </StyledHeading>
-      {seriesOrder != null && (
-        <StyledPartLabel>
-          {t('seriesIndicator.part', { order: seriesOrder })}
-        </StyledPartLabel>
-      )}
-      <StyledList>
-        {seriesPosts.map((post) => {
-          const isCurrent = post.id === postId
-          return (
-            <StyledItem key={post.id} $current={isCurrent}>
-              {post.seriesOrder != null && (
-                <StyledOrder>{post.seriesOrder}.</StyledOrder>
-              )}
-              {isCurrent ? (
-                <StyledCurrentLabel>{post.title}</StyledCurrentLabel>
-              ) : (
-                <StyledLink href={`/${lng}/blog/${post.id}/${post.slug}`}>
-                  {post.title}
-                </StyledLink>
-              )}
-            </StyledItem>
-          )
-        })}
-      </StyledList>
-    </StyledSection>
+    <SeriesIndicatorUI
+      posts={posts}
+      postId={postId}
+      lng={lng}
+      heading={heading}
+      partLabel={partLabel}
+    />
   )
 }

@@ -13,6 +13,7 @@ import {
   StyledScrollButton,
   StyledScrollColumn,
   StyledShareButton,
+  StyledSvgFilters,
   StyledWrap,
 } from './PortfolioPage.styles'
 import type { CvDocumentProps } from './components/CvDocument/CvDocument'
@@ -60,11 +61,7 @@ export function PortfolioPageClient({
 
   return (
     <>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        version="1.1"
-        style={{ display: 'none' }}
-      >
+      <StyledSvgFilters xmlns="http://www.w3.org/2000/svg" version="1.1">
         <defs>
           <filter id="fancy-goo">
             <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
@@ -77,7 +74,7 @@ export function PortfolioPageClient({
             <feComposite in="SourceGraphic" in2="goo" operator="atop" />
           </filter>
         </defs>
-      </svg>
+      </StyledSvgFilters>
       <StyledContent>
         <StyledScrollColumn $active={scroll > 0.1} data-testid="scrollColumn">
           <StyledScrollButton

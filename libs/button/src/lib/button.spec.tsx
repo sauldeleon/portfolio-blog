@@ -135,4 +135,54 @@ describe('Button', () => {
     expect(screen.getByText('Click me')).toBeInTheDocument()
     expect(baseElement).toMatchSnapshot()
   })
+
+  it('should render ghost with colorScheme success', () => {
+    const { baseElement } = renderWithTheme(
+      <Button variant="ghost" size="xs" colorScheme="success">
+        Publish
+      </Button>,
+    )
+    expect(screen.getByText('Publish')).toBeInTheDocument()
+    expect(baseElement).toMatchSnapshot()
+  })
+
+  it('should render ghost with colorScheme danger', () => {
+    const { baseElement } = renderWithTheme(
+      <Button variant="ghost" size="xs" colorScheme="danger">
+        Delete
+      </Button>,
+    )
+    expect(screen.getByText('Delete')).toBeInTheDocument()
+    expect(baseElement).toMatchSnapshot()
+  })
+
+  it('should render ghost with colorScheme warning', () => {
+    const { baseElement } = renderWithTheme(
+      <Button variant="ghost" size="xs" colorScheme="warning">
+        Warning
+      </Button>,
+    )
+    expect(screen.getByText('Warning')).toBeInTheDocument()
+    expect(baseElement).toMatchSnapshot()
+  })
+
+  it('should render contained with colorScheme success', () => {
+    const { baseElement } = renderWithTheme(
+      <Button variant="contained" size="sm" colorScheme="success">
+        Save
+      </Button>,
+    )
+    expect(screen.getByText('Save')).toBeInTheDocument()
+    expect(baseElement).toMatchSnapshot()
+  })
+
+  it('should render contained with colorScheme danger', () => {
+    const { baseElement } = renderWithTheme(
+      <Button variant="contained" size="sm" colorScheme="danger">
+        Remove
+      </Button>,
+    )
+    expect(screen.getByText('Remove')).toBeInTheDocument()
+    expect(baseElement).toMatchSnapshot()
+  })
 })

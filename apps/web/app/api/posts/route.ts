@@ -95,7 +95,7 @@ const createPostSchema = z.object({
   seriesTitles: z
     .object({ en: z.string().optional(), es: z.string().optional() })
     .optional(),
-  scheduledAt: z.string().optional(),
+  scheduledAt: z.string().nullable().optional(),
   translations: z
     .object({
       en: translationSchema.optional(),

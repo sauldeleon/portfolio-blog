@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react'
 
-import { BlogImage } from '@sdlgr/blog-image'
 import { Callout } from '@sdlgr/callout'
 
 jest.mock('next-mdx-remote/rsc', () => ({
@@ -10,17 +9,34 @@ jest.mock('next-mdx-remote/rsc', () => ({
 }))
 
 jest.mock('rehype-pretty-code', () => jest.fn())
+jest.mock('remark-gfm', () => jest.fn())
 
 jest.mock('./rehypeHeadingIds', () => ({
   rehypeHeadingIds: jest.fn(),
+}))
+
+jest.mock('./rehypeUnwrapImages', () => ({
+  rehypeUnwrapImages: jest.fn(),
+}))
+
+jest.mock('./remarkEmbeds', () => ({
+  remarkEmbeds: jest.fn(),
 }))
 
 jest.mock('@sdlgr/callout', () => ({
   Callout: jest.fn(),
 }))
 
-jest.mock('@sdlgr/blog-image', () => ({
-  BlogImage: jest.fn(),
+jest.mock('@web/components/PostContent/PostContentImage', () => ({
+  PostContentImage: jest.fn(),
+}))
+
+jest.mock('@web/components/PostContent/PostContentEmbed', () => ({
+  PostContentEmbed: jest.fn(),
+}))
+
+jest.mock('@web/components/PostContent/MdxTable', () => ({
+  MdxTable: jest.fn(),
 }))
 
 jest.mock('@sdlgr/code-block', () => ({
@@ -47,13 +63,28 @@ describe('renderMDX', () => {
     expect(components.Callout).toBe(Callout)
   })
 
-  it('uses BlogImage in mdxComponents', () => {
+  it('uses PostContentImage as img in mdxComponents', () => {
+    const {
+      PostContentImage,
+    } = require('@web/components/PostContent/PostContentImage')
     const { createMdxComponents } = require('./components')
     const components = createMdxComponents({
       copyLabel: 'Copy',
       copiedLabel: 'Copied!',
     })
-    expect(components.BlogImage).toBe(BlogImage)
+    expect(components.img).toBe(PostContentImage)
+  })
+
+  it('uses PostContentEmbed as Embed in mdxComponents', () => {
+    const {
+      PostContentEmbed,
+    } = require('@web/components/PostContent/PostContentEmbed')
+    const { createMdxComponents } = require('./components')
+    const components = createMdxComponents({
+      copyLabel: 'Copy',
+      copiedLabel: 'Copied!',
+    })
+    expect(components.Embed).toBe(PostContentEmbed)
   })
 
   it('pre component renders CodeBlock with labels', () => {
@@ -84,9 +115,35 @@ describe('renderMDX', () => {
   })
 
   it('exports mdxComponents with default labels', () => {
+    const {
+      PostContentImage,
+    } = require('@web/components/PostContent/PostContentImage')
     const { mdxComponents } = require('./components')
     expect(mdxComponents.Callout).toBe(Callout)
-    expect(mdxComponents.BlogImage).toBe(BlogImage)
+    expect(mdxComponents.img).toBe(PostContentImage)
     expect(mdxComponents.pre).toBeDefined()
+  })
+
+  it('has table component in mdxComponents', () => {
+    const { MdxTable } = require('@web/components/PostContent/MdxTable')
+    const { createMdxComponents } = require('./components')
+    const components = createMdxComponents({
+      copyLabel: 'Copy',
+      copiedLabel: 'Copied!',
+    })
+    expect(components.table).toBeDefined()
+    render(components.table({ children: null }))
+    expect(MdxTable).toHaveBeenCalled()
+  })
+
+  it('h1 component renders as h2', () => {
+    const { createMdxComponents } = require('./components')
+    const components = createMdxComponents({
+      copyLabel: 'Copy',
+      copiedLabel: 'Copied!',
+    })
+    render(components.h1({ children: 'Section Title' }))
+    const heading = screen.getByRole('heading', { name: 'Section Title' })
+    expect(heading.tagName).toBe('H2')
   })
 })

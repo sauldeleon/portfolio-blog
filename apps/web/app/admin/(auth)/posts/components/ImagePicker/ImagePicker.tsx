@@ -167,11 +167,6 @@ export function ImagePicker({ open, onClose, onPick }: ImagePickerProps) {
                     alt=""
                     width={image.width}
                     height={image.height}
-                    style={{
-                      objectFit: 'contain',
-                      width: '100%',
-                      height: '100%',
-                    }}
                   />
                 </StyledImagePreview>
                 <StyledImageName

@@ -49,6 +49,7 @@ const mockPost = {
   category: 'engineering',
   tags: ['react'],
   coverImage: null,
+  coverImageFit: null,
 }
 
 const mockCategory = {

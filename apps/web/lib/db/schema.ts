@@ -51,6 +51,7 @@ export const posts = pgTable(
   'posts',
   {
     id: text('id').primaryKey(), // ULID
+    postNumber: integer('post_number').generatedAlwaysAsIdentity(),
     category: text('category')
       .notNull()
       .references(() => categories.slug),

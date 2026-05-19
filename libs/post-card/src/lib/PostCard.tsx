@@ -22,6 +22,7 @@ const MAX_TAGS = 3
 
 export interface PostCardProps {
   id: string
+  postNumber?: number
   slug: string
   title: string
   excerpt: string
@@ -40,6 +41,7 @@ export interface PostCardProps {
 
 export function PostCard({
   id,
+  postNumber,
   slug,
   title,
   excerpt,
@@ -95,7 +97,9 @@ export function PostCard({
             <StyledMoreTags>+{extraTagCount}</StyledMoreTags>
           )}
         </StyledTagList>
-        <StyledReadMore href={`/${lng}/blog/${id}/${slug}`}>
+        <StyledReadMore
+          href={postNumber != null ? `/${lng}/blog/${postNumber}/${slug}` : '#'}
+        >
           {readMoreLabel}
         </StyledReadMore>
       </StyledBody>

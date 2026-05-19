@@ -1,4 +1,5 @@
 import { dir } from 'i18next'
+import 'react-day-picker/style.css'
 
 import { LanguageContextProvider } from '@sdlgr/i18n-tools'
 import { robotoMonoClassName } from '@sdlgr/main-theme'
@@ -16,7 +17,12 @@ interface AdminLayoutProps {
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
   return (
-    <html lang="en" dir={dir('en')} className={robotoMonoClassName}>
+    <html
+      lang="en"
+      dir={dir('en')}
+      className={robotoMonoClassName}
+      style={{ scrollBehavior: 'auto' }}
+    >
       <body>
         <StyledComponentsRegistry>
           <LanguageContextProvider value={{ language: 'en' }}>

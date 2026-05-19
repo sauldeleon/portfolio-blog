@@ -31,6 +31,7 @@ jest.mock('@sdlgr/post-card', () => ({
       data-series-title={props.seriesTitle}
       data-series-order={props.seriesOrder}
       data-lng={props.lng}
+      data-post-number={props.postNumber}
     />
   ),
 }))
@@ -148,6 +149,21 @@ describe('PostCardPreview', () => {
     renderApp(<PostCardPreview {...defaultProps} />)
     expect(screen.getByTestId('post-card')).not.toHaveAttribute(
       'data-series-title',
+    )
+  })
+
+  it('passes postNumber to PostCard when provided', () => {
+    renderApp(<PostCardPreview {...defaultProps} postNumber={42} />)
+    expect(screen.getByTestId('post-card')).toHaveAttribute(
+      'data-post-number',
+      '42',
+    )
+  })
+
+  it('does not pass postNumber when not provided', () => {
+    renderApp(<PostCardPreview {...defaultProps} />)
+    expect(screen.getByTestId('post-card')).not.toHaveAttribute(
+      'data-post-number',
     )
   })
 })

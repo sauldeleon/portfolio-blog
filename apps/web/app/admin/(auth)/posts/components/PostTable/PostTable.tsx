@@ -2,17 +2,26 @@
 
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import axios from 'axios'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 
 import { ConfirmDeleteModal } from '@web/app/admin/(auth)/components/ConfirmDeleteModal'
 import { useClientTranslation } from '@web/i18n/client'
 import type { AdminPost } from '@web/lib/db/queries/posts'
 
+import { STATUS_FILTERS, type StatusFilter } from './PostTable.constants'
 import {
   StyledActions,
   StyledArchiveButton,
+  StyledBulkActions,
+  StyledBulkArchiveButton,
+  StyledBulkDeleteButton,
+  StyledBulkPublishButton,
+  StyledBulkUnarchiveButton,
+  StyledBulkUnpublishButton,
   StyledButtonGroup,
+  StyledCheckboxTd,
+  StyledCheckboxTh,
   StyledCount,
   StyledEmDash,
   StyledEmpty,
@@ -38,7 +47,8 @@ import {
   StyledWrapper,
 } from './PostTable.styles'
 
-type StatusFilter = 'all' | 'published' | 'draft' | 'archived'
+export type { StatusFilter }
+export { STATUS_FILTERS }
 
 type RawAdminPost = Omit<
   AdminPost,
@@ -62,8 +72,6 @@ function deserializePost(p: RawAdminPost): AdminPost {
   }
 }
 
-const STATUS_FILTERS: StatusFilter[] = ['all', 'published', 'draft', 'archived']
-
 interface PostTableProps {
   posts: AdminPost[]
 }
@@ -71,17 +79,31 @@ interface PostTableProps {
 export function PostTable({ posts }: PostTableProps) {
   const { t } = useClientTranslation('admin')
   const queryClient = useQueryClient()
-  const [filter, setFilter] = useState<StatusFilter>('all')
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const rawFilter = searchParams.get('filter')
+  const initialFilter: StatusFilter = (
+    STATUS_FILTERS as readonly string[]
+  ).includes(rawFilter ?? '')
+    ? (rawFilter as StatusFilter)
+    : 'all'
+  const [filter, setFilter] = useState<StatusFilter>(initialFilter)
   const [search, setSearch] = useState('')
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
+  const [bulkPublishPending, setBulkPublishPending] = useState(false)
+  const [bulkUnpublishPending, setBulkUnpublishPending] = useState(false)
+  const [bulkArchivePending, setBulkArchivePending] = useState(false)
+  const [bulkDeletePending, setBulkDeletePending] = useState(false)
+  const [bulkUnarchivePending, setBulkUnarchivePending] = useState(false)
   const [archiveTargetId, setArchiveTargetId] = useState<string | null>(null)
   const [hardDeleteTargetId, setHardDeleteTargetId] = useState<string | null>(
     null,
   )
-  const router = useRouter()
 
   const QUERY_KEY = ['admin-posts'] as const
 
-  const { data: items, refetch } = useQuery({
+  const { data: items } = useQuery({
     queryKey: QUERY_KEY,
     queryFn: async () => {
       const { data } = await axios.get<{ data: RawAdminPost[] }>(
@@ -188,6 +210,140 @@ export function PostTable({ posts }: PostTableProps) {
 
   const canPublish = (post: AdminPost) => !!(post.titleEn && post.titleEs)
 
+  const allVisibleIds = filtered.map((p) => p.id)
+  const allSelected =
+    allVisibleIds.length > 0 && allVisibleIds.every((id) => selectedIds.has(id))
+  const selectedPosts = filtered.filter((p) => selectedIds.has(p.id))
+
+  function handleSelectAll(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.checked) {
+      setSelectedIds(new Set(allVisibleIds))
+    } else {
+      setSelectedIds(new Set())
+    }
+  }
+
+  function handleSelectRow(e: React.ChangeEvent<HTMLInputElement>, id: string) {
+    const next = new Set(selectedIds)
+    if (e.target.checked) {
+      next.add(id)
+    } else {
+      next.delete(id)
+    }
+    setSelectedIds(next)
+  }
+
+  function handleBulkPublish() {
+    setBulkPublishPending(true)
+  }
+
+  async function handleConfirmBulkPublish() {
+    const toPublish = selectedPosts.filter(
+      (p) => p.status !== 'published' && canPublish(p),
+    )
+    await Promise.all(
+      toPublish.map((p) =>
+        axios.put(`/api/posts/${p.id}/`, { status: 'published' }),
+      ),
+    )
+    queryClient.setQueryData<AdminPost[]>(QUERY_KEY, (old) => {
+      /* istanbul ignore next */
+      if (!old) return []
+      const ids = new Set(toPublish.map((p) => p.id))
+      return old.map((p) =>
+        ids.has(p.id)
+          ? { ...p, status: 'published', publishedAt: new Date() }
+          : p,
+      )
+    })
+    setBulkPublishPending(false)
+    setSelectedIds(new Set())
+  }
+
+  function handleBulkUnpublish() {
+    setBulkUnpublishPending(true)
+  }
+
+  async function handleConfirmBulkUnpublish() {
+    const toUnpublish = selectedPosts.filter((p) => p.status === 'published')
+    await Promise.all(
+      toUnpublish.map((p) =>
+        axios.put(`/api/posts/${p.id}/`, { status: 'draft' }),
+      ),
+    )
+    queryClient.setQueryData<AdminPost[]>(QUERY_KEY, (old) => {
+      /* istanbul ignore next */
+      if (!old) return []
+      const ids = new Set(toUnpublish.map((p) => p.id))
+      return old.map((p) =>
+        ids.has(p.id) ? { ...p, status: 'draft', publishedAt: null } : p,
+      )
+    })
+    setBulkUnpublishPending(false)
+    setSelectedIds(new Set())
+  }
+
+  function handleBulkArchive() {
+    setBulkArchivePending(true)
+  }
+
+  async function handleConfirmBulkArchive() {
+    const toArchive = selectedPosts.filter(
+      (p) => p.status !== 'archived' && p.status !== 'published',
+    )
+    await Promise.all(toArchive.map((p) => axios.delete(`/api/posts/${p.id}/`)))
+    queryClient.setQueryData<AdminPost[]>(QUERY_KEY, (old) => {
+      /* istanbul ignore next */
+      if (!old) return []
+      const ids = new Set(toArchive.map((p) => p.id))
+      return old.map((p) =>
+        ids.has(p.id) ? { ...p, status: 'archived', deletedAt: new Date() } : p,
+      )
+    })
+    setBulkArchivePending(false)
+    setSelectedIds(new Set())
+  }
+
+  function handleBulkDelete() {
+    setBulkDeletePending(true)
+  }
+
+  function handleBulkUnarchive() {
+    setBulkUnarchivePending(true)
+  }
+
+  async function handleConfirmBulkUnarchive() {
+    await Promise.all(
+      selectedPosts.map((p) =>
+        axios.put(`/api/posts/${p.id}/`, { status: 'draft' }),
+      ),
+    )
+    queryClient.setQueryData<AdminPost[]>(QUERY_KEY, (old) => {
+      /* istanbul ignore next */
+      if (!old) return []
+      const ids = new Set(selectedPosts.map((p) => p.id))
+      return old.map((p) =>
+        ids.has(p.id) ? { ...p, status: 'draft', deletedAt: null } : p,
+      )
+    })
+    setBulkUnarchivePending(false)
+    setSelectedIds(new Set())
+  }
+
+  async function handleConfirmBulkDelete() {
+    await Promise.all(
+      selectedPosts.map((p) => axios.delete(`/api/posts/${p.id}/?hard=true`)),
+    )
+    queryClient.setQueryData<AdminPost[]>(QUERY_KEY, (old) => {
+      /* istanbul ignore next */
+      if (!old) return []
+      const ids = new Set(selectedPosts.map((p) => p.id))
+      return old.filter((p) => !ids.has(p.id))
+    })
+    setBulkDeletePending(false)
+    setSelectedIds(new Set())
+  }
+
   return (
     <StyledWrapper data-testid="post-table">
       <StyledToolbar>
@@ -204,7 +360,20 @@ export function PostTable({ posts }: PostTableProps) {
               <StyledFilterTab
                 key={s}
                 active={filter === s}
-                onClick={() => setFilter(s)}
+                onClick={() => {
+                  setFilter(s)
+                  setSelectedIds(new Set())
+                  const params = new URLSearchParams(searchParams.toString())
+                  if (s === 'all') {
+                    params.delete('filter')
+                  } else {
+                    params.set('filter', s)
+                  }
+                  const qs = params.toString()
+                  router.push(qs ? `${pathname}?${qs}` : pathname, {
+                    scroll: false,
+                  })
+                }}
                 aria-pressed={filter === s}
                 data-testid={`filter-${s}`}
               >
@@ -215,10 +384,53 @@ export function PostTable({ posts }: PostTableProps) {
           </StyledFilterTabs>
         </StyledLeftGroup>
         <StyledButtonGroup>
+          {selectedIds.size > 0 && (
+            <StyledBulkActions data-testid="bulk-actions">
+              {filter !== 'archived' ? (
+                <>
+                  <StyledBulkPublishButton
+                    onClick={handleBulkPublish}
+                    data-testid="bulk-publish-button"
+                  >
+                    {t('posts.publish')}
+                  </StyledBulkPublishButton>
+                  <StyledBulkUnpublishButton
+                    onClick={handleBulkUnpublish}
+                    data-testid="bulk-unpublish-button"
+                  >
+                    {t('posts.unpublish')}
+                  </StyledBulkUnpublishButton>
+                  <StyledBulkArchiveButton
+                    onClick={handleBulkArchive}
+                    data-testid="bulk-archive-button"
+                  >
+                    {t('posts.archive')}
+                  </StyledBulkArchiveButton>
+                </>
+              ) : (
+                <>
+                  <StyledBulkUnarchiveButton
+                    onClick={handleBulkUnarchive}
+                    data-testid="bulk-unarchive-button"
+                  >
+                    {t('posts.unarchive')}
+                  </StyledBulkUnarchiveButton>
+                  <StyledBulkDeleteButton
+                    onClick={handleBulkDelete}
+                    data-testid="bulk-delete-button"
+                  >
+                    {t('posts.hardDelete')}
+                  </StyledBulkDeleteButton>
+                </>
+              )}
+            </StyledBulkActions>
+          )}
           <StyledRefreshButton
             variant="contained"
             size="sm"
-            onClick={() => void refetch()}
+            onClick={() =>
+              void queryClient.invalidateQueries({ queryKey: QUERY_KEY })
+            }
             data-testid="refresh-button"
           >
             {t('refresh')}
@@ -237,11 +449,20 @@ export function PostTable({ posts }: PostTableProps) {
       <StyledTable>
         <StyledThead>
           <tr>
+            <StyledCheckboxTh>
+              <input
+                type="checkbox"
+                checked={allSelected}
+                onChange={handleSelectAll}
+                data-testid="select-all-checkbox"
+              />
+            </StyledCheckboxTh>
             <StyledTh>{t('posts.table.title')}</StyledTh>
             <StyledTh>{t('posts.table.status')}</StyledTh>
             <StyledTh>{t('posts.table.category')}</StyledTh>
             <StyledTh>{t('posts.table.translations')}</StyledTh>
             <StyledTh>{t('posts.table.published')}</StyledTh>
+            <StyledTh>{t('posts.table.scheduledAt')}</StyledTh>
             <StyledTh>{t('posts.table.createdAt')}</StyledTh>
             <StyledTh>{t('posts.table.updatedAt')}</StyledTh>
             <StyledTh>{t('posts.table.archived')}</StyledTh>
@@ -251,7 +472,7 @@ export function PostTable({ posts }: PostTableProps) {
         <StyledTbody>
           {filtered.length === 0 && (
             <tr>
-              <StyledTd colSpan={9}>
+              <StyledTd colSpan={11}>
                 <StyledEmpty>{t('posts.empty')}</StyledEmpty>
               </StyledTd>
             </tr>
@@ -262,6 +483,15 @@ export function PostTable({ posts }: PostTableProps) {
               data-testid="post-row"
               onClick={() => router.push(`/admin/posts/${post.id}`)}
             >
+              <StyledCheckboxTd>
+                <input
+                  type="checkbox"
+                  checked={selectedIds.has(post.id)}
+                  onChange={(e) => handleSelectRow(e, post.id)}
+                  onClick={(e) => e.stopPropagation()}
+                  data-testid="row-checkbox"
+                />
+              </StyledCheckboxTd>
               <StyledTd>
                 <StyledTitle>
                   {post.titleEn ?? post.titleEs ?? (
@@ -296,6 +526,13 @@ export function PostTable({ posts }: PostTableProps) {
               <StyledTd>
                 {post.publishedAt ? (
                   new Date(post.publishedAt).toLocaleDateString()
+                ) : (
+                  <StyledEmDash>—</StyledEmDash>
+                )}
+              </StyledTd>
+              <StyledTd>
+                {post.scheduledAt ? (
+                  new Date(post.scheduledAt).toLocaleDateString()
                 ) : (
                   <StyledEmDash>—</StyledEmDash>
                 )}
@@ -376,6 +613,40 @@ export function PostTable({ posts }: PostTableProps) {
         message={t('posts.hardDeleteConfirm')}
         onConfirm={handleConfirmHardDelete}
         onCancel={handleCancelHardDelete}
+      />
+      <ConfirmDeleteModal
+        isOpen={bulkPublishPending}
+        message={t('posts.bulkPublishConfirm')}
+        onConfirm={handleConfirmBulkPublish}
+        onCancel={() => setBulkPublishPending(false)}
+        variant="warning"
+      />
+      <ConfirmDeleteModal
+        isOpen={bulkUnpublishPending}
+        message={t('posts.bulkUnpublishConfirm')}
+        onConfirm={handleConfirmBulkUnpublish}
+        onCancel={() => setBulkUnpublishPending(false)}
+        variant="warning"
+      />
+      <ConfirmDeleteModal
+        isOpen={bulkArchivePending}
+        message={t('posts.bulkArchiveConfirm')}
+        onConfirm={handleConfirmBulkArchive}
+        onCancel={() => setBulkArchivePending(false)}
+        variant="warning"
+      />
+      <ConfirmDeleteModal
+        isOpen={bulkUnarchivePending}
+        message={t('posts.bulkUnarchiveConfirm')}
+        onConfirm={handleConfirmBulkUnarchive}
+        onCancel={() => setBulkUnarchivePending(false)}
+        variant="warning"
+      />
+      <ConfirmDeleteModal
+        isOpen={bulkDeletePending}
+        message={t('posts.bulkDeleteConfirm')}
+        onConfirm={handleConfirmBulkDelete}
+        onCancel={() => setBulkDeletePending(false)}
       />
     </StyledWrapper>
   )

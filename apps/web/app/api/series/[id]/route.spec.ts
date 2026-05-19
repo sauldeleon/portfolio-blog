@@ -40,6 +40,7 @@ jest.mock('drizzle-orm', () => ({
   eq: jest.fn(),
   and: jest.fn(),
   isNotNull: jest.fn(),
+  isNull: jest.fn(),
 }))
 
 function makeParams(id: string) {

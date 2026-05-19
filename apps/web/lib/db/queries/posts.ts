@@ -24,6 +24,7 @@ import {
 
 export type PublicPost = {
   id: string
+  postNumber: number
   category: string
   tags: string[]
   status: PostStatus
@@ -67,6 +68,7 @@ export type AdminPost = {
 
 const publicFields = {
   id: posts.id,
+  postNumber: posts.postNumber,
   category: posts.category,
   tags: posts.tags,
   status: posts.status,
@@ -137,6 +139,32 @@ export async function getPostById(
   return rows[0] ?? null
 }
 
+export async function getPostByNumber(
+  postNumber: number,
+  locale: Locale,
+): Promise<PostWithContent | null> {
+  const rows = await db
+    .select(publicFieldsWithContent)
+    .from(posts)
+    .innerJoin(
+      postTranslations,
+      and(
+        eq(postTranslations.postId, posts.id),
+        eq(postTranslations.locale, locale),
+      ),
+    )
+    .leftJoin(
+      seriesTranslations,
+      and(
+        eq(seriesTranslations.seriesId, posts.seriesId),
+        eq(seriesTranslations.locale, locale),
+      ),
+    )
+    .where(and(eq(posts.postNumber, postNumber), isNull(posts.deletedAt)))
+
+  return rows[0] ?? null
+}
+
 export async function getPostBySlug(
   locale: Locale,
   slug: string,
@@ -169,6 +197,15 @@ export async function getPostBySlug(
   return rows[0] ?? null
 }
 
+function shuffleArray<T>(arr: T[]): T[] {
+  const result = [...arr]
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[result[i], result[j]] = [result[j], result[i]]
+  }
+  return result
+}
+
 export async function getRelatedPosts(
   postId: string,
   locale: Locale,
@@ -177,7 +214,7 @@ export async function getRelatedPosts(
   const current = await getPostById(postId, locale)
   if (!current) return []
 
-  return db
+  const allRelated = await db
     .select(publicFieldsWithContent)
     .from(posts)
     .innerJoin(
@@ -203,7 +240,8 @@ export async function getRelatedPosts(
       ),
     )
     .orderBy(desc(posts.publishedAt))
-    .limit(limit)
+
+  return shuffleArray(allRelated).slice(0, limit)
 }
 
 export type SeriesSummary = {
@@ -567,4 +605,26 @@ export async function getPublishedPostCountByCategory(
       ),
     )
   return rows[0]?.count ?? 0
+}
+
+export type ScheduledPost = {
+  id: string
+  scheduledAt: Date
+}
+
+export async function getScheduledPostsToPublish(): Promise<ScheduledPost[]> {
+  type Row = { id: string; scheduled_at: Date }
+  const result = await db.execute<Row>(sql`
+    SELECT p.id, p.scheduled_at
+    FROM posts p
+    INNER JOIN post_translations en_t
+      ON en_t.post_id = p.id AND en_t.locale = 'en' AND en_t.content != ''
+    INNER JOIN post_translations es_t
+      ON es_t.post_id = p.id AND es_t.locale = 'es' AND es_t.content != ''
+    WHERE p.status = 'draft'
+      AND p.deleted_at IS NULL
+      AND p.scheduled_at IS NOT NULL
+      AND p.scheduled_at <= NOW()
+  `)
+  return result.rows.map((r) => ({ id: r.id, scheduledAt: r.scheduled_at }))
 }

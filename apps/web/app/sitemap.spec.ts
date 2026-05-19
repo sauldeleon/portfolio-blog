@@ -5,6 +5,7 @@ jest.mock('@web/lib/db/queries/posts', () => ({
 
 const mockPost = {
   id: '01JWTEST000000000000000000',
+  postNumber: 1,
   slug: 'test-post',
   title: 'Test Post',
   excerpt: 'An excerpt',
@@ -73,12 +74,8 @@ describe('sitemap', () => {
     const sitemap = (await import('./sitemap')).default
     const result = await sitemap()
     const urls = result.map((r) => r.url)
-    expect(urls).toContain(
-      'https://test.url/en/blog/01JWTEST000000000000000000/test-post',
-    )
-    expect(urls).toContain(
-      'https://test.url/es/blog/01JWTEST000000000000000000/test-post',
-    )
+    expect(urls).toContain('https://test.url/en/blog/1/test-post')
+    expect(urls).toContain('https://test.url/es/blog/1/test-post')
   })
 
   it('uses post updatedAt as lastModified for blog routes', async () => {

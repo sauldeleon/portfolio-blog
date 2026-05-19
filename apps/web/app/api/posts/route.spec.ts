@@ -417,6 +417,25 @@ describe('POST /api/posts', () => {
     )
   })
 
+  it('passes null scheduledAt when null provided', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockGetCategoryBySlug.mockResolvedValue(mockCategory)
+    mockSlugExistsForLocale.mockResolvedValue(false)
+    mockCreatePost.mockResolvedValue(mockPost)
+    await POST(
+      makeRequest({
+        category: 'engineering',
+        author: 'admin',
+        scheduledAt: null,
+        translations: { en: validTranslations.en },
+      }),
+    )
+    expect(mockCreatePost).toHaveBeenCalledWith(
+      expect.objectContaining({ scheduledAt: null }),
+      expect.any(Object),
+    )
+  })
+
   it('calls ensureSeries before createPost when seriesId provided', async () => {
     mockAuth.mockResolvedValue({ user: { name: 'admin' } })
     mockGetCategoryBySlug.mockResolvedValue(mockCategory)

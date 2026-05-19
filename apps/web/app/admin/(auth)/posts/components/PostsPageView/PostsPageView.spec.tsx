@@ -14,6 +14,8 @@ jest.mock('@web/i18n/client', () => ({
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn().mockReturnValue({ refresh: jest.fn(), push: jest.fn() }),
+  usePathname: jest.fn().mockReturnValue('/admin/posts/'),
+  useSearchParams: jest.fn().mockReturnValue(new URLSearchParams()),
 }))
 
 const mockPosts: AdminPost[] = [
@@ -52,5 +54,24 @@ describe('PostsPageView', () => {
   it('renders the post table', () => {
     renderApp(<PostsPageView posts={mockPosts} title="Posts" />)
     expect(screen.getByTestId('post-table')).toBeInTheDocument()
+  })
+
+  it('archived tab is active when URL has ?filter=archived', () => {
+    const { useSearchParams } = jest.requireMock('next/navigation') as {
+      useSearchParams: jest.Mock
+    }
+    useSearchParams.mockReturnValueOnce(new URLSearchParams('filter=archived'))
+    const archivedPost = {
+      ...mockPosts[0],
+      id: '02',
+      titleEn: 'Archived Post',
+      status: 'archived' as const,
+    }
+    renderApp(<PostsPageView posts={[archivedPost]} title="Posts" />)
+    expect(screen.getByTestId('filter-archived')).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    )
+    expect(screen.getByText('Archived Post')).toBeInTheDocument()
   })
 })

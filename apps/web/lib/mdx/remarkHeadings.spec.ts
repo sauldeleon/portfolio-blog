@@ -42,9 +42,10 @@ describe('extractToc', () => {
     ])
   })
 
-  it('ignores h1 headings', () => {
+  it('extracts h1 headings', () => {
     const source = '# Title\n\n## Section'
     expect(extractToc(source)).toEqual([
+      { depth: 1, text: 'Title', id: 'title' },
       { depth: 2, text: 'Section', id: 'section' },
     ])
   })

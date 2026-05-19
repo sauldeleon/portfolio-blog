@@ -85,10 +85,6 @@ export const StyledConfirmButton = styled(Button).attrs({
   size: 'xs',
 })<{ $variant: ModalVariant }>`
   padding: 0.375rem 0.875rem;
-  color: ${({ $variant, theme }) =>
-    $variant === 'warning' ? theme.colors.green : theme.colors.orange};
-  border-color: ${({ $variant, theme }) =>
-    $variant === 'warning' ? theme.colors.green : theme.colors.orange};
   text-transform: uppercase;
   letter-spacing: 0.08em;
 
@@ -98,7 +94,5 @@ export const StyledConfirmButton = styled(Button).attrs({
         $variant === 'warning'
           ? 'rgba(152, 223, 214, 0.4)'
           : 'rgba(176, 75, 47, 0.4)'};
-    border-color: ${({ $variant, theme }) =>
-      $variant === 'warning' ? theme.colors.green : theme.colors.orange};
   }
 `

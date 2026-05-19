@@ -5,6 +5,13 @@ import { PostCard } from '@sdlgr/post-card'
 import { useClientTranslation } from '@web/i18n/client'
 import { computeReadingTime } from '@web/utils/computeReadingTime'
 
+import {
+  StyledPreviewCardConstraint,
+  StyledPreviewCardWrapper,
+  StyledPreviewSection,
+} from './PostCardPreview.styles'
+import { PreviewSectionLabel } from './PreviewSectionLabel'
+
 interface PostCardPreviewProps {
   title: string
   slug: string
@@ -18,6 +25,7 @@ interface PostCardPreviewProps {
   seriesOrder?: number | null
   author: string
   lng: string
+  postNumber?: number
 }
 
 export function PostCardPreview({
@@ -33,36 +41,20 @@ export function PostCardPreview({
   seriesOrder,
   author,
   lng,
+  postNumber,
 }: PostCardPreviewProps) {
   const { t } = useClientTranslation('admin')
   const readingTime = computeReadingTime(content)
   const publishedAt = new Date().toLocaleDateString()
 
   return (
-    <div
-      style={{
-        paddingTop: '1.5rem',
-        borderTop: '1px solid rgba(251,251,251,0.08)',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '0.75rem',
-      }}
-      data-testid="post-card-preview"
-    >
-      <span
-        style={{
-          fontSize: '0.55rem',
-          textTransform: 'uppercase',
-          letterSpacing: '0.12em',
-          opacity: 0.3,
-        }}
-      >
-        {t('postEditor.cardPreview')}
-      </span>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <div style={{ width: '100%', maxWidth: '360px' }}>
+    <StyledPreviewSection data-testid="post-card-preview">
+      <PreviewSectionLabel>{t('postEditor.cardPreview')}</PreviewSectionLabel>
+      <StyledPreviewCardWrapper>
+        <StyledPreviewCardConstraint>
           <PostCard
             id="preview"
+            postNumber={postNumber}
             slug={slug}
             title={title}
             excerpt={excerpt}
@@ -78,8 +70,8 @@ export function PostCardPreview({
             lng={lng}
             readMoreLabel="Read more"
           />
-        </div>
-      </div>
-    </div>
+        </StyledPreviewCardConstraint>
+      </StyledPreviewCardWrapper>
+    </StyledPreviewSection>
   )
 }

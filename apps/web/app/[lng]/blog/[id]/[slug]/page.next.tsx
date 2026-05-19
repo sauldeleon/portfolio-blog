@@ -5,13 +5,17 @@ import { notFound, redirect } from 'next/navigation'
 import { PostHero } from '@sdlgr/post-hero'
 import { TableOfContents } from '@sdlgr/table-of-contents'
 
+import { JsonLd } from '@web/components/JsonLd/JsonLd'
+import { PostContent } from '@web/components/PostContent/PostContent'
 import { RelatedPosts } from '@web/components/RelatedPosts/RelatedPosts'
 import { SeriesIndicator } from '@web/components/SeriesIndicator/SeriesIndicator'
 import { getServerTranslation } from '@web/i18n/server'
-import { getPostById, getPublishedPosts } from '@web/lib/db/queries/posts'
+import { getCategoryTranslations } from '@web/lib/db/queries/categories'
+import { getPostByNumber, getPublishedPosts } from '@web/lib/db/queries/posts'
 import { Locale } from '@web/lib/db/schema'
 import { extractToc } from '@web/lib/mdx/remarkHeadings'
 import { renderMDX } from '@web/lib/mdx/renderMDX'
+import { generateArticleJsonLd } from '@web/lib/seo/generateArticleJsonLd'
 import { computeReadingTime } from '@web/utils/computeReadingTime'
 import {
   buildAlternates,
@@ -19,9 +23,23 @@ import {
   ogLocaleAlternate,
 } from '@web/utils/metadata/inLanguage'
 
+import { StyledPage } from './page.next.styles'
+
 export const revalidate = 60
 
 const dateLocales: Record<Locale, DateLocale> = { en: enUS, es }
+
+async function getCategoryName(
+  categorySlug: string,
+  lng: Locale,
+): Promise<string> {
+  const translations = await getCategoryTranslations(categorySlug)
+  return (
+    translations.find((t) => t.locale === lng)?.name ??
+    translations.find((t) => t.locale === 'en')?.name ??
+    categorySlug
+  )
+}
 
 interface RouteProps {
   params: Promise<{ lng: Locale; id: string; slug: string }>
@@ -33,7 +51,11 @@ export async function generateStaticParams() {
     const results = await Promise.all(
       locales.map(async (lng) => {
         const posts = await getPublishedPosts(lng)
-        return posts.map((p) => ({ lng, id: p.id, slug: p.slug }))
+        return posts.map((p) => ({
+          lng,
+          id: String(p.postNumber),
+          slug: p.slug,
+        }))
       }),
     )
     return results.flat()
@@ -44,17 +66,25 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: RouteProps) {
   const { lng, id } = await params
+  const postNumber = parseInt(id, 10)
+  if (isNaN(postNumber)) return {}
 
   const [post, postAlt] = await Promise.all([
-    getPostById(id, lng),
-    getPostById(id, lng === 'en' ? 'es' : 'en'),
+    getPostByNumber(postNumber, lng as Locale),
+    getPostByNumber(postNumber, (lng === 'en' ? 'es' : 'en') as Locale),
   ])
 
   if (!post || post.status !== 'published') return {}
 
   const altSlug = postAlt?.slug ?? post.slug
-  const altPath = `blog/${id}/${altSlug}`
-  const ownPath = `blog/${id}/${post.slug}`
+  const altPath = `blog/${postNumber}/${altSlug}`
+  const ownPath = `blog/${postNumber}/${post.slug}`
+
+  const categoryName = await getCategoryName(post.category, lng as Locale)
+  const ogParams = new URLSearchParams([['title', post.title]])
+  if (post.coverImage) ogParams.set('cover', post.coverImage)
+  if (post.category) ogParams.set('category', categoryName)
+  const ogImageUrl = `/og?${ogParams.toString()}`
 
   return {
     title: post.title,
@@ -64,6 +94,11 @@ export async function generateMetadata({ params }: RouteProps) {
       description: post.excerpt,
       locale: ogLocale(lng),
       localeAlternate: ogLocaleAlternate(lng),
+      images: [{ url: ogImageUrl, width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: 'summary_large_image' as const,
+      images: [ogImageUrl],
     },
     alternates: {
       ...buildAlternates(lng, ownPath),
@@ -81,36 +116,51 @@ export default async function BlogPostPage({ params }: RouteProps) {
   const { lng, id, slug } = await params
   const { t } = await getServerTranslation({ ns: 'blogPage', language: lng })
 
-  const post = await getPostById(id, lng)
+  const postNumber = parseInt(id, 10)
+  if (isNaN(postNumber)) return notFound()
+  const post = await getPostByNumber(postNumber, lng as Locale)
   if (!post || post.status !== 'published') return notFound()
   if (post.slug !== slug)
-    return redirect(`/${lng}/blog/${post.id}/${post.slug}`)
+    return redirect(`/${lng}/blog/${post.postNumber}/${post.slug}`)
 
   const locale = dateLocales[lng] ?? enUS
   const publishedAt = post.publishedAt
     ? format(new Date(post.publishedAt), 'PP', { locale })
     : null
 
-  const toc = extractToc(post.content)
+  const [toc, categoryName] = await Promise.all([
+    Promise.resolve(extractToc(post.content)),
+    getCategoryName(post.category, lng as Locale),
+  ])
+  const postUrl = `${process.env.BASE_URL ?? ''}/${lng}/blog/${post.postNumber}/${post.slug}`
 
   return (
-    <main>
+    <StyledPage>
+      <JsonLd data={generateArticleJsonLd(post, lng, postUrl)} />
       <PostHero
         title={post.title}
         coverImagePublicId={post.coverImage}
-        category={post.category}
+        coverImageFit={post.coverImageFit}
+        category={categoryName}
+        tags={post.tags}
         author={post.author}
         publishedAt={publishedAt}
         readingTime={computeReadingTime(post.content)}
         lng={lng}
+        seriesTitle={post.seriesTitle}
+        seriesOrder={post.seriesOrder}
+        url={postUrl}
+        shareLabel={t('share')}
+        copyLinkLabel={t('share.copyLink')}
+        copiedLabel={t('share.copied')}
       />
       {toc.length > 0 && <TableOfContents entries={toc} label={t('toc')} />}
-      <article>
+      <PostContent>
         {renderMDX(post.content, {
           copyLabel: t('copyCode'),
           copiedLabel: t('codeCopied'),
         })}
-      </article>
+      </PostContent>
       {post.seriesId && (
         <SeriesIndicator
           postId={post.id}
@@ -120,6 +170,6 @@ export default async function BlogPostPage({ params }: RouteProps) {
         />
       )}
       <RelatedPosts postId={post.id} lng={lng} />
-    </main>
+    </StyledPage>
   )
 }

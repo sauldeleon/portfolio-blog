@@ -16,5 +16,8 @@
   "seriesIndicator.heading": "Serie: {{seriesId}}",
   "toc": "Tabla de contenidos",
   "copyCode": "Copiar",
-  "codeCopied": "¡Copiado!"
+  "codeCopied": "¡Copiado!",
+  "share": "Compartir",
+  "share.copyLink": "Copiar enlace",
+  "share.copied": "¡Copiado!"
 }
