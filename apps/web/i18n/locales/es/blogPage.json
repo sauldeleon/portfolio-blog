@@ -1,7 +1,7 @@
 {
   "title": "Blog",
   "meta.title": "Blog — Saúl de León",
-  "meta.description": "Artículos sobre desarrollo web, ingeniería de software y tecnología.",
+  "meta.description": "Un lugar para artículos sobre desarrollo, tecnología y lo que sea que esté en mi mente.",
   "noResults": "No se encontraron publicaciones",
   "readMore": "Leer más",
   "readingTime": "{{count}} min de lectura",

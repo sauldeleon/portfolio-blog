@@ -39,13 +39,6 @@ jest.mock('@sdlgr/table-of-contents', () => ({
   ),
 }))
 
-jest.mock('next-cloudinary', () => ({
-  getCldImageUrl: jest.fn(
-    ({ src }: { src: string }) =>
-      `https://res.cloudinary.com/test/image/upload/${src}`,
-  ),
-}))
-
 jest.mock('@web/lib/mdx/renderMDX', () => ({
   renderMDX: jest.fn().mockReturnValue(null),
 }))
@@ -539,6 +532,7 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
     render(ui)
     expect(screen.getByTestId('json-ld')).toBeInTheDocument()
     process.env.BASE_URL = originalBaseUrl
-    if (originalVercelUrl !== undefined) process.env.VERCEL_URL = originalVercelUrl
+    if (originalVercelUrl !== undefined)
+      process.env.VERCEL_URL = originalVercelUrl
   })
 })

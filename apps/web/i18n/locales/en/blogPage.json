@@ -1,7 +1,7 @@
 {
   "title": "Blog",
   "meta.title": "Blog — Saúl de León",
-  "meta.description": "Articles on web development, software engineering, and technology.",
+  "meta.description": "A place for articles on development, tech, and whatever else is on my mind.",
   "noResults": "No posts found",
   "readMore": "Read more",
   "readingTime": "{{count}} min read",

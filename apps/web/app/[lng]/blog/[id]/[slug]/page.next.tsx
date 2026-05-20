@@ -1,6 +1,5 @@
 import { format } from 'date-fns'
 import { Locale as DateLocale, enUS, es } from 'date-fns/locale'
-import { getCldImageUrl } from 'next-cloudinary'
 import { notFound, redirect } from 'next/navigation'
 
 import { PostHero } from '@sdlgr/post-hero'
@@ -84,16 +83,8 @@ export async function generateMetadata({ params }: RouteProps) {
 
   const siteUrl = getSiteUrl()
   const categoryName = await getCategoryName(post.category, lng as Locale)
-  const coverUrl = post.coverImage
-    ? getCldImageUrl({
-        src: post.coverImage,
-        width: 1200,
-        height: 630,
-        crop: 'fill',
-      })
-    : null
   const ogParams = new URLSearchParams([['title', post.title]])
-  if (coverUrl) ogParams.set('cover', coverUrl)
+  if (post.coverImage) ogParams.set('cover', post.coverImage)
   if (post.category) ogParams.set('category', categoryName)
   const ogImageUrl = `${siteUrl}/og?${ogParams.toString()}`
 

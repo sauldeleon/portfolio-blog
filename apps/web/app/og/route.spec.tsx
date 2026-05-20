@@ -7,6 +7,12 @@ jest.mock('./OgImageTemplate', () => ({
   OgImageTemplate: (props: unknown) => mockOgImageTemplate(props),
 }))
 
+jest.mock('next-cloudinary', () => ({
+  getCldImageUrl: jest.fn(
+    () => 'https://res.cloudinary.com/test/image/upload/cover.jpg',
+  ),
+}))
+
 const mockImageResponse = jest.fn()
 jest.mock('next/og', () => ({
   ImageResponse: jest.fn().mockImplementation((...args: unknown[]) => {
@@ -19,9 +25,21 @@ jest.mock('next/og', () => ({
 }))
 
 describe('GET /og', () => {
+  let mockFetch: jest.SpyInstance
+
   beforeEach(() => {
     jest.clearAllMocks()
     mockOgImageTemplate.mockReturnValue(null)
+    mockFetch = jest.spyOn(global, 'fetch').mockResolvedValue({
+      arrayBuffer: jest
+        .fn()
+        .mockResolvedValue(Buffer.from('fake-image-data').buffer),
+      headers: { get: jest.fn().mockReturnValue('image/jpeg') },
+    } as unknown as Response)
+  })
+
+  afterEach(() => {
+    mockFetch.mockRestore()
   })
 
   it('calls ImageResponse with 1200x630 dimensions', async () => {
@@ -47,15 +65,45 @@ describe('GET /og', () => {
     expect(element.props.title).toBe('My Post Title')
   })
 
-  it('passes cover param when provided', async () => {
+  it('fetches cover image by public ID and passes as data URI', async () => {
     const { GET } = require('./route')
+    const { getCldImageUrl } = require('next-cloudinary')
     await GET(
-      new Request(
-        'http://localhost/og?title=Test&cover=https%3A%2F%2Fimg.example.com%2Fphoto.jpg',
-      ),
+      new Request('http://localhost/og?title=Test&cover=blog%2Fcover.jpg'),
+    )
+    expect(getCldImageUrl).toHaveBeenCalledWith(
+      expect.objectContaining({ src: 'blog/cover.jpg' }),
+    )
+    expect(global.fetch).toHaveBeenCalledWith(
+      'https://res.cloudinary.com/test/image/upload/cover.jpg',
     )
     const element = mockImageResponse.mock.calls[0][0]
-    expect(element.props.cover).toBe('https://img.example.com/photo.jpg')
+    expect(element.props.cover).toMatch(/^data:image\/jpeg;base64,/)
+  })
+
+  it('uses image/jpeg fallback when content-type header is missing', async () => {
+    mockFetch.mockResolvedValue({
+      arrayBuffer: jest
+        .fn()
+        .mockResolvedValue(Buffer.from('fake-image-data').buffer),
+      headers: { get: jest.fn().mockReturnValue(null) },
+    } as unknown as Response)
+    const { GET } = require('./route')
+    await GET(
+      new Request('http://localhost/og?title=Test&cover=blog%2Fcover.jpg'),
+    )
+    const element = mockImageResponse.mock.calls[0][0]
+    expect(element.props.cover).toMatch(/^data:image\/jpeg;base64,/)
+  })
+
+  it('passes null cover when fetch fails', async () => {
+    mockFetch.mockRejectedValue(new Error('Network error'))
+    const { GET } = require('./route')
+    await GET(
+      new Request('http://localhost/og?title=Test&cover=blog%2Fcover.jpg'),
+    )
+    const element = mockImageResponse.mock.calls[0][0]
+    expect(element.props.cover).toBeNull()
   })
 
   it('passes null cover when not provided', async () => {
