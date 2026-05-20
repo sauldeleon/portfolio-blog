@@ -1,6 +1,7 @@
 import { getCldImageUrl } from 'next-cloudinary'
 import { ImageResponse } from 'next/og'
 import { type NextRequest } from 'next/server'
+import React from 'react'
 
 import { OgImageTemplate } from './OgImageTemplate'
 
@@ -31,7 +32,7 @@ export async function GET(request: NextRequest) {
   const cover = coverPublicId ? await fetchCoverAsDataUri(coverPublicId) : null
 
   return new ImageResponse(
-    <OgImageTemplate title={title} cover={cover} category={category} />,
+    React.createElement(OgImageTemplate, { title, cover, category }),
     { width: 1200, height: 630 },
   )
 }
