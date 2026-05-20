@@ -1,6 +1,8 @@
 import { fireEvent, screen } from '@testing-library/react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { ThemeProvider } from 'styled-components'
 
+import { mainTheme } from '@sdlgr/main-theme'
 import { renderWithTheme } from '@sdlgr/test-utils'
 
 import { CategoryFilter } from './CategoryFilter'
@@ -260,5 +262,59 @@ describe('CategoryFilter', () => {
       />,
     )
     expect(screen.getByText('Apply')).toBeInTheDocument()
+  })
+
+  it('resets pending to activeCategories when panel opens', () => {
+    const wrap = (isOpen: boolean) => (
+      <ThemeProvider theme={mainTheme}>
+        <CategoryFilter
+          categories={categories}
+          activeCategories={['engineering']}
+          isOpen={isOpen}
+          onToggle={mockOnToggle}
+          applyLabel="Apply"
+        />
+      </ThemeProvider>
+    )
+    const { rerender } = renderWithTheme(
+      <CategoryFilter
+        categories={categories}
+        activeCategories={['engineering']}
+        isOpen={true}
+        onToggle={mockOnToggle}
+        applyLabel="Apply"
+      />,
+    )
+    fireEvent.click(screen.getByText('Life'))
+    rerender(wrap(false))
+    rerender(wrap(true))
+    expect(screen.getByText('Apply')).toBeDisabled()
+  })
+
+  it('does not reset pending when panel closes', () => {
+    const wrap = (isOpen: boolean) => (
+      <ThemeProvider theme={mainTheme}>
+        <CategoryFilter
+          categories={categories}
+          activeCategories={[]}
+          isOpen={isOpen}
+          onToggle={mockOnToggle}
+          applyLabel="Apply"
+        />
+      </ThemeProvider>
+    )
+    const { rerender } = renderWithTheme(
+      <CategoryFilter
+        categories={categories}
+        activeCategories={[]}
+        isOpen={true}
+        onToggle={mockOnToggle}
+        applyLabel="Apply"
+      />,
+    )
+    fireEvent.click(screen.getByText('Engineering'))
+    rerender(wrap(false))
+    rerender(wrap(true))
+    expect(screen.getByText('Apply')).toBeDisabled()
   })
 })
