@@ -9,6 +9,7 @@ import {
   LinkedInIcon,
   TelegramIcon,
   WhatsAppIcon,
+  XComIcon,
 } from '@sdlgr/assets'
 import { VisuallyHidden } from '@sdlgr/visually-hidden'
 
@@ -33,6 +34,12 @@ const PLATFORMS = [
     Icon: LinkedInIcon,
     getHref: (url: string, title: string) =>
       `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`,
+  },
+  {
+    name: 'X',
+    Icon: XComIcon,
+    getHref: (url: string, title: string) =>
+      `https://x.com/intent/post?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
   },
   {
     name: 'Facebook',
