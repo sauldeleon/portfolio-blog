@@ -612,55 +612,48 @@ export type PublishedDateGroup = {
 export async function getPostPublishedDates(
   locale: Locale,
   excludeId?: string,
+  filters?: { categories?: string[]; tags?: string[] },
 ): Promise<PublishedDateGroup[]> {
   type Row = {
     year: number
     count: number
     months: { month: number; count: number }[]
   }
-  const result =
-    excludeId != null
-      ? await db.execute<Row>(sql`
-          SELECT
-            year,
-            SUM(month_count)::int AS count,
-            json_agg(json_build_object('month', month, 'count', month_count) ORDER BY month) AS months
-          FROM (
-            SELECT
-              date_part('year', p.published_at)::int AS year,
-              date_part('month', p.published_at)::int AS month,
-              COUNT(*)::int AS month_count
-            FROM posts p
-            INNER JOIN post_translations pt ON pt.post_id = p.id AND pt.locale = ${locale}
-            WHERE p.status = 'published'
-              AND p.deleted_at IS NULL
-              AND p.published_at IS NOT NULL
-              AND p.id != ${excludeId}
-            GROUP BY year, month
-          ) sub
-          GROUP BY year
-          ORDER BY year DESC
-        `)
-      : await db.execute<Row>(sql`
-          SELECT
-            year,
-            SUM(month_count)::int AS count,
-            json_agg(json_build_object('month', month, 'count', month_count) ORDER BY month) AS months
-          FROM (
-            SELECT
-              date_part('year', p.published_at)::int AS year,
-              date_part('month', p.published_at)::int AS month,
-              COUNT(*)::int AS month_count
-            FROM posts p
-            INNER JOIN post_translations pt ON pt.post_id = p.id AND pt.locale = ${locale}
-            WHERE p.status = 'published'
-              AND p.deleted_at IS NULL
-              AND p.published_at IS NOT NULL
-            GROUP BY year, month
-          ) sub
-          GROUP BY year
-          ORDER BY year DESC
-        `)
+
+  let conditions = sql`p.status = 'published' AND p.deleted_at IS NULL AND p.published_at IS NOT NULL`
+
+  if (excludeId != null) {
+    conditions = sql`${conditions} AND p.id != ${excludeId}`
+  }
+  if (filters?.categories?.length) {
+    let catFilter = sql`p.category = ${filters.categories[0]}`
+    for (let i = 1; i < filters.categories.length; i++) {
+      catFilter = sql`${catFilter} OR p.category = ${filters.categories[i]}`
+    }
+    conditions = sql`${conditions} AND (${catFilter})`
+  }
+  for (const tag of filters?.tags ?? []) {
+    conditions = sql`${conditions} AND p.tags @> ARRAY[${tag}]::text[]`
+  }
+
+  const result = await db.execute<Row>(sql`
+    SELECT
+      year,
+      SUM(month_count)::int AS count,
+      json_agg(json_build_object('month', month, 'count', month_count) ORDER BY month) AS months
+    FROM (
+      SELECT
+        date_part('year', p.published_at)::int AS year,
+        date_part('month', p.published_at)::int AS month,
+        COUNT(*)::int AS month_count
+      FROM posts p
+      INNER JOIN post_translations pt ON pt.post_id = p.id AND pt.locale = ${locale}
+      WHERE ${conditions}
+      GROUP BY year, month
+    ) sub
+    GROUP BY year
+    ORDER BY year DESC
+  `)
   return result.rows
 }
 

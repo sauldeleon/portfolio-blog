@@ -678,6 +678,78 @@ describe('getPostPublishedDates', () => {
     ])
     expect(mockDb.execute).toHaveBeenCalledTimes(1)
   })
+
+  it('filters by a single category', async () => {
+    mockDb.execute.mockResolvedValue({
+      rows: [{ year: 2024, count: 1, months: [{ month: 6, count: 1 }] }],
+    })
+    const result = await getPostPublishedDates('en', undefined, {
+      categories: ['engineering'],
+    })
+    expect(result).toEqual([
+      { year: 2024, count: 1, months: [{ month: 6, count: 1 }] },
+    ])
+    expect(mockDb.execute).toHaveBeenCalledTimes(1)
+  })
+
+  it('filters by multiple categories with OR logic', async () => {
+    mockDb.execute.mockResolvedValue({
+      rows: [{ year: 2024, count: 3, months: [{ month: 6, count: 3 }] }],
+    })
+    const result = await getPostPublishedDates('en', undefined, {
+      categories: ['engineering', 'design'],
+    })
+    expect(result).toEqual([
+      { year: 2024, count: 3, months: [{ month: 6, count: 3 }] },
+    ])
+    expect(mockDb.execute).toHaveBeenCalledTimes(1)
+  })
+
+  it('filters by a single tag', async () => {
+    mockDb.execute.mockResolvedValue({
+      rows: [{ year: 2024, count: 2, months: [{ month: 3, count: 2 }] }],
+    })
+    const result = await getPostPublishedDates('en', undefined, {
+      tags: ['REACT'],
+    })
+    expect(result).toEqual([
+      { year: 2024, count: 2, months: [{ month: 3, count: 2 }] },
+    ])
+    expect(mockDb.execute).toHaveBeenCalledTimes(1)
+  })
+
+  it('filters by multiple tags', async () => {
+    mockDb.execute.mockResolvedValue({ rows: [] })
+    const result = await getPostPublishedDates('en', undefined, {
+      tags: ['REACT', 'TYPESCRIPT'],
+    })
+    expect(result).toEqual([])
+    expect(mockDb.execute).toHaveBeenCalledTimes(1)
+  })
+
+  it('applies excludeId and filters together', async () => {
+    mockDb.execute.mockResolvedValue({
+      rows: [{ year: 2024, count: 1, months: [{ month: 6, count: 1 }] }],
+    })
+    const result = await getPostPublishedDates('en', 'hero-id', {
+      categories: ['engineering'],
+      tags: ['REACT'],
+    })
+    expect(result).toEqual([
+      { year: 2024, count: 1, months: [{ month: 6, count: 1 }] },
+    ])
+    expect(mockDb.execute).toHaveBeenCalledTimes(1)
+  })
+
+  it('ignores empty filter arrays', async () => {
+    mockDb.execute.mockResolvedValue({ rows: [] })
+    const result = await getPostPublishedDates('en', undefined, {
+      categories: [],
+      tags: [],
+    })
+    expect(result).toEqual([])
+    expect(mockDb.execute).toHaveBeenCalledTimes(1)
+  })
 })
 
 describe('getLatestPublishedPost', () => {

@@ -40,7 +40,8 @@ jest.mock('@web/components/LatestPostHero', () => ({
   LatestPostHero: () => <div data-testid="latest-post-hero" />,
 }))
 
-const { BlogPage } = require('./BlogPage') as typeof import('./BlogPage')
+const { BlogPage, mergeDateCounts } =
+  require('./BlogPage') as typeof import('./BlogPage')
 
 const mockPost = {
   id: '01JWTEST000000000000000000',
@@ -171,12 +172,18 @@ describe('BlogPage', () => {
   it('passes hero id to getPostCountPerTag', async () => {
     mockGetLatestPublishedPost.mockResolvedValue(mockPost)
     await BlogPage({ lng: 'en' })
-    expect(mockGetPostCountPerTag).toHaveBeenCalledWith(mockPost.id)
+    expect(mockGetPostCountPerTag).toHaveBeenCalledWith(
+      mockPost.id,
+      expect.objectContaining({ categories: [] }),
+    )
   })
 
   it('passes undefined to getPostCountPerTag when no hero post', async () => {
     await BlogPage({ lng: 'en' })
-    expect(mockGetPostCountPerTag).toHaveBeenCalledWith(undefined)
+    expect(mockGetPostCountPerTag).toHaveBeenCalledWith(
+      undefined,
+      expect.objectContaining({ categories: [] }),
+    )
   })
 
   it('passes hero id to getPostPublishedDates', async () => {
@@ -193,12 +200,81 @@ describe('BlogPage', () => {
   it('passes hero id to getCategories', async () => {
     mockGetLatestPublishedPost.mockResolvedValue(mockPost)
     await BlogPage({ lng: 'en' })
-    expect(mockGetCategories).toHaveBeenCalledWith('en', mockPost.id)
+    expect(mockGetCategories).toHaveBeenCalledWith(
+      'en',
+      mockPost.id,
+      expect.objectContaining({ tags: [] }),
+    )
   })
 
   it('passes undefined to getCategories when no hero post', async () => {
     await BlogPage({ lng: 'en' })
-    expect(mockGetCategories).toHaveBeenCalledWith('en', undefined)
+    expect(mockGetCategories).toHaveBeenCalledWith(
+      'en',
+      undefined,
+      expect.objectContaining({ tags: [] }),
+    )
+  })
+
+  it('passes active tags to getCategories filter', async () => {
+    await BlogPage({ lng: 'en', tags: 'REACT,TYPESCRIPT' })
+    expect(mockGetCategories).toHaveBeenCalledWith(
+      'en',
+      undefined,
+      expect.objectContaining({ tags: ['REACT', 'TYPESCRIPT'] }),
+    )
+  })
+
+  it('passes active year/month to getCategories filter', async () => {
+    await BlogPage({ lng: 'en', year: '2024', month: '6' })
+    expect(mockGetCategories).toHaveBeenCalledWith(
+      'en',
+      undefined,
+      expect.objectContaining({ year: 2024, month: 6 }),
+    )
+  })
+
+  it('passes canonical categories to getPostCountPerTag filter', async () => {
+    mockGetCategoryByLocaleSlug.mockResolvedValue({
+      canonicalSlug: 'engineering',
+    })
+    await BlogPage({ lng: 'en', categories: 'engineering' })
+    expect(mockGetPostCountPerTag).toHaveBeenCalledWith(
+      undefined,
+      expect.objectContaining({ categories: ['engineering'] }),
+    )
+  })
+
+  it('passes active year/month to getPostCountPerTag filter', async () => {
+    await BlogPage({ lng: 'en', year: '2024', month: '3' })
+    expect(mockGetPostCountPerTag).toHaveBeenCalledWith(
+      undefined,
+      expect.objectContaining({ year: 2024, month: 3 }),
+    )
+  })
+
+  it('calls getPostPublishedDates once when no category or tag filters', async () => {
+    await BlogPage({ lng: 'en' })
+    expect(mockGetPostPublishedDates).toHaveBeenCalledTimes(1)
+  })
+
+  it('calls getPostPublishedDates twice when tag filter active', async () => {
+    await BlogPage({ lng: 'en', tags: 'REACT' })
+    expect(mockGetPostPublishedDates).toHaveBeenCalledTimes(2)
+    expect(mockGetPostPublishedDates).toHaveBeenCalledWith('en', undefined)
+    expect(mockGetPostPublishedDates).toHaveBeenCalledWith(
+      'en',
+      undefined,
+      expect.objectContaining({ tags: ['REACT'] }),
+    )
+  })
+
+  it('calls getPostPublishedDates twice when category filter active', async () => {
+    mockGetCategoryByLocaleSlug.mockResolvedValue({
+      canonicalSlug: 'engineering',
+    })
+    await BlogPage({ lng: 'en', categories: 'engineering' })
+    expect(mockGetPostPublishedDates).toHaveBeenCalledTimes(2)
   })
 
   it('resolves locale slug to canonical and passes canonical to query', async () => {
@@ -299,6 +375,86 @@ describe('BlogPage', () => {
     const ui = await BlogPage({ lng: 'en' })
     render(ui)
     expect(screen.getByTestId('post-card')).toBeInTheDocument()
+  })
+})
+
+describe('mergeDateCounts', () => {
+  const allDates = [
+    {
+      year: 2024,
+      count: 5,
+      months: [
+        { month: 1, count: 2 },
+        { month: 6, count: 3 },
+      ],
+    },
+    {
+      year: 2023,
+      count: 4,
+      months: [
+        { month: 11, count: 2 },
+        { month: 12, count: 2 },
+      ],
+    },
+  ]
+
+  it('returns filtered counts merged into all structure', () => {
+    const filtered = [
+      {
+        year: 2024,
+        count: 2,
+        months: [
+          { month: 1, count: 1 },
+          { month: 6, count: 1 },
+        ],
+      },
+    ]
+    const result = mergeDateCounts(allDates, filtered)
+    expect(result).toEqual([
+      {
+        year: 2024,
+        count: 2,
+        months: [
+          { month: 1, count: 1 },
+          { month: 6, count: 1 },
+        ],
+      },
+      {
+        year: 2023,
+        count: 0,
+        months: [
+          { month: 11, count: 0 },
+          { month: 12, count: 0 },
+        ],
+      },
+    ])
+  })
+
+  it('shows 0 for years not in filtered result', () => {
+    const result = mergeDateCounts(allDates, [])
+    expect(result[0].count).toBe(0)
+    expect(result[1].count).toBe(0)
+    expect(result[0].months.every((m) => m.count === 0)).toBe(true)
+    expect(result[1].months.every((m) => m.count === 0)).toBe(true)
+  })
+
+  it('shows 0 for months not in filtered result', () => {
+    const filtered = [
+      {
+        year: 2024,
+        count: 1,
+        months: [{ month: 1, count: 1 }],
+      },
+    ]
+    const result = mergeDateCounts(allDates, filtered)
+    const year2024 = result.find((g) => g.year === 2024)!
+    expect(year2024.months.find((m) => m.month === 1)?.count).toBe(1)
+    expect(year2024.months.find((m) => m.month === 6)?.count).toBe(0)
+  })
+
+  it('returns empty array when all dates is empty', () => {
+    const result = mergeDateCounts([], [{ year: 2024, count: 1, months: [] }])
+    expect(result).toEqual([])
   })
 })
 

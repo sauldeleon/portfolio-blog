@@ -122,6 +122,25 @@ describe('ShareButtons', () => {
     ).toBeInTheDocument()
   })
 
+  it('shows copied pill with text after clicking copy', async () => {
+    renderWithTheme(<ShareButtons {...defaultProps} copiedLabel="Copied!" />)
+    expect(screen.queryByText('Copied!')).not.toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: 'Copy link' }))
+    expect(await screen.findByText('Copied!')).toBeInTheDocument()
+  })
+
+  it('hides copied pill after 2 seconds', async () => {
+    renderWithTheme(<ShareButtons {...defaultProps} copiedLabel="Copied!" />)
+    fireEvent.click(screen.getByRole('button', { name: 'Copy link' }))
+    await screen.findByText('Copied!')
+    act(() => {
+      jest.advanceTimersByTime(2000)
+    })
+    await waitFor(() => {
+      expect(screen.queryByText('Copied!')).not.toBeInTheDocument()
+    })
+  })
+
   it('reverts to copyLinkLabel after 2 seconds', async () => {
     renderWithTheme(<ShareButtons {...defaultProps} copiedLabel="Copied!" />)
     fireEvent.click(screen.getByRole('button', { name: 'Copy link' }))

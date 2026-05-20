@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
 
 export const StyledShareWrapper = styled.div`
   display: flex;
@@ -39,4 +39,35 @@ export const StyledShareLink = styled.a`
 
 export const StyledCopyButton = styled.button`
   ${shareButtonStyles}
+`
+
+export const StyledCopyItem = styled.li`
+  position: relative;
+`
+
+const fadeInUp = keyframes`
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+`
+
+export const StyledCopiedPill = styled.span`
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: ${({ theme }) => theme.colors.primary};
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+  pointer-events: none;
+  animation: ${fadeInUp} 0.18s ease;
 `

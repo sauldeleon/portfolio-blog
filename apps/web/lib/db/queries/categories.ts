@@ -44,9 +44,26 @@ const enAlias = alias(categoryTranslations, 'ct_en')
 export async function getCategories(
   locale: Locale = 'en',
   excludeId?: string,
+  filters?: { tags?: string[]; year?: number; month?: number },
 ): Promise<CategoryWithCount[]> {
   const excludeCondition =
     excludeId != null ? sql` AND ${posts.id} != ${excludeId}` : sql``
+
+  let tagFilter = sql``
+  for (const tag of filters?.tags ?? []) {
+    tagFilter = sql`${tagFilter} AND ${posts.tags} @> ARRAY[${tag}]::text[]`
+  }
+
+  const yearFilter =
+    filters?.year != null
+      ? sql` AND date_part('year', ${posts.publishedAt}) = ${filters.year}`
+      : sql``
+
+  const monthFilter =
+    filters?.month != null
+      ? sql` AND date_part('month', ${posts.publishedAt}) = ${filters.month}`
+      : sql``
+
   const rows = await db
     .select({
       id: categories.id,
@@ -57,7 +74,7 @@ export async function getCategories(
       >`coalesce(${tAlias.description}, ${enAlias.description})`,
       localeSlug: sql<string>`coalesce(${tAlias.slug}, ${enAlias.slug}, ${categories.slug})`,
       postCount: sql<number>`count(${posts.id})::int`,
-      publishedPostCount: sql<number>`count(case when ${posts.status} = 'published'${excludeCondition} then 1 end)::int`,
+      publishedPostCount: sql<number>`count(case when ${posts.status} = 'published'${excludeCondition}${tagFilter}${yearFilter}${monthFilter} then 1 end)::int`,
     })
     .from(categories)
     .leftJoin(

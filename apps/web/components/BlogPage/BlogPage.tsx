@@ -12,6 +12,7 @@ import {
   getCategoryByLocaleSlug,
 } from '@web/lib/db/queries/categories'
 import {
+  type PublishedDateGroup,
   getLatestPublishedPost,
   getPostPublishedDates,
   getPublishedPostsPaginated,
@@ -32,6 +33,34 @@ import {
 const POSTS_PER_PAGE = 9
 
 const dateLocales: Record<Locale, DateLocale> = { en: enUS, es }
+
+export function mergeDateCounts(
+  all: PublishedDateGroup[],
+  filtered: PublishedDateGroup[],
+): PublishedDateGroup[] {
+  const filteredByYear = new Map(filtered.map((g) => [g.year, g]))
+  return all.map((yearGroup) => {
+    const filteredYear = filteredByYear.get(yearGroup.year)
+    if (!filteredYear) {
+      return {
+        ...yearGroup,
+        count: 0,
+        months: yearGroup.months.map((m) => ({ ...m, count: 0 })),
+      }
+    }
+    const filteredByMonth = new Map(
+      filteredYear.months.map((m) => [m.month, m.count]),
+    )
+    return {
+      ...yearGroup,
+      count: filteredYear.count,
+      months: yearGroup.months.map((m) => ({
+        ...m,
+        count: filteredByMonth.get(m.month) ?? 0,
+      })),
+    }
+  })
+}
 
 export interface BlogPageProps {
   lng: Locale
@@ -65,30 +94,54 @@ export async function BlogPage({
   const latestPost = await getLatestPublishedPost(lng)
   const heroId = latestPost?.id
 
-  const [canonicalCategories, categoriesData, tagsData, publishedDates] =
+  const canonicalCategories = await Promise.all(
+    activeCategories.map(async (slug) => {
+      const resolved = await getCategoryByLocaleSlug(slug, lng)
+      return resolved?.canonicalSlug ?? slug
+    }),
+  )
+
+  const hasDateCrossFilters = !!(
+    activeTags.length || canonicalCategories.length
+  )
+
+  const [categoriesData, tagsData, allDates, filteredDatesResult, gridResult] =
     await Promise.all([
-      Promise.all(
-        activeCategories.map(async (slug) => {
-          const resolved = await getCategoryByLocaleSlug(slug, lng)
-          return resolved?.canonicalSlug ?? slug
-        }),
-      ),
-      getCategories(lng, heroId),
-      getPostCountPerTag(heroId),
+      getCategories(lng, heroId, {
+        tags: activeTags,
+        year: activeYear ?? undefined,
+        month: activeMonth ?? undefined,
+      }),
+      getPostCountPerTag(heroId, {
+        categories: canonicalCategories,
+        year: activeYear ?? undefined,
+        month: activeMonth ?? undefined,
+      }),
       getPostPublishedDates(lng, heroId),
+      hasDateCrossFilters
+        ? getPostPublishedDates(lng, heroId, {
+            categories: canonicalCategories,
+            tags: activeTags,
+          })
+        : Promise.resolve(null),
+      getPublishedPostsPaginated({
+        locale: lng,
+        page: currentPage,
+        limit: POSTS_PER_PAGE,
+        categories: canonicalCategories.length
+          ? canonicalCategories
+          : undefined,
+        tags: activeTags.length ? activeTags : undefined,
+        q,
+        year: activeYear ?? undefined,
+        month: activeMonth ?? undefined,
+        excludeId: heroId,
+      }),
     ])
 
-  const gridResult = await getPublishedPostsPaginated({
-    locale: lng,
-    page: currentPage,
-    limit: POSTS_PER_PAGE,
-    categories: canonicalCategories.length ? canonicalCategories : undefined,
-    tags: activeTags.length ? activeTags : undefined,
-    q,
-    year: activeYear ?? undefined,
-    month: activeMonth ?? undefined,
-    excludeId: heroId,
-  })
+  const publishedDates = filteredDatesResult
+    ? mergeDateCounts(allDates, filteredDatesResult)
+    : allDates
 
   const { t } = await getServerTranslation({ ns: 'blogPage', language: lng })
 

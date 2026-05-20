@@ -14,7 +14,9 @@ import {
 import { VisuallyHidden } from '@sdlgr/visually-hidden'
 
 import {
+  StyledCopiedPill,
   StyledCopyButton,
+  StyledCopyItem,
   StyledShareLink,
   StyledShareList,
   StyledShareWrapper,
@@ -100,7 +102,12 @@ export function ShareButtons({
             </StyledShareLink>
           </li>
         ))}
-        <li>
+        <StyledCopyItem>
+          {copied && (
+            <StyledCopiedPill aria-hidden="true">
+              {copiedLabel}
+            </StyledCopiedPill>
+          )}
           <StyledCopyButton
             onClick={handleCopy}
             aria-label={copied ? copiedLabel : copyLinkLabel}
@@ -108,7 +115,7 @@ export function ShareButtons({
           >
             <CopyLinkIcon width={18} height={18} />
           </StyledCopyButton>
-        </li>
+        </StyledCopyItem>
       </StyledShareList>
     </StyledShareWrapper>
   )
