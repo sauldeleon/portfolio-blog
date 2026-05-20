@@ -26,7 +26,10 @@ export async function GET(request: NextRequest) {
   )
 
   if (scheduled.length > 0) {
-    revalidateTag('posts', 'default')
+    revalidateTag('posts')
+    for (const post of scheduled) {
+      revalidateTag(`post-${post.id}`)
+    }
   }
 
   return NextResponse.json({ published: scheduled.length })

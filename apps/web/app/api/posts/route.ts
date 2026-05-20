@@ -1,3 +1,4 @@
+import { revalidateTag } from 'next/cache'
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
@@ -201,5 +202,6 @@ export async function POST(request: Request) {
     }
   }
 
+  revalidateTag('posts')
   return NextResponse.json(post, { status: 201 })
 }

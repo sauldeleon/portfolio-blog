@@ -27,6 +27,9 @@ jest.mock('@web/i18n/server', () => ({
   getServerTranslation: mockGetServerTranslation,
 }))
 
+const mockLoggerError = jest.fn()
+jest.mock('@web/lib/logger', () => ({ logger: { error: mockLoggerError } }))
+
 const mockHeaders = jest.fn()
 jest.mock('next/headers', () => ({
   headers: () => mockHeaders(),
@@ -329,11 +332,16 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
     ])
   })
 
-  it('generateStaticParams returns empty array when DB fails', async () => {
-    mockGetPublishedPosts.mockRejectedValue(new Error('no db'))
+  it('generateStaticParams returns empty array and logs error when DB fails', async () => {
+    const err = new Error('no db')
+    mockGetPublishedPosts.mockRejectedValue(err)
     const { generateStaticParams } = require('./page.next')
     const params = await generateStaticParams()
     expect(params).toEqual([])
+    expect(mockLoggerError).toHaveBeenCalledWith(
+      err,
+      'generateStaticParams failed — posts will not be pre-rendered',
+    )
   })
 
   describe('generateMetadata', () => {

@@ -3,6 +3,8 @@ import { ImageResponse } from 'next/og'
 import { type NextRequest } from 'next/server'
 import React from 'react'
 
+import { logger } from '@web/lib/logger'
+
 import { OgImageTemplate } from './OgImageTemplate'
 
 async function fetchCoverAsDataUri(publicId: string): Promise<string | null> {
@@ -18,7 +20,8 @@ async function fetchCoverAsDataUri(publicId: string): Promise<string | null> {
     const base64 = Buffer.from(buffer).toString('base64')
     const contentType = res.headers.get('content-type') ?? 'image/jpeg'
     return `data:${contentType};base64,${base64}`
-  } catch {
+  } catch (err) {
+    logger.warn(err, 'Failed to fetch OG cover image')
     return null
   }
 }

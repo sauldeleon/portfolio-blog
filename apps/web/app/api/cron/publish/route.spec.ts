@@ -92,7 +92,8 @@ describe('GET /api/cron/publish', () => {
       { id: 'post-1', scheduledAt: new Date('2024-01-10T08:00:00Z') },
     ])
     await GET(makeRequest('Bearer test-secret-xyz'))
-    expect(mockRevalidateTag).toHaveBeenCalledWith('posts', 'default')
+    expect(mockRevalidateTag).toHaveBeenCalledWith('posts')
+    expect(mockRevalidateTag).toHaveBeenCalledWith('post-post-1')
   })
 
   it('does not call revalidateTag when no posts are published', async () => {

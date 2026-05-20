@@ -3,11 +3,13 @@
  */
 const mockAuth = jest.fn()
 const mockDestroyImage = jest.fn()
+const mockLoggerError = jest.fn()
 
 jest.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
 jest.mock('@web/lib/cloudinary/images', () => ({
   destroyImage: mockDestroyImage,
 }))
+jest.mock('@web/lib/logger', () => ({ logger: { error: mockLoggerError } }))
 
 const { DELETE } = require('./route') as {
   DELETE: (
@@ -49,9 +51,10 @@ describe('DELETE /api/images/[...publicId]', () => {
     expect(mockDestroyImage).toHaveBeenCalledWith('sawl.dev - blog/photo')
   })
 
-  it('returns 500 when destroyImage throws', async () => {
+  it('returns 500 and logs error when destroyImage throws', async () => {
     mockAuth.mockResolvedValue({ user: { name: 'admin' } })
-    mockDestroyImage.mockRejectedValue(new Error('Destroy failed'))
+    const err = new Error('Destroy failed')
+    mockDestroyImage.mockRejectedValue(err)
     const response = await DELETE(
       new Request('http://localhost/api/images/sawl.dev%20-%20blog/photo', {
         method: 'DELETE',
@@ -61,6 +64,7 @@ describe('DELETE /api/images/[...publicId]', () => {
     expect(response.status).toBe(500)
     const body = (await response.json()) as { error: string }
     expect(body.error).toBe('Failed to delete image')
+    expect(mockLoggerError).toHaveBeenCalledWith(err, 'Failed to delete image')
   })
 })
 

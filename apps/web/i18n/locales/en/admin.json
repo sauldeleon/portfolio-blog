@@ -8,7 +8,8 @@
     "hidePassword": "hide",
     "signingIn": "Signing in…",
     "signIn": "Sign in",
-    "invalidCredentials": "Invalid credentials"
+    "invalidCredentials": "Invalid credentials",
+    "tooManyAttempts": "Too many attempts, try again in 1 minute"
   },
   "nav": {
     "posts": "Posts",

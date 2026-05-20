@@ -49,6 +49,8 @@
     "@tanstack/react-query": "5.100.9",
     "@tanstack/react-query-devtools": "5.100.10",
     "@testing-library/user-event": "14.6.1",
+    "@upstash/ratelimit": "2.0.8",
+    "@upstash/redis": "1.38.0",
     "accept-language": "3.0.20",
     "axios": "1.16.1",
     "bcryptjs": "3.0.3",

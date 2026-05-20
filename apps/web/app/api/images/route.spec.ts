@@ -6,12 +6,14 @@ import { NextRequest } from 'next/server'
 const mockAuth = jest.fn()
 const mockListImages = jest.fn()
 const mockRenameImage = jest.fn()
+const mockLoggerError = jest.fn()
 
 jest.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
 jest.mock('@web/lib/cloudinary/images', () => ({
   listImages: mockListImages,
   renameImage: mockRenameImage,
 }))
+jest.mock('@web/lib/logger', () => ({ logger: { error: mockLoggerError } }))
 
 const { GET, PATCH } = require('./route') as {
   GET: (request: NextRequest) => Promise<Response>
@@ -93,13 +95,15 @@ describe('GET /api/images', () => {
     expect(mockListImages).toHaveBeenCalledWith(undefined)
   })
 
-  it('returns 500 when listImages throws', async () => {
+  it('returns 500 and logs error when listImages throws', async () => {
     mockAuth.mockResolvedValue({ user: { name: 'admin' } })
-    mockListImages.mockRejectedValue(new Error('Cloudinary error'))
+    const err = new Error('Cloudinary error')
+    mockListImages.mockRejectedValue(err)
     const response = await GET(makeRequest())
     expect(response.status).toBe(500)
     const body = (await response.json()) as { error: string }
     expect(body.error).toBe('Failed to list images')
+    expect(mockLoggerError).toHaveBeenCalledWith(err, 'Failed to list images')
   })
 })
 
@@ -168,9 +172,10 @@ describe('PATCH /api/images', () => {
     )
   })
 
-  it('returns 500 when renameImage throws', async () => {
+  it('returns 500 and logs error when renameImage throws', async () => {
     mockAuth.mockResolvedValue({ user: { name: 'admin' } })
-    mockRenameImage.mockRejectedValue(new Error('Cloudinary error'))
+    const err = new Error('Cloudinary error')
+    mockRenameImage.mockRejectedValue(err)
     const response = await PATCH(
       makePatchRequest({
         publicId: 'sawl.dev - blog/photo',
@@ -180,6 +185,7 @@ describe('PATCH /api/images', () => {
     expect(response.status).toBe(500)
     const body = (await response.json()) as { error: string }
     expect(body.error).toBe('Failed to rename image')
+    expect(mockLoggerError).toHaveBeenCalledWith(err, 'Failed to rename image')
   })
 })
 

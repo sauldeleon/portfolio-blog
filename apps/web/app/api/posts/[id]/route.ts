@@ -1,3 +1,4 @@
+import { revalidateTag } from 'next/cache'
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
@@ -219,6 +220,8 @@ export async function PUT(
     }
   }
 
+  revalidateTag('posts')
+  revalidateTag(`post-${id}`)
   return NextResponse.json(post)
 }
 
@@ -245,6 +248,8 @@ export async function DELETE(
       )
     }
     await hardDeletePost(id)
+    revalidateTag('posts')
+    revalidateTag(`post-${id}`)
     return new NextResponse(null, { status: 204 })
   }
 
@@ -256,5 +261,7 @@ export async function DELETE(
   }
 
   await softDeletePost(id)
+  revalidateTag('posts')
+  revalidateTag(`post-${id}`)
   return new NextResponse(null, { status: 204 })
 }

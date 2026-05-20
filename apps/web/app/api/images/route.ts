@@ -2,6 +2,7 @@ import { type NextRequest, NextResponse } from 'next/server'
 
 import { auth } from '@web/lib/auth/config'
 import { listImages, renameImage } from '@web/lib/cloudinary/images'
+import { logger } from '@web/lib/logger'
 
 export async function GET(request: NextRequest) {
   const session = await auth()
@@ -16,7 +17,8 @@ export async function GET(request: NextRequest) {
       { images, ...(nextCursor ? { nextCursor } : {}) },
       { status: 200 },
     )
-  } catch {
+  } catch (err) {
+    logger.error(err, 'Failed to list images')
     return NextResponse.json(
       { error: 'Failed to list images' },
       { status: 500 },
@@ -43,7 +45,8 @@ export async function PATCH(request: NextRequest) {
   try {
     const image = await renameImage(publicId, newName)
     return NextResponse.json(image, { status: 200 })
-  } catch {
+  } catch (err) {
+    logger.error(err, 'Failed to rename image')
     return NextResponse.json(
       { error: 'Failed to rename image' },
       { status: 500 },

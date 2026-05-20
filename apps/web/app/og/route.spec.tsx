@@ -2,10 +2,12 @@
  * @jest-environment node
  */
 const mockOgImageTemplate = jest.fn()
+const mockLoggerWarn = jest.fn()
 
 jest.mock('./OgImageTemplate', () => ({
   OgImageTemplate: (props: unknown) => mockOgImageTemplate(props),
 }))
+jest.mock('@web/lib/logger', () => ({ logger: { warn: mockLoggerWarn } }))
 
 jest.mock('next-cloudinary', () => ({
   getCldImageUrl: jest.fn(
@@ -96,14 +98,19 @@ describe('GET /og', () => {
     expect(element.props.cover).toMatch(/^data:image\/jpeg;base64,/)
   })
 
-  it('passes null cover when fetch fails', async () => {
-    mockFetch.mockRejectedValue(new Error('Network error'))
+  it('passes null cover and logs warn when fetch fails', async () => {
+    const err = new Error('Network error')
+    mockFetch.mockRejectedValue(err)
     const { GET } = require('./route')
     await GET(
       new Request('http://localhost/og?title=Test&cover=blog%2Fcover.jpg'),
     )
     const element = mockImageResponse.mock.calls[0][0]
     expect(element.props.cover).toBeNull()
+    expect(mockLoggerWarn).toHaveBeenCalledWith(
+      err,
+      'Failed to fetch OG cover image',
+    )
   })
 
   it('passes null cover when not provided', async () => {

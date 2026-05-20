@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 
 import { auth } from '@web/lib/auth/config'
 import { destroyImage } from '@web/lib/cloudinary/images'
+import { logger } from '@web/lib/logger'
 
 export async function DELETE(
   _request: Request,
@@ -16,7 +17,8 @@ export async function DELETE(
   const publicId = segments.join('/')
   try {
     await destroyImage(publicId)
-  } catch {
+  } catch (err) {
+    logger.error(err, 'Failed to delete image')
     return NextResponse.json(
       { error: 'Failed to delete image' },
       { status: 500 },

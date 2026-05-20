@@ -14,6 +14,7 @@ import { getServerTranslation } from '@web/i18n/server'
 import { getCategoryTranslations } from '@web/lib/db/queries/categories'
 import { getPostByNumber, getPublishedPosts } from '@web/lib/db/queries/posts'
 import { Locale } from '@web/lib/db/schema'
+import { logger } from '@web/lib/logger'
 import { extractToc } from '@web/lib/mdx/remarkHeadings'
 import { renderMDX } from '@web/lib/mdx/renderMDX'
 import { generateArticleJsonLd } from '@web/lib/seo/generateArticleJsonLd'
@@ -27,7 +28,7 @@ import { getSiteUrl } from '@web/utils/url/generateUrl'
 
 import { StyledPage } from './page.next.styles'
 
-export const revalidate = 60
+export const revalidate = 3600
 
 const dateLocales: Record<Locale, DateLocale> = { en: enUS, es }
 
@@ -61,7 +62,11 @@ export async function generateStaticParams() {
       }),
     )
     return results.flat()
-  } catch {
+  } catch (err) {
+    logger.error(
+      err,
+      'generateStaticParams failed — posts will not be pre-rendered',
+    )
     return []
   }
 }

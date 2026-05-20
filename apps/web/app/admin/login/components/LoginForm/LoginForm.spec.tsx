@@ -22,6 +22,7 @@ jest.mock('@web/i18n/client', () => ({
         'login.signingIn': 'Signing in…',
         'login.signIn': 'Sign in',
         'login.invalidCredentials': 'Invalid credentials',
+        'login.tooManyAttempts': 'Too many attempts, try again in 1 minute',
       }
       return translations[key] ?? key
     },
@@ -170,5 +171,28 @@ describe('LoginForm', () => {
       expect(screen.queryByRole('alert')).not.toBeInTheDocument()
       expect(mockNavigateTo).toHaveBeenCalledWith('/admin/posts')
     })
+  })
+
+  it('shows rate limit error on 429 response', async () => {
+    mockSignIn.mockResolvedValue({ status: 429, error: 'TooManyRequests' })
+
+    renderApp(<LoginForm />)
+    fireEvent.change(screen.getByLabelText(/username/i), {
+      target: { value: 'admin' },
+    })
+    fireEvent.change(
+      screen.getByLabelText(/password/i, { selector: 'input' }),
+      {
+        target: { value: 'password' },
+      },
+    )
+    fireEvent.submit(screen.getByTestId('login-form'))
+
+    await waitFor(() => {
+      expect(screen.getByRole('alert')).toHaveTextContent(
+        'Too many attempts, try again in 1 minute',
+      )
+    })
+    expect(mockNavigateTo).not.toHaveBeenCalled()
   })
 })
