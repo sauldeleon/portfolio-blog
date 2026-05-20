@@ -24,9 +24,6 @@ import {
   StyledEmpty,
   StyledFilters,
   StyledGrid,
-  StyledHeader,
-  StyledHeading,
-  StyledHeadingAccent,
   StyledHeroWrapper,
   StyledPage,
   StyledPaginationWrapper,
@@ -119,10 +116,6 @@ export async function BlogPage({
 
   return (
     <StyledPage>
-      <StyledHeader>
-        <StyledHeading>{t('title')}</StyledHeading>
-        <StyledHeadingAccent aria-hidden />
-      </StyledHeader>
       {latestPost && (
         <StyledHeroWrapper>
           <LatestPostHero

@@ -263,7 +263,7 @@ describe('BlogPage', () => {
     mockGetPublishedPostsPaginated.mockResolvedValue({ data: [], total: 0 })
     const ui = await BlogPage({ lng: 'fr' as unknown as Locale })
     render(ui)
-    expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument()
+    expect(screen.getByTestId('blog-filters')).toBeInTheDocument()
   })
 
   it('renders null publishedAt as null in PostCard', async () => {
@@ -284,13 +284,6 @@ describe('BlogPage', () => {
     const ui = await BlogPage({ lng: 'en' })
     render(ui)
     expect(screen.getByTestId('post-card')).toBeInTheDocument()
-  })
-
-  it('renders page heading', async () => {
-    mockGetPublishedPostsPaginated.mockResolvedValue({ data: [], total: 0 })
-    const ui = await BlogPage({ lng: 'en' })
-    render(ui)
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('title')
   })
 })
 
