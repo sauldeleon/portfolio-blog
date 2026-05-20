@@ -13,10 +13,15 @@ export const StyledFilterRow = styled.div`
   align-items: center;
   flex-wrap: wrap;
   gap: 0.5rem;
+  position: relative;
 `
 
 export const StyledDropdownWrapper = styled.div`
   position: relative;
+
+  @media (max-width: 600px) {
+    position: static;
+  }
 `
 
 export const StyledDropdownButton = styled.button`
@@ -51,6 +56,14 @@ export const StyledDropdownPanel = styled.div<{ $wide?: boolean }>`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+
+  @media (max-width: 600px) {
+    left: 0;
+    right: 0;
+    min-width: unset;
+    width: 100%;
+    box-sizing: border-box;
+  }
 `
 
 export const StyledTagSearchInput = styled.input`
