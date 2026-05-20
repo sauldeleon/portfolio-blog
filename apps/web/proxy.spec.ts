@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 const mockRatelimitLimit = jest.fn()
-const mockRatelimit = { limit: mockRatelimitLimit }
+let mockRatelimit: { limit: jest.Mock } | null = { limit: mockRatelimitLimit }
 
 jest.mock('./lib/auth/config', () => ({
   auth: (fn: unknown) => fn,
@@ -39,6 +39,7 @@ function makeReq(
 describe('handleMiddleware', () => {
   beforeEach(() => {
     jest.clearAllMocks()
+    mockRatelimit = { limit: mockRatelimitLimit }
     mockRatelimitLimit.mockResolvedValue({ success: true })
   })
 
@@ -179,6 +180,14 @@ describe('handleMiddleware', () => {
     it('skips rate limit check for GET requests', async () => {
       const req = makeReq('/api/auth/callback/credentials', 'GET')
       await handleMiddleware(req)
+      expect(mockRatelimitLimit).not.toHaveBeenCalled()
+    })
+
+    it('allows request when ratelimit is null (Redis not configured)', async () => {
+      mockRatelimit = null
+      const req = makeReq('/api/auth/callback/credentials', 'POST')
+      const res = await handleMiddleware(req)
+      expect(res).toBeUndefined()
       expect(mockRatelimitLimit).not.toHaveBeenCalled()
     })
   })
