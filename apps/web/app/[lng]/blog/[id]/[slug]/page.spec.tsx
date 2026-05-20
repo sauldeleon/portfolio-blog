@@ -39,6 +39,13 @@ jest.mock('@sdlgr/table-of-contents', () => ({
   ),
 }))
 
+jest.mock('next-cloudinary', () => ({
+  getCldImageUrl: jest.fn(
+    ({ src }: { src: string }) =>
+      `https://res.cloudinary.com/test/image/upload/${src}`,
+  ),
+}))
+
 jest.mock('@web/lib/mdx/renderMDX', () => ({
   renderMDX: jest.fn().mockReturnValue(null),
 }))

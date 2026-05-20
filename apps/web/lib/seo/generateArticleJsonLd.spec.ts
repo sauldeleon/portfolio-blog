@@ -2,6 +2,13 @@ import type { PublicPost } from '@web/lib/db/queries/posts'
 
 import { generateArticleJsonLd } from './generateArticleJsonLd'
 
+jest.mock('next-cloudinary', () => ({
+  getCldImageUrl: jest.fn(
+    ({ src }: { src: string }) =>
+      `https://res.cloudinary.com/test/image/upload/${src}`,
+  ),
+}))
+
 const mockPost: PublicPost = {
   id: '01ABC',
   slug: 'test-post',
@@ -54,9 +61,11 @@ describe('generateArticleJsonLd', () => {
     expect(result.description).toBe('A great post excerpt')
   })
 
-  it('includes coverImage when present', () => {
+  it('includes coverImage as full Cloudinary URL when present', () => {
     const result = generateArticleJsonLd(mockPost, 'en', testUrl)
-    expect(result.image).toBe('blog/cover.jpg')
+    expect(result.image).toBe(
+      'https://res.cloudinary.com/test/image/upload/blog/cover.jpg',
+    )
   })
 
   it('sets image to undefined when coverImage is null', () => {

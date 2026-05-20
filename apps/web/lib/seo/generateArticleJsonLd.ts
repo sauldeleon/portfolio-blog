@@ -1,3 +1,5 @@
+import { getCldImageUrl } from 'next-cloudinary'
+
 import type { PublicPost } from '@web/lib/db/queries/posts'
 
 export function generateArticleJsonLd(
@@ -6,12 +8,20 @@ export function generateArticleJsonLd(
   url: string,
 ) {
   const siteUrl = process.env.BASE_URL ?? ''
+  const image = post.coverImage
+    ? getCldImageUrl({
+        src: post.coverImage,
+        width: 1200,
+        height: 630,
+        crop: 'fill',
+      })
+    : undefined
   return {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: post.title,
     description: post.excerpt,
-    image: post.coverImage ?? undefined,
+    image,
     datePublished: post.publishedAt,
     dateModified: post.updatedAt,
     author: {
