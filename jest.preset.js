@@ -4,7 +4,7 @@ const path = require('path')
 const isCI = !!process.env.CI
 
 /** @type {import('@nx/jest/preset').nxPreset['coverageReporters']} */
-let coverageReporters = ['text', 'json', isCI ? 'cobertura' : 'html']
+const coverageReporters = ['text', 'json', isCI ? 'cobertura' : 'html']
 const reporters = ['default']
 if (isCI) {
   reporters.push([
@@ -33,6 +33,8 @@ module.exports = {
     '!*.config.js',
     '!jest.config.ts',
     '!*.d.ts',
+    '!**/*.spec.{js,jsx,ts,tsx}',
+    '!**/*.test.{js,jsx,ts,tsx}',
     '!**/app/*_*.tsx',
     '!**/src/index.ts',
     '!**/**.mock.{ts,tsx}',
@@ -40,9 +42,8 @@ module.exports = {
   ],
   modulePathIgnorePatterns: ['.next'],
   moduleNameMapper: {
-    'next/font/(.*)': require.resolve(
-      'next/dist/build/jest/__mocks__/nextFontMock.js',
-    ),
+    'next/font/(.*)':
+      require.resolve('next/dist/build/jest/__mocks__/nextFontMock.js'),
   },
   coverageReporters,
   reporters,
