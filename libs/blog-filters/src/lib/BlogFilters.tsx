@@ -1,3 +1,5 @@
+'use client'
+
 import { StyledBlogFilters, StyledFilterByLabel } from './BlogFilters.styles'
 import { type Category, CategoryFilter } from './CategoryFilter'
 import { DateFilter, type DateGroup } from './DateFilter'
