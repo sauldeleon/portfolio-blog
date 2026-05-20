@@ -27,6 +27,11 @@ jest.mock('@web/i18n/server', () => ({
   getServerTranslation: mockGetServerTranslation,
 }))
 
+const mockHeaders = jest.fn()
+jest.mock('next/headers', () => ({
+  headers: () => mockHeaders(),
+}))
+
 const mockPostHero = jest.fn()
 
 jest.mock('@sdlgr/post-hero', () => ({
@@ -115,6 +120,13 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
     jest.clearAllMocks()
     mockPostHero.mockReturnValue(<div data-testid="post-hero" />)
     mockGetServerTranslation.mockResolvedValue({ t: (key: string) => key })
+    mockHeaders.mockReturnValue({
+      get: jest.fn((key: string) => {
+        if (key === 'host') return 'localhost:4200'
+        if (key === 'x-forwarded-proto') return 'http'
+        return null
+      }),
+    })
     mockGetCategoryTranslations.mockResolvedValue([
       {
         locale: 'en',
@@ -464,6 +476,36 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
         params: Promise.resolve({ lng: 'es', id: '1', slug: 'my-test-post' }),
       })
       expect(meta.openGraph.images[0].url).toContain('category=Tecnolog')
+    })
+
+    it('uses deployment host for OG image URL, not siteUrl', async () => {
+      process.env.BASE_URL = 'https://production.example.com'
+      mockGetPostByNumber.mockResolvedValue(publishedPost)
+      const { generateMetadata } = require('./page.next')
+      const meta = await generateMetadata({
+        params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
+      })
+      expect(meta.openGraph.images[0].url).toContain(
+        'http://localhost:4200/og?',
+      )
+      expect(meta.openGraph.images[0].url).not.toContain(
+        'production.example.com',
+      )
+      delete process.env.BASE_URL
+    })
+
+    it('falls back to siteUrl for OG image when host header is missing', async () => {
+      process.env.BASE_URL = 'https://production.example.com'
+      mockHeaders.mockReturnValue({ get: jest.fn().mockReturnValue(null) })
+      mockGetPostByNumber.mockResolvedValue(publishedPost)
+      const { generateMetadata } = require('./page.next')
+      const meta = await generateMetadata({
+        params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
+      })
+      expect(meta.openGraph.images[0].url).toContain(
+        'https://production.example.com/og?',
+      )
+      delete process.env.BASE_URL
     })
   })
 
