@@ -101,6 +101,104 @@ describe('getCategories', () => {
     const result = await getCategories('en')
     expect(result).toEqual([])
   })
+
+  it('accepts excludeId to exclude a post from published count', async () => {
+    const row = {
+      id: 1,
+      slug: 'engineering',
+      name: 'Engineering',
+      description: null,
+      localeSlug: 'engineering',
+      postCount: 5,
+      publishedPostCount: 2,
+    }
+    mockDb.select.mockReturnValue(makeChain([row]))
+    const result = await getCategories('en', 'post-ulid-01')
+    expect(result).toEqual([row])
+    expect(mockDb.select).toHaveBeenCalled()
+  })
+
+  it('applies a single tag filter to published count', async () => {
+    const row = {
+      id: 1,
+      slug: 'engineering',
+      name: 'Engineering',
+      description: null,
+      localeSlug: 'engineering',
+      postCount: 5,
+      publishedPostCount: 2,
+    }
+    mockDb.select.mockReturnValue(makeChain([row]))
+    const result = await getCategories('en', undefined, { tags: ['REACT'] })
+    expect(result).toEqual([row])
+    expect(mockDb.select).toHaveBeenCalled()
+  })
+
+  it('applies multiple tag filters to published count', async () => {
+    const row = {
+      id: 1,
+      slug: 'engineering',
+      name: 'Engineering',
+      description: null,
+      localeSlug: 'engineering',
+      postCount: 5,
+      publishedPostCount: 1,
+    }
+    mockDb.select.mockReturnValue(makeChain([row]))
+    const result = await getCategories('en', undefined, {
+      tags: ['REACT', 'TYPESCRIPT'],
+    })
+    expect(result).toEqual([row])
+    expect(mockDb.select).toHaveBeenCalled()
+  })
+
+  it('applies year filter to published count', async () => {
+    const row = {
+      id: 1,
+      slug: 'engineering',
+      name: 'Engineering',
+      description: null,
+      localeSlug: 'engineering',
+      postCount: 5,
+      publishedPostCount: 1,
+    }
+    mockDb.select.mockReturnValue(makeChain([row]))
+    const result = await getCategories('en', undefined, { year: 2024 })
+    expect(result).toEqual([row])
+    expect(mockDb.select).toHaveBeenCalled()
+  })
+
+  it('applies month filter to published count', async () => {
+    const row = {
+      id: 1,
+      slug: 'engineering',
+      name: 'Engineering',
+      description: null,
+      localeSlug: 'engineering',
+      postCount: 5,
+      publishedPostCount: 1,
+    }
+    mockDb.select.mockReturnValue(makeChain([row]))
+    const result = await getCategories('en', undefined, { month: 6 })
+    expect(result).toEqual([row])
+    expect(mockDb.select).toHaveBeenCalled()
+  })
+
+  it('ignores empty tags array in filters', async () => {
+    const row = {
+      id: 1,
+      slug: 'engineering',
+      name: 'Engineering',
+      description: null,
+      localeSlug: 'engineering',
+      postCount: 5,
+      publishedPostCount: 3,
+    }
+    mockDb.select.mockReturnValue(makeChain([row]))
+    const result = await getCategories('en', undefined, { tags: [] })
+    expect(result).toEqual([row])
+    expect(mockDb.select).toHaveBeenCalled()
+  })
 })
 
 describe('getCategoriesForAdmin', () => {

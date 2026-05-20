@@ -29,7 +29,7 @@ export async function getSeriesForAdmin(): Promise<SeriesForAdmin[]> {
     db
       .select({ seriesId: posts.seriesId, postCount: count() })
       .from(posts)
-      .where(isNotNull(posts.seriesId))
+      .where(and(isNotNull(posts.seriesId), isNull(posts.deletedAt)))
       .groupBy(posts.seriesId),
   ])
 

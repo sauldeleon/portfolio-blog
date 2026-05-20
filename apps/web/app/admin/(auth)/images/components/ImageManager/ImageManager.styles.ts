@@ -35,11 +35,11 @@ export const StyledUploadButton = styled(Button)`
   text-transform: uppercase;
 `
 
-export const StyledRefreshButton = styled(Button)`
+export const StyledRefreshButton = styled(Button).attrs({
+  colorScheme: 'success',
+})`
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: ${({ theme }) => theme.colors.green};
-  border-color: ${({ theme }) => theme.colors.green};
 
   &:hover {
     opacity: 0.6;

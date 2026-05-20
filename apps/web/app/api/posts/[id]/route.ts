@@ -67,11 +67,12 @@ const translationUpdateSchema = z.object({
 
 const updatePostSchema = z.object({
   category: z.string().min(1).optional(),
+  author: z.string().min(1).optional(),
   tags: z.array(z.string()).optional(),
   status: z.enum(['draft', 'published', 'archived']).optional(),
   coverImage: z.string().nullable().optional(),
   coverImageFit: z.enum(['cover', 'contain']).nullable().optional(),
-  scheduledAt: z.string().optional(),
+  scheduledAt: z.string().nullable().optional(),
   seriesId: z.string().nullable().optional(),
   seriesOrder: z.number().int().nullable().optional(),
   seriesTitles: z
@@ -183,6 +184,9 @@ export async function PUT(
 
   const post = await updatePost(id, {
     ...postData,
+    ...(postData.tags !== undefined
+      ? { tags: postData.tags.map((t) => t.toUpperCase()) }
+      : {}),
     ...publishedAtUpdate,
     ...deletedAtUpdate,
     ...(scheduledAt !== undefined

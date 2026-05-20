@@ -36,11 +36,11 @@ export const StyledNewPostButton = styled(Button)`
   letter-spacing: 0.1em;
 `
 
-export const StyledRefreshButton = styled(Button)`
+export const StyledRefreshButton = styled(Button).attrs({
+  colorScheme: 'success',
+})`
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: ${({ theme }) => theme.colors.green};
-  border-color: ${({ theme }) => theme.colors.green};
 
   &:hover {
     opacity: 0.6;
@@ -189,47 +189,31 @@ export const StyledActions = styled.div`
 export const StyledPublishButton = styled(Button).attrs({
   variant: 'ghost',
   size: 'xs',
+  colorScheme: 'success',
 })`
   font-family: inherit;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: ${({ theme }) => theme.colors.green};
-  border-color: ${({ theme }) => theme.colors.green};
-
-  &:hover:not(:disabled) {
-    border-color: ${({ theme }) => theme.colors.green};
-    opacity: 0.8;
-  }
 `
 
 export const StyledArchiveButton = styled(Button).attrs({
   variant: 'ghost',
   size: 'xs',
+  colorScheme: 'success',
 })`
   font-family: inherit;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: ${({ theme }) => theme.colors.green};
-  border-color: ${({ theme }) => theme.colors.green};
-
-  &:hover:not(:disabled) {
-    opacity: 0.8;
-    border-color: ${({ theme }) => theme.colors.green};
-  }
 `
 
 export const StyledHardDeleteButton = styled(Button).attrs({
   variant: 'ghost',
   size: 'xs',
+  colorScheme: 'danger',
 })`
   font-family: inherit;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: ${({ theme }) => theme.colors.orange};
-
-  &:hover:not(:disabled) {
-    border-color: ${({ theme }) => theme.colors.orange};
-  }
 `
 
 export const StyledEmpty = styled.div`
@@ -239,4 +223,73 @@ export const StyledEmpty = styled.div`
   opacity: 0.3;
   text-transform: uppercase;
   letter-spacing: 0.12em;
+`
+
+export const StyledCheckboxTh = styled.th`
+  width: 2rem;
+  padding: 0.75rem 0.5rem 0.75rem 0;
+  vertical-align: middle;
+`
+
+export const StyledCheckboxTd = styled.td`
+  width: 2rem;
+  padding: 0.875rem 0.5rem 0.875rem 0;
+  vertical-align: middle;
+  cursor: default;
+`
+
+export const StyledBulkActions = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`
+
+export const StyledBulkPublishButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'sm',
+  colorScheme: 'success',
+})`
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+`
+
+export const StyledBulkUnpublishButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'sm',
+  colorScheme: 'success',
+})`
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+`
+
+export const StyledBulkArchiveButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'sm',
+  colorScheme: 'success',
+})`
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+`
+
+export const StyledBulkUnarchiveButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'sm',
+  colorScheme: 'success',
+})`
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+`
+
+export const StyledBulkDeleteButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'sm',
+  colorScheme: 'danger',
+})`
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 `

@@ -17,6 +17,7 @@ const { SeriesIndicator } =
 
 const mockSeriesPost = (overrides: Record<string, unknown> = {}) => ({
   id: '01JX001',
+  postNumber: 1,
   title: 'Part One',
   slug: 'part-one',
   seriesId: 'my-series',
@@ -111,9 +112,15 @@ describe('SeriesIndicator', () => {
 
   it('renders other posts as links', async () => {
     mockGetPostsBySeries.mockResolvedValue([
-      mockSeriesPost({ id: 'post-1', title: 'Part One', slug: 'part-one' }),
+      mockSeriesPost({
+        id: 'post-1',
+        postNumber: 1,
+        title: 'Part One',
+        slug: 'part-one',
+      }),
       mockSeriesPost({
         id: 'post-2',
+        postNumber: 2,
         title: 'Part Two',
         slug: 'part-two',
         seriesOrder: 2,
@@ -127,7 +134,7 @@ describe('SeriesIndicator', () => {
     })
     renderApp(result)
     const link = screen.getByRole('link', { name: 'Part Two' })
-    expect(link).toHaveAttribute('href', '/en/blog/post-2/part-two')
+    expect(link).toHaveAttribute('href', '/en/blog/2/part-two')
   })
 
   it('renders series order numbers when present', async () => {

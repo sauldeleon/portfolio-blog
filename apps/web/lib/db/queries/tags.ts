@@ -26,13 +26,36 @@ export type TagWithCount = {
   count: number
 }
 
-export async function getPostCountPerTag(): Promise<TagWithCount[]> {
+export async function getPostCountPerTag(
+  excludeId?: string,
+  filters?: { categories?: string[]; year?: number; month?: number },
+): Promise<TagWithCount[]> {
   type Row = { tag: string; count: number }
+
+  let conditions = sql`p.status = 'published' AND p.deleted_at IS NULL`
+
+  if (excludeId != null) {
+    conditions = sql`${conditions} AND p.id != ${excludeId}`
+  }
+  if (filters?.categories?.length) {
+    let catFilter = sql`p.category = ${filters.categories[0]}`
+    for (let i = 1; i < filters.categories.length; i++) {
+      catFilter = sql`${catFilter} OR p.category = ${filters.categories[i]}`
+    }
+    conditions = sql`${conditions} AND (${catFilter})`
+  }
+  if (filters?.year != null) {
+    conditions = sql`${conditions} AND date_part('year', p.published_at)::int = ${filters.year}`
+  }
+  if (filters?.month != null) {
+    conditions = sql`${conditions} AND date_part('month', p.published_at)::int = ${filters.month}`
+  }
+
   const result = await db.execute<Row>(sql`
     SELECT t.tag, count(*)::int AS count
     FROM posts p
     CROSS JOIN LATERAL unnest(p.tags) AS t(tag)
-    WHERE p.status = 'published' AND p.deleted_at IS NULL
+    WHERE ${conditions}
     GROUP BY t.tag
     ORDER BY count DESC, t.tag ASC
   `)

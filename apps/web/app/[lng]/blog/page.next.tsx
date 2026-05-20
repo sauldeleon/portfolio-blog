@@ -7,9 +7,11 @@ interface RouteProps {
   params: Promise<{ lng: Locale }>
   searchParams: Promise<{
     page?: string
-    category?: string
-    tag?: string
+    categories?: string
+    tags?: string
     q?: string
+    year?: string
+    month?: string
   }>
 }
 
@@ -26,6 +28,16 @@ export async function generateMetadata({ params }: RouteProps) {
 
 export default async function Page({ params, searchParams }: RouteProps) {
   const { lng } = await params
-  const { page, category, tag, q } = await searchParams
-  return <BlogPage lng={lng} page={page} category={category} tag={tag} q={q} />
+  const { page, categories, tags, q, year, month } = await searchParams
+  return (
+    <BlogPage
+      lng={lng}
+      page={page}
+      categories={categories}
+      tags={tags}
+      q={q}
+      year={year}
+      month={month}
+    />
+  )
 }

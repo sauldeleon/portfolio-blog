@@ -355,6 +355,25 @@ describe('POST /api/posts', () => {
     expect(response.status).toBe(409)
   })
 
+  it('normalizes tags to uppercase before creating post', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockGetCategoryBySlug.mockResolvedValue(mockCategory)
+    mockSlugExistsForLocale.mockResolvedValue(false)
+    mockCreatePost.mockResolvedValue(mockPost)
+    await POST(
+      makeRequest({
+        category: 'engineering',
+        author: 'admin',
+        tags: ['react', 'TypeScript', 'NODEJS'],
+        translations: validTranslations,
+      }),
+    )
+    expect(mockCreatePost).toHaveBeenCalledWith(
+      expect.objectContaining({ tags: ['REACT', 'TYPESCRIPT', 'NODEJS'] }),
+      expect.any(Object),
+    )
+  })
+
   it('creates post and returns 201', async () => {
     mockAuth.mockResolvedValue({ user: { name: 'admin' } })
     mockGetCategoryBySlug.mockResolvedValue(mockCategory)
@@ -413,6 +432,25 @@ describe('POST /api/posts', () => {
       expect.objectContaining({
         scheduledAt: new Date('2024-06-01T00:00:00.000Z'),
       }),
+      expect.any(Object),
+    )
+  })
+
+  it('passes null scheduledAt when null provided', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockGetCategoryBySlug.mockResolvedValue(mockCategory)
+    mockSlugExistsForLocale.mockResolvedValue(false)
+    mockCreatePost.mockResolvedValue(mockPost)
+    await POST(
+      makeRequest({
+        category: 'engineering',
+        author: 'admin',
+        scheduledAt: null,
+        translations: { en: validTranslations.en },
+      }),
+    )
+    expect(mockCreatePost).toHaveBeenCalledWith(
+      expect.objectContaining({ scheduledAt: null }),
       expect.any(Object),
     )
   })

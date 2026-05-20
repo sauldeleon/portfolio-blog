@@ -32,6 +32,8 @@ jest.mock('@web/i18n/client', () => ({
         'postEditor.fields.seriesOrderPlaceholder': '',
         'postEditor.fields.coverImage': 'Cover Image',
         'postEditor.fields.coverImagePlaceholder': '',
+        'postEditor.fields.scheduledAt': 'Schedule Publish',
+        'postEditor.fields.scheduledAtPlaceholder': 'Not scheduled',
         'postEditor.fields.author': 'Author',
         'postEditor.fields.authorPlaceholder': '',
         'postEditor.fields.authorUseDefault': 'Use default',
@@ -209,6 +211,27 @@ jest.mock('@sdlgr/select', () => ({
 
 jest.mock('@web/utils/slugify', () => ({
   slugify: (text: string) => text.toLowerCase().replace(/\s+/g, '-'),
+}))
+
+jest.mock('@sdlgr/date-picker', () => ({
+  DateTimePicker: ({
+    onChange,
+    'data-testid': testId,
+  }: {
+    value: Date | null
+    onChange: (date: Date | null) => void
+    'data-testid'?: string
+  }) => (
+    <div data-testid={testId}>
+      <button
+        type="button"
+        data-testid={`${testId}-set`}
+        onClick={() => onChange(new Date('2024-06-15T00:00:00.000Z'))}
+      >
+        Set Date
+      </button>
+    </div>
+  ),
 }))
 
 jest.mock('./PostCardPreview', () => ({

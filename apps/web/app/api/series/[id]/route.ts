@@ -1,4 +1,4 @@
-import { and, eq, isNotNull } from 'drizzle-orm'
+import { and, eq, isNotNull, isNull } from 'drizzle-orm'
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
@@ -53,7 +53,13 @@ export async function DELETE(
   const linked = await db
     .select({ id: posts.id })
     .from(posts)
-    .where(and(eq(posts.seriesId, id), isNotNull(posts.seriesId)))
+    .where(
+      and(
+        eq(posts.seriesId, id),
+        isNotNull(posts.seriesId),
+        isNull(posts.deletedAt),
+      ),
+    )
     .limit(1)
 
   if (linked.length > 0) {

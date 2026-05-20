@@ -6,6 +6,7 @@ jest.mock('next-mdx-remote/serialize', () => ({
 
 jest.mock('rehype-pretty-code', () => ({}))
 jest.mock('remark-gfm', () => ({}))
+jest.mock('@web/lib/mdx/remarkEmbeds', () => ({ remarkEmbeds: jest.fn() }))
 
 const { serializePreview } =
   require('./serializePreview') as typeof import('./serializePreview')

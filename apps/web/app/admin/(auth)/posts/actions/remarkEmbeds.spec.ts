@@ -1,4 +1,4 @@
-import { remarkEmbeds } from './remarkEmbeds'
+import { remarkEmbeds } from '@web/lib/mdx/remarkEmbeds'
 
 function makeTree(children: unknown[]) {
   return { children }

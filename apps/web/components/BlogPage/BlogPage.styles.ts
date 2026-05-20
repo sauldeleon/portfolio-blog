@@ -10,29 +10,6 @@ export const StyledPage = styled.main`
   }
 `
 
-export const StyledHeader = styled.header`
-  margin-bottom: 2.5rem;
-`
-
-export const StyledHeading = styled.h1`
-  font-family: var(--font-roboto-mono);
-  font-weight: 400;
-  color: #fbfbfb;
-  font-size: 2rem;
-  line-height: normal;
-  margin: 0 0 0.75rem;
-
-  @media (width >= 1024px) {
-    font-size: 3rem;
-  }
-`
-
-export const StyledHeadingAccent = styled.div`
-  height: 2px;
-  width: 3rem;
-  background: linear-gradient(to right, #ffdd83, #98dfd6);
-`
-
 export const StyledFilters = styled.div`
   display: flex;
   flex-direction: column;
@@ -72,3 +49,5 @@ export const StyledPaginationWrapper = styled.div`
   display: flex;
   justify-content: center;
 `
+
+export const StyledHeroWrapper = styled.div``

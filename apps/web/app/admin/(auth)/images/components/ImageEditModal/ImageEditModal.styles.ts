@@ -85,9 +85,8 @@ export const StyledActions = styled.div`
 export const StyledSaveButton = styled(Button).attrs({
   variant: 'contained',
   size: 'sm',
+  colorScheme: 'success',
 })`
-  color: ${({ theme }) => theme.colors.green};
-  border-color: ${({ theme }) => theme.colors.green};
   transition:
     background 0.15s,
     color 0.15s;

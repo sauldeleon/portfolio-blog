@@ -39,14 +39,23 @@ describe('[lng]/blog — page', () => {
   it('passes lng and searchParams to BlogPage', async () => {
     const ui = await Page({
       params: Promise.resolve({ lng: 'es' }),
-      searchParams: Promise.resolve({ page: '2', category: 'engineering' }),
+      searchParams: Promise.resolve({
+        page: '2',
+        categories: 'engineering',
+        tags: 'react',
+        year: '2024',
+        month: '6',
+      }),
     })
     render(ui)
     expect(BlogPage).toHaveBeenCalledWith(
       expect.objectContaining({
         lng: 'es',
         page: '2',
-        category: 'engineering',
+        categories: 'engineering',
+        tags: 'react',
+        year: '2024',
+        month: '6',
       }),
       undefined,
     )

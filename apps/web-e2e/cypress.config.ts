@@ -41,6 +41,7 @@ function getCypressEnv() {
 }
 
 export default defineConfig({
+  defaultCommandTimeout: 5000,
   e2e: {
     fileServerFolder: '.',
     specPattern: 'src/**/*.cy.{js,jsx,ts,tsx}',

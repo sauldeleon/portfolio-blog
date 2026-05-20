@@ -4,6 +4,7 @@ import {
   desc,
   eq,
   ilike,
+  inArray,
   isNotNull,
   isNull,
   ne,
@@ -24,6 +25,7 @@ import {
 
 export type PublicPost = {
   id: string
+  postNumber: number
   category: string
   tags: string[]
   status: PostStatus
@@ -67,6 +69,7 @@ export type AdminPost = {
 
 const publicFields = {
   id: posts.id,
+  postNumber: posts.postNumber,
   category: posts.category,
   tags: posts.tags,
   status: posts.status,
@@ -137,6 +140,32 @@ export async function getPostById(
   return rows[0] ?? null
 }
 
+export async function getPostByNumber(
+  postNumber: number,
+  locale: Locale,
+): Promise<PostWithContent | null> {
+  const rows = await db
+    .select(publicFieldsWithContent)
+    .from(posts)
+    .innerJoin(
+      postTranslations,
+      and(
+        eq(postTranslations.postId, posts.id),
+        eq(postTranslations.locale, locale),
+      ),
+    )
+    .leftJoin(
+      seriesTranslations,
+      and(
+        eq(seriesTranslations.seriesId, posts.seriesId),
+        eq(seriesTranslations.locale, locale),
+      ),
+    )
+    .where(and(eq(posts.postNumber, postNumber), isNull(posts.deletedAt)))
+
+  return rows[0] ?? null
+}
+
 export async function getPostBySlug(
   locale: Locale,
   slug: string,
@@ -169,6 +198,15 @@ export async function getPostBySlug(
   return rows[0] ?? null
 }
 
+function shuffleArray<T>(arr: T[]): T[] {
+  const result = [...arr]
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[result[i], result[j]] = [result[j], result[i]]
+  }
+  return result
+}
+
 export async function getRelatedPosts(
   postId: string,
   locale: Locale,
@@ -177,7 +215,7 @@ export async function getRelatedPosts(
   const current = await getPostById(postId, locale)
   if (!current) return []
 
-  return db
+  const allRelated = await db
     .select(publicFieldsWithContent)
     .from(posts)
     .innerJoin(
@@ -203,7 +241,8 @@ export async function getRelatedPosts(
       ),
     )
     .orderBy(desc(posts.publishedAt))
-    .limit(limit)
+
+  return shuffleArray(allRelated).slice(0, limit)
 }
 
 export type SeriesSummary = {
@@ -494,9 +533,12 @@ export type PaginatedPostsParams = {
   locale: Locale
   page: number
   limit: number
-  category?: string
-  tag?: string
+  categories?: string[]
+  tags?: string[]
   q?: string
+  year?: number
+  month?: number
+  excludeId?: string
 }
 
 export type PaginatedPostsResult = {
@@ -507,7 +549,8 @@ export type PaginatedPostsResult = {
 export async function getPublishedPostsPaginated(
   params: PaginatedPostsParams,
 ): Promise<PaginatedPostsResult> {
-  const { locale, page, limit, category, tag, q } = params
+  const { locale, page, limit, categories, tags, q, year, month, excludeId } =
+    params
   const offset = (page - 1) * limit
 
   const joinCondition = and(
@@ -518,14 +561,21 @@ export async function getPublishedPostsPaginated(
   const whereConditions = and(
     eq(posts.status, 'published'),
     isNull(posts.deletedAt),
-    category ? eq(posts.category, category) : undefined,
-    tag ? sql`${posts.tags} @> ARRAY[${tag}]::text[]` : undefined,
+    categories?.length ? inArray(posts.category, categories) : undefined,
+    tags?.length
+      ? and(...tags.map((tag) => sql`${posts.tags} @> ARRAY[${tag}]::text[]`))
+      : undefined,
     q
       ? or(
           ilike(postTranslations.title, `%${q}%`),
           ilike(postTranslations.excerpt, `%${q}%`),
         )
       : undefined,
+    year ? sql`date_part('year', ${posts.publishedAt}) = ${year}` : undefined,
+    month
+      ? sql`date_part('month', ${posts.publishedAt}) = ${month}`
+      : undefined,
+    excludeId ? ne(posts.id, excludeId) : undefined,
   )
 
   const seriesJoinCondition = and(
@@ -553,6 +603,86 @@ export async function getPublishedPostsPaginated(
   return { data, total: countRows[0]?.count ?? 0 }
 }
 
+export type PublishedDateGroup = {
+  year: number
+  count: number
+  months: { month: number; count: number }[]
+}
+
+export async function getPostPublishedDates(
+  locale: Locale,
+  excludeId?: string,
+  filters?: { categories?: string[]; tags?: string[] },
+): Promise<PublishedDateGroup[]> {
+  type Row = {
+    year: number
+    count: number
+    months: { month: number; count: number }[]
+  }
+
+  let conditions = sql`p.status = 'published' AND p.deleted_at IS NULL AND p.published_at IS NOT NULL`
+
+  if (excludeId != null) {
+    conditions = sql`${conditions} AND p.id != ${excludeId}`
+  }
+  if (filters?.categories?.length) {
+    let catFilter = sql`p.category = ${filters.categories[0]}`
+    for (let i = 1; i < filters.categories.length; i++) {
+      catFilter = sql`${catFilter} OR p.category = ${filters.categories[i]}`
+    }
+    conditions = sql`${conditions} AND (${catFilter})`
+  }
+  for (const tag of filters?.tags ?? []) {
+    conditions = sql`${conditions} AND p.tags @> ARRAY[${tag}]::text[]`
+  }
+
+  const result = await db.execute<Row>(sql`
+    SELECT
+      year,
+      SUM(month_count)::int AS count,
+      json_agg(json_build_object('month', month, 'count', month_count) ORDER BY month) AS months
+    FROM (
+      SELECT
+        date_part('year', p.published_at)::int AS year,
+        date_part('month', p.published_at)::int AS month,
+        COUNT(*)::int AS month_count
+      FROM posts p
+      INNER JOIN post_translations pt ON pt.post_id = p.id AND pt.locale = ${locale}
+      WHERE ${conditions}
+      GROUP BY year, month
+    ) sub
+    GROUP BY year
+    ORDER BY year DESC
+  `)
+  return result.rows
+}
+
+export async function getLatestPublishedPost(
+  locale: Locale,
+): Promise<PostWithContent | null> {
+  const rows = await db
+    .select(publicFieldsWithContent)
+    .from(posts)
+    .innerJoin(
+      postTranslations,
+      and(
+        eq(postTranslations.postId, posts.id),
+        eq(postTranslations.locale, locale),
+      ),
+    )
+    .leftJoin(
+      seriesTranslations,
+      and(
+        eq(seriesTranslations.seriesId, posts.seriesId),
+        eq(seriesTranslations.locale, locale),
+      ),
+    )
+    .where(and(eq(posts.status, 'published'), isNull(posts.deletedAt)))
+    .orderBy(desc(posts.publishedAt))
+    .limit(1)
+  return rows[0] ?? null
+}
+
 export async function getPublishedPostCountByCategory(
   slug: string,
 ): Promise<number> {
@@ -567,4 +697,26 @@ export async function getPublishedPostCountByCategory(
       ),
     )
   return rows[0]?.count ?? 0
+}
+
+export type ScheduledPost = {
+  id: string
+  scheduledAt: Date
+}
+
+export async function getScheduledPostsToPublish(): Promise<ScheduledPost[]> {
+  type Row = { id: string; scheduled_at: Date }
+  const result = await db.execute<Row>(sql`
+    SELECT p.id, p.scheduled_at
+    FROM posts p
+    INNER JOIN post_translations en_t
+      ON en_t.post_id = p.id AND en_t.locale = 'en' AND en_t.content != ''
+    INNER JOIN post_translations es_t
+      ON es_t.post_id = p.id AND es_t.locale = 'es' AND es_t.content != ''
+    WHERE p.status = 'draft'
+      AND p.deleted_at IS NULL
+      AND p.scheduled_at IS NOT NULL
+      AND p.scheduled_at <= NOW()
+  `)
+  return result.rows.map((r) => ({ id: r.id, scheduledAt: r.scheduled_at }))
 }

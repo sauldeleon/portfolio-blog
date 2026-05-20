@@ -135,4 +135,14 @@ describe('TableOfContents', () => {
     )
     expect(mockObserve).not.toHaveBeenCalled()
   })
+
+  it('renders depth-1 entry with no negative indent', () => {
+    renderWithTheme(
+      <TableOfContents
+        entries={[{ depth: 1, text: 'Top Level', id: 'top-level' }]}
+        label="Table of contents"
+      />,
+    )
+    expect(screen.getByRole('link', { name: 'Top Level' })).toBeInTheDocument()
+  })
 })

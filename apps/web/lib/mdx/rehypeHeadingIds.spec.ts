@@ -50,10 +50,10 @@ describe('rehypeHeadingIds', () => {
     expect(ids['h4']).toBe('deep-section')
   })
 
-  it('does not add id to h1', () => {
+  it('adds id to h1 heading', () => {
     const tree = processMarkdown('# Title')
     const ids = getHeadingIds(tree)
-    expect(ids['h1']).toBeUndefined()
+    expect(ids['h1']).toBe('title')
   })
 
   it('does not add id to h5 or h6', () => {

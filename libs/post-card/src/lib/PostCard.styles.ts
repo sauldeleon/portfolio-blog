@@ -7,10 +7,17 @@ export const StyledCard = styled.article`
   border: 1px solid rgba(251, 251, 251, 0.1);
   overflow: hidden;
   transition: border-color 0.2s ease;
+  position: relative;
 
   &:hover {
     border-color: ${({ theme }) => theme.colors.green};
   }
+`
+
+export const StyledCardOverlay = styled(Link)`
+  position: absolute;
+  inset: 0;
+  z-index: 0;
 `
 
 export const StyledCover = styled.div<{ $fit?: 'cover' | 'contain' }>`
@@ -64,7 +71,7 @@ export const StyledExcerpt = styled.p`
   margin: 0;
   opacity: 0.6;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
   flex: 1;
@@ -94,6 +101,8 @@ export const StyledTag = styled.li`
   padding: 0.125rem 0.5rem;
   border: 1px solid ${({ theme }) => theme.colors.green};
   color: ${({ theme }) => theme.colors.green};
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 `
 
 export const StyledSeriesBadge = styled.div`
@@ -103,6 +112,8 @@ export const StyledSeriesBadge = styled.div`
   gap: 0.375rem;
   color: ${({ theme }) => theme.colors.yellow};
   opacity: 0.75;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 `
 
 export const StyledMoreTags = styled.span`
@@ -118,6 +129,7 @@ export const StyledReadMore = styled(Link)`
   align-self: flex-start;
   margin-top: 0.75rem;
   position: relative;
+  z-index: 1;
 
   &::after {
     content: '';

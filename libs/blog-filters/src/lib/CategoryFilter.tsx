@@ -1,12 +1,15 @@
 'use client'
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { startTransition, useState } from 'react'
 
 import {
+  StyledApplyButton,
   StyledChip,
   StyledChipList,
-  StyledFilterLabel,
-  StyledFilterNav,
+  StyledDropdownButton,
+  StyledDropdownPanel,
+  StyledDropdownWrapper,
 } from './BlogFilters.styles'
 
 export interface Category {
@@ -18,57 +21,93 @@ export interface Category {
 
 export interface CategoryFilterProps {
   categories: Category[]
-  activeCategory: string | null
-  allLabel: string
+  activeCategories: string[]
   label?: string
+  isOpen: boolean
+  onToggle: () => void
+  applyLabel?: string
 }
 
 export function CategoryFilter({
   categories,
-  activeCategory,
-  allLabel,
+  activeCategories,
   label,
+  isOpen,
+  onToggle,
+  applyLabel,
 }: CategoryFilterProps) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const [pending, setPending] = useState<string[]>(activeCategories)
+  const [prevIsOpen, setPrevIsOpen] = useState(isOpen)
 
-  const handleSelect = (slug: string | null) => {
-    const params = new URLSearchParams(searchParams.toString())
-    if (slug) {
-      params.set('category', slug)
-    } else {
-      params.delete('category')
-    }
-    params.delete('page')
-    router.push(`${pathname}?${params.toString()}`)
+  if (prevIsOpen !== isOpen) {
+    setPrevIsOpen(isOpen)
+    if (isOpen) setPending([...activeCategories])
   }
 
+  const hasChanges =
+    [...pending].sort().join(',') !== [...activeCategories].sort().join(',')
+
+  const handleToggle = (slug: string) => {
+    setPending((prev) =>
+      prev.includes(slug) ? prev.filter((s) => s !== slug) : [...prev, slug],
+    )
+  }
+
+  const handleApply = () => {
+    const params = new URLSearchParams(searchParams.toString())
+    if (pending.length === 0) {
+      params.delete('categories')
+    } else {
+      params.set('categories', pending.join(','))
+    }
+    params.delete('page')
+    startTransition(() => {
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false })
+    })
+    onToggle()
+  }
+
+  const activeCount = activeCategories.length
+
   return (
-    <StyledFilterNav aria-label={label ?? allLabel}>
-      {label ? <StyledFilterLabel>{label}</StyledFilterLabel> : null}
-      <StyledChipList>
-        <li>
-          <StyledChip
-            onClick={() => handleSelect(null)}
-            active={activeCategory === null}
-            aria-current={activeCategory === null ? true : undefined}
+    <StyledDropdownWrapper>
+      <StyledDropdownButton
+        onClick={onToggle}
+        aria-expanded={isOpen}
+        data-testid="filter-trigger"
+      >
+        {label}
+        {activeCount > 0 ? ` (${activeCount})` : ''} ▾
+      </StyledDropdownButton>
+      {isOpen && (
+        <StyledDropdownPanel>
+          <StyledChipList>
+            {categories.map((cat) => (
+              <li key={cat.slug}>
+                <StyledChip
+                  onClick={() => handleToggle(cat.slug)}
+                  active={pending.includes(cat.slug)}
+                  aria-current={pending.includes(cat.slug) ? true : undefined}
+                >
+                  {cat.name}
+                </StyledChip>
+              </li>
+            ))}
+          </StyledChipList>
+          <StyledApplyButton
+            variant="ghost"
+            colorScheme="success"
+            size="sm"
+            disabled={!hasChanges}
+            onClick={handleApply}
           >
-            {allLabel}
-          </StyledChip>
-        </li>
-        {categories.map((cat) => (
-          <li key={cat.slug}>
-            <StyledChip
-              onClick={() => handleSelect(cat.slug)}
-              active={cat.slug === activeCategory}
-              aria-current={cat.slug === activeCategory ? true : undefined}
-            >
-              {cat.name}
-            </StyledChip>
-          </li>
-        ))}
-      </StyledChipList>
-    </StyledFilterNav>
+            {applyLabel}
+          </StyledApplyButton>
+        </StyledDropdownPanel>
+      )}
+    </StyledDropdownWrapper>
   )
 }

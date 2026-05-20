@@ -52,6 +52,18 @@ export default function RootLayout({ children, params }: RootLayoutProps) {
       className={robotoMonoClassName}
     >
       <head>
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="RSS — EN"
+          href="/feed.xml"
+        />
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="RSS — ES"
+          href="/feed.es.xml"
+        />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <Script

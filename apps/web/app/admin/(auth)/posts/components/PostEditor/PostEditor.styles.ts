@@ -99,33 +99,21 @@ export const StyledSaveButton = styled(Button).attrs({
 export const StyledPublishButton = styled(Button).attrs({
   variant: 'ghost',
   size: 'xs',
+  colorScheme: 'success',
 })`
   font-family: inherit;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: ${({ theme }) => theme.colors.green};
-  border-color: ${({ theme }) => theme.colors.green};
-
-  &:hover:not(:disabled) {
-    opacity: 0.8;
-    border-color: ${({ theme }) => theme.colors.green};
-  }
 `
 
 export const StyledArchiveButton = styled(Button).attrs({
   variant: 'ghost',
   size: 'xs',
+  colorScheme: 'danger',
 })`
   font-family: inherit;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: ${({ theme }) => theme.colors.orange};
-  border-color: ${({ theme }) => theme.colors.orange};
-
-  &:hover:not(:disabled) {
-    opacity: 0.8;
-    border-color: ${({ theme }) => theme.colors.orange};
-  }
 `
 
 export const StyledLocaleTabs = styled.div`
@@ -186,14 +174,6 @@ export const StyledPreviewPane = styled.div`
   border-radius: 2px;
   padding: 1rem;
   overflow-y: auto;
-`
-
-export const StyledPreviewLabel = styled.span`
-  font-size: 0.55rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  opacity: 0.3;
-  margin-bottom: 0.5rem;
 `
 
 export const StyledContentTextarea = styled(Textarea)`

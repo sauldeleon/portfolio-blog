@@ -95,7 +95,7 @@ const createPostSchema = z.object({
   seriesTitles: z
     .object({ en: z.string().optional(), es: z.string().optional() })
     .optional(),
-  scheduledAt: z.string().optional(),
+  scheduledAt: z.string().nullable().optional(),
   translations: z
     .object({
       en: translationSchema.optional(),
@@ -174,7 +174,7 @@ export async function POST(request: Request) {
   const post = await createPost(
     {
       category: data.category,
-      tags: data.tags,
+      tags: data.tags.map((t) => t.toUpperCase()),
       author: data.author,
       status: data.status,
       coverImage: data.coverImage ?? null,

@@ -25,11 +25,11 @@ export const StyledSearchInput = styled(Input)`
   padding: 0.375rem 0;
 `
 
-export const StyledRefreshButton = styled(Button)`
+export const StyledRefreshButton = styled(Button).attrs({
+  colorScheme: 'success',
+})`
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: ${({ theme }) => theme.colors.green};
-  border-color: ${({ theme }) => theme.colors.green};
 
   &:hover {
     opacity: 0.6;
@@ -207,26 +207,20 @@ export const StyledInnerTr = styled.tr`
 export const StyledViewPostButton = styled(Button).attrs({
   variant: 'ghost',
   size: 'xs',
+  colorScheme: 'success',
 })`
-  color: ${({ theme }) => theme.colors.green};
-  border-color: ${({ theme }) => theme.colors.green};
   font-size: 0.55rem;
   padding: 0.1rem 0.4rem;
   min-height: unset;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-
-  &:hover {
-    opacity: 0.8;
-  }
 `
 
 export const StyledRemoveFromSeriesButton = styled(Button).attrs({
   variant: 'ghost',
   size: 'xs',
+  colorScheme: 'danger',
 })`
-  color: ${({ theme }) => theme.colors.orange};
-  border-color: ${({ theme }) => theme.colors.orange};
   font-size: 0.55rem;
   padding: 0.1rem 0.4rem;
   min-height: unset;
@@ -261,29 +255,19 @@ export const StyledNewButton = styled(Button)`
 export const StyledEditButton = styled(Button).attrs({
   variant: 'ghost',
   size: 'xs',
+  colorScheme: 'success',
 })`
-  color: ${({ theme }) => theme.colors.green};
-  border-color: ${({ theme }) => theme.colors.green};
   text-transform: uppercase;
   letter-spacing: 0.08em;
-
-  &:hover {
-    opacity: 0.8;
-  }
 `
 
 export const StyledSaveButton = styled(Button).attrs({
   variant: 'ghost',
   size: 'xs',
+  colorScheme: 'success',
 })`
-  color: ${({ theme }) => theme.colors.green};
-  border-color: ${({ theme }) => theme.colors.green};
   text-transform: uppercase;
   letter-spacing: 0.08em;
-
-  &:hover {
-    opacity: 0.8;
-  }
 `
 
 export const StyledCancelButton = styled(Button).attrs({
@@ -305,9 +289,8 @@ export const StyledCancelButton = styled(Button).attrs({
 export const StyledDeleteButton = styled(Button).attrs({
   variant: 'ghost',
   size: 'xs',
+  colorScheme: 'danger',
 })`
-  color: ${({ theme }) => theme.colors.orange};
-  border-color: ${({ theme }) => theme.colors.orange};
   opacity: 0.6;
   text-transform: uppercase;
   letter-spacing: 0.08em;

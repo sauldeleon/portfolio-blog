@@ -4,7 +4,7 @@ import { visit } from 'unist-util-visit'
 
 import { slugifyHeading } from './remarkHeadings'
 
-const HEADING_TAGS = new Set(['h2', 'h3', 'h4'])
+const HEADING_TAGS = new Set(['h1', 'h2', 'h3', 'h4'])
 
 function extractTextFromElement(node: Element): string {
   const parts: string[] = []

@@ -2,7 +2,7 @@ import { loginViaUi } from '../support/login'
 
 describe('Admin auth — unauthenticated access', () => {
   it('redirects /admin/posts to login when not authenticated', () => {
-    cy.visit('/admin/posts')
+    cy.visit('/admin/posts/')
     cy.url().should('include', '/admin/login')
   })
 
@@ -50,7 +50,7 @@ describe('Admin auth — logout', () => {
     cy.clearAllCookies()
     cy.clearLocalStorage()
 
-    cy.visit('/admin/posts')
+    cy.visit('/admin/posts/')
     cy.url({ timeout: 15000 }).should('include', '/admin/login')
     cy.get('[data-testid="login-form"]').should('be.visible')
   })

@@ -42,6 +42,7 @@ export default async function EditPostPage({ params }: EditPostPageProps) {
   const editorPost = {
     post: {
       id: postData.post.id,
+      postNumber: postData.post.postNumber,
       category: postData.post.category,
       tags: postData.post.tags,
       status: postData.post.status,
@@ -49,6 +50,7 @@ export default async function EditPostPage({ params }: EditPostPageProps) {
       coverImageFit: postData.post.coverImageFit,
       seriesId: postData.post.seriesId,
       seriesOrder: postData.post.seriesOrder,
+      scheduledAt: postData.post.scheduledAt,
       author: postData.post.author,
     },
     translations: postData.translations.map((t) => ({

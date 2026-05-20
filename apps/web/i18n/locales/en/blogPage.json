@@ -1,7 +1,7 @@
 {
   "title": "Blog",
   "meta.title": "Blog — Saúl de León",
-  "meta.description": "Articles on web development, software engineering, and technology.",
+  "meta.description": "A place for articles on development, tech, and whatever else is on my mind.",
   "noResults": "No posts found",
   "readMore": "Read more",
   "readingTime": "{{count}} min read",
@@ -9,6 +9,11 @@
   "tags": "Tags",
   "allCategories": "All categories",
   "allTags": "All tags",
+  "applyFilters": "Apply",
+  "clearFilters": "Clear all",
+  "tagSearchPlaceholder": "Search tags...",
+  "searchPlaceholder": "Search posts...",
+  "dateLabel": "Date",
   "pagination.previous": "Previous",
   "pagination.next": "Next",
   "relatedPosts": "Related posts",
@@ -16,5 +21,8 @@
   "seriesIndicator.heading": "Series: {{seriesId}}",
   "toc": "Table of contents",
   "copyCode": "Copy",
-  "codeCopied": "Copied!"
+  "codeCopied": "Copied!",
+  "share": "Share",
+  "share.copyLink": "Copy link",
+  "share.copied": "Copied!"
 }

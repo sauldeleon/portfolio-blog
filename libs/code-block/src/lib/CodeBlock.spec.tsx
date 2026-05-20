@@ -79,6 +79,20 @@ describe('CodeBlock', () => {
     expect(screen.getByRole('button', { name: 'Copied!' })).toBeInTheDocument()
   })
 
+  it('uses default Copy/Copied! labels when not provided', async () => {
+    renderWithTheme(
+      <CodeBlock>
+        <code>const x = 1</code>
+      </CodeBlock>,
+    )
+    const button = screen.getByRole('button', { name: 'Copy' })
+    // eslint-disable-next-line testing-library/no-unnecessary-act
+    await act(async () => {
+      fireEvent.click(button)
+    })
+    expect(screen.getByRole('button', { name: 'Copied!' })).toBeInTheDocument()
+  })
+
   it('reverts to copyLabel after 2 seconds', async () => {
     renderWithTheme(
       <CodeBlock copyLabel="Copy" copiedLabel="Copied!">

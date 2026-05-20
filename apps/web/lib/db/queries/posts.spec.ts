@@ -4,10 +4,13 @@ import {
   getAllPosts,
   getAllSeries,
   getAllSeriesAdmin,
+  getLatestPublishedPost,
   getPostById,
+  getPostByNumber,
   getPostByPreviewToken,
   getPostBySlug,
   getPostForEdit,
+  getPostPublishedDates,
   getPostStatus,
   getPostTranslations,
   getPostsBySeries,
@@ -15,6 +18,7 @@ import {
   getPublishedPosts,
   getPublishedPostsPaginated,
   getRelatedPosts,
+  getScheduledPostsToPublish,
   hardDeletePost,
   restorePost,
   slugExistsForLocale,
@@ -165,6 +169,22 @@ describe('getPostBySlug', () => {
   })
 })
 
+describe('getPostByNumber', () => {
+  it('returns post when postNumber matches', async () => {
+    mockDb.select.mockReturnValue(
+      makeChain([{ ...mockPublicPost, content: '# Hello' }]),
+    )
+    const result = await getPostByNumber(1, 'en')
+    expect(result).toMatchObject({ id: '01JWTEST000000000000000000' })
+  })
+
+  it('returns null when postNumber not found', async () => {
+    mockDb.select.mockReturnValue(makeChain([]))
+    const result = await getPostByNumber(999, 'en')
+    expect(result).toBeNull()
+  })
+})
+
 describe('getRelatedPosts', () => {
   it('returns related posts in same category', async () => {
     const relatedPost = {
@@ -188,6 +208,25 @@ describe('getRelatedPosts', () => {
     mockDb.select.mockReturnValue(makeChain([]))
     const result = await getRelatedPosts('nonexistent', 'en')
     expect(result).toEqual([])
+  })
+
+  it('returns at most 3 randomly shuffled posts when more are available', async () => {
+    const allRelated = [1, 2, 3, 4, 5].map((n) => ({
+      ...mockPublicPost,
+      id: `01JWOTHER${String(n).padStart(17, '0')}`,
+      slug: `related-${n}`,
+      content: `# Related ${n}`,
+    }))
+    mockDb.select
+      .mockReturnValueOnce(
+        makeChain([{ ...mockPublicPost, content: '# Hello' }]),
+      )
+      .mockReturnValueOnce(makeChain(allRelated))
+    const randomSpy = jest.spyOn(Math, 'random').mockReturnValue(0)
+    const result = await getRelatedPosts('01JWTEST000000000000000000', 'en')
+    randomSpy.mockRestore()
+    expect(result).toHaveLength(3)
+    result.forEach((post) => expect(allRelated).toContainEqual(post))
   })
 })
 
@@ -453,7 +492,7 @@ describe('getPublishedPostsPaginated', () => {
     expect(result.total).toBe(1)
   })
 
-  it('applies category filter', async () => {
+  it('applies categories filter', async () => {
     mockDb.select
       .mockReturnValueOnce(makeChain([]))
       .mockReturnValueOnce(makeChain([{ count: 0 }]))
@@ -461,13 +500,27 @@ describe('getPublishedPostsPaginated', () => {
       locale: 'en',
       page: 1,
       limit: 10,
-      category: 'engineering',
+      categories: ['engineering', 'design'],
     })
     expect(result.data).toEqual([])
     expect(result.total).toBe(0)
   })
 
-  it('applies tag filter', async () => {
+  it('skips categories filter when empty array', async () => {
+    mockDb.select
+      .mockReturnValueOnce(makeChain([mockPostWithContent]))
+      .mockReturnValueOnce(makeChain([{ count: 1 }]))
+    const result = await getPublishedPostsPaginated({
+      locale: 'en',
+      page: 1,
+      limit: 10,
+      categories: [],
+    })
+    expect(result.data).toEqual([mockPostWithContent])
+    expect(result.total).toBe(1)
+  })
+
+  it('applies tags filter', async () => {
     mockDb.select
       .mockReturnValueOnce(makeChain([mockPostWithContent]))
       .mockReturnValueOnce(makeChain([{ count: 1 }]))
@@ -475,7 +528,21 @@ describe('getPublishedPostsPaginated', () => {
       locale: 'es',
       page: 1,
       limit: 10,
-      tag: 'react',
+      tags: ['react', 'nextjs'],
+    })
+    expect(result.data).toEqual([mockPostWithContent])
+    expect(result.total).toBe(1)
+  })
+
+  it('skips tags filter when empty array', async () => {
+    mockDb.select
+      .mockReturnValueOnce(makeChain([mockPostWithContent]))
+      .mockReturnValueOnce(makeChain([{ count: 1 }]))
+    const result = await getPublishedPostsPaginated({
+      locale: 'en',
+      page: 1,
+      limit: 10,
+      tags: [],
     })
     expect(result.data).toEqual([mockPostWithContent])
     expect(result.total).toBe(1)
@@ -495,6 +562,48 @@ describe('getPublishedPostsPaginated', () => {
     expect(result.total).toBe(0)
   })
 
+  it('applies year filter', async () => {
+    mockDb.select
+      .mockReturnValueOnce(makeChain([mockPostWithContent]))
+      .mockReturnValueOnce(makeChain([{ count: 1 }]))
+    const result = await getPublishedPostsPaginated({
+      locale: 'en',
+      page: 1,
+      limit: 10,
+      year: 2024,
+    })
+    expect(result.data).toEqual([mockPostWithContent])
+    expect(result.total).toBe(1)
+  })
+
+  it('applies month filter', async () => {
+    mockDb.select
+      .mockReturnValueOnce(makeChain([mockPostWithContent]))
+      .mockReturnValueOnce(makeChain([{ count: 1 }]))
+    const result = await getPublishedPostsPaginated({
+      locale: 'en',
+      page: 1,
+      limit: 10,
+      month: 6,
+    })
+    expect(result.data).toEqual([mockPostWithContent])
+    expect(result.total).toBe(1)
+  })
+
+  it('applies excludeId filter', async () => {
+    mockDb.select
+      .mockReturnValueOnce(makeChain([]))
+      .mockReturnValueOnce(makeChain([{ count: 0 }]))
+    const result = await getPublishedPostsPaginated({
+      locale: 'en',
+      page: 1,
+      limit: 10,
+      excludeId: '01JWTEST000000000000000000',
+    })
+    expect(result.data).toEqual([])
+    expect(result.total).toBe(0)
+  })
+
   it('returns 0 total when count row is missing', async () => {
     mockDb.select
       .mockReturnValueOnce(makeChain([]))
@@ -505,6 +614,157 @@ describe('getPublishedPostsPaginated', () => {
       limit: 10,
     })
     expect(result.total).toBe(0)
+  })
+})
+
+describe('getPostPublishedDates', () => {
+  it('returns year/months groups with counts', async () => {
+    mockDb.execute.mockResolvedValue({
+      rows: [
+        {
+          year: 2024,
+          count: 3,
+          months: [
+            { month: 1, count: 1 },
+            { month: 3, count: 1 },
+            { month: 6, count: 1 },
+          ],
+        },
+        {
+          year: 2023,
+          count: 2,
+          months: [
+            { month: 11, count: 1 },
+            { month: 12, count: 1 },
+          ],
+        },
+      ],
+    })
+    const result = await getPostPublishedDates('en')
+    expect(result).toEqual([
+      {
+        year: 2024,
+        count: 3,
+        months: [
+          { month: 1, count: 1 },
+          { month: 3, count: 1 },
+          { month: 6, count: 1 },
+        ],
+      },
+      {
+        year: 2023,
+        count: 2,
+        months: [
+          { month: 11, count: 1 },
+          { month: 12, count: 1 },
+        ],
+      },
+    ])
+  })
+
+  it('returns empty array when no published posts', async () => {
+    mockDb.execute.mockResolvedValue({ rows: [] })
+    const result = await getPostPublishedDates('es')
+    expect(result).toEqual([])
+  })
+
+  it('excludes the given post id when provided', async () => {
+    mockDb.execute.mockResolvedValue({
+      rows: [{ year: 2024, count: 2, months: [{ month: 3, count: 2 }] }],
+    })
+    const result = await getPostPublishedDates('en', 'post-ulid-01')
+    expect(result).toEqual([
+      { year: 2024, count: 2, months: [{ month: 3, count: 2 }] },
+    ])
+    expect(mockDb.execute).toHaveBeenCalledTimes(1)
+  })
+
+  it('filters by a single category', async () => {
+    mockDb.execute.mockResolvedValue({
+      rows: [{ year: 2024, count: 1, months: [{ month: 6, count: 1 }] }],
+    })
+    const result = await getPostPublishedDates('en', undefined, {
+      categories: ['engineering'],
+    })
+    expect(result).toEqual([
+      { year: 2024, count: 1, months: [{ month: 6, count: 1 }] },
+    ])
+    expect(mockDb.execute).toHaveBeenCalledTimes(1)
+  })
+
+  it('filters by multiple categories with OR logic', async () => {
+    mockDb.execute.mockResolvedValue({
+      rows: [{ year: 2024, count: 3, months: [{ month: 6, count: 3 }] }],
+    })
+    const result = await getPostPublishedDates('en', undefined, {
+      categories: ['engineering', 'design'],
+    })
+    expect(result).toEqual([
+      { year: 2024, count: 3, months: [{ month: 6, count: 3 }] },
+    ])
+    expect(mockDb.execute).toHaveBeenCalledTimes(1)
+  })
+
+  it('filters by a single tag', async () => {
+    mockDb.execute.mockResolvedValue({
+      rows: [{ year: 2024, count: 2, months: [{ month: 3, count: 2 }] }],
+    })
+    const result = await getPostPublishedDates('en', undefined, {
+      tags: ['REACT'],
+    })
+    expect(result).toEqual([
+      { year: 2024, count: 2, months: [{ month: 3, count: 2 }] },
+    ])
+    expect(mockDb.execute).toHaveBeenCalledTimes(1)
+  })
+
+  it('filters by multiple tags', async () => {
+    mockDb.execute.mockResolvedValue({ rows: [] })
+    const result = await getPostPublishedDates('en', undefined, {
+      tags: ['REACT', 'TYPESCRIPT'],
+    })
+    expect(result).toEqual([])
+    expect(mockDb.execute).toHaveBeenCalledTimes(1)
+  })
+
+  it('applies excludeId and filters together', async () => {
+    mockDb.execute.mockResolvedValue({
+      rows: [{ year: 2024, count: 1, months: [{ month: 6, count: 1 }] }],
+    })
+    const result = await getPostPublishedDates('en', 'hero-id', {
+      categories: ['engineering'],
+      tags: ['REACT'],
+    })
+    expect(result).toEqual([
+      { year: 2024, count: 1, months: [{ month: 6, count: 1 }] },
+    ])
+    expect(mockDb.execute).toHaveBeenCalledTimes(1)
+  })
+
+  it('ignores empty filter arrays', async () => {
+    mockDb.execute.mockResolvedValue({ rows: [] })
+    const result = await getPostPublishedDates('en', undefined, {
+      categories: [],
+      tags: [],
+    })
+    expect(result).toEqual([])
+    expect(mockDb.execute).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe('getLatestPublishedPost', () => {
+  const mockPostWithContent = { ...mockPublicPost, content: '# Hello' }
+
+  it('returns the latest published post', async () => {
+    mockDb.select.mockReturnValue(makeChain([mockPostWithContent]))
+    const result = await getLatestPublishedPost('en')
+    expect(result).toEqual(mockPostWithContent)
+  })
+
+  it('returns null when no published posts', async () => {
+    mockDb.select.mockReturnValue(makeChain([]))
+    const result = await getLatestPublishedPost('es')
+    expect(result).toBeNull()
   })
 })
 
@@ -560,5 +820,31 @@ describe('getAllSeriesAdmin', () => {
     mockDb.select.mockReturnValue(makeChain([]))
     const result = await getAllSeriesAdmin()
     expect(result).toEqual([])
+  })
+})
+
+describe('getScheduledPostsToPublish', () => {
+  it('returns scheduled posts ready to publish', async () => {
+    const scheduledAt = new Date('2024-01-10T12:00:00Z')
+    mockDb.execute.mockResolvedValue({
+      rows: [{ id: '01JWTEST000000000000000000', scheduled_at: scheduledAt }],
+    })
+    const result = await getScheduledPostsToPublish()
+    expect(result).toEqual([{ id: '01JWTEST000000000000000000', scheduledAt }])
+  })
+
+  it('returns empty array when no posts are ready', async () => {
+    mockDb.execute.mockResolvedValue({ rows: [] })
+    const result = await getScheduledPostsToPublish()
+    expect(result).toEqual([])
+  })
+
+  it('maps scheduled_at to scheduledAt camelCase', async () => {
+    const date = new Date('2024-06-01T08:00:00Z')
+    mockDb.execute.mockResolvedValue({
+      rows: [{ id: 'abc', scheduled_at: date }],
+    })
+    const result = await getScheduledPostsToPublish()
+    expect(result[0].scheduledAt).toBe(date)
   })
 })

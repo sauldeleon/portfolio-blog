@@ -113,6 +113,12 @@ export const StyledImagePreview = styled.div`
   align-items: center;
   justify-content: center;
   overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 `
 
 export const StyledImageMeta = styled.div`

@@ -3161,6 +3161,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@date-fns/tz@npm:^1.4.1":
+  version: 1.4.1
+  resolution: "@date-fns/tz@npm:1.4.1"
+  checksum: eceefcd68d3fc4f2fa07bdea5a22b05b0075850434cdcc765cea78995bb60cfe72d63c50e925188a1841af8d0a76a16d7d4f139d57d1c16ee03b30b2017a8d2d
+  languageName: node
+  linkType: hard
+
 "@discoveryjs/json-ext@npm:0.5.7":
   version: 0.5.7
   resolution: "@discoveryjs/json-ext@npm:0.5.7"
@@ -7391,6 +7398,7 @@ __metadata:
     prettier: 3.8.3
     react: 19.2.6
     react-cookie-consent: 9.0.0
+    react-day-picker: 9
     react-dom: 19.2.6
     react-dropzone: 15.0.0
     react-hook-form: 7.75.0
@@ -7781,6 +7789,13 @@ __metadata:
   dependencies:
     defer-to-connect: ^2.0.1
   checksum: fc9cb993e808806692e4a3337c90ece0ec00c89f4b67e3652a356b89730da98bc824273a6d67ca84d5f33cd85f317dcd5ce39d8cc0a2f060145a608a7cb8ce92
+  languageName: node
+  linkType: hard
+
+"@tabby_ai/hijri-converter@npm:1.0.5":
+  version: 1.0.5
+  resolution: "@tabby_ai/hijri-converter@npm:1.0.5"
+  checksum: dc0d50a1a05ca0bbdb91b06ffdc565f2cdf1e0762b8ce7efafac1c6d2bdab9254588508e16ef25bb0781622c89ebbb472202d720259fe852fbe7a7f4b9ef4a92
   languageName: node
   linkType: hard
 
@@ -12299,10 +12314,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"date-fns-jalali@npm:4.1.0-0":
+  version: 4.1.0-0
+  resolution: "date-fns-jalali@npm:4.1.0-0"
+  checksum: cde80e4a87bfd96458ff1edfd5af5fed7ed6e04dd48574ed64d376e37e7689ddee1a7c5a6685f4b93cf3432eac73c51acd786504070a6973a140c5f15163ca39
+  languageName: node
+  linkType: hard
+
 "date-fns@npm:3.1.0":
   version: 3.1.0
   resolution: "date-fns@npm:3.1.0"
   checksum: 8de5474a0e5a4b9901547f0eb572b0ae8b3027d6d8117053d9b258000a4350b673f03c847211f6dfee316c39a1df30e1ea0f85efd475ef90764c0c3d18aabed3
+  languageName: node
+  linkType: hard
+
+"date-fns@npm:^4.1.0":
+  version: 4.2.1
+  resolution: "date-fns@npm:4.2.1"
+  checksum: b38e1e32b0b0c79b8b19c8e649f45fd8f1c299417321385ee655d13bda9a83d4cf128b9d74070699aa123f635018ba2ad91d40358b4848cdeb262a0e96d2bfc8
   languageName: node
   linkType: hard
 
@@ -22501,6 +22530,20 @@ __metadata:
   peerDependencies:
     react: ">=16"
   checksum: 56a50f03e21c7345dc97159222fd93e920290653da52fc7bf405b757e84dac183753950c42ea1db6cf633fabd0eded8216986798935bbdeda44ddb2db4dc83e0
+  languageName: node
+  linkType: hard
+
+"react-day-picker@npm:9":
+  version: 9.14.0
+  resolution: "react-day-picker@npm:9.14.0"
+  dependencies:
+    "@date-fns/tz": ^1.4.1
+    "@tabby_ai/hijri-converter": 1.0.5
+    date-fns: ^4.1.0
+    date-fns-jalali: 4.1.0-0
+  peerDependencies:
+    react: ">=16.8.0"
+  checksum: 231602c2fbb063af3acaacb4a99a525f96bfee5be88c0f7e62c619a4b2b461cf5ba648b9d165fdd929caf582dbb3dcb8ee157dc6225a467315a7f59589a1b85d
   languageName: node
   linkType: hard
 

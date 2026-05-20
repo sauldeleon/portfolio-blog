@@ -1,5 +1,55 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
+exports[`Button should render contained with colorScheme danger 1`] = `
+.c0 {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  cursor: pointer;
+  border: 1px solid #FBFBFB;
+  padding: 0.5rem 1rem;
+  font-size: 0.6rem;
+  color: #B04B2F;
+  border-color: #B04B2F;
+}
+
+<body>
+  <div>
+    <button
+      class="c0"
+    >
+      Remove
+    </button>
+  </div>
+</body>
+`;
+
+exports[`Button should render contained with colorScheme success 1`] = `
+.c0 {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  cursor: pointer;
+  border: 1px solid #FBFBFB;
+  padding: 0.5rem 1rem;
+  font-size: 0.6rem;
+  color: #98DFD6;
+  border-color: #98DFD6;
+}
+
+<body>
+  <div>
+    <button
+      class="c0"
+    >
+      Save
+    </button>
+  </div>
+</body>
+`;
+
 exports[`Button should render contained with size xs 1`] = `
 .c0 {
   display: flex;
@@ -18,6 +68,141 @@ exports[`Button should render contained with size xs 1`] = `
       class="c0"
     >
       Click me
+    </button>
+  </div>
+</body>
+`;
+
+exports[`Button should render ghost with colorScheme danger 1`] = `
+.c0 {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid transparent;
+  font-family: inherit;
+  padding: 0.25rem 0.625rem;
+  font-size: 0.6rem;
+  color: #B04B2F;
+  border-color: #B04B2F;
+}
+
+.c0:hover:not(:disabled) {
+  border-color: currentColor;
+}
+
+.c0:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
+
+.c0:focus-visible {
+  outline: #FBFBFB auto 1px;
+}
+
+.c0:hover:not(:disabled) {
+  border-color: #B04B2F;
+  opacity: 0.8;
+}
+
+<body>
+  <div>
+    <button
+      class="c0"
+    >
+      Delete
+    </button>
+  </div>
+</body>
+`;
+
+exports[`Button should render ghost with colorScheme success 1`] = `
+.c0 {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid transparent;
+  font-family: inherit;
+  padding: 0.25rem 0.625rem;
+  font-size: 0.6rem;
+  color: #98DFD6;
+  border-color: #98DFD6;
+}
+
+.c0:hover:not(:disabled) {
+  border-color: currentColor;
+}
+
+.c0:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
+
+.c0:focus-visible {
+  outline: #FBFBFB auto 1px;
+}
+
+.c0:hover:not(:disabled) {
+  border-color: #98DFD6;
+  opacity: 0.8;
+}
+
+<body>
+  <div>
+    <button
+      class="c0"
+    >
+      Publish
+    </button>
+  </div>
+</body>
+`;
+
+exports[`Button should render ghost with colorScheme warning 1`] = `
+.c0 {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid transparent;
+  font-family: inherit;
+  padding: 0.25rem 0.625rem;
+  font-size: 0.6rem;
+  color: #FFDD83;
+  border-color: #FFDD83;
+}
+
+.c0:hover:not(:disabled) {
+  border-color: currentColor;
+}
+
+.c0:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
+
+.c0:focus-visible {
+  outline: #FBFBFB auto 1px;
+}
+
+.c0:hover:not(:disabled) {
+  border-color: #FFDD83;
+  opacity: 0.8;
+}
+
+<body>
+  <div>
+    <button
+      class="c0"
+    >
+      Warning
     </button>
   </div>
 </body>

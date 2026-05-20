@@ -1,6 +1,9 @@
-import { BlogImage } from '@sdlgr/blog-image'
 import { Callout } from '@sdlgr/callout'
 import { CodeBlock } from '@sdlgr/code-block'
+
+import { MdxTable } from '@web/components/PostContent/MdxTable'
+import { PostContentEmbed } from '@web/components/PostContent/PostContentEmbed'
+import { PostContentImage } from '@web/components/PostContent/PostContentImage'
 
 export interface MdxComponentLabels {
   copyLabel: string
@@ -10,7 +13,14 @@ export interface MdxComponentLabels {
 export function createMdxComponents(labels: MdxComponentLabels) {
   return {
     Callout,
-    BlogImage,
+    Embed: PostContentEmbed,
+    img: PostContentImage,
+    h1: ({ children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
+      <h2 {...props}>{children}</h2>
+    ),
+    table: (props: React.HTMLAttributes<HTMLTableElement>) => (
+      <MdxTable {...props} />
+    ),
     pre: (props: React.HTMLAttributes<HTMLPreElement>) => (
       <CodeBlock
         {...(props as React.HTMLAttributes<HTMLPreElement> & {

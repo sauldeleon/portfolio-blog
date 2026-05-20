@@ -101,4 +101,79 @@ describe('getPostCountPerTag', () => {
     const result = await getPostCountPerTag()
     expect(result).toEqual([])
   })
+
+  it('excludes the given post id when provided', async () => {
+    mockDb.execute.mockResolvedValue({
+      rows: [{ tag: 'react', count: 4 }],
+    })
+    const result = await getPostCountPerTag('post-ulid-01')
+    expect(result).toEqual([{ tag: 'react', count: 4 }])
+    expect(mockDb.execute).toHaveBeenCalledTimes(1)
+  })
+
+  it('filters by a single category', async () => {
+    mockDb.execute.mockResolvedValue({
+      rows: [{ tag: 'react', count: 2 }],
+    })
+    const result = await getPostCountPerTag(undefined, {
+      categories: ['engineering'],
+    })
+    expect(result).toEqual([{ tag: 'react', count: 2 }])
+    expect(mockDb.execute).toHaveBeenCalledTimes(1)
+  })
+
+  it('filters by multiple categories with OR logic', async () => {
+    mockDb.execute.mockResolvedValue({
+      rows: [
+        { tag: 'react', count: 3 },
+        { tag: 'css', count: 1 },
+      ],
+    })
+    const result = await getPostCountPerTag(undefined, {
+      categories: ['engineering', 'design'],
+    })
+    expect(result).toEqual([
+      { tag: 'react', count: 3 },
+      { tag: 'css', count: 1 },
+    ])
+    expect(mockDb.execute).toHaveBeenCalledTimes(1)
+  })
+
+  it('filters by year', async () => {
+    mockDb.execute.mockResolvedValue({
+      rows: [{ tag: 'react', count: 1 }],
+    })
+    const result = await getPostCountPerTag(undefined, { year: 2024 })
+    expect(result).toEqual([{ tag: 'react', count: 1 }])
+    expect(mockDb.execute).toHaveBeenCalledTimes(1)
+  })
+
+  it('filters by month', async () => {
+    mockDb.execute.mockResolvedValue({
+      rows: [{ tag: 'react', count: 1 }],
+    })
+    const result = await getPostCountPerTag(undefined, { month: 6 })
+    expect(result).toEqual([{ tag: 'react', count: 1 }])
+    expect(mockDb.execute).toHaveBeenCalledTimes(1)
+  })
+
+  it('applies excludeId and multiple filters together', async () => {
+    mockDb.execute.mockResolvedValue({
+      rows: [{ tag: 'typescript', count: 2 }],
+    })
+    const result = await getPostCountPerTag('hero-id', {
+      categories: ['engineering'],
+      year: 2024,
+      month: 3,
+    })
+    expect(result).toEqual([{ tag: 'typescript', count: 2 }])
+    expect(mockDb.execute).toHaveBeenCalledTimes(1)
+  })
+
+  it('ignores empty categories array', async () => {
+    mockDb.execute.mockResolvedValue({ rows: [] })
+    const result = await getPostCountPerTag(undefined, { categories: [] })
+    expect(result).toEqual([])
+    expect(mockDb.execute).toHaveBeenCalledTimes(1)
+  })
 })
