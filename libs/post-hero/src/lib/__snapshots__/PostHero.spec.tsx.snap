@@ -83,9 +83,7 @@ exports[`PostHero matches snapshot 1`] = `
       >
         <img
           alt="My Post Title"
-          sizes="(max-width: 1440px) 100vw, 1440px"
           src="blog/cover-image"
-          style="object-fit: cover;"
         />
       </div>
       <div

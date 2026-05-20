@@ -1,4 +1,4 @@
-import { fireEvent, screen } from '@testing-library/react'
+import { act, fireEvent, screen, waitFor } from '@testing-library/react'
 
 import { renderWithTheme } from '@sdlgr/test-utils'
 
@@ -109,7 +109,9 @@ describe('ShareButtons', () => {
   it('copies url to clipboard on copy button click', async () => {
     renderWithTheme(<ShareButtons {...defaultProps} />)
     fireEvent.click(screen.getByRole('button', { name: 'Copy link' }))
-    expect(mockWriteText).toHaveBeenCalledWith('https://example.com/post')
+    await waitFor(() => {
+      expect(mockWriteText).toHaveBeenCalledWith('https://example.com/post')
+    })
   })
 
   it('shows copiedLabel after clicking copy', async () => {
@@ -124,7 +126,9 @@ describe('ShareButtons', () => {
     renderWithTheme(<ShareButtons {...defaultProps} copiedLabel="Copied!" />)
     fireEvent.click(screen.getByRole('button', { name: 'Copy link' }))
     await screen.findByRole('button', { name: 'Copied!' })
-    jest.advanceTimersByTime(2000)
+    act(() => {
+      jest.advanceTimersByTime(2000)
+    })
     expect(
       await screen.findByRole('button', { name: 'Copy link' }),
     ).toBeInTheDocument()
