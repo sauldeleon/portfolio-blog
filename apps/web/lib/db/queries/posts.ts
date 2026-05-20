@@ -610,15 +610,18 @@ export async function getPostPublishedDates(
 ): Promise<PublishedDateGroup[]> {
   type Row = { year: number; months: number[] }
   const result = await db.execute<Row>(sql`
-    SELECT
-      date_part('year', p.published_at)::int AS year,
-      array_agg(DISTINCT date_part('month', p.published_at)::int ORDER BY 1) AS months
-    FROM posts p
-    INNER JOIN post_translations pt ON pt.post_id = p.id AND pt.locale = ${locale}
-    WHERE p.status = 'published'
-      AND p.deleted_at IS NULL
-      AND p.published_at IS NOT NULL
-    GROUP BY date_part('year', p.published_at)
+    SELECT year, array_agg(month ORDER BY month) AS months
+    FROM (
+      SELECT DISTINCT
+        date_part('year', p.published_at)::int AS year,
+        date_part('month', p.published_at)::int AS month
+      FROM posts p
+      INNER JOIN post_translations pt ON pt.post_id = p.id AND pt.locale = ${locale}
+      WHERE p.status = 'published'
+        AND p.deleted_at IS NULL
+        AND p.published_at IS NOT NULL
+    ) sub
+    GROUP BY year
     ORDER BY year DESC
   `)
   return result.rows
