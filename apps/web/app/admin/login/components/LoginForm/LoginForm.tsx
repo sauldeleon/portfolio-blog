@@ -38,7 +38,9 @@ export function LoginForm() {
       redirect: false,
     })
     setLoading(false)
-    if (result?.error) {
+    if (result?.status === 429) {
+      setError(t('login.tooManyAttempts'))
+    } else if (result?.error) {
       setError(t('login.invalidCredentials'))
     } else {
       navigateTo('/admin/posts')

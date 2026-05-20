@@ -2,6 +2,8 @@ import { notFound, redirect } from 'next/navigation'
 
 import { getPostByNumber } from '@web/lib/db/queries/posts'
 
+export const revalidate = 3600
+
 interface RouteProps {
   params: Promise<{ lng: string; id: string }>
 }

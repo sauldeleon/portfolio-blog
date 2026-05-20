@@ -27,7 +27,7 @@ import { getSiteUrl } from '@web/utils/url/generateUrl'
 
 import { StyledPage } from './page.next.styles'
 
-export const revalidate = 60
+export const revalidate = 3600
 
 const dateLocales: Record<Locale, DateLocale> = { en: enUS, es }
 

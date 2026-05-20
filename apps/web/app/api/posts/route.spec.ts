@@ -11,6 +11,9 @@ const mockEnsureSeries = jest.fn()
 const mockUpsertSeriesTranslation = jest.fn()
 const mockSeriesOrderExistsForSeries = jest.fn()
 
+const mockRevalidateTag = jest.fn()
+
+jest.mock('next/cache', () => ({ revalidateTag: mockRevalidateTag }))
 jest.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
 jest.mock('@web/lib/db/queries/categories', () => ({
   getCategoryBySlug: mockGetCategoryBySlug,
@@ -394,6 +397,7 @@ describe('POST /api/posts', () => {
         es: validTranslations.es,
       }),
     )
+    expect(mockRevalidateTag).toHaveBeenCalledWith('posts')
   })
 
   it('creates post with ES-only translation', async () => {

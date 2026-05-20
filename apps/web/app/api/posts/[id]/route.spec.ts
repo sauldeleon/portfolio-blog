@@ -15,6 +15,9 @@ const mockEnsureSeries = jest.fn()
 const mockUpsertSeriesTranslation = jest.fn()
 const mockSeriesOrderExistsForSeries = jest.fn()
 
+const mockRevalidateTag = jest.fn()
+
+jest.mock('next/cache', () => ({ revalidateTag: mockRevalidateTag }))
 jest.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
 jest.mock('@web/lib/db/queries/categories', () => ({
   getCategoryBySlug: mockGetCategoryBySlug,
@@ -339,6 +342,10 @@ describe('PUT /api/posts/[id]', () => {
     )
     expect(response.status).toBe(200)
     expect(mockUpdatePost).toHaveBeenCalled()
+    expect(mockRevalidateTag).toHaveBeenCalledWith('posts')
+    expect(mockRevalidateTag).toHaveBeenCalledWith(
+      'post-01JWTEST000000000000000000',
+    )
   })
 
   it('upserts translations when provided', async () => {
@@ -588,6 +595,10 @@ describe('DELETE /api/posts/[id]', () => {
     expect(mockSoftDeletePost).toHaveBeenCalledWith(
       '01JWTEST000000000000000000',
     )
+    expect(mockRevalidateTag).toHaveBeenCalledWith('posts')
+    expect(mockRevalidateTag).toHaveBeenCalledWith(
+      'post-01JWTEST000000000000000000',
+    )
   })
 
   it('hard-deletes archived post and returns 204', async () => {
@@ -605,6 +616,10 @@ describe('DELETE /api/posts/[id]', () => {
       '01JWTEST000000000000000000',
     )
     expect(mockSoftDeletePost).not.toHaveBeenCalled()
+    expect(mockRevalidateTag).toHaveBeenCalledWith('posts')
+    expect(mockRevalidateTag).toHaveBeenCalledWith(
+      'post-01JWTEST000000000000000000',
+    )
   })
 
   it('returns 422 when hard-deleting a non-archived post', async () => {

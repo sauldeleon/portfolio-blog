@@ -3,6 +3,8 @@ import { getServerTranslation } from '@web/i18n/server'
 import { Locale } from '@web/lib/db/schema'
 import { buildAlternates } from '@web/utils/metadata/inLanguage'
 
+export const revalidate = 60
+
 interface RouteProps {
   params: Promise<{ lng: Locale }>
   searchParams: Promise<{

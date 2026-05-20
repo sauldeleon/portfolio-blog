@@ -7353,6 +7353,8 @@ __metadata:
     "@types/testing-library__jest-dom": 5.14.9
     "@typescript-eslint/eslint-plugin": 8.59.2
     "@typescript-eslint/parser": 8.59.2
+    "@upstash/ratelimit": 2.0.8
+    "@upstash/redis": 1.38.0
     accept-language: 3.0.20
     axios: 1.16.1
     babel-jest: 30.4.0
@@ -9028,6 +9030,35 @@ __metadata:
   version: 1.11.1
   resolution: "@unrs/resolver-binding-win32-x64-msvc@npm:1.11.1"
   conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@upstash/core-analytics@npm:^0.0.10":
+  version: 0.0.10
+  resolution: "@upstash/core-analytics@npm:0.0.10"
+  dependencies:
+    "@upstash/redis": ^1.28.3
+  checksum: 5b435a5e67666a6ecb19e59ab73f314124634fdadb66390f8b2d6f7e20cac461262e5b81d113d77a5d093d8d11b2cfe3ecd5c573cde77505557f8bbf0f8b1e27
+  languageName: node
+  linkType: hard
+
+"@upstash/ratelimit@npm:2.0.8":
+  version: 2.0.8
+  resolution: "@upstash/ratelimit@npm:2.0.8"
+  dependencies:
+    "@upstash/core-analytics": ^0.0.10
+  peerDependencies:
+    "@upstash/redis": ^1.34.3
+  checksum: c39b59f94a05c8c3b9cd7dab5c754dd5bf94bab42894820781a21521de3024ccae64711967253aad7b85dc972bbfe5d1cc6b44f012f064b410f319787d564434
+  languageName: node
+  linkType: hard
+
+"@upstash/redis@npm:1.38.0, @upstash/redis@npm:^1.28.3":
+  version: 1.38.0
+  resolution: "@upstash/redis@npm:1.38.0"
+  dependencies:
+    uncrypto: ^0.1.3
+  checksum: 8bba049e67a47515b628b4c431bc45f7a8e8695e448dbafdb34ed2b2a23b865a9b6fad49f23d4952076760c71481ff2ebb62f26f303f47576712d587e3368c54
   languageName: node
   linkType: hard
 
@@ -26185,6 +26216,13 @@ __metadata:
   peerDependencies:
     react: ">=15.0.0"
   checksum: 3345c0c1916193ddb9cc6f2b78711dc9f22b919d780485e15b95690722e9d1797fc702c4ebb30c0acaae6a772b865d0a9ddc83fa1da44958f089aee78f2f5eab
+  languageName: node
+  linkType: hard
+
+"uncrypto@npm:^0.1.3":
+  version: 0.1.3
+  resolution: "uncrypto@npm:0.1.3"
+  checksum: 07160e08806dd6cea16bb96c3fd54cd70fc801e02fc3c6f86980144d15c9ebbd1c55587f7280a207b3af6cd34901c0d0b77ada5a02c2f7081a033a05acf409e2
   languageName: node
   linkType: hard
 
