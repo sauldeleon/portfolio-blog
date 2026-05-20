@@ -23,6 +23,7 @@ import {
   ogLocale,
   ogLocaleAlternate,
 } from '@web/utils/metadata/inLanguage'
+import { getSiteUrl } from '@web/utils/url/generateUrl'
 
 import { StyledPage } from './page.next.styles'
 
@@ -81,7 +82,7 @@ export async function generateMetadata({ params }: RouteProps) {
   const altPath = `blog/${postNumber}/${altSlug}`
   const ownPath = `blog/${postNumber}/${post.slug}`
 
-  const siteUrl = process.env.BASE_URL ?? ''
+  const siteUrl = getSiteUrl()
   const categoryName = await getCategoryName(post.category, lng as Locale)
   const coverUrl = post.coverImage
     ? getCldImageUrl({
@@ -142,7 +143,7 @@ export default async function BlogPostPage({ params }: RouteProps) {
     Promise.resolve(extractToc(post.content)),
     getCategoryName(post.category, lng as Locale),
   ])
-  const postUrl = `${process.env.BASE_URL ?? ''}/${lng}/blog/${post.postNumber}/${post.slug}`
+  const postUrl = `${getSiteUrl()}/${lng}/blog/${post.postNumber}/${post.slug}`
 
   return (
     <StyledPage>

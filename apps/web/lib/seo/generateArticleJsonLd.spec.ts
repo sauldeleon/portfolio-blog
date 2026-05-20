@@ -142,8 +142,9 @@ describe('generateArticleJsonLd', () => {
     expect(result.keywords).toBe('')
   })
 
-  it('uses empty string for siteUrl when BASE_URL is not set', () => {
+  it('uses empty string for siteUrl when neither BASE_URL nor VERCEL_URL is set', () => {
     delete process.env.BASE_URL
+    delete process.env.VERCEL_URL
     const result = generateArticleJsonLd(mockPost, 'en', testUrl)
     expect(result.author).toMatchObject({ url: '' })
     expect(result.publisher).toMatchObject({ url: '' })

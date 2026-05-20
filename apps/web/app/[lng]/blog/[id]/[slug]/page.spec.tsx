@@ -526,9 +526,11 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
     )
   })
 
-  it('uses empty string for postUrl when BASE_URL is not set', async () => {
+  it('uses empty string for postUrl when neither BASE_URL nor VERCEL_URL is set', async () => {
     const originalBaseUrl = process.env.BASE_URL
+    const originalVercelUrl = process.env.VERCEL_URL
     delete process.env.BASE_URL
+    delete process.env.VERCEL_URL
     mockGetPostByNumber.mockResolvedValue(publishedPost)
     const { default: BlogPostPage } = require('./page.next')
     const ui = await BlogPostPage({
@@ -537,5 +539,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
     render(ui)
     expect(screen.getByTestId('json-ld')).toBeInTheDocument()
     process.env.BASE_URL = originalBaseUrl
+    if (originalVercelUrl !== undefined) process.env.VERCEL_URL = originalVercelUrl
   })
 })

@@ -1,13 +1,14 @@
 import { getCldImageUrl } from 'next-cloudinary'
 
 import type { PublicPost } from '@web/lib/db/queries/posts'
+import { getSiteUrl } from '@web/utils/url/generateUrl'
 
 export function generateArticleJsonLd(
   post: PublicPost,
   lng: string,
   url: string,
 ) {
-  const siteUrl = process.env.BASE_URL ?? ''
+  const siteUrl = getSiteUrl()
   const image = post.coverImage
     ? getCldImageUrl({
         src: post.coverImage,
