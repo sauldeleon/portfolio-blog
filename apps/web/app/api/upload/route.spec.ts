@@ -3,11 +3,13 @@
  */
 const mockAuth = jest.fn()
 const mockUploadImage = jest.fn()
+const mockLoggerError = jest.fn()
 
 jest.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
 jest.mock('@web/lib/cloudinary/upload', () => ({
   uploadImage: mockUploadImage,
 }))
+jest.mock('@web/lib/logger', () => ({ logger: { error: mockLoggerError } }))
 
 const { POST } = require('./route') as {
   POST: (req: Request) => Promise<Response>
@@ -169,9 +171,10 @@ describe('POST /api/upload', () => {
     )
   })
 
-  it('returns 500 when uploadImage throws', async () => {
+  it('returns 500 and logs error when uploadImage throws', async () => {
     mockAuth.mockResolvedValue({ user: { name: 'admin' } })
-    mockUploadImage.mockRejectedValue(new Error('Cloudinary error'))
+    const err = new Error('Cloudinary error')
+    mockUploadImage.mockRejectedValue(err)
     const response = await POST(
       makeFormDataRequest({
         file: { content: 'data', name: 'photo.jpg', type: 'image/jpeg' },
@@ -180,6 +183,7 @@ describe('POST /api/upload', () => {
     expect(response.status).toBe(500)
     const body = (await response.json()) as { error: string }
     expect(body.error).toBe('Upload failed')
+    expect(mockLoggerError).toHaveBeenCalledWith(err, 'Image upload failed')
   })
 
   it('accepts image/webp and image/gif', async () => {

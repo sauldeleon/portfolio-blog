@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 
 import { auth } from '@web/lib/auth/config'
 import { uploadImage } from '@web/lib/cloudinary/upload'
+import { logger } from '@web/lib/logger'
 
 const MAX_SIZE = 10 * 1024 * 1024
 const ALLOWED_TYPES = new Set([
@@ -51,7 +52,8 @@ export async function POST(request: Request) {
       name || undefined,
     )
     return NextResponse.json(result, { status: 201 })
-  } catch {
+  } catch (err) {
+    logger.error(err, 'Image upload failed')
     return NextResponse.json({ error: 'Upload failed' }, { status: 500 })
   }
 }
