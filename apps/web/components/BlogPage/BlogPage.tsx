@@ -1,17 +1,21 @@
 import { format } from 'date-fns'
 import { type Locale as DateLocale, enUS, es } from 'date-fns/locale'
 
-import { CategoryFilter } from '@sdlgr/blog-filters'
-import { TagFilter } from '@sdlgr/blog-filters'
+import { BlogFilters } from '@sdlgr/blog-filters'
 import { Pagination } from '@sdlgr/pagination'
 import { PostCard } from '@sdlgr/post-card'
 
+import { LatestPostHero } from '@web/components/LatestPostHero'
 import { getServerTranslation } from '@web/i18n/server'
 import {
   getCategories,
   getCategoryByLocaleSlug,
 } from '@web/lib/db/queries/categories'
-import { getPublishedPostsPaginated } from '@web/lib/db/queries/posts'
+import {
+  getLatestPublishedPost,
+  getPostPublishedDates,
+  getPublishedPostsPaginated,
+} from '@web/lib/db/queries/posts'
 import { getPostCountPerTag } from '@web/lib/db/queries/tags'
 import { Locale } from '@web/lib/db/schema'
 import { computeReadingTime } from '@web/utils/computeReadingTime'
@@ -23,6 +27,7 @@ import {
   StyledHeader,
   StyledHeading,
   StyledHeadingAccent,
+  StyledHeroWrapper,
   StyledPage,
   StyledPaginationWrapper,
 } from './BlogPage.styles'
@@ -34,40 +39,83 @@ const dateLocales: Record<Locale, DateLocale> = { en: enUS, es }
 export interface BlogPageProps {
   lng: Locale
   page?: string
-  category?: string
-  tag?: string
+  categories?: string
+  tags?: string
   q?: string
+  year?: string
+  month?: string
 }
 
 export async function BlogPage({
   lng,
   page = '1',
-  category,
-  tag,
+  categories,
+  tags,
   q,
+  year,
+  month,
 }: BlogPageProps) {
   const currentPage = Math.max(1, parseInt(page, 10) || 1)
   const locale = dateLocales[lng] ?? enUS
 
-  const canonicalCategory = category
-    ? ((await getCategoryByLocaleSlug(category, lng))?.canonicalSlug ??
-      category)
-    : undefined
+  const activeCategories = categories
+    ? categories.split(',').filter(Boolean)
+    : []
+  const activeTags = tags ? tags.split(',').filter(Boolean) : []
+  const activeYear = year ? parseInt(year, 10) || null : null
+  const activeMonth = month ? parseInt(month, 10) || null : null
 
-  const [postsResult, categories, tags] = await Promise.all([
-    getPublishedPostsPaginated({
-      locale: lng,
-      page: currentPage,
-      limit: POSTS_PER_PAGE,
-      category: canonicalCategory,
-      tag,
-      q,
+  const hasActiveFilters = !!(
+    q ||
+    activeCategories.length ||
+    activeTags.length ||
+    activeYear ||
+    activeMonth
+  )
+
+  const canonicalCategories = await Promise.all(
+    activeCategories.map(async (slug) => {
+      const resolved = await getCategoryByLocaleSlug(slug, lng)
+      return resolved?.canonicalSlug ?? slug
     }),
-    getCategories(lng),
-    getPostCountPerTag(),
-  ])
+  )
+
+  const [latestPost, postsResult, categoriesData, tagsData, publishedDates] =
+    await Promise.all([
+      hasActiveFilters ? Promise.resolve(null) : getLatestPublishedPost(lng),
+      getPublishedPostsPaginated({
+        locale: lng,
+        page: currentPage,
+        limit: POSTS_PER_PAGE,
+        categories: canonicalCategories.length
+          ? canonicalCategories
+          : undefined,
+        tags: activeTags.length ? activeTags : undefined,
+        q,
+        year: activeYear ?? undefined,
+        month: activeMonth ?? undefined,
+        excludeId: undefined,
+      }),
+      getCategories(lng),
+      getPostCountPerTag(),
+      getPostPublishedDates(lng),
+    ])
+
+  const excludeId = latestPost?.id
+  const gridResult = excludeId
+    ? await getPublishedPostsPaginated({
+        locale: lng,
+        page: currentPage,
+        limit: POSTS_PER_PAGE,
+        excludeId,
+      })
+    : postsResult
 
   const { t } = await getServerTranslation({ ns: 'blogPage', language: lng })
+
+  const monthNames = Array.from({ length: 12 }, (_, i) =>
+    format(new Date(2024, i, 1), 'MMM', { locale }),
+  )
 
   return (
     <StyledPage>
@@ -75,30 +123,45 @@ export async function BlogPage({
         <StyledHeading>{t('title')}</StyledHeading>
         <StyledHeadingAccent aria-hidden />
       </StyledHeader>
+      {latestPost && (
+        <StyledHeroWrapper>
+          <LatestPostHero
+            post={latestPost}
+            lng={lng}
+            readMoreLabel={t('readMore')}
+          />
+        </StyledHeroWrapper>
+      )}
       <StyledFilters>
-        <CategoryFilter
-          categories={categories.map((cat) => ({
+        <BlogFilters
+          categories={categoriesData.map((cat) => ({
             id: cat.id,
             slug: cat.localeSlug,
             name: `${cat.name} (${cat.publishedPostCount})`,
             description: cat.description,
           }))}
-          activeCategory={category ?? null}
-          allLabel={t('allCategories')}
-          label={t('categoriesLabel')}
-        />
-        <TagFilter
-          tags={tags}
-          activeTag={tag ?? null}
-          allLabel={t('allTags')}
-          label={t('tags')}
+          activeCategories={activeCategories}
+          allCategoriesLabel={t('allCategories')}
+          categoriesLabel={t('categoriesLabel')}
+          tags={tagsData}
+          activeTags={activeTags}
+          allTagsLabel={t('allTags')}
+          tagsLabel={t('tags')}
+          dates={publishedDates}
+          activeYear={activeYear}
+          activeMonth={activeMonth}
+          dateLabel={t('dateLabel')}
+          monthNames={monthNames}
+          searchPlaceholder={t('searchPlaceholder')}
+          initialQ={q}
+          filterByLabel={t('filterBy')}
         />
       </StyledFilters>
-      {postsResult.data.length === 0 ? (
+      {gridResult.data.length === 0 ? (
         <StyledEmpty>{t('noResults')}</StyledEmpty>
       ) : (
         <StyledGrid>
-          {postsResult.data.map((post) => (
+          {gridResult.data.map((post) => (
             <PostCard
               key={post.id}
               id={post.id}
@@ -127,7 +190,7 @@ export async function BlogPage({
       )}
       <StyledPaginationWrapper>
         <Pagination
-          total={postsResult.total}
+          total={gridResult.total}
           page={currentPage}
           limit={POSTS_PER_PAGE}
           previousLabel={t('pagination.previous')}

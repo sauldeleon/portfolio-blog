@@ -76,3 +76,7 @@ export const StyledPaginationWrapper = styled.div`
   display: flex;
   justify-content: center;
 `
+
+export const StyledHeroWrapper = styled.div`
+  margin-bottom: 2.5rem;
+`

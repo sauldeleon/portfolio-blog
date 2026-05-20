@@ -23,7 +23,7 @@ describe('CategoryFilter', () => {
     renderWithTheme(
       <CategoryFilter
         categories={categories}
-        activeCategory={null}
+        activeCategories={[]}
         allLabel="All categories"
         label="Category"
       />,
@@ -35,7 +35,7 @@ describe('CategoryFilter', () => {
     renderWithTheme(
       <CategoryFilter
         categories={categories}
-        activeCategory={null}
+        activeCategories={[]}
         allLabel="All"
       />,
     )
@@ -43,26 +43,58 @@ describe('CategoryFilter', () => {
     expect(screen.getByText('Life')).toBeInTheDocument()
   })
 
-  it('clicking a category chip pushes URL with category param', () => {
+  it('clicking a category chip adds it to URL categories param', () => {
     renderWithTheme(
       <CategoryFilter
         categories={categories}
-        activeCategory={null}
+        activeCategories={[]}
         allLabel="All"
       />,
     )
     fireEvent.click(screen.getByText('Engineering'))
-    expect(mockPush).toHaveBeenCalledWith('/en/blog?category=engineering')
+    expect(mockPush).toHaveBeenCalledWith('/en/blog?categories=engineering')
   })
 
-  it('clicking all chip removes category param', () => {
+  it('clicking an active category chip removes it from URL', () => {
     ;(useSearchParams as jest.Mock).mockReturnValue(
-      new URLSearchParams('category=engineering'),
+      new URLSearchParams('categories=engineering'),
     )
     renderWithTheme(
       <CategoryFilter
         categories={categories}
-        activeCategory="engineering"
+        activeCategories={['engineering']}
+        allLabel="All"
+      />,
+    )
+    fireEvent.click(screen.getByText('Engineering'))
+    expect(mockPush).toHaveBeenCalledWith('/en/blog?')
+  })
+
+  it('clicking a second category appends to existing selection', () => {
+    ;(useSearchParams as jest.Mock).mockReturnValue(
+      new URLSearchParams('categories=engineering'),
+    )
+    renderWithTheme(
+      <CategoryFilter
+        categories={categories}
+        activeCategories={['engineering']}
+        allLabel="All"
+      />,
+    )
+    fireEvent.click(screen.getByText('Life'))
+    expect(mockPush).toHaveBeenCalledWith(
+      '/en/blog?categories=engineering%2Clife',
+    )
+  })
+
+  it('clicking all chip removes categories param', () => {
+    ;(useSearchParams as jest.Mock).mockReturnValue(
+      new URLSearchParams('categories=engineering'),
+    )
+    renderWithTheme(
+      <CategoryFilter
+        categories={categories}
+        activeCategories={['engineering']}
         allLabel="All"
       />,
     )
@@ -70,11 +102,11 @@ describe('CategoryFilter', () => {
     expect(mockPush).toHaveBeenCalledWith('/en/blog?')
   })
 
-  it('marks active category with aria-current', () => {
+  it('marks active categories with aria-current', () => {
     renderWithTheme(
       <CategoryFilter
         categories={categories}
-        activeCategory="engineering"
+        activeCategories={['engineering']}
         allLabel="All"
       />,
     )
@@ -82,26 +114,38 @@ describe('CategoryFilter', () => {
       'aria-current',
       'true',
     )
+    expect(screen.getByText('Life')).not.toHaveAttribute('aria-current')
   })
 
-  it('clears page param when a category is selected', () => {
+  it('marks all as active when no categories selected', () => {
+    renderWithTheme(
+      <CategoryFilter
+        categories={categories}
+        activeCategories={[]}
+        allLabel="All"
+      />,
+    )
+    expect(screen.getByText('All')).toHaveAttribute('aria-current', 'true')
+  })
+
+  it('clears page param when a category is toggled', () => {
     ;(useSearchParams as jest.Mock).mockReturnValue(
       new URLSearchParams('page=3'),
     )
     renderWithTheme(
       <CategoryFilter
         categories={categories}
-        activeCategory={null}
+        activeCategories={[]}
         allLabel="All"
       />,
     )
     fireEvent.click(screen.getByText('Engineering'))
-    expect(mockPush).toHaveBeenCalledWith('/en/blog?category=engineering')
+    expect(mockPush).toHaveBeenCalledWith('/en/blog?categories=engineering')
   })
 
   it('renders only all-label when no categories', () => {
     renderWithTheme(
-      <CategoryFilter categories={[]} activeCategory={null} allLabel="All" />,
+      <CategoryFilter categories={[]} activeCategories={[]} allLabel="All" />,
     )
     expect(screen.getByText('All')).toBeInTheDocument()
   })

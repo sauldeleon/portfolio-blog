@@ -2,6 +2,23 @@ import styled, { css } from 'styled-components'
 
 import { Button } from '@sdlgr/button'
 
+export const StyledBlogFilters = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`
+
+export const StyledFilterByLabel = styled.span`
+  display: block;
+  color: ${({ theme }) => theme.colors.white};
+  font-family: inherit;
+  font-size: 0.6rem;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.42;
+`
+
 export const StyledFilterNav = styled.nav`
   min-width: 0;
 `

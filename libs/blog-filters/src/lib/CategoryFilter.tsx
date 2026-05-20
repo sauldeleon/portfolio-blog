@@ -18,14 +18,14 @@ export interface Category {
 
 export interface CategoryFilterProps {
   categories: Category[]
-  activeCategory: string | null
+  activeCategories: string[]
   allLabel: string
   label?: string
 }
 
 export function CategoryFilter({
   categories,
-  activeCategory,
+  activeCategories,
   allLabel,
   label,
 }: CategoryFilterProps) {
@@ -33,13 +33,23 @@ export function CategoryFilter({
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
-  const handleSelect = (slug: string | null) => {
+  const handleToggle = (slug: string) => {
     const params = new URLSearchParams(searchParams.toString())
-    if (slug) {
-      params.set('category', slug)
+    const next = activeCategories.includes(slug)
+      ? activeCategories.filter((s) => s !== slug)
+      : [...activeCategories, slug]
+    if (next.length === 0) {
+      params.delete('categories')
     } else {
-      params.delete('category')
+      params.set('categories', next.join(','))
     }
+    params.delete('page')
+    router.push(`${pathname}?${params.toString()}`)
+  }
+
+  const handleAll = () => {
+    const params = new URLSearchParams(searchParams.toString())
+    params.delete('categories')
     params.delete('page')
     router.push(`${pathname}?${params.toString()}`)
   }
@@ -50,9 +60,9 @@ export function CategoryFilter({
       <StyledChipList>
         <li>
           <StyledChip
-            onClick={() => handleSelect(null)}
-            active={activeCategory === null}
-            aria-current={activeCategory === null ? true : undefined}
+            onClick={handleAll}
+            active={activeCategories.length === 0}
+            aria-current={activeCategories.length === 0 ? true : undefined}
           >
             {allLabel}
           </StyledChip>
@@ -60,9 +70,11 @@ export function CategoryFilter({
         {categories.map((cat) => (
           <li key={cat.slug}>
             <StyledChip
-              onClick={() => handleSelect(cat.slug)}
-              active={cat.slug === activeCategory}
-              aria-current={cat.slug === activeCategory ? true : undefined}
+              onClick={() => handleToggle(cat.slug)}
+              active={activeCategories.includes(cat.slug)}
+              aria-current={
+                activeCategories.includes(cat.slug) ? true : undefined
+              }
             >
               {cat.name}
             </StyledChip>

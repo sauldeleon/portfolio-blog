@@ -16,14 +16,14 @@ export interface TagWithCount {
 
 export interface TagFilterProps {
   tags: TagWithCount[]
-  activeTag: string | null
+  activeTags: string[]
   allLabel: string
   label?: string
 }
 
 export function TagFilter({
   tags,
-  activeTag,
+  activeTags,
   allLabel,
   label,
 }: TagFilterProps) {
@@ -31,13 +31,23 @@ export function TagFilter({
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
-  const handleSelect = (tag: string | null) => {
+  const handleToggle = (tag: string) => {
     const params = new URLSearchParams(searchParams.toString())
-    if (tag) {
-      params.set('tag', tag)
+    const next = activeTags.includes(tag)
+      ? activeTags.filter((t) => t !== tag)
+      : [...activeTags, tag]
+    if (next.length === 0) {
+      params.delete('tags')
     } else {
-      params.delete('tag')
+      params.set('tags', next.join(','))
     }
+    params.delete('page')
+    router.push(`${pathname}?${params.toString()}`)
+  }
+
+  const handleAll = () => {
+    const params = new URLSearchParams(searchParams.toString())
+    params.delete('tags')
     params.delete('page')
     router.push(`${pathname}?${params.toString()}`)
   }
@@ -49,9 +59,9 @@ export function TagFilter({
         <li>
           <StyledChip
             $small
-            onClick={() => handleSelect(null)}
-            active={activeTag === null}
-            aria-current={activeTag === null ? true : undefined}
+            onClick={handleAll}
+            active={activeTags.length === 0}
+            aria-current={activeTags.length === 0 ? true : undefined}
           >
             {allLabel}
           </StyledChip>
@@ -60,9 +70,9 @@ export function TagFilter({
           <li key={tag}>
             <StyledChip
               $small
-              onClick={() => handleSelect(tag)}
-              active={tag === activeTag}
-              aria-current={tag === activeTag ? true : undefined}
+              onClick={() => handleToggle(tag)}
+              active={activeTags.includes(tag)}
+              aria-current={activeTags.includes(tag) ? true : undefined}
             >
               {tag} ({count})
             </StyledChip>
