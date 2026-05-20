@@ -113,4 +113,12 @@ export const StyledReadMoreLink = styled(Link)`
   text-decoration: none;
   background: transparent;
   cursor: pointer;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.yellow};
+    color: ${({ theme }) => theme.colors.black};
+  }
 `
