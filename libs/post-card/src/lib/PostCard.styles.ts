@@ -7,10 +7,17 @@ export const StyledCard = styled.article`
   border: 1px solid rgba(251, 251, 251, 0.1);
   overflow: hidden;
   transition: border-color 0.2s ease;
+  position: relative;
 
   &:hover {
     border-color: ${({ theme }) => theme.colors.green};
   }
+`
+
+export const StyledCardOverlay = styled(Link)`
+  position: absolute;
+  inset: 0;
+  z-index: 0;
 `
 
 export const StyledCover = styled.div<{ $fit?: 'cover' | 'contain' }>`
@@ -122,6 +129,7 @@ export const StyledReadMore = styled(Link)`
   align-self: flex-start;
   margin-top: 0.75rem;
   position: relative;
+  z-index: 1;
 
   &::after {
     content: '';

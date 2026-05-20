@@ -5,6 +5,7 @@ import { CldImage } from 'next-cloudinary'
 import {
   StyledBody,
   StyledCard,
+  StyledCardOverlay,
   StyledCategory,
   StyledCover,
   StyledExcerpt,
@@ -60,8 +61,11 @@ export function PostCard({
   const visibleTags = tags.slice(0, MAX_TAGS)
   const extraTagCount = tags.length - MAX_TAGS
 
+  const href = postNumber != null ? `/${lng}/blog/${postNumber}/${slug}` : '#'
+
   return (
     <StyledCard>
+      <StyledCardOverlay href={href} aria-hidden="true" tabIndex={-1} />
       <StyledCover $fit={coverImageFit}>
         {coverImagePublicId ? (
           <CldImage
@@ -97,11 +101,7 @@ export function PostCard({
             <StyledMoreTags>+{extraTagCount}</StyledMoreTags>
           )}
         </StyledTagList>
-        <StyledReadMore
-          href={postNumber != null ? `/${lng}/blog/${postNumber}/${slug}` : '#'}
-        >
-          {readMoreLabel}
-        </StyledReadMore>
+        <StyledReadMore href={href}>{readMoreLabel}</StyledReadMore>
       </StyledBody>
     </StyledCard>
   )
