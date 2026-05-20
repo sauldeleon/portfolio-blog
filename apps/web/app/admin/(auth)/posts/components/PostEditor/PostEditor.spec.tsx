@@ -169,6 +169,14 @@ jest.mock('@sdlgr/date-picker', () => ({
   ),
 }))
 
+jest.mock('@sdlgr/post-hero', () => ({
+  PostHero: ({ readingTime }: { readingTime: number }) => (
+    <div data-testid="post-hero-mock">
+      <span data-testid="reading-time">{readingTime}</span>
+    </div>
+  ),
+}))
+
 jest.mock('./PostCardPreview', () => ({
   PostCardPreview: () => <div data-testid="post-card-preview-mock" />,
 }))

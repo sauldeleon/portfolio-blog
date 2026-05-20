@@ -169,6 +169,14 @@ jest.mock('@sdlgr/date-picker', () => ({
   ),
 }))
 
+jest.mock('@sdlgr/post-hero', () => ({
+  PostHero: ({ readingTime }: { readingTime: number }) => (
+    <div data-testid="post-hero-mock">
+      <span data-testid="reading-time">{readingTime}</span>
+    </div>
+  ),
+}))
+
 jest.mock('./PostCardPreview', () => ({
   PostCardPreview: () => <div data-testid="post-card-preview-mock" />,
 }))
@@ -421,8 +429,8 @@ describe('PostEditor', () => {
 
     it('publish button disabled when only one translation saved in DB', () => {
       const enOnlyPost: PostEditorProps['post'] = {
-        post: mockExistingPost!.post,
-        translations: [mockExistingPost!.translations[0]],
+        post: mockExistingPost.post,
+        translations: [mockExistingPost.translations[0]],
       }
       renderApp(
         <PostEditor
@@ -486,8 +494,8 @@ describe('PostEditor', () => {
 
     it('updates status badge after unpublish', async () => {
       const publishedPost: PostEditorProps['post'] = {
-        post: { ...mockExistingPost!.post, status: 'published' },
-        translations: mockExistingPost!.translations,
+        post: { ...mockExistingPost.post, status: 'published' },
+        translations: mockExistingPost.translations,
       }
       renderApp(
         <PostEditor
@@ -505,8 +513,8 @@ describe('PostEditor', () => {
 
     it('shows archive button disabled for published post', () => {
       const publishedPost: PostEditorProps['post'] = {
-        post: { ...mockExistingPost!.post, status: 'published' },
-        translations: mockExistingPost!.translations,
+        post: { ...mockExistingPost.post, status: 'published' },
+        translations: mockExistingPost.translations,
       }
       renderApp(
         <PostEditor
@@ -520,8 +528,8 @@ describe('PostEditor', () => {
 
     it('shows archived state with unarchive + disabled publish', () => {
       const archivedPost: PostEditorProps['post'] = {
-        post: { ...mockExistingPost!.post, status: 'archived' },
-        translations: mockExistingPost!.translations,
+        post: { ...mockExistingPost.post, status: 'archived' },
+        translations: mockExistingPost.translations,
       }
       renderApp(
         <PostEditor
@@ -537,8 +545,8 @@ describe('PostEditor', () => {
 
     it('unarchive sends draft status', async () => {
       const archivedPost: PostEditorProps['post'] = {
-        post: { ...mockExistingPost!.post, status: 'archived' },
-        translations: mockExistingPost!.translations,
+        post: { ...mockExistingPost.post, status: 'archived' },
+        translations: mockExistingPost.translations,
       }
       renderApp(
         <PostEditor
@@ -571,13 +579,13 @@ describe('PostEditor', () => {
     it('handles post with null seriesId and seriesOrder', () => {
       const postNoSeries: PostEditorProps['post'] = {
         post: {
-          ...mockExistingPost!.post,
+          ...mockExistingPost.post,
           seriesId: null,
           seriesOrder: null,
           coverImage: null,
           coverImageFit: null,
         },
-        translations: mockExistingPost!.translations,
+        translations: mockExistingPost.translations,
       }
       renderApp(
         <PostEditor
@@ -846,7 +854,7 @@ describe('PostEditor', () => {
           post={{
             ...mockExistingPost,
             post: {
-              ...mockExistingPost!.post,
+              ...mockExistingPost.post,
               scheduledAt: new Date('2024-08-01T09:00:00.000Z'),
             },
           }}
@@ -877,10 +885,10 @@ describe('PostEditor', () => {
 
     it('renders hero preview with fallback slug in url when translation slug is empty', () => {
       const postEmptySlug: PostEditorProps['post'] = {
-        post: mockExistingPost!.post,
+        post: mockExistingPost.post,
         translations: [
-          { ...mockExistingPost!.translations[0], slug: '' },
-          mockExistingPost!.translations[1],
+          { ...mockExistingPost.translations[0], slug: '' },
+          mockExistingPost.translations[1],
         ],
       }
       renderApp(
