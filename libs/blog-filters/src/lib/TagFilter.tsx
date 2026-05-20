@@ -1,12 +1,16 @@
 'use client'
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { startTransition, useState } from 'react'
 
 import {
+  StyledApplyButton,
   StyledChip,
   StyledChipList,
-  StyledFilterLabel,
-  StyledFilterNav,
+  StyledDropdownButton,
+  StyledDropdownPanel,
+  StyledDropdownWrapper,
+  StyledTagSearchInput,
 } from './BlogFilters.styles'
 
 export interface TagWithCount {
@@ -17,68 +21,111 @@ export interface TagWithCount {
 export interface TagFilterProps {
   tags: TagWithCount[]
   activeTags: string[]
-  allLabel: string
   label?: string
+  isOpen: boolean
+  onToggle: () => void
+  applyLabel?: string
+  tagSearchPlaceholder?: string
 }
+
+const MAX_VISIBLE_TAGS = 15
 
 export function TagFilter({
   tags,
   activeTags,
-  allLabel,
   label,
+  isOpen,
+  onToggle,
+  applyLabel,
+  tagSearchPlaceholder,
 }: TagFilterProps) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const [pending, setPending] = useState<string[]>(activeTags)
+  const [tagSearch, setTagSearch] = useState('')
+  const [prevIsOpen, setPrevIsOpen] = useState(isOpen)
+
+  if (prevIsOpen !== isOpen) {
+    setPrevIsOpen(isOpen)
+    if (isOpen) {
+      setPending([...activeTags])
+      setTagSearch('')
+    }
+  }
+
+  const hasChanges =
+    [...pending].sort().join(',') !== [...activeTags].sort().join(',')
 
   const handleToggle = (tag: string) => {
+    setPending((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag],
+    )
+  }
+
+  const handleApply = () => {
     const params = new URLSearchParams(searchParams.toString())
-    const next = activeTags.includes(tag)
-      ? activeTags.filter((t) => t !== tag)
-      : [...activeTags, tag]
-    if (next.length === 0) {
+    if (pending.length === 0) {
       params.delete('tags')
     } else {
-      params.set('tags', next.join(','))
+      params.set('tags', pending.join(','))
     }
     params.delete('page')
-    router.push(`${pathname}?${params.toString()}`)
+    startTransition(() => {
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false })
+    })
+    onToggle()
   }
 
-  const handleAll = () => {
-    const params = new URLSearchParams(searchParams.toString())
-    params.delete('tags')
-    params.delete('page')
-    router.push(`${pathname}?${params.toString()}`)
-  }
+  const filteredTags = tags
+    .filter(({ tag }) => tag.toLowerCase().includes(tagSearch.toLowerCase()))
+    .slice(0, MAX_VISIBLE_TAGS)
+
+  const activeCount = activeTags.length
 
   return (
-    <StyledFilterNav aria-label={label ?? allLabel}>
-      {label ? <StyledFilterLabel>{label}</StyledFilterLabel> : null}
-      <StyledChipList>
-        <li>
-          <StyledChip
-            $small
-            onClick={handleAll}
-            active={activeTags.length === 0}
-            aria-current={activeTags.length === 0 ? true : undefined}
+    <StyledDropdownWrapper>
+      <StyledDropdownButton
+        onClick={onToggle}
+        aria-expanded={isOpen}
+        data-testid="filter-trigger"
+      >
+        {label}
+        {activeCount > 0 ? ` (${activeCount})` : ''} ▾
+      </StyledDropdownButton>
+      {isOpen && (
+        <StyledDropdownPanel $wide>
+          <StyledTagSearchInput
+            value={tagSearch}
+            onChange={(e) => setTagSearch(e.target.value)}
+            placeholder={tagSearchPlaceholder}
+            data-testid="tag-search-input"
+          />
+          <StyledChipList>
+            {filteredTags.map(({ tag, count }) => (
+              <li key={tag}>
+                <StyledChip
+                  $small
+                  onClick={() => handleToggle(tag)}
+                  active={pending.includes(tag)}
+                  aria-current={pending.includes(tag) ? true : undefined}
+                >
+                  {tag} ({count})
+                </StyledChip>
+              </li>
+            ))}
+          </StyledChipList>
+          <StyledApplyButton
+            variant="ghost"
+            colorScheme="success"
+            size="sm"
+            disabled={!hasChanges}
+            onClick={handleApply}
           >
-            {allLabel}
-          </StyledChip>
-        </li>
-        {tags.map(({ tag, count }) => (
-          <li key={tag}>
-            <StyledChip
-              $small
-              onClick={() => handleToggle(tag)}
-              active={activeTags.includes(tag)}
-              aria-current={activeTags.includes(tag) ? true : undefined}
-            >
-              {tag} ({count})
-            </StyledChip>
-          </li>
-        ))}
-      </StyledChipList>
-    </StyledFilterNav>
+            {applyLabel}
+          </StyledApplyButton>
+        </StyledDropdownPanel>
+      )}
+    </StyledDropdownWrapper>
   )
 }

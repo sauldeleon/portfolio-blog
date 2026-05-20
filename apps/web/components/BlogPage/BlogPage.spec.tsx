@@ -84,6 +84,7 @@ describe('BlogPage', () => {
     mockGetPostCountPerTag.mockResolvedValue([])
     mockGetLatestPublishedPost.mockResolvedValue(null)
     mockGetPostPublishedDates.mockResolvedValue([])
+    mockGetPublishedPostsPaginated.mockResolvedValue({ data: [], total: 0 })
   })
 
   it('renders post cards for each post', async () => {
@@ -98,7 +99,6 @@ describe('BlogPage', () => {
   })
 
   it('renders empty state when no posts', async () => {
-    mockGetPublishedPostsPaginated.mockResolvedValue({ data: [], total: 0 })
     const ui = await BlogPage({ lng: 'en' })
     render(ui)
     expect(screen.getByText('noResults')).toBeInTheDocument()
@@ -106,69 +106,54 @@ describe('BlogPage', () => {
   })
 
   it('renders blog filters', async () => {
-    mockGetPublishedPostsPaginated.mockResolvedValue({ data: [], total: 0 })
     const ui = await BlogPage({ lng: 'en' })
     render(ui)
     expect(screen.getByTestId('blog-filters')).toBeInTheDocument()
   })
 
   it('renders pagination', async () => {
-    mockGetPublishedPostsPaginated.mockResolvedValue({ data: [], total: 0 })
     const ui = await BlogPage({ lng: 'en' })
     render(ui)
     expect(screen.getByTestId('pagination')).toBeInTheDocument()
   })
 
-  it('renders hero when no filters active and latest post exists', async () => {
-    mockGetPublishedPostsPaginated.mockResolvedValue({ data: [], total: 0 })
+  it('renders hero when latest post exists', async () => {
     mockGetLatestPublishedPost.mockResolvedValue(mockPost)
     const ui = await BlogPage({ lng: 'en' })
     render(ui)
     expect(screen.getByTestId('latest-post-hero')).toBeInTheDocument()
   })
 
+  it('renders hero even when filters are active', async () => {
+    mockGetLatestPublishedPost.mockResolvedValue(mockPost)
+    const ui = await BlogPage({
+      lng: 'en',
+      q: 'search term',
+      categories: 'engineering',
+      year: '2024',
+    })
+    render(ui)
+    expect(screen.getByTestId('latest-post-hero')).toBeInTheDocument()
+  })
+
   it('does not render hero when latest post is null', async () => {
-    mockGetPublishedPostsPaginated.mockResolvedValue({ data: [], total: 0 })
-    mockGetLatestPublishedPost.mockResolvedValue(null)
     const ui = await BlogPage({ lng: 'en' })
     render(ui)
     expect(screen.queryByTestId('latest-post-hero')).toBeNull()
   })
 
-  it('does not render hero when q filter is active', async () => {
-    mockGetPublishedPostsPaginated.mockResolvedValue({ data: [], total: 0 })
-    const ui = await BlogPage({ lng: 'en', q: 'search term' })
-    render(ui)
-    expect(screen.queryByTestId('latest-post-hero')).toBeNull()
-    expect(mockGetLatestPublishedPost).not.toHaveBeenCalled()
+  it('always calls getLatestPublishedPost regardless of filters', async () => {
+    await BlogPage({
+      lng: 'en',
+      q: 'search',
+      categories: 'engineering',
+      year: '2024',
+      month: '6',
+    })
+    expect(mockGetLatestPublishedPost).toHaveBeenCalled()
   })
 
-  it('does not render hero when categories filter is active', async () => {
-    mockGetPublishedPostsPaginated.mockResolvedValue({ data: [], total: 0 })
-    const ui = await BlogPage({ lng: 'en', categories: 'engineering' })
-    render(ui)
-    expect(screen.queryByTestId('latest-post-hero')).toBeNull()
-    expect(mockGetLatestPublishedPost).not.toHaveBeenCalled()
-  })
-
-  it('does not render hero when year filter is active', async () => {
-    mockGetPublishedPostsPaginated.mockResolvedValue({ data: [], total: 0 })
-    const ui = await BlogPage({ lng: 'en', year: '2024' })
-    render(ui)
-    expect(screen.queryByTestId('latest-post-hero')).toBeNull()
-    expect(mockGetLatestPublishedPost).not.toHaveBeenCalled()
-  })
-
-  it('does not render hero when month filter is active', async () => {
-    mockGetPublishedPostsPaginated.mockResolvedValue({ data: [], total: 0 })
-    const ui = await BlogPage({ lng: 'en', year: '2024', month: '6' })
-    render(ui)
-    expect(screen.queryByTestId('latest-post-hero')).toBeNull()
-    expect(mockGetLatestPublishedPost).not.toHaveBeenCalled()
-  })
-
-  it('excludes latest post from grid when hero is shown', async () => {
-    mockGetPublishedPostsPaginated.mockResolvedValue({ data: [], total: 0 })
+  it('excludes latest post from grid query', async () => {
     mockGetLatestPublishedPost.mockResolvedValue(mockPost)
     await BlogPage({ lng: 'en' })
     expect(mockGetPublishedPostsPaginated).toHaveBeenCalledWith(
@@ -176,8 +161,47 @@ describe('BlogPage', () => {
     )
   })
 
+  it('passes excludeId=undefined when no latest post', async () => {
+    await BlogPage({ lng: 'en' })
+    expect(mockGetPublishedPostsPaginated).toHaveBeenCalledWith(
+      expect.objectContaining({ excludeId: undefined }),
+    )
+  })
+
+  it('passes hero id to getPostCountPerTag', async () => {
+    mockGetLatestPublishedPost.mockResolvedValue(mockPost)
+    await BlogPage({ lng: 'en' })
+    expect(mockGetPostCountPerTag).toHaveBeenCalledWith(mockPost.id)
+  })
+
+  it('passes undefined to getPostCountPerTag when no hero post', async () => {
+    await BlogPage({ lng: 'en' })
+    expect(mockGetPostCountPerTag).toHaveBeenCalledWith(undefined)
+  })
+
+  it('passes hero id to getPostPublishedDates', async () => {
+    mockGetLatestPublishedPost.mockResolvedValue(mockPost)
+    await BlogPage({ lng: 'en' })
+    expect(mockGetPostPublishedDates).toHaveBeenCalledWith('en', mockPost.id)
+  })
+
+  it('passes undefined to getPostPublishedDates when no hero post', async () => {
+    await BlogPage({ lng: 'en' })
+    expect(mockGetPostPublishedDates).toHaveBeenCalledWith('en', undefined)
+  })
+
+  it('passes hero id to getCategories', async () => {
+    mockGetLatestPublishedPost.mockResolvedValue(mockPost)
+    await BlogPage({ lng: 'en' })
+    expect(mockGetCategories).toHaveBeenCalledWith('en', mockPost.id)
+  })
+
+  it('passes undefined to getCategories when no hero post', async () => {
+    await BlogPage({ lng: 'en' })
+    expect(mockGetCategories).toHaveBeenCalledWith('en', undefined)
+  })
+
   it('resolves locale slug to canonical and passes canonical to query', async () => {
-    mockGetPublishedPostsPaginated.mockResolvedValue({ data: [], total: 0 })
     mockGetCategoryByLocaleSlug.mockResolvedValue({
       canonicalSlug: 'engineering',
     })
@@ -202,8 +226,6 @@ describe('BlogPage', () => {
   })
 
   it('falls back to raw locale slug when reverse-lookup returns null', async () => {
-    mockGetPublishedPostsPaginated.mockResolvedValue({ data: [], total: 0 })
-    mockGetCategoryByLocaleSlug.mockResolvedValue(null)
     await BlogPage({ lng: 'en', categories: 'unknown-cat' })
     expect(mockGetPublishedPostsPaginated).toHaveBeenCalledWith(
       expect.objectContaining({ categories: ['unknown-cat'] }),
@@ -211,7 +233,6 @@ describe('BlogPage', () => {
   })
 
   it('passes undefined categories when no category filter', async () => {
-    mockGetPublishedPostsPaginated.mockResolvedValue({ data: [], total: 0 })
     await BlogPage({ lng: 'en' })
     expect(mockGetCategoryByLocaleSlug).not.toHaveBeenCalled()
     expect(mockGetPublishedPostsPaginated).toHaveBeenCalledWith(
@@ -220,7 +241,6 @@ describe('BlogPage', () => {
   })
 
   it('passes undefined tags when no tag filter', async () => {
-    mockGetPublishedPostsPaginated.mockResolvedValue({ data: [], total: 0 })
     await BlogPage({ lng: 'en' })
     expect(mockGetPublishedPostsPaginated).toHaveBeenCalledWith(
       expect.objectContaining({ tags: undefined }),
@@ -228,7 +248,6 @@ describe('BlogPage', () => {
   })
 
   it('defaults to page 1 when page param is missing', async () => {
-    mockGetPublishedPostsPaginated.mockResolvedValue({ data: [], total: 0 })
     await BlogPage({ lng: 'en' })
     expect(mockGetPublishedPostsPaginated).toHaveBeenCalledWith(
       expect.objectContaining({ page: 1 }),
@@ -236,7 +255,6 @@ describe('BlogPage', () => {
   })
 
   it('defaults to page 1 when page param is non-numeric', async () => {
-    mockGetPublishedPostsPaginated.mockResolvedValue({ data: [], total: 0 })
     await BlogPage({ lng: 'en', page: 'abc' })
     expect(mockGetPublishedPostsPaginated).toHaveBeenCalledWith(
       expect.objectContaining({ page: 1 }),
@@ -244,7 +262,6 @@ describe('BlogPage', () => {
   })
 
   it('parses year and month filter params', async () => {
-    mockGetPublishedPostsPaginated.mockResolvedValue({ data: [], total: 0 })
     await BlogPage({ lng: 'en', year: '2024', month: '6' })
     expect(mockGetPublishedPostsPaginated).toHaveBeenCalledWith(
       expect.objectContaining({ year: 2024, month: 6 }),
@@ -252,7 +269,6 @@ describe('BlogPage', () => {
   })
 
   it('treats non-numeric year and month as undefined in query', async () => {
-    mockGetPublishedPostsPaginated.mockResolvedValue({ data: [], total: 0 })
     await BlogPage({ lng: 'en', year: 'abc', month: 'xyz' })
     expect(mockGetPublishedPostsPaginated).toHaveBeenCalledWith(
       expect.objectContaining({ year: undefined, month: undefined }),
@@ -260,7 +276,6 @@ describe('BlogPage', () => {
   })
 
   it('falls back to enUS locale for unknown language', async () => {
-    mockGetPublishedPostsPaginated.mockResolvedValue({ data: [], total: 0 })
     const ui = await BlogPage({ lng: 'fr' as unknown as Locale })
     render(ui)
     expect(screen.getByTestId('blog-filters')).toBeInTheDocument()

@@ -1,11 +1,26 @@
+'use client'
+
 import { format } from 'date-fns'
 import { type Locale as DateLocale, enUS, es } from 'date-fns/locale'
-
-import { PostHero } from '@sdlgr/post-hero'
+import { CldImage } from 'next-cloudinary'
 
 import type { PostWithContent } from '@web/lib/db/queries/posts'
 import { type Locale } from '@web/lib/db/schema'
-import { computeReadingTime } from '@web/utils/computeReadingTime'
+
+import {
+  StyledBadgeRow,
+  StyledCategory,
+  StyledContent,
+  StyledCoverWrapper,
+  StyledExcerpt,
+  StyledMeta,
+  StyledMetaSep,
+  StyledReadMoreLink,
+  StyledSeriesBadge,
+  StyledTag,
+  StyledTitle,
+  StyledWrapper,
+} from './LatestPostHero.styles'
 
 const dateLocales: Record<Locale, DateLocale> = { en: enUS, es }
 
@@ -24,28 +39,54 @@ export function LatestPostHero({
   const url = `/${lng}/blog/${post.postNumber}/${post.slug}`
 
   return (
-    <div data-testid="latest-post-hero">
-      <PostHero
-        title={post.title}
-        coverImagePublicId={post.coverImage}
-        coverImageFit={post.coverImageFit}
-        category={post.category}
-        tags={post.tags}
-        author={post.author}
-        publishedAt={
-          post.publishedAt
-            ? format(new Date(post.publishedAt), 'PP', { locale: dateLocale })
-            : null
-        }
-        readingTime={computeReadingTime(post.content)}
-        lng={lng}
-        seriesTitle={post.seriesTitle}
-        seriesOrder={post.seriesOrder}
-        url={url}
-      />
-      <a href={url} data-testid="latest-post-hero-link">
-        {readMoreLabel}
-      </a>
-    </div>
+    <StyledWrapper data-testid="latest-post-hero">
+      {post.coverImage && (
+        <StyledCoverWrapper>
+          <CldImage
+            src={post.coverImage}
+            alt={post.title}
+            fill
+            sizes="(max-width: 1440px) 100vw, 1440px"
+            style={{ objectFit: post.coverImageFit ?? 'cover' }}
+          />
+        </StyledCoverWrapper>
+      )}
+      <StyledContent>
+        <StyledCategory>{post.category}</StyledCategory>
+        {(post.seriesTitle || post.tags.length > 0) && (
+          <StyledBadgeRow>
+            {post.seriesTitle && (
+              <StyledSeriesBadge data-testid="series-badge">
+                <span>{post.seriesTitle}</span>
+                {post.seriesOrder != null && <span>#{post.seriesOrder}</span>}
+              </StyledSeriesBadge>
+            )}
+            {post.tags.map((tag) => (
+              <StyledTag key={tag} data-testid="tag">
+                {tag}
+              </StyledTag>
+            ))}
+          </StyledBadgeRow>
+        )}
+        <StyledTitle>{post.title}</StyledTitle>
+        <StyledExcerpt>{post.excerpt}</StyledExcerpt>
+        <StyledMeta>
+          <span>{post.author}</span>
+          {post.publishedAt && (
+            <>
+              <StyledMetaSep aria-hidden>|</StyledMetaSep>
+              <time dateTime={String(post.publishedAt)}>
+                {format(new Date(post.publishedAt), 'PP', {
+                  locale: dateLocale,
+                })}
+              </time>
+            </>
+          )}
+        </StyledMeta>
+        <StyledReadMoreLink href={url} data-testid="latest-post-hero-link">
+          {readMoreLabel}
+        </StyledReadMoreLink>
+      </StyledContent>
+    </StyledWrapper>
   )
 }

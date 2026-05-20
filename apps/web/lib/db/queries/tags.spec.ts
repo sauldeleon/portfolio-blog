@@ -101,4 +101,13 @@ describe('getPostCountPerTag', () => {
     const result = await getPostCountPerTag()
     expect(result).toEqual([])
   })
+
+  it('excludes the given post id when provided', async () => {
+    mockDb.execute.mockResolvedValue({
+      rows: [{ tag: 'react', count: 4 }],
+    })
+    const result = await getPostCountPerTag('post-ulid-01')
+    expect(result).toEqual([{ tag: 'react', count: 4 }])
+    expect(mockDb.execute).toHaveBeenCalledTimes(1)
+  })
 })

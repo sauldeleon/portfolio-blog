@@ -109,6 +109,8 @@ exports[`PostCard matches snapshot 1`] = `
   padding: 0.125rem 0.5rem;
   border: 1px solid #98DFD6;
   color: #98DFD6;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
 .c10 {
@@ -332,6 +334,8 @@ exports[`PostCard matches snapshot with series badge 1`] = `
   padding: 0.125rem 0.5rem;
   border: 1px solid #98DFD6;
   color: #98DFD6;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
 .c5 {

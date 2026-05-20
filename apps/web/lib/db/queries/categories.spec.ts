@@ -101,6 +101,22 @@ describe('getCategories', () => {
     const result = await getCategories('en')
     expect(result).toEqual([])
   })
+
+  it('accepts excludeId to exclude a post from published count', async () => {
+    const row = {
+      id: 1,
+      slug: 'engineering',
+      name: 'Engineering',
+      description: null,
+      localeSlug: 'engineering',
+      postCount: 5,
+      publishedPostCount: 2,
+    }
+    mockDb.select.mockReturnValue(makeChain([row]))
+    const result = await getCategories('en', 'post-ulid-01')
+    expect(result).toEqual([row])
+    expect(mockDb.select).toHaveBeenCalled()
+  })
 })
 
 describe('getCategoriesForAdmin', () => {

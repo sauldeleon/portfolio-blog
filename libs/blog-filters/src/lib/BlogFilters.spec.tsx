@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 
 import { renderWithTheme } from '@sdlgr/test-utils'
 
@@ -22,39 +22,81 @@ jest.mock('./SearchInput', () => ({
 
 jest.mock('./CategoryFilter', () => ({
   CategoryFilter: ({
-    allLabel,
+    isOpen,
+    onToggle,
     label,
+    applyLabel,
   }: {
-    allLabel: string
+    isOpen: boolean
+    onToggle: () => void
     label?: string
+    applyLabel?: string
   }) => (
     <div
       data-testid="category-filter-mock"
-      data-all={allLabel}
+      data-open={String(isOpen)}
       data-label={label}
+      data-apply={applyLabel}
+      onClick={onToggle}
     />
   ),
 }))
 
 jest.mock('./TagFilter', () => ({
-  TagFilter: ({ allLabel, label }: { allLabel: string; label?: string }) => (
-    <div data-testid="tag-filter-mock" data-all={allLabel} data-label={label} />
+  TagFilter: ({
+    isOpen,
+    onToggle,
+    label,
+    applyLabel,
+    tagSearchPlaceholder,
+  }: {
+    isOpen: boolean
+    onToggle: () => void
+    label?: string
+    applyLabel?: string
+    tagSearchPlaceholder?: string
+  }) => (
+    <div
+      data-testid="tag-filter-mock"
+      data-open={String(isOpen)}
+      data-label={label}
+      data-apply={applyLabel}
+      data-tag-search={tagSearchPlaceholder}
+      onClick={onToggle}
+    />
   ),
 }))
 
 jest.mock('./DateFilter', () => ({
-  DateFilter: ({ label }: { label?: string }) => (
-    <div data-testid="date-filter-mock" data-label={label} />
+  DateFilter: ({
+    isOpen,
+    onToggle,
+    label,
+  }: {
+    isOpen: boolean
+    onToggle: () => void
+    label?: string
+  }) => (
+    <div
+      data-testid="date-filter-mock"
+      data-open={String(isOpen)}
+      data-label={label}
+      onClick={onToggle}
+    />
+  ),
+}))
+
+jest.mock('./ActiveFilters', () => ({
+  ActiveFilters: ({ clearAllLabel }: { clearAllLabel?: string }) => (
+    <div data-testid="active-filters-mock" data-clear-all={clearAllLabel} />
   ),
 }))
 
 const defaultProps = {
   categories: [],
   activeCategories: [],
-  allCategoriesLabel: 'All categories',
   tags: [],
   activeTags: [],
-  allTagsLabel: 'All tags',
   dates: [],
   activeYear: null,
   activeMonth: null,
@@ -83,14 +125,100 @@ describe('BlogFilters', () => {
     expect(screen.getByTestId('date-filter-mock')).toBeInTheDocument()
   })
 
-  it('renders filterByLabel when provided', () => {
-    renderWithTheme(<BlogFilters {...defaultProps} filterByLabel="Filter by" />)
-    expect(screen.getByText('Filter by')).toBeInTheDocument()
+  it('all filters start closed', () => {
+    renderWithTheme(<BlogFilters {...defaultProps} />)
+    expect(screen.getByTestId('category-filter-mock')).toHaveAttribute(
+      'data-open',
+      'false',
+    )
+    expect(screen.getByTestId('tag-filter-mock')).toHaveAttribute(
+      'data-open',
+      'false',
+    )
+    expect(screen.getByTestId('date-filter-mock')).toHaveAttribute(
+      'data-open',
+      'false',
+    )
   })
 
-  it('does not render filterByLabel when not provided', () => {
+  it('clicking category filter opens it', () => {
     renderWithTheme(<BlogFilters {...defaultProps} />)
-    expect(screen.queryByText('Filter by')).not.toBeInTheDocument()
+    fireEvent.click(screen.getByTestId('category-filter-mock'))
+    expect(screen.getByTestId('category-filter-mock')).toHaveAttribute(
+      'data-open',
+      'true',
+    )
+  })
+
+  it('clicking open category filter closes it', () => {
+    renderWithTheme(<BlogFilters {...defaultProps} />)
+    fireEvent.click(screen.getByTestId('category-filter-mock'))
+    fireEvent.click(screen.getByTestId('category-filter-mock'))
+    expect(screen.getByTestId('category-filter-mock')).toHaveAttribute(
+      'data-open',
+      'false',
+    )
+  })
+
+  it('clicking date filter opens it', () => {
+    renderWithTheme(<BlogFilters {...defaultProps} />)
+    fireEvent.click(screen.getByTestId('date-filter-mock'))
+    expect(screen.getByTestId('date-filter-mock')).toHaveAttribute(
+      'data-open',
+      'true',
+    )
+  })
+
+  it('clicking open date filter closes it', () => {
+    renderWithTheme(<BlogFilters {...defaultProps} />)
+    fireEvent.click(screen.getByTestId('date-filter-mock'))
+    fireEvent.click(screen.getByTestId('date-filter-mock'))
+    expect(screen.getByTestId('date-filter-mock')).toHaveAttribute(
+      'data-open',
+      'false',
+    )
+  })
+
+  it('opening one filter closes the previously open filter', () => {
+    renderWithTheme(<BlogFilters {...defaultProps} />)
+    fireEvent.click(screen.getByTestId('category-filter-mock'))
+    expect(screen.getByTestId('category-filter-mock')).toHaveAttribute(
+      'data-open',
+      'true',
+    )
+    fireEvent.click(screen.getByTestId('tag-filter-mock'))
+    expect(screen.getByTestId('category-filter-mock')).toHaveAttribute(
+      'data-open',
+      'false',
+    )
+    expect(screen.getByTestId('tag-filter-mock')).toHaveAttribute(
+      'data-open',
+      'true',
+    )
+  })
+
+  it('mousedown inside filter row does not close open filter', () => {
+    renderWithTheme(<BlogFilters {...defaultProps} />)
+    fireEvent.click(screen.getByTestId('category-filter-mock'))
+    fireEvent.mouseDown(screen.getByTestId('category-filter-mock'))
+    expect(screen.getByTestId('category-filter-mock')).toHaveAttribute(
+      'data-open',
+      'true',
+    )
+  })
+
+  it('outside mousedown closes open filter', () => {
+    renderWithTheme(<BlogFilters {...defaultProps} />)
+    fireEvent.click(screen.getByTestId('category-filter-mock'))
+    expect(screen.getByTestId('category-filter-mock')).toHaveAttribute(
+      'data-open',
+      'true',
+    )
+    fireEvent.mouseDown(document.body)
+    expect(screen.getByTestId('category-filter-mock')).toHaveAttribute(
+      'data-open',
+      'false',
+    )
   })
 
   it('passes searchPlaceholder and initialQ to SearchInput', () => {
@@ -106,30 +234,22 @@ describe('BlogFilters', () => {
     expect(input).toHaveAttribute('data-initial', 'react')
   })
 
-  it('passes allCategoriesLabel and categoriesLabel to CategoryFilter', () => {
+  it('passes categoriesLabel to CategoryFilter', () => {
     renderWithTheme(
-      <BlogFilters
-        {...defaultProps}
-        allCategoriesLabel="All"
-        categoriesLabel="Categories"
-      />,
+      <BlogFilters {...defaultProps} categoriesLabel="Categories" />,
     )
-    const filter = screen.getByTestId('category-filter-mock')
-    expect(filter).toHaveAttribute('data-all', 'All')
-    expect(filter).toHaveAttribute('data-label', 'Categories')
+    expect(screen.getByTestId('category-filter-mock')).toHaveAttribute(
+      'data-label',
+      'Categories',
+    )
   })
 
-  it('passes allTagsLabel and tagsLabel to TagFilter', () => {
-    renderWithTheme(
-      <BlogFilters
-        {...defaultProps}
-        allTagsLabel="All tags"
-        tagsLabel="Tags"
-      />,
+  it('passes tagsLabel to TagFilter', () => {
+    renderWithTheme(<BlogFilters {...defaultProps} tagsLabel="Tags" />)
+    expect(screen.getByTestId('tag-filter-mock')).toHaveAttribute(
+      'data-label',
+      'Tags',
     )
-    const filter = screen.getByTestId('tag-filter-mock')
-    expect(filter).toHaveAttribute('data-all', 'All tags')
-    expect(filter).toHaveAttribute('data-label', 'Tags')
   })
 
   it('passes dateLabel to DateFilter', () => {
@@ -137,6 +257,45 @@ describe('BlogFilters', () => {
     expect(screen.getByTestId('date-filter-mock')).toHaveAttribute(
       'data-label',
       'Date',
+    )
+  })
+
+  it('removes outside click listener on unmount', () => {
+    const removeSpy = jest.spyOn(document, 'removeEventListener')
+    const { unmount } = renderWithTheme(<BlogFilters {...defaultProps} />)
+    unmount()
+    expect(removeSpy).toHaveBeenCalledWith('mousedown', expect.any(Function))
+    removeSpy.mockRestore()
+  })
+
+  it('passes applyLabel to CategoryFilter and TagFilter', () => {
+    renderWithTheme(<BlogFilters {...defaultProps} applyLabel="Apply" />)
+    expect(screen.getByTestId('category-filter-mock')).toHaveAttribute(
+      'data-apply',
+      'Apply',
+    )
+    expect(screen.getByTestId('tag-filter-mock')).toHaveAttribute(
+      'data-apply',
+      'Apply',
+    )
+  })
+
+  it('passes tagSearchPlaceholder to TagFilter', () => {
+    renderWithTheme(
+      <BlogFilters {...defaultProps} tagSearchPlaceholder="Search tags..." />,
+    )
+    expect(screen.getByTestId('tag-filter-mock')).toHaveAttribute(
+      'data-tag-search',
+      'Search tags...',
+    )
+  })
+
+  it('renders ActiveFilters and passes clearAllLabel', () => {
+    renderWithTheme(<BlogFilters {...defaultProps} clearAllLabel="Clear all" />)
+    expect(screen.getByTestId('active-filters-mock')).toBeInTheDocument()
+    expect(screen.getByTestId('active-filters-mock')).toHaveAttribute(
+      'data-clear-all',
+      'Clear all',
     )
   })
 })

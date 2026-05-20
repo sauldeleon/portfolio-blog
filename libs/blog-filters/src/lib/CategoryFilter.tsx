@@ -1,12 +1,15 @@
 'use client'
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { startTransition, useState } from 'react'
 
 import {
+  StyledApplyButton,
   StyledChip,
   StyledChipList,
-  StyledFilterLabel,
-  StyledFilterNav,
+  StyledDropdownButton,
+  StyledDropdownPanel,
+  StyledDropdownWrapper,
 } from './BlogFilters.styles'
 
 export interface Category {
@@ -19,68 +22,92 @@ export interface Category {
 export interface CategoryFilterProps {
   categories: Category[]
   activeCategories: string[]
-  allLabel: string
   label?: string
+  isOpen: boolean
+  onToggle: () => void
+  applyLabel?: string
 }
 
 export function CategoryFilter({
   categories,
   activeCategories,
-  allLabel,
   label,
+  isOpen,
+  onToggle,
+  applyLabel,
 }: CategoryFilterProps) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const [pending, setPending] = useState<string[]>(activeCategories)
+  const [prevIsOpen, setPrevIsOpen] = useState(isOpen)
+
+  if (prevIsOpen !== isOpen) {
+    setPrevIsOpen(isOpen)
+    if (isOpen) setPending([...activeCategories])
+  }
+
+  const hasChanges =
+    [...pending].sort().join(',') !== [...activeCategories].sort().join(',')
 
   const handleToggle = (slug: string) => {
+    setPending((prev) =>
+      prev.includes(slug) ? prev.filter((s) => s !== slug) : [...prev, slug],
+    )
+  }
+
+  const handleApply = () => {
     const params = new URLSearchParams(searchParams.toString())
-    const next = activeCategories.includes(slug)
-      ? activeCategories.filter((s) => s !== slug)
-      : [...activeCategories, slug]
-    if (next.length === 0) {
+    if (pending.length === 0) {
       params.delete('categories')
     } else {
-      params.set('categories', next.join(','))
+      params.set('categories', pending.join(','))
     }
     params.delete('page')
-    router.push(`${pathname}?${params.toString()}`)
+    startTransition(() => {
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false })
+    })
+    onToggle()
   }
 
-  const handleAll = () => {
-    const params = new URLSearchParams(searchParams.toString())
-    params.delete('categories')
-    params.delete('page')
-    router.push(`${pathname}?${params.toString()}`)
-  }
+  const activeCount = activeCategories.length
 
   return (
-    <StyledFilterNav aria-label={label ?? allLabel}>
-      {label ? <StyledFilterLabel>{label}</StyledFilterLabel> : null}
-      <StyledChipList>
-        <li>
-          <StyledChip
-            onClick={handleAll}
-            active={activeCategories.length === 0}
-            aria-current={activeCategories.length === 0 ? true : undefined}
+    <StyledDropdownWrapper>
+      <StyledDropdownButton
+        onClick={onToggle}
+        aria-expanded={isOpen}
+        data-testid="filter-trigger"
+      >
+        {label}
+        {activeCount > 0 ? ` (${activeCount})` : ''} ▾
+      </StyledDropdownButton>
+      {isOpen && (
+        <StyledDropdownPanel>
+          <StyledChipList>
+            {categories.map((cat) => (
+              <li key={cat.slug}>
+                <StyledChip
+                  onClick={() => handleToggle(cat.slug)}
+                  active={pending.includes(cat.slug)}
+                  aria-current={pending.includes(cat.slug) ? true : undefined}
+                >
+                  {cat.name}
+                </StyledChip>
+              </li>
+            ))}
+          </StyledChipList>
+          <StyledApplyButton
+            variant="ghost"
+            colorScheme="success"
+            size="sm"
+            disabled={!hasChanges}
+            onClick={handleApply}
           >
-            {allLabel}
-          </StyledChip>
-        </li>
-        {categories.map((cat) => (
-          <li key={cat.slug}>
-            <StyledChip
-              onClick={() => handleToggle(cat.slug)}
-              active={activeCategories.includes(cat.slug)}
-              aria-current={
-                activeCategories.includes(cat.slug) ? true : undefined
-              }
-            >
-              {cat.name}
-            </StyledChip>
-          </li>
-        ))}
-      </StyledChipList>
-    </StyledFilterNav>
+            {applyLabel}
+          </StyledApplyButton>
+        </StyledDropdownPanel>
+      )}
+    </StyledDropdownWrapper>
   )
 }

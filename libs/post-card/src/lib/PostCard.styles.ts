@@ -94,6 +94,8 @@ export const StyledTag = styled.li`
   padding: 0.125rem 0.5rem;
   border: 1px solid ${({ theme }) => theme.colors.green};
   color: ${({ theme }) => theme.colors.green};
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 `
 
 export const StyledSeriesBadge = styled.div`

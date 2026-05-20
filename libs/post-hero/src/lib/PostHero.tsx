@@ -3,6 +3,7 @@
 import { CldImage } from 'next-cloudinary'
 
 import {
+  StyledBadgeRow,
   StyledCategory,
   StyledCoverWrapper,
   StyledHeader,
@@ -12,7 +13,6 @@ import {
   StyledPostTitle,
   StyledSeriesBadge,
   StyledTag,
-  StyledTagList,
 } from './PostHero.styles'
 import { ShareButtons } from './ShareButtons'
 
@@ -65,18 +65,20 @@ export function PostHero({
       )}
       <StyledHeroContent>
         <StyledCategory>{category}</StyledCategory>
-        {seriesTitle && (
-          <StyledSeriesBadge data-testid="series-badge">
-            <span>{seriesTitle}</span>
-            {seriesOrder != null && <span>#{seriesOrder}</span>}
-          </StyledSeriesBadge>
-        )}
-        {tags.length > 0 && (
-          <StyledTagList>
+        {(seriesTitle || tags.length > 0) && (
+          <StyledBadgeRow>
+            {seriesTitle && (
+              <StyledSeriesBadge data-testid="series-badge">
+                <span>{seriesTitle}</span>
+                {seriesOrder != null && <span>#{seriesOrder}</span>}
+              </StyledSeriesBadge>
+            )}
             {tags.map((tag) => (
-              <StyledTag key={tag}>{tag}</StyledTag>
+              <StyledTag key={tag} data-testid="tag">
+                {tag}
+              </StyledTag>
             ))}
-          </StyledTagList>
+          </StyledBadgeRow>
         )}
         <StyledPostTitle>{title}</StyledPostTitle>
         <StyledMeta>

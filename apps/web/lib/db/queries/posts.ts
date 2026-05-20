@@ -603,27 +603,64 @@ export async function getPublishedPostsPaginated(
   return { data, total: countRows[0]?.count ?? 0 }
 }
 
-export type PublishedDateGroup = { year: number; months: number[] }
+export type PublishedDateGroup = {
+  year: number
+  count: number
+  months: { month: number; count: number }[]
+}
 
 export async function getPostPublishedDates(
   locale: Locale,
+  excludeId?: string,
 ): Promise<PublishedDateGroup[]> {
-  type Row = { year: number; months: number[] }
-  const result = await db.execute<Row>(sql`
-    SELECT year, array_agg(month ORDER BY month) AS months
-    FROM (
-      SELECT DISTINCT
-        date_part('year', p.published_at)::int AS year,
-        date_part('month', p.published_at)::int AS month
-      FROM posts p
-      INNER JOIN post_translations pt ON pt.post_id = p.id AND pt.locale = ${locale}
-      WHERE p.status = 'published'
-        AND p.deleted_at IS NULL
-        AND p.published_at IS NOT NULL
-    ) sub
-    GROUP BY year
-    ORDER BY year DESC
-  `)
+  type Row = {
+    year: number
+    count: number
+    months: { month: number; count: number }[]
+  }
+  const result =
+    excludeId != null
+      ? await db.execute<Row>(sql`
+          SELECT
+            year,
+            SUM(month_count)::int AS count,
+            json_agg(json_build_object('month', month, 'count', month_count) ORDER BY month) AS months
+          FROM (
+            SELECT
+              date_part('year', p.published_at)::int AS year,
+              date_part('month', p.published_at)::int AS month,
+              COUNT(*)::int AS month_count
+            FROM posts p
+            INNER JOIN post_translations pt ON pt.post_id = p.id AND pt.locale = ${locale}
+            WHERE p.status = 'published'
+              AND p.deleted_at IS NULL
+              AND p.published_at IS NOT NULL
+              AND p.id != ${excludeId}
+            GROUP BY year, month
+          ) sub
+          GROUP BY year
+          ORDER BY year DESC
+        `)
+      : await db.execute<Row>(sql`
+          SELECT
+            year,
+            SUM(month_count)::int AS count,
+            json_agg(json_build_object('month', month, 'count', month_count) ORDER BY month) AS months
+          FROM (
+            SELECT
+              date_part('year', p.published_at)::int AS year,
+              date_part('month', p.published_at)::int AS month,
+              COUNT(*)::int AS month_count
+            FROM posts p
+            INNER JOIN post_translations pt ON pt.post_id = p.id AND pt.locale = ${locale}
+            WHERE p.status = 'published'
+              AND p.deleted_at IS NULL
+              AND p.published_at IS NOT NULL
+            GROUP BY year, month
+          ) sub
+          GROUP BY year
+          ORDER BY year DESC
+        `)
   return result.rows
 }
 

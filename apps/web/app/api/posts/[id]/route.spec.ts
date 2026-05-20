@@ -309,6 +309,27 @@ describe('PUT /api/posts/[id]', () => {
     expect(callArg).not.toHaveProperty('publishedAt')
   })
 
+  it('normalizes tags to uppercase before updating post', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockUpdatePost.mockResolvedValue({ ...mockPost, tags: ['REACT'] })
+    await PUT(
+      makePutRequest({ tags: ['react', 'TypeScript', 'NODEJS'] }),
+      makeParams('id'),
+    )
+    expect(mockUpdatePost).toHaveBeenCalledWith(
+      'id',
+      expect.objectContaining({ tags: ['REACT', 'TYPESCRIPT', 'NODEJS'] }),
+    )
+  })
+
+  it('does not set tags when not provided in update', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockUpdatePost.mockResolvedValue(mockPost)
+    await PUT(makePutRequest({ author: 'new-author' }), makeParams('id'))
+    const callArg = mockUpdatePost.mock.calls[0][1] as Record<string, unknown>
+    expect(callArg).not.toHaveProperty('tags')
+  })
+
   it('updates post metadata and returns 200', async () => {
     mockAuth.mockResolvedValue({ user: { name: 'admin' } })
     mockUpdatePost.mockResolvedValue({ ...mockPost, tags: ['react'] })

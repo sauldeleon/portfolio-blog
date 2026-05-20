@@ -1,31 +1,28 @@
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 
-jest.mock('@sdlgr/post-hero', () => ({
-  PostHero: ({
-    title,
-    author,
-    publishedAt,
-    readingTime,
-    url,
-  }: {
-    title: string
-    author: string
-    publishedAt: string | null
-    readingTime: number
-    url?: string
-  }) => (
-    <div data-testid="post-hero-mock">
-      <span data-testid="hero-title">{title}</span>
-      <span data-testid="hero-author">{author}</span>
-      <span data-testid="hero-published">{publishedAt}</span>
-      <span data-testid="hero-reading-time">{readingTime}</span>
-      <span data-testid="hero-url">{url}</span>
-    </div>
+import { renderWithTheme } from '@sdlgr/test-utils'
+
+jest.mock('next-cloudinary', () => ({
+  CldImage: ({ alt, style }: { alt: string; style?: React.CSSProperties }) => (
+    <img data-testid="cover-image" alt={alt} style={style} />
   ),
 }))
 
-jest.mock('@web/utils/computeReadingTime', () => ({
-  computeReadingTime: (content: string) => content.split(' ').length,
+jest.mock('next/link', () => ({
+  __esModule: true,
+  default: ({
+    href,
+    children,
+    ...props
+  }: {
+    href: string
+    children: React.ReactNode
+    [key: string]: unknown
+  }) => (
+    <a href={href} {...props}>
+      {children}
+    </a>
+  ),
 }))
 
 const { LatestPostHero } =
@@ -36,7 +33,7 @@ const mockPost = {
   postNumber: 5,
   slug: 'my-post',
   title: 'My Post Title',
-  excerpt: 'An excerpt',
+  excerpt: 'An excerpt about the post',
   content: 'Hello world content here',
   author: 'Saúl',
   publishedAt: new Date('2024-06-01T00:00:00.000Z'),
@@ -53,17 +50,168 @@ const mockPost = {
 }
 
 describe('LatestPostHero', () => {
-  it('renders the PostHero with post data', () => {
-    render(
+  it('renders the wrapper', () => {
+    renderWithTheme(
       <LatestPostHero post={mockPost} lng="en" readMoreLabel="Read more →" />,
     )
-    expect(screen.getByTestId('post-hero-mock')).toBeInTheDocument()
-    expect(screen.getByTestId('hero-title')).toHaveTextContent('My Post Title')
-    expect(screen.getByTestId('hero-author')).toHaveTextContent('Saúl')
+    expect(screen.getByTestId('latest-post-hero')).toBeInTheDocument()
+  })
+
+  it('renders cover image when coverImage is set', () => {
+    renderWithTheme(
+      <LatestPostHero post={mockPost} lng="en" readMoreLabel="Read more →" />,
+    )
+    expect(screen.getByTestId('cover-image')).toBeInTheDocument()
+    expect(screen.getByTestId('cover-image')).toHaveAttribute(
+      'alt',
+      'My Post Title',
+    )
+  })
+
+  it('passes objectFit cover when coverImageFit is null', () => {
+    renderWithTheme(
+      <LatestPostHero
+        post={{ ...mockPost, coverImageFit: null }}
+        lng="en"
+        readMoreLabel="Read more →"
+      />,
+    )
+    expect(screen.getByTestId('cover-image')).toHaveStyle({
+      objectFit: 'cover',
+    })
+  })
+
+  it('passes objectFit through when coverImageFit is set', () => {
+    renderWithTheme(
+      <LatestPostHero
+        post={{ ...mockPost, coverImageFit: 'contain' }}
+        lng="en"
+        readMoreLabel="Read more →"
+      />,
+    )
+    expect(screen.getByTestId('cover-image')).toHaveStyle({
+      objectFit: 'contain',
+    })
+  })
+
+  it('does not render cover image when coverImage is null', () => {
+    renderWithTheme(
+      <LatestPostHero
+        post={{ ...mockPost, coverImage: null }}
+        lng="en"
+        readMoreLabel="Read more →"
+      />,
+    )
+    expect(screen.queryByTestId('cover-image')).toBeNull()
+  })
+
+  it('renders the category', () => {
+    renderWithTheme(
+      <LatestPostHero post={mockPost} lng="en" readMoreLabel="Read more →" />,
+    )
+    expect(screen.getByText('engineering')).toBeInTheDocument()
+  })
+
+  it('renders series badge with order when seriesTitle and seriesOrder are set', () => {
+    renderWithTheme(
+      <LatestPostHero
+        post={{ ...mockPost, seriesTitle: 'My Series', seriesOrder: 2 }}
+        lng="en"
+        readMoreLabel="Read more →"
+      />,
+    )
+    expect(screen.getByTestId('series-badge')).toBeInTheDocument()
+    expect(screen.getByText('My Series')).toBeInTheDocument()
+    expect(screen.getByText('#2')).toBeInTheDocument()
+  })
+
+  it('does not render series order when seriesOrder is null', () => {
+    renderWithTheme(
+      <LatestPostHero
+        post={{ ...mockPost, seriesTitle: 'My Series', seriesOrder: null }}
+        lng="en"
+        readMoreLabel="Read more →"
+      />,
+    )
+    expect(screen.getByTestId('series-badge')).toBeInTheDocument()
+    expect(screen.queryByText(/^#/)).toBeNull()
+  })
+
+  it('does not render series badge when seriesTitle is null', () => {
+    renderWithTheme(
+      <LatestPostHero post={mockPost} lng="en" readMoreLabel="Read more →" />,
+    )
+    expect(screen.queryByTestId('series-badge')).toBeNull()
+  })
+
+  it('renders tags when present', () => {
+    renderWithTheme(
+      <LatestPostHero post={mockPost} lng="en" readMoreLabel="Read more →" />,
+    )
+    expect(screen.getByText('react')).toBeInTheDocument()
+  })
+
+  it('does not render tags when empty', () => {
+    renderWithTheme(
+      <LatestPostHero
+        post={{ ...mockPost, tags: [] }}
+        lng="en"
+        readMoreLabel="Read more →"
+      />,
+    )
+    expect(screen.queryAllByTestId('tag')).toHaveLength(0)
+  })
+
+  it('renders the title as h2', () => {
+    renderWithTheme(
+      <LatestPostHero post={mockPost} lng="en" readMoreLabel="Read more →" />,
+    )
+    expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(
+      'My Post Title',
+    )
+  })
+
+  it('renders the excerpt', () => {
+    renderWithTheme(
+      <LatestPostHero post={mockPost} lng="en" readMoreLabel="Read more →" />,
+    )
+    expect(screen.getByText('An excerpt about the post')).toBeInTheDocument()
+  })
+
+  it('renders the author', () => {
+    renderWithTheme(
+      <LatestPostHero post={mockPost} lng="en" readMoreLabel="Read more →" />,
+    )
+    expect(screen.getByText('Saúl')).toBeInTheDocument()
+  })
+
+  it('formats publishedAt for en locale', () => {
+    renderWithTheme(
+      <LatestPostHero post={mockPost} lng="en" readMoreLabel="Read more →" />,
+    )
+    expect(screen.getByText('Jun 1, 2024')).toBeInTheDocument()
+  })
+
+  it('formats publishedAt for es locale', () => {
+    renderWithTheme(
+      <LatestPostHero post={mockPost} lng="es" readMoreLabel="Leer más →" />,
+    )
+    expect(screen.getByText('1 jun 2024')).toBeInTheDocument()
+  })
+
+  it('does not render date when publishedAt is null', () => {
+    renderWithTheme(
+      <LatestPostHero
+        post={{ ...mockPost, publishedAt: null }}
+        lng="en"
+        readMoreLabel="Read more →"
+      />,
+    )
+    expect(screen.queryByRole('time')).toBeNull()
   })
 
   it('renders the read more link pointing to the post URL', () => {
-    render(
+    renderWithTheme(
       <LatestPostHero post={mockPost} lng="en" readMoreLabel="Read more →" />,
     )
     const link = screen.getByTestId('latest-post-hero-link')
@@ -71,60 +219,14 @@ describe('LatestPostHero', () => {
     expect(link).toHaveTextContent('Read more →')
   })
 
-  it('passes the url to PostHero', () => {
-    render(
-      <LatestPostHero post={mockPost} lng="en" readMoreLabel="Read more →" />,
-    )
-    expect(screen.getByTestId('hero-url')).toHaveTextContent(
-      '/en/blog/5/my-post',
-    )
-  })
-
-  it('formats publishedAt date for the active locale', () => {
-    render(
-      <LatestPostHero post={mockPost} lng="en" readMoreLabel="Read more →" />,
-    )
-    expect(screen.getByTestId('hero-published')).toHaveTextContent(
-      'Jun 1, 2024',
-    )
-  })
-
-  it('formats publishedAt date for es locale', () => {
-    render(
-      <LatestPostHero post={mockPost} lng="es" readMoreLabel="Leer más →" />,
-    )
-    expect(screen.getByTestId('hero-published')).toHaveTextContent('1 jun 2024')
-  })
-
-  it('renders null publishedAt as null in PostHero', () => {
-    render(
-      <LatestPostHero
-        post={{ ...mockPost, publishedAt: null }}
-        lng="en"
-        readMoreLabel="Read more →"
-      />,
-    )
-    expect(screen.getByTestId('hero-published')).toBeEmptyDOMElement()
-  })
-
-  it('computes reading time from content', () => {
-    render(
-      <LatestPostHero post={mockPost} lng="en" readMoreLabel="Read more →" />,
-    )
-    // "Hello world content here" = 4 words
-    expect(screen.getByTestId('hero-reading-time')).toHaveTextContent('4')
-  })
-
   it('falls back to enUS for unknown locale', () => {
-    render(
+    renderWithTheme(
       <LatestPostHero
         post={mockPost}
         lng={'fr' as 'en'}
         readMoreLabel="Read more →"
       />,
     )
-    expect(screen.getByTestId('hero-published')).toHaveTextContent(
-      'Jun 1, 2024',
-    )
+    expect(screen.getByText('Jun 1, 2024')).toBeInTheDocument()
   })
 })

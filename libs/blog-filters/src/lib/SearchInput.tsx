@@ -3,6 +3,8 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { startTransition, useEffect, useRef, useState } from 'react'
 
+import { Input } from '@sdlgr/input'
+
 import { useDebounce } from './useDebounce'
 
 export interface SearchInputProps {
@@ -41,7 +43,7 @@ export function SearchInput({
   }, [debouncedValue])
 
   return (
-    <input
+    <Input
       type="search"
       value={value}
       onChange={(e) => setValue(e.target.value)}

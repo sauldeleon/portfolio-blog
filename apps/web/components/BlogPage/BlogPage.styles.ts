@@ -50,6 +50,4 @@ export const StyledPaginationWrapper = styled.div`
   justify-content: center;
 `
 
-export const StyledHeroWrapper = styled.div`
-  margin-bottom: 2.5rem;
-`
+export const StyledHeroWrapper = styled.div``

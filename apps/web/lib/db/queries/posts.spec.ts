@@ -618,17 +618,47 @@ describe('getPublishedPostsPaginated', () => {
 })
 
 describe('getPostPublishedDates', () => {
-  it('returns year/months groups', async () => {
+  it('returns year/months groups with counts', async () => {
     mockDb.execute.mockResolvedValue({
       rows: [
-        { year: 2024, months: [1, 3, 6] },
-        { year: 2023, months: [11, 12] },
+        {
+          year: 2024,
+          count: 3,
+          months: [
+            { month: 1, count: 1 },
+            { month: 3, count: 1 },
+            { month: 6, count: 1 },
+          ],
+        },
+        {
+          year: 2023,
+          count: 2,
+          months: [
+            { month: 11, count: 1 },
+            { month: 12, count: 1 },
+          ],
+        },
       ],
     })
     const result = await getPostPublishedDates('en')
     expect(result).toEqual([
-      { year: 2024, months: [1, 3, 6] },
-      { year: 2023, months: [11, 12] },
+      {
+        year: 2024,
+        count: 3,
+        months: [
+          { month: 1, count: 1 },
+          { month: 3, count: 1 },
+          { month: 6, count: 1 },
+        ],
+      },
+      {
+        year: 2023,
+        count: 2,
+        months: [
+          { month: 11, count: 1 },
+          { month: 12, count: 1 },
+        ],
+      },
     ])
   })
 
@@ -636,6 +666,17 @@ describe('getPostPublishedDates', () => {
     mockDb.execute.mockResolvedValue({ rows: [] })
     const result = await getPostPublishedDates('es')
     expect(result).toEqual([])
+  })
+
+  it('excludes the given post id when provided', async () => {
+    mockDb.execute.mockResolvedValue({
+      rows: [{ year: 2024, count: 2, months: [{ month: 3, count: 2 }] }],
+    })
+    const result = await getPostPublishedDates('en', 'post-ulid-01')
+    expect(result).toEqual([
+      { year: 2024, count: 2, months: [{ month: 3, count: 2 }] },
+    ])
+    expect(mockDb.execute).toHaveBeenCalledTimes(1)
   })
 })
 

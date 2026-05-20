@@ -174,7 +174,7 @@ export async function POST(request: Request) {
   const post = await createPost(
     {
       category: data.category,
-      tags: data.tags,
+      tags: data.tags.map((t) => t.toUpperCase()),
       author: data.author,
       status: data.status,
       coverImage: data.coverImage ?? null,

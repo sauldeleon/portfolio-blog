@@ -43,7 +43,10 @@ const enAlias = alias(categoryTranslations, 'ct_en')
 
 export async function getCategories(
   locale: Locale = 'en',
+  excludeId?: string,
 ): Promise<CategoryWithCount[]> {
+  const excludeCondition =
+    excludeId != null ? sql` AND ${posts.id} != ${excludeId}` : sql``
   const rows = await db
     .select({
       id: categories.id,
@@ -54,7 +57,7 @@ export async function getCategories(
       >`coalesce(${tAlias.description}, ${enAlias.description})`,
       localeSlug: sql<string>`coalesce(${tAlias.slug}, ${enAlias.slug}, ${categories.slug})`,
       postCount: sql<number>`count(${posts.id})::int`,
-      publishedPostCount: sql<number>`count(case when ${posts.status} = 'published' then 1 end)::int`,
+      publishedPostCount: sql<number>`count(case when ${posts.status} = 'published'${excludeCondition} then 1 end)::int`,
     })
     .from(categories)
     .leftJoin(

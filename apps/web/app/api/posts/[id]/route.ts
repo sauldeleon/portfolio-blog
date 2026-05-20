@@ -184,6 +184,9 @@ export async function PUT(
 
   const post = await updatePost(id, {
     ...postData,
+    ...(postData.tags !== undefined
+      ? { tags: postData.tags.map((t) => t.toUpperCase()) }
+      : {}),
     ...publishedAtUpdate,
     ...deletedAtUpdate,
     ...(scheduledAt !== undefined

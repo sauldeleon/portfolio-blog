@@ -73,7 +73,7 @@ describe('PostHero', () => {
 
   it('renders no tags when empty', () => {
     renderWithTheme(<PostHero {...defaultProps} tags={[]} />)
-    expect(screen.queryByRole('list')).not.toBeInTheDocument()
+    expect(screen.queryAllByTestId('tag')).toHaveLength(0)
   })
 
   it('renders series badge when seriesTitle is provided', () => {

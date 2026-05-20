@@ -29,7 +29,7 @@ import {
   StyledPaginationWrapper,
 } from './BlogPage.styles'
 
-const POSTS_PER_PAGE = 10
+const POSTS_PER_PAGE = 9
 
 const dateLocales: Record<Locale, DateLocale> = { en: enUS, es }
 
@@ -62,51 +62,33 @@ export async function BlogPage({
   const activeYear = year ? parseInt(year, 10) || null : null
   const activeMonth = month ? parseInt(month, 10) || null : null
 
-  const hasActiveFilters = !!(
-    q ||
-    activeCategories.length ||
-    activeTags.length ||
-    activeYear ||
-    activeMonth
-  )
+  const latestPost = await getLatestPublishedPost(lng)
+  const heroId = latestPost?.id
 
-  const canonicalCategories = await Promise.all(
-    activeCategories.map(async (slug) => {
-      const resolved = await getCategoryByLocaleSlug(slug, lng)
-      return resolved?.canonicalSlug ?? slug
-    }),
-  )
-
-  const [latestPost, postsResult, categoriesData, tagsData, publishedDates] =
+  const [canonicalCategories, categoriesData, tagsData, publishedDates] =
     await Promise.all([
-      hasActiveFilters ? Promise.resolve(null) : getLatestPublishedPost(lng),
-      getPublishedPostsPaginated({
-        locale: lng,
-        page: currentPage,
-        limit: POSTS_PER_PAGE,
-        categories: canonicalCategories.length
-          ? canonicalCategories
-          : undefined,
-        tags: activeTags.length ? activeTags : undefined,
-        q,
-        year: activeYear ?? undefined,
-        month: activeMonth ?? undefined,
-        excludeId: undefined,
-      }),
-      getCategories(lng),
-      getPostCountPerTag(),
-      getPostPublishedDates(lng),
+      Promise.all(
+        activeCategories.map(async (slug) => {
+          const resolved = await getCategoryByLocaleSlug(slug, lng)
+          return resolved?.canonicalSlug ?? slug
+        }),
+      ),
+      getCategories(lng, heroId),
+      getPostCountPerTag(heroId),
+      getPostPublishedDates(lng, heroId),
     ])
 
-  const excludeId = latestPost?.id
-  const gridResult = excludeId
-    ? await getPublishedPostsPaginated({
-        locale: lng,
-        page: currentPage,
-        limit: POSTS_PER_PAGE,
-        excludeId,
-      })
-    : postsResult
+  const gridResult = await getPublishedPostsPaginated({
+    locale: lng,
+    page: currentPage,
+    limit: POSTS_PER_PAGE,
+    categories: canonicalCategories.length ? canonicalCategories : undefined,
+    tags: activeTags.length ? activeTags : undefined,
+    q,
+    year: activeYear ?? undefined,
+    month: activeMonth ?? undefined,
+    excludeId: heroId,
+  })
 
   const { t } = await getServerTranslation({ ns: 'blogPage', language: lng })
 
@@ -134,11 +116,9 @@ export async function BlogPage({
             description: cat.description,
           }))}
           activeCategories={activeCategories}
-          allCategoriesLabel={t('allCategories')}
           categoriesLabel={t('categoriesLabel')}
           tags={tagsData}
           activeTags={activeTags}
-          allTagsLabel={t('allTags')}
           tagsLabel={t('tags')}
           dates={publishedDates}
           activeYear={activeYear}
@@ -147,7 +127,9 @@ export async function BlogPage({
           monthNames={monthNames}
           searchPlaceholder={t('searchPlaceholder')}
           initialQ={q}
-          filterByLabel={t('filterBy')}
+          applyLabel={t('applyFilters')}
+          clearAllLabel={t('clearFilters')}
+          tagSearchPlaceholder={t('tagSearchPlaceholder')}
         />
       </StyledFilters>
       {gridResult.data.length === 0 ? (

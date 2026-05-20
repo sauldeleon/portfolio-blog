@@ -26,15 +26,27 @@ export type TagWithCount = {
   count: number
 }
 
-export async function getPostCountPerTag(): Promise<TagWithCount[]> {
+export async function getPostCountPerTag(
+  excludeId?: string,
+): Promise<TagWithCount[]> {
   type Row = { tag: string; count: number }
-  const result = await db.execute<Row>(sql`
-    SELECT t.tag, count(*)::int AS count
-    FROM posts p
-    CROSS JOIN LATERAL unnest(p.tags) AS t(tag)
-    WHERE p.status = 'published' AND p.deleted_at IS NULL
-    GROUP BY t.tag
-    ORDER BY count DESC, t.tag ASC
-  `)
+  const result =
+    excludeId != null
+      ? await db.execute<Row>(sql`
+          SELECT t.tag, count(*)::int AS count
+          FROM posts p
+          CROSS JOIN LATERAL unnest(p.tags) AS t(tag)
+          WHERE p.status = 'published' AND p.deleted_at IS NULL AND p.id != ${excludeId}
+          GROUP BY t.tag
+          ORDER BY count DESC, t.tag ASC
+        `)
+      : await db.execute<Row>(sql`
+          SELECT t.tag, count(*)::int AS count
+          FROM posts p
+          CROSS JOIN LATERAL unnest(p.tags) AS t(tag)
+          WHERE p.status = 'published' AND p.deleted_at IS NULL
+          GROUP BY t.tag
+          ORDER BY count DESC, t.tag ASC
+        `)
   return (result as unknown as { rows: Row[] }).rows
 }

@@ -1,33 +1,11 @@
+import Link from 'next/link'
 import styled from 'styled-components'
 
-export const StyledHeader = styled.header`
+export const StyledWrapper = styled.article`
   color: ${({ theme }) => theme.colors.white};
-  border-bottom: 1px solid rgba(152, 223, 214, 0.2);
 `
 
-export const StyledHeroContent = styled.div`
-  padding: 1.5rem 0;
-
-  @media (width >= 768px) {
-    padding: 2rem 0;
-  }
-`
-
-export const StyledPostTitle = styled.h1`
-  font-size: 1.5rem;
-  line-height: 1.25;
-  margin: 0.5rem 0 0;
-
-  @media (width >= 768px) {
-    font-size: 2rem;
-  }
-
-  @media (width >= 1024px) {
-    font-size: 2.5rem;
-  }
-`
-
-export const StyledCoverWrapper = styled.div<{ $fit: 'cover' | 'contain' }>`
+export const StyledCoverWrapper = styled.div`
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 7;
@@ -36,6 +14,14 @@ export const StyledCoverWrapper = styled.div<{ $fit: 'cover' | 'contain' }>`
 
   @media (max-width: 768px) {
     aspect-ratio: 4 / 3;
+  }
+`
+
+export const StyledContent = styled.div`
+  padding: 1.5rem 0;
+
+  @media (width >= 768px) {
+    padding: 2rem 0;
   }
 `
 
@@ -80,6 +66,27 @@ export const StyledTag = styled.span`
   border-radius: 2px;
 `
 
+export const StyledTitle = styled.h2`
+  font-size: 1.5rem;
+  line-height: 1.25;
+  margin: 0.5rem 0 0;
+
+  @media (width >= 768px) {
+    font-size: 2rem;
+  }
+
+  @media (width >= 1024px) {
+    font-size: 2.5rem;
+  }
+`
+
+export const StyledExcerpt = styled.p`
+  font-size: 1rem;
+  line-height: 1.6;
+  opacity: 0.8;
+  margin: 1rem 0;
+`
+
 export const StyledMeta = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -88,10 +95,22 @@ export const StyledMeta = styled.div`
   color: ${({ theme }) => theme.colors.white};
   font-size: 0.875rem;
   opacity: 0.7;
-  margin-top: 0.75rem;
+  margin-bottom: 1.5rem;
 `
 
 export const StyledMetaSep = styled.span`
   opacity: 0.35;
   user-select: none;
+`
+
+export const StyledReadMoreLink = styled(Link)`
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid ${({ theme }) => theme.colors.yellow};
+  color: ${({ theme }) => theme.colors.yellow};
+  padding: 10px 15px;
+  text-decoration: none;
+  background: transparent;
+  cursor: pointer;
 `

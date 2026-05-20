@@ -1,3 +1,4 @@
+export * from './lib/ActiveFilters'
 export * from './lib/BlogFilters'
 export * from './lib/CategoryFilter'
 export * from './lib/DateFilter'

@@ -1,6 +1,9 @@
 'use client'
 
-import { StyledBlogFilters, StyledFilterByLabel } from './BlogFilters.styles'
+import { useEffect, useRef, useState } from 'react'
+
+import { ActiveFilters } from './ActiveFilters'
+import { StyledBlogFilters, StyledFilterRow } from './BlogFilters.styles'
 import { type Category, CategoryFilter } from './CategoryFilter'
 import { DateFilter, type DateGroup } from './DateFilter'
 import { SearchInput } from './SearchInput'
@@ -9,12 +12,10 @@ import { TagFilter, type TagWithCount } from './TagFilter'
 export interface BlogFiltersProps {
   categories: Category[]
   activeCategories: string[]
-  allCategoriesLabel: string
   categoriesLabel?: string
 
   tags: TagWithCount[]
   activeTags: string[]
-  allTagsLabel: string
   tagsLabel?: string
 
   dates: DateGroup[]
@@ -25,17 +26,17 @@ export interface BlogFiltersProps {
 
   searchPlaceholder?: string
   initialQ?: string
-  filterByLabel?: string
+  applyLabel?: string
+  clearAllLabel?: string
+  tagSearchPlaceholder?: string
 }
 
 export function BlogFilters({
   categories,
   activeCategories,
-  allCategoriesLabel,
   categoriesLabel,
   tags,
   activeTags,
-  allTagsLabel,
   tagsLabel,
   dates,
   activeYear,
@@ -44,32 +45,72 @@ export function BlogFilters({
   monthNames,
   searchPlaceholder,
   initialQ,
-  filterByLabel,
+  applyLabel,
+  clearAllLabel,
+  tagSearchPlaceholder,
 }: BlogFiltersProps) {
+  const [openFilter, setOpenFilter] = useState<
+    'category' | 'tag' | 'date' | null
+  >(null)
+  const filterRowRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        filterRowRef.current &&
+        !filterRowRef.current.contains(e.target as Node)
+      ) {
+        setOpenFilter(null)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  const toggleFilter = (filter: 'category' | 'tag' | 'date') => {
+    setOpenFilter((prev) => (prev === filter ? null : filter))
+  }
+
   return (
     <StyledBlogFilters>
-      {filterByLabel && (
-        <StyledFilterByLabel>{filterByLabel}</StyledFilterByLabel>
-      )}
       <SearchInput placeholder={searchPlaceholder} initialValue={initialQ} />
-      <CategoryFilter
-        categories={categories}
+      <StyledFilterRow ref={filterRowRef}>
+        <CategoryFilter
+          categories={categories}
+          activeCategories={activeCategories}
+          label={categoriesLabel}
+          isOpen={openFilter === 'category'}
+          onToggle={() => toggleFilter('category')}
+          applyLabel={applyLabel}
+        />
+        <TagFilter
+          tags={tags}
+          activeTags={activeTags}
+          label={tagsLabel}
+          isOpen={openFilter === 'tag'}
+          onToggle={() => toggleFilter('tag')}
+          applyLabel={applyLabel}
+          tagSearchPlaceholder={tagSearchPlaceholder}
+        />
+        <DateFilter
+          dates={dates}
+          activeYear={activeYear}
+          activeMonth={activeMonth}
+          label={dateLabel}
+          monthNames={monthNames}
+          isOpen={openFilter === 'date'}
+          onToggle={() => toggleFilter('date')}
+        />
+      </StyledFilterRow>
+      <ActiveFilters
         activeCategories={activeCategories}
-        allLabel={allCategoriesLabel}
-        label={categoriesLabel}
-      />
-      <TagFilter
-        tags={tags}
+        categories={categories}
         activeTags={activeTags}
-        allLabel={allTagsLabel}
-        label={tagsLabel}
-      />
-      <DateFilter
-        dates={dates}
         activeYear={activeYear}
         activeMonth={activeMonth}
-        label={dateLabel}
+        dates={dates}
         monthNames={monthNames}
+        clearAllLabel={clearAllLabel}
       />
     </StyledBlogFilters>
   )
