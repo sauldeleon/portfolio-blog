@@ -13,7 +13,7 @@ export const StyledWrapper = styled.div`
 export const StyledHeader = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem;
 `
 
 export const StyledToolbar = styled.div`
