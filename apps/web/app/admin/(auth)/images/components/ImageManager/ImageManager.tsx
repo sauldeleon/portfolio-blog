@@ -21,6 +21,7 @@ import {
   StyledRefreshButton,
   StyledSearchInput,
   StyledTitle,
+  StyledToolbar,
   StyledUploadButton,
   StyledWrapper,
 } from './ImageManager.styles'
@@ -131,34 +132,36 @@ export function ImageManager() {
     <StyledWrapper data-testid="image-manager">
       <StyledHeader>
         <StyledTitle>{t('images.title')}</StyledTitle>
-        <StyledSearchInput
-          type="search"
-          placeholder={t('images.searchPlaceholder')}
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          data-testid="search-input"
-        />
-        <StyledActions>
-          <StyledRefreshButton
-            variant="contained"
-            size="sm"
-            onClick={() => {
-              setDeleteError(null)
-              void refetch()
-            }}
-            data-testid="refresh-button"
-          >
-            {t('refresh')}
-          </StyledRefreshButton>
-          <StyledUploadButton
-            variant="inverted"
-            size="sm"
-            onClick={() => setIsUploadOpen(true)}
-            data-testid="upload-button"
-          >
-            {t('images.uploadButton')}
-          </StyledUploadButton>
-        </StyledActions>
+        <StyledToolbar>
+          <StyledSearchInput
+            type="search"
+            placeholder={t('images.searchPlaceholder')}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            data-testid="search-input"
+          />
+          <StyledActions>
+            <StyledRefreshButton
+              variant="contained"
+              size="sm"
+              onClick={() => {
+                setDeleteError(null)
+                void refetch()
+              }}
+              data-testid="refresh-button"
+            >
+              {t('refresh')}
+            </StyledRefreshButton>
+            <StyledUploadButton
+              variant="inverted"
+              size="sm"
+              onClick={() => setIsUploadOpen(true)}
+              data-testid="upload-button"
+            >
+              {t('images.uploadButton')}
+            </StyledUploadButton>
+          </StyledActions>
+        </StyledToolbar>
       </StyledHeader>
 
       {isLoading && (

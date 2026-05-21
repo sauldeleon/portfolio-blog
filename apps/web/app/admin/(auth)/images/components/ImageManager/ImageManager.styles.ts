@@ -12,7 +12,13 @@ export const StyledWrapper = styled.div`
 
 export const StyledHeader = styled.div`
   display: flex;
-  align-items: baseline;
+  flex-direction: column;
+  gap: 0.75rem;
+`
+
+export const StyledToolbar = styled.div`
+  display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 1rem;
 `
