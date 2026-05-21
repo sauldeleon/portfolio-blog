@@ -112,6 +112,17 @@ exports[`ProfileInfo should render successfully 1`] = `
   line-height: normal;
   font-size: 16px;
   font-weight: bold;
+  color: #61DAFB;
+}
+
+.c11 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .c10 {
@@ -185,6 +196,17 @@ exports[`ProfileInfo should render successfully 1`] = `
             TypeScript
           </i>
           .
+        </li>
+        <li
+          class="c8"
+        >
+          Experience with 
+          <b
+            class="c11"
+          >
+            monorepos
+          </b>
+           (lerna, NX, yarn workspaces...).
         </li>
       </ul>
     </div>

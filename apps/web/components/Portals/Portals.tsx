@@ -27,11 +27,11 @@ export function Portals({
   ...props
 }: PortalsProps) {
   return (
-    <StyledPortals role="presentation" {...props}>
-      <PortalDoorFirst>
+    <StyledPortals {...props}>
+      <PortalDoorFirst aria-hidden="true">
         <StyledPortalIcon color={mainTheme.colors.yellow} />
       </PortalDoorFirst>
-      <PortalDoorLast>
+      <PortalDoorLast aria-hidden="true">
         <StyledPortalIcon color={mainTheme.colors.green} />
       </PortalDoorLast>
       <PortalPath>

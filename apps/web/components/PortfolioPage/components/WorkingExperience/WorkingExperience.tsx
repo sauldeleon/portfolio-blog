@@ -1,5 +1,6 @@
 'use client'
 
+import { getTechColor } from '@web/components/PortfolioPage/techColors'
 import { parseRichText } from '@web/utils/parseRichText/parseRichText'
 
 import {
@@ -27,7 +28,7 @@ export function WorkingExperience({ items }: WorkingExperienceProps) {
     <>
       {items.map(({ order, company, role, period, bullets }) => (
         <div key={order}>
-          <StyledCompanyName $level={2}>
+          <StyledCompanyName $level={2} as="h3">
             {company} - {role}
           </StyledCompanyName>
           <StyledCompanyPeriod>{period}</StyledCompanyPeriod>
@@ -36,7 +37,9 @@ export function WorkingExperience({ items }: WorkingExperienceProps) {
               <StyledListItem key={`${i}-${bullet}`}>
                 {parseRichText(bullet, {
                   bold: (k, t) => (
-                    <StyledTechnology key={k}>{t}</StyledTechnology>
+                    <StyledTechnology key={k} $color={getTechColor(t)}>
+                      {t}
+                    </StyledTechnology>
                   ),
                 })}
               </StyledListItem>

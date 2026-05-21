@@ -223,7 +223,7 @@ exports[`Portrait should render successfully 1`] = `
       class="c0"
     >
       <img
-        alt="My profile picture 1"
+        alt="Saúl de León Guerrero, portrait 1"
         class="c1"
         data-nimg="1"
         decoding="async"
@@ -235,7 +235,7 @@ exports[`Portrait should render successfully 1`] = `
         width="140"
       />
       <img
-        alt="My profile picture 2"
+        alt="Saúl de León Guerrero, portrait 2"
         class="c2"
         data-nimg="1"
         decoding="async"
@@ -247,7 +247,7 @@ exports[`Portrait should render successfully 1`] = `
         width="140"
       />
       <img
-        alt="My profile picture 3"
+        alt="Saúl de León Guerrero, portrait 3"
         class="c3"
         data-nimg="1"
         decoding="async"
@@ -259,7 +259,7 @@ exports[`Portrait should render successfully 1`] = `
         width="140"
       />
       <img
-        alt="My profile picture 4"
+        alt="Saúl de León Guerrero, portrait 4"
         class="c4"
         data-nimg="1"
         decoding="async"
@@ -271,7 +271,7 @@ exports[`Portrait should render successfully 1`] = `
         width="140"
       />
       <img
-        alt="My profile picture 5"
+        alt="Saúl de León Guerrero, portrait 5"
         class="c5"
         data-nimg="1"
         decoding="async"
@@ -283,7 +283,7 @@ exports[`Portrait should render successfully 1`] = `
         width="140"
       />
       <img
-        alt="My profile picture 6"
+        alt="Saúl de León Guerrero, portrait 6"
         class="c6"
         data-nimg="1"
         decoding="async"

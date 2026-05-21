@@ -21,7 +21,7 @@
               "Testing: Principalmente usando <bold>jest</bold> para unit testing. <bold>e2e</bold> testing utilizando Cypress.",
               "Documentación de componentes, sistemas de diseño y aplicaciones con <bold>Storybook</bold>.",
               "Uso de librerías CSS-in-JS como <bold>Emotion</bold> o <bold>Styled-Components</bold>.",
-              "Preferencia de proyectos en <bold>Typescript</bold>.",
+              "Preferencia de proyectos en <bold>TypeScript</bold>.",
               "Experiencia con <bold>monorepos</bold> (lerna, NX, yarn workspaces...)."
             ]
           },
@@ -108,7 +108,8 @@
       ]
     }
   },
-  "profilePicture": "Mi foto de perfil",
+  "profilePicture": "Saúl de León Guerrero, ingeniero de software",
+  "scrollToTop": "Ir arriba",
   "basedIn": "Localizado en Asturias, España",
   "metadata": {
     "description": "Portfolio de Saúl de León Guerrero. Descarga del CV, muestra de proyectos y stack tecnológico. Ingeniero Front-End especializado en React y TypeScript."

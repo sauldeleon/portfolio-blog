@@ -6,7 +6,7 @@
   "experienceItems": {
     "bonhams": {
       "p1": "Front-end React Developer.",
-      "p2": "Part of the team responsible for migrating the legacy website to a cutting-edge <bold>Next.JS Typescript</bold> application within an <bold>NX</bold> monorepo. Instrumental in developing a comprehensive Design System from the ground up using <bold>Styled Components</bold>. Additionally, involved in creating new applications for clients and internal administration, including an <bold>EXPO</bold> mobile app for iOS and Android.",
+      "p2": "Part of the team responsible for migrating the legacy website to a cutting-edge <bold>Next.JS TypeScript</bold> application within an <bold>NX</bold> monorepo. Instrumental in developing a comprehensive Design System from the ground up using <bold>Styled Components</bold>. Additionally, involved in creating new applications for clients and internal administration, including an <bold>EXPO</bold> mobile app for iOS and Android.",
       "p3": "Proficiently employed <bold>Jest</bold> and <bold>MSW</bold> for thorough unit and integration testing, while utilizing <bold>Cypress</bold> for end-to-end testing.",
       "p4": "Helped at the implementation of a robust <bold>CI/CD</bold> pipeline using GitLab for efficient and seamless deployment."
     },

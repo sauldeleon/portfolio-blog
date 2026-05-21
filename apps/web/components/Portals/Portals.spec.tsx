@@ -12,8 +12,7 @@ describe('Portals', () => {
   it('should render only the portals with no items and neither particles but with a surrounding cylinder', () => {
     renderWithTheme(<Portals enableCylinder />)
 
-    expect(screen.getByRole('presentation')).toBeInTheDocument()
-    const portals = screen.getAllByRole('img')
+    const portals = screen.getAllByRole('img', { hidden: true })
     expect(portals).toHaveLength(2)
     expect(portals[0]).toHaveAttribute('color', '#FFDD83')
     expect(portals[1]).toHaveAttribute('color', '#98DFD6')

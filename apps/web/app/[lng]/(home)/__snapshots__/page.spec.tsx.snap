@@ -609,9 +609,9 @@ exports[`[lng] route - Page should render successfully 1`] = `
       >
         <div
           class="c3 c4"
-          role="presentation"
         >
           <div
+            aria-hidden="true"
             class="c5"
           >
             <svg
@@ -695,6 +695,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
             </svg>
           </div>
           <div
+            aria-hidden="true"
             class="c7"
           >
             <svg
@@ -1397,7 +1398,7 @@ exports[`[lng] route - Page should render successfully 1`] = `
                     style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 6.6385529008148625s;"
                   >
                     <a
-                      aria-label="Typescript"
+                      aria-label="TypeScript"
                       class="c18 c19"
                       data-testid="plain-anchor"
                       href="https://www.typescriptlang.org/"

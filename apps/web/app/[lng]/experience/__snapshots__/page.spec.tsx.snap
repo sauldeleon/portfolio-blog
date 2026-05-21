@@ -613,11 +613,11 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
           >
             01
           </p>
-          <p
+          <h2
             class="c5 c7"
           >
             Bonhams
-          </p>
+          </h2>
         </div>
         <p
           class="c5 c8"
@@ -633,9 +633,9 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
         >
           <div
             class="c11 c12"
-            role="presentation"
           >
             <div
+              aria-hidden="true"
               class="c13"
             >
               <svg
@@ -719,6 +719,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
               </svg>
             </div>
             <div
+              aria-hidden="true"
               class="c15"
             >
               <svg
@@ -1055,7 +1056,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.449384545001999s;"
                     >
                       <a
-                        aria-label="Typescript"
+                        aria-label="TypeScript"
                         class="c22 c23"
                         data-testid="plain-anchor"
                         href="https://www.typescriptlang.org/"
@@ -1233,7 +1234,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
             <b
               class="c29"
             >
-              Next.JS Typescript
+              Next.JS TypeScript
             </b>
              application within an 
             <b
@@ -1383,11 +1384,11 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
           >
             02
           </p>
-          <p
+          <h2
             class="c5 c7"
           >
             Smart Protection
-          </p>
+          </h2>
         </div>
         <p
           class="c5 c8"
@@ -1403,9 +1404,9 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
         >
           <div
             class="c11 c12"
-            role="presentation"
           >
             <div
+              aria-hidden="true"
               class="c13"
             >
               <svg
@@ -1489,6 +1490,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
               </svg>
             </div>
             <div
+              aria-hidden="true"
               class="c15"
             >
               <svg
@@ -1931,7 +1933,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
                       style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.213256064388586s;"
                     >
                       <a
-                        aria-label="Typescript"
+                        aria-label="TypeScript"
                         class="c22 c23"
                         data-testid="plain-anchor"
                         href="https://www.typescriptlang.org/"
@@ -2138,11 +2140,11 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
           >
             03
           </p>
-          <p
+          <h2
             class="c5 c7"
           >
             ING
-          </p>
+          </h2>
         </div>
         <p
           class="c5 c8"
@@ -2158,9 +2160,9 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
         >
           <div
             class="c11 c12"
-            role="presentation"
           >
             <div
+              aria-hidden="true"
               class="c13"
             >
               <svg
@@ -2244,6 +2246,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
               </svg>
             </div>
             <div
+              aria-hidden="true"
               class="c15"
             >
               <svg
@@ -2921,11 +2924,11 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
           >
             04
           </p>
-          <p
+          <h2
             class="c5 c7"
           >
             Keytree
-          </p>
+          </h2>
         </div>
         <p
           class="c5 c8"
@@ -2941,9 +2944,9 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
         >
           <div
             class="c11 c12"
-            role="presentation"
           >
             <div
+              aria-hidden="true"
               class="c13"
             >
               <svg
@@ -3027,6 +3030,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
               </svg>
             </div>
             <div
+              aria-hidden="true"
               class="c15"
             >
               <svg
@@ -3498,11 +3502,11 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
           >
             05
           </p>
-          <p
+          <h2
             class="c5 c7"
           >
             Babel S.I
-          </p>
+          </h2>
         </div>
         <p
           class="c5 c8"
@@ -3518,9 +3522,9 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
         >
           <div
             class="c11 c12"
-            role="presentation"
           >
             <div
+              aria-hidden="true"
               class="c13"
             >
               <svg
@@ -3604,6 +3608,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
               </svg>
             </div>
             <div
+              aria-hidden="true"
               class="c15"
             >
               <svg
@@ -4296,11 +4301,11 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
           >
             06
           </p>
-          <p
+          <h2
             class="c5 c7"
           >
             Ioon Technologies
-          </p>
+          </h2>
         </div>
         <p
           class="c5 c8"
@@ -4316,9 +4321,9 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
         >
           <div
             class="c11 c12"
-            role="presentation"
           >
             <div
+              aria-hidden="true"
               class="c13"
             >
               <svg
@@ -4402,6 +4407,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
               </svg>
             </div>
             <div
+              aria-hidden="true"
               class="c15"
             >
               <svg
@@ -5015,11 +5021,11 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
           >
             07
           </p>
-          <p
+          <h2
             class="c5 c7"
           >
             Clarive
-          </p>
+          </h2>
         </div>
         <p
           class="c5 c8"
@@ -5035,9 +5041,9 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
         >
           <div
             class="c11 c12"
-            role="presentation"
           >
             <div
+              aria-hidden="true"
               class="c13"
             >
               <svg
@@ -5121,6 +5127,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
               </svg>
             </div>
             <div
+              aria-hidden="true"
               class="c15"
             >
               <svg
@@ -5658,11 +5665,11 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
           >
             08
           </p>
-          <p
+          <h2
             class="c5 c7"
           >
             idealista.com
-          </p>
+          </h2>
         </div>
         <p
           class="c5 c8"
@@ -5678,9 +5685,9 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
         >
           <div
             class="c11 c12"
-            role="presentation"
           >
             <div
+              aria-hidden="true"
               class="c13"
             >
               <svg
@@ -5764,6 +5771,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
               </svg>
             </div>
             <div
+              aria-hidden="true"
               class="c15"
             >
               <svg
@@ -6229,11 +6237,11 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
           >
             09
           </p>
-          <p
+          <h2
             class="c5 c7"
           >
             Incita Security
-          </p>
+          </h2>
         </div>
         <p
           class="c5 c8"
@@ -6249,9 +6257,9 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
         >
           <div
             class="c11 c12"
-            role="presentation"
           >
             <div
+              aria-hidden="true"
               class="c13"
             >
               <svg
@@ -6335,6 +6343,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
               </svg>
             </div>
             <div
+              aria-hidden="true"
               class="c15"
             >
               <svg

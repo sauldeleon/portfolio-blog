@@ -10,7 +10,7 @@ describe('[lng] route - Page', () => {
       await Page({ params: Promise.resolve({ lng: 'en' }) }),
     )
     const items = await screen.findAllByRole('presentation')
-    expect(items).toHaveLength(2)
+    expect(items).toHaveLength(1)
     expect(baseElement).toMatchSnapshot()
   })
 

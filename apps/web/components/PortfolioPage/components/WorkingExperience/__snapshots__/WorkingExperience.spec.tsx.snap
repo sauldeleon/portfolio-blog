@@ -75,13 +75,13 @@ exports[`WorkingExperience should render successfully 1`] = `
 <body>
   <div>
     <div>
-      <h1
+      <h3
         class="c0 c1"
       >
         Bonhams
          - 
         Senior Front-End Engineer
-      </h1>
+      </h3>
       <div
         class="c2 c3"
       >
@@ -104,13 +104,13 @@ exports[`WorkingExperience should render successfully 1`] = `
       </ul>
     </div>
     <div>
-      <h1
+      <h3
         class="c0 c1"
       >
         Smart Protection
          - 
         Front-End Engineer
-      </h1>
+      </h3>
       <div
         class="c2 c3"
       >

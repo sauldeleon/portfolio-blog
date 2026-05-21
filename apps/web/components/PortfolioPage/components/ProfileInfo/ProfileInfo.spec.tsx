@@ -8,7 +8,10 @@ const mockAreas = [
   {
     icon: 'frontEnd',
     title: 'Front End',
-    skills: ['SPA using <bold>React</bold> and <italic>TypeScript</italic>.'],
+    skills: [
+      'SPA using <bold>React</bold> and <italic>TypeScript</italic>.',
+      'Experience with <bold>monorepos</bold> (lerna, NX, yarn workspaces...).',
+    ],
   },
 ]
 

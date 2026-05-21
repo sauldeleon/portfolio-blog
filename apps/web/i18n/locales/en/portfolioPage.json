@@ -19,9 +19,9 @@
               "SPA using <bold>React 18</bold> and <bold>yarn</bold> as the main package manager.",
               "SSR using <bold>Next.JS 14-16</bold> with experience in both the new App router system and the legacy Pages Router.",
               "Testing: Primarily using <bold>Jest</bold> for unit testing. <bold>Cypress</bold> for e2e testing",
-              "Usage of </bold>Storybook</bold> for documenting components, design systems and applications",
+              "Usage of <bold>Storybook</bold> for documenting components, design systems and applications",
               "Use of CSS-in-JS libraries such as <bold>Emotion</bold> or <bold>Styled-Components</bold>.",
-              "Preference for projects in <bold>Typescript</bold>.",
+              "Preference for projects in <bold>TypeScript</bold>.",
               "Experience with <bold>monorepos</bold> (lerna, NX, yarn workspaces...)."
             ]
           },
@@ -108,7 +108,8 @@
       ]
     }
   },
-  "profilePicture": "My profile picture",
+  "profilePicture": "Saúl de León Guerrero, software engineer",
+  "scrollToTop": "Scroll to top",
   "basedIn": "Based in Asturias, Spain",
   "metadata": {
     "description": "Portfolio of Saúl de León Guerrero. CV download, project showcase and technology stack. Front-End Engineer specialising in React and TypeScript."

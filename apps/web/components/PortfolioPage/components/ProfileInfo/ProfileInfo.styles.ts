@@ -50,10 +50,11 @@ export const StyledListItem = styled.li`
   }
 `
 
-export const StyledTechnology = styled.b`
+export const StyledTechnology = styled.b<{ $color?: string }>`
   ${({ theme }) => theme.typography.body.M}
   font-size: 16px;
   font-weight: bold;
+  ${({ $color }) => $color && `color: ${$color};`}
 `
 
 export const StyledItalic = styled.i`

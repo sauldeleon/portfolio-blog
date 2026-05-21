@@ -373,7 +373,7 @@ export const animatedItemMap: Record<AnimatedItemKey, AnimatedElement> = {
     svg: <StyledComponentsIcon />,
   },
   typescript: {
-    ariaLabel: 'Typescript',
+    ariaLabel: 'TypeScript',
     path: 'https://www.typescriptlang.org/',
     svg: <TypescriptIcon />,
   },

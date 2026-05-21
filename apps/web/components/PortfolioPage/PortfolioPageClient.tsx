@@ -6,6 +6,8 @@ import { useIsScrolling } from 'react-use-is-scrolling'
 
 import { ScrollTop, ShareIcon } from '@sdlgr/assets'
 
+import { useClientTranslation } from '@web/i18n/client'
+
 import {
   StyledActionContainer,
   StyledContent,
@@ -45,6 +47,7 @@ export function PortfolioPageClient({
   shareLabel,
   sharedLabel,
 }: PortfolioPageClientProps) {
+  const { t } = useClientTranslation('portfolioPage')
   const [scroll, setScroll] = useState(0)
   const [isShared, setIsShared] = useState(false)
   const { isScrolling, scrollDirectionY } = useIsScrolling()
@@ -79,11 +82,12 @@ export function PortfolioPageClient({
         <StyledScrollColumn $active={scroll > 0.1} data-testid="scrollColumn">
           <StyledScrollButton
             data-testid="scrollToTop"
+            aria-label={t('scrollToTop')}
             $isScrolling={isScrolling}
             $scrollingDirection={scrollDirectionY}
             onClick={() => window.scrollTo(0, 0)}
           >
-            <ScrollTop height={18} />
+            <ScrollTop height={18} aria-hidden="true" />
           </StyledScrollButton>
         </StyledScrollColumn>
         <StyledWrap>{children}</StyledWrap>

@@ -29,12 +29,16 @@ describe('ContactPage', () => {
     renderApp(<ContactPage />)
     await screen.findByText('Software Engineer')
 
-    await userEvent.click(screen.getAllByAltText(/My profile picture/)[0])
+    await userEvent.click(
+      screen.getAllByAltText(/Saúl de León Guerrero, portrait/)[0],
+    )
     expect(
       await screen.findByAltText('My toothless profile picture'),
     ).toBeInTheDocument()
     await userEvent.click(screen.getByAltText(/My toothless profile picture/))
-    expect(await screen.findAllByAltText(/My profile picture/)).toHaveLength(6)
+    expect(
+      await screen.findAllByAltText(/Saúl de León Guerrero, portrait/),
+    ).toHaveLength(6)
   })
 
   it('should hide contact info if bot info is loading', async () => {

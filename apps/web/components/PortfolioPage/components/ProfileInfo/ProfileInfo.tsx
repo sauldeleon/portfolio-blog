@@ -10,6 +10,7 @@ import {
   MobileIcon,
 } from '@sdlgr/assets'
 
+import { getTechColor } from '@web/components/PortfolioPage/techColors'
 import { parseRichText } from '@web/utils/parseRichText/parseRichText'
 
 import {
@@ -63,7 +64,9 @@ export function ProfileInfo({
               <StyledListItem key={`${i}-${skill}`}>
                 {parseRichText(skill, {
                   bold: (k, t) => (
-                    <StyledTechnology key={k}>{t}</StyledTechnology>
+                    <StyledTechnology key={k} $color={getTechColor(t)}>
+                      {t}
+                    </StyledTechnology>
                   ),
                   italic: (k, t) => <StyledItalic key={k}>{t}</StyledItalic>,
                 })}

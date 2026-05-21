@@ -1,6 +1,19 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`ContactPage should render successfully 1`] = `
+.c9 {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: nowrap;
+  width: 1px;
+  inset: 0;
+}
+
 .c3 {
   --iconHeight: 249px;
   --iconWidth: 130px;
@@ -87,7 +100,7 @@ exports[`ContactPage should render successfully 1`] = `
   background-color: #000000;
 }
 
-.c24 {
+.c25 {
   z-index: -1;
   flex-grow: 1;
   border: 1px solid #98DFD6;
@@ -104,12 +117,12 @@ exports[`ContactPage should render successfully 1`] = `
   left: -41%;
 }
 
-.c23 {
+.c24 {
   position: relative;
   position: relative;
 }
 
-.c23::after {
+.c24::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -119,28 +132,28 @@ exports[`ContactPage should render successfully 1`] = `
   background-color: currentColor;
 }
 
-.c23::after {
+.c24::after {
   transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.25s ease-out;
 }
 
-.c23:hover::after {
+.c24:hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
 
-.c23:hover,
-.c23:active,
-.c23:focus {
+.c24:hover,
+.c24:active,
+.c24:focus {
   text-decoration: none;
 }
 
-.c23:focus-visible {
+.c24:focus-visible {
   outline: #FBFBFB auto 1px;
 }
 
-.c18 {
+.c19 {
   font-family: var(--font-roboto-mono);
   font-weight: 400;
   color: #FBFBFB;
@@ -149,7 +162,7 @@ exports[`ContactPage should render successfully 1`] = `
   margin: 0;
 }
 
-.c20 {
+.c21 {
   font-family: var(--font-roboto-mono);
   font-weight: 400;
   color: #FBFBFB;
@@ -158,32 +171,32 @@ exports[`ContactPage should render successfully 1`] = `
   white-space: pre-line;
 }
 
-.c20 ul,
-.c20 ol {
+.c21 ul,
+.c21 ol {
   margin-left: 40px;
   margin-bottom: 10px;
 }
 
-.c20 ul {
+.c21 ul {
   list-style: outside disc;
 }
 
-.c20 ol {
+.c21 ol {
   list-style: decimal;
 }
 
-.c20 li {
+.c21 li {
   padding-left: 10px;
 }
 
-.c9 {
+.c10 {
   width: 100%;
   height: 100%;
   display: grid;
   place-items: center;
 }
 
-.c10 {
+.c11 {
   display: grid;
   place-items: center;
   rotate: 270deg;
@@ -194,7 +207,7 @@ exports[`ContactPage should render successfully 1`] = `
   row-gap: 4px;
 }
 
-.c19 {
+.c20 {
   font-family: var(--font-roboto-mono);
   font-weight: 400;
   color: #FBFBFB;
@@ -202,7 +215,7 @@ exports[`ContactPage should render successfully 1`] = `
   line-height: normal;
 }
 
-.c21 {
+.c22 {
   display: flex;
   align-items: center;
   font-family: var(--font-roboto-mono);
@@ -212,30 +225,21 @@ exports[`ContactPage should render successfully 1`] = `
   line-height: normal;
 }
 
-.c22 {
+.c23 {
   display: grid;
   place-items: center;
   margin-right: 4px;
 }
 
-.c22 svg {
+.c23 svg {
   width: 12px;
   height: 12px;
 }
 
-.c11 {
+.c12 {
   position: relative;
   width: 70px;
   height: 70px;
-}
-
-.c12 {
-  overflow: hidden;
-  border-radius: 50%;
-  width: 70px;
-  height: 70px;
-  position: absolute;
-  opacity: 1;
 }
 
 .c13 {
@@ -244,8 +248,7 @@ exports[`ContactPage should render successfully 1`] = `
   width: 70px;
   height: 70px;
   position: absolute;
-  opacity: 0;
-  animation: k0 60s 10s infinite;
+  opacity: 1;
 }
 
 .c14 {
@@ -255,7 +258,7 @@ exports[`ContactPage should render successfully 1`] = `
   height: 70px;
   position: absolute;
   opacity: 0;
-  animation: k1 60s 10s infinite;
+  animation: k0 60s 10s infinite;
 }
 
 .c15 {
@@ -265,7 +268,7 @@ exports[`ContactPage should render successfully 1`] = `
   height: 70px;
   position: absolute;
   opacity: 0;
-  animation: k2 60s 10s infinite;
+  animation: k1 60s 10s infinite;
 }
 
 .c16 {
@@ -275,10 +278,20 @@ exports[`ContactPage should render successfully 1`] = `
   height: 70px;
   position: absolute;
   opacity: 0;
-  animation: k3 60s 10s infinite;
+  animation: k2 60s 10s infinite;
 }
 
 .c17 {
+  overflow: hidden;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  opacity: 0;
+  animation: k3 60s 10s infinite;
+}
+
+.c18 {
   overflow: hidden;
   border-radius: 50%;
   width: 70px;
@@ -359,7 +372,7 @@ exports[`ContactPage should render successfully 1`] = `
 }
 
 @media (width >= 768px) {
-  .c24 {
+  .c25 {
     border-bottom: 1px solid #98DFD6;
     border-right: none;
   }
@@ -374,7 +387,7 @@ exports[`ContactPage should render successfully 1`] = `
 }
 
 @media (width >= 768px) {
-  .c10 {
+  .c11 {
     width: 100%;
     height: 100%;
     margin-bottom: 0px;
@@ -387,7 +400,7 @@ exports[`ContactPage should render successfully 1`] = `
 }
 
 @media (width >= 768px) {
-  .c19 {
+  .c20 {
     font-family: var(--font-roboto-mono);
     font-weight: 400;
     color: #FBFBFB;
@@ -397,7 +410,7 @@ exports[`ContactPage should render successfully 1`] = `
 }
 
 @media (width >= 768px) {
-  .c21 {
+  .c22 {
     font-family: var(--font-roboto-mono);
     font-weight: 400;
     color: #FBFBFB;
@@ -407,20 +420,13 @@ exports[`ContactPage should render successfully 1`] = `
 }
 
 @media (width >= 768px) {
-  .c22 {
+  .c23 {
     margin-right: 8px;
   }
 
-  .c22 svg {
+  .c23 svg {
     width: 16px;
     height: 16px;
-  }
-}
-
-@media (width >= 768px) {
-  .c11 {
-    width: 140px;
-    height: 140px;
   }
 }
 
@@ -461,6 +467,13 @@ exports[`ContactPage should render successfully 1`] = `
 
 @media (width >= 768px) {
   .c17 {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+@media (width >= 768px) {
+  .c18 {
     width: 140px;
     height: 140px;
   }
@@ -581,9 +594,9 @@ exports[`ContactPage should render successfully 1`] = `
       >
         <div
           class="c3 c4"
-          role="presentation"
         >
           <div
+            aria-hidden="true"
             class="c5"
           >
             <svg
@@ -667,6 +680,7 @@ exports[`ContactPage should render successfully 1`] = `
             </svg>
           </div>
           <div
+            aria-hidden="true"
             class="c7"
           >
             <svg
@@ -752,19 +766,24 @@ exports[`ContactPage should render successfully 1`] = `
           <div
             class="c8"
           >
-            <div
+            <h1
               class="c9"
             >
+              Contact
+            </h1>
+            <div
+              class="c10"
+            >
               <div
-                class="c10"
+                class="c11"
                 data-testid="contact-info"
               >
                 <div
-                  class="c11"
+                  class="c12"
                 >
                   <img
-                    alt="My profile picture 1"
-                    class="c12"
+                    alt="Saúl de León Guerrero, portrait 1"
+                    class="c13"
                     data-nimg="1"
                     decoding="async"
                     height="140"
@@ -775,8 +794,8 @@ exports[`ContactPage should render successfully 1`] = `
                     width="140"
                   />
                   <img
-                    alt="My profile picture 2"
-                    class="c13"
+                    alt="Saúl de León Guerrero, portrait 2"
+                    class="c14"
                     data-nimg="1"
                     decoding="async"
                     height="140"
@@ -787,8 +806,8 @@ exports[`ContactPage should render successfully 1`] = `
                     width="140"
                   />
                   <img
-                    alt="My profile picture 3"
-                    class="c14"
+                    alt="Saúl de León Guerrero, portrait 3"
+                    class="c15"
                     data-nimg="1"
                     decoding="async"
                     height="140"
@@ -799,8 +818,8 @@ exports[`ContactPage should render successfully 1`] = `
                     width="140"
                   />
                   <img
-                    alt="My profile picture 4"
-                    class="c15"
+                    alt="Saúl de León Guerrero, portrait 4"
+                    class="c16"
                     data-nimg="1"
                     decoding="async"
                     height="140"
@@ -811,8 +830,8 @@ exports[`ContactPage should render successfully 1`] = `
                     width="140"
                   />
                   <img
-                    alt="My profile picture 5"
-                    class="c16"
+                    alt="Saúl de León Guerrero, portrait 5"
+                    class="c17"
                     data-nimg="1"
                     decoding="async"
                     height="140"
@@ -823,8 +842,8 @@ exports[`ContactPage should render successfully 1`] = `
                     width="140"
                   />
                   <img
-                    alt="My profile picture 6"
-                    class="c17"
+                    alt="Saúl de León Guerrero, portrait 6"
+                    class="c18"
                     data-nimg="1"
                     decoding="async"
                     height="140"
@@ -835,16 +854,16 @@ exports[`ContactPage should render successfully 1`] = `
                     width="140"
                   />
                 </div>
-                <h3
-                  class="c18 c19"
+                <h2
+                  class="c19 c20"
                 >
                   Software Engineer
-                </h3>
+                </h2>
                 <p
-                  class="c20 c21"
+                  class="c21 c22"
                 >
                   <span
-                    class="c22"
+                    class="c23"
                   >
                     <svg
                       fill="currentColor"
@@ -860,7 +879,7 @@ exports[`ContactPage should render successfully 1`] = `
                   </span>
                   <a
                     aria-label="My LinkedIn profile"
-                    class="c23 "
+                    class="c24 "
                     data-testid="plain-anchor"
                     href="https://www.linkedin.com/in/sauldeleonguerrero"
                     rel="noreferrer"
@@ -870,10 +889,10 @@ exports[`ContactPage should render successfully 1`] = `
                   </a>
                 </p>
                 <p
-                  class="c20 c21"
+                  class="c21 c22"
                 >
                   <span
-                    class="c22"
+                    class="c23"
                   >
                     <svg
                       fill="currentColor"
@@ -889,7 +908,7 @@ exports[`ContactPage should render successfully 1`] = `
                   </span>
                   <a
                     aria-label="My electronic mail address"
-                    class="c23 "
+                    class="c24 "
                     data-testid="plain-anchor"
                     href="mailto:sauldeleonguerrero@gmail.com"
                     rel="noreferrer"
@@ -904,7 +923,7 @@ exports[`ContactPage should render successfully 1`] = `
         </div>
       </div>
       <div
-        class="c24"
+        class="c25"
       />
     </div>
   </div>

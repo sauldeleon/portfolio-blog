@@ -48,13 +48,24 @@ export function Header() {
         !!navItem.alternativeLinks?.some((regex) => regex.test(pathname))),
   }))
 
+  const isHomePage = pathname === `/${language}` || pathname === `/${language}/`
+
   return (
     <HeaderLib
       aria-label={t('mainMenu')}
       logo={
-        <StyledLogoLink href={`/${language}/`} aria-label={t('headerLogo')}>
-          <StyledSLLogo height={55} width={89} />
-        </StyledLogoLink>
+        isHomePage ? (
+          <StyledSLLogo
+            height={55}
+            width={89}
+            aria-label={t('headerLogoHome')}
+            role="img"
+          />
+        ) : (
+          <StyledLogoLink href={`/${language}/`} aria-label={t('headerLogo')}>
+            <StyledSLLogo height={55} width={89} aria-hidden="true" />
+          </StyledLogoLink>
+        )
       }
       navItems={navItems}
       actionItem={

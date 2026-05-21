@@ -4,6 +4,7 @@ import { useState } from 'react'
 
 import { EmailIcon, LinkedInIcon } from '@sdlgr/assets'
 import { useIsBot } from '@sdlgr/use-is-bot'
+import { VisuallyHidden } from '@sdlgr/visually-hidden'
 
 import { MainPortal } from '@web/components/MainPortal/MainPortal'
 import { NoSSR } from '@web/components/NoSSR/NoSSR'
@@ -30,6 +31,7 @@ export function ContactPage() {
 
   return (
     <MainPortal>
+      <VisuallyHidden as="h1">{t('pageTitle')}</VisuallyHidden>
       <StyledContactInfoWrapper>
         <StyledContactInfo $isVisible={!isLoading} data-testid="contact-info">
           {painMode ? (
@@ -37,8 +39,8 @@ export function ContactPage() {
           ) : (
             <Portrait onClick={() => setPainMode(true)} />
           )}
-          <StyledHeading as="h3" $level={2}>
-            Software Engineer
+          <StyledHeading as="h2" $level={2}>
+            {t('softwareEngineer')}
           </StyledHeading>
           <StyledBody $level="L">
             <StyledIconWrapper>

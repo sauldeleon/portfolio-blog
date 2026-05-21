@@ -511,11 +511,11 @@ exports[`ExperienceItem should render successfully 1`] = `
           >
             01
           </p>
-          <p
+          <h2
             class="c3 c5"
           >
             test
-          </p>
+          </h2>
         </div>
         <p
           class="c3 c6"
@@ -531,9 +531,9 @@ exports[`ExperienceItem should render successfully 1`] = `
         >
           <div
             class="c9 c10"
-            role="presentation"
           >
             <div
+              aria-hidden="true"
               class="c11"
             >
               <svg
@@ -617,6 +617,7 @@ exports[`ExperienceItem should render successfully 1`] = `
               </svg>
             </div>
             <div
+              aria-hidden="true"
               class="c13"
             >
               <svg

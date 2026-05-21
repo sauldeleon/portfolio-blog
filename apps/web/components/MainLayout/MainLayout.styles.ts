@@ -8,7 +8,26 @@ export const StyledPage = styled.div`
   /* overflow-x: auto; */
 `
 
-export const StyledContent = styled.div`
+export const StyledSkipLink = styled.a`
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 9999;
+  padding: 0.5rem 1rem;
+  background: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.black};
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transform: translateY(-100%);
+  transition: transform 0.15s;
+
+  &:focus {
+    transform: translateY(0%);
+  }
+`
+
+export const StyledContent = styled.main`
   display: flex;
   min-height: calc(100vh - 115px - 300px);
   align-items: center;

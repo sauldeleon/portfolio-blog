@@ -73,7 +73,7 @@ export function ExperienceItem({
       <StyledExperienceHeader>
         <StyledCompany>
           <StyledOrder>{zeroPad(order + 1, 2)}</StyledOrder>
-          <StyledCompanyName>{company}</StyledCompanyName>
+          <StyledCompanyName as="h2">{company}</StyledCompanyName>
         </StyledCompany>
         <StyledCompanyPeriod>{period}</StyledCompanyPeriod>
       </StyledExperienceHeader>

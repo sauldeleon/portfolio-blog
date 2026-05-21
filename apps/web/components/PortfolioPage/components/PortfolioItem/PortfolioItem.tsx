@@ -17,7 +17,9 @@ export function PortfolioItem({
 }: Readonly<PortfolioItemProps>) {
   return (
     <StyledSection>
-      <StyledTitle $level="L">{title}</StyledTitle>
+      <StyledTitle as="h2" $level="L">
+        {title}
+      </StyledTitle>
       <StyledContainer>{children}</StyledContainer>
     </StyledSection>
   )

@@ -6,14 +6,14 @@
   "experienceItems": {
     "bonhams": {
       "p1": "Desarrollador de Front-end React.",
-      "p2": "Parte del equipo responsable de migrar la antigua web a una aplicación web de última generación <bold>Next.JS</bold> utilizando <bold>Typescript</bold> dentro de un monorepo <bold>NX</bold>. Desarrollo de un design system utilizando <bold>Styled Components</bold>. Además, participé en la creación de nuevas aplicaciones para usuarios externos y de administración interna, incluyendo una aplicación móvil <bold>EXPO</bold> para iOS y Android.",
+      "p2": "Parte del equipo responsable de migrar la antigua web a una aplicación web de última generación <bold>Next.JS</bold> utilizando <bold>TypeScript</bold> dentro de un monorepo <bold>NX</bold>. Desarrollo de un design system utilizando <bold>Styled Components</bold>. Además, participé en la creación de nuevas aplicaciones para usuarios externos y de administración interna, incluyendo una aplicación móvil <bold>EXPO</bold> para iOS y Android.",
       "p3": "Uso de <bold>Jest</bold> y <bold>MSW</bold> para test de integración y unitarias, mientras utilizaba <bold>Cypress</bold> para pruebas de end to end.",
       "p4": "Ayudé en la mejora del pipeline CI/CD utilizando GitLab para una ejecutar despliegues en múltiples entornos."
     },
     "smartProtection": {
       "p1": "Desarrollador de Front-end React.",
       "p2": "Parte del equipo responsable del desarrollo de aplicaciones de back-office, atendiendo a los requisitos administrativos internos de los datos comerciales de la empresa.",
-      "p3": "Creación de un monorepo integral utilizando <bold>Yarn Workspaces</bold>, asegurando el desarrollo de aplicaciones completas basadas en <bold>Typescript</bold>.",
+      "p3": "Creación de un monorepo integral utilizando <bold>Yarn Workspaces</bold>, asegurando el desarrollo de aplicaciones completas basadas en <bold>TypeScript</bold>.",
       "p4": "Uso de TDD utilizando <bold>Jest</bold> y <bold>React Testing Library</bold>.",
       "p5": "Implementación de un design system, utilizando una biblioteca personalizada de componentes css-in-js usando <bold>Emotion.JS</bold> junto con <bold>Storybook</bold> para una documentación completa.",
       "p6": "Optimización del pipeline en <bold>Jenkins</bold>, paralelizando múltiples etapas.",

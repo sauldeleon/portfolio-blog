@@ -1,5 +1,7 @@
 {
-  "profilePicture": "My profile picture {{count}}",
+  "pageTitle": "Contact",
+  "softwareEngineer": "Software Engineer",
+  "profilePicture": "Saúl de León Guerrero, portrait {{count}}",
   "toothlessProfilePicture": "My toothless profile picture",
   "phoneAria": "My phone number",
   "phone": "Phone",
