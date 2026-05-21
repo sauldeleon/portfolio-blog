@@ -6,14 +6,14 @@ import { Input } from '@sdlgr/input'
 export const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 0;
   padding: 2rem 0;
 `
 
 export const StyledHeader = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1rem;
 `
 
 export const StyledToolbar = styled.div`
@@ -21,6 +21,9 @@ export const StyledToolbar = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(251, 251, 251, 0.08);
+  flex-wrap: wrap;
 `
 
 export const StyledTitle = styled.h1`
