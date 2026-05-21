@@ -41,7 +41,7 @@ const PLATFORMS = [
     name: 'X',
     Icon: XComIcon,
     getHref: (url: string, title: string) =>
-      `https://x.com/intent/post?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
+      `https://x.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
   },
   {
     name: 'Facebook',

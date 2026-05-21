@@ -106,7 +106,8 @@ const publishedPost = {
   category: 'Tech',
   tags: ['next.js', 'react'],
   author: 'Jane Doe',
-  publishedAt: new Date('2024-01-01'),
+  publishedAt: new Date('2024-01-01T00:00:00.000Z'),
+  updatedAt: new Date('2024-06-15T00:00:00.000Z'),
   content: 'Hello world content',
   seriesId: null,
   seriesOrder: null,
@@ -438,7 +439,62 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
         params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
       })
       expect(meta.twitter.card).toBe('summary_large_image')
-      expect(meta.twitter.images[0]).toContain('/og?')
+      expect(meta.twitter.title).toBe('My Test Post')
+      expect(meta.twitter.description).toBe('A great post about testing')
+      expect(meta.twitter.images[0].url).toContain('/og?')
+      expect(meta.twitter.images[0]).toMatchObject({
+        width: 1200,
+        height: 630,
+        alt: 'My Test Post',
+      })
+    })
+
+    it('includes article og type and url', async () => {
+      process.env.BASE_URL = 'https://example.com'
+      mockGetPostByNumber.mockResolvedValue(publishedPost)
+      const { generateMetadata } = require('./page.next')
+      const meta = await generateMetadata({
+        params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
+      })
+      expect(meta.openGraph.type).toBe('article')
+      expect(meta.openGraph.url).toBe(
+        'https://example.com/en/blog/1/my-test-post',
+      )
+      delete process.env.BASE_URL
+    })
+
+    it('includes alternateLocale in openGraph', async () => {
+      mockGetPostByNumber.mockResolvedValue(publishedPost)
+      const { generateMetadata } = require('./page.next')
+      const meta = await generateMetadata({
+        params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
+      })
+      expect(meta.openGraph.alternateLocale).toEqual(['es_ES'])
+    })
+
+    it('includes article metadata in openGraph', async () => {
+      mockGetPostByNumber.mockResolvedValue(publishedPost)
+      const { generateMetadata } = require('./page.next')
+      const meta = await generateMetadata({
+        params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
+      })
+      expect(meta.openGraph.publishedTime).toBe('2024-01-01T00:00:00.000Z')
+      expect(meta.openGraph.modifiedTime).toBe('2024-06-15T00:00:00.000Z')
+      expect(meta.openGraph.authors).toEqual(['Jane Doe'])
+      expect(meta.openGraph.section).toBe('Technology')
+      expect(meta.openGraph.tags).toEqual(['next.js', 'react'])
+    })
+
+    it('omits publishedTime when publishedAt is null', async () => {
+      mockGetPostByNumber.mockResolvedValue({
+        ...publishedPost,
+        publishedAt: null,
+      })
+      const { generateMetadata } = require('./page.next')
+      const meta = await generateMetadata({
+        params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
+      })
+      expect(meta.openGraph.publishedTime).toBeUndefined()
     })
 
     it('does not include cover in OG URL when post has no coverImage', async () => {

@@ -29,6 +29,7 @@ describe('ShareButtons', () => {
   it('renders all platform links', () => {
     renderWithTheme(<ShareButtons {...defaultProps} />)
     expect(screen.getByRole('link', { name: 'LinkedIn' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'X' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Facebook' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'WhatsApp' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Telegram' })).toBeInTheDocument()
@@ -79,6 +80,14 @@ describe('ShareButtons', () => {
     expect(screen.getByRole('link', { name: 'Facebook' })).toHaveAttribute(
       'href',
       expect.stringContaining('facebook.com'),
+    )
+  })
+
+  it('X link contains x.com/intent/tweet', () => {
+    renderWithTheme(<ShareButtons {...defaultProps} />)
+    expect(screen.getByRole('link', { name: 'X' })).toHaveAttribute(
+      'href',
+      expect.stringContaining('x.com/intent/tweet'),
     )
   })
 
