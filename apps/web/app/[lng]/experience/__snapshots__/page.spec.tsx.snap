@@ -1229,6 +1229,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
         >
           <div
             class="c16 c17"
+            data-testid="portals"
           >
             <div
               aria-hidden="true"
@@ -2001,6 +2002,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
         >
           <div
             class="c16 c17"
+            data-testid="portals"
           >
             <div
               aria-hidden="true"
@@ -2758,6 +2760,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
         >
           <div
             class="c16 c17"
+            data-testid="portals"
           >
             <div
               aria-hidden="true"
@@ -3543,6 +3546,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
         >
           <div
             class="c16 c17"
+            data-testid="portals"
           >
             <div
               aria-hidden="true"
@@ -4122,6 +4126,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
         >
           <div
             class="c16 c17"
+            data-testid="portals"
           >
             <div
               aria-hidden="true"
@@ -4922,6 +4927,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
         >
           <div
             class="c16 c17"
+            data-testid="portals"
           >
             <div
               aria-hidden="true"
@@ -5643,6 +5649,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
         >
           <div
             class="c16 c17"
+            data-testid="portals"
           >
             <div
               aria-hidden="true"
@@ -6288,6 +6295,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
         >
           <div
             class="c16 c17"
+            data-testid="portals"
           >
             <div
               aria-hidden="true"
@@ -6861,6 +6869,7 @@ exports[`[lng]/experience route -  page should render successfully 1`] = `
         >
           <div
             class="c16 c17"
+            data-testid="portals"
           >
             <div
               aria-hidden="true"

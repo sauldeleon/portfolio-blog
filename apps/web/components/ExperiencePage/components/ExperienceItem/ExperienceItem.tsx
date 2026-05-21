@@ -81,7 +81,7 @@ export function ExperienceItem({
       </StyledExperienceHeader>
       <StyledExperienceInfo>
         <StyledExperiencePortal>
-          <StyledPortals>
+          <StyledPortals data-testid="portals">
             <ul aria-label={ariaLabel}>
               {technologies
                 .map((tech) => animatedItemMap[tech])

@@ -1211,6 +1211,7 @@ exports[`ExperiencePage should render successfully in English 1`] = `
         >
           <div
             class="c16 c17"
+            data-testid="portals"
           >
             <div
               aria-hidden="true"
@@ -1983,6 +1984,7 @@ exports[`ExperiencePage should render successfully in English 1`] = `
         >
           <div
             class="c16 c17"
+            data-testid="portals"
           >
             <div
               aria-hidden="true"
@@ -2740,6 +2742,7 @@ exports[`ExperiencePage should render successfully in English 1`] = `
         >
           <div
             class="c16 c17"
+            data-testid="portals"
           >
             <div
               aria-hidden="true"
@@ -3525,6 +3528,7 @@ exports[`ExperiencePage should render successfully in English 1`] = `
         >
           <div
             class="c16 c17"
+            data-testid="portals"
           >
             <div
               aria-hidden="true"
@@ -4104,6 +4108,7 @@ exports[`ExperiencePage should render successfully in English 1`] = `
         >
           <div
             class="c16 c17"
+            data-testid="portals"
           >
             <div
               aria-hidden="true"
@@ -4904,6 +4909,7 @@ exports[`ExperiencePage should render successfully in English 1`] = `
         >
           <div
             class="c16 c17"
+            data-testid="portals"
           >
             <div
               aria-hidden="true"
@@ -5625,6 +5631,7 @@ exports[`ExperiencePage should render successfully in English 1`] = `
         >
           <div
             class="c16 c17"
+            data-testid="portals"
           >
             <div
               aria-hidden="true"
@@ -6270,6 +6277,7 @@ exports[`ExperiencePage should render successfully in English 1`] = `
         >
           <div
             class="c16 c17"
+            data-testid="portals"
           >
             <div
               aria-hidden="true"
@@ -6843,6 +6851,7 @@ exports[`ExperiencePage should render successfully in English 1`] = `
         >
           <div
             class="c16 c17"
+            data-testid="portals"
           >
             <div
               aria-hidden="true"
