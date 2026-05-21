@@ -28,6 +28,6 @@ describe('Experience page', () => {
 
   it('should show multiple portals', () => {
     getTitle({ timeout: 6000 }).contains('Experience')
-    cy.findAllByRole('presentation').should('have.length', 9)
+    cy.get('[data-testid="portals"]').should('have.length', 9)
   })
 })
