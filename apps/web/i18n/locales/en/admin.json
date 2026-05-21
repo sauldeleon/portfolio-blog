@@ -142,6 +142,8 @@
       "saving": "Saving…",
       "error": "Rename failed, please try again"
     },
+    "searchPlaceholder": "Search images…",
+    "noResults": "No images match your search.",
     "listError": "Failed to load images, please try again",
     "deleteError": "Delete failed, please try again",
     "upload": {

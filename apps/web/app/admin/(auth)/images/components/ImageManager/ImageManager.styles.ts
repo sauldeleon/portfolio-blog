@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 import { Button } from '@sdlgr/button'
+import { Input } from '@sdlgr/input'
 
 export const StyledWrapper = styled.div`
   display: flex;
@@ -44,6 +45,12 @@ export const StyledRefreshButton = styled(Button).attrs({
   &:hover {
     opacity: 0.6;
   }
+`
+
+export const StyledSearchInput = styled(Input)`
+  font-size: 0.75rem;
+  width: 220px;
+  padding: 0.375rem 0;
 `
 
 export const StyledGrid = styled.div`
