@@ -92,20 +92,30 @@ export async function generateMetadata({ params }: RouteProps) {
   if (post.coverImage) ogParams.set('cover', post.coverImage)
   if (post.category) ogParams.set('category', categoryName)
   const ogImageUrl = `${deploymentUrl}/og?${ogParams.toString()}`
+  const postUrl = `${deploymentUrl}/${lng}/blog/${postNumber}/${post.slug}`
 
   return {
     title: post.title,
     description: post.excerpt,
     openGraph: {
+      type: 'article',
+      url: postUrl,
       title: post.title,
       description: post.excerpt,
       locale: ogLocale(lng),
-      localeAlternate: ogLocaleAlternate(lng),
+      alternateLocale: ogLocaleAlternate(lng),
       images: [{ url: ogImageUrl, width: 1200, height: 630 }],
+      publishedTime: post.publishedAt?.toISOString(),
+      modifiedTime: post.updatedAt.toISOString(),
+      authors: [post.author],
+      section: categoryName,
+      tags: post.tags,
     },
     twitter: {
       card: 'summary_large_image' as const,
-      images: [ogImageUrl],
+      title: post.title,
+      description: post.excerpt,
+      images: [{ url: ogImageUrl, width: 1200, height: 630, alt: post.title }],
     },
     alternates: {
       ...buildAlternates(lng, ownPath),

@@ -110,7 +110,7 @@ exports[`ShareButtons matches snapshot 1`] = `
           <a
             aria-label="X"
             class="c3"
-            href="https://x.com/intent/post?url=https%3A%2F%2Fexample.com%2Fpost&text=My%20Post%20Title"
+            href="https://x.com/intent/tweet?url=https%3A%2F%2Fexample.com%2Fpost&text=My%20Post%20Title"
             rel="noopener noreferrer"
             target="_blank"
           >
