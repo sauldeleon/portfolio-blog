@@ -106,7 +106,7 @@ export async function generateMetadata({ params }: RouteProps) {
       alternateLocale: ogLocaleAlternate(lng),
       images: [{ url: ogImageUrl, width: 1200, height: 630 }],
       publishedTime: post.publishedAt?.toISOString(),
-      modifiedTime: post.updatedAt?.toISOString(),
+      modifiedTime: post.updatedAt.toISOString(),
       authors: [post.author],
       section: categoryName,
       tags: post.tags,
@@ -114,7 +114,7 @@ export async function generateMetadata({ params }: RouteProps) {
     twitter: {
       card: 'summary_large_image' as const,
       title: post.title,
-      description: post.excerpt ?? undefined,
+      description: post.excerpt,
       images: [{ url: ogImageUrl, width: 1200, height: 630, alt: post.title }],
     },
     alternates: {
