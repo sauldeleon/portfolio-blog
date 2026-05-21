@@ -4,7 +4,10 @@ import { NextResponse } from 'next/server'
 import { auth } from './lib/auth/config'
 import { ratelimit } from './lib/ratelimit'
 
-type AuthRequest = NextRequest & { auth?: { user?: unknown } | null }
+type AuthRequest = NextRequest & {
+  ip?: string
+  auth?: { user?: unknown } | null
+}
 
 export async function handleMiddleware(
   req: AuthRequest,

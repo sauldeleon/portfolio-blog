@@ -61,7 +61,7 @@ export const StyledCopiedPill = styled.span`
   bottom: calc(100% + 6px);
   left: 50%;
   transform: translateX(-50%);
-  background: ${({ theme }) => theme.colors.primary};
+  background: ${({ theme }) => theme.colors.blue};
   color: #fff;
   font-size: 0.7rem;
   font-weight: 600;

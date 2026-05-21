@@ -342,9 +342,10 @@ describe('PUT /api/posts/[id]', () => {
     )
     expect(response.status).toBe(200)
     expect(mockUpdatePost).toHaveBeenCalled()
-    expect(mockRevalidateTag).toHaveBeenCalledWith('posts')
+    expect(mockRevalidateTag).toHaveBeenCalledWith('posts', 'default')
     expect(mockRevalidateTag).toHaveBeenCalledWith(
       'post-01JWTEST000000000000000000',
+      'default',
     )
   })
 
@@ -595,9 +596,10 @@ describe('DELETE /api/posts/[id]', () => {
     expect(mockSoftDeletePost).toHaveBeenCalledWith(
       '01JWTEST000000000000000000',
     )
-    expect(mockRevalidateTag).toHaveBeenCalledWith('posts')
+    expect(mockRevalidateTag).toHaveBeenCalledWith('posts', 'default')
     expect(mockRevalidateTag).toHaveBeenCalledWith(
       'post-01JWTEST000000000000000000',
+      'default',
     )
   })
 
@@ -616,9 +618,10 @@ describe('DELETE /api/posts/[id]', () => {
       '01JWTEST000000000000000000',
     )
     expect(mockSoftDeletePost).not.toHaveBeenCalled()
-    expect(mockRevalidateTag).toHaveBeenCalledWith('posts')
+    expect(mockRevalidateTag).toHaveBeenCalledWith('posts', 'default')
     expect(mockRevalidateTag).toHaveBeenCalledWith(
       'post-01JWTEST000000000000000000',
+      'default',
     )
   })
 

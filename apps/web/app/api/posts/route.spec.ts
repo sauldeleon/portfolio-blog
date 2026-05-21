@@ -397,7 +397,7 @@ describe('POST /api/posts', () => {
         es: validTranslations.es,
       }),
     )
-    expect(mockRevalidateTag).toHaveBeenCalledWith('posts')
+    expect(mockRevalidateTag).toHaveBeenCalledWith('posts', 'default')
   })
 
   it('creates post with ES-only translation', async () => {

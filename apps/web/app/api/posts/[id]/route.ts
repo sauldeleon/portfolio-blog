@@ -220,8 +220,8 @@ export async function PUT(
     }
   }
 
-  revalidateTag('posts')
-  revalidateTag(`post-${id}`)
+  revalidateTag('posts', 'default')
+  revalidateTag(`post-${id}`, 'default')
   return NextResponse.json(post)
 }
 
@@ -248,8 +248,8 @@ export async function DELETE(
       )
     }
     await hardDeletePost(id)
-    revalidateTag('posts')
-    revalidateTag(`post-${id}`)
+    revalidateTag('posts', 'default')
+    revalidateTag(`post-${id}`, 'default')
     return new NextResponse(null, { status: 204 })
   }
 
@@ -261,7 +261,7 @@ export async function DELETE(
   }
 
   await softDeletePost(id)
-  revalidateTag('posts')
-  revalidateTag(`post-${id}`)
+  revalidateTag('posts', 'default')
+  revalidateTag(`post-${id}`, 'default')
   return new NextResponse(null, { status: 204 })
 }

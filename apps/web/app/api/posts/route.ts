@@ -202,6 +202,6 @@ export async function POST(request: Request) {
     }
   }
 
-  revalidateTag('posts')
+  revalidateTag('posts', 'default')
   return NextResponse.json(post, { status: 201 })
 }
