@@ -30,6 +30,8 @@ jest.mock('@web/i18n/client', () => ({
         'images.emptyState': 'No images yet. Upload your first image.',
         'images.deleteConfirm': 'Delete this image? This cannot be undone.',
         'images.upload.error': 'Upload failed, please try again',
+        'images.searchPlaceholder': 'Search images…',
+        'images.noResults': 'No images match your search.',
         'images.listError': 'Failed to load images, please try again',
         'images.deleteError': 'Delete failed, please try again',
         'images.picker.loading': 'Loading…',
@@ -398,6 +400,70 @@ describe('ImageManager', () => {
         'Rename failed, please try again',
       ),
     )
+  })
+
+  it('renders search input', async () => {
+    renderApp(<ImageManager />)
+    expect(await screen.findByTestId('image-grid')).toBeInTheDocument()
+    expect(screen.getByTestId('search-input')).toBeInTheDocument()
+  })
+
+  it('filters images by search query', async () => {
+    renderApp(<ImageManager />)
+    expect(await screen.findByTestId('image-grid')).toBeInTheDocument()
+    fireEvent.change(screen.getByTestId('search-input'), {
+      target: { value: 'photo1' },
+    })
+    expect(
+      screen.getByTestId('image-card-sawl.dev - blog/photo1'),
+    ).toBeInTheDocument()
+    expect(
+      screen.queryByTestId('image-card-sawl.dev - blog/photo2'),
+    ).not.toBeInTheDocument()
+  })
+
+  it('shows no-results state when search matches nothing', async () => {
+    renderApp(<ImageManager />)
+    expect(await screen.findByTestId('image-grid')).toBeInTheDocument()
+    fireEvent.change(screen.getByTestId('search-input'), {
+      target: { value: 'nonexistent' },
+    })
+    expect(screen.getByTestId('no-results-state')).toBeInTheDocument()
+    expect(screen.getByTestId('no-results-state')).toHaveTextContent(
+      'No images match your search.',
+    )
+    expect(screen.queryByTestId('image-grid')).not.toBeInTheDocument()
+  })
+
+  it('search is case-insensitive', async () => {
+    renderApp(<ImageManager />)
+    expect(await screen.findByTestId('image-grid')).toBeInTheDocument()
+    fireEvent.change(screen.getByTestId('search-input'), {
+      target: { value: 'PHOTO1' },
+    })
+    expect(
+      screen.getByTestId('image-card-sawl.dev - blog/photo1'),
+    ).toBeInTheDocument()
+    expect(
+      screen.queryByTestId('image-card-sawl.dev - blog/photo2'),
+    ).not.toBeInTheDocument()
+  })
+
+  it('shows all images when search is cleared', async () => {
+    renderApp(<ImageManager />)
+    expect(await screen.findByTestId('image-grid')).toBeInTheDocument()
+    fireEvent.change(screen.getByTestId('search-input'), {
+      target: { value: 'photo1' },
+    })
+    fireEvent.change(screen.getByTestId('search-input'), {
+      target: { value: '' },
+    })
+    expect(
+      screen.getByTestId('image-card-sawl.dev - blog/photo1'),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByTestId('image-card-sawl.dev - blog/photo2'),
+    ).toBeInTheDocument()
   })
 })
 

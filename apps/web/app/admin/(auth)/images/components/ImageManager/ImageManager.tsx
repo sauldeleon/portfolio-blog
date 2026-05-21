@@ -19,7 +19,9 @@ import {
   StyledHeader,
   StyledLoading,
   StyledRefreshButton,
+  StyledSearchInput,
   StyledTitle,
+  StyledToolbar,
   StyledUploadButton,
   StyledWrapper,
 } from './ImageManager.styles'
@@ -30,6 +32,7 @@ export function ImageManager() {
   const { t } = useClientTranslation('admin')
   const queryClient = useQueryClient()
   const [isUploadOpen, setIsUploadOpen] = useState(false)
+  const [search, setSearch] = useState('')
   const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null)
   const [deleteError, setDeleteError] = useState<string | null>(null)
   const [editTargetId, setEditTargetId] = useState<string | null>(null)
@@ -57,6 +60,12 @@ export function ImageManager() {
     : null
 
   const editTarget = images.find((img) => img.publicId === editTargetId) ?? null
+
+  const filteredImages = search
+    ? images.filter((img) =>
+        img.publicId.toLowerCase().includes(search.toLowerCase()),
+      )
+    : images
 
   const renameMutation = useMutation({
     mutationFn: async ({
@@ -123,27 +132,36 @@ export function ImageManager() {
     <StyledWrapper data-testid="image-manager">
       <StyledHeader>
         <StyledTitle>{t('images.title')}</StyledTitle>
-        <StyledActions>
-          <StyledRefreshButton
-            variant="contained"
-            size="sm"
-            onClick={() => {
-              setDeleteError(null)
-              void refetch()
-            }}
-            data-testid="refresh-button"
-          >
-            {t('refresh')}
-          </StyledRefreshButton>
-          <StyledUploadButton
-            variant="inverted"
-            size="sm"
-            onClick={() => setIsUploadOpen(true)}
-            data-testid="upload-button"
-          >
-            {t('images.uploadButton')}
-          </StyledUploadButton>
-        </StyledActions>
+        <StyledToolbar>
+          <StyledSearchInput
+            type="search"
+            placeholder={t('images.searchPlaceholder')}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            data-testid="search-input"
+          />
+          <StyledActions>
+            <StyledRefreshButton
+              variant="contained"
+              size="sm"
+              onClick={() => {
+                setDeleteError(null)
+                void refetch()
+              }}
+              data-testid="refresh-button"
+            >
+              {t('refresh')}
+            </StyledRefreshButton>
+            <StyledUploadButton
+              variant="inverted"
+              size="sm"
+              onClick={() => setIsUploadOpen(true)}
+              data-testid="upload-button"
+            >
+              {t('images.uploadButton')}
+            </StyledUploadButton>
+          </StyledActions>
+        </StyledToolbar>
       </StyledHeader>
 
       {isLoading && (
@@ -162,9 +180,18 @@ export function ImageManager() {
         </StyledEmptyState>
       )}
 
-      {!isLoading && !displayError && images.length > 0 && (
+      {!isLoading &&
+        !displayError &&
+        images.length > 0 &&
+        filteredImages.length === 0 && (
+          <StyledEmptyState data-testid="no-results-state">
+            {t('images.noResults')}
+          </StyledEmptyState>
+        )}
+
+      {!isLoading && !displayError && filteredImages.length > 0 && (
         <StyledGrid data-testid="image-grid">
-          {images.map((image) => (
+          {filteredImages.map((image) => (
             <ImageCard
               key={image.publicId}
               image={image}

@@ -1,19 +1,29 @@
 import styled from 'styled-components'
 
 import { Button } from '@sdlgr/button'
+import { Input } from '@sdlgr/input'
 
 export const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 0;
   padding: 2rem 0;
 `
 
 export const StyledHeader = styled.div`
   display: flex;
-  align-items: baseline;
+  flex-direction: column;
+  gap: 2rem;
+`
+
+export const StyledToolbar = styled.div`
+  display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(251, 251, 251, 0.08);
+  flex-wrap: wrap;
 `
 
 export const StyledTitle = styled.h1`
@@ -44,6 +54,12 @@ export const StyledRefreshButton = styled(Button).attrs({
   &:hover {
     opacity: 0.6;
   }
+`
+
+export const StyledSearchInput = styled(Input)`
+  font-size: 0.75rem;
+  width: 220px;
+  padding: 0.375rem 0;
 `
 
 export const StyledGrid = styled.div`
