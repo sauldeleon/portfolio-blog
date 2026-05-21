@@ -3,6 +3,7 @@
   "present": "Actualmente",
   "usedTechnologies": "Tecnologías utilizadas en {{company}}",
   "checkWebsiteLink": "Página web",
+  "experienceNav": "Ir a",
   "experienceItems": {
     "bonhams": {
       "p1": "Desarrollador de Front-end React.",

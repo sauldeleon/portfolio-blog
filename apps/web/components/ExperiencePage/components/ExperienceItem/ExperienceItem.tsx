@@ -9,6 +9,8 @@ import {
   AnimatedItemKey,
   animatedItemMap,
 } from '@web/utils/animatedItem/animatedItemMap'
+import { parseRichText } from '@web/utils/parseRichText/parseRichText'
+import { getTechColor } from '@web/utils/techColors'
 
 import {
   StyledCircleLink,
@@ -35,22 +37,21 @@ export interface ExperienceItemProps {
   ariaLabel: string
   checkWebsiteLabel: string
   paragraphs: string[]
+  sectionId: string
 }
 
 const zeroPad = (num: number, places: number) =>
   String(num).padStart(places, '0')
 
 function parseParagraph(text: string, paragraphIndex: number) {
-  const parts = text.split(/(<bold>[\s\S]*?<\/bold>)/g)
   return (
     <StyledDescriptionParagraph key={paragraphIndex}>
-      {parts.map((part, i) => {
-        const match = part.match(/^<bold>([\s\S]*?)<\/bold>$/)
-        return match ? (
-          <StyledTechnology key={i}>{match[1]}</StyledTechnology>
-        ) : (
-          part
-        )
+      {parseRichText(text, {
+        bold: (k, t) => (
+          <StyledTechnology key={k} $color={getTechColor(t)}>
+            {t}
+          </StyledTechnology>
+        ),
       })}
     </StyledDescriptionParagraph>
   )
@@ -65,11 +66,12 @@ export function ExperienceItem({
   ariaLabel,
   checkWebsiteLabel,
   paragraphs,
+  sectionId,
 }: Readonly<ExperienceItemProps>) {
   const id = useId()
 
   return (
-    <StyledSection>
+    <StyledSection id={sectionId}>
       <StyledExperienceHeader>
         <StyledCompany>
           <StyledOrder>{zeroPad(order + 1, 2)}</StyledOrder>

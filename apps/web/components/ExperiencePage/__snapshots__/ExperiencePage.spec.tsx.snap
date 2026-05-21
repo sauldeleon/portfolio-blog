@@ -1,6 +1,45 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`ExperiencePage should render successfully in English 1`] = `
+.c3 {
+  padding: 1rem 1.25rem;
+  border: 1px solid rgba(251, 251, 251, 0.1);
+}
+
+.c4 {
+  font-family: var(--font-roboto-mono, monospace);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.5;
+  margin: 0 0 0.75rem;
+}
+
+.c5 {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.c6 {
+  display: block;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: #FBFBFB;
+  text-decoration: none;
+  padding-left: 0rem;
+  opacity: 0.6;
+  transition: color 0.15s,opacity 0.15s;
+}
+
+.c6:hover {
+  color: #98DFD6;
+  opacity: 1;
+}
+
 .c0 {
   font-family: var(--font-roboto-mono);
   font-weight: 400;
@@ -10,7 +49,7 @@ exports[`ExperiencePage should render successfully in English 1`] = `
   margin: 0;
 }
 
-.c5 {
+.c10 {
   font-family: var(--font-roboto-mono);
   font-weight: 400;
   color: #FBFBFB;
@@ -19,21 +58,21 @@ exports[`ExperiencePage should render successfully in English 1`] = `
   white-space: pre-line;
 }
 
-.c5 ul,
-.c5 ol {
+.c10 ul,
+.c10 ol {
   margin-left: 40px;
   margin-bottom: 10px;
 }
 
-.c5 ul {
+.c10 ul {
   list-style: outside disc;
 }
 
-.c5 ol {
+.c10 ol {
   list-style: decimal;
 }
 
-.c5 li {
+.c10 li {
   padding-left: 10px;
 }
 
@@ -43,12 +82,55 @@ exports[`ExperiencePage should render successfully in English 1`] = `
   margin-bottom: 40px;
 }
 
-.c22 {
+.c2 {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  width: 100%;
+  background-color: #000000;
+  border-bottom: 1px solid rgba(251,251,251,0.1);
+  margin-bottom: 20px;
+}
+
+.c2 nav {
+  padding: 0.5rem 10px;
+  border: none;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.c2 p {
+  display: none;
+}
+
+.c2 ol {
+  flex-direction: row;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  gap: 0;
+}
+
+.c2 ol::-webkit-scrollbar {
+  display: none;
+}
+
+.c2 li {
+  flex-shrink: 0;
+}
+
+.c2 a {
+  white-space: nowrap;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+.c27 {
   position: relative;
   position: relative;
 }
 
-.c22::after {
+.c27::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -58,28 +140,28 @@ exports[`ExperiencePage should render successfully in English 1`] = `
   background-color: currentColor;
 }
 
-.c22::after {
+.c27::after {
   transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.25s ease-out;
 }
 
-.c22:hover::after {
+.c27:hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
 
-.c22:hover,
-.c22:active,
-.c22:focus {
+.c27:hover,
+.c27:active,
+.c27:focus {
   text-decoration: none;
 }
 
-.c22:focus-visible {
+.c27:focus-visible {
   outline: #FBFBFB auto 1px;
 }
 
-.c19 {
+.c24 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -92,7 +174,7 @@ exports[`ExperiencePage should render successfully in English 1`] = `
   animation-name: k1;
 }
 
-.c21 {
+.c26 {
   height: var(--itemSize);
   aspect-ratio: 1/1;
   position: absolute;
@@ -102,33 +184,33 @@ exports[`ExperiencePage should render successfully in English 1`] = `
   animation-iteration-count: infinite;
 }
 
-.c23 {
+.c28 {
   pointer-events: all;
   cursor: pointer;
 }
 
-.c23:after {
+.c28:after {
   content: none;
 }
 
-.c23:hover:after {
+.c28:hover:after {
   content: none;
 }
 
-.c25 {
+.c30 {
   color: #FFDD83;
   animation-name: k3;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
 
-.c25 svg {
+.c30 svg {
   width: 100%;
   height: 100%;
   display: block;
 }
 
-.c17 {
+.c22 {
   --itemSize: 40px;
   --translateX-begin: calc(-50% - var(--itemSize));
   --translateX-end: calc(50% + var(--itemSize));
@@ -143,18 +225,18 @@ exports[`ExperiencePage should render successfully in English 1`] = `
   animation-iteration-count: infinite;
 }
 
-.c17:hover {
+.c22:hover {
   z-index: 200;
   animation-play-state: paused;
 }
 
-.c17:hover .c18,
-.c17:hover .c20,
-.c17:hover .c24 {
+.c22:hover .c23,
+.c22:hover .c25,
+.c22:hover .c29 {
   animation-play-state: paused;
 }
 
-.c26 {
+.c31 {
   --itemSize: 55px;
   --translateX-begin: calc(-50% - var(--itemSize));
   --translateX-end: calc(50% + var(--itemSize));
@@ -169,18 +251,18 @@ exports[`ExperiencePage should render successfully in English 1`] = `
   animation-iteration-count: infinite;
 }
 
-.c26:hover {
+.c31:hover {
   z-index: 200;
   animation-play-state: paused;
 }
 
-.c26:hover .c18,
-.c26:hover .c20,
-.c26:hover .c24 {
+.c31:hover .c23,
+.c31:hover .c25,
+.c31:hover .c29 {
   animation-play-state: paused;
 }
 
-.c38 {
+.c50 {
   --itemSize: 25px;
   --translateX-begin: calc(-50% - var(--itemSize));
   --translateX-end: calc(50% + var(--itemSize));
@@ -195,23 +277,23 @@ exports[`ExperiencePage should render successfully in English 1`] = `
   animation-iteration-count: infinite;
 }
 
-.c38:hover {
+.c50:hover {
   z-index: 200;
   animation-play-state: paused;
 }
 
-.c38:hover .c18,
-.c38:hover .c20,
-.c38:hover .c24 {
+.c50:hover .c23,
+.c50:hover .c25,
+.c50:hover .c29 {
   animation-play-state: paused;
 }
 
-.c37 {
+.c49 {
   margin-left: 8px;
   position: relative;
 }
 
-.c37::after {
+.c49::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -221,13 +303,13 @@ exports[`ExperiencePage should render successfully in English 1`] = `
   background-color: currentColor;
 }
 
-.c37::after {
+.c49::after {
   transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.5s ease-out;
 }
 
-.c34 .loading {
+.c46 .loading {
   transform: rotate(-90deg);
   transform-origin: center;
   stroke: #FBFBFB;
@@ -237,7 +319,7 @@ exports[`ExperiencePage should render successfully in English 1`] = `
   transition: stroke-dashoffset 0.5s steps(4, end);
 }
 
-.c30 {
+.c42 {
   outline: none;
   cursor: pointer;
   display: flex;
@@ -245,34 +327,34 @@ exports[`ExperiencePage should render successfully in English 1`] = `
   max-height: 42px;
 }
 
-.c30:after {
+.c42:after {
   content: none;
 }
 
-.c30:hover:after {
+.c42:hover:after {
   content: none;
 }
 
-.c30:focus-visible {
+.c42:focus-visible {
   outline: #FBFBFB auto 1px;
 }
 
-.c30:hover .c33 .loading {
+.c42:hover .c45 .loading {
   stroke-dashoffset: 0;
 }
 
-.c30:hover .c36::after {
+.c42:hover .c48::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
 
-.c32 {
+.c44 {
   position: relative;
   width: 42px;
   height: 42px;
 }
 
-.c35 {
+.c47 {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
@@ -280,7 +362,7 @@ exports[`ExperiencePage should render successfully in English 1`] = `
   display: flex;
 }
 
-.c11 {
+.c16 {
   --iconHeight: 249px;
   --iconWidth: 130px;
   --pathHeight: 212px;
@@ -291,7 +373,7 @@ exports[`ExperiencePage should render successfully in English 1`] = `
   transform: rotate(90deg);
 }
 
-.c16 {
+.c21 {
   position: absolute;
   overflow: clip;
   height: var(--pathHeight);
@@ -304,12 +386,12 @@ exports[`ExperiencePage should render successfully in English 1`] = `
   right: calc((var(--iconWidth) / 2) - 3px);
 }
 
-.c14 {
+.c19 {
   width: var(--iconWidth);
   height: var(--iconHeight);
 }
 
-.c13 {
+.c18 {
   background-color: #000000;
   line-height: 0px;
   border-top-right-radius: 44px 50%;
@@ -318,7 +400,7 @@ exports[`ExperiencePage should render successfully in English 1`] = `
   border-bottom-left-radius: 44px 50%;
 }
 
-.c15 {
+.c20 {
   background-color: #000000;
   line-height: 0px;
   border-top-right-radius: 44px 50%;
@@ -328,14 +410,15 @@ exports[`ExperiencePage should render successfully in English 1`] = `
   transform: scaleX(-1);
 }
 
-.c2 {
+.c7 {
   max-width: 1440px;
   width: 100%;
   padding: 0 10px;
   margin-bottom: 90px;
+  scroll-margin-top: 65px;
 }
 
-.c3 {
+.c8 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -346,13 +429,13 @@ exports[`ExperiencePage should render successfully in English 1`] = `
   padding: 0 20px;
 }
 
-.c6 {
+.c11 {
   font-size: 30px;
   font-family: var(--font-roboto-mono);
   font-weight: 300;
 }
 
-.c4 {
+.c9 {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -360,20 +443,20 @@ exports[`ExperiencePage should render successfully in English 1`] = `
   width: 100%;
 }
 
-.c7 {
+.c12 {
   font-size: 30px;
   text-align: end;
   font-family: var(--font-roboto-mono);
   font-weight: 500;
 }
 
-.c8 {
+.c13 {
   font-size: 16px;
   font-family: var(--font-roboto-mono);
   font-weight: 100;
 }
 
-.c9 {
+.c14 {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -381,7 +464,7 @@ exports[`ExperiencePage should render successfully in English 1`] = `
   align-items: center;
 }
 
-.c10 {
+.c15 {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -389,30 +472,440 @@ exports[`ExperiencePage should render successfully in English 1`] = `
   margin-bottom: 40px;
 }
 
-.c28 {
+.c33 {
   margin-bottom: 20px;
   font-size: 15px;
 }
 
-.c31 {
+.c43 {
   margin-top: 50px;
   text-transform: uppercase;
   width: max-content;
 }
 
-.c12 {
+.c17 {
   width: 100%;
   transform: unset;
   position: relative;
 }
 
-.c29 {
+.c34 {
   font-family: var(--font-roboto-mono);
   font-weight: 400;
   color: #FBFBFB;
   font-size: 0.9rem;
   line-height: normal;
   font-weight: bold;
+  color: #FFFFFF;
+}
+
+.c35 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #0097D7;
+}
+
+.c36 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #DB7093;
+}
+
+.c37 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #ECEDEE;
+}
+
+.c38 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #C21325;
+}
+
+.c39 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #FF6A33;
+}
+
+.c40 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #04C38E;
+}
+
+.c41 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+}
+
+.c51 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #2C8EBB;
+}
+
+.c52 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #3178C6;
+}
+
+.c53 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #E45649;
+}
+
+.c54 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #C43BAD;
+}
+
+.c55 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #FF4785;
+}
+
+.c56 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #D33833;
+}
+
+.c57 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #324FFF;
+}
+
+.c58 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #764ABC;
+}
+
+.c59 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #CE1A2E;
+}
+
+.c60 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #8D6748;
+}
+
+.c61 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #23D96C;
+}
+
+.c62 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #EA5906;
+}
+
+.c63 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #61DAFB;
+}
+
+.c64 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #B52E31;
+}
+
+.c65 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #3880FF;
+}
+
+.c66 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #25C2A0;
+}
+
+.c67 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #339933;
+}
+
+.c68 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #6DB33F;
+}
+
+.c69 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #ED8B00;
+}
+
+.c70 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #BCAE79;
+}
+
+.c71 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #4479A1;
+}
+
+.c72 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #DD0031;
+}
+
+.c73 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #00979D;
+}
+
+.c74 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #C71A36;
+}
+
+.c75 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #4E9BCD;
+}
+
+.c76 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #264DE4;
+}
+
+.c77 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #0769AD;
+}
+
+.c78 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #E34F26;
+}
+
+.c79 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #D64B00;
+}
+
+.c80 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #F80000;
+}
+
+.c81 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #7B87C9;
+}
+
+.c82 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #47A248;
+}
+
+.c83 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #3776AB;
+}
+
+.c84 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #F7DF1E;
 }
 
 @media (width >= 1024px) {
@@ -427,8 +920,19 @@ exports[`ExperiencePage should render successfully in English 1`] = `
   }
 }
 
+@media (width >= 1024px) {
+  .c2 nav {
+    padding: 0.5rem 20px;
+  }
+
+  .c2 a {
+    padding: 0.5rem 1rem;
+    font-size: 0.9375rem;
+  }
+}
+
 @media (width >= 768px) {
-  .c11 {
+  .c16 {
     --iconHeight: 358px;
     --iconWidth: 188px;
     --pathHeight: 305px;
@@ -438,7 +942,7 @@ exports[`ExperiencePage should render successfully in English 1`] = `
 }
 
 @media (width >= 768px) {
-  .c13 {
+  .c18 {
     border-top-right-radius: 60px 50%;
     border-bottom-right-radius: 60px 50%;
     border-top-left-radius: 60px 50%;
@@ -447,40 +951,41 @@ exports[`ExperiencePage should render successfully in English 1`] = `
 }
 
 @media (width >= 768px) {
-  .c15 {
+  .c20 {
     border-top-right-radius: 60px 50%;
     border-bottom-right-radius: 60px 50%;
     border-top-left-radius: 60px 50%;
     border-bottom-left-radius: 60px 50%;
-  }
-}
-
-@media (width >= 1024px) {
-  .c2 {
-    padding: 0 20px;
-  }
-}
-
-@media (width >= 768px) {
-  .c3 {
-    margin-bottom: 70px;
-  }
-}
-
-@media (width >= 1024px) {
-  .c6 {
-    font-size: 65px;
-  }
-}
-
-@media (width >= 1024px) {
-  .c4 {
-    margin-bottom: 30px;
   }
 }
 
 @media (width >= 1024px) {
   .c7 {
+    padding: 0 20px;
+    scroll-margin-top: 75px;
+  }
+}
+
+@media (width >= 768px) {
+  .c8 {
+    margin-bottom: 70px;
+  }
+}
+
+@media (width >= 1024px) {
+  .c11 {
+    font-size: 65px;
+  }
+}
+
+@media (width >= 1024px) {
+  .c9 {
+    margin-bottom: 30px;
+  }
+}
+
+@media (width >= 1024px) {
+  .c12 {
     font-size: 65px;
     font-family: var(--font-roboto-mono);
     font-weight: 300;
@@ -488,27 +993,27 @@ exports[`ExperiencePage should render successfully in English 1`] = `
 }
 
 @media (width >= 1024px) {
-  .c8 {
+  .c13 {
     font-size: 30px;
   }
 }
 
 @media (width >= 768px) {
-  .c9 {
+  .c14 {
     flex-direction: row;
     align-items: flex-start;
   }
 }
 
 @media (width >= 768px) {
-  .c10 {
+  .c15 {
     margin-bottom: 0px;
     max-width: 45%;
   }
 }
 
 @media (width >= 768px) {
-  .c27 {
+  .c32 {
     padding: 0 20px;
     max-width: 55%;
     padding: 0;
@@ -516,13 +1021,13 @@ exports[`ExperiencePage should render successfully in English 1`] = `
 }
 
 @media (width >= 768px) {
-  .c28 {
+  .c33 {
     font-size: 20px;
   }
 }
 
 @media (width >= 768px) {
-  .c12 {
+  .c17 {
     --iconHeight: 249px;
     --iconWidth: 130px;
     --pathHeight: 212px;
@@ -581,47 +1086,138 @@ exports[`ExperiencePage should render successfully in English 1`] = `
     >
       Experience
     </h1>
-    <section
+    <div
       class="c2"
     >
-      <div
+      <nav
+        aria-label="Jump to"
         class="c3"
       >
-        <div
+        <p
           class="c4"
         >
+          Jump to
+        </p>
+        <ol
+          class="c5"
+        >
+          <li>
+            <a
+              class="c6"
+              href="#bonhams"
+            >
+              Bonhams
+            </a>
+          </li>
+          <li>
+            <a
+              class="c6"
+              href="#smart-protection"
+            >
+              Smart Protection
+            </a>
+          </li>
+          <li>
+            <a
+              class="c6"
+              href="#ing"
+            >
+              ING
+            </a>
+          </li>
+          <li>
+            <a
+              class="c6"
+              href="#keytree"
+            >
+              Keytree
+            </a>
+          </li>
+          <li>
+            <a
+              class="c6"
+              href="#babel-si"
+            >
+              Babel S.I
+            </a>
+          </li>
+          <li>
+            <a
+              class="c6"
+              href="#ioon-technologies"
+            >
+              Ioon Technologies
+            </a>
+          </li>
+          <li>
+            <a
+              class="c6"
+              href="#clarive"
+            >
+              Clarive
+            </a>
+          </li>
+          <li>
+            <a
+              class="c6"
+              href="#idealistacom"
+            >
+              idealista.com
+            </a>
+          </li>
+          <li>
+            <a
+              class="c6"
+              href="#incita-security"
+            >
+              Incita Security
+            </a>
+          </li>
+        </ol>
+      </nav>
+    </div>
+    <section
+      class="c7"
+      id="bonhams"
+    >
+      <div
+        class="c8"
+      >
+        <div
+          class="c9"
+        >
           <p
-            class="c5 c6"
+            class="c10 c11"
           >
             01
           </p>
           <h2
-            class="c5 c7"
+            class="c10 c12"
           >
             Bonhams
           </h2>
         </div>
         <p
-          class="c5 c8"
+          class="c10 c13"
         >
           Feb 2022
         </p>
       </div>
       <div
-        class="c9"
+        class="c14"
       >
         <div
-          class="c10"
+          class="c15"
         >
           <div
-            class="c11 c12"
+            class="c16 c17"
           >
             <div
               aria-hidden="true"
-              class="c13"
+              class="c18"
             >
               <svg
-                class="c14"
+                class="c19"
                 color="#FFDD83"
                 fill="none"
                 height="358"
@@ -702,10 +1298,10 @@ exports[`ExperiencePage should render successfully in English 1`] = `
             </div>
             <div
               aria-hidden="true"
-              class="c15"
+              class="c20"
             >
               <svg
-                class="c14"
+                class="c19"
                 color="#98DFD6"
                 fill="none"
                 height="358"
@@ -785,36 +1381,36 @@ exports[`ExperiencePage should render successfully in English 1`] = `
               </svg>
             </div>
             <div
-              class="c16"
+              class="c21"
             >
               <ul
                 aria-label="Used technologies at Bonhams"
               >
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 5.457458048139314s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -36%; --translateY-end: 26%; animation-duration: 5.306167698459591s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 6.224465472165357s;"
                     >
                       <a
                         aria-label="NodeJS"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://nodejs.org/en/"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 5.457458048139314s;"
                         >
@@ -843,30 +1439,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 2.260358087573086s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -17%; --translateY-end: 4%; animation-duration: 10.417444951173s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.378342137759292s;"
                     >
                       <a
                         aria-label="Cypress"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://www.cypress.io"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 2.260358087573086s;"
                         >
@@ -885,30 +1481,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 5.580623580085307s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -1%; --translateY-end: 20%; animation-duration: 7.139931313146209s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 5.864801760056939s;"
                     >
                       <a
                         aria-label="Jest"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://jestjs.io"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 5.580623580085307s;"
                         >
@@ -927,30 +1523,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 5.219303257153408s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -12%; --translateY-end: 8%; animation-duration: 8.364400407710384s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 4.552927301330753s;"
                     >
                       <a
                         aria-label="Tanstack React Query"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://react-query.tanstack.com/"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 5.219303257153408s;"
                         >
@@ -981,30 +1577,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c26"
+                  class="c31"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 2.8469059373100425s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: 5%; --translateY-end: -1%; animation-duration: 2.5990522199350403s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 6.67873451306061s;"
                     >
                       <a
                         aria-label="NextJS"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://nextjs.org"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 2.8469059373100425s;"
                         >
@@ -1023,30 +1619,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 3.6204990710600713s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -28%; --translateY-end: 37%; animation-duration: 5.9537302530318055s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.449384545001999s;"
                     >
                       <a
                         aria-label="TypeScript"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://www.typescriptlang.org/"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 3.6204990710600713s;"
                         >
@@ -1068,30 +1664,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 2.1385167323969045s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: 2%; --translateY-end: -7%; animation-duration: 5.384610939041053s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 4.664569072530999s;"
                     >
                       <a
                         aria-label="Styled Components"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://styled-components.com"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 2.1385167323969045s;"
                         >
@@ -1111,30 +1707,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 5.295743755214707s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -28%; --translateY-end: -3%; animation-duration: 6.736478921971688s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 4.100088631819362s;"
                     >
                       <a
                         aria-label="Vercel"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://vercel.com"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 5.295743755214707s;"
                         >
@@ -1156,30 +1752,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 1.221914078523888s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: 14%; --translateY-end: 6%; animation-duration: 8.500211539448369s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 6.799064484476231s;"
                     >
                       <a
                         aria-label="Expo"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://expo.dev"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 1.221914078523888s;"
                         >
@@ -1202,88 +1798,88 @@ exports[`ExperiencePage should render successfully in English 1`] = `
           </div>
         </div>
         <div
-          class="c27"
+          class="c32"
         >
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Front-end React Developer.
           </p>
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Part of the team responsible for migrating the legacy website to a cutting-edge 
             <b
-              class="c29"
+              class="c34"
             >
               Next.JS TypeScript
             </b>
              application within an 
             <b
-              class="c29"
+              class="c35"
             >
               NX
             </b>
              monorepo. Instrumental in developing a comprehensive Design System from the ground up using 
             <b
-              class="c29"
+              class="c36"
             >
               Styled Components
             </b>
             . Additionally, involved in creating new applications for clients and internal administration, including an 
             <b
-              class="c29"
+              class="c37"
             >
               EXPO
             </b>
              mobile app for iOS and Android.
           </p>
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Proficiently employed 
             <b
-              class="c29"
+              class="c38"
             >
               Jest
             </b>
              and 
             <b
-              class="c29"
+              class="c39"
             >
               MSW
             </b>
              for thorough unit and integration testing, while utilizing 
             <b
-              class="c29"
+              class="c40"
             >
               Cypress
             </b>
              for end-to-end testing.
           </p>
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Helped at the implementation of a robust 
             <b
-              class="c29"
+              class="c41"
             >
               CI/CD
             </b>
              pipeline using GitLab for efficient and seamless deployment.
           </p>
           <a
-            class="c22 c30 c31"
+            class="c27 c42 c43"
             data-testid="plain-anchor"
             href="https://www.bonhams.com/"
             rel="noreferrer"
             target="_blank"
           >
             <div
-              class="c32"
+              class="c44"
             >
               <svg
-                class="c33 c34"
+                class="c45 c46"
                 fill="none"
                 height="42"
                 viewBox="0 0 42 42"
@@ -1327,7 +1923,7 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                 />
               </svg>
               <div
-                class="c35"
+                class="c47"
               >
                 <svg
                   fill="none"
@@ -1344,7 +1940,7 @@ exports[`ExperiencePage should render successfully in English 1`] = `
               </div>
             </div>
             <p
-              class="c36 c5 c37"
+              class="c48 c10 c49"
             >
               Check the website
             </p>
@@ -1353,46 +1949,47 @@ exports[`ExperiencePage should render successfully in English 1`] = `
       </div>
     </section>
     <section
-      class="c2"
+      class="c7"
+      id="smart-protection"
     >
       <div
-        class="c3"
+        class="c8"
       >
         <div
-          class="c4"
+          class="c9"
         >
           <p
-            class="c5 c6"
+            class="c10 c11"
           >
             02
           </p>
           <h2
-            class="c5 c7"
+            class="c10 c12"
           >
             Smart Protection
           </h2>
         </div>
         <p
-          class="c5 c8"
+          class="c10 c13"
         >
           Feb 2021 - Feb 2022
         </p>
       </div>
       <div
-        class="c9"
+        class="c14"
       >
         <div
-          class="c10"
+          class="c15"
         >
           <div
-            class="c11 c12"
+            class="c16 c17"
           >
             <div
               aria-hidden="true"
-              class="c13"
+              class="c18"
             >
               <svg
-                class="c14"
+                class="c19"
                 color="#FFDD83"
                 fill="none"
                 height="358"
@@ -1473,10 +2070,10 @@ exports[`ExperiencePage should render successfully in English 1`] = `
             </div>
             <div
               aria-hidden="true"
-              class="c15"
+              class="c20"
             >
               <svg
-                class="c14"
+                class="c19"
                 color="#98DFD6"
                 fill="none"
                 height="358"
@@ -1556,36 +2153,36 @@ exports[`ExperiencePage should render successfully in English 1`] = `
               </svg>
             </div>
             <div
-              class="c16"
+              class="c21"
             >
               <ul
                 aria-label="Used technologies at Smart Protection"
               >
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 5.25273948447474s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -20%; --translateY-end: 23%; animation-duration: 8.940355369758283s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 5.826325859839387s;"
                     >
                       <a
                         aria-label="NodeJS"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://nodejs.org/en/"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 5.25273948447474s;"
                         >
@@ -1614,30 +2211,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 5.899719154880641s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -12%; --translateY-end: 11%; animation-duration: 5.018135238257322s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 6.268746962825486s;"
                     >
                       <a
                         aria-label="Jest"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://jestjs.io"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 5.899719154880641s;"
                         >
@@ -1656,30 +2253,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 5.739829711312399s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -26%; --translateY-end: 28%; animation-duration: 3.530138064022075s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.8407908590309106s;"
                     >
                       <a
                         aria-label="Storybook"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://storybook.js.org"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 5.739829711312399s;"
                         >
@@ -1698,30 +2295,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 3.3768074966124004s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: 2%; --translateY-end: 9%; animation-duration: 2.5149723476734684s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 5.701537749114324s;"
                     >
                       <a
                         aria-label="EmotionJS"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://emotion.sh"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 3.3768074966124004s;"
                         >
@@ -1762,30 +2359,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 3.7979785910707173s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: 6%; --translateY-end: 13%; animation-duration: 6.229976347455669s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 4.587196968304488s;"
                     >
                       <a
                         aria-label="Tanstack React Query"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://react-query.tanstack.com/"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 3.7979785910707173s;"
                         >
@@ -1816,30 +2413,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c38"
+                  class="c50"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 3.1930431577428555s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -1%; --translateY-end: 4%; animation-duration: 6.461921455624293s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.8281542655977265s;"
                     >
                       <a
                         aria-label="Yarn"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://yarnpkg.com"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 3.1930431577428555s;"
                         >
@@ -1858,30 +2455,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c26"
+                  class="c31"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 2.6474122208764586s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -31%; --translateY-end: 35%; animation-duration: 6.024086585612796s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 5.837089896566783s;"
                     >
                       <a
                         aria-label="ReactJS"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://reactjs.org"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 2.6474122208764586s;"
                         >
@@ -1900,30 +2497,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 3.826057351111811s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: 9%; --translateY-end: 11%; animation-duration: 9.68368497016209s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.213256064388586s;"
                     >
                       <a
                         aria-label="TypeScript"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://www.typescriptlang.org/"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 3.826057351111811s;"
                         >
@@ -1949,97 +2546,97 @@ exports[`ExperiencePage should render successfully in English 1`] = `
           </div>
         </div>
         <div
-          class="c27"
+          class="c32"
         >
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Front-end React Developer.
           </p>
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Responsible for spearheading the development of back-office applications, catering to the internal administrative requirements of the company's business data.
           </p>
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Initiated the creation of a comprehensive monorepo from the ground up using 
             <b
-              class="c29"
+              class="c51"
             >
               Yarn Workspaces
             </b>
             , ensuring the development of full 
             <b
-              class="c29"
+              class="c52"
             >
               TypeScript
             </b>
              applications.
           </p>
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Implemented a robust Test-Driven Development (TDD) approach using 
             <b
-              class="c29"
+              class="c38"
             >
               Jest
             </b>
              and 
             <b
-              class="c29"
+              class="c53"
             >
               React Testing Library
             </b>
             .
           </p>
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Implemented a sophisticated design system, utilizing a customized library of components using 
             <b
-              class="c29"
+              class="c54"
             >
               Emotion.JS
             </b>
              alongside 
             <b
-              class="c29"
+              class="c55"
             >
               Storybook
             </b>
              for comprehensive documentation.
           </p>
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Established and optimized the frontend pipeline in 
             <b
-              class="c29"
+              class="c56"
             >
               Jenkins
             </b>
             , utilizing parallel optimization for multiple stages.
           </p>
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Basic knowledge in utilizing Terraform for storing environment variables in AWS.
           </p>
           <a
-            class="c22 c30 c31"
+            class="c27 c42 c43"
             data-testid="plain-anchor"
             href="https://www.smartprotection.com/"
             rel="noreferrer"
             target="_blank"
           >
             <div
-              class="c32"
+              class="c44"
             >
               <svg
-                class="c33 c34"
+                class="c45 c46"
                 fill="none"
                 height="42"
                 viewBox="0 0 42 42"
@@ -2083,7 +2680,7 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                 />
               </svg>
               <div
-                class="c35"
+                class="c47"
               >
                 <svg
                   fill="none"
@@ -2100,7 +2697,7 @@ exports[`ExperiencePage should render successfully in English 1`] = `
               </div>
             </div>
             <p
-              class="c36 c5 c37"
+              class="c48 c10 c49"
             >
               Check the website
             </p>
@@ -2109,46 +2706,47 @@ exports[`ExperiencePage should render successfully in English 1`] = `
       </div>
     </section>
     <section
-      class="c2"
+      class="c7"
+      id="ing"
     >
       <div
-        class="c3"
+        class="c8"
       >
         <div
-          class="c4"
+          class="c9"
         >
           <p
-            class="c5 c6"
+            class="c10 c11"
           >
             03
           </p>
           <h2
-            class="c5 c7"
+            class="c10 c12"
           >
             ING
           </h2>
         </div>
         <p
-          class="c5 c8"
+          class="c10 c13"
         >
           Aug 2020 - Feb 2021
         </p>
       </div>
       <div
-        class="c9"
+        class="c14"
       >
         <div
-          class="c10"
+          class="c15"
         >
           <div
-            class="c11 c12"
+            class="c16 c17"
           >
             <div
               aria-hidden="true"
-              class="c13"
+              class="c18"
             >
               <svg
-                class="c14"
+                class="c19"
                 color="#FFDD83"
                 fill="none"
                 height="358"
@@ -2229,10 +2827,10 @@ exports[`ExperiencePage should render successfully in English 1`] = `
             </div>
             <div
               aria-hidden="true"
-              class="c15"
+              class="c20"
             >
               <svg
-                class="c14"
+                class="c19"
                 color="#98DFD6"
                 fill="none"
                 height="358"
@@ -2312,36 +2910,36 @@ exports[`ExperiencePage should render successfully in English 1`] = `
               </svg>
             </div>
             <div
-              class="c16"
+              class="c21"
             >
               <ul
                 aria-label="Used technologies at ING"
               >
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 1.7397524780630171s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -8%; --translateY-end: 14%; animation-duration: 2.330485239399739s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 5.601179348684633s;"
                     >
                       <a
                         aria-label="NodeJS"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://nodejs.org/en/"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 1.7397524780630171s;"
                         >
@@ -2370,30 +2968,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 1.7248874957166147s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -31%; --translateY-end: 23%; animation-duration: 4.430085306686301s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 6.878318224334729s;"
                     >
                       <a
                         aria-label="Cypress"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://www.cypress.io"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 1.7248874957166147s;"
                         >
@@ -2412,30 +3010,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 1.9959116471378722s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -31%; --translateY-end: -16%; animation-duration: 2.717581948612875s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 6.811811161118904s;"
                     >
                       <a
                         aria-label="Node Package Manager"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://www.npmjs.com"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 1.9959116471378722s;"
                         >
@@ -2465,30 +3063,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 2.160079716850221s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: 10%; --translateY-end: 19%; animation-duration: 7.909869979391426s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 5.1113967698537595s;"
                     >
                       <a
                         aria-label="Cypress"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://www.cypress.io"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 2.160079716850221s;"
                         >
@@ -2507,30 +3105,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 1.2767287306017143s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -18%; --translateY-end: 0%; animation-duration: 2.5638408020959305s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 4.905246573144001s;"
                     >
                       <a
                         aria-label="Jest"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://jestjs.io"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 1.2767287306017143s;"
                         >
@@ -2549,30 +3147,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 3.3317332809221294s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -8%; --translateY-end: -16%; animation-duration: 4.742961113493661s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 4.992771959488811s;"
                     >
                       <a
                         aria-label="Mocha"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://mochajs.org"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 3.3317332809221294s;"
                         >
@@ -2591,30 +3189,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 4.837795730559135s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: 11%; --translateY-end: -14%; animation-duration: 5.545704214608373s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 6.115458439465009s;"
                     >
                       <a
                         aria-label="LitElement"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://lit.dev"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 4.837795730559135s;"
                         >
@@ -2651,30 +3249,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 2.9076677632753296s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -16%; --translateY-end: 20%; animation-duration: 10.685256396789375s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 4.231882170830964s;"
                     >
                       <a
                         aria-label="Cucumber"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://cucumber.io"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 2.9076677632753296s;"
                         >
@@ -2697,30 +3295,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 1.988498837179336s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -20%; --translateY-end: 21%; animation-duration: 6.800644715226605s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.35856383190983s;"
                     >
                       <a
                         aria-label="Redux"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://redux.js.org"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 1.988498837179336s;"
                         >
@@ -2749,81 +3347,81 @@ exports[`ExperiencePage should render successfully in English 1`] = `
           </div>
         </div>
         <div
-          class="c27"
+          class="c32"
         >
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Front-end Developer.
           </p>
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Contributed to an international project, focusing on web development based on WebComponents, specifically 
             <b
-              class="c29"
+              class="c57"
             >
               LitElement
             </b>
             , and 
             <b
-              class="c29"
+              class="c58"
             >
               Redux
             </b>
             , with seamless communication with REST APIs.
           </p>
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Adopted a Test-Driven Development (TDD) approach using 
             <b
-              class="c29"
+              class="c59"
             >
               Karma
             </b>
              with 
             <b
-              class="c29"
+              class="c60"
             >
               Mocha
             </b>
              for comprehensive unit testing.
           </p>
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Conducted end-to-end testing using 
             <b
-              class="c29"
+              class="c61"
             >
               Cucumber
             </b>
              and 
             <b
-              class="c29"
+              class="c62"
             >
               WebdriverIO
             </b>
              for thorough functionality testing.
           </p>
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Possesses a strong background in pairing code review experience, serving as an approver of the main repository to ensure the validation of merges into the master branch.
           </p>
           <a
-            class="c22 c30 c31"
+            class="c27 c42 c43"
             data-testid="plain-anchor"
             href="https://www.ing.es/"
             rel="noreferrer"
             target="_blank"
           >
             <div
-              class="c32"
+              class="c44"
             >
               <svg
-                class="c33 c34"
+                class="c45 c46"
                 fill="none"
                 height="42"
                 viewBox="0 0 42 42"
@@ -2867,7 +3465,7 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                 />
               </svg>
               <div
-                class="c35"
+                class="c47"
               >
                 <svg
                   fill="none"
@@ -2884,7 +3482,7 @@ exports[`ExperiencePage should render successfully in English 1`] = `
               </div>
             </div>
             <p
-              class="c36 c5 c37"
+              class="c48 c10 c49"
             >
               Check the website
             </p>
@@ -2893,46 +3491,47 @@ exports[`ExperiencePage should render successfully in English 1`] = `
       </div>
     </section>
     <section
-      class="c2"
+      class="c7"
+      id="keytree"
     >
       <div
-        class="c3"
+        class="c8"
       >
         <div
-          class="c4"
+          class="c9"
         >
           <p
-            class="c5 c6"
+            class="c10 c11"
           >
             04
           </p>
           <h2
-            class="c5 c7"
+            class="c10 c12"
           >
             Keytree
           </h2>
         </div>
         <p
-          class="c5 c8"
+          class="c10 c13"
         >
           Oct 2017 - Aug 2020
         </p>
       </div>
       <div
-        class="c9"
+        class="c14"
       >
         <div
-          class="c10"
+          class="c15"
         >
           <div
-            class="c11 c12"
+            class="c16 c17"
           >
             <div
               aria-hidden="true"
-              class="c13"
+              class="c18"
             >
               <svg
-                class="c14"
+                class="c19"
                 color="#FFDD83"
                 fill="none"
                 height="358"
@@ -3013,10 +3612,10 @@ exports[`ExperiencePage should render successfully in English 1`] = `
             </div>
             <div
               aria-hidden="true"
-              class="c15"
+              class="c20"
             >
               <svg
-                class="c14"
+                class="c19"
                 color="#98DFD6"
                 fill="none"
                 height="358"
@@ -3096,36 +3695,36 @@ exports[`ExperiencePage should render successfully in English 1`] = `
               </svg>
             </div>
             <div
-              class="c16"
+              class="c21"
             >
               <ul
                 aria-label="Used technologies at Keytree"
               >
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 5.090541861804732s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -14%; --translateY-end: 21%; animation-duration: 7.757022551083803s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 4.520340060911261s;"
                     >
                       <a
                         aria-label="NodeJS"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://nodejs.org/en/"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 5.090541861804732s;"
                         >
@@ -3154,30 +3753,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c26"
+                  class="c31"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 5.955502889251664s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: 16%; --translateY-end: 14%; animation-duration: 10.25400005124696s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 6.7748700142684415s;"
                     >
                       <a
                         aria-label="ReactJS"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://reactjs.org"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 5.955502889251664s;"
                         >
@@ -3196,30 +3795,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c38"
+                  class="c50"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 3.226930517836155s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -29%; --translateY-end: 32%; animation-duration: 8.363689674963542s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 5.721348628686531s;"
                     >
                       <a
                         aria-label="Yarn"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://yarnpkg.com"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 3.226930517836155s;"
                         >
@@ -3238,30 +3837,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 1.340767874711747s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: 15%; --translateY-end: 13%; animation-duration: 8.520815804106022s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 6.959692313728118s;"
                     >
                       <a
                         aria-label="Storybook"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://storybook.js.org"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 1.340767874711747s;"
                         >
@@ -3280,30 +3879,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 2.435937405263149s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -10%; --translateY-end: 17%; animation-duration: 7.130136901184507s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 5.297390978809806s;"
                     >
                       <a
                         aria-label="Jest"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://jestjs.io"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 2.435937405263149s;"
                         >
@@ -3322,30 +3921,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 4.273200135306686s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -9%; --translateY-end: 3%; animation-duration: 7.048505337597934s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 5.84451515699741s;"
                     >
                       <a
                         aria-label="EmotionJS"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://emotion.sh"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 4.273200135306686s;"
                         >
@@ -3386,30 +3985,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 1.6891410435248297s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: 2%; --translateY-end: -14%; animation-duration: 10.28845886077368s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 3; animation-duration: 6.176792460969031s;"
                     >
                       <a
                         aria-label="Redux"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://redux.js.org"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 1.6891410435248297s;"
                         >
@@ -3438,30 +4037,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
           </div>
         </div>
         <div
-          class="c27"
+          class="c32"
         >
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Front-end Developer.
           </p>
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Involved in the development of multiple 
             <b
-              class="c29"
+              class="c63"
             >
               React.JS
             </b>
              web applications, utilizing REST services provided by the Gateway service, primarily based on SAP, Java, or Node.js backend services.
           </p>
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Took on the role of a front-end developer lead for an 
             <b
-              class="c29"
+              class="c64"
             >
               Angular JS
             </b>
@@ -3471,46 +4070,47 @@ exports[`ExperiencePage should render successfully in English 1`] = `
       </div>
     </section>
     <section
-      class="c2"
+      class="c7"
+      id="babel-si"
     >
       <div
-        class="c3"
+        class="c8"
       >
         <div
-          class="c4"
+          class="c9"
         >
           <p
-            class="c5 c6"
+            class="c10 c11"
           >
             05
           </p>
           <h2
-            class="c5 c7"
+            class="c10 c12"
           >
             Babel S.I
           </h2>
         </div>
         <p
-          class="c5 c8"
+          class="c10 c13"
         >
           Apr 2017 - Sep 2017
         </p>
       </div>
       <div
-        class="c9"
+        class="c14"
       >
         <div
-          class="c10"
+          class="c15"
         >
           <div
-            class="c11 c12"
+            class="c16 c17"
           >
             <div
               aria-hidden="true"
-              class="c13"
+              class="c18"
             >
               <svg
-                class="c14"
+                class="c19"
                 color="#FFDD83"
                 fill="none"
                 height="358"
@@ -3591,10 +4191,10 @@ exports[`ExperiencePage should render successfully in English 1`] = `
             </div>
             <div
               aria-hidden="true"
-              class="c15"
+              class="c20"
             >
               <svg
-                class="c14"
+                class="c19"
                 color="#98DFD6"
                 fill="none"
                 height="358"
@@ -3674,36 +4274,36 @@ exports[`ExperiencePage should render successfully in English 1`] = `
               </svg>
             </div>
             <div
-              class="c16"
+              class="c21"
             >
               <ul
                 aria-label="Used technologies at Babel S.I"
               >
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 2.8846734470190736s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: 18%; --translateY-end: 20%; animation-duration: 8.820194033199067s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 4.539974786616972s;"
                     >
                       <a
                         aria-label="NodeJS"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://nodejs.org/en/"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 2.8846734470190736s;"
                         >
@@ -3732,30 +4332,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 5.440783135562626s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -34%; --translateY-end: 4%; animation-duration: 3.3853923129967947s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 6.21330226653771s;"
                     >
                       <a
                         aria-label="ExpressJS"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://expressjs.com"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 5.440783135562626s;"
                         >
@@ -3774,30 +4374,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 3.7581502244055467s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -14%; --translateY-end: 37%; animation-duration: 9.340150620601158s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 5.102789556631246s;"
                     >
                       <a
                         aria-label="Node Package Manager"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://www.npmjs.com"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 3.7581502244055467s;"
                         >
@@ -3827,30 +4427,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 3.474884949119358s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: 18%; --translateY-end: 6%; animation-duration: 5.276367466842377s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 6.343161039903113s;"
                     >
                       <a
                         aria-label="Storybook"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://storybook.js.org"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 3.474884949119358s;"
                         >
@@ -3869,30 +4469,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 1.9374715382390149s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -21%; --translateY-end: 12%; animation-duration: 2.200463240262257s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 5.144770302049603s;"
                     >
                       <a
                         aria-label="Jest"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://jestjs.io"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 1.9374715382390149s;"
                         >
@@ -3911,30 +4511,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c38"
+                  class="c50"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 4.637231058998219s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: 5%; --translateY-end: 4%; animation-duration: 8.679778514529424s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 4.395779915317739s;"
                     >
                       <a
                         aria-label="MongoDB"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://www.mongodb.com"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 4.637231058998219s;"
                         >
@@ -3953,30 +4553,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 3.7922881927067085s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: 9%; --translateY-end: -15%; animation-duration: 2.2354402422414337s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 6.336282870833946s;"
                     >
                       <a
                         aria-label="AngularJS"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://angular.io"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 3.7922881927067085s;"
                         >
@@ -3996,30 +4596,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 3.121959062753904s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -3%; --translateY-end: 10%; animation-duration: 7.473178479910989s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 6.962946557648543s;"
                     >
                       <a
                         aria-label="Java"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://java.com"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 3.121959062753904s;"
                         >
@@ -4059,30 +4659,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 1.7199005871079451s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: 9%; --translateY-end: 27%; animation-duration: 4.929712104783205s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 6.284766054354932s;"
                     >
                       <a
                         aria-label="SocketIO"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://socket.io"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 1.7199005871079451s;"
                         >
@@ -4101,30 +4701,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 4.348881689397789s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -9%; --translateY-end: -17%; animation-duration: 5.029637304042199s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 5.134759790991075s;"
                     >
                       <a
                         aria-label="Ionic"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://ionicframework.com"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 4.348881689397789s;"
                         >
@@ -4147,60 +4747,60 @@ exports[`ExperiencePage should render successfully in English 1`] = `
           </div>
         </div>
         <div
-          class="c27"
+          class="c32"
         >
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Full Stack Developer.
           </p>
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Contributed to the Mobile Development Center, focusing on the main project, an 
             <b
-              class="c29"
+              class="c65"
             >
               IONIC
             </b>
              app with 
             <b
-              class="c29"
+              class="c64"
             >
               Angular JS
             </b>
             . Involved in the development of an instant messaging system using 
             <b
-              class="c29"
+              class="c66"
             >
               Socket.io
             </b>
              and 
             <b
-              class="c29"
+              class="c67"
             >
               Node.js
             </b>
             . Integrated 
             <b
-              class="c29"
+              class="c68"
             >
               Spring Boot
             </b>
              and multiple REST services.
           </p>
           <a
-            class="c22 c30 c31"
+            class="c27 c42 c43"
             data-testid="plain-anchor"
             href="https://www.babelgroup.com/"
             rel="noreferrer"
             target="_blank"
           >
             <div
-              class="c32"
+              class="c44"
             >
               <svg
-                class="c33 c34"
+                class="c45 c46"
                 fill="none"
                 height="42"
                 viewBox="0 0 42 42"
@@ -4244,7 +4844,7 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                 />
               </svg>
               <div
-                class="c35"
+                class="c47"
               >
                 <svg
                   fill="none"
@@ -4261,7 +4861,7 @@ exports[`ExperiencePage should render successfully in English 1`] = `
               </div>
             </div>
             <p
-              class="c36 c5 c37"
+              class="c48 c10 c49"
             >
               Check the website
             </p>
@@ -4270,46 +4870,47 @@ exports[`ExperiencePage should render successfully in English 1`] = `
       </div>
     </section>
     <section
-      class="c2"
+      class="c7"
+      id="ioon-technologies"
     >
       <div
-        class="c3"
+        class="c8"
       >
         <div
-          class="c4"
+          class="c9"
         >
           <p
-            class="c5 c6"
+            class="c10 c11"
           >
             06
           </p>
           <h2
-            class="c5 c7"
+            class="c10 c12"
           >
             Ioon Technologies
           </h2>
         </div>
         <p
-          class="c5 c8"
+          class="c10 c13"
         >
           Jan 2016 - Apr 2017
         </p>
       </div>
       <div
-        class="c9"
+        class="c14"
       >
         <div
-          class="c10"
+          class="c15"
         >
           <div
-            class="c11 c12"
+            class="c16 c17"
           >
             <div
               aria-hidden="true"
-              class="c13"
+              class="c18"
             >
               <svg
-                class="c14"
+                class="c19"
                 color="#FFDD83"
                 fill="none"
                 height="358"
@@ -4390,10 +4991,10 @@ exports[`ExperiencePage should render successfully in English 1`] = `
             </div>
             <div
               aria-hidden="true"
-              class="c15"
+              class="c20"
             >
               <svg
-                class="c14"
+                class="c19"
                 color="#98DFD6"
                 fill="none"
                 height="358"
@@ -4473,36 +5074,36 @@ exports[`ExperiencePage should render successfully in English 1`] = `
               </svg>
             </div>
             <div
-              class="c16"
+              class="c21"
             >
               <ul
                 aria-label="Used technologies at Ioon Technologies"
               >
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 2.906390898588662s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -31%; --translateY-end: 5%; animation-duration: 8.895954311649117s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 6.154987448552644s;"
                     >
                       <a
                         aria-label="Java"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://java.com"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 2.906390898588662s;"
                         >
@@ -4542,30 +5143,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 1.8561148041764048s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -31%; --translateY-end: 36%; animation-duration: 6.279205584724648s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 5.639402359912333s;"
                     >
                       <a
                         aria-label="Spring"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://spring.io"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 1.8561148041764048s;"
                         >
@@ -4584,30 +5185,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 5.901087318437233s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -19%; --translateY-end: 36%; animation-duration: 10.003686253832837s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 6.354511391617681s;"
                     >
                       <a
                         aria-label="Ionic"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://ionicframework.com"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 5.901087318437233s;"
                         >
@@ -4626,30 +5227,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 1.6881118118107876s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -24%; --translateY-end: -14%; animation-duration: 3.7721484050423726s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 5.400198333167223s;"
                     >
                       <a
                         aria-label="Storybook"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://storybook.js.org"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 1.6881118118107876s;"
                         >
@@ -4668,30 +5269,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 1.6420123380990899s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -9%; --translateY-end: 10%; animation-duration: 9.245005891461542s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 6.6385529008148625s;"
                     >
                       <a
                         aria-label="AngularJS"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://angular.io"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 1.6420123380990899s;"
                         >
@@ -4711,30 +5312,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 4.289529725223943s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -22%; --translateY-end: 22%; animation-duration: 9.869973444979234s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 5.866246165676847s;"
                     >
                       <a
                         aria-label="Arduino"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://www.arduino.cc/"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 4.289529725223943s;"
                         >
@@ -4757,170 +5358,170 @@ exports[`ExperiencePage should render successfully in English 1`] = `
           </div>
         </div>
         <div
-          class="c27"
+          class="c32"
         >
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Scrum Master and Full Stack Developer.
           </p>
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Served as the CTO from November 2016 to April 2017. Acted as the Scrum Master of the main I+D+i project, utilizing 
             <b
-              class="c29"
+              class="c69"
             >
               Java 1.7
             </b>
             , 
             <b
-              class="c29"
+              class="c68"
             >
               Spring 4
             </b>
             , 
             <b
-              class="c29"
+              class="c41"
             >
               GWT 1.7
             </b>
             , 
             <b
-              class="c29"
+              class="c70"
             >
               Hibernate 5
             </b>
             , and 
             <b
-              class="c29"
+              class="c71"
             >
               MySQL 5.6
             </b>
             . Implemented 
             <b
-              class="c29"
+              class="c65"
             >
               IONIC 2
             </b>
              and 
             <b
-              class="c29"
+              class="c72"
             >
               Angular
             </b>
              for mobile development.
           </p>
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Implemented an 
             <b
-              class="c29"
+              class="c73"
             >
               Arduino
             </b>
              monitoring system for real-time information within the application.
           </p>
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Demonstrated proficiency in utilizing 
             <b
-              class="c29"
+              class="c74"
             >
               Maven
             </b>
             , 
             <b
-              class="c29"
+              class="c75"
             >
               Sonarqube
             </b>
             , and 
             <b
-              class="c29"
+              class="c41"
             >
               JUnit
             </b>
             , along with 
             <b
-              class="c29"
+              class="c41"
             >
               Mockito
             </b>
              for testing and validating clean code.
           </p>
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Involved in front-end development for various customers, employing 
             <b
-              class="c29"
+              class="c76"
             >
               CSS3
             </b>
             , 
             <b
-              class="c29"
+              class="c77"
             >
               jQuery
             </b>
             , and 
             <b
-              class="c29"
+              class="c78"
             >
               HTML5
             </b>
             .
           </p>
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Worked as a 
             <b
-              class="c29"
+              class="c69"
             >
               Java
             </b>
              consultant, focusing on back-end developments in PSA Peugeot-Citroën. Involved in incident resolution and new functionalities development, utilizing 
             <b
-              class="c29"
+              class="c68"
             >
               Spring 3 MVC
             </b>
             , 
             <b
-              class="c29"
+              class="c70"
             >
               Hibernate
             </b>
             , 
             <b
-              class="c29"
+              class="c79"
             >
               Struts 2
             </b>
              and DB 
             <b
-              class="c29"
+              class="c80"
             >
               Oracle
             </b>
             .
           </p>
           <a
-            class="c22 c30 c31"
+            class="c27 c42 c43"
             data-testid="plain-anchor"
             href="https://ioon.es/"
             rel="noreferrer"
             target="_blank"
           >
             <div
-              class="c32"
+              class="c44"
             >
               <svg
-                class="c33 c34"
+                class="c45 c46"
                 fill="none"
                 height="42"
                 viewBox="0 0 42 42"
@@ -4964,7 +5565,7 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                 />
               </svg>
               <div
-                class="c35"
+                class="c47"
               >
                 <svg
                   fill="none"
@@ -4981,7 +5582,7 @@ exports[`ExperiencePage should render successfully in English 1`] = `
               </div>
             </div>
             <p
-              class="c36 c5 c37"
+              class="c48 c10 c49"
             >
               Check the website
             </p>
@@ -4990,46 +5591,47 @@ exports[`ExperiencePage should render successfully in English 1`] = `
       </div>
     </section>
     <section
-      class="c2"
+      class="c7"
+      id="clarive"
     >
       <div
-        class="c3"
+        class="c8"
       >
         <div
-          class="c4"
+          class="c9"
         >
           <p
-            class="c5 c6"
+            class="c10 c11"
           >
             07
           </p>
           <h2
-            class="c5 c7"
+            class="c10 c12"
           >
             Clarive
           </h2>
         </div>
         <p
-          class="c5 c8"
+          class="c10 c13"
         >
           Jan 2014 - Jan 2016
         </p>
       </div>
       <div
-        class="c9"
+        class="c14"
       >
         <div
-          class="c10"
+          class="c15"
         >
           <div
-            class="c11 c12"
+            class="c16 c17"
           >
             <div
               aria-hidden="true"
-              class="c13"
+              class="c18"
             >
               <svg
-                class="c14"
+                class="c19"
                 color="#FFDD83"
                 fill="none"
                 height="358"
@@ -5110,10 +5712,10 @@ exports[`ExperiencePage should render successfully in English 1`] = `
             </div>
             <div
               aria-hidden="true"
-              class="c15"
+              class="c20"
             >
               <svg
-                class="c14"
+                class="c19"
                 color="#98DFD6"
                 fill="none"
                 height="358"
@@ -5193,36 +5795,36 @@ exports[`ExperiencePage should render successfully in English 1`] = `
               </svg>
             </div>
             <div
-              class="c16"
+              class="c21"
             >
               <ul
                 aria-label="Used technologies at Clarive"
               >
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 5.155378389461092s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: 6%; --translateY-end: 32%; animation-duration: 7.909213118063964s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 6.861569411977941s;"
                     >
                       <a
                         aria-label="Perl"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://www.perl.org"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 5.155378389461092s;"
                         >
@@ -5242,30 +5844,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c38"
+                  class="c50"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 5.5855447617167275s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -36%; --translateY-end: 20%; animation-duration: 3.890979077941477s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(2 * 360deg); z-index: 5; animation-duration: 6.844201608619747s;"
                     >
                       <a
                         aria-label="MongoDB"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://www.mongodb.com"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 5.5855447617167275s;"
                         >
@@ -5284,30 +5886,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 4.755940277505309s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -27%; --translateY-end: 3%; animation-duration: 4.189074280959575s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 5.860471898709803s;"
                     >
                       <a
                         aria-label="Ext JS"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://www.sencha.com/products/extjs/"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 4.755940277505309s;"
                         >
@@ -5326,30 +5928,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 3.5733833056919293s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: 8%; --translateY-end: 37%; animation-duration: 3.9970863098357703s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.933216163304989s;"
                     >
                       <a
                         aria-label="JavaScript"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://developer.mozilla.org/en/JavaScript"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 3.5733833056919293s;"
                         >
@@ -5368,30 +5970,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 1.6442097572831296s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: 7%; --translateY-end: -12%; animation-duration: 7.664809988948997s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 6.914386238759869s;"
                     >
                       <a
                         aria-label="HTML5"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://www.w3.org/html/"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 1.6442097572831296s;"
                         >
@@ -5419,30 +6021,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c38"
+                  class="c50"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 2.6985545103405455s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -14%; --translateY-end: 3%; animation-duration: 4.681199497186299s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 6.7009534260415045s;"
                     >
                       <a
                         aria-label="CSS3"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://www.w3.org/Style/CSS/"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 2.6985545103405455s;"
                         >
@@ -5461,30 +6063,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 5.0076318379377325s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -18%; --translateY-end: -14%; animation-duration: 10.20230608533101s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(2 * 360deg); z-index: 4; animation-duration: 5.843169425640823s;"
                     >
                       <a
                         aria-label="Oracle"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://www.oracle.com"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 5.0076318379377325s;"
                         >
@@ -5507,64 +6109,64 @@ exports[`ExperiencePage should render successfully in English 1`] = `
           </div>
         </div>
         <div
-          class="c27"
+          class="c32"
         >
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Full Stack Developer.
           </p>
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Involved in back-end development using 
             <b
-              class="c29"
+              class="c81"
             >
               Perl
             </b>
              and the Catalyst Framework, alongside various CPAN modules for seamless database integration, including 
             <b
-              class="c29"
+              class="c80"
             >
               Oracle
             </b>
              and 
             <b
-              class="c29"
+              class="c82"
             >
               MongoDB
             </b>
             .
           </p>
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Utilized the 
             <b
-              class="c29"
+              class="c41"
             >
               ExtJS
             </b>
              Framework for front-end development.
           </p>
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Integrated SOAP webservices for streamlined communication.
           </p>
           <a
-            class="c22 c30 c31"
+            class="c27 c42 c43"
             data-testid="plain-anchor"
             href="https://clarive.com/"
             rel="noreferrer"
             target="_blank"
           >
             <div
-              class="c32"
+              class="c44"
             >
               <svg
-                class="c33 c34"
+                class="c45 c46"
                 fill="none"
                 height="42"
                 viewBox="0 0 42 42"
@@ -5608,7 +6210,7 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                 />
               </svg>
               <div
-                class="c35"
+                class="c47"
               >
                 <svg
                   fill="none"
@@ -5625,7 +6227,7 @@ exports[`ExperiencePage should render successfully in English 1`] = `
               </div>
             </div>
             <p
-              class="c36 c5 c37"
+              class="c48 c10 c49"
             >
               Check the website
             </p>
@@ -5634,46 +6236,47 @@ exports[`ExperiencePage should render successfully in English 1`] = `
       </div>
     </section>
     <section
-      class="c2"
+      class="c7"
+      id="idealistacom"
     >
       <div
-        class="c3"
+        class="c8"
       >
         <div
-          class="c4"
+          class="c9"
         >
           <p
-            class="c5 c6"
+            class="c10 c11"
           >
             08
           </p>
           <h2
-            class="c5 c7"
+            class="c10 c12"
           >
             idealista.com
           </h2>
         </div>
         <p
-          class="c5 c8"
+          class="c10 c13"
         >
           Sep 2013 - Dec 2013
         </p>
       </div>
       <div
-        class="c9"
+        class="c14"
       >
         <div
-          class="c10"
+          class="c15"
         >
           <div
-            class="c11 c12"
+            class="c16 c17"
           >
             <div
               aria-hidden="true"
-              class="c13"
+              class="c18"
             >
               <svg
-                class="c14"
+                class="c19"
                 color="#FFDD83"
                 fill="none"
                 height="358"
@@ -5754,10 +6357,10 @@ exports[`ExperiencePage should render successfully in English 1`] = `
             </div>
             <div
               aria-hidden="true"
-              class="c15"
+              class="c20"
             >
               <svg
-                class="c14"
+                class="c19"
                 color="#98DFD6"
                 fill="none"
                 height="358"
@@ -5837,36 +6440,36 @@ exports[`ExperiencePage should render successfully in English 1`] = `
               </svg>
             </div>
             <div
-              class="c16"
+              class="c21"
             >
               <ul
                 aria-label="Used technologies at idealista.com"
               >
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 1.5337293540840586s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -9%; --translateY-end: 37%; animation-duration: 6.470945831631842s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.891110106734741s;"
                     >
                       <a
                         aria-label="Java"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://java.com"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 1.5337293540840586s;"
                         >
@@ -5906,30 +6509,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c38"
+                  class="c50"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 1.4896085481395889s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -21%; --translateY-end: -10%; animation-duration: 3.4079417857327168s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 6.618217783829801s;"
                     >
                       <a
                         aria-label="MongoDB"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://www.mongodb.com"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 1.4896085481395889s;"
                         >
@@ -5948,30 +6551,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 4.22822058031289s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: 18%; --translateY-end: 9%; animation-duration: 4.877799603227662s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 5; animation-duration: 5.387798447607168s;"
                     >
                       <a
                         aria-label="Hibernate"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://hibernate.org"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 4.22822058031289s;"
                         >
@@ -5990,30 +6593,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 1.774758141363826s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -5%; --translateY-end: 22%; animation-duration: 2.0180152663677116s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 2; animation-duration: 5.416800232269552s;"
                     >
                       <a
                         aria-label="Spring"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://spring.io"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 1.774758141363826s;"
                         >
@@ -6032,30 +6635,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 4.123943079219914s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -23%; --translateY-end: -4%; animation-duration: 3.618095236260644s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 6.134759649557654s;"
                     >
                       <a
                         aria-label="Oracle"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://www.oracle.com"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 4.123943079219914s;"
                         >
@@ -6078,65 +6681,65 @@ exports[`ExperiencePage should render successfully in English 1`] = `
           </div>
         </div>
         <div
-          class="c27"
+          class="c32"
         >
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Back-end Developer.
           </p>
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Involved in back-end development following an Agile (Scrum) methodology.
           </p>
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Utilized 
             <b
-              class="c29"
+              class="c68"
             >
               Spring 3
             </b>
              and 
             <b
-              class="c29"
+              class="c41"
             >
               JPA
             </b>
             , incorporating 
             <b
-              class="c29"
+              class="c70"
             >
               Hibernate
             </b>
              with both 
             <b
-              class="c29"
+              class="c82"
             >
               MongoDB
             </b>
              and 
             <b
-              class="c29"
+              class="c80"
             >
               Oracle
             </b>
              databases.
           </p>
           <a
-            class="c22 c30 c31"
+            class="c27 c42 c43"
             data-testid="plain-anchor"
             href="https://www.idealista.com/"
             rel="noreferrer"
             target="_blank"
           >
             <div
-              class="c32"
+              class="c44"
             >
               <svg
-                class="c33 c34"
+                class="c45 c46"
                 fill="none"
                 height="42"
                 viewBox="0 0 42 42"
@@ -6180,7 +6783,7 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                 />
               </svg>
               <div
-                class="c35"
+                class="c47"
               >
                 <svg
                   fill="none"
@@ -6197,7 +6800,7 @@ exports[`ExperiencePage should render successfully in English 1`] = `
               </div>
             </div>
             <p
-              class="c36 c5 c37"
+              class="c48 c10 c49"
             >
               Check the website
             </p>
@@ -6206,46 +6809,47 @@ exports[`ExperiencePage should render successfully in English 1`] = `
       </div>
     </section>
     <section
-      class="c2"
+      class="c7"
+      id="incita-security"
     >
       <div
-        class="c3"
+        class="c8"
       >
         <div
-          class="c4"
+          class="c9"
         >
           <p
-            class="c5 c6"
+            class="c10 c11"
           >
             09
           </p>
           <h2
-            class="c5 c7"
+            class="c10 c12"
           >
             Incita Security
           </h2>
         </div>
         <p
-          class="c5 c8"
+          class="c10 c13"
         >
           Nov 2012 - Sep 2013
         </p>
       </div>
       <div
-        class="c9"
+        class="c14"
       >
         <div
-          class="c10"
+          class="c15"
         >
           <div
-            class="c11 c12"
+            class="c16 c17"
           >
             <div
               aria-hidden="true"
-              class="c13"
+              class="c18"
             >
               <svg
-                class="c14"
+                class="c19"
                 color="#FFDD83"
                 fill="none"
                 height="358"
@@ -6326,10 +6930,10 @@ exports[`ExperiencePage should render successfully in English 1`] = `
             </div>
             <div
               aria-hidden="true"
-              class="c15"
+              class="c20"
             >
               <svg
-                class="c14"
+                class="c19"
                 color="#98DFD6"
                 fill="none"
                 height="358"
@@ -6409,36 +7013,36 @@ exports[`ExperiencePage should render successfully in English 1`] = `
               </svg>
             </div>
             <div
-              class="c16"
+              class="c21"
             >
               <ul
                 aria-label="Used technologies at Incita Security"
               >
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 3.039830771790478s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -8%; --translateY-end: 3%; animation-duration: 10.297958655167884s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 4.288995156525762s;"
                     >
                       <a
                         aria-label="Python"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://www.python.org"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 3.039830771790478s;"
                         >
@@ -6462,30 +7066,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 2.2503495851253184s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: 10%; --translateY-end: 24%; animation-duration: 4.940030744867554s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 4.638775037797611s;"
                     >
                       <a
                         aria-label="Oracle"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://www.oracle.com"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 2.2503495851253184s;"
                         >
@@ -6504,30 +7108,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 4.486912226049329s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: -17%; --translateY-end: 3%; animation-duration: 4.122745683003191s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(2 * 360deg); z-index: 2; animation-duration: 5.910443380075771s;"
                     >
                       <a
                         aria-label="JavaScript"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://developer.mozilla.org/en/JavaScript"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 4.486912226049329s;"
                         >
@@ -6546,30 +7150,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c17"
+                  class="c22"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 2.1993219774606168s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: 13%; --translateY-end: -14%; animation-duration: 6.800350666500586s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(1 * 360deg); z-index: 4; animation-duration: 4.95628017878512s;"
                     >
                       <a
                         aria-label="HTML5"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://www.w3.org/html/"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 2.1993219774606168s;"
                         >
@@ -6597,30 +7201,30 @@ exports[`ExperiencePage should render successfully in English 1`] = `
                   </div>
                 </li>
                 <li
-                  class="c38"
+                  class="c50"
                   data-testid="horizontal-movement"
                   style="animation-duration: 6s; animation-delay: 4.5398819173071026s;"
                 >
                   <div
-                    class="c18 c19"
+                    class="c23 c24"
                     data-testid="vertical-movement"
                     style="--translateY-begin: 1%; --translateY-end: 0%; animation-duration: 5.678292340738683s;"
                   >
                     <div
-                      class="c20 c21"
+                      class="c25 c26"
                       data-testid="rotation-movement"
                       style="--rotation: calc(2 * 360deg); z-index: 3; animation-duration: 5.200176930490507s;"
                     >
                       <a
                         aria-label="CSS3"
-                        class="c22 c23"
+                        class="c27 c28"
                         data-testid="plain-anchor"
                         href="https://www.w3.org/Style/CSS/"
                         rel="noreferrer"
                         target="_blank"
                       >
                         <div
-                          class="c24 c25"
+                          class="c29 c30"
                           data-testid="color-swapping"
                           style="animation-duration: 6s; animation-delay: 4.5398819173071026s;"
                         >
@@ -6643,47 +7247,47 @@ exports[`ExperiencePage should render successfully in English 1`] = `
           </div>
         </div>
         <div
-          class="c27"
+          class="c32"
         >
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Security Consultant and Web Developer.
           </p>
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Actively involved in SIEM management, utilizing tools such as ArcSight and OSSIM, and proficient in Shell script development.
           </p>
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Demonstrated proficiency in using 
             <b
-              class="c29"
+              class="c83"
             >
               Python
             </b>
              and PHP 5.3, with 
             <b
-              class="c29"
+              class="c71"
             >
               MySQL 5.1
             </b>
              for robust database management.
           </p>
           <p
-            class="c5 c28"
+            class="c10 c33"
           >
             Employed 
             <b
-              class="c29"
+              class="c76"
             >
               CSS3
             </b>
              and 
             <b
-              class="c29"
+              class="c84"
             >
               JavaScript
             </b>

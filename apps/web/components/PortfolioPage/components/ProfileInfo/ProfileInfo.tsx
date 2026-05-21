@@ -10,8 +10,8 @@ import {
   MobileIcon,
 } from '@sdlgr/assets'
 
-import { getTechColor } from '@web/components/PortfolioPage/techColors'
 import { parseRichText } from '@web/utils/parseRichText/parseRichText'
+import { getTechColor } from '@web/utils/techColors'
 
 import {
   StyledItalic,

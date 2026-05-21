@@ -22,6 +22,11 @@ beforeAll(() => {
 
 beforeEach(() => {
   jest.clearAllMocks()
+  jest.useFakeTimers()
+})
+
+afterEach(() => {
+  jest.useRealTimers()
 })
 
 const entries: TocEntry[] = [
@@ -94,6 +99,10 @@ describe('TableOfContents', () => {
       ])
     })
 
+    act(() => {
+      jest.runAllTimers()
+    })
+
     expect(screen.getByRole('link', { name: 'Introduction' })).toHaveAttribute(
       'aria-current',
       'location',
@@ -127,6 +136,153 @@ describe('TableOfContents', () => {
     )
     unmount()
     expect(mockDisconnect).toHaveBeenCalled()
+  })
+
+  it('activates last entry when scrolled near bottom of page', () => {
+    Object.defineProperty(window, 'innerHeight', {
+      writable: true,
+      configurable: true,
+      value: 800,
+    })
+    Object.defineProperty(window, 'scrollY', {
+      writable: true,
+      configurable: true,
+      value: 9300,
+    })
+    Object.defineProperty(document.body, 'offsetHeight', {
+      writable: true,
+      configurable: true,
+      value: 10000,
+    })
+
+    renderWithTheme(
+      <TableOfContents entries={entries} label="Table of contents" />,
+    )
+
+    act(() => {
+      window.dispatchEvent(new Event('scroll'))
+    })
+
+    act(() => {
+      jest.runAllTimers()
+    })
+
+    expect(screen.getByRole('link', { name: 'Conclusion' })).toHaveAttribute(
+      'aria-current',
+      'location',
+    )
+  })
+
+  it('does not activate last entry when not near bottom', () => {
+    Object.defineProperty(window, 'innerHeight', {
+      writable: true,
+      configurable: true,
+      value: 800,
+    })
+    Object.defineProperty(window, 'scrollY', {
+      writable: true,
+      configurable: true,
+      value: 0,
+    })
+    Object.defineProperty(document.body, 'offsetHeight', {
+      writable: true,
+      configurable: true,
+      value: 10000,
+    })
+
+    renderWithTheme(
+      <TableOfContents entries={entries} label="Table of contents" />,
+    )
+
+    act(() => {
+      window.dispatchEvent(new Event('scroll'))
+    })
+
+    expect(
+      screen.queryByRole('link', { name: 'Conclusion' }),
+    ).not.toHaveAttribute('aria-current')
+  })
+
+  it('clears pending intersection debounce on unmount', () => {
+    const headingEl = document.createElement('h2')
+    headingEl.id = 'introduction'
+    document.body.appendChild(headingEl)
+
+    const { unmount } = renderWithTheme(
+      <TableOfContents entries={entries} label="Table of contents" />,
+    )
+
+    act(() => {
+      mockCallback([
+        {
+          isIntersecting: true,
+          target: headingEl,
+        } as unknown as IntersectionObserverEntry,
+      ])
+    })
+
+    unmount()
+    act(() => {
+      jest.runAllTimers()
+    })
+
+    document.body.removeChild(headingEl)
+  })
+
+  it('clears pending scroll debounce on unmount', () => {
+    Object.defineProperty(window, 'innerHeight', {
+      writable: true,
+      configurable: true,
+      value: 800,
+    })
+    Object.defineProperty(window, 'scrollY', {
+      writable: true,
+      configurable: true,
+      value: 9300,
+    })
+    Object.defineProperty(document.body, 'offsetHeight', {
+      writable: true,
+      configurable: true,
+      value: 10000,
+    })
+
+    const { unmount } = renderWithTheme(
+      <TableOfContents entries={entries} label="Table of contents" />,
+    )
+
+    act(() => {
+      window.dispatchEvent(new Event('scroll'))
+    })
+
+    unmount()
+    act(() => {
+      jest.runAllTimers()
+    })
+  })
+
+  it('skips scroll activation when page fits in viewport', () => {
+    Object.defineProperty(window, 'innerHeight', {
+      writable: true,
+      configurable: true,
+      value: 10000,
+    })
+    Object.defineProperty(document.body, 'offsetHeight', {
+      writable: true,
+      configurable: true,
+      value: 800,
+    })
+
+    renderWithTheme(
+      <TableOfContents entries={entries} label="Table of contents" />,
+    )
+
+    act(() => {
+      window.dispatchEvent(new Event('scroll'))
+    })
+
+    expect(
+      screen.queryByRole('link', { name: 'Conclusion' }),
+    ).not.toHaveAttribute('aria-current')
   })
 
   it('skips observing headings not found in DOM', () => {

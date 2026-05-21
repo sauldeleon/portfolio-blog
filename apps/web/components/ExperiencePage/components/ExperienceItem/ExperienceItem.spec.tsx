@@ -12,9 +12,11 @@ const defaultProps = {
   link: 'https://www.test.com/',
   ariaLabel: 'Used technologies at test',
   checkWebsiteLabel: 'Check the website',
+  sectionId: 'test',
   paragraphs: [
     'Front-end React Developer.',
     'Including an <bold>EXPO</bold> mobile app for iOS and Android.',
+    'Some <bold>custom tool</bold> without a brand color.',
   ],
 }
 

@@ -11,9 +11,11 @@ export const StyledSection = styled.section`
   width: 100%;
   padding: 0 10px;
   margin-bottom: 90px;
+  scroll-margin-top: 65px;
 
   ${({ theme }) => theme.media.up.lg} {
     padding: 0 20px;
+    scroll-margin-top: 75px;
   }
 `
 
@@ -144,7 +146,8 @@ export const StyledPortals = styled(Portals)`
   }
 `
 
-export const StyledTechnology = styled.b`
+export const StyledTechnology = styled.b<{ $color?: string }>`
   ${({ theme }) => theme.typography.body.M}
   font-weight: bold;
+  ${({ $color }) => $color && `color: ${$color};`}
 `

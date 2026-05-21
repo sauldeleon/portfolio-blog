@@ -1,0 +1,135 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`ExperienceNav should render successfully 1`] = `
+.c1 {
+  padding: 1rem 1.25rem;
+  border: 1px solid rgba(251, 251, 251, 0.1);
+}
+
+.c2 {
+  font-family: var(--font-roboto-mono, monospace);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.5;
+  margin: 0 0 0.75rem;
+}
+
+.c3 {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.c4 {
+  display: block;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: #FBFBFB;
+  text-decoration: none;
+  padding-left: 0rem;
+  opacity: 0.6;
+  transition: color 0.15s,opacity 0.15s;
+}
+
+.c4:hover {
+  color: #98DFD6;
+  opacity: 1;
+}
+
+.c0 {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  width: 100%;
+  background-color: #000000;
+  border-bottom: 1px solid rgba(251,251,251,0.1);
+  margin-bottom: 20px;
+}
+
+.c0 nav {
+  padding: 0.5rem 10px;
+  border: none;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.c0 p {
+  display: none;
+}
+
+.c0 ol {
+  flex-direction: row;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  gap: 0;
+}
+
+.c0 ol::-webkit-scrollbar {
+  display: none;
+}
+
+.c0 li {
+  flex-shrink: 0;
+}
+
+.c0 a {
+  white-space: nowrap;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+@media (width >= 1024px) {
+  .c0 nav {
+    padding: 0.5rem 20px;
+  }
+
+  .c0 a {
+    padding: 0.5rem 1rem;
+    font-size: 0.9375rem;
+  }
+}
+
+<body>
+  <div>
+    <div
+      class="c0"
+    >
+      <nav
+        aria-label="Jump to"
+        class="c1"
+      >
+        <p
+          class="c2"
+        >
+          Jump to
+        </p>
+        <ol
+          class="c3"
+        >
+          <li>
+            <a
+              class="c4"
+              href="#bonhams"
+            >
+              Bonhams
+            </a>
+          </li>
+          <li>
+            <a
+              class="c4"
+              href="#smart-protection"
+            >
+              Smart Protection
+            </a>
+          </li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+</body>
+`;

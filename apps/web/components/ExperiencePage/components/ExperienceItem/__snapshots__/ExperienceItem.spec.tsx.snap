@@ -139,12 +139,12 @@ exports[`ExperienceItem should render successfully 1`] = `
   padding-left: 10px;
 }
 
-.c34 {
+.c35 {
   margin-left: 8px;
   position: relative;
 }
 
-.c34::after {
+.c35::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -154,13 +154,13 @@ exports[`ExperienceItem should render successfully 1`] = `
   background-color: currentColor;
 }
 
-.c34::after {
+.c35::after {
   transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.5s ease-out;
 }
 
-.c31 .loading {
+.c32 .loading {
   transform: rotate(-90deg);
   transform-origin: center;
   stroke: #FBFBFB;
@@ -170,7 +170,7 @@ exports[`ExperienceItem should render successfully 1`] = `
   transition: stroke-dashoffset 0.5s steps(4, end);
 }
 
-.c27 {
+.c28 {
   outline: none;
   cursor: pointer;
   display: flex;
@@ -178,34 +178,34 @@ exports[`ExperienceItem should render successfully 1`] = `
   max-height: 42px;
 }
 
-.c27:after {
+.c28:after {
   content: none;
 }
 
-.c27:hover:after {
+.c28:hover:after {
   content: none;
 }
 
-.c27:focus-visible {
+.c28:focus-visible {
   outline: #FBFBFB auto 1px;
 }
 
-.c27:hover .c30 .loading {
+.c28:hover .c31 .loading {
   stroke-dashoffset: 0;
 }
 
-.c27:hover .c33::after {
+.c28:hover .c34::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
 
-.c29 {
+.c30 {
   position: relative;
   width: 42px;
   height: 42px;
 }
 
-.c32 {
+.c33 {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
@@ -266,6 +266,7 @@ exports[`ExperienceItem should render successfully 1`] = `
   width: 100%;
   padding: 0 10px;
   margin-bottom: 90px;
+  scroll-margin-top: 65px;
 }
 
 .c1 {
@@ -327,7 +328,7 @@ exports[`ExperienceItem should render successfully 1`] = `
   font-size: 15px;
 }
 
-.c28 {
+.c29 {
   margin-top: 50px;
   text-transform: uppercase;
   width: max-content;
@@ -340,6 +341,16 @@ exports[`ExperienceItem should render successfully 1`] = `
 }
 
 .c26 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #FBFBFB;
+  font-size: 0.9rem;
+  line-height: normal;
+  font-weight: bold;
+  color: #ECEDEE;
+}
+
+.c27 {
   font-family: var(--font-roboto-mono);
   font-weight: 400;
   color: #FBFBFB;
@@ -379,6 +390,7 @@ exports[`ExperienceItem should render successfully 1`] = `
 @media (width >= 1024px) {
   .c0 {
     padding: 0 20px;
+    scroll-margin-top: 75px;
   }
 }
 
@@ -499,6 +511,7 @@ exports[`ExperienceItem should render successfully 1`] = `
   <div>
     <section
       class="c0"
+      id="test"
     >
       <div
         class="c1"
@@ -781,18 +794,29 @@ exports[`ExperienceItem should render successfully 1`] = `
             </b>
              mobile app for iOS and Android.
           </p>
+          <p
+            class="c3 c25"
+          >
+            Some 
+            <b
+              class="c27"
+            >
+              custom tool
+            </b>
+             without a brand color.
+          </p>
           <a
-            class="c20 c27 c28"
+            class="c20 c28 c29"
             data-testid="plain-anchor"
             href="https://www.test.com/"
             rel="noreferrer"
             target="_blank"
           >
             <div
-              class="c29"
+              class="c30"
             >
               <svg
-                class="c30 c31"
+                class="c31 c32"
                 fill="none"
                 height="42"
                 viewBox="0 0 42 42"
@@ -836,7 +860,7 @@ exports[`ExperienceItem should render successfully 1`] = `
                 />
               </svg>
               <div
-                class="c32"
+                class="c33"
               >
                 <svg
                   fill="none"
@@ -853,7 +877,7 @@ exports[`ExperienceItem should render successfully 1`] = `
               </div>
             </div>
             <p
-              class="c33 c3 c34"
+              class="c34 c3 c35"
             >
               Check the website
             </p>
