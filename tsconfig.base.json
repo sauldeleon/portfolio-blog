@@ -45,6 +45,7 @@
       "@sdlgr/table-of-contents": ["./libs/table-of-contents/src/index.ts"],
       "@sdlgr/visually-hidden": ["./libs/visually-hidden/src/index.ts"],
       "@sdlgr/combobox": ["./libs/combobox/src/index.ts"],
+      "@sdlgr/dropdown": ["./libs/dropdown/src/index.ts"],
       "@sdlgr/checkbox": ["./libs/checkbox/src/index.ts"],
       "@sdlgr/date-picker": ["./libs/date-picker/src/index.ts"],
       "@web/*": ["./apps/web/*"]

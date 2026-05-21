@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
+import { StyledFormLabel } from '@sdlgr/input'
+
 export const StyledWrapper = styled.label`
   display: inline-flex;
   align-items: center;
@@ -51,11 +53,8 @@ export const StyledBox = styled.span<{ $checked: boolean }>`
   }
 `
 
-export const StyledLabel = styled.span`
-  font-size: 0.6rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: ${({ theme }) => theme.colors.white};
-  opacity: 0.5;
+export const StyledLabel = styled(StyledFormLabel).attrs({
+  as: 'span' as const,
+})`
   user-select: none;
 `

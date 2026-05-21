@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components'
 
 import { Button } from '@sdlgr/button'
+import { StyledDropdownPanel as BaseDropdownPanel } from '@sdlgr/dropdown'
 
 export const StyledBlogFilters = styled.div`
   display: flex;
@@ -44,13 +45,11 @@ export const StyledDropdownButton = styled.button`
   }
 `
 
-export const StyledDropdownPanel = styled.div<{ $wide?: boolean }>`
-  position: absolute;
+export const StyledDropdownPanel = styled(BaseDropdownPanel)<{
+  $wide?: boolean
+}>`
   top: calc(100% + 6px);
-  left: 0;
-  z-index: 100;
-  background: ${({ theme }) => theme.colors.black};
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.2);
   padding: 0.75rem;
   min-width: ${({ $wide }) => ($wide ? '320px' : '220px')};
   display: flex;

@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
+import { StyledDropdownPanel } from '@sdlgr/dropdown'
+
 export const StyledWrapper = styled.div`
   position: relative;
   display: inline-block;
@@ -30,13 +32,9 @@ export const StyledTrigger = styled.button<{ $hasValue: boolean }>`
   }
 `
 
-export const StyledPopover = styled.div`
-  position: absolute;
+export const StyledPopover = styled(StyledDropdownPanel)`
   top: calc(100% + 4px);
-  left: 0;
-  z-index: 100;
   background: #111;
-  border: 1px solid rgba(251, 251, 251, 0.12);
   padding: 1rem;
   min-width: 280px;
 
