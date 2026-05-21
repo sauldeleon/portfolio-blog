@@ -45,19 +45,27 @@ describe('Contact page', () => {
   it('should show an image carousel', () => {
     getTitle({ timeout: 6000 }).contains('Saúl de León Guerrero')
     cy.contains('h2', 'Software Engineer')
-    cy.get('[alt="My profile picture 1"]').should('have.css', 'opacity', '1')
-    cy.get('[alt="My profile picture 2"]').should('have.css', 'opacity', '0')
-    cy.get('[alt="My profile picture 2"]', { timeout: 60000 }).should(
+    cy.get('[alt="Saúl de León Guerrero, portrait 1"]').should(
       'have.css',
       'opacity',
       '1',
     )
+    cy.get('[alt="Saúl de León Guerrero, portrait 2"]').should(
+      'have.css',
+      'opacity',
+      '0',
+    )
+    cy.get('[alt="Saúl de León Guerrero, portrait 2"]', {
+      timeout: 60000,
+    }).should('have.css', 'opacity', '1')
   })
 
   it('should show a hidden image', () => {
     getTitle({ timeout: 6000 }).contains('Saúl de León Guerrero')
     cy.contains('h2', 'Software Engineer')
-    cy.get('[alt="My profile picture 1"]').as('btn').click({ force: true })
+    cy.get('[alt="Saúl de León Guerrero, portrait 1"]')
+      .as('btn')
+      .click({ force: true })
     cy.get('[alt="My toothless profile picture"]')
   })
 })
