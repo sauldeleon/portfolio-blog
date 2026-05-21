@@ -1,6 +1,5 @@
 import { format } from 'date-fns'
 import { Locale as DateLocale, enUS, es } from 'date-fns/locale'
-import { headers } from 'next/headers'
 import { notFound, redirect } from 'next/navigation'
 
 import { PostHero } from '@sdlgr/post-hero'
@@ -87,11 +86,7 @@ export async function generateMetadata({ params }: RouteProps) {
   const altPath = `blog/${postNumber}/${altSlug}`
   const ownPath = `blog/${postNumber}/${post.slug}`
 
-  const siteUrl = getSiteUrl()
-  const headersList = await headers()
-  const host = headersList.get('host')
-  const proto = headersList.get('x-forwarded-proto') ?? 'https'
-  const deploymentUrl = host ? `${proto}://${host}` : siteUrl
+  const deploymentUrl = getSiteUrl()
   const categoryName = await getCategoryName(post.category, lng as Locale)
   const ogParams = new URLSearchParams([['title', post.title]])
   if (post.coverImage) ogParams.set('cover', post.coverImage)
