@@ -51,6 +51,10 @@ jest.mock('@web/i18n/client', () => ({
         'postEditor.actions.unarchive': 'Unarchive',
         'postEditor.preview': 'Preview',
         'postEditor.previewLoading': 'Rendering…',
+        'postEditor.previewTabPost': 'Post',
+        'postEditor.previewTabPostMobile': 'Post Mobile',
+        'postEditor.previewTabHero': 'Hero',
+        'postEditor.previewTabCard': 'Card',
         'postEditor.error': 'Error',
         'images.picker.title': 'Insert Image',
       }

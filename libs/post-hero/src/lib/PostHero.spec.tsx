@@ -14,6 +14,7 @@ const defaultProps = {
   title: 'My Post Title',
   coverImagePublicId: 'blog/cover-image',
   category: 'Technology',
+  categoryIcon: <svg data-testid="category-icon" />,
   author: 'John Doe',
   publishedAt: 'Jan 1, 2024',
   readingTime: 5,
@@ -55,9 +56,21 @@ describe('PostHero', () => {
     expect(screen.getByTestId('reading-time')).toHaveTextContent('5 min')
   })
 
-  it('renders category', () => {
+  it('renders category badge', () => {
     renderWithTheme(<PostHero {...defaultProps} />)
-    expect(screen.getByText('Technology')).toBeInTheDocument()
+    expect(screen.getByTestId('category-badge')).toBeInTheDocument()
+    expect(screen.getByTestId('category-badge')).toHaveTextContent('Technology')
+  })
+
+  it('renders category icon when provided', () => {
+    renderWithTheme(<PostHero {...defaultProps} />)
+    expect(screen.getByTestId('category-icon')).toBeInTheDocument()
+  })
+
+  it('renders category badge without icon when categoryIcon not provided', () => {
+    renderWithTheme(<PostHero {...defaultProps} categoryIcon={undefined} />)
+    expect(screen.getByTestId('category-badge')).toBeInTheDocument()
+    expect(screen.queryByTestId('category-icon')).not.toBeInTheDocument()
   })
 
   it('renders author', () => {

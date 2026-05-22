@@ -1,10 +1,20 @@
 import { screen } from '@testing-library/react'
+import React from 'react'
 
 import { renderWithTheme } from '@sdlgr/test-utils'
 
 jest.mock('next-cloudinary', () => ({
   CldImage: ({ alt, style }: { alt: string; style?: React.CSSProperties }) => (
     <img data-testid="cover-image" alt={alt} style={style} />
+  ),
+}))
+
+jest.mock('@web/utils/categoryIcons', () => ({
+  CategoryIconRenderer: ({
+    slug: _slug,
+    ...props
+  }: { slug: string } & React.SVGProps<SVGSVGElement>) => (
+    <svg data-testid="category-icon" {...props} />
   ),
 }))
 
@@ -105,11 +115,21 @@ describe('LatestPostHero', () => {
     expect(screen.queryByTestId('cover-image')).toBeNull()
   })
 
-  it('renders the category', () => {
+  it('renders the category badge', () => {
     renderWithTheme(
       <LatestPostHero post={mockPost} lng="en" readMoreLabel="Read more →" />,
     )
-    expect(screen.getByText('engineering')).toBeInTheDocument()
+    expect(screen.getByTestId('category-badge')).toBeInTheDocument()
+    expect(screen.getByTestId('category-badge')).toHaveTextContent(
+      'engineering',
+    )
+  })
+
+  it('renders the category icon', () => {
+    renderWithTheme(
+      <LatestPostHero post={mockPost} lng="en" readMoreLabel="Read more →" />,
+    )
+    expect(screen.getByTestId('category-icon')).toBeInTheDocument()
   })
 
   it('renders series badge with order when seriesTitle and seriesOrder are set', () => {
