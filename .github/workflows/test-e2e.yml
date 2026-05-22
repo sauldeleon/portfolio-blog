@@ -38,3 +38,5 @@ jobs:
           working-directory: apps/web-e2e
           wait-on: 'https://${{ steps.vercel_preview_url.outputs.preview_url }}'
           config: baseUrl=https://${{ steps.vercel_preview_url.outputs.preview_url }}
+        env:
+          CYPRESS_E2E_PASSWORD: ${{ secrets.CYPRESS_E2E_PASSWORD }}
