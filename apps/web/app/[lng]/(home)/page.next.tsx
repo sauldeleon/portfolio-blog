@@ -79,6 +79,11 @@ export default async function Page({ params }: RouteProps) {
       'Personal portfolio of Saúl de León Guerrero, Software Engineer',
     inLanguage: inLanguage(lng),
     isPartOf: { '@type': 'WebSite', url: 'https://www.sawl.dev' },
+    mainEntity: {
+      '@type': 'Person',
+      name: 'Saúl de León Guerrero',
+      url: 'https://www.sawl.dev',
+    },
   }
 
   return (
