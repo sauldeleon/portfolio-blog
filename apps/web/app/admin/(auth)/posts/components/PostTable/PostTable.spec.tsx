@@ -354,10 +354,10 @@ describe('PostTable', () => {
     expect(axios.delete).not.toHaveBeenCalled()
   })
 
-  it('clicking a row navigates to the post edit page', () => {
+  it('clicking the edit button navigates to the post edit page', () => {
     const post = makePost({ id: 'edit123' })
     renderApp(<PostTable posts={[post]} />)
-    fireEvent.click(screen.getByTestId('post-row'))
+    fireEvent.click(screen.getByTestId('edit-button'))
     expect(mockPush).toHaveBeenCalledWith('/admin/posts/edit123')
   })
 

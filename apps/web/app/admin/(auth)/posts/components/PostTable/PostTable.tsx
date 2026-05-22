@@ -23,6 +23,7 @@ import {
   StyledCheckboxTd,
   StyledCheckboxTh,
   StyledCount,
+  StyledEditButton,
   StyledEmDash,
   StyledEmpty,
   StyledFilterTab,
@@ -478,11 +479,7 @@ export function PostTable({ posts }: PostTableProps) {
             </tr>
           )}
           {filtered.map((post) => (
-            <StyledTr
-              key={post.id}
-              data-testid="post-row"
-              onClick={() => router.push(`/admin/posts/${post.id}`)}
-            >
+            <StyledTr key={post.id} data-testid="post-row">
               <StyledCheckboxTd>
                 <input
                   type="checkbox"
@@ -552,6 +549,15 @@ export function PostTable({ posts }: PostTableProps) {
               </StyledTd>
               <StyledTd>
                 <StyledActions>
+                  <StyledEditButton
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      router.push(`/admin/posts/${post.id}`)
+                    }}
+                    data-testid="edit-button"
+                  >
+                    {t('posts.edit')}
+                  </StyledEditButton>
                   {post.status !== 'archived' && (
                     <StyledPublishButton
                       onClick={(e) => handleTogglePublish(e, post)}
