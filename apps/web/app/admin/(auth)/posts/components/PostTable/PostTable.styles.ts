@@ -100,12 +100,7 @@ export const StyledTbody = styled.tbody``
 
 export const StyledTr = styled.tr`
   border-bottom: 1px solid rgba(251, 251, 251, 0.06);
-  cursor: pointer;
   transition: background 0.1s;
-
-  &:hover {
-    background: rgba(152, 223, 214, 0.04);
-  }
 
   &:last-child {
     border-bottom: none;
@@ -184,6 +179,16 @@ export const StyledActions = styled.div`
   align-items: center;
   justify-content: flex-end;
   gap: 0.5rem;
+`
+
+export const StyledEditButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'xs',
+  colorScheme: 'success',
+})`
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 `
 
 export const StyledPublishButton = styled(Button).attrs({
