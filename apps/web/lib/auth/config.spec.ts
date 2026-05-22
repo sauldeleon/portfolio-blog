@@ -147,14 +147,14 @@ describe('authConfig.callbacks', () => {
     it('adds role to token when user is present', () => {
       const token = {}
       const user = { id: 'u1', name: 'admin', role: 'admin' as const }
-       
+
       const result = (callbacks as any).jwt({ token, user })
       expect(result).toMatchObject({ role: 'admin' })
     })
 
     it('returns token unchanged when user is absent', () => {
       const token = { role: 'editor' as const }
-       
+
       const result = (callbacks as any).jwt({ token })
       expect(result).toEqual({ role: 'editor' })
     })
@@ -164,7 +164,7 @@ describe('authConfig.callbacks', () => {
     it('sets role on session.user from token', () => {
       const session = { user: { id: 'u1', name: 'admin', role: undefined } }
       const token = { role: 'admin' as const }
-       
+
       const result = (callbacks as any).session({ session, token })
       expect(result.user.role).toBe('admin')
     })
@@ -172,7 +172,7 @@ describe('authConfig.callbacks', () => {
     it('leaves session unchanged when token has no role', () => {
       const session = { user: { id: 'u1', name: 'admin', role: undefined } }
       const token = {}
-       
+
       const result = (callbacks as any).session({ session, token })
       expect(result.user.role).toBeUndefined()
     })
