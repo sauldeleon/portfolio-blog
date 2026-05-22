@@ -4,6 +4,7 @@
 const mockGetScheduledPostsToPublish = jest.fn()
 const mockUpdatePost = jest.fn()
 const mockRevalidateTag = jest.fn()
+const mockLoggerError = jest.fn()
 
 jest.mock('@web/lib/db/queries/posts', () => ({
   getScheduledPostsToPublish: mockGetScheduledPostsToPublish,
@@ -13,6 +14,8 @@ jest.mock('@web/lib/db/queries/posts', () => ({
 jest.mock('next/cache', () => ({
   revalidateTag: mockRevalidateTag,
 }))
+
+jest.mock('@web/lib/logger', () => ({ logger: { error: mockLoggerError } }))
 
 const { GET } = require('./route') as {
   GET: (req: Request) => Promise<Response>
@@ -100,5 +103,18 @@ describe('GET /api/cron/publish', () => {
     mockGetScheduledPostsToPublish.mockResolvedValue([])
     await GET(makeRequest('Bearer test-secret-xyz'))
     expect(mockRevalidateTag).not.toHaveBeenCalled()
+  })
+
+  it('returns 500 and logs error when getScheduledPostsToPublish throws', async () => {
+    const err = new Error('DB error')
+    mockGetScheduledPostsToPublish.mockRejectedValue(err)
+    const response = await GET(makeRequest('Bearer test-secret-xyz'))
+    expect(response.status).toBe(500)
+    const body = (await response.json()) as { error: string }
+    expect(body.error).toBe('Failed to publish scheduled posts')
+    expect(mockLoggerError).toHaveBeenCalledWith(
+      err,
+      'Failed to publish scheduled posts',
+    )
   })
 })

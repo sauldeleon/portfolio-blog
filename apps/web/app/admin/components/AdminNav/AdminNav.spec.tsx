@@ -15,6 +15,7 @@ jest.mock('@web/i18n/client', () => ({
         'nav.categories': 'Categories',
         'nav.series': 'Series',
         'nav.images': 'Images',
+        'nav.users': 'Users',
         'nav.logout': 'Logout',
       }
       return translations[key] ?? key
@@ -87,6 +88,28 @@ describe('AdminNav', () => {
     expect(screen.getByRole('button', { name: 'Logout' })).toBeInTheDocument()
   })
 
+  it('does not render Users link when role is not admin', () => {
+    renderApp(<AdminNav role="editor" />)
+    expect(
+      screen.queryByRole('link', { name: 'Users' }),
+    ).not.toBeInTheDocument()
+  })
+
+  it('does not render Users link when role is undefined', () => {
+    renderApp(<AdminNav />)
+    expect(
+      screen.queryByRole('link', { name: 'Users' }),
+    ).not.toBeInTheDocument()
+  })
+
+  it('renders Users link when role is admin', () => {
+    renderApp(<AdminNav role="admin" />)
+    expect(screen.getByRole('link', { name: 'Users' })).toHaveAttribute(
+      'href',
+      '/admin/users',
+    )
+  })
+
   it('marks Posts link active when on posts route', () => {
     ;(usePathname as jest.Mock).mockReturnValue('/admin/posts/some-id')
     renderApp(<AdminNav />)
@@ -111,5 +134,11 @@ describe('AdminNav', () => {
     ;(usePathname as jest.Mock).mockReturnValue('/admin/images')
     renderApp(<AdminNav />)
     expect(screen.getByRole('link', { name: 'Images' })).toBeInTheDocument()
+  })
+
+  it('marks Users link active when on users route', () => {
+    ;(usePathname as jest.Mock).mockReturnValue('/admin/users')
+    renderApp(<AdminNav role="admin" />)
+    expect(screen.getByRole('link', { name: 'Users' })).toBeInTheDocument()
   })
 })

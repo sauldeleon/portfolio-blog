@@ -97,6 +97,7 @@ module.exports = {
     '<rootDir>/lib/db/schema\\.ts',
     '<rootDir>/lib/db/migrations/',
     '<rootDir>/lib/types/',
+    '<rootDir>/types/',
     '<rootDir>/components/GlobalStyles/',
     '<rootDir>/components/PostContent/PostContent\\.styles\\.ts',
     '<rootDir>/components/PostContent/MdxTable\\.styles\\.ts',

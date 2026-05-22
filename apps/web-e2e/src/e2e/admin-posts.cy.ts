@@ -25,9 +25,6 @@ describe('Admin posts — publish lifecycle', () => {
 
     // Fill EN
     cy.get('[data-testid="title-input"]').type(enTitle)
-    cy.get('label[for="author-use-default"]').click()
-    cy.get('[data-testid="author-input"]').clear()
-    cy.get('[data-testid="author-input"]').type('e2e')
     cy.get('[data-testid="category-select"]').find('.select__control').click()
     cy.contains('.select__option', /other/i).click()
     cy.get('[data-testid="excerpt-input"]').type('e2e publish test')
@@ -142,9 +139,6 @@ describe('Admin posts — create, archive, and hard delete', () => {
 
     // Fill EN fields
     cy.get('[data-testid="title-input"]').type(enTitle)
-    cy.get('label[for="author-use-default"]').click()
-    cy.get('[data-testid="author-input"]').clear()
-    cy.get('[data-testid="author-input"]').type('e2e')
     cy.get('[data-testid="category-select"]').find('.select__control').click()
     cy.contains('.select__option', /other/i).click()
     cy.get('[data-testid="excerpt-input"]').type('an e2e test post')

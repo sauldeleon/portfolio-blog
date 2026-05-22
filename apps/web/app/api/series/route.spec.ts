@@ -8,12 +8,16 @@ const mockGetSeriesForAdmin = jest.fn()
 const mockUpsertSeriesTranslation = jest.fn()
 const mockDbSelect = jest.fn()
 const mockDbInsert = jest.fn()
+const mockLoggerError = jest.fn()
 
 jest.mock('@web/lib/auth/config', () => ({ auth: () => mockAuth() }))
 jest.mock('@web/lib/db/queries/series', () => ({
   getSeriesForAdmin: (...args: unknown[]) => mockGetSeriesForAdmin(...args),
   upsertSeriesTranslation: (...args: unknown[]) =>
     mockUpsertSeriesTranslation(...args),
+}))
+jest.mock('@web/lib/logger', () => ({
+  logger: { error: (...args: unknown[]) => mockLoggerError(...args) },
 }))
 
 function makeChain(resolved: unknown) {
@@ -55,6 +59,16 @@ describe('GET /api/series', () => {
     expect(res.status).toBe(200)
     const json = await res.json()
     expect(json.data).toEqual(data)
+  })
+
+  it('returns 500 and logs error when getSeriesForAdmin throws', async () => {
+    const err = new Error('DB error')
+    mockGetSeriesForAdmin.mockRejectedValue(err)
+    const res = await GET()
+    expect(res.status).toBe(500)
+    const json = (await res.json()) as { error: string }
+    expect(json.error).toBe('Failed to get series')
+    expect(mockLoggerError).toHaveBeenCalledWith(err, 'Failed to get series')
   })
 })
 
@@ -145,5 +159,19 @@ describe('POST /api/series', () => {
   it('returns 400 for id with invalid characters', async () => {
     const res = await POST(makeRequest({ id: 'invalid id!' }))
     expect(res.status).toBe(400)
+  })
+
+  it('returns 500 and logs error when db.insert throws', async () => {
+    const selectChain = makeChain([])
+    mockDbSelect.mockReturnValue(selectChain)
+    const err = new Error('DB insert error')
+    mockDbInsert.mockImplementation(() => {
+      throw err
+    })
+    const res = await POST(makeRequest({ id: 'my-series' }))
+    expect(res.status).toBe(500)
+    const json = (await res.json()) as { error: string }
+    expect(json.error).toBe('Failed to create series')
+    expect(mockLoggerError).toHaveBeenCalledWith(err, 'Failed to create series')
   })
 })

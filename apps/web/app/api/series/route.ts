@@ -9,14 +9,20 @@ import {
   upsertSeriesTranslation,
 } from '@web/lib/db/queries/series'
 import { series } from '@web/lib/db/schema'
+import { logger } from '@web/lib/logger'
 
 export async function GET() {
   const session = await auth()
   if (!session)
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-  const data = await getSeriesForAdmin()
-  return NextResponse.json({ data })
+  try {
+    const data = await getSeriesForAdmin()
+    return NextResponse.json({ data })
+  } catch (err) {
+    logger.error(err, 'Failed to get series')
+    return NextResponse.json({ error: 'Failed to get series' }, { status: 500 })
+  }
 }
 
 const createSeriesSchema = z.object({
@@ -54,26 +60,34 @@ export async function POST(request: Request) {
 
   const { id, translations } = parsed.data
 
-  const existing = await db
-    .select({ id: series.id })
-    .from(series)
-    .where(eq(series.id, id))
-    .limit(1)
-  if (existing.length > 0) {
+  try {
+    const existing = await db
+      .select({ id: series.id })
+      .from(series)
+      .where(eq(series.id, id))
+      .limit(1)
+    if (existing.length > 0) {
+      return NextResponse.json(
+        { error: `Series '${id}' already exists` },
+        { status: 409 },
+      )
+    }
+
+    await db.insert(series).values({ id })
+
+    if (translations?.en) {
+      await upsertSeriesTranslation(id, 'en', translations.en)
+    }
+    if (translations?.es) {
+      await upsertSeriesTranslation(id, 'es', translations.es)
+    }
+
+    return NextResponse.json({ id }, { status: 201 })
+  } catch (err) {
+    logger.error(err, 'Failed to create series')
     return NextResponse.json(
-      { error: `Series '${id}' already exists` },
-      { status: 409 },
+      { error: 'Failed to create series' },
+      { status: 500 },
     )
   }
-
-  await db.insert(series).values({ id })
-
-  if (translations?.en) {
-    await upsertSeriesTranslation(id, 'en', translations.en)
-  }
-  if (translations?.es) {
-    await upsertSeriesTranslation(id, 'es', translations.es)
-  }
-
-  return NextResponse.json({ id }, { status: 201 })
 }

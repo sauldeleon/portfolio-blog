@@ -7,7 +7,6 @@ import { useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { Checkbox } from '@sdlgr/checkbox'
 import { Combobox } from '@sdlgr/combobox'
 import { DateTimePicker } from '@sdlgr/date-picker'
 import {
@@ -22,6 +21,7 @@ import { Select } from '@sdlgr/select'
 
 import { useClientTranslation } from '@web/i18n/client'
 import type { CloudinaryImage } from '@web/lib/cloudinary/images'
+import type { UserRecord } from '@web/lib/db/queries/users'
 import type { PostStatus } from '@web/lib/db/schema'
 import { CategoryIconRenderer } from '@web/utils/categoryIcons'
 import { computeReadingTime } from '@web/utils/computeReadingTime'
@@ -61,8 +61,6 @@ import {
   StyledTitleRow,
   StyledWrapper,
 } from './PostEditor.styles'
-
-const DEFAULT_AUTHOR = 'Saúl de León'
 
 type Locale = 'en' | 'es'
 
@@ -106,7 +104,7 @@ export interface PostEditorPost {
   seriesId: string | null
   seriesOrder: number | null
   scheduledAt: Date | null
-  author: string
+  authorId: string | null
 }
 
 export type PostEditorSeries = {
@@ -121,9 +119,11 @@ export interface PostEditorProps {
     translations: PostEditorTranslation[]
   }
   categories: PostEditorCategory[]
-  author: string
+  users: UserRecord[]
   allTags?: string[]
   series?: PostEditorSeries[]
+  currentUserId?: string
+  currentUserRole?: 'admin' | 'editor' | 'user'
 }
 
 const postFormSchema = z.object({
@@ -157,9 +157,11 @@ function translationToState(t: PostEditorTranslation | undefined): LocaleState {
 export function PostEditor({
   post,
   categories,
-  author,
+  users,
   allTags,
   series,
+  currentUserId,
+  currentUserRole,
 }: PostEditorProps) {
   const { t } = useClientTranslation('admin')
   const router = useRouter()
@@ -196,9 +198,9 @@ export function PostEditor({
   const [scheduledAt, setScheduledAt] = useState<Date | null>(
     post?.post.scheduledAt ?? null,
   )
-  const [useDefaultAuthor, setUseDefaultAuthor] = useState(true)
-  const [customAuthor, setCustomAuthor] = useState('')
-  const [editAuthor, setEditAuthor] = useState(post?.post.author ?? '')
+  const [editAuthor, setEditAuthor] = useState(
+    post ? (post.post.authorId ?? '') : (currentUserId ?? users[0]?.id ?? ''),
+  )
 
   const currentLocale = locales[activeLocale]
 
@@ -328,7 +330,7 @@ export function PostEditor({
     if (post) {
       return {
         category,
-        author: editAuthor.trim() || post.post.author,
+        authorId: editAuthor,
         tags: tagsArray,
         status: targetStatus,
         coverImage: coverImageValue,
@@ -341,12 +343,10 @@ export function PostEditor({
       }
     }
 
-    const resolvedAuthor = useDefaultAuthor ? DEFAULT_AUTHOR : customAuthor
-
     return {
       category,
       tags: tagsArray,
-      author: resolvedAuthor || author,
+      authorId: editAuthor,
       status: targetStatus,
       ...(coverImageValue ? { coverImage: coverImageValue } : {}),
       coverImageFit,
@@ -358,11 +358,7 @@ export function PostEditor({
     }
   }
 
-  const previewAuthor = post
-    ? post.post.author
-    : useDefaultAuthor
-      ? DEFAULT_AUTHOR
-      : customAuthor || author
+  const previewAuthor = users.find((u) => u.id === editAuthor)?.name ?? ''
 
   async function handleSave(targetStatus: PostStatus = status) {
     setSaving(true)
@@ -685,43 +681,31 @@ export function PostEditor({
                 />
               </FieldGroup>
 
-              {post ? (
-                <FieldGroup>
-                  <FieldLabel htmlFor="meta-author">
-                    {t('postEditor.fields.author')}
-                  </FieldLabel>
+              <FieldGroup>
+                <FieldLabel htmlFor="meta-author">
+                  {t('postEditor.fields.author')}
+                </FieldLabel>
+                {currentUserRole && currentUserRole !== 'admin' ? (
                   <Input
                     id="meta-author"
                     type="text"
+                    value={users.find((u) => u.id === editAuthor)?.name ?? ''}
+                    readOnly
+                    data-testid="author-input"
+                  />
+                ) : (
+                  <Select
+                    id="meta-author"
                     value={editAuthor}
-                    onChange={(e) => setEditAuthor(e.target.value)}
-                    placeholder={t('postEditor.fields.authorPlaceholder')}
+                    onChange={(value) => setEditAuthor(value)}
+                    options={users.map((u) => ({
+                      value: u.id,
+                      label: u.name,
+                    }))}
                     data-testid="author-input"
                   />
-                </FieldGroup>
-              ) : (
-                <FieldGroup>
-                  <FieldLabel htmlFor="meta-author">
-                    {t('postEditor.fields.author')}
-                  </FieldLabel>
-                  <Input
-                    id="meta-author"
-                    type="text"
-                    value={useDefaultAuthor ? DEFAULT_AUTHOR : customAuthor}
-                    onChange={(e) => setCustomAuthor(e.target.value)}
-                    placeholder={t('postEditor.fields.authorPlaceholder')}
-                    disabled={useDefaultAuthor}
-                    data-testid="author-input"
-                  />
-                  <Checkbox
-                    id="author-use-default"
-                    label={t('postEditor.fields.authorUseDefault')}
-                    checked={useDefaultAuthor}
-                    onChange={setUseDefaultAuthor}
-                    data-testid="author-use-default-checkbox"
-                  />
-                </FieldGroup>
-              )}
+                )}
+              </FieldGroup>
             </StyledMetaGrid>
           </StyledMetadataSection>
 

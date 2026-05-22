@@ -2,7 +2,7 @@
   "login": {
     "title": "Admin Login",
     "subtitle": "Enter your credentials to continue",
-    "username": "Username",
+    "email": "Email",
     "password": "Password",
     "showPassword": "show",
     "hidePassword": "hide",
@@ -16,6 +16,7 @@
     "categories": "Categories",
     "series": "Series",
     "images": "Images",
+    "users": "Users",
     "logout": "Logout"
   },
   "refresh": "Refresh",
@@ -241,6 +242,56 @@
       "esTitlePlaceholder": "Título de la serie",
       "create": "Create series",
       "error": "Something went wrong, please try again"
+    }
+  },
+  "users": {
+    "title": "Users",
+    "newUser": "New user",
+    "searchPlaceholder": "Search users…",
+    "empty": "No users found",
+    "table": {
+      "email": "Email",
+      "name": "Name",
+      "role": "Role",
+      "createdAt": "Created",
+      "actions": "Actions",
+      "updatedAt": "Updated"
+    },
+    "roles": {
+      "admin": "Admin",
+      "editor": "Editor",
+      "user": "User"
+    },
+    "delete": "Delete",
+    "deleteConfirm": "Delete this user? This cannot be undone.",
+    "deleteLastAdminError": "Cannot delete the last admin user.",
+    "form": {
+      "back": "← Back to users",
+      "cancel": "Cancel",
+      "createTitle": "New User",
+      "email": "Email",
+      "emailPlaceholder": "admin@example.com",
+      "name": "Display name",
+      "namePlaceholder": "Display name",
+      "password": "Password",
+      "passwordPlaceholder": "Password",
+      "role": "Role",
+      "create": "Create user",
+      "editTitle": "Edit User",
+      "save": "Save changes",
+      "edit": "Edit",
+      "passwordOptionalPlaceholder": "Leave blank to keep current",
+      "error": "Something went wrong, please try again"
+    },
+    "changeRole": "Change role",
+    "resetPassword": "Reset password",
+    "resetPasswordModal": {
+      "title": "Reset Password",
+      "label": "New password",
+      "placeholder": "New password",
+      "save": "Save",
+      "saving": "Saving…",
+      "error": "Reset failed, please try again"
     }
   }
 }

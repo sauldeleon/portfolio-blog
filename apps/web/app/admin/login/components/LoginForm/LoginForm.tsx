@@ -28,12 +28,11 @@ export function LoginForm() {
     setError(null)
     setLoading(true)
     const form = e.currentTarget
-    const username = (form.elements.namedItem('username') as HTMLInputElement)
-      .value
+    const email = (form.elements.namedItem('email') as HTMLInputElement).value
     const password = (form.elements.namedItem('password') as HTMLInputElement)
       .value
     const result = await signIn('credentials', {
-      username,
+      email,
       password,
       redirect: false,
     })
@@ -50,14 +49,14 @@ export function LoginForm() {
   return (
     <StyledForm onSubmit={handleSubmit} data-testid="login-form">
       <StyledField>
-        <StyledLabel htmlFor="username">{t('login.username')}</StyledLabel>
+        <StyledLabel htmlFor="email">{t('login.email')}</StyledLabel>
         <StyledInputRow>
           <StyledInput
-            id="username"
-            name="username"
-            type="text"
-            autoComplete="username"
-            placeholder="admin"
+            id="email"
+            name="email"
+            type="email"
+            autoComplete="email"
+            placeholder="admin@example.com"
             required
           />
         </StyledInputRow>

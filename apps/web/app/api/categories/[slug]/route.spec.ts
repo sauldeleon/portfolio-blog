@@ -6,6 +6,7 @@ const mockGetCategoryBySlug = jest.fn()
 const mockUpsertCategoryTranslation = jest.fn()
 const mockGetPublishedPostCountByCategory = jest.fn()
 const mockDeleteCategory = jest.fn()
+const mockLoggerError = jest.fn()
 
 jest.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
 jest.mock('@web/lib/db/queries/categories', () => ({
@@ -16,6 +17,7 @@ jest.mock('@web/lib/db/queries/categories', () => ({
 jest.mock('@web/lib/db/queries/posts', () => ({
   getPublishedPostCountByCategory: mockGetPublishedPostCountByCategory,
 }))
+jest.mock('@web/lib/logger', () => ({ logger: { error: mockLoggerError } }))
 
 const { DELETE, PUT } = require('./route') as typeof import('./route')
 
@@ -214,6 +216,24 @@ describe('PUT /api/categories/[slug]', () => {
       expect.objectContaining({ description: 'Desc' }),
     )
   })
+
+  it('returns 500 and logs error when upsertCategoryTranslation throws', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockGetCategoryBySlug.mockResolvedValue(mockCategory)
+    const err = new Error('DB error')
+    mockUpsertCategoryTranslation.mockRejectedValue(err)
+    const response = await PUT(
+      makePutRequest({ locale: 'en', name: 'Engineering' }),
+      makeParams('engineering'),
+    )
+    expect(response.status).toBe(500)
+    const body = (await response.json()) as { error: string }
+    expect(body.error).toBe('Failed to update category')
+    expect(mockLoggerError).toHaveBeenCalledWith(
+      err,
+      'Failed to update category',
+    )
+  })
 })
 
 describe('DELETE /api/categories/[slug]', () => {
@@ -258,6 +278,26 @@ describe('DELETE /api/categories/[slug]', () => {
     )
     expect(response.status).toBe(204)
     expect(mockDeleteCategory).toHaveBeenCalledWith('engineering')
+  })
+
+  it('returns 500 and logs error when deleteCategory throws', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockGetPublishedPostCountByCategory.mockResolvedValue(0)
+    const err = new Error('DB error')
+    mockDeleteCategory.mockRejectedValue(err)
+    const response = await DELETE(
+      new Request('http://localhost/api/categories/engineering', {
+        method: 'DELETE',
+      }),
+      makeParams('engineering'),
+    )
+    expect(response.status).toBe(500)
+    const body = (await response.json()) as { error: string }
+    expect(body.error).toBe('Failed to delete category')
+    expect(mockLoggerError).toHaveBeenCalledWith(
+      err,
+      'Failed to delete category',
+    )
   })
 })
 

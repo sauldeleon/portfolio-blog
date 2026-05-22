@@ -1,9 +1,11 @@
-const USERNAME = Cypress.env('ADMIN_USERNAME') ?? 'admin'
-const PASSWORD = Cypress.env('ADMIN_PASSWORD') ?? 'admin'
+const E2E_EMAIL = 'e2e@e2e.com'
 
-export function loginViaUi(username = USERNAME, password = PASSWORD) {
+export function loginViaUi(
+  email = E2E_EMAIL,
+  password: string = Cypress.env('E2E_PASSWORD'),
+) {
   cy.visit('/admin/login')
-  cy.get('#username').type(username)
+  cy.get('#email').type(email)
   cy.get('#password').type(password, { log: false })
   cy.get('[data-testid="login-form"]').submit()
 }

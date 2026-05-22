@@ -24,19 +24,8 @@ function getCommitHash(): string {
 
 function getCypressEnv() {
   const env: Record<string, string> = {}
-  const username =
-    process.env.CYPRESS_ADMIN_USERNAME ?? process.env.ADMIN_USERNAME
-  const password =
-    process.env.CYPRESS_ADMIN_PASSWORD ?? process.env.ADMIN_PASSWORD
-
-  if (username) {
-    env.ADMIN_USERNAME = username
-  }
-
-  if (password) {
-    env.ADMIN_PASSWORD = password
-  }
-
+  const password = process.env.CYPRESS_E2E_PASSWORD ?? process.env.E2E_PASSWORD
+  if (password) env.E2E_PASSWORD = password
   return env
 }
 

@@ -39,7 +39,7 @@ const mockPost = {
   id: '01ABC',
   coverImage: 'blog/cover',
   category: 'Tech',
-  author: 'Jane Doe',
+  authorId: 'user-1',
 }
 
 const mockTranslations = [
@@ -78,6 +78,7 @@ describe('blog/preview/[token] - PreviewPage', () => {
     mockGetPostByPreviewToken.mockResolvedValue({
       post: mockPost,
       translations: mockTranslations,
+      authorName: 'Jane Doe',
     })
     mockHeaders.mockResolvedValue({ get: () => null })
     const { default: PreviewPage } = require('./page.next')
@@ -95,6 +96,7 @@ describe('blog/preview/[token] - PreviewPage', () => {
     mockGetPostByPreviewToken.mockResolvedValue({
       post: mockPost,
       translations: [],
+      authorName: '',
     })
     mockHeaders.mockResolvedValue(makeHeadersList('en'))
     const { default: PreviewPage } = require('./page.next')
@@ -106,6 +108,7 @@ describe('blog/preview/[token] - PreviewPage', () => {
     mockGetPostByPreviewToken.mockResolvedValue({
       post: mockPost,
       translations: mockTranslations,
+      authorName: 'Jane Doe',
     })
     mockHeaders.mockResolvedValue(makeHeadersList('en'))
     const { default: PreviewPage } = require('./page.next')
@@ -122,6 +125,7 @@ describe('blog/preview/[token] - PreviewPage', () => {
     mockGetPostByPreviewToken.mockResolvedValue({
       post: mockPost,
       translations: mockTranslations,
+      authorName: 'Jane Doe',
     })
     mockHeaders.mockResolvedValue(makeHeadersList('es-ES,es;q=0.9'))
     const { default: PreviewPage } = require('./page.next')
@@ -139,6 +143,7 @@ describe('blog/preview/[token] - PreviewPage', () => {
     mockGetPostByPreviewToken.mockResolvedValue({
       post: mockPost,
       translations: mockTranslations,
+      authorName: 'Jane Doe',
     })
     mockHeaders.mockResolvedValue(makeHeadersList('fr-FR,fr;q=0.9'))
     const { default: PreviewPage } = require('./page.next')
@@ -159,6 +164,7 @@ describe('blog/preview/[token] - PreviewPage', () => {
     mockGetPostByPreviewToken.mockResolvedValue({
       post: mockPost,
       translations: onlyFrTranslation,
+      authorName: 'Jane Doe',
     })
     mockHeaders.mockResolvedValue(makeHeadersList('de'))
     const { default: PreviewPage } = require('./page.next')

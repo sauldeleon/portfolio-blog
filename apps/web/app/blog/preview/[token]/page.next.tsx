@@ -16,7 +16,7 @@ export default async function PreviewPage({ params }: RouteProps) {
   const result = await getPostByPreviewToken(token)
   if (!result) return notFound()
 
-  const { post, translations } = result
+  const { post, translations, authorName } = result
 
   const headersList = await headers()
   const acceptLang = headersList.get('accept-language') ?? ''
@@ -36,7 +36,7 @@ export default async function PreviewPage({ params }: RouteProps) {
         title={translation.title}
         coverImagePublicId={post.coverImage}
         category={post.category}
-        author={post.author}
+        author={authorName}
         publishedAt={null}
         readingTime={computeReadingTime(translation.content)}
         lng={lng}

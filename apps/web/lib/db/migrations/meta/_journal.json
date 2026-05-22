@@ -36,6 +36,34 @@
       "when": 1747612800000,
       "tag": "0004_post_number",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1779464165124,
+      "tag": "0006_dark_saracen",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1748000000000,
+      "tag": "0007_users_email",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1748100000000,
+      "tag": "0008_posts_author_fk",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1748200000000,
+      "tag": "0009_users_name_required",
+      "breakpoints": true
     }
   ]
 }

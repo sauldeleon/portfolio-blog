@@ -7,11 +7,15 @@ const mockAuth = jest.fn()
 const mockUpsertSeriesTranslation = jest.fn()
 const mockDbSelect = jest.fn()
 const mockDbDelete = jest.fn()
+const mockLoggerError = jest.fn()
 
 jest.mock('@web/lib/auth/config', () => ({ auth: () => mockAuth() }))
 jest.mock('@web/lib/db/queries/series', () => ({
   upsertSeriesTranslation: (...args: unknown[]) =>
     mockUpsertSeriesTranslation(...args),
+}))
+jest.mock('@web/lib/logger', () => ({
+  logger: { error: (...args: unknown[]) => mockLoggerError(...args) },
 }))
 
 function makeChain(resolved: unknown) {
@@ -111,6 +115,19 @@ describe('PUT /api/series/[id]', () => {
     const json = await res.json()
     expect(json).toEqual({ id: 'my-series', locale: 'en', title: 'My Series' })
   })
+
+  it('returns 500 and logs error when upsertSeriesTranslation throws', async () => {
+    const err = new Error('DB error')
+    mockUpsertSeriesTranslation.mockRejectedValue(err)
+    const res = await PUT(
+      makeRequest({ locale: 'en', title: 'My Series' }),
+      makeParams('my-series'),
+    )
+    expect(res.status).toBe(500)
+    const json = (await res.json()) as { error: string }
+    expect(json.error).toBe('Failed to update series')
+    expect(mockLoggerError).toHaveBeenCalledWith(err, 'Failed to update series')
+  })
 })
 
 describe('DELETE /api/series/[id]', () => {
@@ -140,5 +157,17 @@ describe('DELETE /api/series/[id]', () => {
     expect(mockDbDelete).toHaveBeenCalledTimes(2)
     const json = await res.json()
     expect(json).toEqual({ id: 'my-series' })
+  })
+
+  it('returns 500 and logs error when db.select throws', async () => {
+    const err = new Error('DB error')
+    mockDbSelect.mockImplementation(() => {
+      throw err
+    })
+    const res = await DELETE(deleteReq, makeParams('my-series'))
+    expect(res.status).toBe(500)
+    const json = (await res.json()) as { error: string }
+    expect(json.error).toBe('Failed to delete series')
+    expect(mockLoggerError).toHaveBeenCalledWith(err, 'Failed to delete series')
   })
 })

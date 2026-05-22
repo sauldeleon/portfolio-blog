@@ -15,6 +15,7 @@ import {
   seriesOrderExistsForSeries,
   upsertSeriesTranslation,
 } from '@web/lib/db/queries/series'
+import { logger } from '@web/lib/logger'
 import { computeReadingTime } from '@web/utils/computeReadingTime'
 
 const CACHE_HEADERS = {
@@ -37,8 +38,16 @@ export async function GET(request: Request) {
     const session = await auth()
     if (!session)
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    const posts = await getAllPosts()
-    return NextResponse.json({ data: posts })
+    try {
+      const posts = await getAllPosts()
+      return NextResponse.json({ data: posts })
+    } catch (err) {
+      logger.error(err, 'Failed to get all posts')
+      return NextResponse.json(
+        { error: 'Failed to get all posts' },
+        { status: 500 },
+      )
+    }
   }
 
   const parsed = getPostsQuerySchema.safeParse(Object.fromEntries(searchParams))
@@ -47,34 +56,42 @@ export async function GET(request: Request) {
   }
 
   const { lng, page, limit, category, tag, q } = parsed.data
-  const { data, total } = await getPublishedPostsPaginated({
-    locale: lng,
-    page,
-    limit,
-    category,
-    tag,
-    q,
-  })
 
-  const posts = data.map(({ content, status: _s, createdAt: _c, ...post }) => ({
-    ...post,
-    publishedAt: post.publishedAt?.toISOString() ?? null,
-    updatedAt: post.updatedAt.toISOString(),
-    readingTime: computeReadingTime(content),
-  }))
+  try {
+    const { data, total } = await getPublishedPostsPaginated({
+      locale: lng,
+      page,
+      limit,
+      category,
+      tag,
+      q,
+    })
 
-  return NextResponse.json(
-    {
-      data: posts,
-      pagination: {
-        page,
-        limit,
-        total,
-        totalPages: Math.ceil(total / limit),
+    const posts = data.map(
+      ({ content, status: _s, createdAt: _c, ...post }) => ({
+        ...post,
+        publishedAt: post.publishedAt?.toISOString() ?? null,
+        updatedAt: post.updatedAt.toISOString(),
+        readingTime: computeReadingTime(content),
+      }),
+    )
+
+    return NextResponse.json(
+      {
+        data: posts,
+        pagination: {
+          page,
+          limit,
+          total,
+          totalPages: Math.ceil(total / limit),
+        },
       },
-    },
-    { headers: CACHE_HEADERS },
-  )
+      { headers: CACHE_HEADERS },
+    )
+  } catch (err) {
+    logger.error(err, 'Failed to get posts')
+    return NextResponse.json({ error: 'Failed to get posts' }, { status: 500 })
+  }
 }
 
 const translationSchema = z.object({
@@ -87,7 +104,7 @@ const translationSchema = z.object({
 const createPostSchema = z.object({
   category: z.string().min(1),
   tags: z.array(z.string()).default([]),
-  author: z.string().min(1),
+  authorId: z.string().min(1),
   status: z.enum(['draft', 'published', 'archived']).default('draft'),
   coverImage: z.string().optional(),
   coverImageFit: z.enum(['cover', 'contain']).optional(),
@@ -153,55 +170,63 @@ export async function POST(request: Request) {
     }
   }
 
-  if (data.seriesId) {
-    await ensureSeries(data.seriesId)
-  }
-
-  if (data.seriesId && data.seriesOrder != null) {
-    const orderTaken = await seriesOrderExistsForSeries(
-      data.seriesId,
-      data.seriesOrder,
-    )
-    if (orderTaken) {
-      return NextResponse.json(
-        {
-          error: `Order ${data.seriesOrder} is already taken in this series`,
-        },
-        { status: 422 },
-      )
+  try {
+    if (data.seriesId) {
+      await ensureSeries(data.seriesId)
     }
-  }
 
-  const post = await createPost(
-    {
-      category: data.category,
-      tags: data.tags.map((t) => t.toUpperCase()),
-      author: data.author,
-      status: data.status,
-      coverImage: data.coverImage ?? null,
-      coverImageFit: data.coverImageFit ?? null,
-      seriesId: data.seriesId ?? null,
-      seriesOrder: data.seriesOrder ?? null,
-      scheduledAt: data.scheduledAt ? new Date(data.scheduledAt) : null,
-      previewToken: crypto.randomUUID(),
-    },
-    {
-      ...(data.translations.en ? { en: data.translations.en } : {}),
-      ...(data.translations.es ? { es: data.translations.es } : {}),
-    },
-  )
-
-  if (data.seriesId && data.seriesTitles) {
-    for (const [locale, title] of Object.entries(data.seriesTitles) as Array<
-      ['en' | 'es', string | undefined]
-    >) {
-      /* istanbul ignore next */
-      if (title) {
-        await upsertSeriesTranslation(data.seriesId, locale, title)
+    if (data.seriesId && data.seriesOrder != null) {
+      const orderTaken = await seriesOrderExistsForSeries(
+        data.seriesId,
+        data.seriesOrder,
+      )
+      if (orderTaken) {
+        return NextResponse.json(
+          {
+            error: `Order ${data.seriesOrder} is already taken in this series`,
+          },
+          { status: 422 },
+        )
       }
     }
-  }
 
-  revalidateTag('posts', 'default')
-  return NextResponse.json(post, { status: 201 })
+    const post = await createPost(
+      {
+        category: data.category,
+        tags: data.tags.map((t) => t.toUpperCase()),
+        authorId: data.authorId,
+        status: data.status,
+        coverImage: data.coverImage ?? null,
+        coverImageFit: data.coverImageFit ?? null,
+        seriesId: data.seriesId ?? null,
+        seriesOrder: data.seriesOrder ?? null,
+        scheduledAt: data.scheduledAt ? new Date(data.scheduledAt) : null,
+        previewToken: crypto.randomUUID(),
+      },
+      {
+        ...(data.translations.en ? { en: data.translations.en } : {}),
+        ...(data.translations.es ? { es: data.translations.es } : {}),
+      },
+    )
+
+    if (data.seriesId && data.seriesTitles) {
+      for (const [locale, title] of Object.entries(data.seriesTitles) as Array<
+        ['en' | 'es', string | undefined]
+      >) {
+        /* istanbul ignore next */
+        if (title) {
+          await upsertSeriesTranslation(data.seriesId, locale, title)
+        }
+      }
+    }
+
+    revalidateTag('posts', 'default')
+    return NextResponse.json(post, { status: 201 })
+  } catch (err) {
+    logger.error(err, 'Failed to create post')
+    return NextResponse.json(
+      { error: 'Failed to create post' },
+      { status: 500 },
+    )
+  }
 }

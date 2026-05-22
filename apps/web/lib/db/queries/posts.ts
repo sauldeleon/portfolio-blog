@@ -21,6 +21,7 @@ import {
   postTranslations,
   posts,
   seriesTranslations,
+  users,
 } from '../schema'
 
 export type PublicPost = {
@@ -81,7 +82,7 @@ const publicFields = {
   publishedAt: posts.publishedAt,
   createdAt: posts.createdAt,
   updatedAt: posts.updatedAt,
-  author: posts.author,
+  author: sql<string>`COALESCE(${users.name}, ${users.email}, '')`,
   title: postTranslations.title,
   slug: postTranslations.slug,
   excerpt: postTranslations.excerpt,
@@ -110,6 +111,7 @@ export async function getPublishedPosts(locale: Locale): Promise<PublicPost[]> {
         eq(seriesTranslations.locale, locale),
       ),
     )
+    .leftJoin(users, eq(users.id, posts.authorId))
     .where(and(eq(posts.status, 'published'), isNull(posts.deletedAt)))
     .orderBy(desc(posts.publishedAt))
 }
@@ -135,6 +137,7 @@ export async function getPostById(
         eq(seriesTranslations.locale, locale),
       ),
     )
+    .leftJoin(users, eq(users.id, posts.authorId))
     .where(and(eq(posts.id, id), isNull(posts.deletedAt)))
 
   return rows[0] ?? null
@@ -161,6 +164,7 @@ export async function getPostByNumber(
         eq(seriesTranslations.locale, locale),
       ),
     )
+    .leftJoin(users, eq(users.id, posts.authorId))
     .where(and(eq(posts.postNumber, postNumber), isNull(posts.deletedAt)))
 
   return rows[0] ?? null
@@ -187,6 +191,7 @@ export async function getPostBySlug(
         eq(seriesTranslations.locale, locale),
       ),
     )
+    .leftJoin(users, eq(users.id, posts.authorId))
     .where(
       and(
         eq(postTranslations.slug, slug),
@@ -232,6 +237,7 @@ export async function getRelatedPosts(
         eq(seriesTranslations.locale, locale),
       ),
     )
+    .leftJoin(users, eq(users.id, posts.authorId))
     .where(
       and(
         eq(posts.category, current.category),
@@ -300,6 +306,7 @@ export async function getPostsBySeries(
         eq(seriesTranslations.locale, locale),
       ),
     )
+    .leftJoin(users, eq(users.id, posts.authorId))
     .where(
       and(
         eq(posts.seriesId, seriesId),
@@ -313,6 +320,7 @@ export async function getPostsBySeries(
 export type PostWithTranslations = {
   post: typeof posts.$inferSelect
   translations: Array<typeof postTranslations.$inferSelect>
+  authorName: string
 }
 
 export async function getPostByPreviewToken(
@@ -325,12 +333,22 @@ export async function getPostByPreviewToken(
 
   if (!postRows[0]) return null
 
-  const translationRows = await db
-    .select()
-    .from(postTranslations)
-    .where(eq(postTranslations.postId, postRows[0].id))
+  const [translationRows, authorRows] = await Promise.all([
+    db
+      .select()
+      .from(postTranslations)
+      .where(eq(postTranslations.postId, postRows[0].id)),
+    postRows[0].authorId
+      ? db
+          .select({ name: users.name })
+          .from(users)
+          .where(eq(users.id, postRows[0].authorId))
+      : Promise.resolve([]),
+  ])
 
-  return { post: postRows[0], translations: translationRows }
+  const authorName = authorRows[0]?.name ?? ''
+
+  return { post: postRows[0], translations: translationRows, authorName }
 }
 
 export async function getAllPosts(): Promise<AdminPost[]> {
@@ -526,7 +544,7 @@ export async function getPostForEdit(
   if (!postRows[0]) return null
 
   const translationRows = await getPostTranslations(id)
-  return { post: postRows[0], translations: translationRows }
+  return { post: postRows[0], translations: translationRows, authorName: '' }
 }
 
 export type PaginatedPostsParams = {
@@ -589,6 +607,7 @@ export async function getPublishedPostsPaginated(
       .from(posts)
       .innerJoin(postTranslations, joinCondition)
       .leftJoin(seriesTranslations, seriesJoinCondition)
+      .leftJoin(users, eq(users.id, posts.authorId))
       .where(whereConditions)
       .orderBy(desc(posts.publishedAt))
       .limit(limit)
@@ -677,6 +696,7 @@ export async function getLatestPublishedPost(
         eq(seriesTranslations.locale, locale),
       ),
     )
+    .leftJoin(users, eq(users.id, posts.authorId))
     .where(and(eq(posts.status, 'published'), isNull(posts.deletedAt)))
     .orderBy(desc(posts.publishedAt))
     .limit(1)
