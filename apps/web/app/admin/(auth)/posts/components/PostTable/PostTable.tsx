@@ -9,7 +9,11 @@ import { ConfirmDeleteModal } from '@web/app/admin/(auth)/components/ConfirmDele
 import { useClientTranslation } from '@web/i18n/client'
 import type { AdminPost } from '@web/lib/db/queries/posts'
 
-import { STATUS_FILTERS, type StatusFilter } from './PostTable.constants'
+import {
+  PAGE_LIMIT,
+  STATUS_FILTERS,
+  type StatusFilter,
+} from './PostTable.constants'
 import {
   StyledActions,
   StyledArchiveButton,
@@ -33,6 +37,9 @@ import {
   StyledLangChips,
   StyledLeftGroup,
   StyledNewPostButton,
+  StyledPageButton,
+  StyledPageInfo,
+  StyledPagination,
   StyledPublishButton,
   StyledRefreshButton,
   StyledSearchInput,
@@ -101,6 +108,7 @@ export function PostTable({ posts }: PostTableProps) {
   const [hardDeleteTargetId, setHardDeleteTargetId] = useState<string | null>(
     null,
   )
+  const [page, setPage] = useState(1)
 
   const QUERY_KEY = ['admin-posts'] as const
 
@@ -130,6 +138,13 @@ export function PostTable({ posts }: PostTableProps) {
     const matchesSearch = title.toLowerCase().includes(searchLower)
     return matchesStatus && matchesSearch
   })
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_LIMIT))
+  const effectivePage = Math.min(page, totalPages)
+  const paginated = filtered.slice(
+    (effectivePage - 1) * PAGE_LIMIT,
+    effectivePage * PAGE_LIMIT,
+  )
 
   function handleArchive(e: React.MouseEvent, id: string) {
     e.stopPropagation()
@@ -211,7 +226,7 @@ export function PostTable({ posts }: PostTableProps) {
 
   const canPublish = (post: AdminPost) => !!(post.titleEn && post.titleEs)
 
-  const allVisibleIds = filtered.map((p) => p.id)
+  const allVisibleIds = paginated.map((p) => p.id)
   const allSelected =
     allVisibleIds.length > 0 && allVisibleIds.every((id) => selectedIds.has(id))
   const selectedPosts = filtered.filter((p) => selectedIds.has(p.id))
@@ -353,7 +368,10 @@ export function PostTable({ posts }: PostTableProps) {
             type="search"
             placeholder={t('posts.searchPlaceholder')}
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => {
+              setSearch(e.target.value)
+              setPage(1)
+            }}
             data-testid="search-input"
           />
           <StyledFilterTabs data-testid="filter-tabs">
@@ -364,6 +382,7 @@ export function PostTable({ posts }: PostTableProps) {
                 onClick={() => {
                   setFilter(s)
                   setSelectedIds(new Set())
+                  setPage(1)
                   const params = new URLSearchParams(searchParams.toString())
                   if (s === 'all') {
                     params.delete('filter')
@@ -478,7 +497,7 @@ export function PostTable({ posts }: PostTableProps) {
               </StyledTd>
             </tr>
           )}
-          {filtered.map((post) => (
+          {paginated.map((post) => (
             <StyledTr key={post.id} data-testid="post-row">
               <StyledCheckboxTd>
                 <input
@@ -606,6 +625,31 @@ export function PostTable({ posts }: PostTableProps) {
           ))}
         </StyledTbody>
       </StyledTable>
+
+      {totalPages > 1 && (
+        <StyledPagination data-testid="pagination">
+          <StyledPageButton
+            onClick={() => setPage(effectivePage - 1)}
+            disabled={effectivePage === 1}
+            data-testid="pagination-prev"
+          >
+            {t('posts.pagination.prev')}
+          </StyledPageButton>
+          <StyledPageInfo data-testid="pagination-info">
+            {t('posts.pagination.pageOf', {
+              page: effectivePage,
+              total: totalPages,
+            })}
+          </StyledPageInfo>
+          <StyledPageButton
+            onClick={() => setPage(effectivePage + 1)}
+            disabled={effectivePage === totalPages}
+            data-testid="pagination-next"
+          >
+            {t('posts.pagination.next')}
+          </StyledPageButton>
+        </StyledPagination>
+      )}
 
       <ConfirmDeleteModal
         isOpen={archiveTargetId !== null}

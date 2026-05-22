@@ -298,3 +298,37 @@ export const StyledBulkDeleteButton = styled(Button).attrs({
   text-transform: uppercase;
   letter-spacing: 0.1em;
 `
+
+export const StyledPagination = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 1.5rem 0 0.5rem;
+  border-top: 1px solid rgba(251, 251, 251, 0.06);
+  margin-top: 0.5rem;
+`
+
+export const StyledPageButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'xs',
+})`
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: ${({ theme }) => theme.colors.white};
+
+  &:disabled {
+    opacity: 0.2;
+    cursor: not-allowed;
+  }
+`
+
+export const StyledPageInfo = styled.span`
+  font-size: 0.7rem;
+  color: ${({ theme }) => theme.colors.white};
+  opacity: 0.5;
+  letter-spacing: 0.06em;
+  min-width: 6rem;
+  text-align: center;
+`

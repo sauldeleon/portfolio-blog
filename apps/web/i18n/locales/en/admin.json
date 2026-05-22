@@ -55,7 +55,12 @@
     "bulkArchiveConfirm": "Archive selected posts? Only draft posts will be archived. You can restore them later.",
     "bulkUnarchiveConfirm": "Unarchive selected posts? They will be restored as drafts.",
     "bulkDeleteConfirm": "Permanently delete selected posts? This cannot be undone.",
-    "empty": "No posts found"
+    "empty": "No posts found",
+    "pagination": {
+      "prev": "← Prev",
+      "next": "Next →",
+      "pageOf": "{{page}} of {{total}}"
+    }
   },
   "confirmDelete": {
     "confirm": "Confirm",
