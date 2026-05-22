@@ -229,6 +229,7 @@ exports[`PostCard matches snapshot 1`] = `
           </li>
         </ul>
         <a
+          aria-label="Read more Test Post Title"
           class="c11"
           href="/en/blog/1/test-post"
         >
@@ -496,6 +497,7 @@ exports[`PostCard matches snapshot with series badge 1`] = `
           </li>
         </ul>
         <a
+          aria-label="Read more Test Post Title"
           class="c12"
           href="/en/blog/1/test-post"
         >

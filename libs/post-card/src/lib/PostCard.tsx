@@ -101,7 +101,9 @@ export function PostCard({
             <StyledMoreTags>+{extraTagCount}</StyledMoreTags>
           )}
         </StyledTagList>
-        <StyledReadMore href={href}>{readMoreLabel}</StyledReadMore>
+        <StyledReadMore href={href} aria-label={`${readMoreLabel} ${title}`}>
+          {readMoreLabel}
+        </StyledReadMore>
       </StyledBody>
     </StyledCard>
   )
