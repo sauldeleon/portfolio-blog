@@ -25,13 +25,24 @@ export const StyledContent = styled.div`
   }
 `
 
-export const StyledCategory = styled.span`
-  display: inline-block;
-  color: ${({ theme }) => theme.colors.green};
+export const StyledCategoryBadge = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  margin-bottom: 0.5rem;
+  letter-spacing: 0.08em;
+  color: ${({ theme }) => theme.colors.green};
+  border: 1px solid ${({ theme }) => theme.colors.green};
+  border-radius: 2px;
+  padding: 0.2rem 0.6rem;
+  opacity: 0.75;
+
+  svg {
+    width: 0.75rem;
+    height: 0.75rem;
+    flex-shrink: 0;
+  }
 `
 
 export const StyledBadgeRow = styled.div`
@@ -39,7 +50,7 @@ export const StyledBadgeRow = styled.div`
   flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
-  margin: 0.5rem 0 1rem;
+  margin: 0 0 1rem;
 `
 
 export const StyledSeriesBadge = styled.div`

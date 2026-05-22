@@ -56,6 +56,7 @@ describe('Admin posts — publish lifecycle', () => {
 
     // Capture EN blog post URL
     cy.get('[data-testid="locale-tab-en"]').click()
+    cy.get('[data-testid="preview-tab-card"]').click()
     cy.contains('a', 'Read more')
       .should('have.attr', 'href')
       .and('not.eq', '#')

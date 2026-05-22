@@ -4,17 +4,6 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { PostCardPreview } from './PostCardPreview'
 
-jest.mock('@web/i18n/client', () => ({
-  useClientTranslation: jest.fn().mockReturnValue({
-    t: (key: string) => {
-      const map: Record<string, string> = {
-        'postEditor.cardPreview': 'Card preview',
-      }
-      return map[key] ?? key
-    },
-  }),
-}))
-
 jest.mock('@sdlgr/post-card', () => ({
   PostCard: (props: Record<string, unknown>) => (
     <div
@@ -65,11 +54,6 @@ describe('PostCardPreview', () => {
   it('renders the preview wrapper', () => {
     renderApp(<PostCardPreview {...defaultProps} />)
     expect(screen.getByTestId('post-card-preview')).toBeInTheDocument()
-  })
-
-  it('shows the card preview label', () => {
-    renderApp(<PostCardPreview {...defaultProps} />)
-    expect(screen.getByText('Card preview')).toBeInTheDocument()
   })
 
   it('passes title, slug, excerpt, author, category, lng to PostCard', () => {

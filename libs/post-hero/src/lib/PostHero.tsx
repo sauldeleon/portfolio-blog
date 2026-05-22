@@ -1,10 +1,11 @@
 'use client'
 
 import { CldImage } from 'next-cloudinary'
+import { type ReactNode } from 'react'
 
 import {
   StyledBadgeRow,
-  StyledCategory,
+  StyledCategoryBadge,
   StyledCoverWrapper,
   StyledHeader,
   StyledHeroContent,
@@ -32,6 +33,7 @@ export interface PostHeroProps {
   shareLabel?: string
   copyLinkLabel?: string
   copiedLabel?: string
+  categoryIcon?: ReactNode
 }
 
 export function PostHero({
@@ -49,6 +51,7 @@ export function PostHero({
   shareLabel,
   copyLinkLabel,
   copiedLabel,
+  categoryIcon,
 }: PostHeroProps) {
   return (
     <StyledHeader>
@@ -64,22 +67,23 @@ export function PostHero({
         </StyledCoverWrapper>
       )}
       <StyledHeroContent>
-        <StyledCategory>{category}</StyledCategory>
-        {(seriesTitle || tags.length > 0) && (
-          <StyledBadgeRow>
-            {seriesTitle && (
-              <StyledSeriesBadge data-testid="series-badge">
-                <span>{seriesTitle}</span>
-                {seriesOrder != null && <span>#{seriesOrder}</span>}
-              </StyledSeriesBadge>
-            )}
-            {tags.map((tag) => (
-              <StyledTag key={tag} data-testid="tag">
-                {tag}
-              </StyledTag>
-            ))}
-          </StyledBadgeRow>
-        )}
+        <StyledBadgeRow>
+          <StyledCategoryBadge data-testid="category-badge">
+            {categoryIcon}
+            {category}
+          </StyledCategoryBadge>
+          {seriesTitle && (
+            <StyledSeriesBadge data-testid="series-badge">
+              <span>{seriesTitle}</span>
+              {seriesOrder != null && <span>#{seriesOrder}</span>}
+            </StyledSeriesBadge>
+          )}
+          {tags.map((tag) => (
+            <StyledTag key={tag} data-testid="tag">
+              {tag}
+            </StyledTag>
+          ))}
+        </StyledBadgeRow>
         <StyledPostTitle>{title}</StyledPostTitle>
         <StyledMeta>
           <span>{author}</span>

@@ -168,12 +168,76 @@ export const StyledEditorPane = styled.div`
 export const StyledPreviewPane = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
   min-height: 300px;
   border: 1px solid rgba(251, 251, 251, 0.06);
   border-radius: 2px;
-  padding: 1rem;
+  overflow: hidden;
+`
+
+export const StyledPreviewTabsBar = styled.div`
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid rgba(251, 251, 251, 0.08);
+  flex-shrink: 0;
+`
+
+export const StyledPreviewTab = styled(Button).attrs({
+  variant: 'ghost',
+})<{ $active: boolean }>`
+  border: none;
+  border-bottom: 2px solid
+    ${({ $active, theme }) => ($active ? theme.colors.green : 'transparent')};
+  padding: 0.5rem 1rem;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: ${({ $active, theme }) =>
+    $active ? theme.colors.green : theme.colors.white};
+  opacity: ${({ $active }) => ($active ? 1 : 0.4)};
+  transition:
+    border-color 0.15s,
+    color 0.15s,
+    opacity 0.15s;
+  margin-bottom: -1px;
+
+  &:hover:not(:disabled) {
+    opacity: 1;
+    border-color: ${({ $active, theme }) =>
+      $active ? theme.colors.green : 'transparent'};
+  }
+`
+
+export const StyledPreviewContent = styled.div`
+  flex: 1;
   overflow-y: auto;
+  padding: 1rem;
+`
+
+export const StyledMobileFrame = styled.div`
+  margin: 0 auto;
+  width: 100%;
+  max-width: 390px;
+  border: 6px solid rgba(251, 251, 251, 0.12);
+  border-radius: 40px;
+  overflow: hidden;
+  background: ${({ theme }) => theme.colors.black};
+
+  &::before {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 6px;
+    background: rgba(251, 251, 251, 0.12);
+    border-radius: 3px;
+    margin: 0.75rem auto;
+  }
+`
+
+export const StyledMobileContent = styled.div`
+  padding: 0.75rem 1rem 2rem;
+  overflow-y: auto;
+  max-height: 70vh;
+  cursor: pointer;
 `
 
 export const StyledContentTextarea = styled(Textarea)`

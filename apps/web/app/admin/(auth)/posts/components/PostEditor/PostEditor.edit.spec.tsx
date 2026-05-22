@@ -62,6 +62,10 @@ jest.mock('@web/i18n/client', () => ({
         'postEditor.actions.unarchive': 'Unarchive',
         'postEditor.preview': 'Preview',
         'postEditor.previewLoading': 'Rendering…',
+        'postEditor.previewTabPost': 'Post',
+        'postEditor.previewTabPostMobile': 'Post Mobile',
+        'postEditor.previewTabHero': 'Hero',
+        'postEditor.previewTabCard': 'Card',
         'postEditor.error': 'Something went wrong',
         'images.picker.title': 'Insert Image',
       }
@@ -898,6 +902,7 @@ describe('PostEditor', () => {
           author="Admin"
         />,
       )
+      fireEvent.click(screen.getByTestId('preview-tab-hero'))
       expect(screen.getByTestId('reading-time')).toBeInTheDocument()
     })
   })
@@ -928,6 +933,20 @@ describe('PostEditor', () => {
       expect(
         within(screen.getByTestId('category-select')).getByRole('button'),
       ).toHaveTextContent('Design')
+    })
+  })
+
+  describe('card preview tab with existing seriesOrder', () => {
+    it('passes parsed seriesOrder to PostCardPreview when seriesOrder is set', () => {
+      renderApp(
+        <PostEditor
+          categories={mockCategories}
+          author="Admin"
+          post={mockExistingPost}
+        />,
+      )
+      fireEvent.click(screen.getByTestId('preview-tab-card'))
+      expect(screen.getByTestId('post-card-preview-mock')).toBeInTheDocument()
     })
   })
 })

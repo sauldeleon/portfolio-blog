@@ -4,13 +4,36 @@ import styled from 'styled-components'
 export const StyledCard = styled.article`
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(251, 251, 251, 0.1);
+  background:
+    linear-gradient(
+        ${({ theme }) => theme.colors.black},
+        ${({ theme }) => theme.colors.black}
+      )
+      padding-box,
+    linear-gradient(
+        135deg,
+        ${({ theme }) => theme.colors.green}4d 0%,
+        ${({ theme }) => theme.colors.yellow}4d 100%
+      )
+      border-box;
+  border: 1px solid transparent;
   overflow: hidden;
-  transition: border-color 0.2s ease;
   position: relative;
+  transition: background 0.2s ease;
 
   &:hover {
-    border-color: ${({ theme }) => theme.colors.green};
+    background:
+      linear-gradient(
+          ${({ theme }) => theme.colors.black},
+          ${({ theme }) => theme.colors.black}
+        )
+        padding-box,
+      linear-gradient(
+          135deg,
+          ${({ theme }) => theme.colors.green} 0%,
+          ${({ theme }) => theme.colors.yellow} 100%
+        )
+        border-box;
   }
 `
 
@@ -41,7 +64,11 @@ export const StyledCover = styled.div<{ $fit?: 'cover' | 'contain' }>`
 export const StyledPlaceholder = styled.div`
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 100%);
+  background: linear-gradient(
+    135deg,
+    ${({ theme }) => theme.colors.green}40 0%,
+    ${({ theme }) => theme.colors.yellow}26 100%
+  );
 `
 
 export const StyledBody = styled.div`

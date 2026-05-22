@@ -4,14 +4,15 @@ exports[`PostCard matches snapshot 1`] = `
 .c1 {
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(251, 251, 251, 0.1);
+  background: linear-gradient(#000000, #000000) padding-box,linear-gradient(         135deg,         #98DFD64d 0%,         #FFDD834d 100%       ) border-box;
+  border: 1px solid transparent;
   overflow: hidden;
-  transition: border-color 0.2s ease;
   position: relative;
+  transition: background 0.2s ease;
 }
 
 .c1:hover {
-  border-color: #98DFD6;
+  background: linear-gradient(#000000, #000000) padding-box,linear-gradient(           135deg,           #98DFD6 0%,           #FFDD83 100%         ) border-box;
 }
 
 .c2 {
@@ -243,14 +244,15 @@ exports[`PostCard matches snapshot with series badge 1`] = `
 .c1 {
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(251, 251, 251, 0.1);
+  background: linear-gradient(#000000, #000000) padding-box,linear-gradient(         135deg,         #98DFD64d 0%,         #FFDD834d 100%       ) border-box;
+  border: 1px solid transparent;
   overflow: hidden;
-  transition: border-color 0.2s ease;
   position: relative;
+  transition: background 0.2s ease;
 }
 
 .c1:hover {
-  border-color: #98DFD6;
+  background: linear-gradient(#000000, #000000) padding-box,linear-gradient(           135deg,           #98DFD6 0%,           #FFDD83 100%         ) border-box;
 }
 
 .c2 {

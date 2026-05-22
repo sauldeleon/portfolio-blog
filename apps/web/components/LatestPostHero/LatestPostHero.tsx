@@ -6,10 +6,11 @@ import { CldImage } from 'next-cloudinary'
 
 import type { PostWithContent } from '@web/lib/db/queries/posts'
 import { type Locale } from '@web/lib/db/schema'
+import { CategoryIconRenderer } from '@web/utils/categoryIcons'
 
 import {
   StyledBadgeRow,
-  StyledCategory,
+  StyledCategoryBadge,
   StyledContent,
   StyledCoverWrapper,
   StyledExcerpt,
@@ -52,22 +53,23 @@ export function LatestPostHero({
         </StyledCoverWrapper>
       )}
       <StyledContent>
-        <StyledCategory>{post.category}</StyledCategory>
-        {(post.seriesTitle || post.tags.length > 0) && (
-          <StyledBadgeRow>
-            {post.seriesTitle && (
-              <StyledSeriesBadge data-testid="series-badge">
-                <span>{post.seriesTitle}</span>
-                {post.seriesOrder != null && <span>#{post.seriesOrder}</span>}
-              </StyledSeriesBadge>
-            )}
-            {post.tags.map((tag) => (
-              <StyledTag key={tag} data-testid="tag">
-                {tag}
-              </StyledTag>
-            ))}
-          </StyledBadgeRow>
-        )}
+        <StyledBadgeRow>
+          <StyledCategoryBadge data-testid="category-badge">
+            <CategoryIconRenderer slug={post.category} aria-hidden />
+            {post.category}
+          </StyledCategoryBadge>
+          {post.seriesTitle && (
+            <StyledSeriesBadge data-testid="series-badge">
+              <span>{post.seriesTitle}</span>
+              {post.seriesOrder != null && <span>#{post.seriesOrder}</span>}
+            </StyledSeriesBadge>
+          )}
+          {post.tags.map((tag) => (
+            <StyledTag key={tag} data-testid="tag">
+              {tag}
+            </StyledTag>
+          ))}
+        </StyledBadgeRow>
         <StyledTitle>{post.title}</StyledTitle>
         <StyledExcerpt>{post.excerpt}</StyledExcerpt>
         <StyledMeta>

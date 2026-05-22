@@ -2,7 +2,6 @@
 
 import { PostCard } from '@sdlgr/post-card'
 
-import { useClientTranslation } from '@web/i18n/client'
 import { computeReadingTime } from '@web/utils/computeReadingTime'
 
 import {
@@ -10,7 +9,6 @@ import {
   StyledPreviewCardWrapper,
   StyledPreviewSection,
 } from './PostCardPreview.styles'
-import { PreviewSectionLabel } from './PreviewSectionLabel'
 
 interface PostCardPreviewProps {
   title: string
@@ -43,13 +41,11 @@ export function PostCardPreview({
   lng,
   postNumber,
 }: PostCardPreviewProps) {
-  const { t } = useClientTranslation('admin')
   const readingTime = computeReadingTime(content)
   const publishedAt = new Date().toLocaleDateString()
 
   return (
     <StyledPreviewSection data-testid="post-card-preview">
-      <PreviewSectionLabel>{t('postEditor.cardPreview')}</PreviewSectionLabel>
       <StyledPreviewCardWrapper>
         <StyledPreviewCardConstraint>
           <PostCard

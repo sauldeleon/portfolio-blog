@@ -17,6 +17,7 @@ import { logger } from '@web/lib/logger'
 import { extractToc } from '@web/lib/mdx/remarkHeadings'
 import { renderMDX } from '@web/lib/mdx/renderMDX'
 import { generateArticleJsonLd } from '@web/lib/seo/generateArticleJsonLd'
+import { CategoryIconRenderer } from '@web/utils/categoryIcons'
 import { computeReadingTime } from '@web/utils/computeReadingTime'
 import {
   buildAlternates,
@@ -170,6 +171,7 @@ export default async function BlogPostPage({ params }: RouteProps) {
         shareLabel={t('share')}
         copyLinkLabel={t('share.copyLink')}
         copiedLabel={t('share.copied')}
+        categoryIcon={<CategoryIconRenderer slug={post.category} aria-hidden />}
       />
       {toc.length > 0 && <TableOfContents entries={toc} label={t('toc')} />}
       <PostContent>

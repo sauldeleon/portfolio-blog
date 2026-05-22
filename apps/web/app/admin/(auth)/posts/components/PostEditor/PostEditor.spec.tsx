@@ -62,6 +62,10 @@ jest.mock('@web/i18n/client', () => ({
         'postEditor.actions.unarchive': 'Unarchive',
         'postEditor.preview': 'Preview',
         'postEditor.previewLoading': 'Rendering…',
+        'postEditor.previewTabPost': 'Post',
+        'postEditor.previewTabPostMobile': 'Post Mobile',
+        'postEditor.previewTabHero': 'Hero',
+        'postEditor.previewTabCard': 'Card',
         'postEditor.error': 'Something went wrong',
         'images.picker.title': 'Insert Image',
       }
@@ -1018,6 +1022,60 @@ describe('PostEditor', () => {
         expect(
           screen.queryByTestId('author-use-default-checkbox'),
         ).not.toBeInTheDocument()
+      })
+    })
+
+    describe('preview tabs', () => {
+      it('renders all four preview tabs', () => {
+        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        expect(screen.getByTestId('preview-tab-post')).toBeInTheDocument()
+        expect(
+          screen.getByTestId('preview-tab-post-mobile'),
+        ).toBeInTheDocument()
+        expect(screen.getByTestId('preview-tab-hero')).toBeInTheDocument()
+        expect(screen.getByTestId('preview-tab-card')).toBeInTheDocument()
+      })
+
+      it('Post tab is active by default and shows markdown preview', () => {
+        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        expect(screen.getByTestId('markdown-preview')).toBeInTheDocument()
+        expect(screen.queryByTestId('post-hero-mock')).not.toBeInTheDocument()
+        expect(
+          screen.queryByTestId('post-card-preview-mock'),
+        ).not.toBeInTheDocument()
+      })
+
+      it('clicking Post Mobile tab shows mobile frame with markdown preview', () => {
+        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        fireEvent.click(screen.getByTestId('preview-tab-post-mobile'))
+        expect(screen.getByTestId('mobile-frame')).toBeInTheDocument()
+        expect(screen.getByTestId('markdown-preview')).toBeInTheDocument()
+        expect(screen.queryByTestId('post-hero-mock')).not.toBeInTheDocument()
+        expect(
+          screen.queryByTestId('post-card-preview-mock'),
+        ).not.toBeInTheDocument()
+      })
+
+      it('clicking Hero tab shows PostHero and hides markdown preview', () => {
+        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        fireEvent.click(screen.getByTestId('preview-tab-hero'))
+        expect(screen.getByTestId('post-hero-mock')).toBeInTheDocument()
+        expect(screen.queryByTestId('markdown-preview')).not.toBeInTheDocument()
+      })
+
+      it('clicking Card tab shows PostCard and hides markdown preview', () => {
+        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        fireEvent.click(screen.getByTestId('preview-tab-card'))
+        expect(screen.getByTestId('post-card-preview-mock')).toBeInTheDocument()
+        expect(screen.queryByTestId('markdown-preview')).not.toBeInTheDocument()
+      })
+
+      it('switching back to Post tab shows markdown preview again', () => {
+        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        fireEvent.click(screen.getByTestId('preview-tab-hero'))
+        fireEvent.click(screen.getByTestId('preview-tab-post'))
+        expect(screen.getByTestId('markdown-preview')).toBeInTheDocument()
+        expect(screen.queryByTestId('post-hero-mock')).not.toBeInTheDocument()
       })
     })
   })

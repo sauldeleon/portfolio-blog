@@ -23,6 +23,7 @@ import { Select } from '@sdlgr/select'
 import { useClientTranslation } from '@web/i18n/client'
 import type { CloudinaryImage } from '@web/lib/cloudinary/images'
 import type { PostStatus } from '@web/lib/db/schema'
+import { CategoryIconRenderer } from '@web/utils/categoryIcons'
 import { computeReadingTime } from '@web/utils/computeReadingTime'
 import { slugify } from '@web/utils/slugify'
 
@@ -47,15 +48,19 @@ import {
   StyledMarkdownHint,
   StyledMetaGrid,
   StyledMetadataSection,
+  StyledMobileContent,
+  StyledMobileFrame,
   StyledPageHeader,
+  StyledPreviewContent,
   StyledPreviewPane,
+  StyledPreviewTab,
+  StyledPreviewTabsBar,
   StyledPublishButton,
   StyledSaveButton,
   StyledStatusBadge,
   StyledTitleRow,
   StyledWrapper,
 } from './PostEditor.styles'
-import { PreviewSectionLabel } from './PreviewSectionLabel'
 
 const DEFAULT_AUTHOR = 'Saúl de León'
 
@@ -220,6 +225,9 @@ export function PostEditor({
   const [error, setError] = useState<string | null>(null)
   const [isPickerOpen, setIsPickerOpen] = useState(false)
   const [pickerMode, setPickerMode] = useState<'insert' | 'cover'>('insert')
+  const [previewTab, setPreviewTab] = useState<
+    'post' | 'post-mobile' | 'hero' | 'card'
+  >('post')
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   function handleSeriesIdChange(newId: string) {
@@ -778,18 +786,66 @@ https://www.wikiloc.com/wikiloc/embedv2.do?id=<trail-id>&elevation=on&images=on&
 Supported types: youtube · maps · openstreetmap · wikiloc`}</pre>
             </StyledMarkdownHint>
           </FieldGroup>
+        </StyledEditorPane>
 
-          {currentLocale.title && (
-            <>
-              <PreviewSectionLabel>
-                {t('postEditor.heroPreview')}
-              </PreviewSectionLabel>
+        <StyledPreviewPane data-testid="preview-pane">
+          <StyledPreviewTabsBar>
+            <StyledPreviewTab
+              $active={previewTab === 'post'}
+              onClick={() => setPreviewTab('post')}
+              data-testid="preview-tab-post"
+            >
+              {t('postEditor.previewTabPost')}
+            </StyledPreviewTab>
+            <StyledPreviewTab
+              $active={previewTab === 'post-mobile'}
+              onClick={() => setPreviewTab('post-mobile')}
+              data-testid="preview-tab-post-mobile"
+            >
+              {t('postEditor.previewTabPostMobile')}
+            </StyledPreviewTab>
+            <StyledPreviewTab
+              $active={previewTab === 'hero'}
+              onClick={() => setPreviewTab('hero')}
+              data-testid="preview-tab-hero"
+            >
+              {t('postEditor.previewTabHero')}
+            </StyledPreviewTab>
+            <StyledPreviewTab
+              $active={previewTab === 'card'}
+              onClick={() => setPreviewTab('card')}
+              data-testid="preview-tab-card"
+            >
+              {t('postEditor.previewTabCard')}
+            </StyledPreviewTab>
+          </StyledPreviewTabsBar>
+          <StyledPreviewContent>
+            {previewTab === 'post' && (
+              <MarkdownPreview
+                content={currentLocale.content}
+                loadingLabel={t('postEditor.previewLoading')}
+              />
+            )}
+            {previewTab === 'post-mobile' && (
+              <StyledMobileFrame data-testid="mobile-frame">
+                <StyledMobileContent>
+                  <MarkdownPreview
+                    content={currentLocale.content}
+                    loadingLabel={t('postEditor.previewLoading')}
+                  />
+                </StyledMobileContent>
+              </StyledMobileFrame>
+            )}
+            {previewTab === 'hero' && (
               <PostHero
                 title={currentLocale.title}
                 coverImagePublicId={coverImage || null}
                 coverImageFit={coverImageFit}
                 category={
                   categories.find((c) => c.slug === category)?.name ?? ''
+                }
+                categoryIcon={
+                  <CategoryIconRenderer slug={category} aria-hidden />
                 }
                 tags={tags}
                 author={previewAuthor}
@@ -805,35 +861,29 @@ Supported types: youtube · maps · openstreetmap · wikiloc`}</pre>
                 copyLinkLabel={t('postEditor.shareCopyLink')}
                 copiedLabel={t('postEditor.shareCopied')}
               />
-            </>
-          )}
-          <PostCardPreview
-            title={currentLocale.title}
-            slug={currentLocale.slug}
-            excerpt={currentLocale.excerpt}
-            content={currentLocale.content}
-            categoryName={
-              categories.find((c) => c.slug === category)?.name ?? ''
-            }
-            tags={tags}
-            coverImage={coverImage}
-            coverImageFit={coverImageFit}
-            seriesTitle={seriesTitles[activeLocale] || undefined}
-            seriesOrder={
-              seriesOrder.trim() ? parseInt(seriesOrder.trim(), 10) : null
-            }
-            author={previewAuthor}
-            lng={activeLocale}
-            postNumber={post?.post.postNumber ?? undefined}
-          />
-        </StyledEditorPane>
-
-        <StyledPreviewPane data-testid="preview-pane">
-          <PreviewSectionLabel>{t('postEditor.preview')}</PreviewSectionLabel>
-          <MarkdownPreview
-            content={currentLocale.content}
-            loadingLabel={t('postEditor.previewLoading')}
-          />
+            )}
+            {previewTab === 'card' && (
+              <PostCardPreview
+                title={currentLocale.title}
+                slug={currentLocale.slug}
+                excerpt={currentLocale.excerpt}
+                content={currentLocale.content}
+                categoryName={
+                  categories.find((c) => c.slug === category)?.name ?? ''
+                }
+                tags={tags}
+                coverImage={coverImage}
+                coverImageFit={coverImageFit}
+                seriesTitle={seriesTitles[activeLocale] || undefined}
+                seriesOrder={
+                  seriesOrder.trim() ? parseInt(seriesOrder.trim(), 10) : null
+                }
+                author={previewAuthor}
+                lng={activeLocale}
+                postNumber={post?.post.postNumber ?? undefined}
+              />
+            )}
+          </StyledPreviewContent>
         </StyledPreviewPane>
       </StyledEditorLayout>
 
