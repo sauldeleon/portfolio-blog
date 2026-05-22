@@ -89,20 +89,19 @@ describe('PostCard', () => {
     expect(screen.getByAltText('Test Post Title')).toBeInTheDocument()
   })
 
-  it('renders read more link with correct href', () => {
+  it('renders read more link with correct href and accessible label', () => {
     renderWithTheme(<PostCard {...defaultProps} />)
-    expect(screen.getByRole('link', { name: 'Read more' })).toHaveAttribute(
-      'href',
-      '/en/blog/1/test-post',
-    )
+    const link = screen.getByRole('link', {
+      name: 'Read more Test Post Title',
+    })
+    expect(link).toHaveAttribute('href', '/en/blog/1/test-post')
   })
 
   it('renders read more link with href="#" when postNumber is undefined', () => {
     renderWithTheme(<PostCard {...defaultProps} postNumber={undefined} />)
-    expect(screen.getByRole('link', { name: 'Read more' })).toHaveAttribute(
-      'href',
-      '#',
-    )
+    expect(
+      screen.getByRole('link', { name: 'Read more Test Post Title' }),
+    ).toHaveAttribute('href', '#')
   })
 
   it('does not render date when publishedAt is null', () => {

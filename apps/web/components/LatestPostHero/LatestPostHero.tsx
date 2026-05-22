@@ -85,7 +85,11 @@ export function LatestPostHero({
             </>
           )}
         </StyledMeta>
-        <StyledReadMoreLink href={url} data-testid="latest-post-hero-link">
+        <StyledReadMoreLink
+          href={url}
+          aria-label={`${readMoreLabel} ${post.title}`}
+          data-testid="latest-post-hero-link"
+        >
           {readMoreLabel}
         </StyledReadMoreLink>
       </StyledContent>

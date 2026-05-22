@@ -230,13 +230,14 @@ describe('LatestPostHero', () => {
     expect(screen.queryByRole('time')).toBeNull()
   })
 
-  it('renders the read more link pointing to the post URL', () => {
+  it('renders the read more link pointing to the post URL with accessible label', () => {
     renderWithTheme(
       <LatestPostHero post={mockPost} lng="en" readMoreLabel="Read more →" />,
     )
     const link = screen.getByTestId('latest-post-hero-link')
     expect(link).toHaveAttribute('href', '/en/blog/5/my-post')
     expect(link).toHaveTextContent('Read more →')
+    expect(link).toHaveAttribute('aria-label', 'Read more → My Post Title')
   })
 
   it('falls back to enUS for unknown locale', () => {
