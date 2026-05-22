@@ -5,6 +5,7 @@ on:
 jobs:
   cypress-run:
     runs-on: ubuntu-22.04
+    environment: preview
     steps:
       - name: vercel-preview-url
         uses: zentered/vercel-preview-url@v1.4.0
