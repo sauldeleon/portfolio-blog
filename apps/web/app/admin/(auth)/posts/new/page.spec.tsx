@@ -7,6 +7,7 @@ const mockRequireAdminSession = jest.fn()
 const mockGetCategoriesForAdmin = jest.fn()
 const mockGetAllTagsAdmin = jest.fn()
 const mockGetAllSeriesWithTranslations = jest.fn()
+const mockListUsers = jest.fn()
 
 jest.mock('@web/lib/auth/requireAdminSession', () => ({
   requireAdminSession: (...args: unknown[]) => mockRequireAdminSession(...args),
@@ -24,6 +25,10 @@ jest.mock('@web/lib/db/queries/tags', () => ({
 jest.mock('@web/lib/db/queries/series', () => ({
   getAllSeriesWithTranslations: (...args: unknown[]) =>
     mockGetAllSeriesWithTranslations(...args),
+}))
+
+jest.mock('@web/lib/db/queries/users', () => ({
+  listUsers: (...args: unknown[]) => mockListUsers(...args),
 }))
 
 jest.mock('../components/PostEditor', () => {
@@ -63,16 +68,28 @@ const mockCategories = [
 ]
 
 describe('NewPostPage', () => {
+  const mockUsers = [
+    {
+      id: 'user-1',
+      email: 'admin@example.com',
+      name: 'Saúl de León',
+      role: 'admin' as const,
+      createdAt: new Date('2024-01-01'),
+      updatedAt: new Date('2024-01-01'),
+    },
+  ]
+
   beforeEach(() => {
     jest.clearAllMocks()
     mockRequireAdminSession.mockResolvedValue({
-      user: { name: 'Saúl de León' },
+      user: { name: 'Saúl de León', id: 'user-1', role: 'admin' },
     })
     mockGetCategoriesForAdmin.mockResolvedValue(mockCategories)
     mockGetAllTagsAdmin.mockResolvedValue(['react', 'typescript'])
     mockGetAllSeriesWithTranslations.mockResolvedValue([
       { id: 'my-series', translations: [] },
     ])
+    mockListUsers.mockResolvedValue(mockUsers)
   })
 
   it('renders PostEditor', async () => {
@@ -107,31 +124,11 @@ describe('NewPostPage', () => {
     )
   })
 
-  it('passes author from session user name', async () => {
+  it('passes users list to PostEditor', async () => {
     const ui = await NewPostPage()
     render(ui)
     expect(PostEditor).toHaveBeenCalledWith(
-      expect.objectContaining({ author: 'Saúl de León' }),
-      undefined,
-    )
-  })
-
-  it('falls back to Admin when session user name is null', async () => {
-    mockRequireAdminSession.mockResolvedValue({ user: { name: null } })
-    const ui = await NewPostPage()
-    render(ui)
-    expect(PostEditor).toHaveBeenCalledWith(
-      expect.objectContaining({ author: 'Admin' }),
-      undefined,
-    )
-  })
-
-  it('falls back to Admin when session has no user', async () => {
-    mockRequireAdminSession.mockResolvedValue(null)
-    const ui = await NewPostPage()
-    render(ui)
-    expect(PostEditor).toHaveBeenCalledWith(
-      expect.objectContaining({ author: 'Admin' }),
+      expect.objectContaining({ users: mockUsers }),
       undefined,
     )
   })
@@ -172,6 +169,18 @@ describe('NewPostPage', () => {
       expect.objectContaining({
         allTags: ['react', 'typescript'],
         series: [{ id: 'my-series', translations: [] }],
+      }),
+      undefined,
+    )
+  })
+
+  it('passes currentUserId and currentUserRole to PostEditor', async () => {
+    const ui = await NewPostPage()
+    render(ui)
+    expect(PostEditor).toHaveBeenCalledWith(
+      expect.objectContaining({
+        currentUserId: 'user-1',
+        currentUserRole: 'admin',
       }),
       undefined,
     )

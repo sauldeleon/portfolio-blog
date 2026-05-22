@@ -26,9 +26,6 @@ describe('Admin posts — series order auto-assignment', () => {
     cy.url({ timeout: 10000 }).should('include', '/admin/posts/new')
 
     cy.get('[data-testid="title-input"]').type(firstTitle)
-    cy.get('label[for="author-use-default"]').click()
-    cy.get('[data-testid="author-input"]').clear()
-    cy.get('[data-testid="author-input"]').type('e2e')
     cy.get('[data-testid="category-select"]').find('.select__control').click()
     cy.contains('.select__option', /other/i).click()
     cy.get('[data-testid="excerpt-input"]').type('first post in series')
@@ -61,9 +58,6 @@ describe('Admin posts — series order auto-assignment', () => {
     cy.url({ timeout: 10000 }).should('include', '/admin/posts/new')
 
     cy.get('[data-testid="title-input"]').type(secondTitle)
-    cy.get('label[for="author-use-default"]').click()
-    cy.get('[data-testid="author-input"]').clear()
-    cy.get('[data-testid="author-input"]').type('e2e')
     cy.get('[data-testid="category-select"]').find('.select__control').click()
     cy.contains('.select__option', /other/i).click()
     cy.get('[data-testid="excerpt-input"]').type('second post in series')

@@ -7,6 +7,7 @@ const mockGetCategoriesForAdmin = jest.fn()
 const mockGetCategoryBySlug = jest.fn()
 const mockCreateCategory = jest.fn()
 const mockCreateCategoryTranslation = jest.fn()
+const mockLoggerError = jest.fn()
 
 jest.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
 jest.mock('@web/lib/db/queries/categories', () => ({
@@ -16,6 +17,7 @@ jest.mock('@web/lib/db/queries/categories', () => ({
   createCategory: mockCreateCategory,
   createCategoryTranslation: mockCreateCategoryTranslation,
 }))
+jest.mock('@web/lib/logger', () => ({ logger: { error: mockLoggerError } }))
 
 const { GET, POST } = require('./route') as {
   GET: (req: Request) => Promise<Response>
@@ -101,6 +103,35 @@ describe('GET /api/categories', () => {
     const body = await response.json()
     expect(body).toEqual({ data: [mockCategory] })
     expect(response.headers.get('Cache-Control')).toBeNull()
+  })
+
+  it('returns 500 and logs error when getCategories throws', async () => {
+    const err = new Error('DB error')
+    mockGetCategories.mockRejectedValue(err)
+    const response = await GET(makeGetRequest())
+    expect(response.status).toBe(500)
+    const body = (await response.json()) as { error: string }
+    expect(body.error).toBe('Failed to get categories')
+    expect(mockLoggerError).toHaveBeenCalledWith(
+      err,
+      'Failed to get categories',
+    )
+  })
+
+  it('returns 500 and logs error when getCategoriesForAdmin throws', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    const err = new Error('DB error')
+    mockGetCategoriesForAdmin.mockRejectedValue(err)
+    const response = await GET(
+      makeGetRequest('http://localhost/api/categories?admin=1'),
+    )
+    expect(response.status).toBe(500)
+    const body = (await response.json()) as { error: string }
+    expect(body.error).toBe('Failed to get categories')
+    expect(mockLoggerError).toHaveBeenCalledWith(
+      err,
+      'Failed to get categories',
+    )
   })
 })
 
@@ -234,6 +265,21 @@ describe('POST /api/categories', () => {
     expect(response.status).toBe(201)
     expect(mockCreateCategoryTranslation).toHaveBeenCalledWith(
       expect.objectContaining({ description: 'Desc' }),
+    )
+  })
+
+  it('returns 500 and logs error when createCategory throws', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockGetCategoryBySlug.mockResolvedValue(null)
+    const err = new Error('DB error')
+    mockCreateCategory.mockRejectedValue(err)
+    const response = await POST(makeRequest(makeValidBody()))
+    expect(response.status).toBe(500)
+    const body = (await response.json()) as { error: string }
+    expect(body.error).toBe('Failed to create category')
+    expect(mockLoggerError).toHaveBeenCalledWith(
+      err,
+      'Failed to create category',
     )
   })
 })

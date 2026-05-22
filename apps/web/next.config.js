@@ -17,6 +17,26 @@ const nextConfig = {
   nx: {},
   serverExternalPackages: ['shiki', 'rehype-pretty-code', 'remark-gfm'],
   output: isStaticExport ? 'export' : undefined,
+  async redirects() {
+    if (isStaticExport) return []
+    return [
+      {
+        source: '/contact/:path*',
+        destination: '/en/contact/:path*',
+        permanent: false,
+      },
+      {
+        source: '/experience/:path*',
+        destination: '/en/experience/:path*',
+        permanent: false,
+      },
+      {
+        source: '/portfolio/:path*',
+        destination: '/en/portfolio/:path*',
+        permanent: false,
+      },
+    ]
+  },
   async headers() {
     if (isStaticExport) return []
     const sharedLinks = [

@@ -16,9 +16,11 @@ const mockUpsertSeriesTranslation = jest.fn()
 const mockSeriesOrderExistsForSeries = jest.fn()
 
 const mockRevalidateTag = jest.fn()
+const mockLoggerError = jest.fn()
 
 jest.mock('next/cache', () => ({ revalidateTag: mockRevalidateTag }))
 jest.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
+jest.mock('@web/lib/logger', () => ({ logger: { error: mockLoggerError } }))
 jest.mock('@web/lib/db/queries/categories', () => ({
   getCategoryBySlug: mockGetCategoryBySlug,
 }))
@@ -181,6 +183,19 @@ describe('GET /api/posts/[id]', () => {
     const body = (await response.json()) as Record<string, unknown>
     expect(body.publishedAt).toBeNull()
   })
+
+  it('returns 500 and logs error when getPostById throws', async () => {
+    const err = new Error('DB error')
+    mockGetPostById.mockRejectedValue(err)
+    const response = await GET(
+      new Request('http://localhost/api/posts/id?lng=en'),
+      makeParams('id'),
+    )
+    expect(response.status).toBe(500)
+    const body = (await response.json()) as { error: string }
+    expect(body.error).toBe('Failed to get post')
+    expect(mockLoggerError).toHaveBeenCalledWith(err, 'Failed to get post')
+  })
 })
 
 describe('PUT /api/posts/[id]', () => {
@@ -328,7 +343,7 @@ describe('PUT /api/posts/[id]', () => {
   it('does not set tags when not provided in update', async () => {
     mockAuth.mockResolvedValue({ user: { name: 'admin' } })
     mockUpdatePost.mockResolvedValue(mockPost)
-    await PUT(makePutRequest({ author: 'new-author' }), makeParams('id'))
+    await PUT(makePutRequest({ authorId: 'new-author' }), makeParams('id'))
     const callArg = mockUpdatePost.mock.calls[0][1] as Record<string, unknown>
     expect(callArg).not.toHaveProperty('tags')
   })
@@ -419,13 +434,13 @@ describe('PUT /api/posts/[id]', () => {
     )
   })
 
-  it('passes author when provided', async () => {
+  it('passes authorId when provided', async () => {
     mockAuth.mockResolvedValue({ user: { name: 'admin' } })
     mockUpdatePost.mockResolvedValue(mockPost)
-    await PUT(makePutRequest({ author: 'Jane Doe' }), makeParams('id'))
+    await PUT(makePutRequest({ authorId: 'user-1' }), makeParams('id'))
     expect(mockUpdatePost).toHaveBeenCalledWith(
       'id',
-      expect.objectContaining({ author: 'Jane Doe' }),
+      expect.objectContaining({ authorId: 'user-1' }),
     )
   })
 
@@ -555,6 +570,20 @@ describe('PUT /api/posts/[id]', () => {
     )
     expect(res.status).toBe(200)
   })
+
+  it('returns 500 and logs error when updatePost throws', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    const err = new Error('DB error')
+    mockUpdatePost.mockRejectedValue(err)
+    const response = await PUT(
+      makePutRequest({ tags: ['react'] }),
+      makeParams('id'),
+    )
+    expect(response.status).toBe(500)
+    const body = (await response.json()) as { error: string }
+    expect(body.error).toBe('Failed to update post')
+    expect(mockLoggerError).toHaveBeenCalledWith(err, 'Failed to update post')
+  })
 })
 
 describe('DELETE /api/posts/[id]', () => {
@@ -651,6 +680,20 @@ describe('DELETE /api/posts/[id]', () => {
     )
     expect(response.status).toBe(422)
     expect(mockHardDeletePost).not.toHaveBeenCalled()
+  })
+
+  it('returns 500 and logs error when getPostStatus throws', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    const err = new Error('DB error')
+    mockGetPostStatus.mockRejectedValue(err)
+    const response = await DELETE(
+      new Request('http://localhost/api/posts/id', { method: 'DELETE' }),
+      makeParams('id'),
+    )
+    expect(response.status).toBe(500)
+    const body = (await response.json()) as { error: string }
+    expect(body.error).toBe('Failed to delete post')
+    expect(mockLoggerError).toHaveBeenCalledWith(err, 'Failed to delete post')
   })
 })
 

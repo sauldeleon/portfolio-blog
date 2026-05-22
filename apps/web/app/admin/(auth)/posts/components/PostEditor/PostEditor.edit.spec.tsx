@@ -221,36 +221,6 @@ jest.mock('./CoverImageInput', () => ({
   ),
 }))
 
-jest.mock('@sdlgr/checkbox', () => ({
-  Checkbox: ({
-    id,
-    label,
-    checked,
-    onChange,
-    'data-testid': testId,
-    disabled,
-  }: {
-    id: string
-    label?: string
-    checked: boolean
-    onChange: (checked: boolean) => void
-    'data-testid'?: string
-    disabled?: boolean
-  }) => (
-    <label htmlFor={id}>
-      <input
-        type="checkbox"
-        id={id}
-        checked={checked}
-        onChange={(e) => onChange(e.target.checked)}
-        disabled={disabled}
-        data-testid={testId}
-      />
-      {label && <span>{label}</span>}
-    </label>
-  ),
-}))
-
 jest.mock('@sdlgr/combobox', () => ({
   Combobox: ({
     value,
@@ -332,6 +302,25 @@ const mockCategories: PostEditorProps['categories'] = [
   { slug: 'design', name: 'Design' },
 ]
 
+const mockUsers: PostEditorProps['users'] = [
+  {
+    id: 'user-1',
+    email: 'admin@example.com',
+    name: 'Admin',
+    role: 'admin',
+    createdAt: new Date('2024-01-01'),
+    updatedAt: new Date('2024-01-01'),
+  },
+  {
+    id: 'user-2',
+    email: 'editor@example.com',
+    name: 'Editor',
+    role: 'editor',
+    createdAt: new Date('2024-01-01'),
+    updatedAt: new Date('2024-01-01'),
+  },
+]
+
 const mockExistingPost: PostEditorProps['post'] = {
   post: {
     id: 'post123',
@@ -344,7 +333,7 @@ const mockExistingPost: PostEditorProps['post'] = {
     seriesId: 'series-1',
     seriesOrder: 2,
     scheduledAt: null,
-    author: 'Admin',
+    authorId: 'user-1',
   },
   translations: [
     {
@@ -381,7 +370,7 @@ describe('PostEditor', () => {
         <PostEditor
           post={mockExistingPost}
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
         />,
       )
       expect(
@@ -398,7 +387,7 @@ describe('PostEditor', () => {
         <PostEditor
           post={mockExistingPost}
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
         />,
       )
       expect(screen.getByTestId('tags-input')).toHaveValue('react, nextjs')
@@ -412,7 +401,7 @@ describe('PostEditor', () => {
         <PostEditor
           post={mockExistingPost}
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
         />,
       )
       fireEvent.click(screen.getByTestId('locale-tab-es'))
@@ -425,7 +414,7 @@ describe('PostEditor', () => {
         <PostEditor
           post={mockExistingPost}
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
         />,
       )
       expect(screen.getByTestId('publish-button')).not.toBeDisabled()
@@ -440,7 +429,7 @@ describe('PostEditor', () => {
         <PostEditor
           post={enOnlyPost}
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
         />,
       )
       expect(screen.getByTestId('publish-button')).toBeDisabled()
@@ -451,7 +440,7 @@ describe('PostEditor', () => {
         <PostEditor
           post={mockExistingPost}
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
         />,
       )
       fireEvent.click(screen.getByTestId('publish-button'))
@@ -467,7 +456,7 @@ describe('PostEditor', () => {
         <PostEditor
           post={mockExistingPost}
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
         />,
       )
       fireEvent.click(screen.getByTestId('save-button'))
@@ -484,7 +473,7 @@ describe('PostEditor', () => {
         <PostEditor
           post={mockExistingPost}
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
         />,
       )
       fireEvent.click(screen.getByTestId('save-button'))
@@ -505,7 +494,7 @@ describe('PostEditor', () => {
         <PostEditor
           post={publishedPost}
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
         />,
       )
       expect(screen.getByTestId('status-badge')).toHaveTextContent('Published')
@@ -524,7 +513,7 @@ describe('PostEditor', () => {
         <PostEditor
           post={publishedPost}
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
         />,
       )
       expect(screen.getByTestId('archive-button')).toBeDisabled()
@@ -539,7 +528,7 @@ describe('PostEditor', () => {
         <PostEditor
           post={archivedPost}
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
         />,
       )
       expect(screen.getByTestId('unarchive-button')).toBeInTheDocument()
@@ -556,7 +545,7 @@ describe('PostEditor', () => {
         <PostEditor
           post={archivedPost}
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
         />,
       )
       fireEvent.click(screen.getByTestId('unarchive-button'))
@@ -572,7 +561,7 @@ describe('PostEditor', () => {
         <PostEditor
           post={mockExistingPost}
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
         />,
       )
       fireEvent.click(screen.getByTestId('save-button'))
@@ -595,7 +584,7 @@ describe('PostEditor', () => {
         <PostEditor
           post={postNoSeries}
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
         />,
       )
       expect(screen.getByTestId('series-id-input')).toHaveValue('')
@@ -608,7 +597,7 @@ describe('PostEditor', () => {
         <PostEditor
           post={mockExistingPost}
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
         />,
       )
       fireEvent.click(screen.getByTestId('save-button'))
@@ -625,7 +614,7 @@ describe('PostEditor', () => {
         <PostEditor
           post={mockExistingPost}
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
           series={[
             {
               id: 'series-1',
@@ -652,7 +641,7 @@ describe('PostEditor', () => {
         <PostEditor
           post={mockExistingPost}
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
           series={[
             { id: 'series-1', nextOrder: 5, translations: [] },
             { id: 'series-2', nextOrder: 7, translations: [] },
@@ -678,7 +667,7 @@ describe('PostEditor', () => {
             },
           }}
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
           series={[{ id: 'series-1', nextOrder: 2, translations: [] }]}
         />,
       )
@@ -700,7 +689,7 @@ describe('PostEditor', () => {
             },
           }}
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
         />,
       )
       fireEvent.click(screen.getByTestId('save-button'))
@@ -717,7 +706,7 @@ describe('PostEditor', () => {
         <PostEditor
           post={mockExistingPost}
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
           series={[
             {
               id: 'series-1',
@@ -735,7 +724,7 @@ describe('PostEditor', () => {
         <PostEditor
           post={mockExistingPost}
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
           series={[{ id: 'series-1', nextOrder: 3, translations: [] }]}
         />,
       )
@@ -752,7 +741,7 @@ describe('PostEditor', () => {
         <PostEditor
           post={mockExistingPost}
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
           series={[
             {
               id: 'series-1',
@@ -770,29 +759,35 @@ describe('PostEditor', () => {
       expect(body.seriesTitles).toHaveProperty('es', 'Mi Serie')
     })
 
-    it('pre-fills author input from existing post', () => {
+    it('pre-fills author select from existing post', () => {
       renderApp(
         <PostEditor
           post={mockExistingPost}
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
         />,
       )
-      expect(screen.getByTestId('author-input')).toHaveValue('Admin')
+      expect(
+        within(screen.getByTestId('author-input')).getByRole('button'),
+      ).toHaveTextContent('Admin')
     })
 
-    it('allows editing author in edit mode', () => {
+    it('allows selecting a different author in edit mode', () => {
       renderApp(
         <PostEditor
           post={mockExistingPost}
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
         />,
       )
-      fireEvent.change(screen.getByTestId('author-input'), {
-        target: { value: 'Jane Doe' },
-      })
-      expect(screen.getByTestId('author-input')).toHaveValue('Jane Doe')
+      fireEvent.click(
+        within(screen.getByTestId('author-input')).getByRole('option', {
+          name: 'Editor',
+        }),
+      )
+      expect(
+        within(screen.getByTestId('author-input')).getByRole('button'),
+      ).toHaveTextContent('Editor')
     })
 
     it('PUT body includes updated author', async () => {
@@ -800,39 +795,21 @@ describe('PostEditor', () => {
         <PostEditor
           post={mockExistingPost}
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
         />,
       )
-      fireEvent.change(screen.getByTestId('author-input'), {
-        target: { value: 'Jane Doe' },
-      })
+      fireEvent.click(
+        within(screen.getByTestId('author-input')).getByRole('option', {
+          name: 'Editor',
+        }),
+      )
       fireEvent.click(screen.getByTestId('save-button'))
       await waitFor(() => expect(axios.put).toHaveBeenCalled())
       const body = (axios.put as jest.Mock).mock.calls[0][1] as Record<
         string,
         unknown
       >
-      expect(body).toHaveProperty('author', 'Jane Doe')
-    })
-
-    it('PUT body falls back to original author when input cleared', async () => {
-      renderApp(
-        <PostEditor
-          post={mockExistingPost}
-          categories={mockCategories}
-          author="Admin"
-        />,
-      )
-      fireEvent.change(screen.getByTestId('author-input'), {
-        target: { value: '' },
-      })
-      fireEvent.click(screen.getByTestId('save-button'))
-      await waitFor(() => expect(axios.put).toHaveBeenCalled())
-      const body = (axios.put as jest.Mock).mock.calls[0][1] as Record<
-        string,
-        unknown
-      >
-      expect(body).toHaveProperty('author', 'Admin')
+      expect(body).toHaveProperty('authorId', 'user-2')
     })
 
     it('PUT body includes scheduledAt as null when not set', async () => {
@@ -840,7 +817,7 @@ describe('PostEditor', () => {
         <PostEditor
           post={mockExistingPost}
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
         />,
       )
       fireEvent.click(screen.getByTestId('save-button'))
@@ -863,7 +840,7 @@ describe('PostEditor', () => {
             },
           }}
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
         />,
       )
       expect(
@@ -876,7 +853,7 @@ describe('PostEditor', () => {
         <PostEditor
           post={mockExistingPost}
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
         />,
       )
       fireEvent.click(screen.getByTestId('save-button'))
@@ -899,7 +876,7 @@ describe('PostEditor', () => {
         <PostEditor
           post={postEmptySlug}
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
         />,
       )
       fireEvent.click(screen.getByTestId('preview-tab-hero'))
@@ -909,12 +886,12 @@ describe('PostEditor', () => {
 
   describe('categories dropdown', () => {
     it('renders category select', () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       expect(screen.getByTestId('category-select')).toBeInTheDocument()
     })
 
     it('shows category options when opened', () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       fireEvent.click(
         within(screen.getByTestId('category-select')).getByRole('button'),
       )
@@ -925,7 +902,7 @@ describe('PostEditor', () => {
     })
 
     it('allows selecting a category', () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       fireEvent.click(
         within(screen.getByTestId('category-select')).getByRole('button'),
       )
@@ -941,7 +918,7 @@ describe('PostEditor', () => {
       renderApp(
         <PostEditor
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
           post={mockExistingPost}
         />,
       )

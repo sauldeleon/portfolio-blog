@@ -12,9 +12,11 @@ const mockUpsertSeriesTranslation = jest.fn()
 const mockSeriesOrderExistsForSeries = jest.fn()
 
 const mockRevalidateTag = jest.fn()
+const mockLoggerError = jest.fn()
 
 jest.mock('next/cache', () => ({ revalidateTag: mockRevalidateTag }))
 jest.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
+jest.mock('@web/lib/logger', () => ({ logger: { error: mockLoggerError } }))
 jest.mock('@web/lib/db/queries/categories', () => ({
   getCategoryBySlug: mockGetCategoryBySlug,
 }))
@@ -46,7 +48,7 @@ const mockPost = {
   id: '01JWTEST000000000000000000',
   category: 'engineering',
   tags: [],
-  author: 'admin',
+  authorId: 'admin',
   status: 'draft',
   coverImage: null,
   seriesId: null,
@@ -88,7 +90,7 @@ const mockPostWithContent = {
   publishedAt: new Date('2024-01-01'),
   createdAt: new Date('2024-01-01'),
   updatedAt: new Date('2024-01-02'),
-  author: 'admin',
+  authorId: 'admin',
   title: 'Test Post',
   slug: 'test-post',
   excerpt: 'An excerpt',
@@ -139,6 +141,19 @@ describe('GET /api/posts (admin status=all)', () => {
     const body = (await response.json()) as { data: unknown[] }
     expect(body.data).toHaveLength(1)
     expect(mockGetAllPosts).toHaveBeenCalledTimes(1)
+  })
+
+  it('returns 500 and logs error when getAllPosts throws', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    const err = new Error('DB error')
+    mockGetAllPosts.mockRejectedValue(err)
+    const response = await GET(
+      new Request('http://localhost/api/posts?status=all'),
+    )
+    expect(response.status).toBe(500)
+    const body = (await response.json()) as { error: string }
+    expect(body.error).toBe('Failed to get all posts')
+    expect(mockLoggerError).toHaveBeenCalledWith(err, 'Failed to get all posts')
   })
 })
 
@@ -236,6 +251,16 @@ describe('GET /api/posts', () => {
     }
     expect(body.pagination.totalPages).toBe(3)
   })
+
+  it('returns 500 and logs error when getPublishedPostsPaginated throws', async () => {
+    const err = new Error('DB error')
+    mockGetPublishedPostsPaginated.mockRejectedValue(err)
+    const response = await GET(new Request('http://localhost/api/posts?lng=en'))
+    expect(response.status).toBe(500)
+    const body = (await response.json()) as { error: string }
+    expect(body.error).toBe('Failed to get posts')
+    expect(mockLoggerError).toHaveBeenCalledWith(err, 'Failed to get posts')
+  })
 })
 
 describe('POST /api/posts', () => {
@@ -273,7 +298,7 @@ describe('POST /api/posts', () => {
     const response = await POST(
       makeRequest({
         category: 'unknown',
-        author: 'admin',
+        authorId: 'admin',
         translations: { en: validTranslations.en },
       }),
     )
@@ -287,7 +312,7 @@ describe('POST /api/posts', () => {
     const response = await POST(
       makeRequest({
         category: 'engineering',
-        author: 'admin',
+        authorId: 'admin',
         translations: {},
       }),
     )
@@ -300,7 +325,7 @@ describe('POST /api/posts', () => {
     const response = await POST(
       makeRequest({
         category: 'engineering',
-        author: 'admin',
+        authorId: 'admin',
         status: 'published',
         translations: { en: validTranslations.en },
       }),
@@ -316,7 +341,7 @@ describe('POST /api/posts', () => {
     const response = await POST(
       makeRequest({
         category: 'engineering',
-        author: 'admin',
+        authorId: 'admin',
         status: 'published',
         translations: { es: validTranslations.es },
       }),
@@ -333,7 +358,7 @@ describe('POST /api/posts', () => {
     const response = await POST(
       makeRequest({
         category: 'engineering',
-        author: 'admin',
+        authorId: 'admin',
         translations: { en: validTranslations.en },
       }),
     )
@@ -351,7 +376,7 @@ describe('POST /api/posts', () => {
     const response = await POST(
       makeRequest({
         category: 'engineering',
-        author: 'admin',
+        authorId: 'admin',
         translations: validTranslations,
       }),
     )
@@ -366,7 +391,7 @@ describe('POST /api/posts', () => {
     await POST(
       makeRequest({
         category: 'engineering',
-        author: 'admin',
+        authorId: 'admin',
         tags: ['react', 'TypeScript', 'NODEJS'],
         translations: validTranslations,
       }),
@@ -385,13 +410,13 @@ describe('POST /api/posts', () => {
     const response = await POST(
       makeRequest({
         category: 'engineering',
-        author: 'admin',
+        authorId: 'admin',
         translations: validTranslations,
       }),
     )
     expect(response.status).toBe(201)
     expect(mockCreatePost).toHaveBeenCalledWith(
-      expect.objectContaining({ category: 'engineering', author: 'admin' }),
+      expect.objectContaining({ category: 'engineering', authorId: 'admin' }),
       expect.objectContaining({
         en: validTranslations.en,
         es: validTranslations.es,
@@ -408,7 +433,7 @@ describe('POST /api/posts', () => {
     const response = await POST(
       makeRequest({
         category: 'engineering',
-        author: 'admin',
+        authorId: 'admin',
         translations: { es: validTranslations.es },
       }),
     )
@@ -427,7 +452,7 @@ describe('POST /api/posts', () => {
     await POST(
       makeRequest({
         category: 'engineering',
-        author: 'admin',
+        authorId: 'admin',
         scheduledAt: '2024-06-01T00:00:00.000Z',
         translations: { en: validTranslations.en },
       }),
@@ -448,7 +473,7 @@ describe('POST /api/posts', () => {
     await POST(
       makeRequest({
         category: 'engineering',
-        author: 'admin',
+        authorId: 'admin',
         scheduledAt: null,
         translations: { en: validTranslations.en },
       }),
@@ -468,7 +493,7 @@ describe('POST /api/posts', () => {
     await POST(
       makeRequest({
         category: 'engineering',
-        author: 'admin',
+        authorId: 'admin',
         seriesId: 'my-series',
         translations: { en: validTranslations.en },
       }),
@@ -487,7 +512,7 @@ describe('POST /api/posts', () => {
     await POST(
       makeRequest({
         category: 'engineering',
-        author: 'admin',
+        authorId: 'admin',
         translations: { en: validTranslations.en },
       }),
     )
@@ -504,7 +529,7 @@ describe('POST /api/posts', () => {
     await POST(
       makeRequest({
         category: 'engineering',
-        author: 'admin',
+        authorId: 'admin',
         seriesId: 'my-series',
         seriesTitles: { en: 'My Series', es: 'Mi Serie' },
         translations: { en: validTranslations.en },
@@ -531,7 +556,7 @@ describe('POST /api/posts', () => {
     const res = await POST(
       makeRequest({
         category: 'engineering',
-        author: 'admin',
+        authorId: 'admin',
         seriesId: 'my-series',
         seriesOrder: 2,
         translations: { en: validTranslations.en },
@@ -552,13 +577,32 @@ describe('POST /api/posts', () => {
     const res = await POST(
       makeRequest({
         category: 'engineering',
-        author: 'admin',
+        authorId: 'admin',
         seriesId: 'my-series',
         seriesOrder: 2,
         translations: { en: validTranslations.en },
       }),
     )
     expect(res.status).toBe(201)
+  })
+
+  it('returns 500 and logs error when createPost throws', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockGetCategoryBySlug.mockResolvedValue(mockCategory)
+    mockSlugExistsForLocale.mockResolvedValue(false)
+    const err = new Error('DB error')
+    mockCreatePost.mockRejectedValue(err)
+    const response = await POST(
+      makeRequest({
+        category: 'engineering',
+        authorId: 'admin',
+        translations: { en: validTranslations.en },
+      }),
+    )
+    expect(response.status).toBe(500)
+    const body = (await response.json()) as { error: string }
+    expect(body.error).toBe('Failed to create post')
+    expect(mockLoggerError).toHaveBeenCalledWith(err, 'Failed to create post')
   })
 })
 

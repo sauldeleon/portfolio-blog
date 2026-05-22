@@ -19,6 +19,7 @@ import {
   seriesOrderExistsForSeries,
   upsertSeriesTranslation,
 } from '@web/lib/db/queries/series'
+import { logger } from '@web/lib/logger'
 import { computeReadingTime } from '@web/utils/computeReadingTime'
 
 const CACHE_HEADERS = {
@@ -42,21 +43,26 @@ export async function GET(
   const { lng } = parsed.data
   const { id } = await params
 
-  const post = await getPostById(id, lng)
-  if (!post || post.status !== 'published') {
-    return NextResponse.json({ error: 'Post not found' }, { status: 404 })
-  }
+  try {
+    const post = await getPostById(id, lng)
+    if (!post || post.status !== 'published') {
+      return NextResponse.json({ error: 'Post not found' }, { status: 404 })
+    }
 
-  const { status: _s, createdAt: _c, ...rest } = post
-  return NextResponse.json(
-    {
-      ...rest,
-      publishedAt: rest.publishedAt?.toISOString() ?? null,
-      updatedAt: rest.updatedAt.toISOString(),
-      readingTime: computeReadingTime(rest.content),
-    },
-    { headers: CACHE_HEADERS },
-  )
+    const { status: _s, createdAt: _c, ...rest } = post
+    return NextResponse.json(
+      {
+        ...rest,
+        publishedAt: rest.publishedAt?.toISOString() ?? null,
+        updatedAt: rest.updatedAt.toISOString(),
+        readingTime: computeReadingTime(rest.content),
+      },
+      { headers: CACHE_HEADERS },
+    )
+  } catch (err) {
+    logger.error(err, 'Failed to get post')
+    return NextResponse.json({ error: 'Failed to get post' }, { status: 500 })
+  }
 }
 
 const translationUpdateSchema = z.object({
@@ -68,7 +74,7 @@ const translationUpdateSchema = z.object({
 
 const updatePostSchema = z.object({
   category: z.string().min(1).optional(),
-  author: z.string().min(1).optional(),
+  authorId: z.string().min(1).optional(),
   tags: z.array(z.string()).optional(),
   status: z.enum(['draft', 'published', 'archived']).optional(),
   coverImage: z.string().nullable().optional(),
@@ -163,66 +169,74 @@ export async function PUT(
         ? { deletedAt: null }
         : {}
 
-  if (data.seriesId) {
-    await ensureSeries(data.seriesId)
-  }
+  try {
+    if (data.seriesId) {
+      await ensureSeries(data.seriesId)
+    }
 
-  if (data.seriesId && data.seriesOrder != null) {
-    const orderTaken = await seriesOrderExistsForSeries(
-      data.seriesId,
-      data.seriesOrder,
-      id,
-    )
-    if (orderTaken) {
-      return NextResponse.json(
-        {
-          error: `Order ${data.seriesOrder} is already taken in this series`,
-        },
-        { status: 422 },
+    if (data.seriesId && data.seriesOrder != null) {
+      const orderTaken = await seriesOrderExistsForSeries(
+        data.seriesId,
+        data.seriesOrder,
+        id,
       )
-    }
-  }
-
-  const post = await updatePost(id, {
-    ...postData,
-    ...(postData.tags !== undefined
-      ? { tags: postData.tags.map((t) => t.toUpperCase()) }
-      : {}),
-    ...publishedAtUpdate,
-    ...deletedAtUpdate,
-    ...(scheduledAt !== undefined
-      ? { scheduledAt: scheduledAt ? new Date(scheduledAt) : null }
-      : {}),
-  })
-
-  if (!post) {
-    return NextResponse.json({ error: 'Post not found' }, { status: 404 })
-  }
-
-  if (translations) {
-    for (const [locale, t] of Object.entries(translations) as Array<
-      ['en' | 'es', z.infer<typeof translationUpdateSchema>]
-    >) {
-      await upsertTranslation(id, locale, t)
-    }
-  }
-
-  const resolvedSeriesId =
-    data.seriesId !== undefined ? data.seriesId : post.seriesId
-  if (resolvedSeriesId && data.seriesTitles) {
-    for (const [locale, title] of Object.entries(data.seriesTitles) as Array<
-      ['en' | 'es', string | undefined]
-    >) {
-      /* istanbul ignore next */
-      if (title) {
-        await upsertSeriesTranslation(resolvedSeriesId, locale, title)
+      if (orderTaken) {
+        return NextResponse.json(
+          {
+            error: `Order ${data.seriesOrder} is already taken in this series`,
+          },
+          { status: 422 },
+        )
       }
     }
-  }
 
-  revalidateTag('posts', 'default')
-  revalidateTag(`post-${id}`, 'default')
-  return NextResponse.json(post)
+    const post = await updatePost(id, {
+      ...postData,
+      ...(postData.tags !== undefined
+        ? { tags: postData.tags.map((t) => t.toUpperCase()) }
+        : {}),
+      ...publishedAtUpdate,
+      ...deletedAtUpdate,
+      ...(scheduledAt !== undefined
+        ? { scheduledAt: scheduledAt ? new Date(scheduledAt) : null }
+        : {}),
+    })
+
+    if (!post) {
+      return NextResponse.json({ error: 'Post not found' }, { status: 404 })
+    }
+
+    if (translations) {
+      for (const [locale, t] of Object.entries(translations) as Array<
+        ['en' | 'es', z.infer<typeof translationUpdateSchema>]
+      >) {
+        await upsertTranslation(id, locale, t)
+      }
+    }
+
+    const resolvedSeriesId =
+      data.seriesId !== undefined ? data.seriesId : post.seriesId
+    if (resolvedSeriesId && data.seriesTitles) {
+      for (const [locale, title] of Object.entries(data.seriesTitles) as Array<
+        ['en' | 'es', string | undefined]
+      >) {
+        /* istanbul ignore next */
+        if (title) {
+          await upsertSeriesTranslation(resolvedSeriesId, locale, title)
+        }
+      }
+    }
+
+    revalidateTag('posts', 'default')
+    revalidateTag(`post-${id}`, 'default')
+    return NextResponse.json(post)
+  } catch (err) {
+    logger.error(err, 'Failed to update post')
+    return NextResponse.json(
+      { error: 'Failed to update post' },
+      { status: 500 },
+    )
+  }
 }
 
 export async function DELETE(
@@ -238,30 +252,38 @@ export async function DELETE(
   const { searchParams } = new URL(request.url)
   const hard = searchParams.get('hard') === 'true'
 
-  const status = await getPostStatus(id)
+  try {
+    const status = await getPostStatus(id)
 
-  if (hard) {
-    if (status !== 'archived') {
+    if (hard) {
+      if (status !== 'archived') {
+        return NextResponse.json(
+          { error: 'Only archived posts can be permanently deleted.' },
+          { status: 422 },
+        )
+      }
+      await hardDeletePost(id)
+      revalidateTag('posts', 'default')
+      revalidateTag(`post-${id}`, 'default')
+      return new NextResponse(null, { status: 204 })
+    }
+
+    if (status === 'published') {
       return NextResponse.json(
-        { error: 'Only archived posts can be permanently deleted.' },
+        { error: 'Cannot archive a published post. Unpublish it first.' },
         { status: 422 },
       )
     }
-    await hardDeletePost(id)
+
+    await softDeletePost(id)
     revalidateTag('posts', 'default')
     revalidateTag(`post-${id}`, 'default')
     return new NextResponse(null, { status: 204 })
-  }
-
-  if (status === 'published') {
+  } catch (err) {
+    logger.error(err, 'Failed to delete post')
     return NextResponse.json(
-      { error: 'Cannot archive a published post. Unpublish it first.' },
-      { status: 422 },
+      { error: 'Failed to delete post' },
+      { status: 500 },
     )
   }
-
-  await softDeletePost(id)
-  revalidateTag('posts', 'default')
-  revalidateTag(`post-${id}`, 'default')
-  return new NextResponse(null, { status: 204 })
 }

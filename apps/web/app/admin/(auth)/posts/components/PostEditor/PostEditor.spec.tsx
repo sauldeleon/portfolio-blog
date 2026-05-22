@@ -221,36 +221,6 @@ jest.mock('./CoverImageInput', () => ({
   ),
 }))
 
-jest.mock('@sdlgr/checkbox', () => ({
-  Checkbox: ({
-    id,
-    label,
-    checked,
-    onChange,
-    'data-testid': testId,
-    disabled,
-  }: {
-    id: string
-    label?: string
-    checked: boolean
-    onChange: (checked: boolean) => void
-    'data-testid'?: string
-    disabled?: boolean
-  }) => (
-    <label htmlFor={id}>
-      <input
-        type="checkbox"
-        id={id}
-        checked={checked}
-        onChange={(e) => onChange(e.target.checked)}
-        disabled={disabled}
-        data-testid={testId}
-      />
-      {label && <span>{label}</span>}
-    </label>
-  ),
-}))
-
 jest.mock('@sdlgr/combobox', () => ({
   Combobox: ({
     value,
@@ -332,6 +302,25 @@ const mockCategories: PostEditorProps['categories'] = [
   { slug: 'design', name: 'Design' },
 ]
 
+const mockUsers: PostEditorProps['users'] = [
+  {
+    id: 'user-1',
+    email: 'admin@example.com',
+    name: 'Admin',
+    role: 'admin',
+    createdAt: new Date('2024-01-01'),
+    updatedAt: new Date('2024-01-01'),
+  },
+  {
+    id: 'user-2',
+    email: 'editor@example.com',
+    name: 'Editor',
+    role: 'editor',
+    createdAt: new Date('2024-01-01'),
+    updatedAt: new Date('2024-01-01'),
+  },
+]
+
 const mockExistingPost: PostEditorProps['post'] = {
   post: {
     id: 'post123',
@@ -344,7 +333,7 @@ const mockExistingPost: PostEditorProps['post'] = {
     seriesId: 'series-1',
     seriesOrder: 2,
     scheduledAt: null,
-    author: 'Admin',
+    authorId: 'user-1',
   },
   translations: [
     {
@@ -394,18 +383,18 @@ describe('PostEditor', () => {
 
   describe('new post', () => {
     it('save button is disabled when mandatory fields are empty', () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       expect(screen.getByTestId('save-button')).toBeDisabled()
     })
 
     it('save button is enabled when title, excerpt, content, and category are filled', () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       fillMandatoryFields()
       expect(screen.getByTestId('save-button')).not.toBeDisabled()
     })
 
     it('renders new post title and empty fields', () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       expect(
         screen.getByRole('heading', { name: 'New Post' }),
       ).toBeInTheDocument()
@@ -414,23 +403,23 @@ describe('PostEditor', () => {
     })
 
     it('renders image syntax hint below content field', () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       expect(screen.getByText('Image syntax')).toBeInTheDocument()
     })
 
     it('shows draft status badge', () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       expect(screen.getByTestId('status-badge')).toHaveTextContent('Draft')
     })
 
     it('back link navigates to /admin/posts', () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       fireEvent.click(screen.getByTestId('back-link'))
       expect(mockPush).toHaveBeenCalledWith('/admin/posts')
     })
 
     it('auto-generates slug from title', () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       fireEvent.change(screen.getByTestId('title-input'), {
         target: { value: 'My New Post' },
       })
@@ -438,7 +427,7 @@ describe('PostEditor', () => {
     })
 
     it('stops auto-generating slug after manual edit', () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       fireEvent.change(screen.getByTestId('title-input'), {
         target: { value: 'My Post' },
       })
@@ -452,18 +441,18 @@ describe('PostEditor', () => {
     })
 
     it('publish button disabled when no translations saved in DB', () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       expect(screen.getByTestId('publish-button')).toBeDisabled()
     })
 
     it('save button is disabled when ES tab active and fields are empty', () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       fireEvent.click(screen.getByTestId('locale-tab-es'))
       expect(screen.getByTestId('save-button')).toBeDisabled()
     })
 
     it('save button is enabled when ES tab active and fields are filled', () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       fireEvent.click(screen.getByTestId('locale-tab-es'))
       fireEvent.change(screen.getByTestId('title-input'), {
         target: { value: 'Mi Post' },
@@ -483,7 +472,7 @@ describe('PostEditor', () => {
     })
 
     it('POST body contains only active locale translation', async () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       fillMandatoryFields()
       fireEvent.click(screen.getByTestId('save-button'))
       await waitFor(() => expect(axios.post).toHaveBeenCalled())
@@ -495,7 +484,7 @@ describe('PostEditor', () => {
     })
 
     it('POST body contains ES translation when ES tab active', async () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       fireEvent.click(screen.getByTestId('locale-tab-es'))
       fireEvent.change(screen.getByTestId('title-input'), {
         target: { value: 'Mi Post' },
@@ -521,7 +510,7 @@ describe('PostEditor', () => {
     })
 
     it('creates new post via POST and navigates to edit page', async () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       fillMandatoryFields()
       fireEvent.click(screen.getByTestId('save-button'))
       await waitFor(() => expect(axios.post).toHaveBeenCalled())
@@ -536,7 +525,7 @@ describe('PostEditor', () => {
           resolvePost = res
         }),
       )
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       fillMandatoryFields()
       fireEvent.click(screen.getByTestId('save-button'))
       expect(screen.getByTestId('save-button')).toHaveTextContent('Saving…')
@@ -556,7 +545,7 @@ describe('PostEditor', () => {
           config: {} as never,
         }),
       )
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       fillMandatoryFields()
       fireEvent.click(screen.getByTestId('save-button'))
       expect(await screen.findByTestId('editor-error')).toHaveTextContent(
@@ -574,7 +563,7 @@ describe('PostEditor', () => {
           config: {} as never,
         }),
       )
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       fillMandatoryFields()
       fireEvent.click(screen.getByTestId('save-button'))
       expect(await screen.findByTestId('editor-error')).toHaveTextContent(
@@ -592,7 +581,7 @@ describe('PostEditor', () => {
           config: {} as never,
         }),
       )
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       fillMandatoryFields()
       fireEvent.click(screen.getByTestId('save-button'))
       expect(await screen.findByTestId('editor-error')).toHaveTextContent(
@@ -602,7 +591,7 @@ describe('PostEditor', () => {
 
     it('silently ignores non-axios errors on save', async () => {
       jest.spyOn(axios, 'post').mockRejectedValue(new Error('Network timeout'))
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       fillMandatoryFields()
       fireEvent.click(screen.getByTestId('save-button'))
       await waitFor(() => expect(axios.post).toHaveBeenCalled())
@@ -610,7 +599,7 @@ describe('PostEditor', () => {
     })
 
     it('sends archived status when archive button clicked', async () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       fireEvent.click(screen.getByTestId('archive-button'))
       await waitFor(() => expect(axios.post).toHaveBeenCalled())
       const body = (axios.post as jest.Mock).mock.calls[0][1] as {
@@ -620,7 +609,7 @@ describe('PostEditor', () => {
     })
 
     it('switching locale tab preserves EN state', () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       fireEvent.change(screen.getByTestId('title-input'), {
         target: { value: 'English Title' },
       })
@@ -630,7 +619,7 @@ describe('PostEditor', () => {
     })
 
     it('locale tabs are independent', () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       fireEvent.change(screen.getByTestId('title-input'), {
         target: { value: 'English Title' },
       })
@@ -644,7 +633,7 @@ describe('PostEditor', () => {
     })
 
     it('tags, category, series fields are editable', () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       fireEvent.change(screen.getByTestId('tags-input'), {
         target: { value: 'react, nextjs' },
       })
@@ -660,7 +649,7 @@ describe('PostEditor', () => {
     })
 
     it('excerpt field is editable', () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       fireEvent.change(screen.getByTestId('excerpt-input'), {
         target: { value: 'A brief description' },
       })
@@ -670,7 +659,7 @@ describe('PostEditor', () => {
     })
 
     it('content field updates preview pane', () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       fireEvent.change(screen.getByTestId('content-input'), {
         target: { value: '# My heading' },
       })
@@ -680,7 +669,7 @@ describe('PostEditor', () => {
     })
 
     it('includes optional fields in POST body when filled', async () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       fillMandatoryFields()
       fireEvent.click(screen.getByTestId('cover-image-input'))
       fireEvent.click(screen.getByTestId('image-picker-insert'))
@@ -702,7 +691,7 @@ describe('PostEditor', () => {
     })
 
     it('tag isValidNewOption filters out invalid tags', () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       fireEvent.change(screen.getByTestId('tags-input'), {
         target: { value: 'valid-tag, invalid!@#, another' },
       })
@@ -713,7 +702,7 @@ describe('PostEditor', () => {
       renderApp(
         <PostEditor
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
           series={[
             { id: 'series-a', nextOrder: 1, translations: [] },
             { id: 'series-b', nextOrder: 1, translations: [] },
@@ -724,12 +713,12 @@ describe('PostEditor', () => {
     })
 
     it('shows coverImageFit select', () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       expect(screen.getByTestId('cover-image-fit-select')).toBeInTheDocument()
     })
 
     it('coverImageFit defaults to cover', () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       expect(
         within(screen.getByTestId('cover-image-fit-select')).getByRole(
           'button',
@@ -738,7 +727,7 @@ describe('PostEditor', () => {
     })
 
     it('POST body includes coverImageFit', async () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       fillMandatoryFields()
       fireEvent.click(screen.getByTestId('save-button'))
       await waitFor(() => expect(axios.post).toHaveBeenCalled())
@@ -750,7 +739,7 @@ describe('PostEditor', () => {
     })
 
     it('POST body includes changed coverImageFit', async () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       fillMandatoryFields()
       fireEvent.click(
         within(screen.getByTestId('cover-image-fit-select')).getByRole(
@@ -768,12 +757,12 @@ describe('PostEditor', () => {
     })
 
     it('series title input hidden when no series ID', () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       expect(screen.queryByTestId('series-title-input')).not.toBeInTheDocument()
     })
 
     it('series title input shown for active locale when series ID set', () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       fireEvent.change(screen.getByTestId('series-id-input'), {
         target: { value: 'my-series' },
       })
@@ -784,7 +773,7 @@ describe('PostEditor', () => {
       renderApp(
         <PostEditor
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
           series={[
             {
               id: 'my-series',
@@ -810,7 +799,7 @@ describe('PostEditor', () => {
     })
 
     it('series title input hidden when series ID cleared', () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       fireEvent.change(screen.getByTestId('series-id-input'), {
         target: { value: 'my-series' },
       })
@@ -827,7 +816,7 @@ describe('PostEditor', () => {
       renderApp(
         <PostEditor
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
           series={[{ id: 'my-series', nextOrder: 3, translations: [] }]}
         />,
       )
@@ -838,7 +827,7 @@ describe('PostEditor', () => {
     })
 
     it('auto-fills seriesOrder with 1 when new series created', () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       fireEvent.change(screen.getByTestId('series-id-input'), {
         target: { value: 'brand-new-series' },
       })
@@ -849,7 +838,7 @@ describe('PostEditor', () => {
       renderApp(
         <PostEditor
           categories={mockCategories}
-          author="Admin"
+          users={mockUsers}
           series={[
             {
               id: 'my-series',
@@ -871,7 +860,7 @@ describe('PostEditor', () => {
     })
 
     it('POST body includes seriesTitles when series ID and title set', async () => {
-      renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
       fillMandatoryFields()
       fireEvent.change(screen.getByTestId('series-id-input'), {
         target: { value: 'my-series' },
@@ -890,19 +879,19 @@ describe('PostEditor', () => {
 
     describe('scheduledAt field', () => {
       it('renders scheduledAt picker', () => {
-        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
         expect(screen.getByTestId('scheduled-at-picker')).toBeInTheDocument()
       })
 
       it('scheduledAt is null by default', () => {
-        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
         expect(
           screen.queryByTestId('scheduled-at-picker-value'),
         ).not.toBeInTheDocument()
       })
 
       it('POST body includes scheduledAt as null when not set', async () => {
-        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
         fillMandatoryFields()
         fireEvent.click(screen.getByTestId('save-button'))
         await waitFor(() => expect(axios.post).toHaveBeenCalled())
@@ -914,7 +903,7 @@ describe('PostEditor', () => {
       })
 
       it('POST body includes scheduledAt as ISO string when set', async () => {
-        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
         fillMandatoryFields()
         fireEvent.click(screen.getByTestId('scheduled-at-picker-set'))
         fireEvent.click(screen.getByTestId('save-button'))
@@ -927,7 +916,7 @@ describe('PostEditor', () => {
       })
 
       it('scheduledAt can be cleared', async () => {
-        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
         fillMandatoryFields()
         fireEvent.click(screen.getByTestId('scheduled-at-picker-set'))
         expect(
@@ -941,34 +930,16 @@ describe('PostEditor', () => {
     })
 
     describe('author field', () => {
-      it('renders author input with default value when checkbox checked', () => {
-        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
-        expect(screen.getByTestId('author-input')).toHaveValue('Saúl de León')
-        expect(screen.getByTestId('author-input')).toBeDisabled()
+      it('renders author select with first user as default', () => {
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+        expect(screen.getByTestId('author-input')).toBeInTheDocument()
+        expect(
+          within(screen.getByTestId('author-input')).getByRole('button'),
+        ).toHaveTextContent('Admin')
       })
 
-      it('author checkbox is checked by default', () => {
-        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
-        expect(screen.getByTestId('author-use-default-checkbox')).toBeChecked()
-      })
-
-      it('unchecking checkbox enables author input', () => {
-        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
-        fireEvent.click(screen.getByTestId('author-use-default-checkbox'))
-        expect(screen.getByTestId('author-input')).not.toBeDisabled()
-      })
-
-      it('allows typing custom author when unchecked', () => {
-        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
-        fireEvent.click(screen.getByTestId('author-use-default-checkbox'))
-        fireEvent.change(screen.getByTestId('author-input'), {
-          target: { value: 'Jane Doe' },
-        })
-        expect(screen.getByTestId('author-input')).toHaveValue('Jane Doe')
-      })
-
-      it('POST body uses default author when checkbox checked', async () => {
-        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+      it('POST body uses first user ID as author when no currentUserId', async () => {
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
         fillMandatoryFields()
         fireEvent.click(screen.getByTestId('save-button'))
         await waitFor(() => expect(axios.post).toHaveBeenCalled())
@@ -976,30 +947,28 @@ describe('PostEditor', () => {
           string,
           unknown
         >
-        expect(body).toHaveProperty('author', 'Saúl de León')
+        expect(body).toHaveProperty('authorId', 'user-1')
       })
 
-      it('POST body uses custom author when checkbox unchecked and name typed', async () => {
-        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
-        fireEvent.click(screen.getByTestId('author-use-default-checkbox'))
-        fireEvent.change(screen.getByTestId('author-input'), {
-          target: { value: 'Jane Doe' },
-        })
-        fillMandatoryFields()
-        fireEvent.click(screen.getByTestId('save-button'))
-        await waitFor(() => expect(axios.post).toHaveBeenCalled())
-        const body = (axios.post as jest.Mock).mock.calls[0][1] as Record<
-          string,
-          unknown
-        >
-        expect(body).toHaveProperty('author', 'Jane Doe')
-      })
-
-      it('POST body falls back to author prop when unchecked and input empty', async () => {
-        renderApp(
-          <PostEditor categories={mockCategories} author="Fallback Author" />,
+      it('allows selecting a different author', () => {
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+        fireEvent.click(
+          within(screen.getByTestId('author-input')).getByRole('option', {
+            name: 'Editor',
+          }),
         )
-        fireEvent.click(screen.getByTestId('author-use-default-checkbox'))
+        expect(
+          within(screen.getByTestId('author-input')).getByRole('button'),
+        ).toHaveTextContent('Editor')
+      })
+
+      it('POST body uses selected user ID as authorId', async () => {
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+        fireEvent.click(
+          within(screen.getByTestId('author-input')).getByRole('option', {
+            name: 'Editor',
+          }),
+        )
         fillMandatoryFields()
         fireEvent.click(screen.getByTestId('save-button'))
         await waitFor(() => expect(axios.post).toHaveBeenCalled())
@@ -1007,27 +976,106 @@ describe('PostEditor', () => {
           string,
           unknown
         >
-        expect(body).toHaveProperty('author', 'Fallback Author')
+        expect(body).toHaveProperty('authorId', 'user-2')
       })
 
-      it('author field is rendered for existing posts without checkbox', () => {
+      it('author field is rendered for existing posts', () => {
         renderApp(
           <PostEditor
             post={mockExistingPost}
             categories={mockCategories}
-            author="Admin"
+            users={mockUsers}
           />,
         )
         expect(screen.getByTestId('author-input')).toBeInTheDocument()
+      })
+
+      it('defaults author to empty string when users array is empty', () => {
+        renderApp(<PostEditor categories={mockCategories} users={[]} />)
         expect(
-          screen.queryByTestId('author-use-default-checkbox'),
-        ).not.toBeInTheDocument()
+          within(screen.getByTestId('author-input')).getByRole('button'),
+        ).toHaveTextContent('')
+      })
+
+      it('pre-fills author with currentUserId when provided', () => {
+        renderApp(
+          <PostEditor
+            categories={mockCategories}
+            users={mockUsers}
+            currentUserId="user-2"
+          />,
+        )
+        expect(
+          within(screen.getByTestId('author-input')).getByRole('button'),
+        ).toHaveTextContent('Editor')
+      })
+
+      it('renders read-only input for non-admin user', () => {
+        renderApp(
+          <PostEditor
+            categories={mockCategories}
+            users={mockUsers}
+            currentUserId="user-2"
+            currentUserRole="editor"
+          />,
+        )
+        const authorInput = screen.getByTestId('author-input')
+        expect(authorInput).toHaveAttribute('readonly')
+        expect(authorInput).toHaveValue('Editor')
+      })
+
+      it('defaults author to empty string when existing post has no authorId', () => {
+        const postWithoutAuthor = {
+          ...mockExistingPost,
+          post: { ...mockExistingPost.post, authorId: null },
+        }
+        renderApp(
+          <PostEditor
+            post={postWithoutAuthor as never}
+            categories={mockCategories}
+            users={mockUsers}
+          />,
+        )
+        expect(screen.getByTestId('author-input')).toBeInTheDocument()
+      })
+
+      it('shows empty author name when editAuthor does not match any user', () => {
+        renderApp(
+          <PostEditor
+            categories={mockCategories}
+            users={mockUsers}
+            currentUserId="non-existent-id"
+            currentUserRole="editor"
+          />,
+        )
+        const authorInput = screen.getByTestId('author-input')
+        expect(authorInput).toHaveAttribute('readonly')
+        expect(authorInput).toHaveValue('')
+      })
+
+      it('non-admin cannot change author in new post body', async () => {
+        renderApp(
+          <PostEditor
+            categories={mockCategories}
+            users={mockUsers}
+            currentUserId="user-2"
+            currentUserRole="editor"
+          />,
+        )
+        fillMandatoryFields()
+        fireEvent.click(screen.getByTestId('save-button'))
+        await waitFor(() => expect(axios.post).toHaveBeenCalled())
+        const body = (axios.post as jest.Mock).mock.calls[0][1] as Record<
+          string,
+          unknown
+        >
+        expect(body).toHaveProperty('authorId', 'user-2')
       })
     })
 
     describe('preview tabs', () => {
       it('renders all four preview tabs', () => {
-        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
         expect(screen.getByTestId('preview-tab-post')).toBeInTheDocument()
         expect(
           screen.getByTestId('preview-tab-post-mobile'),
@@ -1037,7 +1085,7 @@ describe('PostEditor', () => {
       })
 
       it('Post tab is active by default and shows markdown preview', () => {
-        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
         expect(screen.getByTestId('markdown-preview')).toBeInTheDocument()
         expect(screen.queryByTestId('post-hero-mock')).not.toBeInTheDocument()
         expect(
@@ -1046,7 +1094,7 @@ describe('PostEditor', () => {
       })
 
       it('clicking Post Mobile tab shows mobile frame with markdown preview', () => {
-        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
         fireEvent.click(screen.getByTestId('preview-tab-post-mobile'))
         expect(screen.getByTestId('mobile-frame')).toBeInTheDocument()
         expect(screen.getByTestId('markdown-preview')).toBeInTheDocument()
@@ -1057,21 +1105,21 @@ describe('PostEditor', () => {
       })
 
       it('clicking Hero tab shows PostHero and hides markdown preview', () => {
-        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
         fireEvent.click(screen.getByTestId('preview-tab-hero'))
         expect(screen.getByTestId('post-hero-mock')).toBeInTheDocument()
         expect(screen.queryByTestId('markdown-preview')).not.toBeInTheDocument()
       })
 
       it('clicking Card tab shows PostCard and hides markdown preview', () => {
-        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
         fireEvent.click(screen.getByTestId('preview-tab-card'))
         expect(screen.getByTestId('post-card-preview-mock')).toBeInTheDocument()
         expect(screen.queryByTestId('markdown-preview')).not.toBeInTheDocument()
       })
 
       it('switching back to Post tab shows markdown preview again', () => {
-        renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
         fireEvent.click(screen.getByTestId('preview-tab-hero'))
         fireEvent.click(screen.getByTestId('preview-tab-post'))
         expect(screen.getByTestId('markdown-preview')).toBeInTheDocument()

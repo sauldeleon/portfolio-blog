@@ -9,6 +9,7 @@ import {
   getCategoriesForAdmin,
   getCategoryBySlug,
 } from '@web/lib/db/queries/categories'
+import { logger } from '@web/lib/logger'
 
 const CACHE_HEADERS = {
   'Cache-Control': 's-maxage=60, stale-while-revalidate=3600',
@@ -21,12 +22,28 @@ export async function GET(request: Request) {
     const session = await auth()
     if (!session)
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    const categories = await getCategoriesForAdmin()
-    return NextResponse.json({ data: categories })
+    try {
+      const categories = await getCategoriesForAdmin()
+      return NextResponse.json({ data: categories })
+    } catch (err) {
+      logger.error(err, 'Failed to get categories')
+      return NextResponse.json(
+        { error: 'Failed to get categories' },
+        { status: 500 },
+      )
+    }
   }
 
-  const categories = await getCategories()
-  return NextResponse.json({ data: categories }, { headers: CACHE_HEADERS })
+  try {
+    const categories = await getCategories()
+    return NextResponse.json({ data: categories }, { headers: CACHE_HEADERS })
+  } catch (err) {
+    logger.error(err, 'Failed to get categories')
+    return NextResponse.json(
+      { error: 'Failed to get categories' },
+      { status: 500 },
+    )
+  }
 }
 
 const translationSchema = z.object({
@@ -65,33 +82,41 @@ export async function POST(request: Request) {
   const { translations } = parsed.data
   const canonicalSlug = translations.en.slug
 
-  const existing = await getCategoryBySlug(canonicalSlug)
-  if (existing) {
-    return NextResponse.json(
-      { error: `Category slug '${canonicalSlug}' already exists` },
-      { status: 409 },
-    )
-  }
+  try {
+    const existing = await getCategoryBySlug(canonicalSlug)
+    if (existing) {
+      return NextResponse.json(
+        { error: `Category slug '${canonicalSlug}' already exists` },
+        { status: 409 },
+      )
+    }
 
-  const category = await createCategory(canonicalSlug)
+    const category = await createCategory(canonicalSlug)
 
-  await createCategoryTranslation({
-    categorySlug: canonicalSlug,
-    locale: 'en',
-    name: translations.en.name,
-    description: translations.en.description ?? null,
-    slug: translations.en.slug,
-  })
-
-  if (translations.es) {
     await createCategoryTranslation({
       categorySlug: canonicalSlug,
-      locale: 'es',
-      name: translations.es.name,
-      description: translations.es.description ?? null,
-      slug: translations.es.slug,
+      locale: 'en',
+      name: translations.en.name,
+      description: translations.en.description ?? null,
+      slug: translations.en.slug,
     })
-  }
 
-  return NextResponse.json(category, { status: 201 })
+    if (translations.es) {
+      await createCategoryTranslation({
+        categorySlug: canonicalSlug,
+        locale: 'es',
+        name: translations.es.name,
+        description: translations.es.description ?? null,
+        slug: translations.es.slug,
+      })
+    }
+
+    return NextResponse.json(category, { status: 201 })
+  } catch (err) {
+    logger.error(err, 'Failed to create category')
+    return NextResponse.json(
+      { error: 'Failed to create category' },
+      { status: 500 },
+    )
+  }
 }

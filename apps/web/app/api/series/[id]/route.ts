@@ -6,6 +6,7 @@ import { auth } from '@web/lib/auth/config'
 import { db } from '@web/lib/db'
 import { upsertSeriesTranslation } from '@web/lib/db/queries/series'
 import { posts, series, seriesTranslations } from '@web/lib/db/schema'
+import { logger } from '@web/lib/logger'
 
 const updateSchema = z.object({
   locale: z.enum(['en', 'es']),
@@ -35,9 +36,17 @@ export async function PUT(
   }
 
   const { locale, title } = parsed.data
-  await upsertSeriesTranslation(id, locale, title)
 
-  return NextResponse.json({ id, locale, title })
+  try {
+    await upsertSeriesTranslation(id, locale, title)
+    return NextResponse.json({ id, locale, title })
+  } catch (err) {
+    logger.error(err, 'Failed to update series')
+    return NextResponse.json(
+      { error: 'Failed to update series' },
+      { status: 500 },
+    )
+  }
 }
 
 export async function DELETE(
@@ -50,27 +59,37 @@ export async function DELETE(
 
   const { id } = await params
 
-  const linked = await db
-    .select({ id: posts.id })
-    .from(posts)
-    .where(
-      and(
-        eq(posts.seriesId, id),
-        isNotNull(posts.seriesId),
-        isNull(posts.deletedAt),
-      ),
-    )
-    .limit(1)
+  try {
+    const linked = await db
+      .select({ id: posts.id })
+      .from(posts)
+      .where(
+        and(
+          eq(posts.seriesId, id),
+          isNotNull(posts.seriesId),
+          isNull(posts.deletedAt),
+        ),
+      )
+      .limit(1)
 
-  if (linked.length > 0) {
+    if (linked.length > 0) {
+      return NextResponse.json(
+        { error: 'Cannot delete series with posts' },
+        { status: 422 },
+      )
+    }
+
+    await db
+      .delete(seriesTranslations)
+      .where(eq(seriesTranslations.seriesId, id))
+    await db.delete(series).where(eq(series.id, id))
+
+    return NextResponse.json({ id })
+  } catch (err) {
+    logger.error(err, 'Failed to delete series')
     return NextResponse.json(
-      { error: 'Cannot delete series with posts' },
-      { status: 422 },
+      { error: 'Failed to delete series' },
+      { status: 500 },
     )
   }
-
-  await db.delete(seriesTranslations).where(eq(seriesTranslations.seriesId, id))
-  await db.delete(series).where(eq(series.id, id))
-
-  return NextResponse.json({ id })
 }

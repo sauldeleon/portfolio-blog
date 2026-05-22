@@ -291,6 +291,16 @@ describe('getPostByPreviewToken', () => {
     const result = await getPostByPreviewToken('bad-token')
     expect(result).toBeNull()
   })
+
+  it('fetches author name when authorId is set', async () => {
+    const postWithAuthor = { ...mockPost, authorId: 'user-1' }
+    mockDb.select
+      .mockReturnValueOnce(makeChain([postWithAuthor]))
+      .mockReturnValueOnce(makeChain([mockTranslation]))
+      .mockReturnValueOnce(makeChain([{ name: 'Admin' }]))
+    const result = await getPostByPreviewToken('secret-token')
+    expect(result?.authorName).toBe('Admin')
+  })
 })
 
 describe('getAllPosts', () => {
@@ -794,7 +804,11 @@ describe('getPostForEdit', () => {
       .mockReturnValueOnce(makeChain([mockPost]))
       .mockReturnValueOnce(makeChain([mockTranslation]))
     const result = await getPostForEdit(mockPost.id)
-    expect(result).toEqual({ post: mockPost, translations: [mockTranslation] })
+    expect(result).toEqual({
+      post: mockPost,
+      translations: [mockTranslation],
+      authorName: '',
+    })
   })
 
   it('returns null when post not found', async () => {

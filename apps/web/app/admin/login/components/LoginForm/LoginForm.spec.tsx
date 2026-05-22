@@ -15,7 +15,7 @@ jest.mock('@web/i18n/client', () => ({
   useClientTranslation: jest.fn().mockReturnValue({
     t: (key: string) => {
       const translations: Record<string, string> = {
-        'login.username': 'Username',
+        'login.email': 'Email',
         'login.password': 'Password',
         'login.showPassword': 'show',
         'login.hidePassword': 'hide',
@@ -38,9 +38,9 @@ describe('LoginForm', () => {
     jest.clearAllMocks()
   })
 
-  it('renders username and password inputs and submit button', () => {
+  it('renders email and password inputs and submit button', () => {
     renderApp(<LoginForm />)
-    expect(screen.getByLabelText(/username/i)).toBeInTheDocument()
+    expect(screen.getByLabelText(/email/i)).toBeInTheDocument()
     expect(
       screen.getByLabelText(/password/i, { selector: 'input' }),
     ).toBeInTheDocument()
@@ -68,7 +68,7 @@ describe('LoginForm', () => {
     )
 
     renderApp(<LoginForm />)
-    fireEvent.change(screen.getByLabelText(/username/i), {
+    fireEvent.change(screen.getByLabelText(/email/i), {
       target: { value: 'admin' },
     })
     fireEvent.change(
@@ -94,7 +94,7 @@ describe('LoginForm', () => {
     mockSignIn.mockResolvedValue({ error: 'CredentialsSignin' })
 
     renderApp(<LoginForm />)
-    fireEvent.change(screen.getByLabelText(/username/i), {
+    fireEvent.change(screen.getByLabelText(/email/i), {
       target: { value: 'wrong' },
     })
     fireEvent.change(
@@ -115,7 +115,7 @@ describe('LoginForm', () => {
     mockSignIn.mockResolvedValue({ error: null })
 
     renderApp(<LoginForm />)
-    fireEvent.change(screen.getByLabelText(/username/i), {
+    fireEvent.change(screen.getByLabelText(/email/i), {
       target: { value: 'admin' },
     })
     fireEvent.change(
@@ -150,7 +150,7 @@ describe('LoginForm', () => {
       .mockResolvedValueOnce({ error: null })
 
     renderApp(<LoginForm />)
-    fireEvent.change(screen.getByLabelText(/username/i), {
+    fireEvent.change(screen.getByLabelText(/email/i), {
       target: { value: 'admin' },
     })
     fireEvent.change(
@@ -177,7 +177,7 @@ describe('LoginForm', () => {
     mockSignIn.mockResolvedValue({ status: 429, error: 'TooManyRequests' })
 
     renderApp(<LoginForm />)
-    fireEvent.change(screen.getByLabelText(/username/i), {
+    fireEvent.change(screen.getByLabelText(/email/i), {
       target: { value: 'admin' },
     })
     fireEvent.change(

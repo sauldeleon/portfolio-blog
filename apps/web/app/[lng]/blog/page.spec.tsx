@@ -20,6 +20,10 @@ jest.mock('@web/i18n/server', () => ({
   getServerTranslation: jest.fn(),
 }))
 
+jest.mock('@web/utils/url/generateUrl', () => ({
+  getSiteUrl: jest.fn().mockReturnValue('https://www.sawl.dev'),
+}))
+
 function makeParams(lng: Locale) {
   return { params: Promise.resolve({ lng }), searchParams: Promise.resolve({}) }
 }
@@ -81,6 +85,17 @@ describe('[lng]/blog — metadata', () => {
           'x-default': 'https://www.sawl.dev/en/blog/',
         },
       },
+      openGraph: {
+        images: [
+          { url: 'https://www.sawl.dev/og/blog.png', width: 1731, height: 909 },
+        ],
+      },
+      twitter: {
+        card: 'summary_large_image',
+        images: [
+          { url: 'https://www.sawl.dev/og/blog.png', width: 1731, height: 909 },
+        ],
+      },
     })
   })
 
@@ -96,6 +111,17 @@ describe('[lng]/blog — metadata', () => {
           'es-ES': 'https://www.sawl.dev/es/blog/',
           'x-default': 'https://www.sawl.dev/en/blog/',
         },
+      },
+      openGraph: {
+        images: [
+          { url: 'https://www.sawl.dev/og/blog.png', width: 1731, height: 909 },
+        ],
+      },
+      twitter: {
+        card: 'summary_large_image',
+        images: [
+          { url: 'https://www.sawl.dev/og/blog.png', width: 1731, height: 909 },
+        ],
       },
     })
   })

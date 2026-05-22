@@ -10,11 +10,11 @@ interface AuthLayoutProps {
 }
 
 export default async function AuthLayout({ children }: AuthLayoutProps) {
-  await requireAdminSession()
+  const session = await requireAdminSession()
 
   return (
     <StyledAuthLayout data-testid="auth-layout">
-      <AdminNav />
+      <AdminNav role={session.user.role} />
       <StyledMain>{children}</StyledMain>
     </StyledAuthLayout>
   )

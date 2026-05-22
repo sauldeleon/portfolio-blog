@@ -115,36 +115,6 @@ jest.mock('../ImagePicker', () => ({
     ) : null,
 }))
 
-jest.mock('@sdlgr/checkbox', () => ({
-  Checkbox: ({
-    id,
-    label,
-    checked,
-    onChange,
-    'data-testid': testId,
-    disabled,
-  }: {
-    id: string
-    label?: string
-    checked: boolean
-    onChange: (v: boolean) => void
-    'data-testid'?: string
-    disabled?: boolean
-  }) => (
-    <label htmlFor={id}>
-      <input
-        type="checkbox"
-        id={id}
-        checked={checked}
-        onChange={(e) => onChange(e.target.checked)}
-        disabled={disabled}
-        data-testid={testId}
-      />
-      {label && <span>{label}</span>}
-    </label>
-  ),
-}))
-
 jest.mock('@sdlgr/combobox', () => ({
   Combobox: ({
     value,
@@ -280,32 +250,43 @@ const mockCategories: PostEditorProps['categories'] = [
   { slug: 'engineering', name: 'Engineering' },
 ]
 
+const mockUsers: PostEditorProps['users'] = [
+  {
+    id: 'user-1',
+    email: 'admin@example.com',
+    name: 'Admin',
+    role: 'admin',
+    createdAt: new Date('2024-01-01'),
+    updatedAt: new Date('2024-01-01'),
+  },
+]
+
 describe('PostEditor — image picker', () => {
   it('renders the open image picker button', () => {
-    renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
     expect(screen.getByTestId('open-image-picker-button')).toBeInTheDocument()
   })
 
   it('image picker is not visible initially', () => {
-    renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
     expect(screen.queryByTestId('image-picker')).not.toBeInTheDocument()
   })
 
   it('opens image picker when button clicked', () => {
-    renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
     fireEvent.click(screen.getByTestId('open-image-picker-button'))
     expect(screen.getByTestId('image-picker')).toBeInTheDocument()
   })
 
   it('closes image picker when onClose called', () => {
-    renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
     fireEvent.click(screen.getByTestId('open-image-picker-button'))
     fireEvent.click(screen.getByTestId('picker-close'))
     expect(screen.queryByTestId('image-picker')).not.toBeInTheDocument()
   })
 
   it('inserts markdown at end of content when textarea has no ref focus', () => {
-    renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
     const textarea = screen.getByTestId('content-input') as HTMLTextAreaElement
     fireEvent.change(textarea, { target: { value: 'existing content' } })
     fireEvent.click(screen.getByTestId('open-image-picker-button'))
@@ -316,13 +297,13 @@ describe('PostEditor — image picker', () => {
   })
 
   it('opens picker in cover mode when cover-image-input clicked', () => {
-    renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
     fireEvent.click(screen.getByTestId('cover-image-input'))
     expect(screen.getByTestId('image-picker')).toBeInTheDocument()
   })
 
   it('fills cover image field and closes picker in cover mode', () => {
-    renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
     fireEvent.click(screen.getByTestId('cover-image-input'))
     fireEvent.click(screen.getByTestId('picker-insert'))
     expect(screen.getByTestId('cover-image-input')).toHaveValue('test/img')
@@ -330,12 +311,12 @@ describe('PostEditor — image picker', () => {
   })
 
   it('cover-image-input is read-only', () => {
-    renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
     expect(screen.getByTestId('cover-image-input')).toHaveAttribute('readonly')
   })
 
   it('clears cover image when clear button clicked', () => {
-    renderApp(<PostEditor categories={mockCategories} author="Admin" />)
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
     fireEvent.click(screen.getByTestId('cover-image-input'))
     fireEvent.click(screen.getByTestId('picker-insert'))
     expect(screen.getByTestId('cover-image-input')).toHaveValue('test/img')

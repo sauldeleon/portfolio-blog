@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation'
 
 import { useClientTranslation } from '@web/i18n/client'
+import type { UserRole } from '@web/lib/db/schema'
 
 import { logoutAction } from '../../actions/logout'
 import {
@@ -13,7 +14,11 @@ import {
   StyledNavLink,
 } from './AdminNav.styles'
 
-export function AdminNav() {
+interface AdminNavProps {
+  role?: UserRole
+}
+
+export function AdminNav({ role }: AdminNavProps) {
   const { t } = useClientTranslation('admin')
   const pathname = usePathname()
 
@@ -44,6 +49,14 @@ export function AdminNav() {
       >
         {t('nav.images')}
       </StyledNavLink>
+      {role === 'admin' && (
+        <StyledNavLink
+          href="/admin/users"
+          $active={pathname.startsWith('/admin/users')}
+        >
+          {t('nav.users')}
+        </StyledNavLink>
+      )}
       <StyledDivider aria-hidden />
       <form action={logoutAction}>
         <StyledLogoutButton type="submit">{t('nav.logout')}</StyledLogoutButton>

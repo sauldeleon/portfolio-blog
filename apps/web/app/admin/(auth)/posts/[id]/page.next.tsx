@@ -5,6 +5,7 @@ import { getCategoriesForAdmin } from '@web/lib/db/queries/categories'
 import { getPostForEdit } from '@web/lib/db/queries/posts'
 import { getAllSeriesWithTranslations } from '@web/lib/db/queries/series'
 import { getAllTagsAdmin } from '@web/lib/db/queries/tags'
+import { listUsers } from '@web/lib/db/queries/users'
 
 import { PostEditor } from '../components/PostEditor'
 
@@ -16,13 +17,14 @@ interface EditPostPageProps {
 
 export default async function EditPostPage({ params }: EditPostPageProps) {
   const { id } = await params
-  const [session, postData, categoriesForAdmin, allTags, series] =
+  const [session, postData, categoriesForAdmin, allTags, series, users] =
     await Promise.all([
       requireAdminSession(),
       getPostForEdit(id),
       getCategoriesForAdmin(),
       getAllTagsAdmin(),
       getAllSeriesWithTranslations(),
+      listUsers(),
     ])
 
   if (!postData) return notFound()
@@ -34,10 +36,6 @@ export default async function EditPostPage({ params }: EditPostPageProps) {
       cat.translations[0]?.name ??
       cat.slug,
   }))
-
-  const author =
-    (session as { user?: { name?: string | null } } | null)?.user?.name ??
-    'Admin'
 
   const editorPost = {
     post: {
@@ -51,7 +49,7 @@ export default async function EditPostPage({ params }: EditPostPageProps) {
       seriesId: postData.post.seriesId,
       seriesOrder: postData.post.seriesOrder,
       scheduledAt: postData.post.scheduledAt,
-      author: postData.post.author,
+      authorId: postData.post.authorId,
     },
     translations: postData.translations.map((t) => ({
       locale: t.locale,
@@ -66,9 +64,11 @@ export default async function EditPostPage({ params }: EditPostPageProps) {
     <PostEditor
       post={editorPost}
       categories={categories}
-      author={author}
+      users={users}
       allTags={allTags}
       series={series}
+      currentUserId={session.user.id}
+      currentUserRole={session.user.role}
     />
   )
 }

@@ -5,10 +5,14 @@ import { GET } from './route'
 
 const mockAuth = jest.fn()
 const mockGetPostsForSeries = jest.fn()
+const mockLoggerError = jest.fn()
 
 jest.mock('@web/lib/auth/config', () => ({ auth: () => mockAuth() }))
 jest.mock('@web/lib/db/queries/series', () => ({
   getPostsForSeries: (...args: unknown[]) => mockGetPostsForSeries(...args),
+}))
+jest.mock('@web/lib/logger', () => ({
+  logger: { error: (...args: unknown[]) => mockLoggerError(...args) },
 }))
 
 function makeParams(id: string) {
@@ -62,5 +66,21 @@ describe('GET /api/series/[id]/posts', () => {
     expect(res.status).toBe(200)
     const body = (await res.json()) as { data: unknown[] }
     expect(body.data).toEqual([])
+  })
+
+  it('returns 500 and logs error when getPostsForSeries throws', async () => {
+    const err = new Error('DB error')
+    mockGetPostsForSeries.mockRejectedValue(err)
+    const res = await GET(
+      new Request('http://localhost/api/series/my-series/posts'),
+      makeParams('my-series'),
+    )
+    expect(res.status).toBe(500)
+    const body = (await res.json()) as { error: string }
+    expect(body.error).toBe('Failed to get posts for series')
+    expect(mockLoggerError).toHaveBeenCalledWith(
+      err,
+      'Failed to get posts for series',
+    )
   })
 })

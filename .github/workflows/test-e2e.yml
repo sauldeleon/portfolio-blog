@@ -5,6 +5,7 @@ on:
 jobs:
   cypress-run:
     runs-on: ubuntu-22.04
+    environment: preview
     steps:
       - name: vercel-preview-url
         uses: zentered/vercel-preview-url@v1.4.0
@@ -38,3 +39,4 @@ jobs:
           working-directory: apps/web-e2e
           wait-on: 'https://${{ steps.vercel_preview_url.outputs.preview_url }}'
           config: baseUrl=https://${{ steps.vercel_preview_url.outputs.preview_url }}
+          env: E2E_PASSWORD=${{ secrets.E2E_PASSWORD }}

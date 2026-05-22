@@ -1,4 +1,6 @@
+import { sql } from 'drizzle-orm'
 import {
+  check,
   index,
   integer,
   pgTable,
@@ -56,7 +58,9 @@ export const posts = pgTable(
       .notNull()
       .references(() => categories.slug),
     tags: text('tags').array().notNull().default([]),
-    author: text('author').notNull(),
+    authorId: text('author_id').references(() => users.id, {
+      onDelete: 'set null',
+    }),
     status: text('status', { enum: ['draft', 'published', 'archived'] })
       .notNull()
       .default('draft'),
@@ -98,6 +102,30 @@ export const postTranslations = pgTable(
   ],
 )
 
+export type UserRole = 'admin' | 'editor' | 'user'
+
+export const users = pgTable(
+  'users',
+  {
+    id: text('id').primaryKey(),
+    email: text('email').notNull().unique(),
+    passwordHash: text('password_hash').notNull(),
+    role: text('role', { enum: ['admin', 'editor', 'user'] })
+      .notNull()
+      .default('editor'),
+    name: text('name').notNull().unique(),
+    createdAt: timestamp('created_at', { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [
+    check('users_role_check', sql`${t.role} IN ('admin', 'editor', 'user')`),
+  ],
+)
+
 export type Category = typeof categories.$inferSelect
 export type NewCategory = typeof categories.$inferInsert
 export type CategoryTranslation = typeof categoryTranslations.$inferSelect
@@ -110,6 +138,8 @@ export type Post = typeof posts.$inferSelect
 export type NewPost = typeof posts.$inferInsert
 export type PostTranslation = typeof postTranslations.$inferSelect
 export type NewPostTranslation = typeof postTranslations.$inferInsert
+export type User = typeof users.$inferSelect
+export type NewUser = typeof users.$inferInsert
 export type Locale = 'en' | 'es'
 export type PostStatus = 'draft' | 'published' | 'archived'
 export type CoverImageFit = 'cover' | 'contain'

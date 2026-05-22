@@ -8,6 +8,7 @@ const mockGetPostForEdit = jest.fn()
 const mockGetCategoriesForAdmin = jest.fn()
 const mockGetAllTagsAdmin = jest.fn()
 const mockGetAllSeriesWithTranslations = jest.fn()
+const mockListUsers = jest.fn()
 const mockNotFound = jest.fn()
 
 jest.mock('@web/lib/auth/requireAdminSession', () => ({
@@ -30,6 +31,10 @@ jest.mock('@web/lib/db/queries/tags', () => ({
 jest.mock('@web/lib/db/queries/series', () => ({
   getAllSeriesWithTranslations: (...args: unknown[]) =>
     mockGetAllSeriesWithTranslations(...args),
+}))
+
+jest.mock('@web/lib/db/queries/users', () => ({
+  listUsers: (...args: unknown[]) => mockListUsers(...args),
 }))
 
 jest.mock('next/navigation', () => ({
@@ -75,7 +80,7 @@ const mockPostData = {
     coverImageFit: null as null,
     seriesId: null,
     seriesOrder: null,
-    author: 'Admin',
+    authorId: 'user-1',
     scheduledAt: null,
     publishedAt: null,
     createdAt: new Date('2024-01-01'),
@@ -96,10 +101,21 @@ const mockPostData = {
 }
 
 describe('EditPostPage', () => {
+  const mockUsers = [
+    {
+      id: 'user-1',
+      email: 'admin@example.com',
+      name: 'Admin',
+      role: 'admin' as const,
+      createdAt: new Date('2024-01-01'),
+      updatedAt: new Date('2024-01-01'),
+    },
+  ]
+
   beforeEach(() => {
     jest.clearAllMocks()
     mockRequireAdminSession.mockResolvedValue({
-      user: { name: 'Saúl de León' },
+      user: { name: 'Saúl de León', id: 'user-1', role: 'admin' },
     })
     mockGetPostForEdit.mockResolvedValue(mockPostData)
     mockGetCategoriesForAdmin.mockResolvedValue(mockCategories)
@@ -107,6 +123,7 @@ describe('EditPostPage', () => {
     mockGetAllSeriesWithTranslations.mockResolvedValue([
       { id: 'my-series', translations: [] },
     ])
+    mockListUsers.mockResolvedValue(mockUsers)
   })
 
   it('renders PostEditor with post data', async () => {
@@ -138,13 +155,13 @@ describe('EditPostPage', () => {
     )
   })
 
-  it('passes author from session', async () => {
+  it('passes users list to PostEditor', async () => {
     const ui = await EditPostPage({
       params: Promise.resolve({ id: 'post123' }),
     })
     render(ui)
     expect(PostEditor).toHaveBeenCalledWith(
-      expect.objectContaining({ author: 'Saúl de León' }),
+      expect.objectContaining({ users: mockUsers }),
       undefined,
     )
   })
@@ -153,30 +170,6 @@ describe('EditPostPage', () => {
     mockGetPostForEdit.mockResolvedValue(null)
     await EditPostPage({ params: Promise.resolve({ id: 'unknown' }) })
     expect(mockNotFound).toHaveBeenCalledTimes(1)
-  })
-
-  it('falls back to Admin when session has no user name', async () => {
-    mockRequireAdminSession.mockResolvedValue({ user: { name: null } })
-    const ui = await EditPostPage({
-      params: Promise.resolve({ id: 'post123' }),
-    })
-    render(ui)
-    expect(PostEditor).toHaveBeenCalledWith(
-      expect.objectContaining({ author: 'Admin' }),
-      undefined,
-    )
-  })
-
-  it('falls back to Admin when session is null', async () => {
-    mockRequireAdminSession.mockResolvedValue(null)
-    const ui = await EditPostPage({
-      params: Promise.resolve({ id: 'post123' }),
-    })
-    render(ui)
-    expect(PostEditor).toHaveBeenCalledWith(
-      expect.objectContaining({ author: 'Admin' }),
-      undefined,
-    )
   })
 
   it('maps translations correctly', async () => {
@@ -233,6 +226,20 @@ describe('EditPostPage', () => {
       expect.objectContaining({
         allTags: ['react', 'typescript'],
         series: [{ id: 'my-series', translations: [] }],
+      }),
+      undefined,
+    )
+  })
+
+  it('passes currentUserId and currentUserRole to PostEditor', async () => {
+    const ui = await EditPostPage({
+      params: Promise.resolve({ id: 'post123' }),
+    })
+    render(ui)
+    expect(PostEditor).toHaveBeenCalledWith(
+      expect.objectContaining({
+        currentUserId: 'user-1',
+        currentUserRole: 'admin',
       }),
       undefined,
     )

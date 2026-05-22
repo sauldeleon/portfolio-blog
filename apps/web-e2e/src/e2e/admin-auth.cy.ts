@@ -11,6 +11,16 @@ describe('Admin auth — unauthenticated access', () => {
     cy.url().should('include', '/admin/login')
   })
 
+  it('redirects /admin/series to login when not authenticated', () => {
+    cy.visit('/admin/series')
+    cy.url().should('include', '/admin/login')
+  })
+
+  it('redirects /admin/images to login when not authenticated', () => {
+    cy.visit('/admin/images')
+    cy.url().should('include', '/admin/login')
+  })
+
   it('allows visiting /admin/login without auth', () => {
     cy.visit('/admin/login')
     cy.get('[data-testid="login-form"]').should('be.visible')
@@ -19,7 +29,7 @@ describe('Admin auth — unauthenticated access', () => {
 
 describe('Admin auth — login', () => {
   it('shows error on invalid credentials', () => {
-    loginViaUi('admin', 'wrongpassword')
+    loginViaUi('e2e@e2e.com', 'wrongpassword')
     cy.get('[role="alert"]').should('contain.text', 'Invalid credentials')
     cy.url().should('include', '/admin/login')
   })
@@ -62,6 +72,28 @@ describe('Admin auth — logout', () => {
     cy.clearLocalStorage()
 
     cy.visit('/admin/categories')
+    cy.url({ timeout: 15000 }).should('include', '/admin/login')
+    cy.get('[data-testid="login-form"]').should('be.visible')
+  })
+
+  it('cannot access /admin/series after logout', () => {
+    cy.contains('button', 'Logout').click()
+    cy.url({ timeout: 15000 }).should('include', '/admin/login')
+    cy.clearAllCookies()
+    cy.clearLocalStorage()
+
+    cy.visit('/admin/series')
+    cy.url({ timeout: 15000 }).should('include', '/admin/login')
+    cy.get('[data-testid="login-form"]').should('be.visible')
+  })
+
+  it('cannot access /admin/images after logout', () => {
+    cy.contains('button', 'Logout').click()
+    cy.url({ timeout: 15000 }).should('include', '/admin/login')
+    cy.clearAllCookies()
+    cy.clearLocalStorage()
+
+    cy.visit('/admin/images')
     cy.url({ timeout: 15000 }).should('include', '/admin/login')
     cy.get('[data-testid="login-form"]').should('be.visible')
   })
