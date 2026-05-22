@@ -87,13 +87,13 @@ describe('[lng]/blog — metadata', () => {
       },
       openGraph: {
         images: [
-          { url: 'https://www.sawl.dev/og/blog.png', width: 1731, height: 909 },
+          { url: 'https://www.sawl.dev/og/blog.jpg', width: 1200, height: 630 },
         ],
       },
       twitter: {
         card: 'summary_large_image',
         images: [
-          { url: 'https://www.sawl.dev/og/blog.png', width: 1731, height: 909 },
+          { url: 'https://www.sawl.dev/og/blog.jpg', width: 1200, height: 630 },
         ],
       },
     })
@@ -114,13 +114,13 @@ describe('[lng]/blog — metadata', () => {
       },
       openGraph: {
         images: [
-          { url: 'https://www.sawl.dev/og/blog.png', width: 1731, height: 909 },
+          { url: 'https://www.sawl.dev/og/blog.jpg', width: 1200, height: 630 },
         ],
       },
       twitter: {
         card: 'summary_large_image',
         images: [
-          { url: 'https://www.sawl.dev/og/blog.png', width: 1731, height: 909 },
+          { url: 'https://www.sawl.dev/og/blog.jpg', width: 1200, height: 630 },
         ],
       },
     })

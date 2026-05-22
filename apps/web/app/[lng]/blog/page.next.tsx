@@ -21,18 +21,18 @@ interface RouteProps {
 export async function generateMetadata({ params }: RouteProps) {
   const { lng } = await params
   const { t } = await getServerTranslation({ ns: 'blogPage', language: lng })
-  const ogImageUrl = `${getSiteUrl()}/og/blog.png`
+  const ogImageUrl = `${getSiteUrl()}/og/blog.jpg`
 
   return {
     title: t('meta.title'),
     description: t('meta.description'),
     alternates: buildAlternates(lng, 'blog/'),
     openGraph: {
-      images: [{ url: ogImageUrl, width: 1731, height: 909 }],
+      images: [{ url: ogImageUrl, width: 1200, height: 630 }],
     },
     twitter: {
       card: 'summary_large_image' as const,
-      images: [{ url: ogImageUrl, width: 1731, height: 909 }],
+      images: [{ url: ogImageUrl, width: 1200, height: 630 }],
     },
   }
 }
