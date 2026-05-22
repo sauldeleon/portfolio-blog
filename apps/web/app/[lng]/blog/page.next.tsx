@@ -2,6 +2,7 @@ import { BlogPage } from '@web/components/BlogPage/BlogPage'
 import { getServerTranslation } from '@web/i18n/server'
 import { Locale } from '@web/lib/db/schema'
 import { buildAlternates } from '@web/utils/metadata/inLanguage'
+import { getSiteUrl } from '@web/utils/url/generateUrl'
 
 export const revalidate = 60
 
@@ -20,11 +21,19 @@ interface RouteProps {
 export async function generateMetadata({ params }: RouteProps) {
   const { lng } = await params
   const { t } = await getServerTranslation({ ns: 'blogPage', language: lng })
+  const ogImageUrl = `${getSiteUrl()}/og/blog.png`
 
   return {
     title: t('meta.title'),
     description: t('meta.description'),
     alternates: buildAlternates(lng, 'blog/'),
+    openGraph: {
+      images: [{ url: ogImageUrl, width: 1731, height: 909 }],
+    },
+    twitter: {
+      card: 'summary_large_image' as const,
+      images: [{ url: ogImageUrl, width: 1731, height: 909 }],
+    },
   }
 }
 
