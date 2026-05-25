@@ -16,7 +16,14 @@ const mockLoggerError = jest.fn()
 
 jest.mock('next/cache', () => ({ revalidateTag: mockRevalidateTag }))
 jest.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
-jest.mock('@web/lib/logger', () => ({ logger: { error: mockLoggerError } }))
+jest.mock('@web/lib/logger', () => ({
+  logger: {
+    error: mockLoggerError,
+    info: jest.fn(),
+    debug: jest.fn(),
+    warn: jest.fn(),
+  },
+}))
 jest.mock('@web/lib/db/queries/categories', () => ({
   getCategoryBySlug: mockGetCategoryBySlug,
 }))

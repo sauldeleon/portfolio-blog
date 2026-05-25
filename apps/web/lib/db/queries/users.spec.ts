@@ -165,7 +165,7 @@ describe('deleteUser', () => {
 
 describe('countAdmins', () => {
   it('returns count of admin users', async () => {
-    mockDb.select.mockReturnValue(makeChain([{ id: 'a' }, { id: 'b' }]))
+    mockDb.select.mockReturnValue(makeChain([{ count: 2 }]))
     const result = await countAdmins()
     expect(result).toBe(2)
   })

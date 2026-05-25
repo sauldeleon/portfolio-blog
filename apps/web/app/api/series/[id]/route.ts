@@ -2,7 +2,7 @@ import { and, eq, isNotNull, isNull } from 'drizzle-orm'
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
-import { auth } from '@web/lib/auth/config'
+import { parseAuthRequest, requireAuth } from '@web/lib/api/parseRequest'
 import { db } from '@web/lib/db'
 import { upsertSeriesTranslation } from '@web/lib/db/queries/series'
 import { posts, series, seriesTranslations } from '@web/lib/db/schema'
@@ -17,28 +17,16 @@ export async function PUT(
   request: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  const session = await auth()
-  if (!session)
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  const result = await parseAuthRequest(request, updateSchema)
+  if (!result.ok) return result.response
 
   const { id } = await params
-
-  let body: unknown
-  try {
-    body = await request.json()
-  } catch {
-    return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
-  }
-
-  const parsed = updateSchema.safeParse(body)
-  if (!parsed.success) {
-    return NextResponse.json({ error: parsed.error.issues }, { status: 400 })
-  }
-
-  const { locale, title } = parsed.data
+  const { locale, title } = result.data
+  logger.debug({ id, locale }, 'PUT /api/series/[id]')
 
   try {
     await upsertSeriesTranslation(id, locale, title)
+    logger.info({ id, locale }, 'PUT /api/series/[id]: updated')
     return NextResponse.json({ id, locale, title })
   } catch (err) {
     logger.error(err, 'Failed to update series')
@@ -53,11 +41,11 @@ export async function DELETE(
   _request: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  const session = await auth()
-  if (!session)
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  const authResult = await requireAuth()
+  if (!authResult.ok) return authResult.response
 
   const { id } = await params
+  logger.debug({ id }, 'DELETE /api/series/[id]')
 
   try {
     const linked = await db
@@ -84,6 +72,7 @@ export async function DELETE(
       .where(eq(seriesTranslations.seriesId, id))
     await db.delete(series).where(eq(series.id, id))
 
+    logger.info({ id }, 'DELETE /api/series/[id]: deleted')
     return NextResponse.json({ id })
   } catch (err) {
     logger.error(err, 'Failed to delete series')

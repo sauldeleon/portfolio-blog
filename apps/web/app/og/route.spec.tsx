@@ -7,7 +7,14 @@ const mockLoggerWarn = jest.fn()
 jest.mock('./OgImageTemplate', () => ({
   OgImageTemplate: (props: unknown) => mockOgImageTemplate(props),
 }))
-jest.mock('@web/lib/logger', () => ({ logger: { warn: mockLoggerWarn } }))
+jest.mock('@web/lib/logger', () => ({
+  logger: {
+    warn: mockLoggerWarn,
+    error: jest.fn(),
+    info: jest.fn(),
+    debug: jest.fn(),
+  },
+}))
 
 jest.mock('next-cloudinary', () => ({
   getCldImageUrl: jest.fn(
@@ -26,22 +33,20 @@ jest.mock('next/og', () => ({
   }),
 }))
 
+jest.mock('axios')
+
 describe('GET /og', () => {
-  let mockFetch: jest.SpyInstance
+  let mockAxiosGet: jest.Mock
 
   beforeEach(() => {
     jest.clearAllMocks()
     mockOgImageTemplate.mockReturnValue(null)
-    mockFetch = jest.spyOn(global, 'fetch').mockResolvedValue({
-      arrayBuffer: jest
-        .fn()
-        .mockResolvedValue(Buffer.from('fake-image-data').buffer),
-      headers: { get: jest.fn().mockReturnValue('image/jpeg') },
-    } as unknown as Response)
-  })
-
-  afterEach(() => {
-    mockFetch.mockRestore()
+    const axios = require('axios')
+    mockAxiosGet = axios.get as jest.Mock
+    mockAxiosGet.mockResolvedValue({
+      data: Buffer.from('fake-image-data').buffer,
+      headers: { 'content-type': 'image/jpeg' },
+    })
   })
 
   it('calls ImageResponse with 1200x630 dimensions', async () => {
@@ -76,20 +81,19 @@ describe('GET /og', () => {
     expect(getCldImageUrl).toHaveBeenCalledWith(
       expect.objectContaining({ src: 'blog/cover.jpg' }),
     )
-    expect(global.fetch).toHaveBeenCalledWith(
+    expect(mockAxiosGet).toHaveBeenCalledWith(
       'https://res.cloudinary.com/test/image/upload/cover.jpg',
+      expect.objectContaining({ responseType: 'arraybuffer' }),
     )
     const element = mockImageResponse.mock.calls[0][0]
     expect(element.props.cover).toMatch(/^data:image\/jpeg;base64,/)
   })
 
   it('uses image/jpeg fallback when content-type header is missing', async () => {
-    mockFetch.mockResolvedValue({
-      arrayBuffer: jest
-        .fn()
-        .mockResolvedValue(Buffer.from('fake-image-data').buffer),
-      headers: { get: jest.fn().mockReturnValue(null) },
-    } as unknown as Response)
+    mockAxiosGet.mockResolvedValue({
+      data: Buffer.from('fake-image-data').buffer,
+      headers: {},
+    })
     const { GET } = require('./route')
     await GET(
       new Request('http://localhost/og?title=Test&cover=blog%2Fcover.jpg'),
@@ -100,7 +104,7 @@ describe('GET /og', () => {
 
   it('passes null cover and logs warn when fetch fails', async () => {
     const err = new Error('Network error')
-    mockFetch.mockRejectedValue(err)
+    mockAxiosGet.mockRejectedValue(err)
     const { GET } = require('./route')
     await GET(
       new Request('http://localhost/og?title=Test&cover=blog%2Fcover.jpg'),
@@ -142,3 +146,5 @@ describe('GET /og', () => {
     expect(response).toBeDefined()
   })
 })
+
+export {}

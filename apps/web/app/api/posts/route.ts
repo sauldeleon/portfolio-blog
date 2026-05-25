@@ -2,7 +2,7 @@ import { revalidateTag } from 'next/cache'
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
-import { auth } from '@web/lib/auth/config'
+import { parseAuthRequest, requireAuth } from '@web/lib/api/parseRequest'
 import { getCategoryBySlug } from '@web/lib/db/queries/categories'
 import {
   createPost,
@@ -35,11 +35,11 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
 
   if (searchParams.get('status') === 'all') {
-    const session = await auth()
-    if (!session)
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    const authResult = await requireAuth()
+    if (!authResult.ok) return authResult.response
     try {
       const posts = await getAllPosts()
+      logger.debug({ count: posts.length }, 'GET /api/posts admin')
       return NextResponse.json({ data: posts })
     } catch (err) {
       logger.error(err, 'Failed to get all posts')
@@ -125,24 +125,14 @@ const createPostSchema = z.object({
 })
 
 export async function POST(request: Request) {
-  const session = await auth()
-  if (!session) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
+  const result = await parseAuthRequest(request, createPostSchema)
+  if (!result.ok) return result.response
 
-  let body: unknown
-  try {
-    body = await request.json()
-  } catch {
-    return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
-  }
-
-  const parsed = createPostSchema.safeParse(body)
-  if (!parsed.success) {
-    return NextResponse.json({ error: parsed.error.issues }, { status: 400 })
-  }
-
-  const data = parsed.data
+  const data = result.data
+  logger.debug(
+    { category: data.category, status: data.status },
+    'POST /api/posts',
+  )
 
   const category = await getCategoryBySlug(data.category)
   if (!category) {
@@ -220,6 +210,10 @@ export async function POST(request: Request) {
       }
     }
 
+    logger.info(
+      { id: post.id, category: data.category },
+      'POST /api/posts: created',
+    )
     revalidateTag('posts', 'default')
     return NextResponse.json(post, { status: 201 })
   } catch (err) {

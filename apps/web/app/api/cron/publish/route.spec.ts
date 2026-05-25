@@ -15,7 +15,14 @@ jest.mock('next/cache', () => ({
   revalidateTag: mockRevalidateTag,
 }))
 
-jest.mock('@web/lib/logger', () => ({ logger: { error: mockLoggerError } }))
+jest.mock('@web/lib/logger', () => ({
+  logger: {
+    error: mockLoggerError,
+    info: jest.fn(),
+    debug: jest.fn(),
+    warn: jest.fn(),
+  },
+}))
 
 const { GET } = require('./route') as {
   GET: (req: Request) => Promise<Response>

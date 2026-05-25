@@ -9,7 +9,14 @@ jest.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
 jest.mock('@web/lib/cloudinary/images', () => ({
   destroyImage: mockDestroyImage,
 }))
-jest.mock('@web/lib/logger', () => ({ logger: { error: mockLoggerError } }))
+jest.mock('@web/lib/logger', () => ({
+  logger: {
+    error: mockLoggerError,
+    info: jest.fn(),
+    debug: jest.fn(),
+    warn: jest.fn(),
+  },
+}))
 
 const { DELETE } = require('./route') as {
   DELETE: (

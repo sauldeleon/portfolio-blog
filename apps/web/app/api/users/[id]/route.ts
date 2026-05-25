@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs'
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
-import { auth } from '@web/lib/auth/config'
+import { parseAdminRequest, requireAdminAuth } from '@web/lib/api/parseRequest'
 import {
   countAdmins,
   deleteUser,
@@ -24,27 +24,12 @@ export async function PATCH(
   request: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  const session = await auth()
-  if (!session || session.user.role !== 'admin') {
-    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
-  }
+  const result = await parseAdminRequest(request, patchUserSchema)
+  if (!result.ok) return result.response
 
   const { id } = await params
-
-  let body: unknown
-  try {
-    body = await request.json()
-  } catch (err) {
-    logger.error(err, 'PATCH /api/users/[id]: invalid JSON')
-    return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
-  }
-
-  const parsed = patchUserSchema.safeParse(body)
-  if (!parsed.success) {
-    return NextResponse.json({ error: parsed.error.issues }, { status: 400 })
-  }
-
-  const { email, role, name, password } = parsed.data
+  const { email, role, name, password } = result.data
+  logger.debug({ id, email, role }, 'PATCH /api/users/[id]')
 
   if (email !== undefined) {
     const existing = await getUserByEmail(email)
@@ -91,6 +76,7 @@ export async function PATCH(
     return NextResponse.json({ error: 'User not found' }, { status: 404 })
   }
 
+  logger.info({ id }, 'PATCH /api/users/[id]: updated')
   return NextResponse.json(updated)
 }
 
@@ -98,12 +84,11 @@ export async function DELETE(
   _request: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  const session = await auth()
-  if (!session || session.user.role !== 'admin') {
-    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
-  }
+  const authResult = await requireAdminAuth()
+  if (!authResult.ok) return authResult.response
 
   const { id } = await params
+  logger.debug({ id }, 'DELETE /api/users/[id]')
 
   const target = await getUserById(id)
   if (!target) {
@@ -130,5 +115,6 @@ export async function DELETE(
     )
   }
 
+  logger.info({ id }, 'DELETE /api/users/[id]: deleted')
   return new NextResponse(null, { status: 204 })
 }

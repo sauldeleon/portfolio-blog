@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 
-import { auth } from '@web/lib/auth/config'
+import { requireAuth } from '@web/lib/api/parseRequest'
 import { getPostsForSeries } from '@web/lib/db/queries/series'
 import { logger } from '@web/lib/logger'
 
@@ -8,14 +8,14 @@ export async function GET(
   _request: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  const session = await auth()
-  if (!session)
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  const authResult = await requireAuth()
+  if (!authResult.ok) return authResult.response
 
   const { id } = await params
 
   try {
     const posts = await getPostsForSeries(id)
+    logger.debug({ id, count: posts.length }, 'GET /api/series/[id]/posts')
     return NextResponse.json({ data: posts })
   } catch (err) {
     logger.error(err, 'Failed to get posts for series')

@@ -2,7 +2,7 @@ import { eq } from 'drizzle-orm'
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
-import { auth } from '@web/lib/auth/config'
+import { parseAuthRequest, requireAuth } from '@web/lib/api/parseRequest'
 import { db } from '@web/lib/db'
 import {
   getSeriesForAdmin,
@@ -12,12 +12,12 @@ import { series } from '@web/lib/db/schema'
 import { logger } from '@web/lib/logger'
 
 export async function GET() {
-  const session = await auth()
-  if (!session)
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  const authResult = await requireAuth()
+  if (!authResult.ok) return authResult.response
 
   try {
     const data = await getSeriesForAdmin()
+    logger.debug({ count: data.length }, 'GET /api/series')
     return NextResponse.json({ data })
   } catch (err) {
     logger.error(err, 'Failed to get series')
@@ -42,23 +42,11 @@ const createSeriesSchema = z.object({
 })
 
 export async function POST(request: Request) {
-  const session = await auth()
-  if (!session)
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  const result = await parseAuthRequest(request, createSeriesSchema)
+  if (!result.ok) return result.response
 
-  let body: unknown
-  try {
-    body = await request.json()
-  } catch {
-    return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
-  }
-
-  const parsed = createSeriesSchema.safeParse(body)
-  if (!parsed.success) {
-    return NextResponse.json({ error: parsed.error.issues }, { status: 400 })
-  }
-
-  const { id, translations } = parsed.data
+  const { id, translations } = result.data
+  logger.debug({ id }, 'POST /api/series')
 
   try {
     const existing = await db
@@ -82,6 +70,7 @@ export async function POST(request: Request) {
       await upsertSeriesTranslation(id, 'es', translations.es)
     }
 
+    logger.info({ id }, 'POST /api/series: created')
     return NextResponse.json({ id }, { status: 201 })
   } catch (err) {
     logger.error(err, 'Failed to create series')

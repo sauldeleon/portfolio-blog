@@ -186,22 +186,28 @@ describe('getPostByNumber', () => {
 })
 
 describe('getRelatedPosts', () => {
-  it('returns related posts in same category', async () => {
-    const relatedPost = {
+  it('returns category posts then tag posts', async () => {
+    const categoryPost = {
       ...mockPublicPost,
-      id: '01JWOTHER000000000000000000',
-      slug: 'other-post',
-      content: '# Related',
+      id: '01JWOTHER000000000000000001',
+      slug: 'category-post',
+      content: '# Category',
     }
-    // First call: getPostById for current post
+    const tagPost = {
+      ...mockPublicPost,
+      id: '01JWOTHER000000000000000002',
+      slug: 'tag-post',
+      content: '# Tag',
+    }
+    // Call 1: getPostById, Call 2: byCategory, Call 3: byTags
     mockDb.select
       .mockReturnValueOnce(
         makeChain([{ ...mockPublicPost, content: '# Hello' }]),
       )
-      // Second call: related query
-      .mockReturnValueOnce(makeChain([relatedPost]))
+      .mockReturnValueOnce(makeChain([categoryPost]))
+      .mockReturnValueOnce(makeChain([tagPost]))
     const result = await getRelatedPosts('01JWTEST000000000000000000', 'en')
-    expect(result).toEqual([relatedPost])
+    expect(result).toEqual([categoryPost, tagPost])
   })
 
   it('returns empty array when current post not found', async () => {
@@ -210,23 +216,38 @@ describe('getRelatedPosts', () => {
     expect(result).toEqual([])
   })
 
-  it('returns at most 3 randomly shuffled posts when more are available', async () => {
-    const allRelated = [1, 2, 3, 4, 5].map((n) => ({
+  it('skips tag query when category fills the limit', async () => {
+    const categoryPosts = [1, 2, 3].map((n) => ({
       ...mockPublicPost,
       id: `01JWOTHER${String(n).padStart(17, '0')}`,
-      slug: `related-${n}`,
-      content: `# Related ${n}`,
+      slug: `cat-${n}`,
+      content: `# Cat ${n}`,
     }))
+    // Call 1: getPostById, Call 2: byCategory returns 3 (fills limit=3, ceil(3*2/3)=2 but mock ignores LIMIT)
     mockDb.select
       .mockReturnValueOnce(
         makeChain([{ ...mockPublicPost, content: '# Hello' }]),
       )
-      .mockReturnValueOnce(makeChain(allRelated))
-    const randomSpy = jest.spyOn(Math, 'random').mockReturnValue(0)
+      .mockReturnValueOnce(makeChain(categoryPosts))
     const result = await getRelatedPosts('01JWTEST000000000000000000', 'en')
-    randomSpy.mockRestore()
+    // tagTarget = 3 - 3 = 0, so no third query
     expect(result).toHaveLength(3)
-    result.forEach((post) => expect(allRelated).toContainEqual(post))
+    result.forEach((post) => expect(categoryPosts).toContainEqual(post))
+  })
+
+  it('returns only category posts when post has no tags', async () => {
+    const noTagsPost = { ...mockPublicPost, tags: [] }
+    const relatedPost = {
+      ...mockPublicPost,
+      id: '01JWOTHER000000000000000001',
+      slug: 'related',
+      content: '# Related',
+    }
+    mockDb.select
+      .mockReturnValueOnce(makeChain([{ ...noTagsPost, content: '# Hello' }]))
+      .mockReturnValueOnce(makeChain([relatedPost]))
+    const result = await getRelatedPosts('01JWTEST000000000000000000', 'en')
+    expect(result).toEqual([relatedPost])
   })
 })
 

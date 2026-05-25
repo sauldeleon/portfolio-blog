@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { getCldImageUrl } from 'next-cloudinary'
 import { ImageResponse } from 'next/og'
 import { type NextRequest } from 'next/server'
@@ -15,10 +16,12 @@ async function fetchCoverAsDataUri(publicId: string): Promise<string | null> {
       height: 630,
       crop: 'fill',
     })
-    const res = await fetch(url)
-    const buffer = await res.arrayBuffer()
-    const base64 = Buffer.from(buffer).toString('base64')
-    const contentType = res.headers.get('content-type') ?? 'image/jpeg'
+    const res = await axios.get<ArrayBuffer>(url, {
+      responseType: 'arraybuffer',
+    })
+    const base64 = Buffer.from(res.data).toString('base64')
+    const contentType =
+      (res.headers['content-type'] as string | undefined) ?? 'image/jpeg'
     return `data:${contentType};base64,${base64}`
   } catch (err) {
     logger.warn(err, 'Failed to fetch OG cover image')

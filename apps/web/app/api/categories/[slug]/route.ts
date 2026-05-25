@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
-import { auth } from '@web/lib/auth/config'
+import { parseAuthRequest, requireAuth } from '@web/lib/api/parseRequest'
 import {
   deleteCategory,
   getCategoryBySlug,
@@ -24,24 +24,14 @@ export async function PUT(
   request: Request,
   { params }: { params: Promise<{ slug: string }> },
 ) {
-  const session = await auth()
-  if (!session) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
+  const result = await parseAuthRequest(request, updateTranslationSchema)
+  if (!result.ok) return result.response
 
   const { slug } = await params
-
-  let body: unknown
-  try {
-    body = await request.json()
-  } catch {
-    return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
-  }
-
-  const parsed = updateTranslationSchema.safeParse(body)
-  if (!parsed.success) {
-    return NextResponse.json({ error: parsed.error.issues }, { status: 400 })
-  }
+  logger.debug(
+    { slug, locale: result.data.locale },
+    'PUT /api/categories/[slug]',
+  )
 
   try {
     const existing = await getCategoryBySlug(slug)
@@ -49,7 +39,7 @@ export async function PUT(
       return NextResponse.json({ error: 'Category not found' }, { status: 404 })
     }
 
-    const { locale, name, description, slug: localeSlug } = parsed.data
+    const { locale, name, description, slug: localeSlug } = result.data
 
     const translation = await upsertCategoryTranslation({
       categorySlug: slug,
@@ -59,6 +49,7 @@ export async function PUT(
       slug: localeSlug ?? slug,
     })
 
+    logger.info({ slug, locale }, 'PUT /api/categories/[slug]: updated')
     return NextResponse.json(translation)
   } catch (err) {
     logger.error(err, 'Failed to update category')
@@ -73,12 +64,11 @@ export async function DELETE(
   _request: Request,
   { params }: { params: Promise<{ slug: string }> },
 ) {
-  const session = await auth()
-  if (!session) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
+  const authResult = await requireAuth()
+  if (!authResult.ok) return authResult.response
 
   const { slug } = await params
+  logger.debug({ slug }, 'DELETE /api/categories/[slug]')
 
   try {
     const publishedCount = await getPublishedPostCountByCategory(slug)
@@ -92,6 +82,7 @@ export async function DELETE(
     }
 
     await deleteCategory(slug)
+    logger.info({ slug }, 'DELETE /api/categories/[slug]: deleted')
     return new NextResponse(null, { status: 204 })
   } catch (err) {
     logger.error(err, 'Failed to delete category')

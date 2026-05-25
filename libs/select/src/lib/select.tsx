@@ -1,5 +1,6 @@
 'use client'
 
+import { useId } from 'react'
 import ReactSelect from 'react-select'
 import CreatableReactSelect from 'react-select/creatable'
 
@@ -40,6 +41,7 @@ export function Select({
   isClearable = false,
   'data-testid': testId,
 }: SelectProps) {
+  const uid = useId()
   const rsOptions: RsOption[] = options.map((o) => ({
     value: o.value,
     label: o.label,
@@ -52,6 +54,7 @@ export function Select({
 
   const commonProps = {
     inputId: id,
+    instanceId: id ?? uid,
     unstyled: true,
     classNamePrefix: 'select',
     options: rsOptions,
