@@ -1,20 +1,20 @@
 import styled from 'styled-components'
 
-import { Button } from '@sdlgr/button'
-import { Input } from '@sdlgr/input'
+import {
+  StyledAdminActions,
+  StyledAdminBackLink,
+  StyledAdminError,
+  StyledAdminFieldGroup,
+  StyledAdminForm,
+  StyledAdminFormHeading,
+  StyledAdminInput,
+  StyledAdminPageHeader,
+  StyledAdminSubmitButton,
+} from '../../../components/AdminForm/AdminForm.styles'
 
-export const StyledForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  max-width: 480px;
-`
+export const StyledForm = styled(StyledAdminForm)``
 
-export const StyledFieldGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.375rem;
-
+export const StyledFieldGroup = styled(StyledAdminFieldGroup)`
   label {
     font-size: 0.6rem;
     text-transform: uppercase;
@@ -24,53 +24,16 @@ export const StyledFieldGroup = styled.div`
   }
 `
 
-export const StyledInput = styled(Input)``
+export const StyledInput = styled(StyledAdminInput)``
 
-export const StyledError = styled.p`
-  font-size: 0.7rem;
-  color: ${({ theme }) => theme.colors.orange};
-  margin: 0;
-`
+export const StyledError = styled(StyledAdminError)``
 
-export const StyledActions = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding-top: 0.5rem;
-`
+export const StyledActions = styled(StyledAdminActions)``
 
-export const StyledSubmitButton = styled(Button).attrs({ variant: 'inverted' })`
-  padding: 0.625rem 1.25rem;
-  font-family: inherit;
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-`
+export const StyledSubmitButton = styled(StyledAdminSubmitButton)``
 
-export const StyledBackLink = styled.a`
-  font-size: 0.7rem;
-  color: ${({ theme }) => theme.colors.white};
-  opacity: 0.45;
-  cursor: pointer;
-  text-decoration: none;
+export const StyledBackLink = styled(StyledAdminBackLink)``
 
-  &:hover {
-    opacity: 0.8;
-  }
-`
+export const StyledPageHeader = styled(StyledAdminPageHeader)``
 
-export const StyledPageHeader = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  padding-bottom: 2rem;
-  border-bottom: 1px solid rgba(251, 251, 251, 0.08);
-  margin-bottom: 2rem;
-`
-
-export const StyledHeading = styled.h1`
-  font-size: 1.25rem;
-  font-weight: 400;
-  margin: 0;
-  color: ${({ theme }) => theme.colors.white};
-`
+export const StyledHeading = styled(StyledAdminFormHeading)``

@@ -1,5 +1,6 @@
 'use client'
 
+import { useId } from 'react'
 import CreatableSelect from 'react-select/creatable'
 
 import { StyledComboboxWrapper } from './combobox.styles'
@@ -23,6 +24,7 @@ export function Combobox({
   isValidNewOption,
   'data-testid': testId,
 }: ComboboxProps) {
+  const uid = useId()
   const selectOptions: ComboboxOption[] = options.map((opt) => ({
     value: opt,
     label: opt,
@@ -39,6 +41,7 @@ export function Combobox({
         isMulti
         unstyled
         classNamePrefix="combobox"
+        instanceId={uid}
         options={selectOptions}
         value={selectValue}
         onChange={(selected) => onChange(selected.map((opt) => opt.value))}

@@ -17,7 +17,12 @@ jest.mock('@web/lib/db/queries/series', () => ({
     mockUpsertSeriesTranslation(...args),
 }))
 jest.mock('@web/lib/logger', () => ({
-  logger: { error: (...args: unknown[]) => mockLoggerError(...args) },
+  logger: {
+    error: (...args: unknown[]) => mockLoggerError(...args),
+    info: jest.fn(),
+    debug: jest.fn(),
+    warn: jest.fn(),
+  },
 }))
 
 function makeChain(resolved: unknown) {

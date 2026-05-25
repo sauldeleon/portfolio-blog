@@ -41,6 +41,19 @@ describe('Admin auth — login', () => {
   })
 })
 
+describe('Admin auth — editor role restrictions', () => {
+  beforeEach(() => {
+    loginViaUi()
+    cy.url({ timeout: 20000 }).should('include', '/admin/posts')
+  })
+
+  it('redirects /admin/users to /admin/posts for editor role', () => {
+    cy.visit('/admin/users')
+    cy.url({ timeout: 15000 }).should('include', '/admin/posts')
+    cy.url().should('not.include', '/admin/users')
+  })
+})
+
 describe('Admin auth — logout', () => {
   beforeEach(() => {
     loginViaUi()

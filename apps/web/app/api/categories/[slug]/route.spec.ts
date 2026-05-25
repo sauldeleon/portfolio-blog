@@ -17,7 +17,14 @@ jest.mock('@web/lib/db/queries/categories', () => ({
 jest.mock('@web/lib/db/queries/posts', () => ({
   getPublishedPostCountByCategory: mockGetPublishedPostCountByCategory,
 }))
-jest.mock('@web/lib/logger', () => ({ logger: { error: mockLoggerError } }))
+jest.mock('@web/lib/logger', () => ({
+  logger: {
+    error: mockLoggerError,
+    info: jest.fn(),
+    debug: jest.fn(),
+    warn: jest.fn(),
+  },
+}))
 
 const { DELETE, PUT } = require('./route') as typeof import('./route')
 

@@ -11,6 +11,16 @@
       "sourceType": "autoskills-registry",
       "computedHash": "c124390cc3441844903ada94cb5820b23d922f2d0ad34e01e029e410197c8a32"
     },
+    "deploy-to-vercel": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "autoskills-registry",
+      "computedHash": "698dfb0ec0cf3e8d97c3f181e13b37b3b8fbc872a4b031d812adb4193f66035e"
+    },
+    "drizzle": {
+      "source": "bobmatnyc/claude-mpm-skills",
+      "sourceType": "autoskills-registry",
+      "computedHash": "ee38c0b7737febd7409d84e613099a0f276e215e0bbda418b2593786ea8a4754"
+    },
     "frontend-design": {
       "source": "anthropics/skills",
       "sourceType": "autoskills-registry",
@@ -25,6 +35,11 @@
       "source": "affaan-m/everything-claude-code",
       "sourceType": "autoskills-registry",
       "computedHash": "4c1e0c6805760534d8fd1a9fa2e4b5eb700b402f054254383437bd679d341cbd"
+    },
+    "neon-postgres": {
+      "source": "neondatabase/agent-skills",
+      "sourceType": "autoskills-registry",
+      "computedHash": "afa90370212ed99bb472c8d64ca6a5169e3608a6c0d3e570565e7997b1dc81b2"
     },
     "next-best-practices": {
       "source": "vercel-labs/next-skills",
@@ -56,6 +71,11 @@
       "sourceType": "autoskills-registry",
       "computedHash": "502eb06700e2c3cb1bd7f710860528f72281320bd5171a2087b05a090b573dc1"
     },
+    "react-hook-form": {
+      "source": "pproenca/dot-skills",
+      "sourceType": "autoskills-registry",
+      "computedHash": "5cac0a77035b36714c95df1f0ccc9955713fbfc87734f189a16f5aac903eccda"
+    },
     "seo": {
       "source": "addyosmani/web-quality-skills",
       "sourceType": "autoskills-registry",
@@ -65,6 +85,11 @@
       "source": "wshobson/agents",
       "sourceType": "autoskills-registry",
       "computedHash": "5ca0e177c6aaaba1889255691224daafdb7d71f317cc70bede1590d3907ded42"
+    },
+    "zod": {
+      "source": "pproenca/dot-skills",
+      "sourceType": "autoskills-registry",
+      "computedHash": "aa8a97195b07763d37494b511f48be90979fd6826c031956c831cfc58f6a24b8"
     }
   }
 }

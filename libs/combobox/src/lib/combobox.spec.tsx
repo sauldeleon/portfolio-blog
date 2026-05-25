@@ -99,6 +99,14 @@ describe('Combobox', () => {
     )
   })
 
+  it('passes a stable instanceId to prevent hydration mismatch', () => {
+    renderCombobox()
+    const [props] = mockCreatableSelect.mock.calls[0] as [
+      Record<string, unknown>,
+    ]
+    expect(props.instanceId).toBeDefined()
+  })
+
   function getIsValidNewOption() {
     const props = mockCreatableSelect.mock.calls[0][0] as {
       isValidNewOption: (

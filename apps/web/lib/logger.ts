@@ -1,5 +1,14 @@
 import pino from 'pino'
 
+// Log levels (most → least verbose): trace → debug → info → warn → error → fatal
+// Default: info  (info + warn + error)
+// Enable debug:  LOG_LEVEL=debug  (adds request-level traces)
+// Enable trace:  LOG_LEVEL=trace  (adds db/framework internals)
+// Silence:       LOG_LEVEL=silent (used in tests)
+//
+// Runtime override: set LOG_LEVEL env var before starting the server.
+// Example: LOG_LEVEL=debug yarn start:web
+
 export function createLogger() {
   const level =
     process.env.LOG_LEVEL ??

@@ -13,7 +13,14 @@ jest.mock('@web/lib/cloudinary/images', () => ({
   listImages: mockListImages,
   renameImage: mockRenameImage,
 }))
-jest.mock('@web/lib/logger', () => ({ logger: { error: mockLoggerError } }))
+jest.mock('@web/lib/logger', () => ({
+  logger: {
+    error: mockLoggerError,
+    info: jest.fn(),
+    debug: jest.fn(),
+    warn: jest.fn(),
+  },
+}))
 
 const { GET, PATCH } = require('./route') as {
   GET: (request: NextRequest) => Promise<Response>

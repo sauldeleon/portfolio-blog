@@ -16,7 +16,12 @@ jest.mock('@web/lib/auth/config', () => ({ auth: jest.fn() }))
 jest.mock('@web/lib/db/queries/users')
 jest.mock('bcryptjs')
 jest.mock('@web/lib/logger', () => ({
-  logger: { error: jest.fn(), info: jest.fn() },
+  logger: {
+    error: jest.fn(),
+    info: jest.fn(),
+    debug: jest.fn(),
+    warn: jest.fn(),
+  },
 }))
 
 const mockAuth = auth as jest.Mock

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
-import { auth } from '@web/lib/auth/config'
+import { parseAuthRequest, requireAuth } from '@web/lib/api/parseRequest'
 import {
   createCategory,
   createCategoryTranslation,
@@ -19,11 +19,11 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
 
   if (searchParams.get('admin') === '1') {
-    const session = await auth()
-    if (!session)
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    const authResult = await requireAuth()
+    if (!authResult.ok) return authResult.response
     try {
       const categories = await getCategoriesForAdmin()
+      logger.debug({ count: categories.length }, 'GET /api/categories admin')
       return NextResponse.json({ data: categories })
     } catch (err) {
       logger.error(err, 'Failed to get categories')
@@ -36,6 +36,7 @@ export async function GET(request: Request) {
 
   try {
     const categories = await getCategories()
+    logger.debug({ count: categories.length }, 'GET /api/categories')
     return NextResponse.json({ data: categories }, { headers: CACHE_HEADERS })
   } catch (err) {
     logger.error(err, 'Failed to get categories')
@@ -62,25 +63,13 @@ const createCategorySchema = z.object({
 })
 
 export async function POST(request: Request) {
-  const session = await auth()
-  if (!session) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
+  const result = await parseAuthRequest(request, createCategorySchema)
+  if (!result.ok) return result.response
 
-  let body: unknown
-  try {
-    body = await request.json()
-  } catch {
-    return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
-  }
-
-  const parsed = createCategorySchema.safeParse(body)
-  if (!parsed.success) {
-    return NextResponse.json({ error: parsed.error.issues }, { status: 400 })
-  }
-
-  const { translations } = parsed.data
+  const { translations } = result.data
   const canonicalSlug = translations.en.slug
+
+  logger.debug({ slug: canonicalSlug }, 'POST /api/categories')
 
   try {
     const existing = await getCategoryBySlug(canonicalSlug)
@@ -111,6 +100,7 @@ export async function POST(request: Request) {
       })
     }
 
+    logger.info({ slug: canonicalSlug }, 'POST /api/categories: created')
     return NextResponse.json(category, { status: 201 })
   } catch (err) {
     logger.error(err, 'Failed to create category')

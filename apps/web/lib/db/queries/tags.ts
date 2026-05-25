@@ -5,20 +5,22 @@ import { posts } from '../schema'
 
 export async function getAllTags(): Promise<string[]> {
   const rows = await db
-    .select({ tag: sql<string>`unnest(${posts.tags})` })
+    .selectDistinct({ tag: sql<string>`unnest(${posts.tags})` })
     .from(posts)
     .where(and(eq(posts.status, 'published'), isNull(posts.deletedAt)))
+    .orderBy(sql`1`)
 
-  return [...new Set(rows.map((r) => r.tag))].sort()
+  return rows.map((r) => r.tag)
 }
 
 export async function getAllTagsAdmin(): Promise<string[]> {
   const rows = await db
-    .select({ tag: sql<string>`unnest(${posts.tags})` })
+    .selectDistinct({ tag: sql<string>`unnest(${posts.tags})` })
     .from(posts)
     .where(isNull(posts.deletedAt))
+    .orderBy(sql`1`)
 
-  return [...new Set(rows.map((r) => r.tag))].sort()
+  return rows.map((r) => r.tag)
 }
 
 export type TagWithCount = {
@@ -38,11 +40,10 @@ export async function getPostCountPerTag(
     conditions = sql`${conditions} AND p.id != ${excludeId}`
   }
   if (filters?.categories?.length) {
-    let catFilter = sql`p.category = ${filters.categories[0]}`
-    for (let i = 1; i < filters.categories.length; i++) {
-      catFilter = sql`${catFilter} OR p.category = ${filters.categories[i]}`
-    }
-    conditions = sql`${conditions} AND (${catFilter})`
+    conditions = sql`${conditions} AND p.category = ANY(ARRAY[${sql.join(
+      filters.categories.map((c) => sql`${c}`),
+      sql`, `,
+    )}])`
   }
   if (filters?.year != null) {
     conditions = sql`${conditions} AND date_part('year', p.published_at)::int = ${filters.year}`

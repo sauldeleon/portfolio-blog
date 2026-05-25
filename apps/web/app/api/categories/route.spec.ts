@@ -17,7 +17,14 @@ jest.mock('@web/lib/db/queries/categories', () => ({
   createCategory: mockCreateCategory,
   createCategoryTranslation: mockCreateCategoryTranslation,
 }))
-jest.mock('@web/lib/logger', () => ({ logger: { error: mockLoggerError } }))
+jest.mock('@web/lib/logger', () => ({
+  logger: {
+    error: mockLoggerError,
+    info: jest.fn(),
+    debug: jest.fn(),
+    warn: jest.fn(),
+  },
+}))
 
 const { GET, POST } = require('./route') as {
   GET: (req: Request) => Promise<Response>

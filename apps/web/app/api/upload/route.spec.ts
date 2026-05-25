@@ -9,7 +9,14 @@ jest.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
 jest.mock('@web/lib/cloudinary/upload', () => ({
   uploadImage: mockUploadImage,
 }))
-jest.mock('@web/lib/logger', () => ({ logger: { error: mockLoggerError } }))
+jest.mock('@web/lib/logger', () => ({
+  logger: {
+    error: mockLoggerError,
+    info: jest.fn(),
+    debug: jest.fn(),
+    warn: jest.fn(),
+  },
+}))
 
 const { POST } = require('./route') as {
   POST: (req: Request) => Promise<Response>

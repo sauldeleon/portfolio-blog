@@ -8,6 +8,7 @@ import {
   isNotNull,
   isNull,
   ne,
+  notInArray,
   or,
   sql,
 } from 'drizzle-orm'
@@ -203,15 +204,6 @@ export async function getPostBySlug(
   return rows[0] ?? null
 }
 
-function shuffleArray<T>(arr: T[]): T[] {
-  const result = [...arr]
-  for (let i = result.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    ;[result[i], result[j]] = [result[j], result[i]]
-  }
-  return result
-}
-
 export async function getRelatedPosts(
   postId: string,
   locale: Locale,
@@ -220,23 +212,22 @@ export async function getRelatedPosts(
   const current = await getPostById(postId, locale)
   if (!current) return []
 
-  const allRelated = await db
+  const categoryTarget = Math.ceil((limit * 2) / 3)
+
+  const translationJoin = and(
+    eq(postTranslations.postId, posts.id),
+    eq(postTranslations.locale, locale),
+  )
+  const seriesJoin = and(
+    eq(seriesTranslations.seriesId, posts.seriesId),
+    eq(seriesTranslations.locale, locale),
+  )
+
+  const byCategory = await db
     .select(publicFieldsWithContent)
     .from(posts)
-    .innerJoin(
-      postTranslations,
-      and(
-        eq(postTranslations.postId, posts.id),
-        eq(postTranslations.locale, locale),
-      ),
-    )
-    .leftJoin(
-      seriesTranslations,
-      and(
-        eq(seriesTranslations.seriesId, posts.seriesId),
-        eq(seriesTranslations.locale, locale),
-      ),
-    )
+    .innerJoin(postTranslations, translationJoin)
+    .leftJoin(seriesTranslations, seriesJoin)
     .leftJoin(users, eq(users.id, posts.authorId))
     .where(
       and(
@@ -246,9 +237,36 @@ export async function getRelatedPosts(
         isNull(posts.deletedAt),
       ),
     )
-    .orderBy(desc(posts.publishedAt))
+    .orderBy(sql`random()`)
+    .limit(categoryTarget)
 
-  return shuffleArray(allRelated).slice(0, limit)
+  const tagTarget = limit - byCategory.length
+  let byTags: typeof byCategory = []
+
+  if (tagTarget > 0 && current.tags.length > 0) {
+    const excludeIds = [postId, ...byCategory.map((p) => p.id)]
+    byTags = await db
+      .select(publicFieldsWithContent)
+      .from(posts)
+      .innerJoin(postTranslations, translationJoin)
+      .leftJoin(seriesTranslations, seriesJoin)
+      .leftJoin(users, eq(users.id, posts.authorId))
+      .where(
+        and(
+          sql`${posts.tags} && ARRAY[${sql.join(
+            current.tags.map((t) => sql`${t}`),
+            sql`, `,
+          )}]`,
+          notInArray(posts.id, excludeIds),
+          eq(posts.status, 'published'),
+          isNull(posts.deletedAt),
+        ),
+      )
+      .orderBy(sql`random()`)
+      .limit(tagTarget)
+  }
+
+  return [...byCategory, ...byTags]
 }
 
 export type SeriesSummary = {
@@ -645,11 +663,10 @@ export async function getPostPublishedDates(
     conditions = sql`${conditions} AND p.id != ${excludeId}`
   }
   if (filters?.categories?.length) {
-    let catFilter = sql`p.category = ${filters.categories[0]}`
-    for (let i = 1; i < filters.categories.length; i++) {
-      catFilter = sql`${catFilter} OR p.category = ${filters.categories[i]}`
-    }
-    conditions = sql`${conditions} AND (${catFilter})`
+    conditions = sql`${conditions} AND p.category = ANY(ARRAY[${sql.join(
+      filters.categories.map((c) => sql`${c}`),
+      sql`, `,
+    )}])`
   }
   for (const tag of filters?.tags ?? []) {
     conditions = sql`${conditions} AND p.tags @> ARRAY[${tag}]::text[]`

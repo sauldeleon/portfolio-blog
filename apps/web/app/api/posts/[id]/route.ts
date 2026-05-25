@@ -2,7 +2,7 @@ import { revalidateTag } from 'next/cache'
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
-import { auth } from '@web/lib/auth/config'
+import { parseAuthRequest, requireAuth } from '@web/lib/api/parseRequest'
 import { getCategoryBySlug } from '@web/lib/db/queries/categories'
 import {
   getPostById,
@@ -97,26 +97,12 @@ export async function PUT(
   request: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  const session = await auth()
-  if (!session) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
+  const result = await parseAuthRequest(request, updatePostSchema)
+  if (!result.ok) return result.response
 
   const { id } = await params
-
-  let body: unknown
-  try {
-    body = await request.json()
-  } catch {
-    return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
-  }
-
-  const parsed = updatePostSchema.safeParse(body)
-  if (!parsed.success) {
-    return NextResponse.json({ error: parsed.error.issues }, { status: 400 })
-  }
-
-  const data = parsed.data
+  const data = result.data
+  logger.debug({ id, status: data.status }, 'PUT /api/posts/[id]')
 
   if (data.category !== undefined) {
     const category = await getCategoryBySlug(data.category)
@@ -227,6 +213,7 @@ export async function PUT(
       }
     }
 
+    logger.info({ id, status: data.status }, 'PUT /api/posts/[id]: updated')
     revalidateTag('posts', 'default')
     revalidateTag(`post-${id}`, 'default')
     return NextResponse.json(post)
@@ -243,14 +230,13 @@ export async function DELETE(
   request: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  const session = await auth()
-  if (!session) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
+  const authResult = await requireAuth()
+  if (!authResult.ok) return authResult.response
 
   const { id } = await params
   const { searchParams } = new URL(request.url)
   const hard = searchParams.get('hard') === 'true'
+  logger.debug({ id, hard }, 'DELETE /api/posts/[id]')
 
   try {
     const status = await getPostStatus(id)
@@ -263,6 +249,7 @@ export async function DELETE(
         )
       }
       await hardDeletePost(id)
+      logger.info({ id }, 'DELETE /api/posts/[id]: hard deleted')
       revalidateTag('posts', 'default')
       revalidateTag(`post-${id}`, 'default')
       return new NextResponse(null, { status: 204 })
@@ -276,6 +263,7 @@ export async function DELETE(
     }
 
     await softDeletePost(id)
+    logger.info({ id }, 'DELETE /api/posts/[id]: soft deleted')
     revalidateTag('posts', 'default')
     revalidateTag(`post-${id}`, 'default')
     return new NextResponse(null, { status: 204 })

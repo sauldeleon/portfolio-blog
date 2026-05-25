@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 
-import { auth } from '@web/lib/auth/config'
+import { requireAuth } from '@web/lib/api/parseRequest'
 import { uploadImage } from '@web/lib/cloudinary/upload'
 import { logger } from '@web/lib/logger'
 
@@ -13,10 +13,8 @@ const ALLOWED_TYPES = new Set([
 ])
 
 export async function POST(request: Request) {
-  const session = await auth()
-  if (!session) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
+  const authResult = await requireAuth()
+  if (!authResult.ok) return authResult.response
 
   let formData: FormData
   try {
@@ -50,6 +48,10 @@ export async function POST(request: Request) {
       file.type,
       altText,
       name || undefined,
+    )
+    logger.info(
+      { publicId: result.publicId, name },
+      'POST /api/upload: uploaded',
     )
     return NextResponse.json(result, { status: 201 })
   } catch (err) {

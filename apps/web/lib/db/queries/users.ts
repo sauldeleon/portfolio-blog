@@ -1,4 +1,4 @@
-import { asc, eq } from 'drizzle-orm'
+import { asc, count, eq } from 'drizzle-orm'
 import { ulid } from 'ulid'
 
 import { db } from '../index'
@@ -116,9 +116,9 @@ export async function deleteUser(id: string): Promise<void> {
 }
 
 export async function countAdmins(): Promise<number> {
-  const rows = await db
-    .select({ id: users.id })
+  const [row] = await db
+    .select({ count: count() })
     .from(users)
     .where(eq(users.role, 'admin'))
-  return rows.length
+  return row?.count ?? 0
 }

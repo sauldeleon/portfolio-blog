@@ -4,11 +4,16 @@ import { getAllTags, getAllTagsAdmin, getPostCountPerTag } from './tags'
 jest.mock('../index', () => ({
   db: {
     select: jest.fn(),
+    selectDistinct: jest.fn(),
     execute: jest.fn(),
   },
 }))
 
-const mockDb = db as unknown as { select: jest.Mock; execute: jest.Mock }
+const mockDb = db as unknown as {
+  select: jest.Mock
+  selectDistinct: jest.Mock
+  execute: jest.Mock
+}
 
 function makeChain(resolved: unknown) {
   const chain: Record<string, unknown> = {}
@@ -28,32 +33,23 @@ beforeEach(() => {
 })
 
 describe('getAllTags', () => {
-  it('returns deduplicated sorted tags from published posts', async () => {
-    mockDb.select.mockReturnValue(
-      makeChain([
-        { tag: 'typescript' },
-        { tag: 'javascript' },
-        { tag: 'typescript' },
-      ]),
+  it('returns sorted tags from published posts', async () => {
+    mockDb.selectDistinct.mockReturnValue(
+      makeChain([{ tag: 'javascript' }, { tag: 'typescript' }]),
     )
     const result = await getAllTags()
     expect(result).toEqual(['javascript', 'typescript'])
   })
 
   it('returns empty array when no published posts', async () => {
-    mockDb.select.mockReturnValue(makeChain([]))
+    mockDb.selectDistinct.mockReturnValue(makeChain([]))
     const result = await getAllTags()
     expect(result).toEqual([])
   })
 
-  it('deduplicates tags across posts', async () => {
-    mockDb.select.mockReturnValue(
-      makeChain([
-        { tag: 'react' },
-        { tag: 'next' },
-        { tag: 'react' },
-        { tag: 'next' },
-      ]),
+  it('maps tag rows to strings', async () => {
+    mockDb.selectDistinct.mockReturnValue(
+      makeChain([{ tag: 'next' }, { tag: 'react' }]),
     )
     const result = await getAllTags()
     expect(result).toEqual(['next', 'react'])
@@ -62,20 +58,16 @@ describe('getAllTags', () => {
 })
 
 describe('getAllTagsAdmin', () => {
-  it('returns deduplicated sorted tags from all non-deleted posts', async () => {
-    mockDb.select.mockReturnValue(
-      makeChain([
-        { tag: 'typescript' },
-        { tag: 'javascript' },
-        { tag: 'typescript' },
-      ]),
+  it('returns sorted tags from all non-deleted posts', async () => {
+    mockDb.selectDistinct.mockReturnValue(
+      makeChain([{ tag: 'javascript' }, { tag: 'typescript' }]),
     )
     const result = await getAllTagsAdmin()
     expect(result).toEqual(['javascript', 'typescript'])
   })
 
   it('returns empty array when no posts', async () => {
-    mockDb.select.mockReturnValue(makeChain([]))
+    mockDb.selectDistinct.mockReturnValue(makeChain([]))
     const result = await getAllTagsAdmin()
     expect(result).toEqual([])
   })

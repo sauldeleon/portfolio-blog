@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs'
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
-import { auth } from '@web/lib/auth/config'
+import { parseAdminRequest, requireAdminAuth } from '@web/lib/api/parseRequest'
 import {
   createUser,
   getUserByEmail,
@@ -12,12 +12,11 @@ import type { UserRole } from '@web/lib/db/schema'
 import { logger } from '@web/lib/logger'
 
 export async function GET() {
-  const session = await auth()
-  if (!session || session.user.role !== 'admin') {
-    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
-  }
+  const authResult = await requireAdminAuth()
+  if (!authResult.ok) return authResult.response
 
   const users = await listUsers()
+  logger.debug({ count: users.length }, 'GET /api/users')
   return NextResponse.json({ data: users })
 }
 
@@ -29,25 +28,11 @@ const createUserSchema = z.object({
 })
 
 export async function POST(request: Request) {
-  const session = await auth()
-  if (!session || session.user.role !== 'admin') {
-    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
-  }
+  const result = await parseAdminRequest(request, createUserSchema)
+  if (!result.ok) return result.response
 
-  let body: unknown
-  try {
-    body = await request.json()
-  } catch (err) {
-    logger.error(err, 'POST /api/users: invalid JSON')
-    return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
-  }
-
-  const parsed = createUserSchema.safeParse(body)
-  if (!parsed.success) {
-    return NextResponse.json({ error: parsed.error.issues }, { status: 400 })
-  }
-
-  const { email, password, role, name } = parsed.data
+  const { email, password, role, name } = result.data
+  logger.debug({ email, role }, 'POST /api/users')
 
   const existing = await getUserByEmail(email)
   if (existing) {
@@ -65,6 +50,7 @@ export async function POST(request: Request) {
       role: role as UserRole,
       name,
     })
+    logger.info({ id: user.id, email, role }, 'POST /api/users: created')
     return NextResponse.json(user, { status: 201 })
   } catch (err) {
     logger.error(err, 'POST /api/users: failed to create user')

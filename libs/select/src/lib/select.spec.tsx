@@ -147,11 +147,21 @@ describe('Select', () => {
     )
   })
 
-  it('forwards id as inputId', () => {
+  it('forwards id as inputId and instanceId', () => {
     renderSelect({ id: 'my-select' })
     expect(mockReactSelect).toHaveBeenCalledWith(
-      expect.objectContaining({ inputId: 'my-select' }),
+      expect.objectContaining({
+        inputId: 'my-select',
+        instanceId: 'my-select',
+      }),
     )
+  })
+
+  it('uses generated instanceId when id is not provided', () => {
+    renderSelect()
+    const [props] = mockReactSelect.mock.calls[0] as [Record<string, unknown>]
+    expect(props.instanceId).toBeDefined()
+    expect(props.inputId).toBeUndefined()
   })
 
   it('uses ReactSelect by default when isCreatable is false', () => {

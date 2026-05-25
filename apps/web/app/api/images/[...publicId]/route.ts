@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 
-import { auth } from '@web/lib/auth/config'
+import { requireAuth } from '@web/lib/api/parseRequest'
 import { destroyImage } from '@web/lib/cloudinary/images'
 import { logger } from '@web/lib/logger'
 
@@ -8,13 +8,12 @@ export async function DELETE(
   _request: Request,
   { params }: { params: Promise<{ publicId: string[] }> },
 ) {
-  const session = await auth()
-  if (!session) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
+  const authResult = await requireAuth()
+  if (!authResult.ok) return authResult.response
 
   const { publicId: segments } = await params
   const publicId = segments.join('/')
+  logger.debug({ publicId }, 'DELETE /api/images/[publicId]')
   try {
     await destroyImage(publicId)
   } catch (err) {
@@ -24,5 +23,6 @@ export async function DELETE(
       { status: 500 },
     )
   }
+  logger.info({ publicId }, 'DELETE /api/images/[publicId]: deleted')
   return new NextResponse(null, { status: 204 })
 }
