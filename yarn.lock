@@ -6677,6 +6677,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-leaflet/core@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@react-leaflet/core@npm:3.0.0"
+  peerDependencies:
+    leaflet: ^1.9.0
+    react: ^19.0.0
+    react-dom: ^19.0.0
+  checksum: 38abc98bbf8c08bafa01fe83bd74e3142d250de42c08f7b1f981c96e6396a252e41e65c78331c413642e08ed943945a22c853946a9c3133749e7d6c97d234d11
+  languageName: node
+  linkType: hard
+
 "@react-pdf/fns@npm:3.1.3":
   version: 3.1.3
   resolution: "@react-pdf/fns@npm:3.1.3"
@@ -7344,6 +7355,7 @@ __metadata:
     "@types/circular-dependency-plugin": 5.0.7
     "@types/jest": 30.0.0
     "@types/js-cookie": 3.0.5
+    "@types/leaflet": 1.9.21
     "@types/node": 20.10.7
     "@types/react": 19.2.14
     "@types/react-dom": 19.2.3
@@ -7385,6 +7397,8 @@ __metadata:
     jest-junit: 16.0.0
     jest-styled-components: 7.4.0
     jest-util: 30.4.0
+    leaflet: 1.9.4
+    leaflet-gpx: 2.2.0
     lint-staged: 17.0.2
     next: 16.2.6
     next-auth: beta
@@ -7406,6 +7420,7 @@ __metadata:
     react-hook-form: 7.75.0
     react-i18next: 17.0.7
     react-is: 19.2.6
+    react-leaflet: 5.0.0
     react-overlays: 5.2.1
     react-select: 5.10.2
     react-use-is-scrolling: 0.0.2
@@ -8265,6 +8280,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/geojson@npm:*":
+  version: 7946.0.16
+  resolution: "@types/geojson@npm:7946.0.16"
+  checksum: d66e5e023f43b3e7121448117af1930af7d06410a32a585a8bc9c6bb5d97e0d656cd93d99e31fa432976c32e98d4b780f82bf1fd1acd20ccf952eb6b8e39edf2
+  languageName: node
+  linkType: hard
+
 "@types/hast@npm:^3.0.0, @types/hast@npm:^3.0.4":
   version: 3.0.4
   resolution: "@types/hast@npm:3.0.4"
@@ -8404,6 +8426,15 @@ __metadata:
   version: 0.0.29
   resolution: "@types/json5@npm:0.0.29"
   checksum: e60b153664572116dfea673c5bda7778dbff150498f44f998e34b5886d8afc47f16799280e4b6e241c0472aef1bc36add771c569c68fc5125fc2ae519a3eb9ac
+  languageName: node
+  linkType: hard
+
+"@types/leaflet@npm:1.9.21":
+  version: 1.9.21
+  resolution: "@types/leaflet@npm:1.9.21"
+  dependencies:
+    "@types/geojson": "*"
+  checksum: 247f6492add1af10beabb410d2f7d6d272d0ffdbc96d2ad57175bbefcc6adf36e45dc44bbd9e3b736a7d7cea0ee2198ea364bf752db7f00ecffddc1996798fe1
   languageName: node
   linkType: hard
 
@@ -18523,6 +18554,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"leaflet-gpx@npm:2.2.0":
+  version: 2.2.0
+  resolution: "leaflet-gpx@npm:2.2.0"
+  checksum: 4bf1d440bf923c1abaa703480168c7561eb3ffcbbbcc852155759b251f4411858a6f91787546053a87ca326873906dfd1a8241b2094dafcb0df13232f9897516
+  languageName: node
+  linkType: hard
+
+"leaflet@npm:1.9.4":
+  version: 1.9.4
+  resolution: "leaflet@npm:1.9.4"
+  checksum: bfc79f17a247b37b92d84b3c78702501603392d6589fde606de4a825d11f1609d90225388834f2e0709dac327e52dcd4b4b9cc9fd3d590060c5b1e53b84fa6c6
+  languageName: node
+  linkType: hard
+
 "less-loader@npm:^12.2.0":
   version: 12.3.2
   resolution: "less-loader@npm:12.3.2"
@@ -22676,6 +22721,19 @@ __metadata:
   version: 18.2.0
   resolution: "react-is@npm:18.2.0"
   checksum: e72d0ba81b5922759e4aff17e0252bd29988f9642ed817f56b25a3e217e13eea8a7f2322af99a06edb779da12d5d636e9fda473d620df9a3da0df2a74141d53e
+  languageName: node
+  linkType: hard
+
+"react-leaflet@npm:5.0.0":
+  version: 5.0.0
+  resolution: "react-leaflet@npm:5.0.0"
+  dependencies:
+    "@react-leaflet/core": ^3.0.0
+  peerDependencies:
+    leaflet: ^1.9.0
+    react: ^19.0.0
+    react-dom: ^19.0.0
+  checksum: 830a48bacca1553b29f0a22a6aeb4590541d4c7a36cceb4653363edeec880d76f2418e487b20e3840097fea19cc8c53a1295eeb4f72212822c51dc0641c92db8
   languageName: node
   linkType: hard
 

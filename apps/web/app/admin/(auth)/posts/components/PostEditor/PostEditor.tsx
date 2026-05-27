@@ -767,7 +767,17 @@ https://www.openstreetmap.org/export/embed.html?...
 https://www.wikiloc.com/wikiloc/embedv2.do?id=<trail-id>&elevation=on&images=on&maptype=H
 \`\`\`
 
-Supported types: youtube · maps · openstreetmap · wikiloc`}</pre>
+\`\`\`gpx
+https://your-cdn.com/routes/track.gpx
+\`\`\`
+
+\`\`\`gpx showWaypoints
+https://your-cdn.com/routes/track.gpx
+\`\`\`
+
+Add showWaypoints to show a collapsible waypoints table below the map.
+
+Supported types: youtube · maps · openstreetmap · wikiloc · gpx`}</pre>
             </StyledMarkdownHint>
           </FieldGroup>
         </StyledEditorPane>

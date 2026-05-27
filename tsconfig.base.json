@@ -42,6 +42,7 @@
       "@sdlgr/post-hero": ["./libs/post-hero/src/index.ts"],
       "@sdlgr/callout": ["./libs/callout/src/index.ts"],
       "@sdlgr/code-block": ["./libs/code-block/src/index.ts"],
+      "@sdlgr/gpx-map": ["./libs/gpx-map/src/index.ts"],
       "@sdlgr/table-of-contents": ["./libs/table-of-contents/src/index.ts"],
       "@sdlgr/visually-hidden": ["./libs/visually-hidden/src/index.ts"],
       "@sdlgr/combobox": ["./libs/combobox/src/index.ts"],

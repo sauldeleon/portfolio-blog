@@ -8,6 +8,36 @@ jest.mock('./PostContent.styles', () => ({
   ),
 }))
 
+jest.mock('@sdlgr/gpx-map', () => ({
+  GpxMap: ({
+    url,
+    showWaypoints,
+  }: {
+    url: string
+    showWaypoints?: boolean
+  }) => (
+    <div
+      data-testid="gpx-map"
+      data-url={url}
+      data-show-waypoints={String(showWaypoints ?? false)}
+    />
+  ),
+}))
+
+jest.mock('next/dynamic', () => ({
+  __esModule: true,
+  default: (fn: () => Promise<{ default: React.ComponentType<unknown> }>) => {
+    let Component: React.ComponentType<unknown> = () => null
+    fn().then((mod) => {
+      Component = mod.default
+    })
+    const DynamicComponent = (props: unknown) => (
+      <Component {...(props as object)} />
+    )
+    return DynamicComponent
+  },
+}))
+
 describe('PostContentEmbed', () => {
   it('returns null when url is not provided', () => {
     const { container } = render(<PostContentEmbed />)
@@ -40,5 +70,36 @@ describe('PostContentEmbed', () => {
     render(<PostContentEmbed url="https://example.com/embed" />)
     const iframe = screen.getByTitle('embed')
     expect(iframe).toHaveAttribute('allowFullScreen')
+  })
+
+  it('renders GpxMap when type is gpx', async () => {
+    render(<PostContentEmbed type="gpx" url="https://example.com/track.gpx" />)
+    const gpxMap = await screen.findByTestId('gpx-map')
+    expect(gpxMap).toBeInTheDocument()
+    expect(gpxMap).toHaveAttribute('data-url', 'https://example.com/track.gpx')
+  })
+
+  it('does not render iframe when type is gpx', async () => {
+    render(<PostContentEmbed type="gpx" url="https://example.com/track.gpx" />)
+    await screen.findByTestId('gpx-map')
+    expect(screen.queryByTestId('post-embed-wrapper')).not.toBeInTheDocument()
+  })
+
+  it('passes showWaypoints=true to GpxMap when prop is set', async () => {
+    render(
+      <PostContentEmbed
+        type="gpx"
+        url="https://example.com/track.gpx"
+        showWaypoints={true}
+      />,
+    )
+    const gpxMap = await screen.findByTestId('gpx-map')
+    expect(gpxMap).toHaveAttribute('data-show-waypoints', 'true')
+  })
+
+  it('passes showWaypoints=false to GpxMap when prop is not set', async () => {
+    render(<PostContentEmbed type="gpx" url="https://example.com/track.gpx" />)
+    const gpxMap = await screen.findByTestId('gpx-map')
+    expect(gpxMap).toHaveAttribute('data-show-waypoints', 'false')
   })
 })
