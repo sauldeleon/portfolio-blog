@@ -1,4 +1,4 @@
-import { act, render, screen, waitFor } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { useMap } from 'react-leaflet'
 
 import { GpxMap, parseWaypointsFromXml } from './GpxMap'
@@ -90,10 +90,12 @@ const GPX_XML_NO_WAYPOINTS = `<?xml version="1.0"?><gpx xmlns="http://www.topogr
 describe('GpxMap', () => {
   const mockFitBounds = jest.fn()
   const mockRemoveLayer = jest.fn()
+  const mockFlyTo = jest.fn()
 
   beforeEach(() => {
     mockFitBounds.mockReset()
     mockRemoveLayer.mockReset()
+    mockFlyTo.mockReset()
     MockGPX.mockClear()
     mockOn.mockClear()
     mockAddTo.mockClear()
@@ -102,6 +104,7 @@ describe('GpxMap', () => {
     ;(useMap as jest.Mock).mockReturnValue({
       fitBounds: mockFitBounds,
       removeLayer: mockRemoveLayer,
+      flyTo: mockFlyTo,
     })
     global.fetch = jest.fn().mockResolvedValue({
       text: jest.fn().mockResolvedValue(GPX_XML_WITH_WAYPOINTS),
@@ -251,15 +254,37 @@ describe('GpxMap', () => {
       await waitFor(() => expect(global.fetch).toHaveBeenCalled())
       expect(screen.queryByTestId('waypoints-details')).not.toBeInTheDocument()
     })
+
+    it('flies to first waypoint coords on row click', async () => {
+      render(<GpxMap url={GPX_URL} showWaypoints />)
+      expect(await screen.findByText('Refugio Mar')).toBeInTheDocument()
+      const rows = screen.getAllByRole('row')
+      fireEvent.click(rows[1])
+      expect(mockFlyTo).toHaveBeenCalledWith([43.5, -5.6], 15)
+    })
+
+    it('flies to second waypoint coords on row click', async () => {
+      render(<GpxMap url={GPX_URL} showWaypoints />)
+      expect(await screen.findByText('Summit')).toBeInTheDocument()
+      const rows = screen.getAllByRole('row')
+      fireEvent.click(rows[2])
+      expect(mockFlyTo).toHaveBeenCalledWith([43.6, -5.7], 15)
+    })
   })
 })
 
 describe('parseWaypointsFromXml', () => {
-  it('parses name, desc and rounded elevation', () => {
+  it('parses name, desc, rounded elevation, lat and lon', () => {
     const result = parseWaypointsFromXml(GPX_XML_WITH_WAYPOINTS)
     expect(result).toEqual([
-      { name: 'Refugio Mar', desc: 'Mountain refuge', ele: 1201 },
-      { name: 'Summit', desc: '', ele: 1500 },
+      {
+        name: 'Refugio Mar',
+        desc: 'Mountain refuge',
+        ele: 1201,
+        lat: 43.5,
+        lon: -5.6,
+      },
+      { name: 'Summit', desc: '', ele: 1500, lat: 43.6, lon: -5.7 },
     ])
   })
 
@@ -267,6 +292,8 @@ describe('parseWaypointsFromXml', () => {
     const xml = `<gpx><wpt lat="0" lon="0"><name>A</name></wpt></gpx>`
     const [wpt] = parseWaypointsFromXml(xml)
     expect(wpt.ele).toBeNull()
+    expect(wpt.lat).toBe(0)
+    expect(wpt.lon).toBe(0)
   })
 
   it('returns empty array when no waypoints', () => {
@@ -274,10 +301,19 @@ describe('parseWaypointsFromXml', () => {
   })
 
   it('handles missing name and desc', () => {
-    const xml = `<gpx><wpt lat="0" lon="0"><ele>100</ele></wpt></gpx>`
+    const xml = `<gpx><wpt lat="10" lon="20"><ele>100</ele></wpt></gpx>`
     const [wpt] = parseWaypointsFromXml(xml)
     expect(wpt.name).toBe('')
     expect(wpt.desc).toBe('')
     expect(wpt.ele).toBe(100)
+    expect(wpt.lat).toBe(10)
+    expect(wpt.lon).toBe(20)
+  })
+
+  it('defaults lat and lon to 0 when attributes are missing', () => {
+    const xml = `<gpx><wpt><name>A</name></wpt></gpx>`
+    const [wpt] = parseWaypointsFromXml(xml)
+    expect(wpt.lat).toBe(0)
+    expect(wpt.lon).toBe(0)
   })
 })

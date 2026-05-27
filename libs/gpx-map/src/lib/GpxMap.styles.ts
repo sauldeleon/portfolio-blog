@@ -62,6 +62,10 @@ export const StyledWaypointsDetails = styled.details`
       opacity: 0.7;
     }
 
+    tbody tr {
+      cursor: pointer;
+    }
+
     tr:hover td {
       background: rgba(128, 128, 128, 0.06);
     }

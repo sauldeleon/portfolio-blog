@@ -39,6 +39,8 @@ export interface Waypoint {
   name: string
   desc: string
   ele: number | null
+  lat: number
+  lon: number
 }
 
 export function parseWaypointsFromXml(text: string): Waypoint[] {
@@ -49,6 +51,8 @@ export function parseWaypointsFromXml(text: string): Waypoint[] {
       name: wpt.querySelector('name')?.textContent ?? '',
       desc: wpt.querySelector('desc')?.textContent ?? '',
       ele: eleText ? Math.round(parseFloat(eleText)) : null,
+      lat: parseFloat(wpt.getAttribute('lat') ?? '0'),
+      lon: parseFloat(wpt.getAttribute('lon') ?? '0'),
     }
   })
 }
@@ -56,6 +60,15 @@ export function parseWaypointsFromXml(text: string): Waypoint[] {
 export interface GpxMapProps {
   url: string
   showWaypoints?: boolean
+}
+
+function WaypointFocuser({ waypoint }: { waypoint: Waypoint | null }) {
+  const map = useMap()
+  useEffect(() => {
+    if (!waypoint) return
+    map.flyTo([waypoint.lat, waypoint.lon], 15)
+  }, [waypoint, map])
+  return null
 }
 
 function GpxTrack({ url }: { url: string }) {
@@ -99,6 +112,7 @@ function GpxTrack({ url }: { url: string }) {
 
 export function GpxMap({ url, showWaypoints }: GpxMapProps) {
   const [waypoints, setWaypoints] = useState<Waypoint[]>([])
+  const [focusedWaypoint, setFocusedWaypoint] = useState<Waypoint | null>(null)
 
   useEffect(() => {
     if (!showWaypoints) return
@@ -118,10 +132,11 @@ export function GpxMap({ url, showWaypoints }: GpxMapProps) {
           scrollWheelZoom={true}
         >
           <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           <GpxTrack url={url} />
+          <WaypointFocuser waypoint={focusedWaypoint} />
         </MapContainer>
       </StyledMapContainer>
 
@@ -138,7 +153,10 @@ export function GpxMap({ url, showWaypoints }: GpxMapProps) {
             </thead>
             <tbody>
               {waypoints.map((wpt, i) => (
-                <tr key={`${wpt.name}-${i}`}>
+                <tr
+                  key={`${wpt.name}-${i}`}
+                  onClick={() => setFocusedWaypoint(wpt)}
+                >
                   <td>{wpt.name || '—'}</td>
                   <td>{wpt.desc || '—'}</td>
                   <td>{wpt.ele != null ? `${wpt.ele}m` : '—'}</td>
