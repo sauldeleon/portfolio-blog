@@ -216,9 +216,10 @@ describe('GpxMap', () => {
       render(<GpxMap url={GPX_URL} showWaypoints />)
       expect(await screen.findByTestId('waypoints-details')).toBeInTheDocument()
       expect(screen.getByText('Refugio Mar')).toBeInTheDocument()
-      expect(screen.getByText('Mountain refuge')).toBeInTheDocument()
+      expect(screen.getByText('43.50000, -5.60000')).toBeInTheDocument()
       expect(screen.getByText('1201m')).toBeInTheDocument()
       expect(screen.getByText('Summit')).toBeInTheDocument()
+      expect(screen.getByText('43.60000, -5.70000')).toBeInTheDocument()
       expect(screen.getByText('1500m')).toBeInTheDocument()
     })
 
@@ -227,7 +228,7 @@ describe('GpxMap', () => {
       expect(await screen.findByText('Waypoints (2)')).toBeInTheDocument()
     })
 
-    it('shows dash for missing name, desc and ele', async () => {
+    it('shows dash for missing name and ele', async () => {
       global.fetch = jest.fn().mockResolvedValue({
         text: jest.fn().mockResolvedValue(`<?xml version="1.0"?>
 <gpx xmlns="http://www.topografix.com/GPX/1/1">
@@ -237,6 +238,7 @@ describe('GpxMap', () => {
       render(<GpxMap url={GPX_URL} showWaypoints />)
       expect(await screen.findByTestId('waypoints-details')).toBeInTheDocument()
       expect(screen.getAllByText('—').length).toBeGreaterThanOrEqual(2)
+      expect(screen.getByText('43.50000, -5.60000')).toBeInTheDocument()
     })
 
     it('does not show waypoints details when GPX has no waypoints', async () => {
@@ -260,7 +262,7 @@ describe('GpxMap', () => {
       expect(await screen.findByText('Refugio Mar')).toBeInTheDocument()
       const rows = screen.getAllByRole('row')
       fireEvent.click(rows[1])
-      expect(mockFlyTo).toHaveBeenCalledWith([43.5, -5.6], 15)
+      expect(mockFlyTo).toHaveBeenCalledWith([43.5, -5.6], 17)
     })
 
     it('flies to second waypoint coords on row click', async () => {
@@ -268,7 +270,7 @@ describe('GpxMap', () => {
       expect(await screen.findByText('Summit')).toBeInTheDocument()
       const rows = screen.getAllByRole('row')
       fireEvent.click(rows[2])
-      expect(mockFlyTo).toHaveBeenCalledWith([43.6, -5.7], 15)
+      expect(mockFlyTo).toHaveBeenCalledWith([43.6, -5.7], 17)
     })
   })
 })

@@ -66,7 +66,7 @@ function WaypointFocuser({ waypoint }: { waypoint: Waypoint | null }) {
   const map = useMap()
   useEffect(() => {
     if (!waypoint) return
-    map.flyTo([waypoint.lat, waypoint.lon], 15)
+    map.flyTo([waypoint.lat, waypoint.lon], 17)
   }, [waypoint, map])
   return null
 }
@@ -147,7 +147,7 @@ export function GpxMap({ url, showWaypoints }: GpxMapProps) {
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Description</th>
+                <th>Coordinates</th>
                 <th>Elevation</th>
               </tr>
             </thead>
@@ -158,7 +158,7 @@ export function GpxMap({ url, showWaypoints }: GpxMapProps) {
                   onClick={() => setFocusedWaypoint(wpt)}
                 >
                   <td>{wpt.name || '—'}</td>
-                  <td>{wpt.desc || '—'}</td>
+                  <td>{`${wpt.lat.toFixed(5)}, ${wpt.lon.toFixed(5)}`}</td>
                   <td>{wpt.ele != null ? `${wpt.ele}m` : '—'}</td>
                 </tr>
               ))}
