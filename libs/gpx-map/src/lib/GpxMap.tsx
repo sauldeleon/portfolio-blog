@@ -13,6 +13,7 @@ import {
   MAP_ICON_START,
   MAP_ICON_WPT,
   TRANSPARENT_1PX,
+  WPT_ICON_URLS,
 } from './GpxMap.icons'
 import {
   StyledGpxMap,
@@ -41,6 +42,7 @@ export interface Waypoint {
   ele: number | null
   lat: number
   lon: number
+  sym: string
 }
 
 export function parseWaypointsFromXml(text: string): Waypoint[] {
@@ -53,6 +55,7 @@ export function parseWaypointsFromXml(text: string): Waypoint[] {
       ele: eleText ? Math.round(parseFloat(eleText)) : null,
       lat: parseFloat(wpt.getAttribute('lat') ?? '0'),
       lon: parseFloat(wpt.getAttribute('lon') ?? '0'),
+      sym: wpt.querySelector('sym')?.textContent ?? '',
     }
   })
 }
@@ -87,7 +90,7 @@ function GpxTrack({ url }: { url: string }) {
         startIconUrl: MAP_ICON_START,
         endIconUrl: MAP_ICON_END,
         shadowUrl: TRANSPARENT_1PX,
-        wptIconUrls: { '': MAP_ICON_WPT },
+        wptIconUrls: WPT_ICON_URLS,
         iconSize: MAP_ICON_SIZE,
         iconAnchor: MAP_ICON_ANCHOR,
         shadowSize: [0, 0],

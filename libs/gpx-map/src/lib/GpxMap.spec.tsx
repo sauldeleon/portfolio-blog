@@ -91,10 +91,12 @@ const GPX_XML_WITH_WAYPOINTS = `<?xml version="1.0"?>
     <name>Refugio Mar</name>
     <desc>Mountain refuge</desc>
     <ele>1200.5</ele>
+    <sym>Campground</sym>
   </wpt>
   <wpt lat="43.6" lon="-5.7">
     <name>Summit</name>
     <ele>1500</ele>
+    <sym>Summit</sym>
   </wpt>
 </gpx>`
 
@@ -169,9 +171,13 @@ describe('GpxMap', () => {
         startIconUrl: expect.stringContaining('data:image/svg+xml'),
         endIconUrl: expect.stringContaining('data:image/svg+xml'),
         shadowUrl: expect.stringContaining('data:image/gif'),
-        wptIconUrls: { '': expect.stringContaining('data:image/svg+xml') },
-        iconSize: [25, 33],
-        iconAnchor: [12, 33],
+        wptIconUrls: expect.objectContaining({
+          '': expect.stringContaining('data:image/svg+xml'),
+          Warning: expect.stringContaining('data:image/svg+xml'),
+          Summit: expect.stringContaining('data:image/svg+xml'),
+        }),
+        iconSize: [20, 26],
+        iconAnchor: [10, 26],
         shadowSize: [0, 0],
       }),
     })
@@ -311,7 +317,7 @@ describe('GpxMap', () => {
 })
 
 describe('parseWaypointsFromXml', () => {
-  it('parses name, desc, rounded elevation, lat and lon', () => {
+  it('parses name, desc, rounded elevation, lat, lon and sym', () => {
     const result = parseWaypointsFromXml(GPX_XML_WITH_WAYPOINTS)
     expect(result).toEqual([
       {
@@ -320,8 +326,16 @@ describe('parseWaypointsFromXml', () => {
         ele: 1201,
         lat: 43.5,
         lon: -5.6,
+        sym: 'Campground',
       },
-      { name: 'Summit', desc: '', ele: 1500, lat: 43.6, lon: -5.7 },
+      {
+        name: 'Summit',
+        desc: '',
+        ele: 1500,
+        lat: 43.6,
+        lon: -5.7,
+        sym: 'Summit',
+      },
     ])
   })
 
@@ -331,6 +345,7 @@ describe('parseWaypointsFromXml', () => {
     expect(wpt.ele).toBeNull()
     expect(wpt.lat).toBe(0)
     expect(wpt.lon).toBe(0)
+    expect(wpt.sym).toBe('')
   })
 
   it('returns empty array when no waypoints', () => {
@@ -352,5 +367,17 @@ describe('parseWaypointsFromXml', () => {
     const [wpt] = parseWaypointsFromXml(xml)
     expect(wpt.lat).toBe(0)
     expect(wpt.lon).toBe(0)
+  })
+
+  it('parses sym tag', () => {
+    const xml = `<gpx><wpt lat="0" lon="0"><name>A</name><sym>Warning</sym></wpt></gpx>`
+    const [wpt] = parseWaypointsFromXml(xml)
+    expect(wpt.sym).toBe('Warning')
+  })
+
+  it('defaults sym to empty string when sym element is missing', () => {
+    const xml = `<gpx><wpt lat="0" lon="0"><name>A</name></wpt></gpx>`
+    const [wpt] = parseWaypointsFromXml(xml)
+    expect(wpt.sym).toBe('')
   })
 })
