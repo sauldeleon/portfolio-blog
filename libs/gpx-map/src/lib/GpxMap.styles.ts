@@ -69,5 +69,9 @@ export const StyledWaypointsDetails = styled.details`
     tr:hover td {
       background: rgba(128, 128, 128, 0.06);
     }
+
+    tr[data-selected] td {
+      background: rgba(245, 158, 11, 0.12);
+    }
   }
 `

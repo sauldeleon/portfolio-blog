@@ -4,7 +4,7 @@ import L from 'leaflet'
 import 'leaflet-gpx'
 import 'leaflet/dist/leaflet.css'
 import { useEffect, useRef, useState } from 'react'
-import { MapContainer, TileLayer, useMap } from 'react-leaflet'
+import { CircleMarker, MapContainer, TileLayer, useMap } from 'react-leaflet'
 
 import {
   MAP_ICON_ANCHOR,
@@ -66,7 +66,7 @@ function WaypointFocuser({ waypoint }: { waypoint: Waypoint | null }) {
   const map = useMap()
   useEffect(() => {
     if (!waypoint) return
-    map.flyTo([waypoint.lat, waypoint.lon], 17)
+    map.flyTo([waypoint.lat, waypoint.lon], 18)
   }, [waypoint, map])
   return null
 }
@@ -137,6 +137,18 @@ export function GpxMap({ url, showWaypoints }: GpxMapProps) {
           />
           <GpxTrack url={url} />
           <WaypointFocuser waypoint={focusedWaypoint} />
+          {focusedWaypoint && (
+            <CircleMarker
+              center={[focusedWaypoint.lat, focusedWaypoint.lon]}
+              radius={14}
+              pathOptions={{
+                color: '#f59e0b',
+                fillColor: '#f59e0b',
+                fillOpacity: 0.35,
+                weight: 2,
+              }}
+            />
+          )}
         </MapContainer>
       </StyledMapContainer>
 
@@ -156,6 +168,7 @@ export function GpxMap({ url, showWaypoints }: GpxMapProps) {
                 <tr
                   key={`${wpt.name}-${i}`}
                   onClick={() => setFocusedWaypoint(wpt)}
+                  data-selected={focusedWaypoint === wpt ? 'true' : undefined}
                 >
                   <td>{wpt.name || '—'}</td>
                   <td>{`${wpt.lat.toFixed(5)}, ${wpt.lon.toFixed(5)}`}</td>

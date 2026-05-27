@@ -46,6 +46,19 @@ jest.mock('react-leaflet', () => ({
       data-url={url}
     />
   ),
+  CircleMarker: ({
+    center,
+    radius,
+  }: {
+    center: [number, number]
+    radius: number
+  }) => (
+    <div
+      data-testid="circle-marker"
+      data-center={JSON.stringify(center)}
+      data-radius={radius}
+    />
+  ),
   useMap: jest.fn(),
 }))
 
@@ -262,7 +275,7 @@ describe('GpxMap', () => {
       expect(await screen.findByText('Refugio Mar')).toBeInTheDocument()
       const rows = screen.getAllByRole('row')
       fireEvent.click(rows[1])
-      expect(mockFlyTo).toHaveBeenCalledWith([43.5, -5.6], 17)
+      expect(mockFlyTo).toHaveBeenCalledWith([43.5, -5.6], 18)
     })
 
     it('flies to second waypoint coords on row click', async () => {
@@ -270,7 +283,29 @@ describe('GpxMap', () => {
       expect(await screen.findByText('Summit')).toBeInTheDocument()
       const rows = screen.getAllByRole('row')
       fireEvent.click(rows[2])
-      expect(mockFlyTo).toHaveBeenCalledWith([43.6, -5.7], 17)
+      expect(mockFlyTo).toHaveBeenCalledWith([43.6, -5.7], 18)
+    })
+
+    it('renders circle marker at clicked waypoint coords', async () => {
+      render(<GpxMap url={GPX_URL} showWaypoints />)
+      expect(await screen.findByText('Refugio Mar')).toBeInTheDocument()
+      expect(screen.queryByTestId('circle-marker')).not.toBeInTheDocument()
+      const rows = screen.getAllByRole('row')
+      fireEvent.click(rows[1])
+      const marker = screen.getByTestId('circle-marker')
+      expect(marker).toHaveAttribute(
+        'data-center',
+        JSON.stringify([43.5, -5.6]),
+      )
+    })
+
+    it('marks clicked row as selected', async () => {
+      render(<GpxMap url={GPX_URL} showWaypoints />)
+      expect(await screen.findByText('Refugio Mar')).toBeInTheDocument()
+      const rows = screen.getAllByRole('row')
+      fireEvent.click(rows[1])
+      expect(rows[1]).toHaveAttribute('data-selected', 'true')
+      expect(rows[2]).not.toHaveAttribute('data-selected')
     })
   })
 })
