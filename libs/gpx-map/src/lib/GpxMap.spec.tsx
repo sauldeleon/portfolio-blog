@@ -168,17 +168,19 @@ describe('GpxMap', () => {
       async: true,
       polyline_options: { color: '#e63946', weight: 3, opacity: 0.85 },
       marker_options: expect.objectContaining({
-        startIconUrl: expect.stringContaining('data:image/svg+xml'),
-        endIconUrl: expect.stringContaining('data:image/svg+xml'),
         shadowUrl: expect.stringContaining('data:image/gif'),
-        wptIconUrls: expect.objectContaining({
+        iconSize: [20, 26],
+        iconAnchor: [10, 26],
+        shadowSize: [0, 0],
+      }),
+      markers: expect.objectContaining({
+        startIcon: expect.stringContaining('data:image/svg+xml'),
+        endIcon: expect.stringContaining('data:image/svg+xml'),
+        wptIcons: expect.objectContaining({
           '': expect.stringContaining('data:image/svg+xml'),
           Warning: expect.stringContaining('data:image/svg+xml'),
           Summit: expect.stringContaining('data:image/svg+xml'),
         }),
-        iconSize: [20, 26],
-        iconAnchor: [10, 26],
-        shadowSize: [0, 0],
       }),
     })
   })

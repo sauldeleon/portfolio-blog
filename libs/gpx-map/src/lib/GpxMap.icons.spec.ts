@@ -56,8 +56,10 @@ describe('GpxMap icons', () => {
     }
   })
 
-  it('WPT_ICON_URLS maps Warning to amber pin', () => {
-    expect(decodeURIComponent(WPT_ICON_URLS['Warning'])).toContain('#f59e0b')
+  it('WPT_ICON_URLS maps Warning to amber pin with warning triangle', () => {
+    const svg = decodeURIComponent(WPT_ICON_URLS['Warning'])
+    expect(svg).toContain('#f59e0b')
+    expect(svg).toContain('<polygon')
   })
 
   it('WPT_ICON_URLS maps Summit to purple pin', () => {

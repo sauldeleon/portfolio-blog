@@ -87,13 +87,15 @@ function GpxTrack({ url }: { url: string }) {
         opacity: 0.85,
       },
       marker_options: {
-        startIconUrl: MAP_ICON_START,
-        endIconUrl: MAP_ICON_END,
         shadowUrl: TRANSPARENT_1PX,
-        wptIconUrls: WPT_ICON_URLS,
         iconSize: MAP_ICON_SIZE,
         iconAnchor: MAP_ICON_ANCHOR,
         shadowSize: [0, 0],
+      },
+      markers: {
+        startIcon: MAP_ICON_START,
+        endIcon: MAP_ICON_END,
+        wptIcons: WPT_ICON_URLS,
       },
     })
 
