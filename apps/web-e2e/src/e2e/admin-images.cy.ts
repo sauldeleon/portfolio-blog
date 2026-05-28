@@ -26,7 +26,11 @@ describe('Admin images — upload, verify in picker, delete', () => {
     cy.get('[data-testid="image-manager"]').should('be.visible')
 
     // 2. Open upload modal
-    cy.get('[data-testid="upload-button"]').click()
+    // Use native HTMLElement.click() — same as open-image-picker-button above;
+    // Cypress synthetic click can miss React event delegation on freshly loaded pages.
+    cy.get('[data-testid="upload-button"]').then(($el) => {
+      $el[0].click()
+    })
     cy.get('[data-testid="dropzone"]').should('be.visible')
 
     // 3. Drop the image file
