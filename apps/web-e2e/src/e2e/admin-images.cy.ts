@@ -71,29 +71,37 @@ describe('Admin images — upload, verify in picker, delete', () => {
     cy.visit('/admin/posts/new')
     cy.get('[data-testid="post-editor"]').should('be.visible')
 
-    // 7. Open image picker sidebar.
-    // Intercept before clicking so we can wait for the fetch that fires on open.
-    cy.intercept('GET', '/api/images/').as('pickerHydration')
-    // Use native HTMLElement.click() — React's event delegation handles it
-    // correctly where Cypress's synthetic click sometimes does not.
+    // 7. Open image insert modal, then the image picker from within it.
+    // Step 7a: open ImageInsertModal via the toolbar button.
+    // Native click — React event delegation on freshly loaded pages.
     cy.get('[data-testid="open-image-picker-button"]').scrollIntoView()
     cy.get('[data-testid="open-image-picker-button"]').then(($el) => {
       $el[0].click()
     })
+    cy.get('[data-testid="pick-image-button"]').should('be.visible')
+
+    // Step 7b: open the image picker sidebar from inside the insert modal.
+    // Intercept before clicking so we can wait for the fetch that fires on open.
+    cy.intercept('GET', '/api/images/').as('pickerHydration')
+    cy.get('[data-testid="pick-image-button"]').then(($el) => {
+      $el[0].click()
+    })
     cy.wait('@pickerHydration')
-    // Wait for the 0.3s slide-in transition to complete before interacting
-    cy.get('[data-testid="image-picker-sidebar"]').should(
-      'have.css',
-      'transform',
-      'matrix(1, 0, 0, 1, 0, 0)',
-    )
+    // Two ImagePicker instances exist (cover + content). Content picker is last.
+    // Wait for the 0.3s slide-in transition to complete before interacting.
+    cy.get('[data-testid="image-picker-sidebar"]')
+      .last()
+      .should('have.css', 'transform', 'matrix(1, 0, 0, 1, 0, 0)')
 
     // 8. Search for the renamed image.
     // force: true bypasses Cypress's elementFromPoint overlap check which
-    // can false-positive on position:fixed elements inside other fixed ancestors
-    cy.get('[data-testid="image-picker-search"]').type(renamedImageName, {
-      force: true,
-    })
+    // can false-positive on position:fixed elements inside other fixed ancestors.
+    // Target the last search input — the content picker is the second instance.
+    cy.get('[data-testid="image-picker-search"]')
+      .last()
+      .type(renamedImageName, {
+        force: true,
+      })
     cy.get('[data-testid="image-picker-item"]', { timeout: 20000 }).should(
       'have.length.at.least',
       1,
