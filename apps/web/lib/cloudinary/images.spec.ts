@@ -2,14 +2,21 @@
  * @jest-environment node
  */
 const mockConfig = jest.fn()
-const mockApiResources = jest.fn()
+const mockExecute = jest.fn()
+const mockSearch = {
+  expression: jest.fn().mockReturnThis(),
+  sort_by: jest.fn().mockReturnThis(),
+  max_results: jest.fn().mockReturnThis(),
+  next_cursor: jest.fn().mockReturnThis(),
+  execute: mockExecute,
+}
 const mockUploaderDestroy = jest.fn()
 const mockUploaderRename = jest.fn()
 
 jest.mock('cloudinary', () => ({
   v2: {
     config: mockConfig,
-    api: { resources: mockApiResources },
+    search: mockSearch,
     uploader: {
       destroy: mockUploaderDestroy,
       rename: mockUploaderRename,
@@ -51,7 +58,7 @@ describe('listImages', () => {
   })
 
   it('configures cloudinary with env vars', async () => {
-    mockApiResources.mockResolvedValue({ resources: [] })
+    mockExecute.mockResolvedValue({ resources: [] })
     await listImages()
     expect(mockConfig).toHaveBeenCalledWith({
       cloud_name: 'test-cloud',
@@ -60,49 +67,37 @@ describe('listImages', () => {
     })
   })
 
-  it('calls api.resources with correct params (default)', async () => {
-    mockApiResources.mockResolvedValue({ resources: [] })
+  it('calls search with correct expression and sort', async () => {
+    mockExecute.mockResolvedValue({ resources: [] })
     await listImages()
-    expect(mockApiResources).toHaveBeenCalledWith({
-      type: 'upload',
-      resource_type: 'image',
-      prefix: 'sawl.dev - blog/',
-      max_results: 20,
-    })
+    expect(mockSearch.expression).toHaveBeenCalledWith(
+      'folder:"sawl.dev - blog"',
+    )
+    expect(mockSearch.sort_by).toHaveBeenCalledWith('created_at', 'desc')
+    expect(mockSearch.max_results).toHaveBeenCalledWith(20)
+    expect(mockSearch.next_cursor).not.toHaveBeenCalled()
   })
 
-  it('calls api.resources with custom maxResults', async () => {
-    mockApiResources.mockResolvedValue({ resources: [] })
+  it('calls search with custom maxResults', async () => {
+    mockExecute.mockResolvedValue({ resources: [] })
     await listImages(undefined, 50)
-    expect(mockApiResources).toHaveBeenCalledWith({
-      type: 'upload',
-      resource_type: 'image',
-      prefix: 'sawl.dev - blog/',
-      max_results: 50,
-    })
+    expect(mockSearch.max_results).toHaveBeenCalledWith(50)
   })
 
   it('passes next_cursor when nextCursor param is provided', async () => {
-    mockApiResources.mockResolvedValue({ resources: [] })
+    mockExecute.mockResolvedValue({ resources: [] })
     await listImages('cursor-abc-123')
-    expect(mockApiResources).toHaveBeenCalledWith({
-      type: 'upload',
-      resource_type: 'image',
-      prefix: 'sawl.dev - blog/',
-      max_results: 20,
-      next_cursor: 'cursor-abc-123',
-    })
+    expect(mockSearch.next_cursor).toHaveBeenCalledWith('cursor-abc-123')
   })
 
-  it('does not include next_cursor when nextCursor is undefined', async () => {
-    mockApiResources.mockResolvedValue({ resources: [] })
+  it('does not call next_cursor when nextCursor is undefined', async () => {
+    mockExecute.mockResolvedValue({ resources: [] })
     await listImages(undefined)
-    const callArg = mockApiResources.mock.calls[0][0] as Record<string, unknown>
-    expect(callArg).not.toHaveProperty('next_cursor')
+    expect(mockSearch.next_cursor).not.toHaveBeenCalled()
   })
 
   it('maps response to CloudinaryImage array', async () => {
-    mockApiResources.mockResolvedValue({ resources: [mockResource] })
+    mockExecute.mockResolvedValue({ resources: [mockResource] })
     const result = await listImages()
     expect(result.images).toEqual([
       {
@@ -118,7 +113,7 @@ describe('listImages', () => {
   })
 
   it('returns nextCursor when Cloudinary provides one', async () => {
-    mockApiResources.mockResolvedValue({
+    mockExecute.mockResolvedValue({
       resources: [mockResource],
       next_cursor: 'cursor-xyz-456',
     })
@@ -127,13 +122,13 @@ describe('listImages', () => {
   })
 
   it('returns undefined nextCursor when Cloudinary provides no more pages', async () => {
-    mockApiResources.mockResolvedValue({ resources: [mockResource] })
+    mockExecute.mockResolvedValue({ resources: [mockResource] })
     const result = await listImages()
     expect(result.nextCursor).toBeUndefined()
   })
 
-  it('propagates errors from api.resources', async () => {
-    mockApiResources.mockRejectedValue(new Error('Cloudinary error'))
+  it('propagates errors from search', async () => {
+    mockExecute.mockRejectedValue(new Error('Cloudinary error'))
     await expect(listImages()).rejects.toThrow('Cloudinary error')
   })
 })

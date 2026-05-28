@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import { Button } from '@sdlgr/button'
 
-export const StyledSidebar = styled.div<{ $open: boolean }>`
+export const StyledSidebar = styled.div<{ $open: boolean; $zIndex: number }>`
   position: fixed;
   right: 0;
   top: 0;
@@ -10,7 +10,7 @@ export const StyledSidebar = styled.div<{ $open: boolean }>`
   width: 50%;
   background: ${({ theme }) => theme.colors.black};
   border-left: 1px solid rgba(251, 251, 251, 0.1);
-  z-index: 900;
+  z-index: ${({ $zIndex }) => $zIndex};
   display: flex;
   flex-direction: column;
   transform: translateX(${({ $open }) => ($open ? '0' : '100%')});
@@ -157,4 +157,46 @@ export const StyledEmptyState = styled.p`
   text-align: center;
   padding: 2rem 0;
   margin: 0;
+`
+
+export const StyledUploadSection = styled.div`
+  padding: 0.75rem 1.5rem;
+  flex-shrink: 0;
+  border-bottom: 1px solid rgba(251, 251, 251, 0.06);
+`
+
+export const StyledUploadZone = styled.div<{
+  $active: boolean
+  $uploading: boolean
+}>`
+  border: 1px dashed
+    ${({ $active, theme }) =>
+      $active ? theme.colors.green : 'rgba(251, 251, 251, 0.2)'};
+  border-radius: 2px;
+  color: ${({ $active, theme }) =>
+    $active ? theme.colors.green : theme.colors.white};
+  cursor: ${({ $uploading }) => ($uploading ? 'default' : 'pointer')};
+  display: block;
+  font-family: inherit;
+  font-size: 0.7rem;
+  opacity: ${({ $uploading }) => ($uploading ? 0.4 : 0.6)};
+  padding: 0.6rem;
+  pointer-events: ${({ $uploading }) => ($uploading ? 'none' : 'auto')};
+  text-align: center;
+  transition:
+    border-color 0.15s,
+    color 0.15s,
+    opacity 0.15s;
+
+  &:hover {
+    border-color: ${({ theme }) => theme.colors.green};
+    opacity: 1;
+  }
+`
+
+export const StyledUploadError = styled.p`
+  color: #f87171;
+  font-family: inherit;
+  font-size: 0.65rem;
+  margin: 0.35rem 0 0;
 `

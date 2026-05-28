@@ -7,5 +7,13 @@
     "accept": "Aceptar",
     "message": "Este sitio web utiliza cookies para asegurarse de que obtenga la mejor experiencia."
   },
-  "skipToContent": "Saltar al contenido principal"
+  "skipToContent": "Saltar al contenido principal",
+  "gpxMap": {
+    "downloadGpx": "Descargar GPX",
+    "waypoints": "Puntos de interés",
+    "colName": "Nombre",
+    "colCoordinates": "Coordenadas",
+    "colElevation": "Elevación",
+    "flyTo": "Ver en el mapa"
+  }
 }

@@ -26,6 +26,10 @@ jest.mock('@web/i18n/client', () => ({
         'images.picker.search': 'Search images…',
         'images.picker.empty': 'No images found.',
         'images.picker.loading': 'Loading…',
+        'images.upload.dropzone': 'Drop an image here, or click to select',
+        'images.upload.dropzoneActive': 'Drop it!',
+        'images.upload.uploading': 'Uploading…',
+        'images.upload.error': 'Upload failed, please try again',
       }
       return translations[key] ?? key
     },
@@ -202,6 +206,7 @@ describe('ImagePicker', () => {
       <ImagePicker open={false} onClose={mockOnClose} onPick={mockOnPick} />,
     )
     expect(screen.getByTestId('image-picker-sidebar')).toBeInTheDocument()
+    expect(axios.get).not.toHaveBeenCalled()
   })
 
   it('shows image name extracted from publicId', async () => {
@@ -466,6 +471,407 @@ describe('ImagePicker', () => {
       expect(screen.queryByTestId('load-more-loading')).not.toBeInTheDocument(),
     )
     expect(screen.getAllByTestId('image-picker-item')).toHaveLength(2)
+  })
+
+  describe('upload', () => {
+    const uploadedImage = {
+      publicId: 'sawl.dev - blog/new-image',
+      url: 'https://res.cloudinary.com/demo/new.jpg',
+      width: 600,
+      height: 400,
+      format: 'jpg',
+      createdAt: '2024-01-10T00:00:00Z',
+      bytes: 5000,
+    }
+
+    it('renders upload dropzone with default text', async () => {
+      renderApp(
+        <ImagePicker open={true} onClose={mockOnClose} onPick={mockOnPick} />,
+      )
+      await waitFor(() =>
+        expect(screen.queryByTestId('picker-loading')).not.toBeInTheDocument(),
+      )
+      expect(screen.getByTestId('upload-dropzone')).toHaveTextContent(
+        'Drop an image here, or click to select',
+      )
+    })
+
+    it('shows active text on drag over', async () => {
+      renderApp(
+        <ImagePicker open={true} onClose={mockOnClose} onPick={mockOnPick} />,
+      )
+      await waitFor(() =>
+        expect(screen.queryByTestId('picker-loading')).not.toBeInTheDocument(),
+      )
+      fireEvent.dragOver(screen.getByTestId('upload-dropzone'))
+      expect(screen.getByTestId('upload-dropzone')).toHaveTextContent(
+        'Drop it!',
+      )
+    })
+
+    it('resets text on drag leave', async () => {
+      renderApp(
+        <ImagePicker open={true} onClose={mockOnClose} onPick={mockOnPick} />,
+      )
+      await waitFor(() =>
+        expect(screen.queryByTestId('picker-loading')).not.toBeInTheDocument(),
+      )
+      fireEvent.dragOver(screen.getByTestId('upload-dropzone'))
+      fireEvent.dragLeave(screen.getByTestId('upload-dropzone'))
+      expect(screen.getByTestId('upload-dropzone')).toHaveTextContent(
+        'Drop an image here, or click to select',
+      )
+    })
+
+    it('shows uploading text while upload is in progress', async () => {
+      let resolveUpload: (value: unknown) => void
+      const uploadPromise = new Promise((resolve) => {
+        resolveUpload = resolve
+      })
+      jest
+        .spyOn(axios, 'post')
+        .mockReturnValue(uploadPromise as ReturnType<typeof axios.post>)
+
+      renderApp(
+        <ImagePicker open={true} onClose={mockOnClose} onPick={mockOnPick} />,
+      )
+      await waitFor(() =>
+        expect(screen.getAllByTestId('image-picker-item')).toHaveLength(2),
+      )
+
+      const file = new File(['content'], 'test.jpg', { type: 'image/jpeg' })
+      fireEvent.drop(screen.getByTestId('upload-dropzone'), {
+        dataTransfer: { files: [file] },
+      })
+
+      expect(screen.getByTestId('upload-dropzone')).toHaveTextContent(
+        'Uploading…',
+      )
+
+      await act(async () => {
+        resolveUpload!({ data: uploadedImage })
+      })
+      await waitFor(() =>
+        expect(screen.getByTestId('upload-dropzone')).not.toHaveTextContent(
+          'Uploading…',
+        ),
+      )
+    })
+
+    it('prepends uploaded image immediately before background refresh', async () => {
+      let resolveGet: (value: unknown) => void
+      const getPromise = new Promise((resolve) => {
+        resolveGet = resolve
+      })
+      jest.spyOn(axios, 'post').mockResolvedValue({ data: uploadedImage })
+      jest
+        .spyOn(axios, 'get')
+        .mockResolvedValueOnce({
+          data: { images: mockImages, nextCursor: undefined },
+        })
+        .mockReturnValueOnce(getPromise as ReturnType<typeof axios.get>)
+
+      renderApp(
+        <ImagePicker open={true} onClose={mockOnClose} onPick={mockOnPick} />,
+      )
+      await waitFor(() =>
+        expect(screen.getAllByTestId('image-picker-item')).toHaveLength(2),
+      )
+
+      const file = new File(['content'], 'test.jpg', { type: 'image/jpeg' })
+      fireEvent.drop(screen.getByTestId('upload-dropzone'), {
+        dataTransfer: { files: [file] },
+      })
+
+      // Image is prepended from upload, before background GET resolves
+      await waitFor(() =>
+        expect(screen.getAllByTestId('image-picker-item')).toHaveLength(3),
+      )
+      expect(screen.getAllByTestId('image-name')[0]).toHaveTextContent(
+        'new-image',
+      )
+
+      await act(async () => {
+        resolveGet!({ data: { images: mockImages, nextCursor: undefined } })
+      })
+    })
+
+    it('pins uploaded image at top when server refresh includes it', async () => {
+      // Server returns uploaded image mid-list (alphabetical sort); it should stay at top
+      const serverListWithUploadedMid = [...mockImages, uploadedImage]
+      jest.spyOn(axios, 'post').mockResolvedValue({ data: uploadedImage })
+      jest
+        .spyOn(axios, 'get')
+        .mockResolvedValueOnce({
+          data: { images: mockImages, nextCursor: undefined },
+        })
+        .mockResolvedValueOnce({
+          data: { images: serverListWithUploadedMid, nextCursor: undefined },
+        })
+
+      renderApp(
+        <ImagePicker open={true} onClose={mockOnClose} onPick={mockOnPick} />,
+      )
+      await waitFor(() =>
+        expect(screen.getAllByTestId('image-picker-item')).toHaveLength(2),
+      )
+
+      const file = new File(['content'], 'test.jpg', { type: 'image/jpeg' })
+      fireEvent.drop(screen.getByTestId('upload-dropzone'), {
+        dataTransfer: { files: [file] },
+      })
+
+      await waitFor(() =>
+        expect(screen.getAllByTestId('image-picker-item')).toHaveLength(3),
+      )
+      expect(screen.getAllByTestId('image-name')[0]).toHaveTextContent(
+        'new-image',
+      )
+    })
+
+    it('keeps uploaded image at top when server has not indexed it yet', async () => {
+      jest.spyOn(axios, 'post').mockResolvedValue({ data: uploadedImage })
+      jest
+        .spyOn(axios, 'get')
+        .mockResolvedValueOnce({
+          data: { images: mockImages, nextCursor: undefined },
+        })
+        .mockResolvedValueOnce({
+          data: { images: mockImages, nextCursor: undefined },
+        })
+
+      renderApp(
+        <ImagePicker open={true} onClose={mockOnClose} onPick={mockOnPick} />,
+      )
+      await waitFor(() =>
+        expect(screen.getAllByTestId('image-picker-item')).toHaveLength(2),
+      )
+
+      const file = new File(['content'], 'test.jpg', { type: 'image/jpeg' })
+      fireEvent.drop(screen.getByTestId('upload-dropzone'), {
+        dataTransfer: { files: [file] },
+      })
+
+      await waitFor(() =>
+        expect(screen.getAllByTestId('image-picker-item')).toHaveLength(3),
+      )
+      expect(screen.getAllByTestId('image-name')[0]).toHaveTextContent(
+        'new-image',
+      )
+    })
+
+    it('preserves uploaded image when initial fetch resolves after upload', async () => {
+      let resolveInitialGet: (value: unknown) => void
+      const initialGetPromise = new Promise((resolve) => {
+        resolveInitialGet = resolve
+      })
+      jest.spyOn(axios, 'post').mockResolvedValue({ data: uploadedImage })
+      jest
+        .spyOn(axios, 'get')
+        .mockReturnValueOnce(initialGetPromise as ReturnType<typeof axios.get>)
+        .mockResolvedValueOnce({
+          data: { images: mockImages, nextCursor: undefined },
+        })
+
+      renderApp(
+        <ImagePicker open={true} onClose={mockOnClose} onPick={mockOnPick} />,
+      )
+
+      expect(screen.getByTestId('picker-loading')).toBeInTheDocument()
+
+      const file = new File(['content'], 'test.jpg', { type: 'image/jpeg' })
+      fireEvent.drop(screen.getByTestId('upload-dropzone'), {
+        dataTransfer: { files: [file] },
+      })
+
+      // Resolve initial GET after upload to trigger the race condition
+      await act(async () => {
+        resolveInitialGet!({
+          data: { images: mockImages, nextCursor: undefined },
+        })
+      })
+
+      await waitFor(() =>
+        expect(screen.getAllByTestId('image-picker-item')).toHaveLength(3),
+      )
+      expect(screen.getAllByTestId('image-name')[0]).toHaveTextContent(
+        'new-image',
+      )
+    })
+
+    it('keeps uploaded image when background refresh fails', async () => {
+      jest.spyOn(axios, 'post').mockResolvedValue({ data: uploadedImage })
+      jest
+        .spyOn(axios, 'get')
+        .mockResolvedValueOnce({
+          data: { images: mockImages, nextCursor: undefined },
+        })
+        .mockRejectedValueOnce(new Error('network error'))
+
+      renderApp(
+        <ImagePicker open={true} onClose={mockOnClose} onPick={mockOnPick} />,
+      )
+      await waitFor(() =>
+        expect(screen.getAllByTestId('image-picker-item')).toHaveLength(2),
+      )
+
+      const file = new File(['content'], 'test.jpg', { type: 'image/jpeg' })
+      fireEvent.drop(screen.getByTestId('upload-dropzone'), {
+        dataTransfer: { files: [file] },
+      })
+
+      await waitFor(() =>
+        expect(screen.getAllByTestId('image-picker-item')).toHaveLength(3),
+      )
+      expect(screen.getAllByTestId('image-name')[0]).toHaveTextContent(
+        'new-image',
+      )
+    })
+
+    it('shows upload error on failure', async () => {
+      jest.spyOn(axios, 'post').mockRejectedValue(new Error('Upload failed'))
+
+      renderApp(
+        <ImagePicker open={true} onClose={mockOnClose} onPick={mockOnPick} />,
+      )
+      await waitFor(() =>
+        expect(screen.getAllByTestId('image-picker-item')).toHaveLength(2),
+      )
+
+      const file = new File(['content'], 'test.jpg', { type: 'image/jpeg' })
+      fireEvent.drop(screen.getByTestId('upload-dropzone'), {
+        dataTransfer: { files: [file] },
+      })
+
+      expect(await screen.findByTestId('upload-error')).toHaveTextContent(
+        'Upload failed, please try again',
+      )
+    })
+
+    it('clears upload error on subsequent upload attempt', async () => {
+      jest
+        .spyOn(axios, 'post')
+        .mockRejectedValueOnce(new Error('fail'))
+        .mockResolvedValueOnce({ data: uploadedImage })
+
+      renderApp(
+        <ImagePicker open={true} onClose={mockOnClose} onPick={mockOnPick} />,
+      )
+      await waitFor(() =>
+        expect(screen.getAllByTestId('image-picker-item')).toHaveLength(2),
+      )
+
+      const file = new File(['content'], 'test.jpg', { type: 'image/jpeg' })
+      fireEvent.drop(screen.getByTestId('upload-dropzone'), {
+        dataTransfer: { files: [file] },
+      })
+      await screen.findByTestId('upload-error')
+
+      fireEvent.drop(screen.getByTestId('upload-dropzone'), {
+        dataTransfer: { files: [file] },
+      })
+      await waitFor(() =>
+        expect(screen.queryByTestId('upload-error')).not.toBeInTheDocument(),
+      )
+    })
+
+    it('sends filename without extension as name in FormData', async () => {
+      let capturedFormData: FormData | undefined
+      jest.spyOn(axios, 'post').mockImplementation((_, data) => {
+        capturedFormData = data as FormData
+        return Promise.resolve({ data: uploadedImage })
+      })
+
+      renderApp(
+        <ImagePicker open={true} onClose={mockOnClose} onPick={mockOnPick} />,
+      )
+      await waitFor(() =>
+        expect(screen.getAllByTestId('image-picker-item')).toHaveLength(2),
+      )
+
+      const file = new File(['content'], 'my-photo.jpg', { type: 'image/jpeg' })
+      fireEvent.drop(screen.getByTestId('upload-dropzone'), {
+        dataTransfer: { files: [file] },
+      })
+
+      expect(capturedFormData?.get('name')).toBe('my-photo')
+    })
+
+    it('does not upload when drop has no file', async () => {
+      const postSpy = jest.spyOn(axios, 'post')
+
+      renderApp(
+        <ImagePicker open={true} onClose={mockOnClose} onPick={mockOnPick} />,
+      )
+      await waitFor(() =>
+        expect(screen.getAllByTestId('image-picker-item')).toHaveLength(2),
+      )
+
+      fireEvent.drop(screen.getByTestId('upload-dropzone'), {
+        dataTransfer: { files: [] },
+      })
+
+      expect(postSpy).not.toHaveBeenCalled()
+    })
+
+    it('prepends uploaded image via file input', async () => {
+      jest.spyOn(axios, 'post').mockResolvedValue({ data: uploadedImage })
+
+      renderApp(
+        <ImagePicker open={true} onClose={mockOnClose} onPick={mockOnPick} />,
+      )
+      await waitFor(() =>
+        expect(screen.getAllByTestId('image-picker-item')).toHaveLength(2),
+      )
+
+      const file = new File(['content'], 'new.jpg', { type: 'image/jpeg' })
+      const input = screen.getByTestId('upload-file-input') as HTMLInputElement
+      Object.defineProperty(input, 'files', {
+        value: [file],
+        configurable: true,
+      })
+      fireEvent.change(input)
+
+      await waitFor(() =>
+        expect(screen.getAllByTestId('image-picker-item')).toHaveLength(3),
+      )
+      expect(screen.getAllByTestId('image-name')[0]).toHaveTextContent(
+        'new-image',
+      )
+    })
+
+    it('does not upload when file input has no file', async () => {
+      const postSpy = jest.spyOn(axios, 'post')
+
+      renderApp(
+        <ImagePicker open={true} onClose={mockOnClose} onPick={mockOnPick} />,
+      )
+      await waitFor(() =>
+        expect(screen.queryByTestId('picker-loading')).not.toBeInTheDocument(),
+      )
+
+      const input = screen.getByTestId('upload-file-input') as HTMLInputElement
+      Object.defineProperty(input, 'files', {
+        value: null,
+        configurable: true,
+      })
+      fireEvent.change(input)
+
+      expect(postSpy).not.toHaveBeenCalled()
+    })
+
+    it('file input has correct accept attribute', async () => {
+      renderApp(
+        <ImagePicker open={true} onClose={mockOnClose} onPick={mockOnPick} />,
+      )
+      await waitFor(() =>
+        expect(screen.queryByTestId('picker-loading')).not.toBeInTheDocument(),
+      )
+      expect(screen.getByTestId('upload-file-input')).toHaveAttribute(
+        'accept',
+        'image/jpeg,image/png,image/webp,image/gif',
+      )
+    })
   })
 
   it('does not load more when already loading more', async () => {

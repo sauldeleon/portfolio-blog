@@ -324,6 +324,12 @@ export const StyledError = styled.p`
   width: 100%;
 `
 
+export const StyledToolbarRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+`
+
 export const StyledImagePickerButton = styled(Button).attrs({
   variant: 'contained',
   size: 'sm',

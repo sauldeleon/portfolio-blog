@@ -76,6 +76,7 @@ jest.mock('../ImagePicker', () => ({
     open,
     onClose,
     onPick,
+    zIndex = 900,
   }: {
     open: boolean
     onClose: () => void
@@ -88,12 +89,14 @@ jest.mock('../ImagePicker', () => ({
       createdAt: string
       bytes: number
     }) => void
-  }) =>
-    open ? (
-      <div data-testid="image-picker">
+    zIndex?: number
+  }) => {
+    const prefix = zIndex === 1100 ? 'content-' : ''
+    return open ? (
+      <div data-testid={`${prefix}image-picker`}>
         <button
           type="button"
-          data-testid="picker-insert"
+          data-testid={`${prefix}picker-insert`}
           onClick={() =>
             onPick({
               publicId: 'test/img',
@@ -108,8 +111,61 @@ jest.mock('../ImagePicker', () => ({
         >
           Insert
         </button>
-        <button type="button" data-testid="picker-close" onClick={onClose}>
+        <button
+          type="button"
+          data-testid={`${prefix}picker-close`}
+          onClick={onClose}
+        >
           Close
+        </button>
+      </div>
+    ) : null
+  },
+}))
+
+jest.mock('../ImageInsertModal', () => ({
+  ImageInsertModal: ({
+    isOpen,
+    onInsert,
+    onCancel,
+    onRequestImagePick,
+  }: {
+    isOpen: boolean
+    onInsert: (markdown: string) => void
+    onCancel: () => void
+    pickerOpen: boolean
+    onRequestImagePick: (
+      onPicked: (image: {
+        publicId: string
+        url: string
+        width: number
+        height: number
+        format: string
+        createdAt: string
+        bytes: number
+      }) => void,
+    ) => void
+  }) =>
+    isOpen ? (
+      <div data-testid="image-insert-modal">
+        <button
+          type="button"
+          data-testid="modal-insert"
+          onClick={() =>
+            onInsert('\n\n![](https://res.cloudinary.com/test/img.jpg)\n\n')
+          }
+        >
+          Insert
+        </button>
+        <button type="button" data-testid="modal-cancel" onClick={onCancel}>
+          Cancel
+        </button>
+        <button
+          type="button"
+          data-testid="modal-request-pick"
+          onClick={() => onRequestImagePick(jest.fn())}
+        >
+          Request Pick
         </button>
       </div>
     ) : null,
@@ -267,33 +323,40 @@ describe('PostEditor — image picker', () => {
     expect(screen.getByTestId('open-image-picker-button')).toBeInTheDocument()
   })
 
-  it('image picker is not visible initially', () => {
+  it('image insert modal is not visible initially', () => {
     renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
-    expect(screen.queryByTestId('image-picker')).not.toBeInTheDocument()
+    expect(screen.queryByTestId('image-insert-modal')).not.toBeInTheDocument()
   })
 
-  it('opens image picker when button clicked', () => {
-    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
-    fireEvent.click(screen.getByTestId('open-image-picker-button'))
-    expect(screen.getByTestId('image-picker')).toBeInTheDocument()
-  })
-
-  it('closes image picker when onClose called', () => {
+  it('opens image insert modal when button clicked', () => {
     renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
     fireEvent.click(screen.getByTestId('open-image-picker-button'))
-    fireEvent.click(screen.getByTestId('picker-close'))
-    expect(screen.queryByTestId('image-picker')).not.toBeInTheDocument()
+    expect(screen.getByTestId('image-insert-modal')).toBeInTheDocument()
   })
 
-  it('inserts markdown at end of content when textarea has no ref focus', () => {
+  it('closes image insert modal when cancel called', () => {
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+    fireEvent.click(screen.getByTestId('open-image-picker-button'))
+    fireEvent.click(screen.getByTestId('modal-cancel'))
+    expect(screen.queryByTestId('image-insert-modal')).not.toBeInTheDocument()
+  })
+
+  it('inserts markdown into content when image insert modal confirms', () => {
     renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
     const textarea = screen.getByTestId('content-input') as HTMLTextAreaElement
     fireEvent.change(textarea, { target: { value: 'existing content' } })
     fireEvent.click(screen.getByTestId('open-image-picker-button'))
-    fireEvent.click(screen.getByTestId('picker-insert'))
+    fireEvent.click(screen.getByTestId('modal-insert'))
     expect(textarea.value).toContain(
       '![](https://res.cloudinary.com/test/img.jpg)',
     )
+  })
+
+  it('closes image insert modal after insert', () => {
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+    fireEvent.click(screen.getByTestId('open-image-picker-button'))
+    fireEvent.click(screen.getByTestId('modal-insert'))
+    expect(screen.queryByTestId('image-insert-modal')).not.toBeInTheDocument()
   })
 
   it('opens picker in cover mode when cover-image-input clicked', () => {
@@ -310,6 +373,13 @@ describe('PostEditor — image picker', () => {
     expect(screen.queryByTestId('image-picker')).not.toBeInTheDocument()
   })
 
+  it('closes cover image picker when onClose called', () => {
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+    fireEvent.click(screen.getByTestId('cover-image-input'))
+    fireEvent.click(screen.getByTestId('picker-close'))
+    expect(screen.queryByTestId('image-picker')).not.toBeInTheDocument()
+  })
+
   it('cover-image-input is read-only', () => {
     renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
     expect(screen.getByTestId('cover-image-input')).toHaveAttribute('readonly')
@@ -322,6 +392,29 @@ describe('PostEditor — image picker', () => {
     expect(screen.getByTestId('cover-image-input')).toHaveValue('test/img')
     fireEvent.click(screen.getByTestId('clear-cover-image-button'))
     expect(screen.getByTestId('cover-image-input')).toHaveValue('')
+  })
+
+  it('opens content picker when image insert modal requests it', () => {
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+    fireEvent.click(screen.getByTestId('open-image-picker-button'))
+    fireEvent.click(screen.getByTestId('modal-request-pick'))
+    expect(screen.getByTestId('content-image-picker')).toBeInTheDocument()
+  })
+
+  it('closes content picker when onClose is called', () => {
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+    fireEvent.click(screen.getByTestId('open-image-picker-button'))
+    fireEvent.click(screen.getByTestId('modal-request-pick'))
+    fireEvent.click(screen.getByTestId('content-picker-close'))
+    expect(screen.queryByTestId('content-image-picker')).not.toBeInTheDocument()
+  })
+
+  it('closes content picker after pick', () => {
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+    fireEvent.click(screen.getByTestId('open-image-picker-button'))
+    fireEvent.click(screen.getByTestId('modal-request-pick'))
+    fireEvent.click(screen.getByTestId('content-picker-insert'))
+    expect(screen.queryByTestId('content-image-picker')).not.toBeInTheDocument()
   })
 })
 

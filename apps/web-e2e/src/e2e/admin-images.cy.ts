@@ -26,8 +26,14 @@ describe('Admin images — upload, verify in picker, delete', () => {
     cy.get('[data-testid="image-manager"]').should('be.visible')
 
     // 2. Open upload modal
+    // Wait for React hydration (same pattern as open-image-picker-button):
+    // image-manager is visible from SSR before hydrateRoot() attaches handlers.
     cy.get('[data-testid="upload-button"]').click()
-    cy.get('[data-testid="dropzone"]').should('be.visible')
+    cy.get('[data-testid="upload-button"]').then(($el) => {
+      $el[0].click()
+    })
+    // react-overlays resolves its portal container via useEffect (one extra render cycle)
+    cy.get('[data-testid="dropzone"]', { timeout: 10000 }).should('be.visible')
 
     // 3. Drop the image file
     cy.get('[data-testid="dropzone-input"]').selectFile(
@@ -64,31 +70,47 @@ describe('Admin images — upload, verify in picker, delete', () => {
     }).should('be.visible')
 
     // 6. Navigate to new post editor.
-    // Intercept the images API call that fires after React hydration so we
-    // know event handlers are attached before clicking the picker button.
-    cy.intercept('GET', '/api/images/').as('pickerHydration')
     cy.visit('/admin/posts/new')
     cy.get('[data-testid="post-editor"]').should('be.visible')
-    cy.wait('@pickerHydration')
+    // This page is fully SSR'd with no client-side fetch on mount, so post-editor
+    // is visible in the DOM before React hydrateRoot() finishes attaching handlers.
+    // Wait for React hydration by checking that React has set __reactProps$xxx on
+    // the button element — this only happens after hydrateRoot() completes.
+    cy.get('[data-testid="open-image-picker-button"]').should(($el) => {
+      assert.isTrue(
+        Object.keys($el[0]).some((k) => k.startsWith('__reactProps')),
+        'React fiber attached to button',
+      )
+    })
 
-    // 7. Open image picker sidebar.
-    // Use native HTMLElement.click() — React's event delegation handles it
-    // correctly where Cypress's synthetic click sometimes does not.
+    // 7. Open image insert modal, then the image picker from within it.
+    // Step 7a: open ImageInsertModal via the toolbar button.
+    // Native click — React event delegation on freshly loaded pages.
     cy.get('[data-testid="open-image-picker-button"]').scrollIntoView()
-    cy.get('[data-testid="open-image-picker-button"]').then(($el) => {
+    cy.get('[data-testid="open-image-picker-button"]').click()
+    cy.get('[data-testid="pick-image-button"]', { timeout: 10000 }).should(
+      'be.visible',
+    )
+
+    // Step 7b: open the image picker sidebar from inside the insert modal.
+    // Intercept before clicking so we can wait for the fetch that fires on open.
+    cy.intercept('GET', '/api/images/').as('pickerHydration')
+    cy.get('[data-testid="pick-image-button"]').then(($el) => {
       $el[0].click()
     })
-    // Wait for the 0.3s slide-in transition to complete before interacting
-    cy.get('[data-testid="image-picker-sidebar"]').should(
-      'have.css',
-      'transform',
-      'matrix(1, 0, 0, 1, 0, 0)',
-    )
+    cy.wait('@pickerHydration')
+    // Three ImagePicker sidebars exist: [0] cover (closed), [1] content (open),
+    // [2] GpxMapModal's picker (closed — always in DOM, outside modal portal).
+    // Wait for the 0.3s slide-in transition to complete before interacting.
+    cy.get('[data-testid="image-picker-sidebar"]')
+      .eq(1)
+      .should('have.css', 'transform', 'matrix(1, 0, 0, 1, 0, 0)')
 
     // 8. Search for the renamed image.
     // force: true bypasses Cypress's elementFromPoint overlap check which
-    // can false-positive on position:fixed elements inside other fixed ancestors
-    cy.get('[data-testid="image-picker-search"]').type(renamedImageName, {
+    // can false-positive on position:fixed elements inside other fixed ancestors.
+    // Target index 1 — content picker is the second ImagePicker instance.
+    cy.get('[data-testid="image-picker-search"]').eq(1).type(renamedImageName, {
       force: true,
     })
     cy.get('[data-testid="image-picker-item"]', { timeout: 20000 }).should(

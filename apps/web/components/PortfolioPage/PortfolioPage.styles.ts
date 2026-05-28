@@ -56,7 +56,9 @@ const translateHelper = ($scrollingDirection: VerticalScrollDirection) => {
   return `translateY(${scrollMapper[$scrollingDirection]}px)`
 }
 
-export const StyledScrollButton = styled.button<{
+export const StyledScrollButton = styled(Button).attrs({
+  variant: 'ghost',
+})<{
   $isScrolling: boolean
   $scrollingDirection: VerticalScrollDirection
 }>`
@@ -65,15 +67,15 @@ export const StyledScrollButton = styled.button<{
   margin-bottom: 50px;
   height: 50px;
   width: 50px;
+  justify-content: center;
   background-color: ${({ theme }) => theme.colors.white};
+  border: none;
   border-top-right-radius: 50%;
   border-bottom-right-radius: 50%;
-  cursor: pointer;
-  padding-block: 0;
-  padding-inline: 0;
-  border: none;
   outline: none;
   color: ${({ theme }) => theme.colors.black};
+  padding-block: 0;
+  padding-inline: 0;
 
   animation-name: ${({ $isScrolling }) => ($isScrolling ? gelatineY : '')};
   animation-duration: 0.5s;
@@ -82,6 +84,10 @@ export const StyledScrollButton = styled.button<{
   transition: transform 0.3s ease-in-out;
   transform: ${({ $scrollingDirection }) =>
     translateHelper($scrollingDirection)};
+
+  &:hover:not(:disabled) {
+    border: none;
+  }
 `
 
 export const StyledActionContainer = styled.div`

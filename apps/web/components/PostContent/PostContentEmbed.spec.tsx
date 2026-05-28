@@ -2,10 +2,70 @@ import { render, screen } from '@testing-library/react'
 
 import { PostContentEmbed } from './PostContentEmbed'
 
+jest.mock('@web/i18n/client', () => ({
+  useClientTranslation: () => ({
+    t: (key: string) => {
+      const map: Record<string, string> = {
+        'gpxMap.downloadGpx': 'Download GPX',
+        'gpxMap.waypoints': 'Waypoints',
+        'gpxMap.colName': 'Name',
+        'gpxMap.colCoordinates': 'Coordinates',
+        'gpxMap.colElevation': 'Elevation',
+        'gpxMap.flyTo': 'View on map',
+      }
+      return map[key] ?? key
+    },
+  }),
+}))
+
 jest.mock('./PostContent.styles', () => ({
   StyledEmbedWrapper: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="post-embed-wrapper">{children}</div>
   ),
+}))
+
+jest.mock('@sdlgr/gpx-map', () => ({
+  GpxMap: ({
+    url,
+    showWaypoints,
+    allowDownload,
+    waypointImages,
+    downloadLabel,
+    labels,
+  }: {
+    url: string
+    showWaypoints?: boolean
+    allowDownload?: boolean
+    waypointImages?: Record<string, string>
+    downloadLabel?: string
+    labels?: Record<string, string>
+  }) => (
+    <div
+      data-testid="gpx-map"
+      data-url={url}
+      data-show-waypoints={String(showWaypoints ?? false)}
+      data-allow-download={String(allowDownload ?? false)}
+      data-waypoint-images={
+        waypointImages ? JSON.stringify(waypointImages) : ''
+      }
+      data-download-label={downloadLabel ?? ''}
+      data-fly-to-label={labels?.flyTo ?? ''}
+    />
+  ),
+}))
+
+jest.mock('next/dynamic', () => ({
+  __esModule: true,
+  default: (fn: () => Promise<{ default: React.ComponentType<unknown> }>) => {
+    let Component: React.ComponentType<unknown> = () => null
+    fn().then((mod) => {
+      Component = mod.default
+    })
+    const DynamicComponent = (props: unknown) => (
+      <Component {...(props as object)} />
+    )
+    return DynamicComponent
+  },
 }))
 
 describe('PostContentEmbed', () => {
@@ -40,5 +100,88 @@ describe('PostContentEmbed', () => {
     render(<PostContentEmbed url="https://example.com/embed" />)
     const iframe = screen.getByTitle('embed')
     expect(iframe).toHaveAttribute('allowFullScreen')
+  })
+
+  it('renders GpxMap when type is gpx', async () => {
+    render(<PostContentEmbed type="gpx" url="https://example.com/track.gpx" />)
+    const gpxMap = await screen.findByTestId('gpx-map')
+    expect(gpxMap).toBeInTheDocument()
+    expect(gpxMap).toHaveAttribute('data-url', 'https://example.com/track.gpx')
+  })
+
+  it('does not render iframe when type is gpx', async () => {
+    render(<PostContentEmbed type="gpx" url="https://example.com/track.gpx" />)
+    await screen.findByTestId('gpx-map')
+    expect(screen.queryByTestId('post-embed-wrapper')).not.toBeInTheDocument()
+  })
+
+  it('passes showWaypoints=true to GpxMap when prop is set', async () => {
+    render(
+      <PostContentEmbed
+        type="gpx"
+        url="https://example.com/track.gpx"
+        showWaypoints={true}
+      />,
+    )
+    const gpxMap = await screen.findByTestId('gpx-map')
+    expect(gpxMap).toHaveAttribute('data-show-waypoints', 'true')
+  })
+
+  it('passes showWaypoints=false to GpxMap when prop is not set', async () => {
+    render(<PostContentEmbed type="gpx" url="https://example.com/track.gpx" />)
+    const gpxMap = await screen.findByTestId('gpx-map')
+    expect(gpxMap).toHaveAttribute('data-show-waypoints', 'false')
+  })
+
+  it('passes allowDownload=true to GpxMap when prop is set', async () => {
+    render(
+      <PostContentEmbed
+        type="gpx"
+        url="https://example.com/track.gpx"
+        allowDownload={true}
+      />,
+    )
+    const gpxMap = await screen.findByTestId('gpx-map')
+    expect(gpxMap).toHaveAttribute('data-allow-download', 'true')
+  })
+
+  it('passes allowDownload=false to GpxMap when prop is not set', async () => {
+    render(<PostContentEmbed type="gpx" url="https://example.com/track.gpx" />)
+    const gpxMap = await screen.findByTestId('gpx-map')
+    expect(gpxMap).toHaveAttribute('data-allow-download', 'false')
+  })
+
+  it('passes parsed waypointImages to GpxMap when json string provided', async () => {
+    const images = { Summit: 'https://cdn.com/img.jpg' }
+    render(
+      <PostContentEmbed
+        type="gpx"
+        url="https://example.com/track.gpx"
+        waypointImages={JSON.stringify(images)}
+      />,
+    )
+    const gpxMap = await screen.findByTestId('gpx-map')
+    expect(gpxMap).toHaveAttribute(
+      'data-waypoint-images',
+      JSON.stringify(images),
+    )
+  })
+
+  it('passes undefined waypointImages to GpxMap when prop not set', async () => {
+    render(<PostContentEmbed type="gpx" url="https://example.com/track.gpx" />)
+    const gpxMap = await screen.findByTestId('gpx-map')
+    expect(gpxMap).toHaveAttribute('data-waypoint-images', '')
+  })
+
+  it('passes translated downloadLabel to GpxMap', async () => {
+    render(<PostContentEmbed type="gpx" url="https://example.com/track.gpx" />)
+    const gpxMap = await screen.findByTestId('gpx-map')
+    expect(gpxMap).toHaveAttribute('data-download-label', 'Download GPX')
+  })
+
+  it('passes translated flyTo label to GpxMap', async () => {
+    render(<PostContentEmbed type="gpx" url="https://example.com/track.gpx" />)
+    const gpxMap = await screen.findByTestId('gpx-map')
+    expect(gpxMap).toHaveAttribute('data-fly-to-label', 'View on map')
   })
 })

@@ -2,7 +2,7 @@
 
 import axios from 'axios'
 import Image from 'next/image'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useId, useRef, useState } from 'react'
 
 import { useClientTranslation } from '@web/i18n/client'
 import type { CloudinaryImage } from '@web/lib/cloudinary/images'
@@ -22,6 +22,9 @@ import {
   StyledSearchWrapper,
   StyledSidebar,
   StyledTitle,
+  StyledUploadError,
+  StyledUploadSection,
+  StyledUploadZone,
 } from './ImagePicker.styles'
 
 function formatBytes(bytes: number): string {
@@ -34,15 +37,25 @@ export interface ImagePickerProps {
   open: boolean
   onClose: () => void
   onPick: (image: CloudinaryImage) => void
+  zIndex?: number
 }
 
-export function ImagePicker({ open, onClose, onPick }: ImagePickerProps) {
+export function ImagePicker({
+  open,
+  onClose,
+  onPick,
+  zIndex = 900,
+}: ImagePickerProps) {
   const { t } = useClientTranslation('admin')
+  const inputId = useId()
   const [images, setImages] = useState<CloudinaryImage[]>([])
   const [nextCursor, setNextCursor] = useState<string | undefined>(undefined)
   const [search, setSearch] = useState('')
   const [loading, setLoading] = useState(false)
   const [loadingMore, setLoadingMore] = useState(false)
+  const [isDragging, setIsDragging] = useState(false)
+  const [uploading, setUploading] = useState(false)
+  const [uploadError, setUploadError] = useState<string | null>(null)
   const sentinelRef = useRef<HTMLDivElement>(null)
   const nextCursorRef = useRef<string | undefined>(undefined)
   const loadingMoreRef = useRef(false)
@@ -55,24 +68,31 @@ export function ImagePicker({ open, onClose, onPick }: ImagePickerProps) {
     loadingMoreRef.current = loadingMore
   }, [loadingMore])
 
-  useEffect(() => {
-    async function fetchImages() {
-      setLoading(true)
-      try {
-        const { data } = await axios.get<{
-          images: CloudinaryImage[]
-          nextCursor?: string
-        }>('/api/images/')
-        setImages(data.images)
-        setNextCursor(data.nextCursor)
-      } catch {
-        // leave images empty on error
-      } finally {
-        setLoading(false)
-      }
+  const fetchImages = useCallback(async () => {
+    setLoading(true)
+    try {
+      const { data } = await axios.get<{
+        images: CloudinaryImage[]
+        nextCursor?: string
+      }>('/api/images/')
+      setImages((prev) => {
+        // Preserve images uploaded while this fetch was in flight
+        const serverIds = new Set(data.images.map((img) => img.publicId))
+        const freshUploads = prev.filter((img) => !serverIds.has(img.publicId))
+        return [...freshUploads, ...data.images]
+      })
+      setNextCursor(data.nextCursor)
+    } catch {
+      // leave images empty on error
+    } finally {
+      setLoading(false)
     }
-    void fetchImages()
   }, [])
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (open) void fetchImages()
+  }, [open, fetchImages])
 
   const loadMore = useCallback(async () => {
     const cursor = nextCursorRef.current
@@ -117,12 +137,68 @@ export function ImagePicker({ open, onClose, onPick }: ImagePickerProps) {
     return () => observer.disconnect()
   }, [loadMore])
 
+  async function handleUpload(file: File) {
+    setUploading(true)
+    setUploadError(null)
+    const formData = new FormData()
+    formData.append('file', file)
+    formData.append('name', file.name.replace(/\.[^/.]+$/, ''))
+    try {
+      const { data: uploaded } = await axios.post<CloudinaryImage>(
+        '/api/upload',
+        formData,
+      )
+      // Show immediately — Cloudinary indexing has latency
+      setImages((prev) => [uploaded, ...prev])
+      // Silent background refresh — always keep uploaded at top regardless of server sort
+      void axios
+        .get<{ images: CloudinaryImage[]; nextCursor?: string }>('/api/images/')
+        .then(({ data }) => {
+          setImages([
+            uploaded,
+            ...data.images.filter((img) => img.publicId !== uploaded.publicId),
+          ])
+          setNextCursor(data.nextCursor)
+        })
+        .catch(() => undefined)
+    } catch {
+      setUploadError(t('images.upload.error'))
+    } finally {
+      setUploading(false)
+    }
+  }
+
+  function handleDrop(e: React.DragEvent) {
+    e.preventDefault()
+    setIsDragging(false)
+    const file = e.dataTransfer.files[0]
+    if (file) void handleUpload(file)
+  }
+
+  function handleDragOver(e: React.DragEvent) {
+    e.preventDefault()
+    setIsDragging(true)
+  }
+
+  function handleDragLeave() {
+    setIsDragging(false)
+  }
+
+  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (file) void handleUpload(file)
+  }
+
   const filtered = images.filter((img) =>
     img.publicId.toLowerCase().includes(search.toLowerCase()),
   )
 
   return (
-    <StyledSidebar $open={open} data-testid="image-picker-sidebar">
+    <StyledSidebar
+      $open={open}
+      $zIndex={zIndex}
+      data-testid="image-picker-sidebar"
+    >
       <StyledHeader>
         <StyledTitle>{t('images.picker.title')}</StyledTitle>
         <StyledCloseButton
@@ -133,6 +209,37 @@ export function ImagePicker({ open, onClose, onPick }: ImagePickerProps) {
           ✕
         </StyledCloseButton>
       </StyledHeader>
+      <StyledUploadSection>
+        <StyledUploadZone
+          as="label"
+          htmlFor={inputId}
+          $active={isDragging}
+          $uploading={uploading}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+          data-testid="upload-dropzone"
+        >
+          {uploading
+            ? t('images.upload.uploading')
+            : isDragging
+              ? t('images.upload.dropzoneActive')
+              : t('images.upload.dropzone')}
+        </StyledUploadZone>
+        {uploadError && (
+          <StyledUploadError data-testid="upload-error">
+            {uploadError}
+          </StyledUploadError>
+        )}
+        <input
+          id={inputId}
+          type="file"
+          accept="image/jpeg,image/png,image/webp,image/gif"
+          style={{ display: 'none' }}
+          onChange={handleFileChange}
+          data-testid="upload-file-input"
+        />
+      </StyledUploadSection>
       <StyledSearchWrapper>
         <StyledSearch
           type="text"

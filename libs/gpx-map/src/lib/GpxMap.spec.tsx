@@ -1,0 +1,881 @@
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
+import React from 'react'
+import { useMap } from 'react-leaflet'
+
+import { GpxMap, parseWaypointsFromXml } from './GpxMap'
+
+jest.mock('leaflet/dist/leaflet.css', () => ({}))
+jest.mock('leaflet-gpx', () => ({}))
+
+jest.mock('leaflet', () => {
+  const on = jest.fn()
+  const addTo = jest.fn()
+  const getBounds = jest.fn().mockReturnValue({ _bounds: true })
+  const eachLayer = jest.fn()
+  const GPX = jest
+    .fn()
+    .mockImplementation(() => ({ on, addTo, getBounds, eachLayer }))
+  const IconDefault = {
+    prototype: {},
+    mergeOptions: jest.fn(),
+  }
+  return {
+    __esModule: true,
+    default: { GPX, Icon: { Default: IconDefault } },
+    GPX,
+    Icon: { Default: IconDefault },
+    _testMocks: { on, addTo, getBounds, eachLayer, GPX },
+  }
+})
+
+jest.mock('react-leaflet', () => ({
+  MapContainer: ({
+    children,
+    scrollWheelZoom,
+  }: {
+    children: React.ReactNode
+    scrollWheelZoom: boolean
+  }) => (
+    <div
+      data-testid="map-container"
+      data-scroll-wheel-zoom={String(scrollWheelZoom)}
+    >
+      {children}
+    </div>
+  ),
+  TileLayer: ({ attribution, url }: { attribution: string; url: string }) => (
+    <div
+      data-testid="tile-layer"
+      data-attribution={attribution}
+      data-url={url}
+    />
+  ),
+  AttributionControl: () => null,
+  CircleMarker: ({
+    center,
+    radius,
+  }: {
+    center: [number, number]
+    radius: number
+  }) => (
+    <div
+      data-testid="circle-marker"
+      data-center={JSON.stringify(center)}
+      data-radius={radius}
+    />
+  ),
+  useMap: jest.fn(),
+}))
+
+jest.mock('./GpxMap.styles', () => ({
+  StyledGpxMap: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="gpx-map-wrapper">{children}</div>
+  ),
+
+  StyledMapContainer: require('react').forwardRef(
+    (
+      { children }: { children: React.ReactNode },
+      ref: React.Ref<HTMLDivElement>,
+    ) => (
+      <div ref={ref} data-testid="map-container-wrapper">
+        {children}
+      </div>
+    ),
+  ),
+  StyledRowChevron: ({
+    children,
+    'data-testid': testId,
+  }: {
+    children: React.ReactNode
+    $expanded: boolean
+    'data-testid'?: string
+  }) => <span data-testid={testId}>{children}</span>,
+  StyledWaypointImageCard: ({
+    src,
+    alt,
+    'data-testid': testId,
+  }: {
+    src: string
+    alt: string
+    'data-testid'?: string
+  }) => <img data-testid={testId} src={src} alt={alt} />,
+  StyledWaypointsDetails: ({ children }: { children: React.ReactNode }) => (
+    <details data-testid="waypoints-details">{children}</details>
+  ),
+  StyledTableWrapper: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="table-wrapper">{children}</div>
+  ),
+  StyledLocateButton: ({
+    children,
+    onClick,
+    'aria-label': ariaLabel,
+  }: {
+    children: React.ReactNode
+    onClick: React.MouseEventHandler
+    'aria-label': string
+  }) => (
+    <button aria-label={ariaLabel} onClick={onClick}>
+      {children}
+    </button>
+  ),
+  StyledDownloadBar: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="download-bar">{children}</div>
+  ),
+  StyledDownloadButton: ({
+    children,
+    onClick,
+    'aria-label': ariaLabel,
+  }: {
+    children: React.ReactNode
+    onClick: React.MouseEventHandler
+    'aria-label': string
+  }) => (
+    <button aria-label={ariaLabel} onClick={onClick}>
+      {children}
+    </button>
+  ),
+}))
+
+const L = require('leaflet')
+const { _testMocks } = L
+const {
+  on: mockOn,
+  addTo: mockAddTo,
+  getBounds: mockGetBounds,
+  eachLayer: mockEachLayer,
+  GPX: MockGPX,
+} = _testMocks
+
+const GPX_URL = 'https://example.com/track.gpx'
+
+const GPX_XML_WITH_WAYPOINTS = `<?xml version="1.0"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1">
+  <wpt lat="43.5" lon="-5.6">
+    <name>Refugio Mar</name>
+    <desc>Mountain refuge</desc>
+    <ele>1200.5</ele>
+    <sym>Campground</sym>
+  </wpt>
+  <wpt lat="43.6" lon="-5.7">
+    <name>Summit</name>
+    <ele>1500</ele>
+    <sym>Summit</sym>
+  </wpt>
+</gpx>`
+
+const GPX_XML_NO_WAYPOINTS = `<?xml version="1.0"?><gpx xmlns="http://www.topografix.com/GPX/1/1"></gpx>`
+
+describe('GpxMap', () => {
+  const mockFitBounds = jest.fn()
+  const mockRemoveLayer = jest.fn()
+  const mockFlyTo = jest.fn()
+
+  beforeEach(() => {
+    mockFitBounds.mockReset()
+    mockRemoveLayer.mockReset()
+    mockFlyTo.mockReset()
+    MockGPX.mockClear()
+    mockOn.mockClear()
+    mockAddTo.mockClear()
+    mockGetBounds.mockReset()
+    mockGetBounds.mockReturnValue({ _bounds: true })
+    mockEachLayer.mockReset()
+    window.HTMLElement.prototype.scrollIntoView = jest.fn()
+    ;(useMap as jest.Mock).mockReturnValue({
+      fitBounds: mockFitBounds,
+      removeLayer: mockRemoveLayer,
+      flyTo: mockFlyTo,
+    })
+    global.fetch = jest.fn().mockResolvedValue({
+      text: jest.fn().mockResolvedValue(GPX_XML_WITH_WAYPOINTS),
+    } as unknown as Response)
+  })
+
+  it('renders gpx map wrapper', () => {
+    render(<GpxMap url={GPX_URL} />)
+    expect(screen.getByTestId('gpx-map-wrapper')).toBeInTheDocument()
+  })
+
+  it('renders map container wrapper', () => {
+    render(<GpxMap url={GPX_URL} />)
+    expect(screen.getByTestId('map-container-wrapper')).toBeInTheDocument()
+  })
+
+  it('renders map container', () => {
+    render(<GpxMap url={GPX_URL} />)
+    expect(screen.getByTestId('map-container')).toBeInTheDocument()
+  })
+
+  it('enables scroll wheel zoom', () => {
+    render(<GpxMap url={GPX_URL} />)
+    expect(screen.getByTestId('map-container')).toHaveAttribute(
+      'data-scroll-wheel-zoom',
+      'true',
+    )
+  })
+
+  it('renders tile layer with OpenStreetMap', () => {
+    render(<GpxMap url={GPX_URL} />)
+    const tile = screen.getByTestId('tile-layer')
+    expect(tile).toHaveAttribute(
+      'data-attribution',
+      '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    )
+    expect(tile).toHaveAttribute(
+      'data-url',
+      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    )
+  })
+
+  it('creates GPX layer with correct url and options', () => {
+    render(<GpxMap url={GPX_URL} />)
+    expect(MockGPX).toHaveBeenCalledWith(GPX_URL, {
+      async: true,
+      polyline_options: { color: '#e63946', weight: 3, opacity: 0.85 },
+      marker_options: expect.objectContaining({
+        shadowUrl: expect.stringContaining('data:image/gif'),
+        iconSize: [20, 26],
+        iconAnchor: [10, 26],
+        shadowSize: [0, 0],
+      }),
+      markers: expect.objectContaining({
+        startIcon: expect.stringContaining('data:image/svg+xml'),
+        endIcon: expect.stringContaining('data:image/svg+xml'),
+        wptIcons: expect.objectContaining({
+          '': expect.stringContaining('data:image/svg+xml'),
+          Warning: expect.stringContaining('data:image/svg+xml'),
+          Summit: expect.stringContaining('data:image/svg+xml'),
+        }),
+      }),
+    })
+  })
+
+  it('registers loaded event on GPX layer', () => {
+    render(<GpxMap url={GPX_URL} />)
+    expect(mockOn).toHaveBeenCalledWith('loaded', expect.any(Function))
+  })
+
+  it('adds GPX layer to map', () => {
+    render(<GpxMap url={GPX_URL} />)
+    expect(mockAddTo).toHaveBeenCalled()
+  })
+
+  it('fits bounds on loaded event', () => {
+    render(<GpxMap url={GPX_URL} />)
+    const loadedCallback = mockOn.mock.calls.find(
+      (c: [string, () => void]) => c[0] === 'loaded',
+    )?.[1]
+    act(() => {
+      loadedCallback()
+    })
+    expect(mockFitBounds).toHaveBeenCalledWith({ _bounds: true })
+  })
+
+  it('removes layer on unmount', () => {
+    const { unmount } = render(<GpxMap url={GPX_URL} />)
+    unmount()
+    expect(mockRemoveLayer).toHaveBeenCalled()
+  })
+
+  it('recreates GPX layer when url changes', () => {
+    const { rerender } = render(<GpxMap url="https://example.com/track1.gpx" />)
+    rerender(<GpxMap url="https://example.com/track2.gpx" />)
+    expect(MockGPX).toHaveBeenCalledTimes(2)
+    expect(MockGPX).toHaveBeenLastCalledWith(
+      'https://example.com/track2.gpx',
+      expect.any(Object),
+    )
+  })
+
+  describe('allowDownload', () => {
+    let mockAnchorClick: jest.Mock
+    let capturedAnchor: HTMLAnchorElement | undefined
+
+    beforeEach(() => {
+      mockAnchorClick = jest.fn()
+      capturedAnchor = undefined
+      Object.defineProperty(URL, 'createObjectURL', {
+        writable: true,
+        value: jest.fn().mockReturnValue('blob:mock-url'),
+      })
+      Object.defineProperty(URL, 'revokeObjectURL', {
+        writable: true,
+        value: jest.fn(),
+      })
+      const original = document.createElement.bind(document)
+      jest
+        .spyOn(document, 'createElement')
+        .mockImplementation((tag: string) => {
+          const el = original(tag)
+          if (tag === 'a') {
+            capturedAnchor = el as HTMLAnchorElement
+            jest.spyOn(el, 'click').mockImplementation(mockAnchorClick)
+          }
+          return el
+        })
+      const origAppend = document.body.appendChild.bind(document.body)
+      jest
+        .spyOn(document.body, 'appendChild')
+        .mockImplementation((child: Node) => {
+          if ((child as HTMLElement).tagName === 'A') return child
+          return origAppend(child)
+        })
+      const origRemove = document.body.removeChild.bind(document.body)
+      jest
+        .spyOn(document.body, 'removeChild')
+        .mockImplementation((child: Node) => {
+          if ((child as HTMLElement).tagName === 'A') return child
+          return origRemove(child)
+        })
+    })
+
+    afterEach(() => {
+      jest.restoreAllMocks()
+    })
+
+    it('does not render download bar when allowDownload is false', () => {
+      render(<GpxMap url={GPX_URL} />)
+      expect(screen.queryByTestId('download-bar')).not.toBeInTheDocument()
+    })
+
+    it('renders download bar when allowDownload is true', () => {
+      render(<GpxMap url={GPX_URL} allowDownload />)
+      expect(screen.getByTestId('download-bar')).toBeInTheDocument()
+    })
+
+    it('uses default label "Download GPX" when downloadLabel not provided', () => {
+      render(<GpxMap url={GPX_URL} allowDownload />)
+      expect(
+        screen.getByRole('button', { name: 'Download GPX' }),
+      ).toBeInTheDocument()
+    })
+
+    it('uses custom downloadLabel when provided', () => {
+      render(
+        <GpxMap url={GPX_URL} allowDownload downloadLabel="Descargar GPX" />,
+      )
+      expect(
+        screen.getByRole('button', { name: 'Descargar GPX' }),
+      ).toBeInTheDocument()
+    })
+
+    it('download button fetches url and triggers file download', async () => {
+      const mockBlob = new Blob(['<gpx/>'], { type: 'application/gpx+xml' })
+      global.fetch = jest.fn().mockResolvedValue({
+        blob: jest.fn().mockResolvedValue(mockBlob),
+        text: jest.fn().mockResolvedValue(''),
+      } as unknown as Response)
+
+      render(<GpxMap url={GPX_URL} allowDownload />)
+      fireEvent.click(screen.getByRole('button', { name: 'Download GPX' }))
+
+      await waitFor(() => {
+        expect(global.fetch).toHaveBeenCalledWith(GPX_URL)
+        expect(URL.createObjectURL).toHaveBeenCalledWith(mockBlob)
+        expect(mockAnchorClick).toHaveBeenCalled()
+        expect(URL.revokeObjectURL).toHaveBeenCalledWith('blob:mock-url')
+      })
+      expect(capturedAnchor?.download).toBe('track.gpx')
+    })
+
+    it('uses track.gpx fallback filename when url has no filename segment', async () => {
+      const mockBlob = new Blob(['<gpx/>'])
+      global.fetch = jest.fn().mockResolvedValue({
+        blob: jest.fn().mockResolvedValue(mockBlob),
+        text: jest.fn().mockResolvedValue(''),
+      } as unknown as Response)
+
+      render(<GpxMap url="https://example.com/" allowDownload />)
+      fireEvent.click(screen.getByRole('button', { name: 'Download GPX' }))
+
+      await waitFor(() => expect(mockAnchorClick).toHaveBeenCalled())
+      expect(capturedAnchor?.download).toBe('track.gpx')
+    })
+  })
+
+  describe('labels', () => {
+    it('uses default waypoints label', async () => {
+      render(<GpxMap url={GPX_URL} showWaypoints />)
+      expect(await screen.findByText('Waypoints (2)')).toBeInTheDocument()
+    })
+
+    it('uses custom waypoints label', async () => {
+      render(
+        <GpxMap
+          url={GPX_URL}
+          showWaypoints
+          labels={{ waypoints: 'Puntos de interés' }}
+        />,
+      )
+      expect(
+        await screen.findByText('Puntos de interés (2)'),
+      ).toBeInTheDocument()
+    })
+
+    it('uses default column headers', async () => {
+      render(<GpxMap url={GPX_URL} showWaypoints />)
+      await screen.findByTestId('waypoints-details')
+      expect(screen.getByText('Name')).toBeInTheDocument()
+      expect(screen.getByText('Coordinates')).toBeInTheDocument()
+      expect(screen.getByText('Elevation')).toBeInTheDocument()
+    })
+
+    it('uses custom column headers', async () => {
+      render(
+        <GpxMap
+          url={GPX_URL}
+          showWaypoints
+          labels={{
+            colName: 'Nombre',
+            colCoordinates: 'Coordenadas',
+            colElevation: 'Elevación',
+          }}
+        />,
+      )
+      await screen.findByTestId('waypoints-details')
+      expect(screen.getByText('Nombre')).toBeInTheDocument()
+      expect(screen.getByText('Coordenadas')).toBeInTheDocument()
+      expect(screen.getByText('Elevación')).toBeInTheDocument()
+    })
+
+    it('uses default flyTo aria-label on locate button', async () => {
+      render(<GpxMap url={GPX_URL} showWaypoints />)
+      await screen.findByText('Refugio Mar')
+      expect(
+        screen.getAllByRole('button', { name: 'View on map' }),
+      ).toHaveLength(2)
+    })
+
+    it('uses custom flyTo aria-label on locate button', async () => {
+      render(
+        <GpxMap
+          url={GPX_URL}
+          showWaypoints
+          labels={{ flyTo: 'Ver en el mapa' }}
+        />,
+      )
+      await screen.findByText('Refugio Mar')
+      expect(
+        screen.getAllByRole('button', { name: 'Ver en el mapa' }),
+      ).toHaveLength(2)
+    })
+  })
+
+  describe('showWaypoints', () => {
+    it('does not fetch when showWaypoints is false', () => {
+      render(<GpxMap url={GPX_URL} />)
+      expect(global.fetch).not.toHaveBeenCalled()
+    })
+
+    it('does not show waypoints section when showWaypoints is false', () => {
+      render(<GpxMap url={GPX_URL} />)
+      expect(screen.queryByTestId('waypoints-details')).not.toBeInTheDocument()
+    })
+
+    it('fetches GPX and renders waypoints table when showWaypoints is true', async () => {
+      render(<GpxMap url={GPX_URL} showWaypoints />)
+      expect(await screen.findByTestId('waypoints-details')).toBeInTheDocument()
+      expect(screen.getByText('Refugio Mar')).toBeInTheDocument()
+      expect(screen.getByText('43.50000, -5.60000')).toBeInTheDocument()
+      expect(screen.getByText('1201m')).toBeInTheDocument()
+      expect(screen.getByText('Summit')).toBeInTheDocument()
+      expect(screen.getByText('43.60000, -5.70000')).toBeInTheDocument()
+      expect(screen.getByText('1500m')).toBeInTheDocument()
+    })
+
+    it('shows waypoint count in summary', async () => {
+      render(<GpxMap url={GPX_URL} showWaypoints />)
+      expect(await screen.findByText('Waypoints (2)')).toBeInTheDocument()
+    })
+
+    it('shows dash for missing name and ele', async () => {
+      global.fetch = jest.fn().mockResolvedValue({
+        text: jest.fn().mockResolvedValue(`<?xml version="1.0"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1">
+  <wpt lat="43.5" lon="-5.6"></wpt>
+</gpx>`),
+      } as unknown as Response)
+      render(<GpxMap url={GPX_URL} showWaypoints />)
+      expect(await screen.findByTestId('waypoints-details')).toBeInTheDocument()
+      expect(screen.getAllByText('—').length).toBeGreaterThanOrEqual(2)
+      expect(screen.getByText('43.50000, -5.60000')).toBeInTheDocument()
+    })
+
+    it('does not show waypoints details when GPX has no waypoints', async () => {
+      global.fetch = jest.fn().mockResolvedValue({
+        text: jest.fn().mockResolvedValue(GPX_XML_NO_WAYPOINTS),
+      } as unknown as Response)
+      render(<GpxMap url={GPX_URL} showWaypoints />)
+      await waitFor(() => expect(global.fetch).toHaveBeenCalled())
+      expect(screen.queryByTestId('waypoints-details')).not.toBeInTheDocument()
+    })
+
+    it('does not show waypoints details when fetch fails', async () => {
+      global.fetch = jest.fn().mockRejectedValue(new Error('network'))
+      render(<GpxMap url={GPX_URL} showWaypoints />)
+      await waitFor(() => expect(global.fetch).toHaveBeenCalled())
+      expect(screen.queryByTestId('waypoints-details')).not.toBeInTheDocument()
+    })
+
+    it('row click expands to show description', async () => {
+      render(<GpxMap url={GPX_URL} showWaypoints />)
+      await screen.findByText('Refugio Mar')
+      const rows = screen.getAllByRole('row')
+      fireEvent.click(rows[1])
+      expect(rows[1]).toHaveAttribute('data-expanded', 'true')
+      expect(screen.getByText('Mountain refuge')).toBeInTheDocument()
+    })
+
+    it('row click collapses on second click', async () => {
+      render(<GpxMap url={GPX_URL} showWaypoints />)
+      await screen.findByText('Refugio Mar')
+      const rows = screen.getAllByRole('row')
+      fireEvent.click(rows[1])
+      fireEvent.click(rows[1])
+      expect(rows[1]).not.toHaveAttribute('data-expanded')
+      expect(screen.queryByText('Mountain refuge')).not.toBeInTheDocument()
+    })
+
+    it('does not expand row when waypoint has no desc and no image', async () => {
+      render(<GpxMap url={GPX_URL} showWaypoints />)
+      await screen.findByText('Summit')
+      const rows = screen.getAllByRole('row')
+      fireEvent.click(rows[2])
+      expect(rows[2]).not.toHaveAttribute('data-expanded')
+      expect(
+        screen
+          .getAllByRole('row')
+          .filter((r) => r.getAttribute('data-details') === 'true'),
+      ).toHaveLength(0)
+    })
+
+    it('row with desc has data-clickable attribute', async () => {
+      render(<GpxMap url={GPX_URL} showWaypoints />)
+      await screen.findByText('Refugio Mar')
+      const rows = screen.getAllByRole('row')
+      expect(rows[1]).toHaveAttribute('data-clickable', 'true')
+    })
+
+    it('row without desc and image does not have data-clickable', async () => {
+      render(<GpxMap url={GPX_URL} showWaypoints />)
+      await screen.findByText('Summit')
+      const rows = screen.getAllByRole('row')
+      expect(rows[2]).not.toHaveAttribute('data-clickable')
+    })
+
+    it('locate button flies to first waypoint', async () => {
+      render(<GpxMap url={GPX_URL} showWaypoints />)
+      await screen.findByText('Refugio Mar')
+      const buttons = screen.getAllByRole('button', { name: 'View on map' })
+      fireEvent.click(buttons[0])
+      expect(mockFlyTo).toHaveBeenCalledWith([43.5, -5.6], 18)
+    })
+
+    it('locate button flies to second waypoint', async () => {
+      render(<GpxMap url={GPX_URL} showWaypoints />)
+      await screen.findByText('Summit')
+      const buttons = screen.getAllByRole('button', { name: 'View on map' })
+      fireEvent.click(buttons[1])
+      expect(mockFlyTo).toHaveBeenCalledWith([43.6, -5.7], 18)
+    })
+
+    it('locate button renders circle marker at waypoint coords', async () => {
+      render(<GpxMap url={GPX_URL} showWaypoints />)
+      await screen.findByText('Refugio Mar')
+      expect(screen.queryByTestId('circle-marker')).not.toBeInTheDocument()
+      const buttons = screen.getAllByRole('button', { name: 'View on map' })
+      fireEvent.click(buttons[0])
+      const marker = screen.getByTestId('circle-marker')
+      expect(marker).toHaveAttribute(
+        'data-center',
+        JSON.stringify([43.5, -5.6]),
+      )
+    })
+
+    it('locate button does not expand the row', async () => {
+      render(<GpxMap url={GPX_URL} showWaypoints />)
+      await screen.findByText('Refugio Mar')
+      const rows = screen.getAllByRole('row')
+      const buttons = screen.getAllByRole('button', { name: 'View on map' })
+      fireEvent.click(buttons[0])
+      expect(rows[1]).not.toHaveAttribute('data-expanded')
+    })
+
+    it('locate button scrolls map container into view', async () => {
+      render(<GpxMap url={GPX_URL} showWaypoints />)
+      await screen.findByText('Refugio Mar')
+      const container = screen.getByTestId('map-container-wrapper')
+      const mockScrollIntoView = jest.fn()
+      container.scrollIntoView = mockScrollIntoView
+      const buttons = screen.getAllByRole('button', { name: 'View on map' })
+      fireEvent.click(buttons[0])
+      expect(mockScrollIntoView).toHaveBeenCalledWith({
+        behavior: 'smooth',
+        block: 'nearest',
+      })
+    })
+  })
+
+  describe('waypointImages', () => {
+    it('shows expand chevron for waypoint with image', async () => {
+      render(
+        <GpxMap
+          url={GPX_URL}
+          showWaypoints
+          waypointImages={{ 'Refugio Mar': 'https://cdn.com/img.jpg' }}
+        />,
+      )
+      await screen.findByText('Refugio Mar')
+      expect(screen.getByTestId('expand-chevron')).toBeInTheDocument()
+    })
+
+    it('does not show expand chevron when waypoint has no image or desc', async () => {
+      global.fetch = jest.fn().mockResolvedValue({
+        text: jest.fn().mockResolvedValue(`<?xml version="1.0"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1">
+  <wpt lat="43.5" lon="-5.6"><name>Plain</name></wpt>
+</gpx>`),
+      } as unknown as Response)
+      render(<GpxMap url={GPX_URL} showWaypoints />)
+      await screen.findByText('Plain')
+      expect(screen.queryByTestId('expand-chevron')).not.toBeInTheDocument()
+    })
+
+    it('does not show expand chevron for waypoint without matching image and no desc', async () => {
+      render(
+        <GpxMap
+          url={GPX_URL}
+          showWaypoints
+          waypointImages={{ Other: 'https://cdn.com/img.jpg' }}
+        />,
+      )
+      await screen.findByText('Summit')
+      const chevrons = screen.getAllByTestId('expand-chevron')
+      expect(chevrons).toHaveLength(1)
+    })
+
+    it('shows image card in expanded row when waypoint has image', async () => {
+      render(
+        <GpxMap
+          url={GPX_URL}
+          showWaypoints
+          waypointImages={{ 'Refugio Mar': 'https://cdn.com/img.jpg' }}
+        />,
+      )
+      await screen.findByText('Refugio Mar')
+      const rows = screen.getAllByRole('row')
+      fireEvent.click(rows[1])
+      const img = screen.getByTestId('waypoint-image-card')
+      expect(img).toHaveAttribute('src', 'https://cdn.com/img.jpg')
+      expect(img).toHaveAttribute('alt', 'Refugio Mar')
+    })
+
+    it('shows description alongside image when both present', async () => {
+      render(
+        <GpxMap
+          url={GPX_URL}
+          showWaypoints
+          waypointImages={{ 'Refugio Mar': 'https://cdn.com/img.jpg' }}
+        />,
+      )
+      await screen.findByText('Refugio Mar')
+      const rows = screen.getAllByRole('row')
+      fireEvent.click(rows[1])
+      expect(screen.getByTestId('waypoint-image-card')).toBeInTheDocument()
+      expect(screen.getByText('Mountain refuge')).toBeInTheDocument()
+    })
+
+    it('does not expand row when waypoint has no matching image and no desc', async () => {
+      render(
+        <GpxMap
+          url={GPX_URL}
+          showWaypoints
+          waypointImages={{ Other: 'https://cdn.com/img.jpg' }}
+        />,
+      )
+      await screen.findByText('Summit')
+      const rows = screen.getAllByRole('row')
+      fireEvent.click(rows[2])
+      expect(rows[2]).not.toHaveAttribute('data-expanded')
+      expect(
+        screen
+          .getAllByRole('row')
+          .filter((r) => r.getAttribute('data-details') === 'true'),
+      ).toHaveLength(0)
+    })
+
+    it('calls eachLayer on loaded event when waypointImages provided', () => {
+      render(
+        <GpxMap
+          url={GPX_URL}
+          waypointImages={{ 'Refugio Mar': 'https://cdn.com/img.jpg' }}
+        />,
+      )
+      const loadedCallback = mockOn.mock.calls.find(
+        (c: [string, () => void]) => c[0] === 'loaded',
+      )?.[1]
+      act(() => {
+        loadedCallback()
+      })
+      expect(mockEachLayer).toHaveBeenCalled()
+    })
+
+    it('does not call eachLayer when no waypointImages', () => {
+      render(<GpxMap url={GPX_URL} />)
+      const loadedCallback = mockOn.mock.calls.find(
+        (c: [string, () => void]) => c[0] === 'loaded',
+      )?.[1]
+      act(() => {
+        loadedCallback()
+      })
+      expect(mockEachLayer).not.toHaveBeenCalled()
+    })
+
+    it('binds popup to layer with matching title', () => {
+      const mockBindPopup = jest.fn()
+      mockEachLayer.mockImplementationOnce((cb: (l: unknown) => void) => {
+        cb({ options: { title: 'Refugio Mar' }, bindPopup: mockBindPopup })
+      })
+      render(
+        <GpxMap
+          url={GPX_URL}
+          waypointImages={{ 'Refugio Mar': 'https://cdn.com/img.jpg' }}
+        />,
+      )
+      const loadedCallback = mockOn.mock.calls.find(
+        (c: [string, () => void]) => c[0] === 'loaded',
+      )?.[1]
+      act(() => {
+        loadedCallback()
+      })
+      expect(mockBindPopup).toHaveBeenCalledWith(
+        expect.stringContaining('https://cdn.com/img.jpg'),
+        expect.objectContaining({ maxWidth: 200 }),
+      )
+    })
+
+    it('does not bind popup to layer without title', () => {
+      const mockBindPopup = jest.fn()
+      mockEachLayer.mockImplementationOnce((cb: (l: unknown) => void) => {
+        cb({ options: {}, bindPopup: mockBindPopup })
+      })
+      render(
+        <GpxMap
+          url={GPX_URL}
+          waypointImages={{ 'Refugio Mar': 'https://cdn.com/img.jpg' }}
+        />,
+      )
+      const loadedCallback = mockOn.mock.calls.find(
+        (c: [string, () => void]) => c[0] === 'loaded',
+      )?.[1]
+      act(() => {
+        loadedCallback()
+      })
+      expect(mockBindPopup).not.toHaveBeenCalled()
+    })
+
+    it('does not bind popup when title not in waypointImages', () => {
+      const mockBindPopup = jest.fn()
+      mockEachLayer.mockImplementationOnce((cb: (l: unknown) => void) => {
+        cb({ options: { title: 'Unknown' }, bindPopup: mockBindPopup })
+      })
+      render(
+        <GpxMap
+          url={GPX_URL}
+          waypointImages={{ 'Refugio Mar': 'https://cdn.com/img.jpg' }}
+        />,
+      )
+      const loadedCallback = mockOn.mock.calls.find(
+        (c: [string, () => void]) => c[0] === 'loaded',
+      )?.[1]
+      act(() => {
+        loadedCallback()
+      })
+      expect(mockBindPopup).not.toHaveBeenCalled()
+    })
+
+    it('does not show dash when image present but no desc', async () => {
+      render(
+        <GpxMap
+          url={GPX_URL}
+          showWaypoints
+          waypointImages={{ Summit: 'https://cdn.com/img.jpg' }}
+        />,
+      )
+      await screen.findByText('Summit')
+      const rows = screen.getAllByRole('row')
+      fireEvent.click(rows[2])
+      expect(screen.getByTestId('waypoint-image-card')).toBeInTheDocument()
+      const detailRows = screen
+        .getAllByRole('row')
+        .filter((r) => r.getAttribute('data-details') === 'true')
+      expect(detailRows[0]).not.toHaveTextContent('—')
+    })
+  })
+})
+
+describe('parseWaypointsFromXml', () => {
+  it('parses name, desc, rounded elevation, lat, lon and sym', () => {
+    const result = parseWaypointsFromXml(GPX_XML_WITH_WAYPOINTS)
+    expect(result).toEqual([
+      {
+        name: 'Refugio Mar',
+        desc: 'Mountain refuge',
+        ele: 1201,
+        lat: 43.5,
+        lon: -5.6,
+        sym: 'Campground',
+      },
+      {
+        name: 'Summit',
+        desc: '',
+        ele: 1500,
+        lat: 43.6,
+        lon: -5.7,
+        sym: 'Summit',
+      },
+    ])
+  })
+
+  it('returns null ele when ele element is missing', () => {
+    const xml = `<gpx><wpt lat="0" lon="0"><name>A</name></wpt></gpx>`
+    const [wpt] = parseWaypointsFromXml(xml)
+    expect(wpt.ele).toBeNull()
+    expect(wpt.lat).toBe(0)
+    expect(wpt.lon).toBe(0)
+    expect(wpt.sym).toBe('')
+  })
+
+  it('returns empty array when no waypoints', () => {
+    expect(parseWaypointsFromXml(GPX_XML_NO_WAYPOINTS)).toEqual([])
+  })
+
+  it('handles missing name and desc', () => {
+    const xml = `<gpx><wpt lat="10" lon="20"><ele>100</ele></wpt></gpx>`
+    const [wpt] = parseWaypointsFromXml(xml)
+    expect(wpt.name).toBe('')
+    expect(wpt.desc).toBe('')
+    expect(wpt.ele).toBe(100)
+    expect(wpt.lat).toBe(10)
+    expect(wpt.lon).toBe(20)
+  })
+
+  it('defaults lat and lon to 0 when attributes are missing', () => {
+    const xml = `<gpx><wpt><name>A</name></wpt></gpx>`
+    const [wpt] = parseWaypointsFromXml(xml)
+    expect(wpt.lat).toBe(0)
+    expect(wpt.lon).toBe(0)
+  })
+
+  it('parses sym tag', () => {
+    const xml = `<gpx><wpt lat="0" lon="0"><name>A</name><sym>Warning</sym></wpt></gpx>`
+    const [wpt] = parseWaypointsFromXml(xml)
+    expect(wpt.sym).toBe('Warning')
+  })
+
+  it('defaults sym to empty string when sym element is missing', () => {
+    const xml = `<gpx><wpt lat="0" lon="0"><name>A</name></wpt></gpx>`
+    const [wpt] = parseWaypointsFromXml(xml)
+    expect(wpt.sym).toBe('')
+  })
+})

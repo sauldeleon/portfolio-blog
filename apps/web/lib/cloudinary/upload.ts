@@ -28,6 +28,7 @@ export async function uploadImage(
     folder: 'sawl.dev - blog',
     context: { alt: altText },
     ...(name ? { public_id: name } : {}),
+    transformation: [{ quality: 'auto:good' }],
   })
 
   return {

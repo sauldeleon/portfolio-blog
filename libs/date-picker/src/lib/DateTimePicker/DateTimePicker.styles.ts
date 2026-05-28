@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 
+import { Button } from '@sdlgr/button'
 import { StyledDropdownPanel } from '@sdlgr/dropdown'
 
 export const StyledWrapper = styled.div`
@@ -8,21 +9,20 @@ export const StyledWrapper = styled.div`
   width: 100%;
 `
 
-export const StyledTrigger = styled.button<{ $hasValue: boolean }>`
+export const StyledTrigger = styled(Button).attrs({
+  variant: 'ghost',
+})<{ $hasValue: boolean }>`
   width: 100%;
   padding: 0.5rem 0;
-  background: transparent;
   border: none;
   border-bottom: 1px solid rgba(251, 251, 251, 0.2);
   color: ${({ $hasValue, theme }) =>
     $hasValue ? theme.colors.white : 'rgba(251,251,251,0.35)'};
-  font-family: inherit;
   font-size: 0.8rem;
-  text-align: left;
-  cursor: pointer;
   transition: border-color 0.2s;
 
-  &:hover {
+  &:hover:not(:disabled) {
+    border: none;
     border-bottom-color: rgba(251, 251, 251, 0.5);
   }
 
@@ -90,24 +90,24 @@ export const StyledPopover = styled(StyledDropdownPanel)`
   }
 `
 
-export const StyledClearButton = styled.button`
+export const StyledClearButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'xs',
+})`
   margin-top: 0.75rem;
   display: block;
   width: 100%;
   padding: 0.4rem;
-  background: transparent;
-  border: 1px solid rgba(251, 251, 251, 0.12);
+  border-color: rgba(251, 251, 251, 0.12);
   color: rgba(251, 251, 251, 0.5);
-  font-family: inherit;
   font-size: 0.65rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  cursor: pointer;
   transition:
     border-color 0.15s,
     color 0.15s;
 
-  &:hover {
+  &:hover:not(:disabled) {
     border-color: ${({ theme }) => theme.colors.orange};
     color: ${({ theme }) => theme.colors.orange};
   }

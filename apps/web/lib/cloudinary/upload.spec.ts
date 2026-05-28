@@ -57,6 +57,7 @@ describe('uploadImage', () => {
       expect.objectContaining({
         folder: 'sawl.dev - blog',
         context: { alt: 'alt text' },
+        transformation: [{ quality: 'auto:good' }],
       }),
     )
   })
