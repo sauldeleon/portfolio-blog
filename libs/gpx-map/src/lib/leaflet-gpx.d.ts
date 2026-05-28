@@ -5,13 +5,16 @@ declare module 'leaflet' {
     async?: boolean
     polyline_options?: L.PolylineOptions
     marker_options?: {
-      startIconUrl?: string | null
-      endIconUrl?: string | null
       shadowUrl?: string | null
-      wptIconUrls?: Record<string, string | null>
       iconSize?: [number, number]
       iconAnchor?: [number, number]
       shadowSize?: [number, number]
+    }
+    markers?: {
+      startIcon?: string | L.Icon
+      endIcon?: string | L.Icon
+      wptIcons?: Record<string, string | L.Icon>
+      wptTypeIcons?: Record<string, string | L.Icon>
     }
   }
 

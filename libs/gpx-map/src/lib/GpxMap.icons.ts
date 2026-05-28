@@ -22,11 +22,9 @@ const ICON_WARNING =
   `<line x1="10" y1="8" x2="10" y2="11" stroke="white" stroke-width="1.2" stroke-linecap="round"/>` +
   `<circle cx="10" cy="12.5" r=".6" fill="white"/>`
 
-const ICON_SUMMIT =
-  `<polyline points="5,14 10,5 15,14" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`
+const ICON_SUMMIT = `<polyline points="5,14 10,5 15,14" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`
 
-const ICON_WATER =
-  `<path d="M10,5 C14,8 14,12 10,14 C6,12 6,8 10,5Z" fill="white"/>`
+const ICON_WATER = `<path d="M10,5 C14,8 14,12 10,14 C6,12 6,8 10,5Z" fill="white"/>`
 
 const ICON_CAMP =
   `<polyline points="5,14 10,5 15,14" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>` +
@@ -37,8 +35,7 @@ const ICON_FOOD =
   `<path d="M8,5 L8,8.5 Q10,10 10,10 Q12,10 12,8.5 L12,5" stroke="white" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" fill="none"/>` +
   `<line x1="10" y1="5" x2="10" y2="8.5" stroke="white" stroke-width="1.1" stroke-linecap="round"/>`
 
-const ICON_PARKING =
-  `<text x="10" y="10" text-anchor="middle" dominant-baseline="central" font-size="9" font-weight="bold" fill="white" font-family="sans-serif">P</text>`
+const ICON_PARKING = `<text x="10" y="10" text-anchor="middle" dominant-baseline="central" font-size="9" font-weight="bold" fill="white" font-family="sans-serif">P</text>`
 
 const ICON_MEDICAL =
   `<line x1="10" y1="5.5" x2="10" y2="14.5" stroke="white" stroke-width="2" stroke-linecap="round"/>` +
@@ -50,8 +47,7 @@ const ICON_CYCLING =
   `<line x1="10" y1="5" x2="10" y2="15" stroke="white" stroke-width=".9"/>` +
   `<line x1="5" y1="10" x2="15" y2="10" stroke="white" stroke-width=".9"/>`
 
-const ICON_SCENIC =
-  `<polygon points="10,5 11.18,8.38 14.76,8.46 11.9,10.62 12.94,14.05 10,12 7.06,14.05 8.1,10.62 5.24,8.46 8.82,8.38" fill="white"/>`
+const ICON_SCENIC = `<polygon points="10,5 11.18,8.38 14.76,8.46 11.9,10.62 12.94,14.05 10,12 7.06,14.05 8.1,10.62 5.24,8.46 8.82,8.38" fill="white"/>`
 
 // Sym-specific waypoint icons (Garmin / gpxstudio symbol categories)
 const MAP_ICON_WPT_WARNING = svgToDataUrl(pin('#f59e0b', ICON_WARNING)) // amber  — warning / danger

@@ -27,6 +27,8 @@ import { CategoryIconRenderer } from '@web/utils/categoryIcons'
 import { computeReadingTime } from '@web/utils/computeReadingTime'
 import { slugify } from '@web/utils/slugify'
 
+import { GpxMapModal } from '../GpxMapModal'
+import { ImageInsertModal } from '../ImageInsertModal'
 import { ImagePicker } from '../ImagePicker'
 import { MarkdownPreview } from '../MarkdownPreview'
 import { CoverImageInput } from './CoverImageInput'
@@ -59,6 +61,7 @@ import {
   StyledSaveButton,
   StyledStatusBadge,
   StyledTitleRow,
+  StyledToolbarRow,
   StyledWrapper,
 } from './PostEditor.styles'
 
@@ -226,7 +229,12 @@ export function PostEditor({
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [isPickerOpen, setIsPickerOpen] = useState(false)
-  const [pickerMode, setPickerMode] = useState<'insert' | 'cover'>('insert')
+  const [isContentPickerOpen, setIsContentPickerOpen] = useState(false)
+  const contentPickerCallbackRef = useRef<
+    ((image: CloudinaryImage) => void) | null
+  >(null)
+  const [isImageInsertModalOpen, setIsImageInsertModalOpen] = useState(false)
+  const [isGpxModalOpen, setIsGpxModalOpen] = useState(false)
   const [previewTab, setPreviewTab] = useState<
     'post' | 'post-mobile' | 'hero' | 'card'
   >('post')
@@ -266,11 +274,7 @@ export function PostEditor({
   }
 
   function handlePick(image: CloudinaryImage) {
-    if (pickerMode === 'insert') {
-      insertAtCursor(`![](${image.url})`)
-    } else {
-      setCoverImage(image.publicId)
-    }
+    setCoverImage(image.publicId)
     setIsPickerOpen(false)
   }
 
@@ -477,7 +481,7 @@ export function PostEditor({
             </>
           )}
 
-          {status === 'draft' && (
+          {status === 'draft' && !!post && (
             <StyledArchiveButton
               onClick={() => handleSave('archived')}
               disabled={saving || !canArchive()}
@@ -587,10 +591,7 @@ export function PostEditor({
                 placeholder={t('postEditor.fields.coverImagePlaceholder')}
                 clearTitle={t('postEditor.fields.coverImageClear')}
                 value={coverImage}
-                onPick={() => {
-                  setPickerMode('cover')
-                  setIsPickerOpen(true)
-                }}
+                onPick={() => setIsPickerOpen(true)}
                 onClear={() => setCoverImage('')}
               />
 
@@ -713,16 +714,22 @@ export function PostEditor({
             <FieldLabel htmlFor={`content-${activeLocale}`} required>
               {t('postEditor.fields.content')}
             </FieldLabel>
-            <StyledImagePickerButton
-              type="button"
-              onClick={() => {
-                setPickerMode('insert')
-                setIsPickerOpen(true)
-              }}
-              data-testid="open-image-picker-button"
-            >
-              {t('images.picker.title')}
-            </StyledImagePickerButton>
+            <StyledToolbarRow>
+              <StyledImagePickerButton
+                type="button"
+                onClick={() => setIsImageInsertModalOpen(true)}
+                data-testid="open-image-picker-button"
+              >
+                {t('images.picker.title')}
+              </StyledImagePickerButton>
+              <StyledImagePickerButton
+                type="button"
+                onClick={() => setIsGpxModalOpen(true)}
+                data-testid="open-gpx-modal-button"
+              >
+                Insert GPX Map
+              </StyledImagePickerButton>
+            </StyledToolbarRow>
             <StyledContentTextarea
               id={`content-${activeLocale}`}
               value={currentLocale.content}
@@ -775,7 +782,12 @@ https://your-cdn.com/routes/track.gpx
 https://your-cdn.com/routes/track.gpx
 \`\`\`
 
-Add showWaypoints to show a collapsible waypoints table below the map.
+\`\`\`gpx showWaypoints allowDownload
+https://your-cdn.com/routes/track.gpx
+\`\`\`
+
+showWaypoints — collapsible waypoints table below the map.
+allowDownload — download GPX button below the map.
 
 Supported types: youtube · maps · openstreetmap · wikiloc · gpx`}</pre>
             </StyledMarkdownHint>
@@ -889,6 +901,38 @@ Supported types: youtube · maps · openstreetmap · wikiloc · gpx`}</pre>
         open={isPickerOpen}
         onClose={() => setIsPickerOpen(false)}
         onPick={handlePick}
+      />
+      <ImagePicker
+        open={isContentPickerOpen}
+        onClose={() => setIsContentPickerOpen(false)}
+        onPick={(image) => {
+          /* istanbul ignore next */
+          contentPickerCallbackRef.current?.(image)
+          contentPickerCallbackRef.current = null
+          setIsContentPickerOpen(false)
+        }}
+        zIndex={1100}
+      />
+      <ImageInsertModal
+        isOpen={isImageInsertModalOpen}
+        onInsert={(markdown) => {
+          insertAtCursor(markdown)
+          setIsImageInsertModalOpen(false)
+        }}
+        onCancel={() => setIsImageInsertModalOpen(false)}
+        pickerOpen={isContentPickerOpen}
+        onRequestImagePick={(onPicked) => {
+          contentPickerCallbackRef.current = onPicked
+          setIsContentPickerOpen(true)
+        }}
+      />
+      <GpxMapModal
+        isOpen={isGpxModalOpen}
+        onInsert={(markdown) => {
+          insertAtCursor(markdown)
+          setIsGpxModalOpen(false)
+        }}
+        onCancel={() => setIsGpxModalOpen(false)}
       />
     </StyledWrapper>
   )

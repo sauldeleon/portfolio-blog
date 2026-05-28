@@ -2,6 +2,8 @@
 
 import dynamic from 'next/dynamic'
 
+import { useClientTranslation } from '@web/i18n/client'
+
 import { StyledEmbedWrapper } from './PostContent.styles'
 
 const GpxMap = dynamic(
@@ -13,15 +15,39 @@ export function PostContentEmbed({
   type,
   url,
   showWaypoints,
+  allowDownload,
+  waypointImages,
 }: {
   type?: string
   url?: string
   showWaypoints?: boolean
+  allowDownload?: boolean
+  waypointImages?: string
 }) {
+  const { t } = useClientTranslation('common')
+
   if (!url) return null
 
   if (type === 'gpx') {
-    return <GpxMap url={url} showWaypoints={showWaypoints} />
+    const parsedWaypointImages = waypointImages
+      ? (JSON.parse(waypointImages) as Record<string, string>)
+      : undefined
+    return (
+      <GpxMap
+        url={url}
+        showWaypoints={showWaypoints}
+        allowDownload={allowDownload}
+        waypointImages={parsedWaypointImages}
+        downloadLabel={t('gpxMap.downloadGpx')}
+        labels={{
+          waypoints: t('gpxMap.waypoints'),
+          colName: t('gpxMap.colName'),
+          colCoordinates: t('gpxMap.colCoordinates'),
+          colElevation: t('gpxMap.colElevation'),
+          flyTo: t('gpxMap.flyTo'),
+        }}
+      />
+    )
   }
 
   return (

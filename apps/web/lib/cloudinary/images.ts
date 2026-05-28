@@ -20,13 +20,16 @@ export async function listImages(
     api_secret: process.env.CLOUDINARY_API_SECRET,
   })
 
-  const result = await cloudinary.api.resources({
-    type: 'upload',
-    resource_type: 'image',
-    prefix: 'sawl.dev - blog/',
-    max_results: maxResults,
-    ...(nextCursor ? { next_cursor: nextCursor } : {}),
-  })
+  let query = cloudinary.search
+    .expression('folder:"sawl.dev - blog"')
+    .sort_by('created_at', 'desc')
+    .max_results(maxResults)
+
+  if (nextCursor) {
+    query = query.next_cursor(nextCursor)
+  }
+
+  const result = await query.execute()
 
   const images = (
     result.resources as {

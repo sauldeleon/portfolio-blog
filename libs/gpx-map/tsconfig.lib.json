@@ -5,6 +5,7 @@
     "types": ["node"]
   },
   "files": [
+    "../../libs/types/styled.d.ts",
     "../../node_modules/@nx/react/typings/cssmodule.d.ts",
     "../../node_modules/@nx/react/typings/image.d.ts"
   ],

@@ -194,4 +194,140 @@ describe('remarkEmbeds', () => {
       expect.objectContaining({ name: 'showWaypoints' }),
     )
   })
+
+  it('adds allowDownload attribute when meta includes allowDownload', () => {
+    const [result] = runPlugin([
+      {
+        type: 'code',
+        lang: 'gpx',
+        meta: 'allowDownload',
+        value: 'https://example.com/track.gpx',
+      },
+    ])
+    expect(result.attributes).toContainEqual({
+      type: 'mdxJsxAttribute',
+      name: 'allowDownload',
+      value: null,
+    })
+  })
+
+  it('does not add allowDownload attribute when meta is null', () => {
+    const [result] = runPlugin([
+      {
+        type: 'code',
+        lang: 'gpx',
+        meta: null,
+        value: 'https://example.com/track.gpx',
+      },
+    ])
+    expect(result.attributes).not.toContainEqual(
+      expect.objectContaining({ name: 'allowDownload' }),
+    )
+  })
+
+  it('does not add allowDownload attribute when meta does not include allowDownload', () => {
+    const [result] = runPlugin([
+      {
+        type: 'code',
+        lang: 'gpx',
+        meta: 'someOtherFlag',
+        value: 'https://example.com/track.gpx',
+      },
+    ])
+    expect(result.attributes).not.toContainEqual(
+      expect.objectContaining({ name: 'allowDownload' }),
+    )
+  })
+
+  it('uses first line as url when content has multiple lines', () => {
+    const [result] = runPlugin([
+      {
+        type: 'code',
+        lang: 'gpx',
+        value: 'https://example.com/track.gpx\nSummit=https://cdn.com/img.jpg',
+      },
+    ])
+    expect(result.attributes).toContainEqual({
+      type: 'mdxJsxAttribute',
+      name: 'url',
+      value: 'https://example.com/track.gpx',
+    })
+  })
+
+  it('adds waypointImages attribute when content has name=url lines', () => {
+    const [result] = runPlugin([
+      {
+        type: 'code',
+        lang: 'gpx',
+        value:
+          'https://example.com/track.gpx\nSummit=https://cdn.com/img1.jpg\nWater=https://cdn.com/img2.jpg',
+      },
+    ])
+    expect(result.attributes).toContainEqual({
+      type: 'mdxJsxAttribute',
+      name: 'waypointImages',
+      value: JSON.stringify({
+        Summit: 'https://cdn.com/img1.jpg',
+        Water: 'https://cdn.com/img2.jpg',
+      }),
+    })
+  })
+
+  it('does not add waypointImages attribute when no image lines present', () => {
+    const [result] = runPlugin([
+      {
+        type: 'code',
+        lang: 'gpx',
+        value: 'https://example.com/track.gpx',
+      },
+    ])
+    expect(result.attributes).not.toContainEqual(
+      expect.objectContaining({ name: 'waypointImages' }),
+    )
+  })
+
+  it('ignores lines without = when parsing waypoint images', () => {
+    const [result] = runPlugin([
+      {
+        type: 'code',
+        lang: 'gpx',
+        value: 'https://example.com/track.gpx\nnot-an-image-line',
+      },
+    ])
+    expect(result.attributes).not.toContainEqual(
+      expect.objectContaining({ name: 'waypointImages' }),
+    )
+  })
+
+  it('trims waypoint name and url in image lines', () => {
+    const [result] = runPlugin([
+      {
+        type: 'code',
+        lang: 'gpx',
+        value:
+          'https://example.com/track.gpx\n  Summit  =  https://cdn.com/img.jpg  ',
+      },
+    ])
+    expect(result.attributes).toContainEqual({
+      type: 'mdxJsxAttribute',
+      name: 'waypointImages',
+      value: JSON.stringify({ Summit: 'https://cdn.com/img.jpg' }),
+    })
+  })
+
+  it('handles = inside image url correctly', () => {
+    const [result] = runPlugin([
+      {
+        type: 'code',
+        lang: 'gpx',
+        value:
+          'https://example.com/track.gpx\nSummit=https://cdn.com/img.jpg?w=800',
+      },
+    ])
+    expect(result.attributes).toContainEqual({
+      type: 'mdxJsxAttribute',
+      name: 'waypointImages',
+      value: JSON.stringify({ Summit: 'https://cdn.com/img.jpg?w=800' }),
+    })
+  })
 })

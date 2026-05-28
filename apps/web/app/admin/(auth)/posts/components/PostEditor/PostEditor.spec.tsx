@@ -84,6 +84,39 @@ jest.mock('../MarkdownPreview', () => ({
   ),
 }))
 
+jest.mock('../GpxMapModal', () => ({
+  GpxMapModal: ({
+    isOpen,
+    onInsert,
+    onCancel,
+  }: {
+    isOpen: boolean
+    onInsert: (markdown: string) => void
+    onCancel: () => void
+    [key: string]: unknown
+  }) =>
+    isOpen ? (
+      <div data-testid="gpx-map-modal-mock">
+        <button
+          type="button"
+          data-testid="gpx-modal-insert-mock"
+          onClick={() =>
+            onInsert('\n\n```gpx\nhttps://example.com/track.gpx\n```\n\n')
+          }
+        >
+          Insert
+        </button>
+        <button
+          type="button"
+          data-testid="gpx-modal-cancel-mock"
+          onClick={onCancel}
+        >
+          Cancel
+        </button>
+      </div>
+    ) : null,
+}))
+
 jest.mock('../ImagePicker', () => ({
   ImagePicker: ({
     open,
@@ -598,11 +631,23 @@ describe('PostEditor', () => {
       expect(screen.queryByTestId('editor-error')).not.toBeInTheDocument()
     })
 
-    it('sends archived status when archive button clicked', async () => {
+    it('does not show archive button when creating a new post', () => {
       renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+      expect(screen.queryByTestId('archive-button')).not.toBeInTheDocument()
+    })
+
+    it('sends archived status when archive button clicked on existing draft', async () => {
+      jest.spyOn(axios, 'put').mockResolvedValue({ data: {} })
+      renderApp(
+        <PostEditor
+          categories={mockCategories}
+          users={mockUsers}
+          post={mockExistingPost}
+        />,
+      )
       fireEvent.click(screen.getByTestId('archive-button'))
-      await waitFor(() => expect(axios.post).toHaveBeenCalled())
-      const body = (axios.post as jest.Mock).mock.calls[0][1] as {
+      await waitFor(() => expect(axios.put).toHaveBeenCalled())
+      const body = (axios.put as jest.Mock).mock.calls[0][1] as {
         status: string
       }
       expect(body.status).toBe('archived')
@@ -1125,6 +1170,39 @@ describe('PostEditor', () => {
         expect(screen.getByTestId('markdown-preview')).toBeInTheDocument()
         expect(screen.queryByTestId('post-hero-mock')).not.toBeInTheDocument()
       })
+    })
+  })
+
+  describe('GPX Map modal', () => {
+    it('does not show GPX modal by default', () => {
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+      expect(screen.queryByTestId('gpx-map-modal-mock')).not.toBeInTheDocument()
+    })
+
+    it('shows GPX modal when insert GPX button clicked', () => {
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+      fireEvent.click(screen.getByTestId('open-gpx-modal-button'))
+      expect(screen.getByTestId('gpx-map-modal-mock')).toBeInTheDocument()
+    })
+
+    it('closes GPX modal when cancel is clicked', () => {
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+      fireEvent.click(screen.getByTestId('open-gpx-modal-button'))
+      fireEvent.click(screen.getByTestId('gpx-modal-cancel-mock'))
+      expect(screen.queryByTestId('gpx-map-modal-mock')).not.toBeInTheDocument()
+    })
+
+    it('inserts markdown at cursor and closes modal on insert', () => {
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+      fireEvent.change(screen.getByTestId('content-input'), {
+        target: { value: 'Hello ' },
+      })
+      fireEvent.click(screen.getByTestId('open-gpx-modal-button'))
+      fireEvent.click(screen.getByTestId('gpx-modal-insert-mock'))
+      expect(screen.getByTestId('content-input')).toHaveValue(
+        'Hello \n\n```gpx\nhttps://example.com/track.gpx\n```\n\n',
+      )
+      expect(screen.queryByTestId('gpx-map-modal-mock')).not.toBeInTheDocument()
     })
   })
 })

@@ -18,6 +18,71 @@ export const StyledMapContainer = styled.div`
   }
 `
 
+export const StyledDownloadBar = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.35rem 0;
+`
+
+export const StyledDownloadButton = styled.button`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: none;
+  border: 1px solid rgba(128, 128, 128, 0.3);
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 0.3rem 0.65rem;
+  font-size: 0.75rem;
+  opacity: 0.7;
+  color: inherit;
+
+  &:hover {
+    opacity: 1;
+    border-color: rgba(128, 128, 128, 0.6);
+  }
+`
+
+export const StyledLocateButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px 4px;
+  opacity: 0.45;
+  color: inherit;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    opacity: 1;
+  }
+`
+
+export const StyledRowChevron = styled.span<{ $expanded: boolean }>`
+  display: inline-flex;
+  align-items: center;
+  margin-right: 0.35rem;
+  opacity: 0.45;
+  transition: transform 0.15s;
+  transform: ${({ $expanded }) =>
+    $expanded ? 'rotate(90deg)' : 'rotate(0deg)'};
+  vertical-align: middle;
+  flex-shrink: 0;
+`
+
+export const StyledWaypointImageCard = styled.img`
+  width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  border-radius: 2px;
+  display: block;
+  margin-bottom: 0.5rem;
+`
+
+export const StyledTableWrapper = styled.div`
+  overflow-x: auto;
+`
+
 export const StyledWaypointsDetails = styled.details`
   margin-top: 0.75rem;
   border: 1px solid rgba(128, 128, 128, 0.25);
@@ -62,7 +127,13 @@ export const StyledWaypointsDetails = styled.details`
       opacity: 0.7;
     }
 
-    tbody tr {
+    th:last-child,
+    td:last-child {
+      width: 2rem;
+      padding-left: 0;
+    }
+
+    tbody tr[data-clickable] {
       cursor: pointer;
     }
 
@@ -70,8 +141,25 @@ export const StyledWaypointsDetails = styled.details`
       background: rgba(128, 128, 128, 0.06);
     }
 
-    tr[data-selected] td {
-      background: rgba(245, 158, 11, 0.12);
+    tr[data-expanded] td {
+      background: rgba(245, 158, 11, 0.08);
+    }
+
+    tr[data-details] {
+      cursor: default;
+
+      td {
+        padding-top: 0;
+        border-top: none;
+        background: rgba(245, 158, 11, 0.04);
+
+        p {
+          margin: 0 0 0.5rem;
+          opacity: 0.75;
+          font-size: 0.78rem;
+          line-height: 1.5;
+        }
+      }
     }
   }
 `

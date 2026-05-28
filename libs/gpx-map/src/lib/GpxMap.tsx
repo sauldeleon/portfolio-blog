@@ -3,8 +3,14 @@
 import L from 'leaflet'
 import 'leaflet-gpx'
 import 'leaflet/dist/leaflet.css'
-import { useEffect, useRef, useState } from 'react'
-import { CircleMarker, MapContainer, TileLayer, useMap } from 'react-leaflet'
+import { Fragment, useEffect, useRef, useState } from 'react'
+import {
+  AttributionControl,
+  CircleMarker,
+  MapContainer,
+  TileLayer,
+  useMap,
+} from 'react-leaflet'
 
 import {
   MAP_ICON_ANCHOR,
@@ -16,8 +22,14 @@ import {
   WPT_ICON_URLS,
 } from './GpxMap.icons'
 import {
+  StyledDownloadBar,
+  StyledDownloadButton,
   StyledGpxMap,
+  StyledLocateButton,
   StyledMapContainer,
+  StyledRowChevron,
+  StyledTableWrapper,
+  StyledWaypointImageCard,
   StyledWaypointsDetails,
 } from './GpxMap.styles'
 
@@ -60,9 +72,103 @@ export function parseWaypointsFromXml(text: string): Waypoint[] {
   })
 }
 
+export interface GpxMapLabels {
+  waypoints?: string
+  colName?: string
+  colCoordinates?: string
+  colElevation?: string
+  flyTo?: string
+}
+
 export interface GpxMapProps {
   url: string
   showWaypoints?: boolean
+  allowDownload?: boolean
+  waypointImages?: Record<string, string>
+  downloadLabel?: string
+  labels?: GpxMapLabels
+}
+
+function downloadGpx(url: string) {
+  fetch(url)
+    .then((r) => r.blob())
+    .then((blob) => {
+      const objectUrl = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = objectUrl
+      a.download = url.split('/').pop() || 'track.gpx'
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      URL.revokeObjectURL(objectUrl)
+    })
+}
+
+function DownloadIcon() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+      <line
+        x1="6.5"
+        y1="1"
+        x2="6.5"
+        y2="8.5"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+      />
+      <polyline
+        points="4,6 6.5,8.5 9,6"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
+      <line
+        x1="1.5"
+        y1="11.5"
+        x2="11.5"
+        y2="11.5"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
+
+function MapPinIcon() {
+  return (
+    <svg width="13" height="15" viewBox="0 0 13 15" fill="none">
+      <path
+        d="M6.5 1C4.01 1 2 3.01 2 5.5C2 8.75 6.5 14 6.5 14C6.5 14 11 8.75 11 5.5C11 3.01 8.99 1 6.5 1Z"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinejoin="round"
+      />
+      <circle
+        cx="6.5"
+        cy="5.5"
+        r="1.4"
+        stroke="currentColor"
+        strokeWidth="1.2"
+      />
+    </svg>
+  )
+}
+
+function ChevronIcon() {
+  return (
+    <svg width="9" height="9" viewBox="0 0 9 9" fill="none" aria-hidden="true">
+      <polyline
+        points="2.5,1.5 6.5,4.5 2.5,7.5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
 }
 
 function WaypointFocuser({ waypoint }: { waypoint: Waypoint | null }) {
@@ -74,7 +180,13 @@ function WaypointFocuser({ waypoint }: { waypoint: Waypoint | null }) {
   return null
 }
 
-function GpxTrack({ url }: { url: string }) {
+function GpxTrack({
+  url,
+  waypointImages,
+}: {
+  url: string
+  waypointImages?: Record<string, string>
+}) {
   const map = useMap()
   const layerRef = useRef<L.GPX | null>(null)
 
@@ -101,6 +213,21 @@ function GpxTrack({ url }: { url: string }) {
 
     layer.on('loaded', () => {
       map.fitBounds(layer.getBounds())
+      if (waypointImages) {
+        layer.eachLayer((l) => {
+          const opts = (l as L.Marker).options as L.MarkerOptions & {
+            title?: string
+          }
+          const name = opts?.title
+          const imgUrl = name ? waypointImages[name] : undefined
+          if (imgUrl) {
+            ;(l as L.Marker).bindPopup(
+              `<img src="${imgUrl}" style="width:180px;max-height:160px;object-fit:contain;display:block;" alt="${name}" />`,
+              { maxWidth: 200 },
+            )
+          }
+        })
+      }
     })
 
     layer.addTo(map)
@@ -115,9 +242,25 @@ function GpxTrack({ url }: { url: string }) {
   return null
 }
 
-export function GpxMap({ url, showWaypoints }: GpxMapProps) {
+export function GpxMap({
+  url,
+  showWaypoints,
+  allowDownload,
+  waypointImages,
+  downloadLabel = 'Download GPX',
+  labels,
+}: GpxMapProps) {
+  const {
+    waypoints: waypointsLabel = 'Waypoints',
+    colName = 'Name',
+    colCoordinates = 'Coordinates',
+    colElevation = 'Elevation',
+    flyTo = 'View on map',
+  } = labels ?? {}
   const [waypoints, setWaypoints] = useState<Waypoint[]>([])
   const [focusedWaypoint, setFocusedWaypoint] = useState<Waypoint | null>(null)
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null)
+  const mapContainerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (!showWaypoints) return
@@ -127,20 +270,30 @@ export function GpxMap({ url, showWaypoints }: GpxMapProps) {
       .catch(() => setWaypoints([]))
   }, [url, showWaypoints])
 
+  function flyToWaypoint(wpt: Waypoint) {
+    setFocusedWaypoint(wpt)
+    mapContainerRef.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+    })
+  }
+
   return (
     <StyledGpxMap>
-      <StyledMapContainer>
+      <StyledMapContainer ref={mapContainerRef}>
         <MapContainer
           center={[0, 0]}
           zoom={2}
           style={{ width: '100%', height: '100%' }}
           scrollWheelZoom={true}
+          attributionControl={false}
         >
+          <AttributionControl prefix={false} />
           <TileLayer
             attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <GpxTrack url={url} />
+          <GpxTrack url={url} waypointImages={waypointImages} />
           <WaypointFocuser waypoint={focusedWaypoint} />
           {focusedWaypoint && (
             <CircleMarker
@@ -157,31 +310,95 @@ export function GpxMap({ url, showWaypoints }: GpxMapProps) {
         </MapContainer>
       </StyledMapContainer>
 
+      {allowDownload && (
+        <StyledDownloadBar>
+          <StyledDownloadButton
+            aria-label={downloadLabel}
+            onClick={() => downloadGpx(url)}
+          >
+            <DownloadIcon />
+            {downloadLabel}
+          </StyledDownloadButton>
+        </StyledDownloadBar>
+      )}
+
       {showWaypoints && waypoints.length > 0 && (
         <StyledWaypointsDetails>
-          <summary>Waypoints ({waypoints.length})</summary>
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Coordinates</th>
-                <th>Elevation</th>
-              </tr>
-            </thead>
-            <tbody>
-              {waypoints.map((wpt, i) => (
-                <tr
-                  key={`${wpt.name}-${i}`}
-                  onClick={() => setFocusedWaypoint(wpt)}
-                  data-selected={focusedWaypoint === wpt ? 'true' : undefined}
-                >
-                  <td>{wpt.name || '—'}</td>
-                  <td>{`${wpt.lat.toFixed(5)}, ${wpt.lon.toFixed(5)}`}</td>
-                  <td>{wpt.ele != null ? `${wpt.ele}m` : '—'}</td>
+          <summary>
+            {waypointsLabel} ({waypoints.length})
+          </summary>
+          <StyledTableWrapper>
+            <table>
+              <thead>
+                <tr>
+                  <th>{colName}</th>
+                  <th>{colCoordinates}</th>
+                  <th>{colElevation}</th>
+                  <th />
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {waypoints.map((wpt, i) => {
+                  const hasDetails = !!(waypointImages?.[wpt.name] || wpt.desc)
+                  const isExpanded = expandedIndex === i
+                  return (
+                    <Fragment key={`${wpt.name}-${i}`}>
+                      <tr
+                        onClick={
+                          hasDetails
+                            ? () => setExpandedIndex(isExpanded ? null : i)
+                            : undefined
+                        }
+                        data-expanded={
+                          hasDetails && isExpanded ? 'true' : undefined
+                        }
+                        data-clickable={hasDetails ? 'true' : undefined}
+                      >
+                        <td>
+                          {hasDetails && (
+                            <StyledRowChevron
+                              $expanded={isExpanded}
+                              data-testid="expand-chevron"
+                            >
+                              <ChevronIcon />
+                            </StyledRowChevron>
+                          )}
+                          {wpt.name || '—'}
+                        </td>
+                        <td>{`${wpt.lat.toFixed(5)}, ${wpt.lon.toFixed(5)}`}</td>
+                        <td>{wpt.ele != null ? `${wpt.ele}m` : '—'}</td>
+                        <td>
+                          <StyledLocateButton
+                            aria-label={flyTo}
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              flyToWaypoint(wpt)
+                            }}
+                          >
+                            <MapPinIcon />
+                          </StyledLocateButton>
+                        </td>
+                      </tr>
+                      {hasDetails && isExpanded && (
+                        <tr data-details="true">
+                          <td colSpan={4}>
+                            {waypointImages?.[wpt.name] && (
+                              <StyledWaypointImageCard
+                                data-testid="waypoint-image-card"
+                                src={waypointImages[wpt.name]}
+                                alt={wpt.name}
+                              />
+                            )}
+                            {wpt.desc && <p>{wpt.desc}</p>}
+                          </td>
+                        </tr>
+                      )}
+                    </Fragment>
+                  )
+                })}
+              </tbody>
+            </table>
+          </StyledTableWrapper>
         </StyledWaypointsDetails>
       )}
     </StyledGpxMap>
