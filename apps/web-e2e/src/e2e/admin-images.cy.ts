@@ -26,8 +26,14 @@ describe('Admin images — upload, verify in picker, delete', () => {
     cy.get('[data-testid="image-manager"]').should('be.visible')
 
     // 2. Open upload modal
-    // Use native HTMLElement.click() — same as open-image-picker-button above;
-    // Cypress synthetic click can miss React event delegation on freshly loaded pages.
+    // Wait for React hydration (same pattern as open-image-picker-button):
+    // image-manager is visible from SSR before hydrateRoot() attaches handlers.
+    cy.get('[data-testid="upload-button"]').should(($el) => {
+      assert.isTrue(
+        Object.keys($el[0]).some((k) => k.startsWith('__reactProps')),
+        'React fiber attached to upload button',
+      )
+    })
     cy.get('[data-testid="upload-button"]').then(($el) => {
       $el[0].click()
     })
