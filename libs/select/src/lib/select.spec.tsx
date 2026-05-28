@@ -189,4 +189,17 @@ describe('Select', () => {
       expect.objectContaining({ isSearchable: true }),
     )
   })
+
+  it('passes maxMenuHeight when provided', () => {
+    renderSelect({ maxMenuHeight: 160 })
+    expect(mockReactSelect).toHaveBeenCalledWith(
+      expect.objectContaining({ maxMenuHeight: 160 }),
+    )
+  })
+
+  it('omits maxMenuHeight when not provided', () => {
+    renderSelect()
+    const [props] = mockReactSelect.mock.calls[0] as [Record<string, unknown>]
+    expect(props).not.toHaveProperty('maxMenuHeight')
+  })
 })

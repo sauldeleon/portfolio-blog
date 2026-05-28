@@ -21,6 +21,7 @@ export interface SelectProps {
   isSearchable?: boolean
   isCreatable?: boolean
   isClearable?: boolean
+  maxMenuHeight?: number
   'data-testid'?: string
 }
 
@@ -39,6 +40,7 @@ export function Select({
   isSearchable = false,
   isCreatable = false,
   isClearable = false,
+  maxMenuHeight,
   'data-testid': testId,
 }: SelectProps) {
   const uid = useId()
@@ -63,6 +65,7 @@ export function Select({
     placeholder,
     isSearchable,
     isClearable,
+    ...(maxMenuHeight !== undefined && { maxMenuHeight }),
   }
 
   return (

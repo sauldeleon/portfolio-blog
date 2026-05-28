@@ -253,6 +253,7 @@ export function GpxMapModal({ isOpen, onInsert, onCancel }: GpxMapModalProps) {
                       label: name,
                     }))}
                     isSearchable
+                    maxMenuHeight={160}
                     data-testid="waypoint-select"
                   />
                   <StyledPickImageButton
