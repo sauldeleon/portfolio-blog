@@ -87,21 +87,20 @@ describe('Admin images — upload, verify in picker, delete', () => {
       $el[0].click()
     })
     cy.wait('@pickerHydration')
-    // Two ImagePicker instances exist (cover + content). Content picker is last.
+    // Three ImagePicker sidebars exist: [0] cover (closed), [1] content (open),
+    // [2] GpxMapModal's picker (closed — always in DOM, outside modal portal).
     // Wait for the 0.3s slide-in transition to complete before interacting.
     cy.get('[data-testid="image-picker-sidebar"]')
-      .last()
+      .eq(1)
       .should('have.css', 'transform', 'matrix(1, 0, 0, 1, 0, 0)')
 
     // 8. Search for the renamed image.
     // force: true bypasses Cypress's elementFromPoint overlap check which
     // can false-positive on position:fixed elements inside other fixed ancestors.
-    // Target the last search input — the content picker is the second instance.
-    cy.get('[data-testid="image-picker-search"]')
-      .last()
-      .type(renamedImageName, {
-        force: true,
-      })
+    // Target index 1 — content picker is the second ImagePicker instance.
+    cy.get('[data-testid="image-picker-search"]').eq(1).type(renamedImageName, {
+      force: true,
+    })
     cy.get('[data-testid="image-picker-item"]', { timeout: 20000 }).should(
       'have.length.at.least',
       1,
