@@ -64,20 +64,19 @@ describe('Admin images — upload, verify in picker, delete', () => {
     }).should('be.visible')
 
     // 6. Navigate to new post editor.
-    // Intercept the images API call that fires after React hydration so we
-    // know event handlers are attached before clicking the picker button.
-    cy.intercept('GET', '/api/images/').as('pickerHydration')
     cy.visit('/admin/posts/new')
     cy.get('[data-testid="post-editor"]').should('be.visible')
-    cy.wait('@pickerHydration')
 
     // 7. Open image picker sidebar.
+    // Intercept before clicking so we can wait for the fetch that fires on open.
+    cy.intercept('GET', '/api/images/').as('pickerHydration')
     // Use native HTMLElement.click() — React's event delegation handles it
     // correctly where Cypress's synthetic click sometimes does not.
     cy.get('[data-testid="open-image-picker-button"]').scrollIntoView()
     cy.get('[data-testid="open-image-picker-button"]').then(($el) => {
       $el[0].click()
     })
+    cy.wait('@pickerHydration')
     // Wait for the 0.3s slide-in transition to complete before interacting
     cy.get('[data-testid="image-picker-sidebar"]').should(
       'have.css',
