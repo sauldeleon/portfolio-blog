@@ -28,16 +28,12 @@ describe('Admin images — upload, verify in picker, delete', () => {
     // 2. Open upload modal
     // Wait for React hydration (same pattern as open-image-picker-button):
     // image-manager is visible from SSR before hydrateRoot() attaches handlers.
-    cy.get('[data-testid="upload-button"]').should(($el) => {
-      assert.isTrue(
-        Object.keys($el[0]).some((k) => k.startsWith('__reactProps')),
-        'React fiber attached to upload button',
-      )
-    })
+    cy.get('[data-testid="upload-button"]').click()
     cy.get('[data-testid="upload-button"]').then(($el) => {
       $el[0].click()
     })
-    cy.get('[data-testid="dropzone"]').should('be.visible')
+    // react-overlays resolves its portal container via useEffect (one extra render cycle)
+    cy.get('[data-testid="dropzone"]', { timeout: 10000 }).should('be.visible')
 
     // 3. Drop the image file
     cy.get('[data-testid="dropzone-input"]').selectFile(
@@ -91,9 +87,7 @@ describe('Admin images — upload, verify in picker, delete', () => {
     // Step 7a: open ImageInsertModal via the toolbar button.
     // Native click — React event delegation on freshly loaded pages.
     cy.get('[data-testid="open-image-picker-button"]').scrollIntoView()
-    cy.get('[data-testid="open-image-picker-button"]').then(($el) => {
-      $el[0].click()
-    })
+    cy.get('[data-testid="open-image-picker-button"]').click()
     cy.get('[data-testid="pick-image-button"]', { timeout: 10000 }).should(
       'be.visible',
     )

@@ -100,20 +100,20 @@ export const StyledImagePlaceholder = styled.div`
   color: ${({ theme }) => theme.colors.white};
 `
 
-export const StyledPickButton = styled.button`
-  background: none;
-  border: 1px solid rgba(128, 128, 128, 0.35);
+export const StyledPickButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'xs',
+})`
+  border-color: rgba(128, 128, 128, 0.35);
   border-radius: 4px;
   color: ${({ theme }) => theme.colors.white};
-  cursor: pointer;
-  font-family: inherit;
   font-size: 0.72rem;
   opacity: 0.75;
   padding: 0.4rem 0.7rem;
   white-space: nowrap;
   margin-left: auto;
 
-  &:hover {
+  &:hover:not(:disabled) {
     opacity: 1;
     border-color: ${({ theme }) => theme.colors.green};
   }
@@ -124,23 +124,23 @@ export const StyledSegmentRow = styled.div`
   gap: 0.35rem;
 `
 
-export const StyledSegmentButton = styled.button<{ $active: boolean }>`
-  background: ${({ $active, theme }) =>
+export const StyledSegmentButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'xs',
+})<{ $active: boolean }>`
+  background: ${({ $active }) =>
     $active ? 'rgba(152, 223, 214, 0.12)' : 'rgba(255, 255, 255, 0.04)'};
-  border: 1px solid
-    ${({ $active, theme }) =>
-      $active ? theme.colors.green : 'rgba(255, 255, 255, 0.15)'};
+  border-color: ${({ $active, theme }) =>
+    $active ? theme.colors.green : 'rgba(255, 255, 255, 0.15)'};
   border-radius: 2px;
   color: ${({ $active, theme }) =>
     $active ? theme.colors.green : theme.colors.white};
-  cursor: pointer;
-  font-family: inherit;
   font-size: 0.72rem;
   opacity: ${({ $active }) => ($active ? 1 : 0.55)};
   padding: 0.3rem 0.65rem;
   text-transform: capitalize;
 
-  &:hover {
+  &:hover:not(:disabled) {
     opacity: 1;
     border-color: ${({ theme }) => theme.colors.green};
   }

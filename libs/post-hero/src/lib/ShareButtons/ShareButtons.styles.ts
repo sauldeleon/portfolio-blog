@@ -1,5 +1,7 @@
 import styled, { css, keyframes } from 'styled-components'
 
+import { Button } from '@sdlgr/button'
+
 export const StyledShareWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -37,8 +39,23 @@ export const StyledShareLink = styled.a`
   ${shareButtonStyles}
 `
 
-export const StyledCopyButton = styled.button`
-  ${shareButtonStyles}
+export const StyledCopyButton = styled(Button).attrs({
+  variant: 'ghost',
+})`
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  color: currentColor;
+  border: none;
+  padding: 0;
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+
+  &:hover:not(:disabled) {
+    border: none;
+    opacity: 1;
+  }
 `
 
 export const StyledCopyItem = styled.li`

@@ -151,27 +151,26 @@ export const StyledAddRow = styled.div`
   align-items: center;
 `
 
-export const StyledPickImageButton = styled.button`
+export const StyledPickImageButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'xs',
+})`
   align-self: stretch;
-  background: none;
-  border: 1px solid rgba(128, 128, 128, 0.35);
+  border-color: rgba(128, 128, 128, 0.35);
   border-radius: 4px;
   color: ${({ theme }) => theme.colors.white};
-  cursor: pointer;
-  font-family: inherit;
   font-size: 0.72rem;
   opacity: 0.75;
   padding: 0 0.7rem;
   white-space: nowrap;
 
-  &:hover {
+  &:hover:not(:disabled) {
     opacity: 1;
     border-color: ${({ theme }) => theme.colors.green};
   }
 
   &:disabled {
     opacity: 0.3;
-    cursor: not-allowed;
   }
 `
 
@@ -202,17 +201,19 @@ export const StyledMappingName = styled.span`
   white-space: nowrap;
 `
 
-export const StyledRemoveButton = styled.button`
-  background: none;
+export const StyledRemoveButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'xs',
+})`
   border: none;
   color: ${({ theme }) => theme.colors.white};
-  cursor: pointer;
   font-size: 0.9rem;
   line-height: 1;
   opacity: 0.4;
   padding: 2px 4px;
 
-  &:hover {
+  &:hover:not(:disabled) {
+    border: none;
     opacity: 1;
   }
 `

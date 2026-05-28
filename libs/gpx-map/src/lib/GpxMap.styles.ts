@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
+import { Button } from '@sdlgr/button'
+
 export const StyledGpxMap = styled.div`
   margin: 2rem 0;
 `
@@ -24,36 +26,35 @@ export const StyledDownloadBar = styled.div`
   padding: 0.35rem 0;
 `
 
-export const StyledDownloadButton = styled.button`
+export const StyledDownloadButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'xs',
+})`
   display: inline-flex;
-  align-items: center;
   gap: 0.35rem;
-  background: none;
-  border: 1px solid rgba(128, 128, 128, 0.3);
+  border-color: rgba(128, 128, 128, 0.3);
   border-radius: 4px;
-  cursor: pointer;
   padding: 0.3rem 0.65rem;
   font-size: 0.75rem;
   opacity: 0.7;
   color: inherit;
 
-  &:hover {
+  &:hover:not(:disabled) {
     opacity: 1;
     border-color: rgba(128, 128, 128, 0.6);
   }
 `
 
-export const StyledLocateButton = styled.button`
-  background: none;
+export const StyledLocateButton = styled(Button).attrs({
+  variant: 'ghost',
+})`
   border: none;
-  cursor: pointer;
   padding: 2px 4px;
   opacity: 0.45;
   color: inherit;
-  display: flex;
-  align-items: center;
 
-  &:hover {
+  &:hover:not(:disabled) {
+    border: none;
     opacity: 1;
   }
 `

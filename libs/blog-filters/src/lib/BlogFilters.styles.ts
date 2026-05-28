@@ -25,22 +25,20 @@ export const StyledDropdownWrapper = styled.div`
   }
 `
 
-export const StyledDropdownButton = styled.button`
-  display: flex;
-  align-items: center;
+export const StyledDropdownButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'xs',
+})`
   gap: 0.4rem;
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.25);
   color: ${({ theme }) => theme.colors.white};
-  font-family: inherit;
   font-size: 0.65rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   padding: 0.3rem 0.75rem;
-  cursor: pointer;
   white-space: nowrap;
 
-  &:hover {
+  &:hover:not(:disabled) {
     border-color: rgba(255, 255, 255, 0.5);
   }
 `
@@ -98,39 +96,40 @@ export const StyledActiveFiltersRow = styled.div`
   gap: 0.35rem;
 `
 
-export const StyledActiveChip = styled.button`
-  display: inline-flex;
-  align-items: center;
+export const StyledActiveChip = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'xs',
+})`
   gap: 0.35rem;
   background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.25);
   color: ${({ theme }) => theme.colors.white};
-  font-family: inherit;
   font-size: 0.6rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   padding: 0.2rem 0.5rem;
-  cursor: pointer;
   white-space: nowrap;
 
-  &:hover {
+  &:hover:not(:disabled) {
     background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.25);
   }
 `
 
-export const StyledClearAllButton = styled.button`
-  background: transparent;
+export const StyledClearAllButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'xs',
+})`
   border: none;
   color: rgba(255, 255, 255, 0.5);
-  font-family: inherit;
   font-size: 0.6rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   padding: 0.2rem 0.4rem;
-  cursor: pointer;
   text-decoration: underline;
 
-  &:hover {
+  &:hover:not(:disabled) {
+    border: none;
     color: ${({ theme }) => theme.colors.white};
   }
 `
