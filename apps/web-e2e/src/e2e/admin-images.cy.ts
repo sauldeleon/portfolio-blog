@@ -70,6 +70,16 @@ describe('Admin images — upload, verify in picker, delete', () => {
     // 6. Navigate to new post editor.
     cy.visit('/admin/posts/new')
     cy.get('[data-testid="post-editor"]').should('be.visible')
+    // This page is fully SSR'd with no client-side fetch on mount, so post-editor
+    // is visible in the DOM before React hydrateRoot() finishes attaching handlers.
+    // Wait for React hydration by checking that React has set __reactProps$xxx on
+    // the button element — this only happens after hydrateRoot() completes.
+    cy.get('[data-testid="open-image-picker-button"]').should(($el) => {
+      assert.isTrue(
+        Object.keys($el[0]).some((k) => k.startsWith('__reactProps')),
+        'React fiber attached to button',
+      )
+    })
 
     // 7. Open image insert modal, then the image picker from within it.
     // Step 7a: open ImageInsertModal via the toolbar button.
@@ -78,7 +88,9 @@ describe('Admin images — upload, verify in picker, delete', () => {
     cy.get('[data-testid="open-image-picker-button"]').then(($el) => {
       $el[0].click()
     })
-    cy.get('[data-testid="pick-image-button"]').should('be.visible')
+    cy.get('[data-testid="pick-image-button"]', { timeout: 10000 }).should(
+      'be.visible',
+    )
 
     // Step 7b: open the image picker sidebar from inside the insert modal.
     // Intercept before clicking so we can wait for the fetch that fires on open.
