@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`ChevronIcon renders 1`] = `
+<DocumentFragment>
+  <svg
+    aria-hidden="true"
+    fill="none"
+    height="9"
+    viewBox="0 0 9 9"
+    width="9"
+  >
+    <polyline
+      points="2.5,1.5 6.5,4.5 2.5,7.5"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="1.5"
+    />
+  </svg>
+</DocumentFragment>
+`;

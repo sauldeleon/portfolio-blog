@@ -84,6 +84,102 @@ export const StyledTableWrapper = styled.div`
   overflow-x: auto;
 `
 
+export const StyledTrackStrip = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0.35rem 0;
+`
+
+export const StyledTrackChip = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  border: 1px solid rgba(128, 128, 128, 0.25);
+  border-radius: 4px;
+  overflow: hidden;
+`
+
+export const StyledTrackDot = styled.span<{ $color: string; $active: boolean }>`
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: ${({ $color, $active }) => ($active ? $color : 'transparent')};
+  border: 1.5px solid ${({ $color }) => $color};
+  flex-shrink: 0;
+`
+
+export const StyledTrackToggle = styled.button`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.75rem;
+  color: inherit;
+  opacity: 0.8;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &[aria-pressed='false'] {
+    opacity: 0.4;
+  }
+`
+
+export const StyledTrackDownloadButton = styled.button`
+  display: inline-flex;
+  align-items: center;
+  background: none;
+  border: none;
+  border-left: 1px solid rgba(128, 128, 128, 0.25);
+  cursor: pointer;
+  padding: 0.3rem 0.45rem;
+  color: inherit;
+  opacity: 0.55;
+
+  &:hover {
+    opacity: 1;
+  }
+`
+
+export const StyledLayerSwitcher = styled.div`
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 1000;
+  display: flex;
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+`
+
+export const StyledLayerButton = styled.button<{ $active: boolean }>`
+  background: ${({ $active }) =>
+    $active ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.6)'};
+  border: none;
+  border-right: 1px solid rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  padding: 0.28rem 0.6rem;
+  font-size: 0.68rem;
+  font-weight: ${({ $active }) => ($active ? '700' : '500')};
+  color: ${({ $active }) => ($active ? '#111' : '#555')};
+  line-height: 1;
+
+  &:last-child {
+    border-right: none;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.9);
+    color: #111;
+  }
+`
+
 export const StyledWaypointsDetails = styled.details`
   margin-top: 0.75rem;
   border: 1px solid rgba(128, 128, 128, 0.25);

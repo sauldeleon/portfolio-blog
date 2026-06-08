@@ -84,6 +84,41 @@ jest.mock('../MarkdownPreview', () => ({
   ),
 }))
 
+jest.mock('../EmbedInsertModal', () => ({
+  EmbedInsertModal: ({
+    isOpen,
+    onInsert,
+    onCancel,
+  }: {
+    isOpen: boolean
+    onInsert: (markdown: string) => void
+    onCancel: () => void
+    [key: string]: unknown
+  }) =>
+    isOpen ? (
+      <div data-testid="embed-insert-modal-mock">
+        <button
+          type="button"
+          data-testid="embed-modal-insert-mock"
+          onClick={() =>
+            onInsert(
+              '\n\n```youtube\nhttps://www.youtube.com/embed/abc\n```\n\n',
+            )
+          }
+        >
+          Insert
+        </button>
+        <button
+          type="button"
+          data-testid="embed-modal-cancel-mock"
+          onClick={onCancel}
+        >
+          Cancel
+        </button>
+      </div>
+    ) : null,
+}))
+
 jest.mock('../GpxMapModal', () => ({
   GpxMapModal: ({
     isOpen,
@@ -433,11 +468,6 @@ describe('PostEditor', () => {
       ).toBeInTheDocument()
       expect(screen.getByTestId('title-input')).toHaveValue('')
       expect(screen.getByTestId('slug-input')).toHaveValue('')
-    })
-
-    it('renders image syntax hint below content field', () => {
-      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
-      expect(screen.getByText('Image syntax')).toBeInTheDocument()
     })
 
     it('shows draft status badge', () => {
@@ -1170,6 +1200,45 @@ describe('PostEditor', () => {
         expect(screen.getByTestId('markdown-preview')).toBeInTheDocument()
         expect(screen.queryByTestId('post-hero-mock')).not.toBeInTheDocument()
       })
+    })
+  })
+
+  describe('Embed insert modal', () => {
+    it('does not show embed modal by default', () => {
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+      expect(
+        screen.queryByTestId('embed-insert-modal-mock'),
+      ).not.toBeInTheDocument()
+    })
+
+    it('shows embed modal when insert embed button clicked', () => {
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+      fireEvent.click(screen.getByTestId('open-embed-modal-button'))
+      expect(screen.getByTestId('embed-insert-modal-mock')).toBeInTheDocument()
+    })
+
+    it('closes embed modal when cancel is clicked', () => {
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+      fireEvent.click(screen.getByTestId('open-embed-modal-button'))
+      fireEvent.click(screen.getByTestId('embed-modal-cancel-mock'))
+      expect(
+        screen.queryByTestId('embed-insert-modal-mock'),
+      ).not.toBeInTheDocument()
+    })
+
+    it('inserts markdown at cursor and closes modal on insert', () => {
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+      fireEvent.change(screen.getByTestId('content-input'), {
+        target: { value: 'Hello ' },
+      })
+      fireEvent.click(screen.getByTestId('open-embed-modal-button'))
+      fireEvent.click(screen.getByTestId('embed-modal-insert-mock'))
+      expect(screen.getByTestId('content-input')).toHaveValue(
+        'Hello \n\n```youtube\nhttps://www.youtube.com/embed/abc\n```\n\n',
+      )
+      expect(
+        screen.queryByTestId('embed-insert-modal-mock'),
+      ).not.toBeInTheDocument()
     })
   })
 

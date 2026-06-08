@@ -2,6 +2,8 @@
 
 import dynamic from 'next/dynamic'
 
+import type { GpxTrackDef } from '@sdlgr/gpx-map'
+
 import { useClientTranslation } from '@web/i18n/client'
 
 import { StyledEmbedWrapper } from './PostContent.styles'
@@ -14,27 +16,34 @@ const GpxMap = dynamic(
 export function PostContentEmbed({
   type,
   url,
+  tracks,
   showWaypoints,
   allowDownload,
   waypointImages,
 }: {
   type?: string
   url?: string
+  tracks?: string
   showWaypoints?: boolean
   allowDownload?: boolean
   waypointImages?: string
 }) {
   const { t } = useClientTranslation('common')
 
-  if (!url) return null
-
   if (type === 'gpx') {
+    const parsedTracks = tracks
+      ? (JSON.parse(tracks) as GpxTrackDef[])
+      : undefined
     const parsedWaypointImages = waypointImages
       ? (JSON.parse(waypointImages) as Record<string, string>)
       : undefined
+
+    if (!parsedTracks && !url) return null
+
     return (
       <GpxMap
-        url={url}
+        url={parsedTracks ? undefined : url}
+        tracks={parsedTracks}
         showWaypoints={showWaypoints}
         allowDownload={allowDownload}
         waypointImages={parsedWaypointImages}
@@ -49,6 +58,8 @@ export function PostContentEmbed({
       />
     )
   }
+
+  if (!url) return null
 
   return (
     <StyledEmbedWrapper data-testid="post-embed-wrapper">

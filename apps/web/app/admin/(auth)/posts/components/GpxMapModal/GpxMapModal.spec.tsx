@@ -22,6 +22,7 @@ jest.mock('@sdlgr/select', () => ({
     options: Array<{ value: string; label: string }>
     'data-testid'?: string
     isSearchable?: boolean
+    maxMenuHeight?: number
   }) => (
     <select
       data-testid={testId}
@@ -89,157 +90,296 @@ describe('GpxMapModal', () => {
     renderApp(
       <GpxMapModal isOpen={false} onInsert={jest.fn()} onCancel={jest.fn()} />,
     )
-    expect(screen.queryByTestId('gpx-url-input')).not.toBeInTheDocument()
+    expect(screen.queryByTestId('gpx-track-url-0')).not.toBeInTheDocument()
   })
 
   it('renders modal content when open', () => {
     renderApp(<GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />)
-    expect(screen.getByTestId('gpx-url-input')).toBeInTheDocument()
-    expect(screen.getByTestId('gpx-show-waypoints')).toBeInTheDocument()
-    expect(screen.getByTestId('gpx-allow-download')).toBeInTheDocument()
+    expect(screen.getByTestId('gpx-track-url-0')).toBeInTheDocument()
+    expect(screen.getByTestId('gpx-track-name-0')).toBeInTheDocument()
+    expect(screen.getByTestId('gpx-track-allow-download-0')).toBeInTheDocument()
+    expect(screen.getByTestId('gpx-track-show-waypoints-0')).toBeInTheDocument()
     expect(screen.getByTestId('gpx-preview')).toBeInTheDocument()
     expect(screen.getByTestId('gpx-modal-cancel')).toBeInTheDocument()
     expect(screen.getByTestId('gpx-modal-insert')).toBeInTheDocument()
+    expect(screen.getByTestId('gpx-add-track')).toBeInTheDocument()
   })
 
-  it('shows placeholder in preview when url is empty', () => {
-    renderApp(<GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />)
-    expect(screen.getByTestId('gpx-preview').textContent).toBe(
-      '```gpx\nhttps://...\n```',
-    )
-  })
-
-  it('shows url in preview when url is filled', () => {
-    renderApp(<GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />)
-    fireEvent.change(screen.getByTestId('gpx-url-input'), {
-      target: { value: 'https://example.com/track.gpx' },
+  describe('preview', () => {
+    it('shows placeholder when first track url is empty', () => {
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      expect(screen.getByTestId('gpx-preview').textContent).toBe(
+        '```gpx\ntrack:https://...\n```',
+      )
     })
-    expect(screen.getByTestId('gpx-preview').textContent).toBe(
-      '```gpx\nhttps://example.com/track.gpx\n```',
-    )
-  })
 
-  it('includes showWaypoints flag in preview when checked', () => {
-    renderApp(<GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />)
-    fireEvent.click(screen.getByTestId('gpx-show-waypoints'))
-    expect(screen.getByTestId('gpx-preview')).toHaveTextContent(
-      '```gpx showWaypoints',
-    )
-  })
-
-  it('includes allowDownload flag in preview when checked', () => {
-    renderApp(<GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />)
-    fireEvent.click(screen.getByTestId('gpx-allow-download'))
-    expect(screen.getByTestId('gpx-preview')).toHaveTextContent(
-      '```gpx allowDownload',
-    )
-  })
-
-  it('includes both flags in preview when both checked', () => {
-    renderApp(<GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />)
-    fireEvent.click(screen.getByTestId('gpx-show-waypoints'))
-    fireEvent.click(screen.getByTestId('gpx-allow-download'))
-    expect(screen.getByTestId('gpx-preview')).toHaveTextContent(
-      '```gpx showWaypoints allowDownload',
-    )
-  })
-
-  it('insert button is disabled when url is empty', () => {
-    renderApp(<GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />)
-    expect(screen.getByTestId('gpx-modal-insert')).toBeDisabled()
-  })
-
-  it('insert button is enabled when url is filled', () => {
-    renderApp(<GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />)
-    fireEvent.change(screen.getByTestId('gpx-url-input'), {
-      target: { value: 'https://example.com/track.gpx' },
+    it('shows url in preview when url filled', () => {
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/track.gpx' },
+      })
+      expect(screen.getByTestId('gpx-preview').textContent).toBe(
+        '```gpx\ntrack:https://example.com/track.gpx\n```',
+      )
     })
-    expect(screen.getByTestId('gpx-modal-insert')).not.toBeDisabled()
-  })
 
-  it('does not call onInsert when url is empty and insert clicked', () => {
-    const onInsert = jest.fn()
-    renderApp(<GpxMapModal isOpen onInsert={onInsert} onCancel={jest.fn()} />)
-    fireEvent.click(screen.getByTestId('gpx-modal-insert'))
-    expect(onInsert).not.toHaveBeenCalled()
-  })
-
-  it('calls onInsert with basic gpx markdown on insert', () => {
-    const onInsert = jest.fn()
-    renderApp(<GpxMapModal isOpen onInsert={onInsert} onCancel={jest.fn()} />)
-    fireEvent.change(screen.getByTestId('gpx-url-input'), {
-      target: { value: 'https://example.com/track.gpx' },
+    it('includes name in preview when name filled', () => {
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/track.gpx' },
+      })
+      fireEvent.change(screen.getByTestId('gpx-track-name-0'), {
+        target: { value: 'Outbound' },
+      })
+      expect(screen.getByTestId('gpx-preview').textContent).toBe(
+        '```gpx\ntrack:https://example.com/track.gpx | Outbound\n```',
+      )
     })
-    fireEvent.click(screen.getByTestId('gpx-modal-insert'))
-    expect(onInsert).toHaveBeenCalledWith(
-      '\n\n```gpx\nhttps://example.com/track.gpx\n```\n\n',
-    )
+
+    it('includes color in preview when color chip selected without name', () => {
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/track.gpx' },
+      })
+      fireEvent.click(screen.getByTestId('gpx-track-color-0-e63946'))
+      expect(screen.getByTestId('gpx-preview').textContent).toBe(
+        '```gpx\ntrack:https://example.com/track.gpx || #e63946\n```',
+      )
+    })
+
+    it('includes name and color in preview when both filled', () => {
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/track.gpx' },
+      })
+      fireEvent.change(screen.getByTestId('gpx-track-name-0'), {
+        target: { value: 'Outbound' },
+      })
+      fireEvent.click(screen.getByTestId('gpx-track-color-0-e63946'))
+      expect(screen.getByTestId('gpx-preview').textContent).toBe(
+        '```gpx\ntrack:https://example.com/track.gpx | Outbound | #e63946\n```',
+      )
+    })
+
+    it('includes showWaypoints flag when checked', () => {
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      expect(screen.getByTestId('gpx-preview')).toHaveTextContent(
+        '||| showWaypoints',
+      )
+    })
+
+    it('includes allowDownload flag in track line preview when checked', () => {
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      fireEvent.click(screen.getByTestId('gpx-track-allow-download-0'))
+      expect(screen.getByTestId('gpx-preview')).toHaveTextContent(
+        '||| download',
+      )
+    })
+
+    it('includes both flags when both checked', () => {
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      fireEvent.click(screen.getByTestId('gpx-track-allow-download-0'))
+      expect(screen.getByTestId('gpx-preview')).toHaveTextContent(
+        '||| download showWaypoints',
+      )
+    })
   })
 
-  it('calls onInsert with showWaypoints flag when checked', () => {
-    const onInsert = jest.fn()
-    renderApp(<GpxMapModal isOpen onInsert={onInsert} onCancel={jest.fn()} />)
-    fireEvent.change(screen.getByTestId('gpx-url-input'), {
-      target: { value: 'https://example.com/track.gpx' },
+  describe('insert button', () => {
+    it('is disabled when no url is filled', () => {
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      expect(screen.getByTestId('gpx-modal-insert')).toBeDisabled()
     })
-    fireEvent.click(screen.getByTestId('gpx-show-waypoints'))
-    fireEvent.click(screen.getByTestId('gpx-modal-insert'))
-    expect(onInsert).toHaveBeenCalledWith(
-      '\n\n```gpx showWaypoints\nhttps://example.com/track.gpx\n```\n\n',
-    )
+
+    it('is enabled when url is filled', () => {
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/track.gpx' },
+      })
+      expect(screen.getByTestId('gpx-modal-insert')).not.toBeDisabled()
+    })
   })
 
-  it('calls onInsert with allowDownload flag when checked', () => {
-    const onInsert = jest.fn()
-    renderApp(<GpxMapModal isOpen onInsert={onInsert} onCancel={jest.fn()} />)
-    fireEvent.change(screen.getByTestId('gpx-url-input'), {
-      target: { value: 'https://example.com/track.gpx' },
+  describe('onInsert', () => {
+    it('calls onInsert with url-only track format', () => {
+      const onInsert = jest.fn()
+      renderApp(<GpxMapModal isOpen onInsert={onInsert} onCancel={jest.fn()} />)
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/track.gpx' },
+      })
+      fireEvent.click(screen.getByTestId('gpx-modal-insert'))
+      expect(onInsert).toHaveBeenCalledWith(
+        '\n\n```gpx\ntrack:https://example.com/track.gpx\n```\n\n',
+      )
     })
-    fireEvent.click(screen.getByTestId('gpx-allow-download'))
-    fireEvent.click(screen.getByTestId('gpx-modal-insert'))
-    expect(onInsert).toHaveBeenCalledWith(
-      '\n\n```gpx allowDownload\nhttps://example.com/track.gpx\n```\n\n',
-    )
-  })
 
-  it('calls onInsert with both flags when both checked', () => {
-    const onInsert = jest.fn()
-    renderApp(<GpxMapModal isOpen onInsert={onInsert} onCancel={jest.fn()} />)
-    fireEvent.change(screen.getByTestId('gpx-url-input'), {
-      target: { value: 'https://example.com/track.gpx' },
+    it('calls onInsert with url and name', () => {
+      const onInsert = jest.fn()
+      renderApp(<GpxMapModal isOpen onInsert={onInsert} onCancel={jest.fn()} />)
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/track.gpx' },
+      })
+      fireEvent.change(screen.getByTestId('gpx-track-name-0'), {
+        target: { value: 'Outbound' },
+      })
+      fireEvent.click(screen.getByTestId('gpx-modal-insert'))
+      expect(onInsert).toHaveBeenCalledWith(
+        '\n\n```gpx\ntrack:https://example.com/track.gpx | Outbound\n```\n\n',
+      )
     })
-    fireEvent.click(screen.getByTestId('gpx-show-waypoints'))
-    fireEvent.click(screen.getByTestId('gpx-allow-download'))
-    fireEvent.click(screen.getByTestId('gpx-modal-insert'))
-    expect(onInsert).toHaveBeenCalledWith(
-      '\n\n```gpx showWaypoints allowDownload\nhttps://example.com/track.gpx\n```\n\n',
-    )
-  })
 
-  it('trims whitespace from url on insert', () => {
-    const onInsert = jest.fn()
-    renderApp(<GpxMapModal isOpen onInsert={onInsert} onCancel={jest.fn()} />)
-    fireEvent.change(screen.getByTestId('gpx-url-input'), {
-      target: { value: '  https://example.com/track.gpx  ' },
+    it('calls onInsert with url and color (no name)', () => {
+      const onInsert = jest.fn()
+      renderApp(<GpxMapModal isOpen onInsert={onInsert} onCancel={jest.fn()} />)
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/track.gpx' },
+      })
+      fireEvent.click(screen.getByTestId('gpx-track-color-0-e63946'))
+      fireEvent.click(screen.getByTestId('gpx-modal-insert'))
+      expect(onInsert).toHaveBeenCalledWith(
+        '\n\n```gpx\ntrack:https://example.com/track.gpx || #e63946\n```\n\n',
+      )
     })
-    fireEvent.click(screen.getByTestId('gpx-modal-insert'))
-    expect(onInsert).toHaveBeenCalledWith(
-      '\n\n```gpx\nhttps://example.com/track.gpx\n```\n\n',
-    )
-  })
 
-  it('resets state after insert', () => {
-    const onInsert = jest.fn()
-    renderApp(<GpxMapModal isOpen onInsert={onInsert} onCancel={jest.fn()} />)
-    fireEvent.change(screen.getByTestId('gpx-url-input'), {
-      target: { value: 'https://example.com/track.gpx' },
+    it('calls onInsert with url, name and color', () => {
+      const onInsert = jest.fn()
+      renderApp(<GpxMapModal isOpen onInsert={onInsert} onCancel={jest.fn()} />)
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/track.gpx' },
+      })
+      fireEvent.change(screen.getByTestId('gpx-track-name-0'), {
+        target: { value: 'Outbound' },
+      })
+      fireEvent.click(screen.getByTestId('gpx-track-color-0-e63946'))
+      fireEvent.click(screen.getByTestId('gpx-modal-insert'))
+      expect(onInsert).toHaveBeenCalledWith(
+        '\n\n```gpx\ntrack:https://example.com/track.gpx | Outbound | #e63946\n```\n\n',
+      )
     })
-    fireEvent.click(screen.getByTestId('gpx-show-waypoints'))
-    fireEvent.click(screen.getByTestId('gpx-allow-download'))
-    fireEvent.click(screen.getByTestId('gpx-modal-insert'))
-    expect(screen.getByTestId('gpx-url-input')).toHaveValue('')
-    expect(screen.getByTestId('gpx-show-waypoints')).not.toBeChecked()
-    expect(screen.getByTestId('gpx-allow-download')).not.toBeChecked()
+
+    it('includes showWaypoints flag in insert', () => {
+      const onInsert = jest.fn()
+      renderApp(<GpxMapModal isOpen onInsert={onInsert} onCancel={jest.fn()} />)
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/track.gpx' },
+      })
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      fireEvent.click(screen.getByTestId('gpx-modal-insert'))
+      expect(onInsert).toHaveBeenCalledWith(
+        '\n\n```gpx\ntrack:https://example.com/track.gpx ||| showWaypoints\n```\n\n',
+      )
+    })
+
+    it('includes allowDownload flag in track line (no name, no color)', () => {
+      const onInsert = jest.fn()
+      renderApp(<GpxMapModal isOpen onInsert={onInsert} onCancel={jest.fn()} />)
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/track.gpx' },
+      })
+      fireEvent.click(screen.getByTestId('gpx-track-allow-download-0'))
+      fireEvent.click(screen.getByTestId('gpx-modal-insert'))
+      expect(onInsert).toHaveBeenCalledWith(
+        '\n\n```gpx\ntrack:https://example.com/track.gpx ||| download\n```\n\n',
+      )
+    })
+
+    it('includes allowDownload with name but no color', () => {
+      const onInsert = jest.fn()
+      renderApp(<GpxMapModal isOpen onInsert={onInsert} onCancel={jest.fn()} />)
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/track.gpx' },
+      })
+      fireEvent.change(screen.getByTestId('gpx-track-name-0'), {
+        target: { value: 'Outbound' },
+      })
+      fireEvent.click(screen.getByTestId('gpx-track-allow-download-0'))
+      fireEvent.click(screen.getByTestId('gpx-modal-insert'))
+      expect(onInsert).toHaveBeenCalledWith(
+        '\n\n```gpx\ntrack:https://example.com/track.gpx | Outbound || download\n```\n\n',
+      )
+    })
+
+    it('includes allowDownload with name and color', () => {
+      const onInsert = jest.fn()
+      renderApp(<GpxMapModal isOpen onInsert={onInsert} onCancel={jest.fn()} />)
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/track.gpx' },
+      })
+      fireEvent.change(screen.getByTestId('gpx-track-name-0'), {
+        target: { value: 'Outbound' },
+      })
+      fireEvent.click(screen.getByTestId('gpx-track-color-0-e63946'))
+      fireEvent.click(screen.getByTestId('gpx-track-allow-download-0'))
+      fireEvent.click(screen.getByTestId('gpx-modal-insert'))
+      expect(onInsert).toHaveBeenCalledWith(
+        '\n\n```gpx\ntrack:https://example.com/track.gpx | Outbound | #e63946 | download\n```\n\n',
+      )
+    })
+
+    it('includes both showWaypoints and per-track allowDownload in insert', () => {
+      const onInsert = jest.fn()
+      renderApp(<GpxMapModal isOpen onInsert={onInsert} onCancel={jest.fn()} />)
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/track.gpx' },
+      })
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      fireEvent.click(screen.getByTestId('gpx-track-allow-download-0'))
+      fireEvent.click(screen.getByTestId('gpx-modal-insert'))
+      expect(onInsert).toHaveBeenCalledWith(
+        '\n\n```gpx\ntrack:https://example.com/track.gpx ||| download showWaypoints\n```\n\n',
+      )
+    })
+
+    it('trims whitespace from url on insert', () => {
+      const onInsert = jest.fn()
+      renderApp(<GpxMapModal isOpen onInsert={onInsert} onCancel={jest.fn()} />)
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: '  https://example.com/track.gpx  ' },
+      })
+      fireEvent.click(screen.getByTestId('gpx-modal-insert'))
+      expect(onInsert).toHaveBeenCalledWith(
+        '\n\n```gpx\ntrack:https://example.com/track.gpx\n```\n\n',
+      )
+    })
+
+    it('resets state after insert', () => {
+      const onInsert = jest.fn()
+      renderApp(<GpxMapModal isOpen onInsert={onInsert} onCancel={jest.fn()} />)
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/track.gpx' },
+      })
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      fireEvent.click(screen.getByTestId('gpx-track-allow-download-0'))
+      fireEvent.click(screen.getByTestId('gpx-modal-insert'))
+      expect(screen.getByTestId('gpx-track-url-0')).toHaveValue('')
+      expect(screen.getByTestId('gpx-track-show-waypoints-0')).not.toBeChecked()
+      expect(screen.getByTestId('gpx-track-allow-download-0')).not.toBeChecked()
+      expect(screen.getByTestId('gpx-preview').textContent).toBe(
+        '```gpx\ntrack:https://...\n```',
+      )
+    })
   })
 
   it('calls onCancel when cancel button clicked', () => {
@@ -249,13 +389,228 @@ describe('GpxMapModal', () => {
     expect(onCancel).toHaveBeenCalledTimes(1)
   })
 
+  describe('color chips', () => {
+    it('deselects color chip when clicked again', () => {
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/track.gpx' },
+      })
+      fireEvent.click(screen.getByTestId('gpx-track-color-0-e63946'))
+      fireEvent.click(screen.getByTestId('gpx-track-color-0-e63946'))
+      expect(screen.getByTestId('gpx-preview').textContent).toBe(
+        '```gpx\ntrack:https://example.com/track.gpx\n```',
+      )
+    })
+
+    it('selecting new chip replaces previous selection', () => {
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/track.gpx' },
+      })
+      fireEvent.click(screen.getByTestId('gpx-track-color-0-e63946'))
+      fireEvent.click(screen.getByTestId('gpx-track-color-0-3a86ff'))
+      expect(screen.getByTestId('gpx-preview').textContent).toBe(
+        '```gpx\ntrack:https://example.com/track.gpx || #3a86ff\n```',
+      )
+    })
+  })
+
+  describe('multi-track', () => {
+    it('does not show remove button for single track', () => {
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      expect(screen.queryByTestId('gpx-track-remove-0')).not.toBeInTheDocument()
+    })
+
+    it('adds second track row on add track click', () => {
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      fireEvent.click(screen.getByTestId('gpx-add-track'))
+      expect(screen.getByTestId('gpx-track-url-1')).toBeInTheDocument()
+      expect(screen.getByTestId('gpx-track-name-1')).toBeInTheDocument()
+    })
+
+    it('shows remove button for each track when multiple tracks exist', () => {
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      fireEvent.click(screen.getByTestId('gpx-add-track'))
+      expect(screen.getByTestId('gpx-track-remove-0')).toBeInTheDocument()
+      expect(screen.getByTestId('gpx-track-remove-1')).toBeInTheDocument()
+    })
+
+    it('removes track row on remove click', () => {
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      fireEvent.click(screen.getByTestId('gpx-add-track'))
+      fireEvent.change(screen.getByTestId('gpx-track-url-1'), {
+        target: { value: 'https://example.com/t2.gpx' },
+      })
+      fireEvent.click(screen.getByTestId('gpx-track-remove-1'))
+      expect(screen.queryByTestId('gpx-track-url-1')).not.toBeInTheDocument()
+    })
+
+    it('hides remove button after removing down to one track', () => {
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      fireEvent.click(screen.getByTestId('gpx-add-track'))
+      fireEvent.click(screen.getByTestId('gpx-track-remove-1'))
+      expect(screen.queryByTestId('gpx-track-remove-0')).not.toBeInTheDocument()
+    })
+
+    it('inserts multiple track lines with auto-assigned color for new track', () => {
+      const onInsert = jest.fn()
+      renderApp(<GpxMapModal isOpen onInsert={onInsert} onCancel={jest.fn()} />)
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/t1.gpx' },
+      })
+      fireEvent.click(screen.getByTestId('gpx-add-track'))
+      fireEvent.change(screen.getByTestId('gpx-track-url-1'), {
+        target: { value: 'https://example.com/t2.gpx' },
+      })
+      fireEvent.click(screen.getByTestId('gpx-modal-insert'))
+      // Track 0: no color. Track 1: auto-assigned #3a86ff (first unused)
+      expect(onInsert).toHaveBeenCalledWith(
+        '\n\n```gpx\ntrack:https://example.com/t1.gpx\ntrack:https://example.com/t2.gpx || #3a86ff\n```\n\n',
+      )
+    })
+
+    it('auto-assigns distinct color to new track based on effective colors', () => {
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      // Track 0 has no color; effective color = #e63946 (TRACK_COLORS[0])
+      fireEvent.click(screen.getByTestId('gpx-add-track'))
+      // Track 1 should have auto-assigned #3a86ff (TRACK_COLORS[1], first unused)
+      expect(screen.getByTestId('gpx-track-color-1-3a86ff')).toHaveAttribute(
+        'aria-pressed',
+        'true',
+      )
+    })
+
+    it('skips tracks with empty urls on insert', () => {
+      const onInsert = jest.fn()
+      renderApp(<GpxMapModal isOpen onInsert={onInsert} onCancel={jest.fn()} />)
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/t1.gpx' },
+      })
+      fireEvent.click(screen.getByTestId('gpx-add-track'))
+      fireEvent.click(screen.getByTestId('gpx-modal-insert'))
+      expect(onInsert).toHaveBeenCalledWith(
+        '\n\n```gpx\ntrack:https://example.com/t1.gpx\n```\n\n',
+      )
+    })
+
+    it('insert button enabled when only second track has url', () => {
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      fireEvent.click(screen.getByTestId('gpx-add-track'))
+      fireEvent.change(screen.getByTestId('gpx-track-url-1'), {
+        target: { value: 'https://example.com/t2.gpx' },
+      })
+      expect(screen.getByTestId('gpx-modal-insert')).not.toBeDisabled()
+    })
+
+    it('preview shows all tracks with their data', () => {
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/t1.gpx' },
+      })
+      fireEvent.change(screen.getByTestId('gpx-track-name-0'), {
+        target: { value: 'Outbound' },
+      })
+      fireEvent.click(screen.getByTestId('gpx-add-track'))
+      fireEvent.change(screen.getByTestId('gpx-track-url-1'), {
+        target: { value: 'https://example.com/t2.gpx' },
+      })
+      // Track 1 auto-gets #3a86ff (distinct from track 0's effective #e63946)
+      expect(screen.getByTestId('gpx-preview').textContent).toBe(
+        '```gpx\ntrack:https://example.com/t1.gpx | Outbound\ntrack:https://example.com/t2.gpx || #3a86ff\n```',
+      )
+    })
+
+    it('resets to single empty track after insert', () => {
+      const onInsert = jest.fn()
+      renderApp(<GpxMapModal isOpen onInsert={onInsert} onCancel={jest.fn()} />)
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/t1.gpx' },
+      })
+      fireEvent.click(screen.getByTestId('gpx-add-track'))
+      fireEvent.change(screen.getByTestId('gpx-track-url-1'), {
+        target: { value: 'https://example.com/t2.gpx' },
+      })
+      fireEvent.click(screen.getByTestId('gpx-modal-insert'))
+      expect(screen.getByTestId('gpx-track-url-0')).toHaveValue('')
+      expect(screen.queryByTestId('gpx-track-url-1')).not.toBeInTheDocument()
+    })
+
+    it('color chips work independently per track', () => {
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      fireEvent.click(screen.getByTestId('gpx-add-track'))
+      // Explicitly pick colors for both tracks
+      fireEvent.click(screen.getByTestId('gpx-track-color-0-e63946'))
+      fireEvent.click(screen.getByTestId('gpx-track-color-1-06d6a0'))
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/t1.gpx' },
+      })
+      fireEvent.change(screen.getByTestId('gpx-track-url-1'), {
+        target: { value: 'https://example.com/t2.gpx' },
+      })
+      expect(screen.getByTestId('gpx-preview').textContent).toBe(
+        '```gpx\ntrack:https://example.com/t1.gpx || #e63946\ntrack:https://example.com/t2.gpx || #06d6a0\n```',
+      )
+    })
+
+    it('disables color chip for other track effective color', () => {
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      fireEvent.click(screen.getByTestId('gpx-add-track'))
+      // Track 0 effective color = #e63946 (no explicit selection, TRACK_COLORS[0])
+      // Track 1 auto-assigned #3a86ff
+      expect(screen.getByTestId('gpx-track-color-0-3a86ff')).toBeDisabled()
+      expect(screen.getByTestId('gpx-track-color-1-e63946')).toBeDisabled()
+    })
+
+    it('includes allowDownload flag in second track line (no name, with color)', () => {
+      const onInsert = jest.fn()
+      renderApp(<GpxMapModal isOpen onInsert={onInsert} onCancel={jest.fn()} />)
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/t1.gpx' },
+      })
+      fireEvent.click(screen.getByTestId('gpx-add-track'))
+      fireEvent.change(screen.getByTestId('gpx-track-url-1'), {
+        target: { value: 'https://example.com/t2.gpx' },
+      })
+      fireEvent.click(screen.getByTestId('gpx-track-allow-download-1'))
+      fireEvent.click(screen.getByTestId('gpx-modal-insert'))
+      // Track 1: auto-color #3a86ff, no name, allowDownload
+      expect(onInsert).toHaveBeenCalledWith(
+        '\n\n```gpx\ntrack:https://example.com/t1.gpx\ntrack:https://example.com/t2.gpx || #3a86ff | download\n```\n\n',
+      )
+    })
+  })
+
   describe('waypoint images section', () => {
     it('does not show waypoint section when showWaypoints is false', () => {
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )
       expect(
-        screen.queryByTestId('waypoint-images-section'),
+        screen.queryByTestId('waypoint-images-section-0'),
       ).not.toBeInTheDocument()
     })
 
@@ -263,9 +618,9 @@ describe('GpxMapModal', () => {
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )
-      fireEvent.click(screen.getByTestId('gpx-show-waypoints'))
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
       expect(
-        screen.queryByTestId('waypoint-images-section'),
+        screen.queryByTestId('waypoint-images-section-0'),
       ).not.toBeInTheDocument()
     })
 
@@ -274,34 +629,39 @@ describe('GpxMapModal', () => {
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )
-      fireEvent.click(screen.getByTestId('gpx-show-waypoints'))
-      fireEvent.change(screen.getByTestId('gpx-url-input'), {
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
         target: { value: 'https://example.com/track.gpx' },
       })
       act(() => {
         jest.advanceTimersByTime(600)
       })
-      expect(screen.getByTestId('fetch-loading')).toBeInTheDocument()
+      expect(screen.getByTestId('fetch-loading-0')).toBeInTheDocument()
       await waitFor(() =>
-        expect(screen.queryByTestId('fetch-loading')).not.toBeInTheDocument(),
+        expect(screen.queryByTestId('fetch-loading-0')).not.toBeInTheDocument(),
       )
     })
 
-    it('shows waypoint dropdown after successful fetch', async () => {
+    it('shows waypoints dropdown after successful fetch', async () => {
       setupFetch()
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )
-      fireEvent.click(screen.getByTestId('gpx-show-waypoints'))
-      fireEvent.change(screen.getByTestId('gpx-url-input'), {
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
         target: { value: 'https://example.com/track.gpx' },
       })
       act(() => {
         jest.advanceTimersByTime(600)
       })
-      expect(await screen.findByTestId('waypoint-select')).toBeInTheDocument()
-      expect(screen.getByText('Summit')).toBeInTheDocument()
-      expect(screen.getByText('Water Source')).toBeInTheDocument()
+      expect(await screen.findByTestId('waypoint-select-0')).toBeInTheDocument()
+      const options = within(
+        screen.getByTestId('waypoint-select-0'),
+      ).getAllByRole('option')
+      expect(options.map((o) => o.textContent)).toEqual([
+        'Summit',
+        'Water Source',
+      ])
     })
 
     it('shows error state when fetch fails', async () => {
@@ -309,14 +669,29 @@ describe('GpxMapModal', () => {
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )
-      fireEvent.click(screen.getByTestId('gpx-show-waypoints'))
-      fireEvent.change(screen.getByTestId('gpx-url-input'), {
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
         target: { value: 'https://example.com/track.gpx' },
       })
       act(() => {
         jest.advanceTimersByTime(600)
       })
-      expect(await screen.findByTestId('fetch-error')).toBeInTheDocument()
+      expect(await screen.findByTestId('fetch-error-0')).toBeInTheDocument()
+    })
+
+    it('does not fetch before debounce delay', () => {
+      global.fetch = jest.fn()
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/track.gpx' },
+      })
+      act(() => {
+        jest.advanceTimersByTime(400)
+      })
+      expect(global.fetch).not.toHaveBeenCalled()
     })
 
     it('opens image picker when pick image button clicked', async () => {
@@ -324,16 +699,38 @@ describe('GpxMapModal', () => {
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )
-      fireEvent.click(screen.getByTestId('gpx-show-waypoints'))
-      fireEvent.change(screen.getByTestId('gpx-url-input'), {
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
         target: { value: 'https://example.com/track.gpx' },
       })
       act(() => {
         jest.advanceTimersByTime(600)
       })
-      expect(await screen.findByTestId('pick-image-button')).toBeInTheDocument()
-      fireEvent.click(screen.getByTestId('pick-image-button'))
+      expect(
+        await screen.findByTestId('pick-image-button-0'),
+      ).toBeInTheDocument()
+      fireEvent.click(screen.getByTestId('pick-image-button-0'))
       expect(screen.getByTestId('image-picker-mock')).toBeInTheDocument()
+    })
+
+    it('closes image picker when close button clicked', async () => {
+      setupFetch()
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/track.gpx' },
+      })
+      act(() => {
+        jest.advanceTimersByTime(600)
+      })
+      expect(
+        await screen.findByTestId('pick-image-button-0'),
+      ).toBeInTheDocument()
+      fireEvent.click(screen.getByTestId('pick-image-button-0'))
+      fireEvent.click(screen.getByTestId('image-picker-close'))
+      expect(screen.queryByTestId('image-picker-mock')).not.toBeInTheDocument()
     })
 
     it('adds mapping row after picking image', async () => {
@@ -341,19 +738,21 @@ describe('GpxMapModal', () => {
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )
-      fireEvent.click(screen.getByTestId('gpx-show-waypoints'))
-      fireEvent.change(screen.getByTestId('gpx-url-input'), {
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
         target: { value: 'https://example.com/track.gpx' },
       })
       act(() => {
         jest.advanceTimersByTime(600)
       })
-      expect(await screen.findByTestId('pick-image-button')).toBeInTheDocument()
-      fireEvent.click(screen.getByTestId('pick-image-button'))
+      expect(
+        await screen.findByTestId('pick-image-button-0'),
+      ).toBeInTheDocument()
+      fireEvent.click(screen.getByTestId('pick-image-button-0'))
       fireEvent.click(screen.getByTestId('image-picker-pick'))
-      expect(screen.getByTestId('mapping-row')).toBeInTheDocument()
-      expect(screen.getByTestId('mapping-name')).toHaveTextContent('Summit')
-      expect(screen.getByTestId('mapping-thumb')).toHaveAttribute(
+      expect(screen.getByTestId('mapping-row-0')).toBeInTheDocument()
+      expect(screen.getByTestId('mapping-name-0')).toHaveTextContent('Summit')
+      expect(screen.getByTestId('mapping-thumb-0')).toHaveAttribute(
         'src',
         'https://cdn.com/img.jpg',
       )
@@ -364,15 +763,17 @@ describe('GpxMapModal', () => {
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )
-      fireEvent.click(screen.getByTestId('gpx-show-waypoints'))
-      fireEvent.change(screen.getByTestId('gpx-url-input'), {
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
         target: { value: 'https://example.com/track.gpx' },
       })
       act(() => {
         jest.advanceTimersByTime(600)
       })
-      expect(await screen.findByTestId('pick-image-button')).toBeInTheDocument()
-      fireEvent.click(screen.getByTestId('pick-image-button'))
+      expect(
+        await screen.findByTestId('pick-image-button-0'),
+      ).toBeInTheDocument()
+      fireEvent.click(screen.getByTestId('pick-image-button-0'))
       fireEvent.click(screen.getByTestId('image-picker-pick'))
       expect(screen.queryByTestId('image-picker-mock')).not.toBeInTheDocument()
     })
@@ -382,18 +783,18 @@ describe('GpxMapModal', () => {
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )
-      fireEvent.click(screen.getByTestId('gpx-show-waypoints'))
-      fireEvent.change(screen.getByTestId('gpx-url-input'), {
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
         target: { value: 'https://example.com/track.gpx' },
       })
       act(() => {
         jest.advanceTimersByTime(600)
       })
-      expect(await screen.findByTestId('waypoint-select')).toBeInTheDocument()
-      fireEvent.click(screen.getByTestId('pick-image-button'))
+      expect(await screen.findByTestId('waypoint-select-0')).toBeInTheDocument()
+      fireEvent.click(screen.getByTestId('pick-image-button-0'))
       fireEvent.click(screen.getByTestId('image-picker-pick'))
       const options = within(
-        screen.getByTestId('waypoint-select'),
+        screen.getByTestId('waypoint-select-0'),
       ).getAllByRole('option')
       expect(options.map((o) => o.textContent)).not.toContain('Summit')
     })
@@ -406,17 +807,22 @@ describe('GpxMapModal', () => {
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )
-      fireEvent.click(screen.getByTestId('gpx-show-waypoints'))
-      fireEvent.change(screen.getByTestId('gpx-url-input'), {
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
         target: { value: 'https://example.com/track.gpx' },
       })
       act(() => {
         jest.advanceTimersByTime(600)
       })
-      expect(await screen.findByTestId('pick-image-button')).toBeInTheDocument()
-      fireEvent.click(screen.getByTestId('pick-image-button'))
+      expect(
+        await screen.findByTestId('pick-image-button-0'),
+      ).toBeInTheDocument()
+      fireEvent.click(screen.getByTestId('pick-image-button-0'))
       fireEvent.click(screen.getByTestId('image-picker-pick'))
-      expect(screen.queryByTestId('waypoint-select')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('waypoint-select-0')).not.toBeInTheDocument()
+      expect(
+        screen.queryByTestId('pick-image-button-0'),
+      ).not.toBeInTheDocument()
     })
 
     it('removes mapping row when remove button clicked', async () => {
@@ -424,18 +830,47 @@ describe('GpxMapModal', () => {
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )
-      fireEvent.click(screen.getByTestId('gpx-show-waypoints'))
-      fireEvent.change(screen.getByTestId('gpx-url-input'), {
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
         target: { value: 'https://example.com/track.gpx' },
       })
       act(() => {
         jest.advanceTimersByTime(600)
       })
-      expect(await screen.findByTestId('pick-image-button')).toBeInTheDocument()
-      fireEvent.click(screen.getByTestId('pick-image-button'))
+      expect(
+        await screen.findByTestId('pick-image-button-0'),
+      ).toBeInTheDocument()
+      fireEvent.click(screen.getByTestId('pick-image-button-0'))
       fireEvent.click(screen.getByTestId('image-picker-pick'))
-      fireEvent.click(screen.getByTestId('mapping-remove'))
-      expect(screen.queryByTestId('mapping-row')).not.toBeInTheDocument()
+      fireEvent.click(screen.getByTestId('mapping-remove-0'))
+      expect(screen.queryByTestId('mapping-row-0')).not.toBeInTheDocument()
+    })
+
+    it('re-adds waypoint to dropdown after mapping removed', async () => {
+      setupFetch()
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/track.gpx' },
+      })
+      act(() => {
+        jest.advanceTimersByTime(600)
+      })
+      expect(
+        await screen.findByTestId('pick-image-button-0'),
+      ).toBeInTheDocument()
+      fireEvent.click(screen.getByTestId('pick-image-button-0'))
+      fireEvent.click(screen.getByTestId('image-picker-pick'))
+      fireEvent.click(screen.getByTestId('mapping-remove-0'))
+      await waitFor(() =>
+        expect(
+          within(screen.getByTestId('waypoint-select-0'))
+            .getAllByRole('option')
+            .map((o) => o.textContent),
+        ).toContain('Summit'),
+      )
     })
 
     it('can change pending waypoint via select', async () => {
@@ -443,20 +878,41 @@ describe('GpxMapModal', () => {
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )
-      fireEvent.click(screen.getByTestId('gpx-show-waypoints'))
-      fireEvent.change(screen.getByTestId('gpx-url-input'), {
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
         target: { value: 'https://example.com/track.gpx' },
       })
       act(() => {
         jest.advanceTimersByTime(600)
       })
-      expect(await screen.findByTestId('waypoint-select')).toBeInTheDocument()
-      fireEvent.change(screen.getByTestId('waypoint-select'), {
+      expect(await screen.findByTestId('waypoint-select-0')).toBeInTheDocument()
+      fireEvent.change(screen.getByTestId('waypoint-select-0'), {
         target: { value: 'Water Source' },
       })
-      fireEvent.click(screen.getByTestId('pick-image-button'))
+      fireEvent.click(screen.getByTestId('pick-image-button-0'))
       fireEvent.click(screen.getByTestId('image-picker-pick'))
-      expect(screen.getByTestId('mapping-name')).toHaveTextContent(
+      expect(screen.getByTestId('mapping-name-0')).toHaveTextContent(
+        'Water Source',
+      )
+    })
+
+    it('selected waypoint persists when not mapped', async () => {
+      setupFetch()
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/track.gpx' },
+      })
+      act(() => {
+        jest.advanceTimersByTime(600)
+      })
+      expect(await screen.findByTestId('waypoint-select-0')).toBeInTheDocument()
+      fireEvent.change(screen.getByTestId('waypoint-select-0'), {
+        target: { value: 'Water Source' },
+      })
+      expect(screen.getByTestId('waypoint-select-0')).toHaveValue(
         'Water Source',
       )
     })
@@ -465,19 +921,21 @@ describe('GpxMapModal', () => {
       const onInsert = jest.fn()
       setupFetch()
       renderApp(<GpxMapModal isOpen onInsert={onInsert} onCancel={jest.fn()} />)
-      fireEvent.change(screen.getByTestId('gpx-url-input'), {
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
         target: { value: 'https://example.com/track.gpx' },
       })
-      fireEvent.click(screen.getByTestId('gpx-show-waypoints'))
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
       act(() => {
         jest.advanceTimersByTime(600)
       })
-      expect(await screen.findByTestId('pick-image-button')).toBeInTheDocument()
-      fireEvent.click(screen.getByTestId('pick-image-button'))
+      expect(
+        await screen.findByTestId('pick-image-button-0'),
+      ).toBeInTheDocument()
+      fireEvent.click(screen.getByTestId('pick-image-button-0'))
       fireEvent.click(screen.getByTestId('image-picker-pick'))
       fireEvent.click(screen.getByTestId('gpx-modal-insert'))
       expect(onInsert).toHaveBeenCalledWith(
-        '\n\n```gpx showWaypoints\nhttps://example.com/track.gpx\nSummit=https://cdn.com/img.jpg\n```\n\n',
+        '\n\n```gpx\ntrack:https://example.com/track.gpx ||| showWaypoints\n0:Summit=https://cdn.com/img.jpg\n```\n\n',
       )
     })
 
@@ -486,94 +944,44 @@ describe('GpxMapModal', () => {
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )
-      fireEvent.change(screen.getByTestId('gpx-url-input'), {
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
         target: { value: 'https://example.com/track.gpx' },
       })
-      fireEvent.click(screen.getByTestId('gpx-show-waypoints'))
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
       act(() => {
         jest.advanceTimersByTime(600)
       })
-      expect(await screen.findByTestId('pick-image-button')).toBeInTheDocument()
-      fireEvent.click(screen.getByTestId('pick-image-button'))
+      expect(
+        await screen.findByTestId('pick-image-button-0'),
+      ).toBeInTheDocument()
+      fireEvent.click(screen.getByTestId('pick-image-button-0'))
       fireEvent.click(screen.getByTestId('image-picker-pick'))
       expect(screen.getByTestId('gpx-preview').textContent).toBe(
-        '```gpx showWaypoints\nhttps://example.com/track.gpx\nSummit=https://cdn.com/img.jpg\n```',
+        '```gpx\ntrack:https://example.com/track.gpx ||| showWaypoints\n0:Summit=https://cdn.com/img.jpg\n```',
       )
-    })
-
-    it('does not fetch before debounce delay', () => {
-      global.fetch = jest.fn()
-      renderApp(
-        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
-      )
-      fireEvent.click(screen.getByTestId('gpx-show-waypoints'))
-      fireEvent.change(screen.getByTestId('gpx-url-input'), {
-        target: { value: 'https://example.com/track.gpx' },
-      })
-      act(() => {
-        jest.advanceTimersByTime(400)
-      })
-      expect(global.fetch).not.toHaveBeenCalled()
-    })
-
-    it('closes image picker when close button clicked', async () => {
-      setupFetch()
-      renderApp(
-        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
-      )
-      fireEvent.click(screen.getByTestId('gpx-show-waypoints'))
-      fireEvent.change(screen.getByTestId('gpx-url-input'), {
-        target: { value: 'https://example.com/track.gpx' },
-      })
-      act(() => {
-        jest.advanceTimersByTime(600)
-      })
-      expect(await screen.findByTestId('pick-image-button')).toBeInTheDocument()
-      fireEvent.click(screen.getByTestId('pick-image-button'))
-      expect(screen.getByTestId('image-picker-mock')).toBeInTheDocument()
-      fireEvent.click(screen.getByTestId('image-picker-close'))
-      expect(screen.queryByTestId('image-picker-mock')).not.toBeInTheDocument()
     })
 
     it('resets mappings and waypoints after insert', async () => {
       const onInsert = jest.fn()
       setupFetch()
       renderApp(<GpxMapModal isOpen onInsert={onInsert} onCancel={jest.fn()} />)
-      fireEvent.change(screen.getByTestId('gpx-url-input'), {
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
         target: { value: 'https://example.com/track.gpx' },
       })
-      fireEvent.click(screen.getByTestId('gpx-show-waypoints'))
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
       act(() => {
         jest.advanceTimersByTime(600)
       })
-      expect(await screen.findByTestId('pick-image-button')).toBeInTheDocument()
-      fireEvent.click(screen.getByTestId('pick-image-button'))
+      expect(
+        await screen.findByTestId('pick-image-button-0'),
+      ).toBeInTheDocument()
+      fireEvent.click(screen.getByTestId('pick-image-button-0'))
       fireEvent.click(screen.getByTestId('image-picker-pick'))
       fireEvent.click(screen.getByTestId('gpx-modal-insert'))
       expect(
-        screen.queryByTestId('waypoint-images-section'),
+        screen.queryByTestId('waypoint-images-section-0'),
       ).not.toBeInTheDocument()
-      expect(screen.queryByTestId('mapping-row')).not.toBeInTheDocument()
-    })
-
-    it('pick image button is disabled when no pendingWaypoint', async () => {
-      setupFetch(
-        `<?xml version="1.0"?><gpx xmlns="http://www.topografix.com/GPX/1/1"></gpx>`,
-      )
-      renderApp(
-        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
-      )
-      fireEvent.click(screen.getByTestId('gpx-show-waypoints'))
-      fireEvent.change(screen.getByTestId('gpx-url-input'), {
-        target: { value: 'https://example.com/track.gpx' },
-      })
-      act(() => {
-        jest.advanceTimersByTime(600)
-      })
-      await waitFor(() =>
-        expect(screen.queryByTestId('waypoint-select')).not.toBeInTheDocument(),
-      )
-      expect(screen.queryByTestId('pick-image-button')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('mapping-row-0')).not.toBeInTheDocument()
     })
 
     it('filters out waypoints with no name element', async () => {
@@ -585,18 +993,53 @@ describe('GpxMapModal', () => {
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )
-      fireEvent.click(screen.getByTestId('gpx-show-waypoints'))
-      fireEvent.change(screen.getByTestId('gpx-url-input'), {
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
         target: { value: 'https://example.com/track.gpx' },
       })
       act(() => {
         jest.advanceTimersByTime(600)
       })
-      expect(await screen.findByTestId('waypoint-select')).toBeInTheDocument()
+      expect(await screen.findByTestId('waypoint-select-0')).toBeInTheDocument()
       const options = within(
-        screen.getByTestId('waypoint-select'),
+        screen.getByTestId('waypoint-select-0'),
       ).getAllByRole('option')
       expect(options.map((o) => o.textContent)).toEqual(['Summit'])
+    })
+
+    it('shows separate waypoint dropdowns per track', async () => {
+      global.fetch = jest.fn().mockResolvedValue({
+        text: jest
+          .fn()
+          .mockResolvedValue(
+            `<?xml version="1.0"?><gpx xmlns="http://www.topografix.com/GPX/1/1"><wpt lat="0" lon="0"><name>Summit</name></wpt></gpx>`,
+          ),
+      } as unknown as Response)
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/t1.gpx' },
+      })
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      fireEvent.click(screen.getByTestId('gpx-add-track'))
+      fireEvent.change(screen.getByTestId('gpx-track-url-1'), {
+        target: { value: 'https://example.com/t2.gpx' },
+      })
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-1'))
+      act(() => {
+        jest.advanceTimersByTime(600)
+      })
+      expect(await screen.findByTestId('waypoint-select-0')).toBeInTheDocument()
+      expect(await screen.findByTestId('waypoint-select-1')).toBeInTheDocument()
+      const opts0 = within(
+        screen.getByTestId('waypoint-select-0'),
+      ).getAllByRole('option')
+      const opts1 = within(
+        screen.getByTestId('waypoint-select-1'),
+      ).getAllByRole('option')
+      expect(opts0.map((o) => o.textContent)).toEqual(['Summit'])
+      expect(opts1.map((o) => o.textContent)).toEqual(['Summit'])
     })
 
     it('does not set fetch error when fetch is aborted before completing', async () => {
@@ -609,23 +1052,23 @@ describe('GpxMapModal', () => {
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )
-      fireEvent.click(screen.getByTestId('gpx-show-waypoints'))
-      fireEvent.change(screen.getByTestId('gpx-url-input'), {
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
         target: { value: 'https://example.com/track.gpx' },
       })
       act(() => {
         jest.advanceTimersByTime(600)
       })
-      // Uncheck showWaypoints → cleanup runs → controller.abort()
-      fireEvent.click(screen.getByTestId('gpx-show-waypoints'))
-      // Reject the now-aborted fetch — guard should prevent setting fetchError
+      // Uncheck showWaypoints → cleanup aborts the controller
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      // Reject the aborted fetch — guard should prevent setFetchError
       await act(async () => {
         rejectFetch(new Error('network'))
       })
-      expect(screen.queryByTestId('fetch-error')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('fetch-error-0')).not.toBeInTheDocument()
     })
 
-    it('does not update loading state when fetch is aborted and resolves', async () => {
+    it('does not update state when aborted fetch resolves', async () => {
       let resolveFetch!: (r: Response) => void
       global.fetch = jest.fn().mockReturnValue(
         new Promise<Response>((resolve) => {
@@ -635,24 +1078,77 @@ describe('GpxMapModal', () => {
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )
-      fireEvent.click(screen.getByTestId('gpx-show-waypoints'))
-      fireEvent.change(screen.getByTestId('gpx-url-input'), {
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
         target: { value: 'https://example.com/track.gpx' },
       })
       act(() => {
         jest.advanceTimersByTime(600)
       })
-      // Uncheck showWaypoints → cleanup runs → controller.abort()
-      fireEvent.click(screen.getByTestId('gpx-show-waypoints'))
-      // Resolve the now-aborted fetch — guard should prevent setFetchLoading call
+      // Uncheck → controller aborted
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      // Resolve after abort — finally guard should skip setFetchLoading
       await act(async () => {
         resolveFetch({
           text: jest.fn().mockResolvedValue(GPX_XML),
         } as unknown as Response)
       })
-      // Waypoint section should not appear since showWaypoints was unchecked
       expect(
-        screen.queryByTestId('waypoint-images-section'),
+        screen.queryByTestId('waypoint-images-section-0'),
+      ).not.toBeInTheDocument()
+    })
+  })
+
+  describe('per-track state shift on remove', () => {
+    it('preserves track-0 waypoint state when removing track 1', async () => {
+      setupFetch()
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/t1.gpx' },
+      })
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      act(() => {
+        jest.advanceTimersByTime(600)
+      })
+      await screen.findByTestId('waypoint-select-0')
+      fireEvent.click(screen.getByTestId('gpx-add-track'))
+      fireEvent.click(screen.getByTestId('gpx-track-remove-1'))
+      expect(
+        screen.getByTestId('waypoint-images-section-0'),
+      ).toBeInTheDocument()
+      expect(
+        screen.queryByTestId('waypoint-images-section-1'),
+      ).not.toBeInTheDocument()
+    })
+
+    it('shifts track-1 waypoint state to track-0 when removing track 0', async () => {
+      setupFetch()
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/t1.gpx' },
+      })
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      fireEvent.click(screen.getByTestId('gpx-add-track'))
+      fireEvent.change(screen.getByTestId('gpx-track-url-1'), {
+        target: { value: 'https://example.com/t2.gpx' },
+      })
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-1'))
+      act(() => {
+        jest.advanceTimersByTime(600)
+      })
+      await screen.findByTestId('waypoint-select-0')
+      await screen.findByTestId('waypoint-select-1')
+      fireEvent.click(screen.getByTestId('gpx-track-remove-0'))
+      // Section-0 still shows (loading state from re-fetch after URL key change)
+      expect(
+        screen.getByTestId('waypoint-images-section-0'),
+      ).toBeInTheDocument()
+      expect(
+        screen.queryByTestId('waypoint-images-section-1'),
       ).not.toBeInTheDocument()
     })
   })

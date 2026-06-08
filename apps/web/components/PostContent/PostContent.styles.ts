@@ -257,6 +257,33 @@ export const StyledModalDownload = styled.a`
   }
 `
 
+export const StyledPhotoMeta = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  justify-content: center;
+  padding: 0.5rem 0.75rem;
+  margin-top: 0.25rem;
+  border-top: 1px solid rgba(251, 251, 251, 0.08);
+`
+
+export const StyledPhotoMetaItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  font-family: var(--font-roboto-mono);
+  font-size: 0.75rem;
+  color: rgba(251, 251, 251, 0.7);
+`
+
+export const StyledPhotoMetaLabel = styled.span`
+  font-size: 0.6rem;
+  color: rgba(251, 251, 251, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+`
+
 export const StyledEmbedWrapper = styled.div`
   position: relative;
   width: 100%;

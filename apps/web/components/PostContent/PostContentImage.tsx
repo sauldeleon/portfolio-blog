@@ -4,6 +4,8 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
 
+import { useClientTranslation } from '@web/i18n/client'
+
 import {
   StyledCaption,
   StyledImageWrapper,
@@ -12,10 +14,14 @@ import {
   StyledModalContent,
   StyledModalDownload,
   StyledModalOverlay,
+  StyledPhotoMeta,
+  StyledPhotoMetaItem,
+  StyledPhotoMetaLabel,
 } from './PostContent.styles'
 
 export function PostContentImage({ src, alt }: { src?: string; alt?: string }) {
   const [expanded, setExpanded] = useState(false)
+  const { t } = useClientTranslation('common')
 
   if (!src) return null
 
@@ -26,6 +32,10 @@ export function PostContentImage({ src, alt }: { src?: string; alt?: string }) {
   const captionPos = options?.get('caption-pos') ?? 'bottom'
   const cleanAlt = options?.get('alt') ?? (options ? '' : (alt ?? ''))
   const expandable = options?.get('expand') === 'true'
+  const photoIso = options?.get('photo-iso')
+  const photoAperture = options?.get('photo-aperture')
+  const photoExposure = options?.get('photo-exposure')
+  const hasPhotoMeta = !!(photoIso || photoAperture || photoExposure)
 
   const sizes =
     size === 'small'
@@ -54,6 +64,34 @@ export function PostContentImage({ src, alt }: { src?: string; alt?: string }) {
           sizes={sizes}
           style={{ width: '100%', height: 'auto', maxWidth: '1440px' }}
         />
+        {hasPhotoMeta && (
+          <StyledPhotoMeta data-testid="post-photo-meta">
+            {photoIso && (
+              <StyledPhotoMetaItem>
+                <StyledPhotoMetaLabel>
+                  {t('photoMeta.iso')}
+                </StyledPhotoMetaLabel>
+                <span>{photoIso}</span>
+              </StyledPhotoMetaItem>
+            )}
+            {photoAperture && (
+              <StyledPhotoMetaItem>
+                <StyledPhotoMetaLabel>
+                  {t('photoMeta.aperture')}
+                </StyledPhotoMetaLabel>
+                <span>{photoAperture}</span>
+              </StyledPhotoMetaItem>
+            )}
+            {photoExposure && (
+              <StyledPhotoMetaItem>
+                <StyledPhotoMetaLabel>
+                  {t('photoMeta.exposure')}
+                </StyledPhotoMetaLabel>
+                <span>{photoExposure}</span>
+              </StyledPhotoMetaItem>
+            )}
+          </StyledPhotoMeta>
+        )}
         {caption && captionPos !== 'top' && (
           <StyledCaption>{caption}</StyledCaption>
         )}

@@ -330,4 +330,298 @@ describe('remarkEmbeds', () => {
       value: JSON.stringify({ Summit: 'https://cdn.com/img.jpg?w=800' }),
     })
   })
+
+  describe('multi-track format', () => {
+    it('emits tracks attribute when track: lines present', () => {
+      const [result] = runPlugin([
+        {
+          type: 'code',
+          lang: 'gpx',
+          value:
+            'track:https://cdn.com/t1.gpx | Outbound | #e63946\ntrack:https://cdn.com/t2.gpx | Return | #3a86ff',
+        },
+      ])
+      expect(result.attributes).toContainEqual({
+        type: 'mdxJsxAttribute',
+        name: 'tracks',
+        value: JSON.stringify([
+          { url: 'https://cdn.com/t1.gpx', name: 'Outbound', color: '#e63946' },
+          { url: 'https://cdn.com/t2.gpx', name: 'Return', color: '#3a86ff' },
+        ]),
+      })
+    })
+
+    it('does not emit url attribute when track: lines present', () => {
+      const [result] = runPlugin([
+        {
+          type: 'code',
+          lang: 'gpx',
+          value: 'track:https://cdn.com/t1.gpx',
+        },
+      ])
+      expect(result.attributes).not.toContainEqual(
+        expect.objectContaining({ name: 'url' }),
+      )
+    })
+
+    it('parses track with only url (no name or color)', () => {
+      const [result] = runPlugin([
+        { type: 'code', lang: 'gpx', value: 'track:https://cdn.com/t1.gpx' },
+      ])
+      expect(result.attributes).toContainEqual({
+        type: 'mdxJsxAttribute',
+        name: 'tracks',
+        value: JSON.stringify([{ url: 'https://cdn.com/t1.gpx' }]),
+      })
+    })
+
+    it('parses track with url and name but no color', () => {
+      const [result] = runPlugin([
+        {
+          type: 'code',
+          lang: 'gpx',
+          value: 'track:https://cdn.com/t1.gpx | Outbound',
+        },
+      ])
+      expect(result.attributes).toContainEqual({
+        type: 'mdxJsxAttribute',
+        name: 'tracks',
+        value: JSON.stringify([
+          { url: 'https://cdn.com/t1.gpx', name: 'Outbound' },
+        ]),
+      })
+    })
+
+    it('parses track with url and color but no name (empty middle segment)', () => {
+      const [result] = runPlugin([
+        {
+          type: 'code',
+          lang: 'gpx',
+          value: 'track:https://cdn.com/t1.gpx || #e63946',
+        },
+      ])
+      expect(result.attributes).toContainEqual({
+        type: 'mdxJsxAttribute',
+        name: 'tracks',
+        value: JSON.stringify([
+          { url: 'https://cdn.com/t1.gpx', color: '#e63946' },
+        ]),
+      })
+    })
+
+    it('includes waypointImages alongside tracks when image lines present', () => {
+      const [result] = runPlugin([
+        {
+          type: 'code',
+          lang: 'gpx',
+          value:
+            'track:https://cdn.com/t1.gpx | Outbound | #e63946\nSummit=https://cdn.com/img.jpg',
+        },
+      ])
+      expect(result.attributes).toContainEqual({
+        type: 'mdxJsxAttribute',
+        name: 'tracks',
+        value: JSON.stringify([
+          { url: 'https://cdn.com/t1.gpx', name: 'Outbound', color: '#e63946' },
+        ]),
+      })
+      expect(result.attributes).toContainEqual({
+        type: 'mdxJsxAttribute',
+        name: 'waypointImages',
+        value: JSON.stringify({ Summit: 'https://cdn.com/img.jpg' }),
+      })
+    })
+
+    it('includes showWaypoints and allowDownload flags with tracks', () => {
+      const [result] = runPlugin([
+        {
+          type: 'code',
+          lang: 'gpx',
+          meta: 'showWaypoints allowDownload',
+          value:
+            'track:https://cdn.com/t1.gpx | Outbound | #e63946\ntrack:https://cdn.com/t2.gpx | Return | #3a86ff',
+        },
+      ])
+      expect(result.attributes).toContainEqual({
+        type: 'mdxJsxAttribute',
+        name: 'showWaypoints',
+        value: null,
+      })
+      expect(result.attributes).toContainEqual({
+        type: 'mdxJsxAttribute',
+        name: 'allowDownload',
+        value: null,
+      })
+    })
+
+    it('parses | download segment as per-track allowDownload', () => {
+      const [result] = runPlugin([
+        {
+          type: 'code',
+          lang: 'gpx',
+          value:
+            'track:https://cdn.com/t1.gpx | T1 | #e63946 | download\ntrack:https://cdn.com/t2.gpx | T2',
+        },
+      ])
+      expect(result.attributes).toContainEqual({
+        type: 'mdxJsxAttribute',
+        name: 'tracks',
+        value: JSON.stringify([
+          {
+            url: 'https://cdn.com/t1.gpx',
+            name: 'T1',
+            color: '#e63946',
+            allowDownload: true,
+          },
+          { url: 'https://cdn.com/t2.gpx', name: 'T2' },
+        ]),
+      })
+    })
+
+    it('parses showWaypoints flag in track line as per-track showWaypoints', () => {
+      const [result] = runPlugin([
+        {
+          type: 'code',
+          lang: 'gpx',
+          value:
+            'track:https://cdn.com/t1.gpx | T1 | #e63946 | showWaypoints\ntrack:https://cdn.com/t2.gpx | T2',
+        },
+      ])
+      expect(result.attributes).toContainEqual({
+        type: 'mdxJsxAttribute',
+        name: 'tracks',
+        value: JSON.stringify([
+          {
+            url: 'https://cdn.com/t1.gpx',
+            name: 'T1',
+            color: '#e63946',
+            showWaypoints: true,
+          },
+          { url: 'https://cdn.com/t2.gpx', name: 'T2' },
+        ]),
+      })
+    })
+
+    it('parses both download and showWaypoints flags in track line', () => {
+      const [result] = runPlugin([
+        {
+          type: 'code',
+          lang: 'gpx',
+          value: 'track:https://cdn.com/t1.gpx ||| download showWaypoints',
+        },
+      ])
+      expect(result.attributes).toContainEqual({
+        type: 'mdxJsxAttribute',
+        name: 'tracks',
+        value: JSON.stringify([
+          {
+            url: 'https://cdn.com/t1.gpx',
+            allowDownload: true,
+            showWaypoints: true,
+          },
+        ]),
+      })
+    })
+
+    it('parses per-track image lines with numeric prefix into track waypointImages', () => {
+      const [result] = runPlugin([
+        {
+          type: 'code',
+          lang: 'gpx',
+          value:
+            'track:https://cdn.com/t1.gpx | T1\ntrack:https://cdn.com/t2.gpx | T2\n0:Summit=https://cdn.com/img1.jpg\n1:Lake=https://cdn.com/img2.jpg',
+        },
+      ])
+      expect(result.attributes).toContainEqual({
+        type: 'mdxJsxAttribute',
+        name: 'tracks',
+        value: JSON.stringify([
+          {
+            url: 'https://cdn.com/t1.gpx',
+            name: 'T1',
+            waypointImages: { Summit: 'https://cdn.com/img1.jpg' },
+          },
+          {
+            url: 'https://cdn.com/t2.gpx',
+            name: 'T2',
+            waypointImages: { Lake: 'https://cdn.com/img2.jpg' },
+          },
+        ]),
+      })
+      expect(result.attributes).not.toContainEqual(
+        expect.objectContaining({ name: 'waypointImages' }),
+      )
+    })
+
+    it('keeps legacy image lines (no prefix) as global waypointImages', () => {
+      const [result] = runPlugin([
+        {
+          type: 'code',
+          lang: 'gpx',
+          value:
+            'track:https://cdn.com/t1.gpx | T1\nSummit=https://cdn.com/img.jpg',
+        },
+      ])
+      expect(result.attributes).toContainEqual({
+        type: 'mdxJsxAttribute',
+        name: 'tracks',
+        value: JSON.stringify([{ url: 'https://cdn.com/t1.gpx', name: 'T1' }]),
+      })
+      expect(result.attributes).toContainEqual({
+        type: 'mdxJsxAttribute',
+        name: 'waypointImages',
+        value: JSON.stringify({ Summit: 'https://cdn.com/img.jpg' }),
+      })
+    })
+
+    it('trims whitespace from track url, name and color', () => {
+      const [result] = runPlugin([
+        {
+          type: 'code',
+          lang: 'gpx',
+          value: 'track:  https://cdn.com/t1.gpx  |  Outbound  |  #e63946  ',
+        },
+      ])
+      expect(result.attributes).toContainEqual({
+        type: 'mdxJsxAttribute',
+        name: 'tracks',
+        value: JSON.stringify([
+          { url: 'https://cdn.com/t1.gpx', name: 'Outbound', color: '#e63946' },
+        ]),
+      })
+    })
+
+    it('merges multiple per-track image lines for the same track index', () => {
+      const [result] = runPlugin([
+        {
+          type: 'code',
+          lang: 'gpx',
+          value:
+            'track:https://cdn.com/t1.gpx\n0:Summit=https://cdn.com/img1.jpg\n0:Lake=https://cdn.com/img2.jpg',
+        },
+      ])
+      expect(result.attributes).toContainEqual({
+        type: 'mdxJsxAttribute',
+        name: 'tracks',
+        value: JSON.stringify([
+          {
+            url: 'https://cdn.com/t1.gpx',
+            waypointImages: {
+              Summit: 'https://cdn.com/img1.jpg',
+              Lake: 'https://cdn.com/img2.jpg',
+            },
+          },
+        ]),
+      })
+    })
+  })
+
+  it('uses empty string for url when non-track gpx block has empty content', () => {
+    const [result] = runPlugin([{ type: 'code', lang: 'gpx', value: '' }])
+    expect(result.attributes).toContainEqual({
+      type: 'mdxJsxAttribute',
+      name: 'url',
+      value: '',
+    })
+  })
 })

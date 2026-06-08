@@ -15,5 +15,10 @@
     "colCoordinates": "Coordenadas",
     "colElevation": "Elevación",
     "flyTo": "Ver en el mapa"
+  },
+  "photoMeta": {
+    "iso": "ISO",
+    "aperture": "Apertura",
+    "exposure": "Exposición"
   }
 }

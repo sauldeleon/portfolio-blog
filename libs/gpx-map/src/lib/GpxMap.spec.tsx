@@ -1,8 +1,15 @@
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from '@testing-library/react'
 import React from 'react'
 import { useMap } from 'react-leaflet'
 
-import { GpxMap, parseWaypointsFromXml } from './GpxMap'
+import { GpxMap, GpxTrackDef, parseWaypointsFromXml } from './GpxMap'
 
 jest.mock('leaflet/dist/leaflet.css', () => ({}))
 jest.mock('leaflet-gpx', () => ({}))
@@ -134,6 +141,90 @@ jest.mock('./GpxMap.styles', () => ({
       {children}
     </button>
   ),
+  StyledTrackStrip: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="track-strip">{children}</div>
+  ),
+  StyledTrackChip: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="track-chip">{children}</div>
+  ),
+  StyledTrackDot: ({
+    $color,
+    $active,
+  }: {
+    $color: string
+    $active: boolean
+  }) => (
+    <span
+      data-testid="track-dot"
+      data-color={$color}
+      data-active={String($active)}
+    />
+  ),
+  StyledTrackToggle: ({
+    children,
+    onClick,
+    'aria-pressed': ariaPressed,
+    'data-testid': testId,
+  }: {
+    children: React.ReactNode
+    onClick: React.MouseEventHandler
+    'aria-pressed': boolean
+    'data-testid'?: string
+  }) => (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={ariaPressed}
+      data-testid={testId}
+    >
+      {children}
+    </button>
+  ),
+  StyledTrackDownloadButton: ({
+    children,
+    onClick,
+    'aria-label': ariaLabel,
+    'data-testid': testId,
+  }: {
+    children: React.ReactNode
+    onClick: React.MouseEventHandler
+    'aria-label': string
+    'data-testid'?: string
+  }) => (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={ariaLabel}
+      data-testid={testId}
+    >
+      {children}
+    </button>
+  ),
+  StyledLayerSwitcher: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="layer-switcher">{children}</div>
+  ),
+  StyledLayerButton: ({
+    children,
+    onClick,
+    $active: _active,
+    'aria-pressed': ariaPressed,
+    'data-testid': testId,
+  }: {
+    children: React.ReactNode
+    onClick: React.MouseEventHandler
+    $active: boolean
+    'aria-pressed': boolean
+    'data-testid'?: string
+  }) => (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={ariaPressed}
+      data-testid={testId}
+    >
+      {children}
+    </button>
+  ),
 }))
 
 const L = require('leaflet')
@@ -169,11 +260,13 @@ describe('GpxMap', () => {
   const mockFitBounds = jest.fn()
   const mockRemoveLayer = jest.fn()
   const mockFlyTo = jest.fn()
+  const mockSetMaxZoom = jest.fn()
 
   beforeEach(() => {
     mockFitBounds.mockReset()
     mockRemoveLayer.mockReset()
     mockFlyTo.mockReset()
+    mockSetMaxZoom.mockReset()
     MockGPX.mockClear()
     mockOn.mockClear()
     mockAddTo.mockClear()
@@ -185,6 +278,7 @@ describe('GpxMap', () => {
       fitBounds: mockFitBounds,
       removeLayer: mockRemoveLayer,
       flyTo: mockFlyTo,
+      setMaxZoom: mockSetMaxZoom,
     })
     global.fetch = jest.fn().mockResolvedValue({
       text: jest.fn().mockResolvedValue(GPX_XML_WITH_WAYPOINTS),
@@ -285,6 +379,12 @@ describe('GpxMap', () => {
       'https://example.com/track2.gpx',
       expect.any(Object),
     )
+  })
+
+  it('renders map with no tracks when neither url nor tracks provided', () => {
+    render(<GpxMap />)
+    expect(screen.getByTestId('map-container-wrapper')).toBeInTheDocument()
+    expect(MockGPX).not.toHaveBeenCalled()
   })
 
   describe('allowDownload', () => {
@@ -390,6 +490,45 @@ describe('GpxMap', () => {
 
       await waitFor(() => expect(mockAnchorClick).toHaveBeenCalled())
       expect(capturedAnchor?.download).toBe('track.gpx')
+    })
+
+    it('download button with no tracks calls downloadGpx with empty string', async () => {
+      const mockBlob = new Blob([''])
+      global.fetch = jest.fn().mockResolvedValue({
+        blob: jest.fn().mockResolvedValue(mockBlob),
+        text: jest.fn().mockResolvedValue(''),
+      } as unknown as Response)
+      render(<GpxMap allowDownload />)
+      fireEvent.click(
+        within(screen.getByTestId('download-bar')).getByRole('button'),
+      )
+      await waitFor(() => expect(global.fetch).toHaveBeenCalledWith(''))
+    })
+
+    it('multi-track download button triggers file download for that track', async () => {
+      const MULTI_TRACKS: GpxTrackDef[] = [
+        { url: 'https://example.com/t1.gpx', name: 'Outbound' },
+        { url: 'https://example.com/t2.gpx', name: 'Return' },
+      ]
+      const mockBlob = new Blob(['<gpx/>'], { type: 'application/gpx+xml' })
+      global.fetch = jest.fn().mockResolvedValue({
+        blob: jest.fn().mockResolvedValue(mockBlob),
+        text: jest.fn().mockResolvedValue(''),
+      } as unknown as Response)
+
+      render(
+        <GpxMap
+          tracks={MULTI_TRACKS}
+          allowDownload
+          downloadLabel="Download GPX"
+        />,
+      )
+      fireEvent.click(screen.getByTestId('track-download-1'))
+
+      await waitFor(() => {
+        expect(global.fetch).toHaveBeenCalledWith('https://example.com/t2.gpx')
+        expect(mockAnchorClick).toHaveBeenCalled()
+      })
     })
   })
 
@@ -794,6 +933,33 @@ describe('GpxMap', () => {
       expect(mockBindPopup).not.toHaveBeenCalled()
     })
 
+    it('uses per-track waypointImages when provided on track def', () => {
+      const mockBindPopup = jest.fn()
+      mockEachLayer.mockImplementationOnce((cb: (l: unknown) => void) => {
+        cb({ options: { title: 'Summit' }, bindPopup: mockBindPopup })
+      })
+      render(
+        <GpxMap
+          tracks={[
+            {
+              url: GPX_URL,
+              waypointImages: { Summit: 'https://cdn.com/track-img.jpg' },
+            },
+          ]}
+        />,
+      )
+      const loadedCallback = mockOn.mock.calls.find(
+        (c: [string, () => void]) => c[0] === 'loaded',
+      )?.[1]
+      act(() => {
+        loadedCallback()
+      })
+      expect(mockBindPopup).toHaveBeenCalledWith(
+        expect.stringContaining('https://cdn.com/track-img.jpg'),
+        expect.anything(),
+      )
+    })
+
     it('does not show dash when image present but no desc', async () => {
       render(
         <GpxMap
@@ -810,6 +976,299 @@ describe('GpxMap', () => {
         .getAllByRole('row')
         .filter((r) => r.getAttribute('data-details') === 'true')
       expect(detailRows[0]).not.toHaveTextContent('—')
+    })
+  })
+
+  describe('multi-track', () => {
+    const TRACKS: GpxTrackDef[] = [
+      { url: 'https://example.com/t1.gpx', name: 'Outbound', color: '#e63946' },
+      { url: 'https://example.com/t2.gpx', name: 'Return', color: '#3a86ff' },
+    ]
+
+    it('creates one GPX layer per track', () => {
+      render(<GpxMap tracks={TRACKS} />)
+      expect(MockGPX).toHaveBeenCalledTimes(2)
+      expect(MockGPX).toHaveBeenCalledWith(
+        'https://example.com/t1.gpx',
+        expect.objectContaining({
+          polyline_options: { color: '#e63946', weight: 3, opacity: 0.85 },
+        }),
+      )
+      expect(MockGPX).toHaveBeenCalledWith(
+        'https://example.com/t2.gpx',
+        expect.objectContaining({
+          polyline_options: { color: '#3a86ff', weight: 3, opacity: 0.85 },
+        }),
+      )
+    })
+
+    it('renders track strip for multi-track', () => {
+      render(<GpxMap tracks={TRACKS} />)
+      expect(screen.getByTestId('track-strip')).toBeInTheDocument()
+    })
+
+    it('does not render track strip for single-track', () => {
+      render(<GpxMap url={GPX_URL} />)
+      expect(screen.queryByTestId('track-strip')).not.toBeInTheDocument()
+    })
+
+    it('renders one track chip per track', () => {
+      render(<GpxMap tracks={TRACKS} />)
+      expect(screen.getAllByTestId('track-chip')).toHaveLength(2)
+    })
+
+    it('shows track names in strip', () => {
+      render(<GpxMap tracks={TRACKS} />)
+      expect(screen.getByText('Outbound')).toBeInTheDocument()
+      expect(screen.getByText('Return')).toBeInTheDocument()
+    })
+
+    it('shows fallback name Track N when name not set', () => {
+      render(
+        <GpxMap
+          tracks={[
+            { url: 'https://example.com/t1.gpx' },
+            { url: 'https://example.com/t2.gpx' },
+          ]}
+        />,
+      )
+      expect(screen.getByText('Track 1')).toBeInTheDocument()
+      expect(screen.getByText('Track 2')).toBeInTheDocument()
+    })
+
+    it('shows colored track dots with active state', () => {
+      render(<GpxMap tracks={TRACKS} />)
+      const dots = screen.getAllByTestId('track-dot')
+      expect(dots[0]).toHaveAttribute('data-color', '#e63946')
+      expect(dots[0]).toHaveAttribute('data-active', 'true')
+      expect(dots[1]).toHaveAttribute('data-color', '#3a86ff')
+      expect(dots[1]).toHaveAttribute('data-active', 'true')
+    })
+
+    it('uses palette color when track has no color', () => {
+      render(
+        <GpxMap
+          tracks={[
+            { url: 'https://example.com/t1.gpx', name: 'A' },
+            { url: 'https://example.com/t2.gpx', name: 'B' },
+          ]}
+        />,
+      )
+      const dots = screen.getAllByTestId('track-dot')
+      expect(dots[0]).toHaveAttribute('data-color', '#e63946')
+      expect(dots[1]).toHaveAttribute('data-color', '#3a86ff')
+    })
+
+    it('toggles track off: removes layer from map', () => {
+      render(<GpxMap tracks={TRACKS} />)
+      mockRemoveLayer.mockClear()
+      fireEvent.click(screen.getByTestId('track-toggle-0'))
+      expect(mockRemoveLayer).toHaveBeenCalled()
+    })
+
+    it('toggles track back on: adds layer to map', () => {
+      render(<GpxMap tracks={TRACKS} />)
+      fireEvent.click(screen.getByTestId('track-toggle-0'))
+      mockAddTo.mockClear()
+      fireEvent.click(screen.getByTestId('track-toggle-0'))
+      expect(mockAddTo).toHaveBeenCalled()
+    })
+
+    it('track dot shows inactive after toggle off', () => {
+      render(<GpxMap tracks={TRACKS} />)
+      fireEvent.click(screen.getByTestId('track-toggle-0'))
+      const dots = screen.getAllByTestId('track-dot')
+      expect(dots[0]).toHaveAttribute('data-active', 'false')
+    })
+
+    it('does not render download buttons in strip when allowDownload is false', () => {
+      render(<GpxMap tracks={TRACKS} />)
+      expect(screen.queryByTestId('track-download-0')).not.toBeInTheDocument()
+    })
+
+    it('renders download button per track when allowDownload is true', () => {
+      render(<GpxMap tracks={TRACKS} allowDownload />)
+      expect(screen.getByTestId('track-download-0')).toBeInTheDocument()
+      expect(screen.getByTestId('track-download-1')).toBeInTheDocument()
+    })
+
+    it('download button has label with track name', () => {
+      render(
+        <GpxMap tracks={TRACKS} allowDownload downloadLabel="Download GPX" />,
+      )
+      expect(
+        screen.getByRole('button', { name: 'Download GPX Outbound' }),
+      ).toBeInTheDocument()
+    })
+
+    it('fetches waypoints from all tracks when showWaypoints is true', async () => {
+      render(<GpxMap tracks={TRACKS} showWaypoints />)
+      await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(2))
+      expect(global.fetch).toHaveBeenCalledWith('https://example.com/t1.gpx')
+      expect(global.fetch).toHaveBeenCalledWith('https://example.com/t2.gpx')
+    })
+
+    it('fetches only track with per-track showWaypoints when global prop is false', async () => {
+      render(
+        <GpxMap
+          tracks={[
+            {
+              url: 'https://example.com/t1.gpx',
+              name: 'T1',
+              showWaypoints: true,
+            },
+            { url: 'https://example.com/t2.gpx', name: 'T2' },
+          ]}
+        />,
+      )
+      await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(1))
+      expect(global.fetch).toHaveBeenCalledWith('https://example.com/t1.gpx')
+      expect(global.fetch).not.toHaveBeenCalledWith(
+        'https://example.com/t2.gpx',
+      )
+    })
+
+    it('renders waypoints sections per track with named label', async () => {
+      render(<GpxMap tracks={TRACKS} showWaypoints />)
+      expect(
+        await screen.findByText('Waypoints – Outbound (2)'),
+      ).toBeInTheDocument()
+      expect(screen.getByText('Waypoints – Return (2)')).toBeInTheDocument()
+    })
+
+    it('hides waypoints table when track is toggled off', async () => {
+      render(<GpxMap tracks={TRACKS} showWaypoints />)
+      expect(
+        await screen.findByText('Waypoints – Outbound (2)'),
+      ).toBeInTheDocument()
+      fireEvent.click(screen.getByTestId('track-toggle-0'))
+      expect(
+        screen.queryByText('Waypoints – Outbound (2)'),
+      ).not.toBeInTheDocument()
+      expect(screen.getByText('Waypoints – Return (2)')).toBeInTheDocument()
+    })
+
+    it('does not render download bar for multi-track even when allowDownload', () => {
+      render(<GpxMap tracks={TRACKS} allowDownload />)
+      expect(screen.queryByTestId('download-bar')).not.toBeInTheDocument()
+    })
+
+    it('uses tracks prop over url prop when both provided', () => {
+      render(<GpxMap url="https://example.com/legacy.gpx" tracks={TRACKS} />)
+      expect(MockGPX).toHaveBeenCalledTimes(2)
+      expect(MockGPX).not.toHaveBeenCalledWith(
+        'https://example.com/legacy.gpx',
+        expect.anything(),
+      )
+    })
+
+    it('shows download button only for track with per-track allowDownload', () => {
+      render(
+        <GpxMap
+          tracks={[
+            {
+              url: 'https://example.com/t1.gpx',
+              name: 'T1',
+              allowDownload: true,
+            },
+            { url: 'https://example.com/t2.gpx', name: 'T2' },
+          ]}
+        />,
+      )
+      expect(screen.getByTestId('track-download-0')).toBeInTheDocument()
+      expect(screen.queryByTestId('track-download-1')).not.toBeInTheDocument()
+    })
+
+    it('shows single-track download bar when track def has allowDownload true', () => {
+      render(<GpxMap tracks={[{ url: GPX_URL, allowDownload: true }]} />)
+      expect(
+        screen.getByRole('button', { name: 'Download GPX' }),
+      ).toBeInTheDocument()
+    })
+
+    it('new track added via prop rerender defaults to visible', () => {
+      const { rerender } = render(<GpxMap tracks={[TRACKS[0]]} />)
+      rerender(<GpxMap tracks={TRACKS} />)
+      expect(screen.getByTestId('track-toggle-1')).toHaveAttribute(
+        'aria-pressed',
+        'true',
+      )
+    })
+  })
+  describe('tile provider switcher', () => {
+    it('renders layer switcher', () => {
+      render(<GpxMap url={GPX_URL} />)
+      expect(screen.getByTestId('layer-switcher')).toBeInTheDocument()
+    })
+
+    it('OSM is active by default', () => {
+      render(<GpxMap url={GPX_URL} />)
+      expect(screen.getByTestId('tile-provider-osm')).toHaveAttribute(
+        'aria-pressed',
+        'true',
+      )
+      expect(screen.getByTestId('tile-provider-topo')).toHaveAttribute(
+        'aria-pressed',
+        'false',
+      )
+      expect(screen.getByTestId('tile-provider-satellite')).toHaveAttribute(
+        'aria-pressed',
+        'false',
+      )
+    })
+
+    it('switches to topo tile layer', () => {
+      render(<GpxMap url={GPX_URL} />)
+      fireEvent.click(screen.getByTestId('tile-provider-topo'))
+      expect(screen.getByTestId('tile-layer')).toHaveAttribute(
+        'data-url',
+        'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+      )
+      expect(screen.getByTestId('tile-provider-topo')).toHaveAttribute(
+        'aria-pressed',
+        'true',
+      )
+      expect(screen.getByTestId('tile-provider-osm')).toHaveAttribute(
+        'aria-pressed',
+        'false',
+      )
+    })
+
+    it('switches to satellite tile layer', () => {
+      render(<GpxMap url={GPX_URL} />)
+      fireEvent.click(screen.getByTestId('tile-provider-satellite'))
+      expect(screen.getByTestId('tile-layer')).toHaveAttribute(
+        'data-url',
+        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+      )
+      expect(screen.getByTestId('tile-provider-satellite')).toHaveAttribute(
+        'aria-pressed',
+        'true',
+      )
+    })
+
+    it('switching back to OSM restores OSM tile layer', () => {
+      render(<GpxMap url={GPX_URL} />)
+      fireEvent.click(screen.getByTestId('tile-provider-topo'))
+      fireEvent.click(screen.getByTestId('tile-provider-osm'))
+      expect(screen.getByTestId('tile-layer')).toHaveAttribute(
+        'data-url',
+        'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      )
+      expect(screen.getByTestId('tile-provider-osm')).toHaveAttribute(
+        'aria-pressed',
+        'true',
+      )
+    })
+
+    it('updates map maxZoom when switching tile providers', () => {
+      render(<GpxMap url={GPX_URL} />)
+      fireEvent.click(screen.getByTestId('tile-provider-topo'))
+      expect(mockSetMaxZoom).toHaveBeenCalledWith(17)
+      fireEvent.click(screen.getByTestId('tile-provider-satellite'))
+      expect(mockSetMaxZoom).toHaveBeenCalledWith(19)
+      fireEvent.click(screen.getByTestId('tile-provider-osm'))
+      expect(mockSetMaxZoom).toHaveBeenCalledWith(19)
     })
   })
 })
