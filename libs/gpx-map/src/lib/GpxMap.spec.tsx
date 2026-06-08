@@ -1239,7 +1239,7 @@ describe('GpxMap', () => {
       fireEvent.click(screen.getByTestId('tile-provider-satellite'))
       expect(screen.getByTestId('tile-layer')).toHaveAttribute(
         'data-url',
-        'https://tiles.stadiamaps.com/tiles/alidade_satellite/{z}/{x}/{y}.jpg',
+        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
       )
       expect(screen.getByTestId('tile-provider-satellite')).toHaveAttribute(
         'aria-pressed',
