@@ -25,6 +25,8 @@ import {
   StyledDownloadBar,
   StyledDownloadButton,
   StyledGpxMap,
+  StyledLayerButton,
+  StyledLayerSwitcher,
   StyledLocateButton,
   StyledMapContainer,
   StyledRowChevron,
@@ -79,6 +81,9 @@ export interface GpxTrackDef {
   url: string
   name?: string
   color?: string
+  allowDownload?: boolean
+  showWaypoints?: boolean
+  waypointImages?: Record<string, string>
 }
 
 export interface GpxMapLabels {
@@ -98,6 +103,33 @@ export interface GpxMapProps {
   downloadLabel?: string
   labels?: GpxMapLabels
 }
+
+const TILE_PROVIDERS = [
+  {
+    id: 'osm',
+    label: 'OSM',
+    maxZoom: 19,
+    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    attribution:
+      '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  },
+  {
+    id: 'topo',
+    label: 'Topo',
+    maxZoom: 17,
+    url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+    attribution:
+      'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)',
+  },
+  {
+    id: 'satellite',
+    label: 'Satellite',
+    maxZoom: 20,
+    url: 'https://tiles.stadiamaps.com/tiles/alidade_satellite/{z}/{x}/{y}.jpg',
+    attribution:
+      '&copy; CNES, Distribution Airbus DS, © Airbus DS, © PlanetObserver (Contains Copernicus Data) | &copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  },
+]
 
 const TRACK_COLORS = [
   '#e63946',
@@ -303,12 +335,13 @@ export function GpxMap({
 
   const resolvedTracks = useMemo<GpxTrackDef[]>(
     () => tracks ?? (url ? [{ url }] : []),
-     
+
     [tracks, url],
   )
 
   const isMultiTrack = resolvedTracks.length > 1
 
+  const [tileProviderIndex, setTileProviderIndex] = useState(0)
   const [visibleTracks, setVisibleTracks] = useState<Record<number, boolean>>(
     () => Object.fromEntries(resolvedTracks.map((_, i) => [i, true])),
   )
@@ -321,11 +354,14 @@ export function GpxMap({
   >({})
   const mapContainerRef = useRef<HTMLDivElement>(null)
 
-  const trackUrlsKey = resolvedTracks.map((t) => t.url).join(',')
+  const trackUrlsKey = resolvedTracks
+    .map((t) => `${t.url}|${t.showWaypoints}`)
+    .join(',')
 
   useEffect(() => {
-    if (!showWaypoints) return
     resolvedTracks.forEach((track, i) => {
+      const effectiveShowWaypoints = track.showWaypoints ?? showWaypoints
+      if (!effectiveShowWaypoints) return
       fetch(track.url)
         .then((r) => r.text())
         .then((text) =>
@@ -363,8 +399,9 @@ export function GpxMap({
         >
           <AttributionControl prefix={false} />
           <TileLayer
-            attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution={TILE_PROVIDERS[tileProviderIndex].attribution}
+            maxZoom={TILE_PROVIDERS[tileProviderIndex].maxZoom}
+            url={TILE_PROVIDERS[tileProviderIndex].url}
           />
           {resolvedTracks.map((track, i) => (
             <GpxTrackLayer
@@ -372,7 +409,7 @@ export function GpxMap({
               url={track.url}
               color={resolveTrackColor(track, i)}
               visible={visibleTracks[i] ?? true}
-              waypointImages={waypointImages}
+              waypointImages={track.waypointImages ?? waypointImages}
             />
           ))}
           <WaypointFocuser waypoint={focusedWaypoint} />
@@ -389,9 +426,23 @@ export function GpxMap({
             />
           )}
         </MapContainer>
+        <StyledLayerSwitcher>
+          {TILE_PROVIDERS.map((provider, i) => (
+            <StyledLayerButton
+              key={provider.id}
+              type="button"
+              $active={i === tileProviderIndex}
+              onClick={() => setTileProviderIndex(i)}
+              aria-pressed={i === tileProviderIndex}
+              data-testid={`tile-provider-${provider.id}`}
+            >
+              {provider.label}
+            </StyledLayerButton>
+          ))}
+        </StyledLayerSwitcher>
       </StyledMapContainer>
 
-      {!isMultiTrack && allowDownload && (
+      {!isMultiTrack && (resolvedTracks[0]?.allowDownload ?? allowDownload) && (
         <StyledDownloadBar>
           <StyledDownloadButton
             aria-label={downloadLabel}
@@ -420,7 +471,7 @@ export function GpxMap({
                   <StyledTrackDot $color={trackColor} $active={isVisible} />
                   {trackName}
                 </StyledTrackToggle>
-                {allowDownload && (
+                {(track.allowDownload ?? allowDownload) && (
                   <StyledTrackDownloadButton
                     type="button"
                     onClick={() => downloadGpx(track.url)}
@@ -436,99 +487,104 @@ export function GpxMap({
         </StyledTrackStrip>
       )}
 
-      {showWaypoints &&
-        resolvedTracks.map((track, trackIndex) => {
-          const trackWaypoints = perTrackWaypoints[trackIndex] ?? []
-          if (trackWaypoints.length === 0) return null
-          const sectionLabel =
-            isMultiTrack && track.name
-              ? `${waypointsLabel} – ${track.name} (${trackWaypoints.length})`
-              : `${waypointsLabel} (${trackWaypoints.length})`
-          const expandedIndex = expandedByIndex[trackIndex] ?? null
-          return (
-            <StyledWaypointsDetails key={trackIndex}>
-              <summary>{sectionLabel}</summary>
-              <StyledTableWrapper>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>{colName}</th>
-                      <th>{colCoordinates}</th>
-                      <th>{colElevation}</th>
-                      <th />
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {trackWaypoints.map((wpt, i) => {
-                      const hasDetails = !!(
-                        waypointImages?.[wpt.name] || wpt.desc
-                      )
-                      const isExpanded = expandedIndex === i
-                      return (
-                        <Fragment key={`${wpt.name}-${i}`}>
-                          <tr
-                            onClick={
-                              hasDetails
-                                ? () =>
-                                    setExpandedByIndex((prev) => ({
-                                      ...prev,
-                                      [trackIndex]: isExpanded ? null : i,
-                                    }))
-                                : undefined
-                            }
-                            data-expanded={
-                              hasDetails && isExpanded ? 'true' : undefined
-                            }
-                            data-clickable={hasDetails ? 'true' : undefined}
-                          >
-                            <td>
-                              {hasDetails && (
-                                <StyledRowChevron
-                                  $expanded={isExpanded}
-                                  data-testid="expand-chevron"
-                                >
-                                  <ChevronIcon />
-                                </StyledRowChevron>
-                              )}
-                              {wpt.name || '—'}
-                            </td>
-                            <td>{`${wpt.lat.toFixed(5)}, ${wpt.lon.toFixed(5)}`}</td>
-                            <td>{wpt.ele != null ? `${wpt.ele}m` : '—'}</td>
-                            <td>
-                              <StyledLocateButton
-                                aria-label={flyTo}
-                                onClick={(e) => {
-                                  e.stopPropagation()
-                                  flyToWaypoint(wpt)
-                                }}
+      {resolvedTracks.map((track, trackIndex) => {
+        const effectiveShowWaypoints = track.showWaypoints ?? showWaypoints
+        if (!effectiveShowWaypoints) return null
+        if (!(visibleTracks[trackIndex] ?? /* istanbul ignore next */ true))
+          return null
+        const trackWaypoints = perTrackWaypoints[trackIndex] ?? []
+        if (trackWaypoints.length === 0) return null
+        const sectionLabel =
+          isMultiTrack && track.name
+            ? `${waypointsLabel} – ${track.name} (${trackWaypoints.length})`
+            : `${waypointsLabel} (${trackWaypoints.length})`
+        const expandedIndex = expandedByIndex[trackIndex] ?? null
+        return (
+          <StyledWaypointsDetails key={trackIndex}>
+            <summary>{sectionLabel}</summary>
+            <StyledTableWrapper>
+              <table>
+                <thead>
+                  <tr>
+                    <th>{colName}</th>
+                    <th>{colCoordinates}</th>
+                    <th>{colElevation}</th>
+                    <th />
+                  </tr>
+                </thead>
+                <tbody>
+                  {trackWaypoints.map((wpt, i) => {
+                    const effectiveImages =
+                      track.waypointImages ?? waypointImages
+                    const hasDetails = !!(
+                      effectiveImages?.[wpt.name] || wpt.desc
+                    )
+                    const isExpanded = expandedIndex === i
+                    return (
+                      <Fragment key={`${wpt.name}-${i}`}>
+                        <tr
+                          onClick={
+                            hasDetails
+                              ? () =>
+                                  setExpandedByIndex((prev) => ({
+                                    ...prev,
+                                    [trackIndex]: isExpanded ? null : i,
+                                  }))
+                              : undefined
+                          }
+                          data-expanded={
+                            hasDetails && isExpanded ? 'true' : undefined
+                          }
+                          data-clickable={hasDetails ? 'true' : undefined}
+                        >
+                          <td>
+                            {hasDetails && (
+                              <StyledRowChevron
+                                $expanded={isExpanded}
+                                data-testid="expand-chevron"
                               >
-                                <MapPinIcon />
-                              </StyledLocateButton>
+                                <ChevronIcon />
+                              </StyledRowChevron>
+                            )}
+                            {wpt.name || '—'}
+                          </td>
+                          <td>{`${wpt.lat.toFixed(5)}, ${wpt.lon.toFixed(5)}`}</td>
+                          <td>{wpt.ele != null ? `${wpt.ele}m` : '—'}</td>
+                          <td>
+                            <StyledLocateButton
+                              aria-label={flyTo}
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                flyToWaypoint(wpt)
+                              }}
+                            >
+                              <MapPinIcon />
+                            </StyledLocateButton>
+                          </td>
+                        </tr>
+                        {hasDetails && isExpanded && (
+                          <tr data-details="true">
+                            <td colSpan={4}>
+                              {effectiveImages?.[wpt.name] && (
+                                <StyledWaypointImageCard
+                                  data-testid="waypoint-image-card"
+                                  src={effectiveImages[wpt.name]}
+                                  alt={wpt.name}
+                                />
+                              )}
+                              {wpt.desc && <p>{wpt.desc}</p>}
                             </td>
                           </tr>
-                          {hasDetails && isExpanded && (
-                            <tr data-details="true">
-                              <td colSpan={4}>
-                                {waypointImages?.[wpt.name] && (
-                                  <StyledWaypointImageCard
-                                    data-testid="waypoint-image-card"
-                                    src={waypointImages[wpt.name]}
-                                    alt={wpt.name}
-                                  />
-                                )}
-                                {wpt.desc && <p>{wpt.desc}</p>}
-                              </td>
-                            </tr>
-                          )}
-                        </Fragment>
-                      )
-                    })}
-                  </tbody>
-                </table>
-              </StyledTableWrapper>
-            </StyledWaypointsDetails>
-          )
-        })}
+                        )}
+                      </Fragment>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </StyledTableWrapper>
+          </StyledWaypointsDetails>
+        )
+      })}
     </StyledGpxMap>
   )
 }

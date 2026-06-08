@@ -262,8 +262,13 @@ export const StyledColorChip = styled.button<{
   flex-shrink: 0;
   transition: border-color 0.1s;
 
-  &:hover {
+  &:hover:not(:disabled) {
     border-color: rgba(255, 255, 255, 0.6);
+  }
+
+  &:disabled {
+    opacity: 0.2;
+    cursor: not-allowed;
   }
 `
 

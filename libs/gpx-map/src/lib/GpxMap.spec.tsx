@@ -200,6 +200,31 @@ jest.mock('./GpxMap.styles', () => ({
       {children}
     </button>
   ),
+  StyledLayerSwitcher: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="layer-switcher">{children}</div>
+  ),
+  StyledLayerButton: ({
+    children,
+    onClick,
+    $active: _active,
+    'aria-pressed': ariaPressed,
+    'data-testid': testId,
+  }: {
+    children: React.ReactNode
+    onClick: React.MouseEventHandler
+    $active: boolean
+    'aria-pressed': boolean
+    'data-testid'?: string
+  }) => (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={ariaPressed}
+      data-testid={testId}
+    >
+      {children}
+    </button>
+  ),
 }))
 
 const L = require('leaflet')
@@ -905,6 +930,33 @@ describe('GpxMap', () => {
       expect(mockBindPopup).not.toHaveBeenCalled()
     })
 
+    it('uses per-track waypointImages when provided on track def', () => {
+      const mockBindPopup = jest.fn()
+      mockEachLayer.mockImplementationOnce((cb: (l: unknown) => void) => {
+        cb({ options: { title: 'Summit' }, bindPopup: mockBindPopup })
+      })
+      render(
+        <GpxMap
+          tracks={[
+            {
+              url: GPX_URL,
+              waypointImages: { Summit: 'https://cdn.com/track-img.jpg' },
+            },
+          ]}
+        />,
+      )
+      const loadedCallback = mockOn.mock.calls.find(
+        (c: [string, () => void]) => c[0] === 'loaded',
+      )?.[1]
+      act(() => {
+        loadedCallback()
+      })
+      expect(mockBindPopup).toHaveBeenCalledWith(
+        expect.stringContaining('https://cdn.com/track-img.jpg'),
+        expect.anything(),
+      )
+    })
+
     it('does not show dash when image present but no desc', async () => {
       render(
         <GpxMap
@@ -1053,11 +1105,43 @@ describe('GpxMap', () => {
       expect(global.fetch).toHaveBeenCalledWith('https://example.com/t2.gpx')
     })
 
+    it('fetches only track with per-track showWaypoints when global prop is false', async () => {
+      render(
+        <GpxMap
+          tracks={[
+            {
+              url: 'https://example.com/t1.gpx',
+              name: 'T1',
+              showWaypoints: true,
+            },
+            { url: 'https://example.com/t2.gpx', name: 'T2' },
+          ]}
+        />,
+      )
+      await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(1))
+      expect(global.fetch).toHaveBeenCalledWith('https://example.com/t1.gpx')
+      expect(global.fetch).not.toHaveBeenCalledWith(
+        'https://example.com/t2.gpx',
+      )
+    })
+
     it('renders waypoints sections per track with named label', async () => {
       render(<GpxMap tracks={TRACKS} showWaypoints />)
       expect(
         await screen.findByText('Waypoints – Outbound (2)'),
       ).toBeInTheDocument()
+      expect(screen.getByText('Waypoints – Return (2)')).toBeInTheDocument()
+    })
+
+    it('hides waypoints table when track is toggled off', async () => {
+      render(<GpxMap tracks={TRACKS} showWaypoints />)
+      expect(
+        await screen.findByText('Waypoints – Outbound (2)'),
+      ).toBeInTheDocument()
+      fireEvent.click(screen.getByTestId('track-toggle-0'))
+      expect(
+        screen.queryByText('Waypoints – Outbound (2)'),
+      ).not.toBeInTheDocument()
       expect(screen.getByText('Waypoints – Return (2)')).toBeInTheDocument()
     })
 
@@ -1075,10 +1159,100 @@ describe('GpxMap', () => {
       )
     })
 
+    it('shows download button only for track with per-track allowDownload', () => {
+      render(
+        <GpxMap
+          tracks={[
+            {
+              url: 'https://example.com/t1.gpx',
+              name: 'T1',
+              allowDownload: true,
+            },
+            { url: 'https://example.com/t2.gpx', name: 'T2' },
+          ]}
+        />,
+      )
+      expect(screen.getByTestId('track-download-0')).toBeInTheDocument()
+      expect(screen.queryByTestId('track-download-1')).not.toBeInTheDocument()
+    })
+
+    it('shows single-track download bar when track def has allowDownload true', () => {
+      render(<GpxMap tracks={[{ url: GPX_URL, allowDownload: true }]} />)
+      expect(
+        screen.getByRole('button', { name: 'Download GPX' }),
+      ).toBeInTheDocument()
+    })
+
     it('new track added via prop rerender defaults to visible', () => {
       const { rerender } = render(<GpxMap tracks={[TRACKS[0]]} />)
       rerender(<GpxMap tracks={TRACKS} />)
       expect(screen.getByTestId('track-toggle-1')).toHaveAttribute(
+        'aria-pressed',
+        'true',
+      )
+    })
+  })
+  describe('tile provider switcher', () => {
+    it('renders layer switcher', () => {
+      render(<GpxMap url={GPX_URL} />)
+      expect(screen.getByTestId('layer-switcher')).toBeInTheDocument()
+    })
+
+    it('OSM is active by default', () => {
+      render(<GpxMap url={GPX_URL} />)
+      expect(screen.getByTestId('tile-provider-osm')).toHaveAttribute(
+        'aria-pressed',
+        'true',
+      )
+      expect(screen.getByTestId('tile-provider-topo')).toHaveAttribute(
+        'aria-pressed',
+        'false',
+      )
+      expect(screen.getByTestId('tile-provider-satellite')).toHaveAttribute(
+        'aria-pressed',
+        'false',
+      )
+    })
+
+    it('switches to topo tile layer', () => {
+      render(<GpxMap url={GPX_URL} />)
+      fireEvent.click(screen.getByTestId('tile-provider-topo'))
+      expect(screen.getByTestId('tile-layer')).toHaveAttribute(
+        'data-url',
+        'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+      )
+      expect(screen.getByTestId('tile-provider-topo')).toHaveAttribute(
+        'aria-pressed',
+        'true',
+      )
+      expect(screen.getByTestId('tile-provider-osm')).toHaveAttribute(
+        'aria-pressed',
+        'false',
+      )
+    })
+
+    it('switches to satellite tile layer', () => {
+      render(<GpxMap url={GPX_URL} />)
+      fireEvent.click(screen.getByTestId('tile-provider-satellite'))
+      expect(screen.getByTestId('tile-layer')).toHaveAttribute(
+        'data-url',
+        'https://tiles.stadiamaps.com/tiles/alidade_satellite/{z}/{x}/{y}.jpg',
+      )
+      expect(screen.getByTestId('tile-provider-satellite')).toHaveAttribute(
+        'aria-pressed',
+        'true',
+      )
+    })
+
+    it('switching back to OSM restores OSM tile layer', () => {
+      render(<GpxMap url={GPX_URL} />)
+      fireEvent.click(screen.getByTestId('tile-provider-topo'))
+      fireEvent.click(screen.getByTestId('tile-provider-osm'))
+      expect(screen.getByTestId('tile-layer')).toHaveAttribute(
+        'data-url',
+        'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      )
+      expect(screen.getByTestId('tile-provider-osm')).toHaveAttribute(
         'aria-pressed',
         'true',
       )
