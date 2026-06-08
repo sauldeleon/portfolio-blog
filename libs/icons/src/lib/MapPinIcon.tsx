@@ -7,7 +7,13 @@ export function MapPinIcon() {
         strokeWidth="1.3"
         strokeLinejoin="round"
       />
-      <circle cx="6.5" cy="5.5" r="1.4" stroke="currentColor" strokeWidth="1.2" />
+      <circle
+        cx="6.5"
+        cy="5.5"
+        r="1.4"
+        stroke="currentColor"
+        strokeWidth="1.2"
+      />
     </svg>
   )
 }

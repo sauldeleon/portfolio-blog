@@ -14,7 +14,7 @@ export const StyledBackdrop = styled.div`
   opacity: 0.7;
 `
 
-export const StyledImageInsertModal = styled(ModalOverlays)`
+export const StyledEmbedInsertModal = styled(ModalOverlays)`
   top: 0;
   left: 0;
   width: 100%;
@@ -32,7 +32,7 @@ export const StyledImageInsertModal = styled(ModalOverlays)`
     transform: translateX(-50%);
     width: 100%;
     height: auto;
-    max-width: min(700px, 90vw);
+    max-width: min(600px, 90vw);
     max-height: 90vh;
     overflow: hidden;
   }
@@ -75,53 +75,10 @@ export const StyledInput = styled.input`
   }
 `
 
-export const StyledImageSection = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem;
-  border: 1px dashed rgba(255, 255, 255, 0.15);
-  border-radius: 2px;
-  min-height: 64px;
-`
-
-export const StyledImageThumb = styled.img`
-  width: 56px;
-  height: 56px;
-  object-fit: cover;
-  border-radius: 2px;
-  flex-shrink: 0;
-`
-
-export const StyledImagePlaceholder = styled.div`
-  flex: 1;
-  font-size: 0.78rem;
-  opacity: 0.35;
-  color: ${({ theme }) => theme.colors.white};
-`
-
-export const StyledPickButton = styled(Button).attrs({
-  variant: 'ghost',
-  size: 'xs',
-})`
-  border-color: rgba(128, 128, 128, 0.35);
-  border-radius: 4px;
-  color: ${({ theme }) => theme.colors.white};
-  font-size: 0.72rem;
-  opacity: 0.75;
-  padding: 0.4rem 0.7rem;
-  white-space: nowrap;
-  margin-left: auto;
-
-  &:hover:not(:disabled) {
-    opacity: 1;
-    border-color: ${({ theme }) => theme.colors.green};
-  }
-`
-
 export const StyledSegmentRow = styled.div`
   display: flex;
   gap: 0.35rem;
+  flex-wrap: wrap;
 `
 
 export const StyledSegmentButton = styled(Button).attrs({
@@ -146,27 +103,6 @@ export const StyledSegmentButton = styled(Button).attrs({
   }
 `
 
-export const StyledCheckboxRow = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.8rem;
-  opacity: 0.85;
-  color: ${({ theme }) => theme.colors.white};
-
-  label {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    cursor: pointer;
-  }
-
-  input[type='checkbox'] {
-    cursor: pointer;
-    accent-color: ${({ theme }) => theme.colors.green};
-  }
-`
-
 export const StyledPreview = styled.pre`
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -174,24 +110,12 @@ export const StyledPreview = styled.pre`
   font-size: 0.72rem;
   line-height: 1.5;
   margin: 0;
-  max-height: 4rem;
+  max-height: 5rem;
   opacity: 0.7;
   overflow: auto;
   padding: 0.6rem 0.75rem;
   white-space: pre-wrap;
   word-break: break-all;
-`
-
-export const StyledPhotoMetaInputRow = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 0.5rem;
-`
-
-export const StyledPhotoMetaField = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
 `
 
 export const StyledButtons = styled.div`

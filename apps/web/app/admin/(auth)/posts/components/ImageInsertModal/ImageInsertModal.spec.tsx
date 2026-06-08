@@ -50,6 +50,7 @@ describe('ImageInsertModal', () => {
     expect(screen.getByTestId('pick-image-button')).toBeInTheDocument()
     expect(screen.getByTestId('alt-text-input')).toBeInTheDocument()
     expect(screen.getByTestId('caption-input')).toBeInTheDocument()
+    expect(screen.getByTestId('caption-pos-checkbox')).toBeInTheDocument()
     expect(screen.getByTestId('size-full')).toBeInTheDocument()
     expect(screen.getByTestId('size-small')).toBeInTheDocument()
     expect(screen.getByTestId('size-medium')).toBeInTheDocument()
@@ -57,6 +58,7 @@ describe('ImageInsertModal', () => {
     expect(screen.getByTestId('align-left')).toBeInTheDocument()
     expect(screen.getByTestId('align-right')).toBeInTheDocument()
     expect(screen.getByTestId('expand-checkbox')).toBeInTheDocument()
+    expect(screen.getByTestId('photo-meta-checkbox')).toBeInTheDocument()
     expect(screen.getByTestId('image-modal-cancel')).toBeInTheDocument()
     expect(screen.getByTestId('image-modal-insert')).toBeInTheDocument()
   })
@@ -251,7 +253,7 @@ describe('ImageInsertModal', () => {
     )
   })
 
-  it('shows caption-pos checkbox when caption is filled', () => {
+  it('always shows caption-pos checkbox', () => {
     renderApp(
       <ImageInsertModal
         isOpen
@@ -261,11 +263,8 @@ describe('ImageInsertModal', () => {
         onRequestImagePick={jest.fn()}
       />,
     )
-    expect(screen.queryByTestId('caption-pos-checkbox')).not.toBeInTheDocument()
-    fireEvent.change(screen.getByTestId('caption-input'), {
-      target: { value: 'My caption' },
-    })
     expect(screen.getByTestId('caption-pos-checkbox')).toBeInTheDocument()
+    expect(screen.getByTestId('caption-pos-checkbox')).not.toBeChecked()
   })
 
   it('includes caption-pos=top when checkbox checked', () => {
@@ -493,6 +492,195 @@ describe('ImageInsertModal', () => {
     )
   })
 
+  it('shows photo-meta-checkbox', () => {
+    renderApp(
+      <ImageInsertModal
+        isOpen
+        onInsert={jest.fn()}
+        onCancel={jest.fn()}
+        pickerOpen={false}
+        onRequestImagePick={jest.fn()}
+      />,
+    )
+    expect(screen.getByTestId('photo-meta-checkbox')).toBeInTheDocument()
+    expect(screen.getByTestId('photo-meta-checkbox')).not.toBeChecked()
+  })
+
+  it('photo meta inputs hidden when checkbox unchecked', () => {
+    renderApp(
+      <ImageInsertModal
+        isOpen
+        onInsert={jest.fn()}
+        onCancel={jest.fn()}
+        pickerOpen={false}
+        onRequestImagePick={jest.fn()}
+      />,
+    )
+    expect(screen.queryByTestId('photo-iso-input')).not.toBeInTheDocument()
+    expect(screen.queryByTestId('photo-aperture-input')).not.toBeInTheDocument()
+    expect(screen.queryByTestId('photo-exposure-input')).not.toBeInTheDocument()
+  })
+
+  it('shows photo meta inputs when checkbox checked', () => {
+    renderApp(
+      <ImageInsertModal
+        isOpen
+        onInsert={jest.fn()}
+        onCancel={jest.fn()}
+        pickerOpen={false}
+        onRequestImagePick={jest.fn()}
+      />,
+    )
+    fireEvent.click(screen.getByTestId('photo-meta-checkbox'))
+    expect(screen.getByTestId('photo-iso-input')).toBeInTheDocument()
+    expect(screen.getByTestId('photo-aperture-input')).toBeInTheDocument()
+    expect(screen.getByTestId('photo-exposure-input')).toBeInTheDocument()
+  })
+
+  it('includes photo-iso param when set', () => {
+    const onInsert = jest.fn()
+    const onRequestImagePick = jest.fn()
+    renderApp(
+      <ImageInsertModal
+        isOpen
+        onInsert={onInsert}
+        onCancel={jest.fn()}
+        pickerOpen={false}
+        onRequestImagePick={onRequestImagePick}
+      />,
+    )
+    fireEvent.click(screen.getByTestId('pick-image-button'))
+    pickImage(onRequestImagePick)
+    fireEvent.click(screen.getByTestId('photo-meta-checkbox'))
+    fireEvent.change(screen.getByTestId('photo-iso-input'), {
+      target: { value: '400' },
+    })
+    fireEvent.click(screen.getByTestId('image-modal-insert'))
+    expect(onInsert).toHaveBeenCalledWith(
+      '\n\n![photo-iso=400](https://cdn.com/photo.jpg)\n\n',
+    )
+  })
+
+  it('includes photo-aperture param when set', () => {
+    const onInsert = jest.fn()
+    const onRequestImagePick = jest.fn()
+    renderApp(
+      <ImageInsertModal
+        isOpen
+        onInsert={onInsert}
+        onCancel={jest.fn()}
+        pickerOpen={false}
+        onRequestImagePick={onRequestImagePick}
+      />,
+    )
+    fireEvent.click(screen.getByTestId('pick-image-button'))
+    pickImage(onRequestImagePick)
+    fireEvent.click(screen.getByTestId('photo-meta-checkbox'))
+    fireEvent.change(screen.getByTestId('photo-aperture-input'), {
+      target: { value: 'f/2.8' },
+    })
+    fireEvent.click(screen.getByTestId('image-modal-insert'))
+    expect(onInsert).toHaveBeenCalledWith(
+      '\n\n![photo-aperture=f/2.8](https://cdn.com/photo.jpg)\n\n',
+    )
+  })
+
+  it('includes photo-exposure param when set', () => {
+    const onInsert = jest.fn()
+    const onRequestImagePick = jest.fn()
+    renderApp(
+      <ImageInsertModal
+        isOpen
+        onInsert={onInsert}
+        onCancel={jest.fn()}
+        pickerOpen={false}
+        onRequestImagePick={onRequestImagePick}
+      />,
+    )
+    fireEvent.click(screen.getByTestId('pick-image-button'))
+    pickImage(onRequestImagePick)
+    fireEvent.click(screen.getByTestId('photo-meta-checkbox'))
+    fireEvent.change(screen.getByTestId('photo-exposure-input'), {
+      target: { value: '1/250' },
+    })
+    fireEvent.click(screen.getByTestId('image-modal-insert'))
+    expect(onInsert).toHaveBeenCalledWith(
+      '\n\n![photo-exposure=1/250](https://cdn.com/photo.jpg)\n\n',
+    )
+  })
+
+  it('does not include photo meta params when checkbox unchecked', () => {
+    const onInsert = jest.fn()
+    const onRequestImagePick = jest.fn()
+    renderApp(
+      <ImageInsertModal
+        isOpen
+        onInsert={onInsert}
+        onCancel={jest.fn()}
+        pickerOpen={false}
+        onRequestImagePick={onRequestImagePick}
+      />,
+    )
+    fireEvent.click(screen.getByTestId('pick-image-button'))
+    pickImage(onRequestImagePick)
+    fireEvent.click(screen.getByTestId('image-modal-insert'))
+    const call = (onInsert.mock.calls[0] as [string])[0]
+    expect(call).not.toContain('photo-')
+  })
+
+  it('includes all photo meta params combined', () => {
+    const onInsert = jest.fn()
+    const onRequestImagePick = jest.fn()
+    renderApp(
+      <ImageInsertModal
+        isOpen
+        onInsert={onInsert}
+        onCancel={jest.fn()}
+        pickerOpen={false}
+        onRequestImagePick={onRequestImagePick}
+      />,
+    )
+    fireEvent.click(screen.getByTestId('pick-image-button'))
+    pickImage(onRequestImagePick)
+    fireEvent.click(screen.getByTestId('photo-meta-checkbox'))
+    fireEvent.change(screen.getByTestId('photo-iso-input'), {
+      target: { value: '800' },
+    })
+    fireEvent.change(screen.getByTestId('photo-aperture-input'), {
+      target: { value: 'f/4' },
+    })
+    fireEvent.change(screen.getByTestId('photo-exposure-input'), {
+      target: { value: '1/500' },
+    })
+    fireEvent.click(screen.getByTestId('image-modal-insert'))
+    expect(onInsert).toHaveBeenCalledWith(
+      '\n\n![photo-iso=800&photo-aperture=f/4&photo-exposure=1/500](https://cdn.com/photo.jpg)\n\n',
+    )
+  })
+
+  it('resets photo meta state after insert', () => {
+    const onInsert = jest.fn()
+    const onRequestImagePick = jest.fn()
+    renderApp(
+      <ImageInsertModal
+        isOpen
+        onInsert={onInsert}
+        onCancel={jest.fn()}
+        pickerOpen={false}
+        onRequestImagePick={onRequestImagePick}
+      />,
+    )
+    fireEvent.click(screen.getByTestId('pick-image-button'))
+    pickImage(onRequestImagePick)
+    fireEvent.click(screen.getByTestId('photo-meta-checkbox'))
+    fireEvent.change(screen.getByTestId('photo-iso-input'), {
+      target: { value: '400' },
+    })
+    fireEvent.click(screen.getByTestId('image-modal-insert'))
+    expect(screen.queryByTestId('photo-iso-input')).not.toBeInTheDocument()
+    expect(screen.getByTestId('photo-meta-checkbox')).not.toBeChecked()
+  })
+
   it('resets state after insert', () => {
     const onInsert = jest.fn()
     const onRequestImagePick = jest.fn()
@@ -607,6 +795,78 @@ describe('buildImageMarkdown', () => {
       }),
     ).toBe(
       '\n\n![size=small&align=right&caption=My photo&caption-pos=top&alt=A forest path&expand=true](https://cdn.com/img.jpg)\n\n',
+    )
+  })
+
+  it('adds photo-iso param', () => {
+    expect(buildImageMarkdown({ ...base, photoMeta: { iso: '400' } })).toBe(
+      '\n\n![photo-iso=400](https://cdn.com/img.jpg)\n\n',
+    )
+  })
+
+  it('adds photo-aperture param', () => {
+    expect(
+      buildImageMarkdown({ ...base, photoMeta: { aperture: 'f/2.8' } }),
+    ).toBe('\n\n![photo-aperture=f/2.8](https://cdn.com/img.jpg)\n\n')
+  })
+
+  it('adds photo-exposure param', () => {
+    expect(
+      buildImageMarkdown({ ...base, photoMeta: { exposure: '1/250' } }),
+    ).toBe('\n\n![photo-exposure=1/250](https://cdn.com/img.jpg)\n\n')
+  })
+
+  it('adds all photo meta params', () => {
+    expect(
+      buildImageMarkdown({
+        ...base,
+        photoMeta: { iso: '800', aperture: 'f/4', exposure: '1/500' },
+      }),
+    ).toBe(
+      '\n\n![photo-iso=800&photo-aperture=f/4&photo-exposure=1/500](https://cdn.com/img.jpg)\n\n',
+    )
+  })
+
+  it('trims whitespace from photo meta values', () => {
+    expect(
+      buildImageMarkdown({
+        ...base,
+        photoMeta: { iso: '  100  ', aperture: '  f/1.8  ' },
+      }),
+    ).toBe(
+      '\n\n![photo-iso=100&photo-aperture=f/1.8](https://cdn.com/img.jpg)\n\n',
+    )
+  })
+
+  it('skips empty photo meta values', () => {
+    expect(
+      buildImageMarkdown({
+        ...base,
+        photoMeta: { iso: '', aperture: 'f/2.8', exposure: '' },
+      }),
+    ).toBe('\n\n![photo-aperture=f/2.8](https://cdn.com/img.jpg)\n\n')
+  })
+
+  it('omits photo meta when not provided', () => {
+    expect(buildImageMarkdown(base)).toBe(
+      '\n\n![](https://cdn.com/img.jpg)\n\n',
+    )
+  })
+
+  it('combines photo meta after other params', () => {
+    expect(
+      buildImageMarkdown({
+        url: 'https://cdn.com/img.jpg',
+        altText: 'shot',
+        caption: '',
+        captionPos: 'bottom',
+        size: 'full',
+        align: 'none',
+        expand: false,
+        photoMeta: { iso: '200', aperture: 'f/5.6', exposure: '1/1000' },
+      }),
+    ).toBe(
+      '\n\n![alt=shot&photo-iso=200&photo-aperture=f/5.6&photo-exposure=1/1000](https://cdn.com/img.jpg)\n\n',
     )
   })
 })

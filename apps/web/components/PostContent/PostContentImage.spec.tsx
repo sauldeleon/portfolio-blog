@@ -2,6 +2,19 @@ import { fireEvent, render, screen } from '@testing-library/react'
 
 import { PostContentImage } from './PostContentImage'
 
+jest.mock('@web/i18n/client', () => ({
+  useClientTranslation: () => ({
+    t: (key: string) => {
+      const map: Record<string, string> = {
+        'photoMeta.iso': 'ISO',
+        'photoMeta.aperture': 'Aperture',
+        'photoMeta.exposure': 'Exposure',
+      }
+      return map[key] ?? key
+    },
+  }),
+}))
+
 jest.mock('next/image', () => ({
   __esModule: true,
   default: ({ src, alt }: { src: string; alt: string }) => (
@@ -70,6 +83,15 @@ jest.mock('./PostContent.styles', () => ({
     <a data-testid="post-modal-download" href={href}>
       {children}
     </a>
+  ),
+  StyledPhotoMeta: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="post-photo-meta">{children}</div>
+  ),
+  StyledPhotoMetaItem: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="post-photo-meta-item">{children}</div>
+  ),
+  StyledPhotoMetaLabel: ({ children }: { children: React.ReactNode }) => (
+    <span data-testid="post-photo-meta-label">{children}</span>
   ),
 }))
 
@@ -195,5 +217,77 @@ describe('PostContentImage', () => {
     render(<PostContentImage src="/img.jpg" alt="size=medium&alt=desc" />)
     expect(screen.getByAltText('desc')).toBeInTheDocument()
     expect(screen.getByTestId('post-image-wrapper')).toBeInTheDocument()
+  })
+
+  it('does not render photo meta strip when no photo meta params', () => {
+    render(<PostContentImage src="/img.jpg" alt="alt=desc" />)
+    expect(screen.queryByTestId('post-photo-meta')).not.toBeInTheDocument()
+  })
+
+  it('renders photo meta strip when photo-iso is present', () => {
+    render(<PostContentImage src="/img.jpg" alt="photo-iso=400" />)
+    expect(screen.getByTestId('post-photo-meta')).toBeInTheDocument()
+    expect(screen.getByText('400')).toBeInTheDocument()
+  })
+
+  it('renders photo meta strip when photo-aperture is present', () => {
+    render(<PostContentImage src="/img.jpg" alt="photo-aperture=f/2.8" />)
+    expect(screen.getByTestId('post-photo-meta')).toBeInTheDocument()
+    expect(screen.getByText('f/2.8')).toBeInTheDocument()
+  })
+
+  it('renders photo meta strip when photo-exposure is present', () => {
+    render(<PostContentImage src="/img.jpg" alt="photo-exposure=1/250" />)
+    expect(screen.getByTestId('post-photo-meta')).toBeInTheDocument()
+    expect(screen.getByText('1/250')).toBeInTheDocument()
+  })
+
+  it('renders all photo meta items when all params provided', () => {
+    render(
+      <PostContentImage
+        src="/img.jpg"
+        alt="photo-iso=800&photo-aperture=f/4&photo-exposure=1/500"
+      />,
+    )
+    expect(screen.getByTestId('post-photo-meta')).toBeInTheDocument()
+    expect(screen.getByText('800')).toBeInTheDocument()
+    expect(screen.getByText('f/4')).toBeInTheDocument()
+    expect(screen.getByText('1/500')).toBeInTheDocument()
+  })
+
+  it('renders photo meta labels', () => {
+    render(
+      <PostContentImage
+        src="/img.jpg"
+        alt="photo-iso=100&photo-aperture=f/1.8&photo-exposure=1/125"
+      />,
+    )
+    const labels = screen.getAllByTestId('post-photo-meta-label')
+    expect(labels).toHaveLength(3)
+    expect(labels[0]).toHaveTextContent('ISO')
+    expect(labels[1]).toHaveTextContent('Aperture')
+    expect(labels[2]).toHaveTextContent('Exposure')
+  })
+
+  it('renders photo meta strip above caption when both present', () => {
+    render(
+      <PostContentImage
+        src="/img.jpg"
+        alt="photo-iso=200&caption=My shot&alt=desc"
+      />,
+    )
+    expect(screen.getByTestId('post-photo-meta')).toBeInTheDocument()
+    expect(screen.getByTestId('post-image-caption')).toBeInTheDocument()
+  })
+
+  it('renders only present photo meta items', () => {
+    render(
+      <PostContentImage
+        src="/img.jpg"
+        alt="photo-iso=100&photo-aperture=f/2"
+      />,
+    )
+    const items = screen.getAllByTestId('post-photo-meta-item')
+    expect(items).toHaveLength(2)
   })
 })
