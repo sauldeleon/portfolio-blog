@@ -126,7 +126,7 @@ const TILE_PROVIDERS = [
   {
     id: 'satellite',
     label: 'Satellite',
-    maxZoom: 20,
+    maxZoom: 19,
     url: 'https://tiles.stadiamaps.com/tiles/alidade_satellite/{z}/{x}/{y}.jpg',
     attribution:
       '&copy; CNES, Distribution Airbus DS, © Airbus DS, © PlanetObserver (Contains Copernicus Data) | &copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -159,6 +159,14 @@ function downloadGpx(url: string) {
       document.body.removeChild(a)
       URL.revokeObjectURL(objectUrl)
     })
+}
+
+function TileProviderMaxZoom({ maxZoom }: { maxZoom: number }) {
+  const map = useMap()
+  useEffect(() => {
+    map.setMaxZoom(maxZoom)
+  }, [maxZoom, map])
+  return null
 }
 
 function WaypointFocuser({ waypoint }: { waypoint: Waypoint | null }) {
@@ -333,6 +341,9 @@ export function GpxMap({
           attributionControl={false}
         >
           <AttributionControl prefix={false} />
+          <TileProviderMaxZoom
+            maxZoom={TILE_PROVIDERS[tileProviderIndex].maxZoom}
+          />
           <TileLayer
             attribution={TILE_PROVIDERS[tileProviderIndex].attribution}
             maxZoom={TILE_PROVIDERS[tileProviderIndex].maxZoom}

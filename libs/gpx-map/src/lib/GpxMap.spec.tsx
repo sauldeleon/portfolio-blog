@@ -260,11 +260,13 @@ describe('GpxMap', () => {
   const mockFitBounds = jest.fn()
   const mockRemoveLayer = jest.fn()
   const mockFlyTo = jest.fn()
+  const mockSetMaxZoom = jest.fn()
 
   beforeEach(() => {
     mockFitBounds.mockReset()
     mockRemoveLayer.mockReset()
     mockFlyTo.mockReset()
+    mockSetMaxZoom.mockReset()
     MockGPX.mockClear()
     mockOn.mockClear()
     mockAddTo.mockClear()
@@ -276,6 +278,7 @@ describe('GpxMap', () => {
       fitBounds: mockFitBounds,
       removeLayer: mockRemoveLayer,
       flyTo: mockFlyTo,
+      setMaxZoom: mockSetMaxZoom,
     })
     global.fetch = jest.fn().mockResolvedValue({
       text: jest.fn().mockResolvedValue(GPX_XML_WITH_WAYPOINTS),
@@ -1256,6 +1259,16 @@ describe('GpxMap', () => {
         'aria-pressed',
         'true',
       )
+    })
+
+    it('updates map maxZoom when switching tile providers', () => {
+      render(<GpxMap url={GPX_URL} />)
+      fireEvent.click(screen.getByTestId('tile-provider-topo'))
+      expect(mockSetMaxZoom).toHaveBeenCalledWith(17)
+      fireEvent.click(screen.getByTestId('tile-provider-satellite'))
+      expect(mockSetMaxZoom).toHaveBeenCalledWith(19)
+      fireEvent.click(screen.getByTestId('tile-provider-osm'))
+      expect(mockSetMaxZoom).toHaveBeenCalledWith(19)
     })
   })
 })
