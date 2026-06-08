@@ -27,13 +27,15 @@ jest.mock('./PostContent.styles', () => ({
 jest.mock('@sdlgr/gpx-map', () => ({
   GpxMap: ({
     url,
+    tracks,
     showWaypoints,
     allowDownload,
     waypointImages,
     downloadLabel,
     labels,
   }: {
-    url: string
+    url?: string
+    tracks?: Array<{ url: string; name?: string; color?: string }>
     showWaypoints?: boolean
     allowDownload?: boolean
     waypointImages?: Record<string, string>
@@ -42,7 +44,8 @@ jest.mock('@sdlgr/gpx-map', () => ({
   }) => (
     <div
       data-testid="gpx-map"
-      data-url={url}
+      data-url={url ?? ''}
+      data-tracks={tracks ? JSON.stringify(tracks) : ''}
       data-show-waypoints={String(showWaypoints ?? false)}
       data-allow-download={String(allowDownload ?? false)}
       data-waypoint-images={
@@ -102,7 +105,7 @@ describe('PostContentEmbed', () => {
     expect(iframe).toHaveAttribute('allowFullScreen')
   })
 
-  it('renders GpxMap when type is gpx', async () => {
+  it('renders GpxMap when type is gpx with url', async () => {
     render(<PostContentEmbed type="gpx" url="https://example.com/track.gpx" />)
     const gpxMap = await screen.findByTestId('gpx-map')
     expect(gpxMap).toBeInTheDocument()
@@ -183,5 +186,39 @@ describe('PostContentEmbed', () => {
     render(<PostContentEmbed type="gpx" url="https://example.com/track.gpx" />)
     const gpxMap = await screen.findByTestId('gpx-map')
     expect(gpxMap).toHaveAttribute('data-fly-to-label', 'View on map')
+  })
+
+  it('renders GpxMap with tracks when tracks json string provided', async () => {
+    const tracks = [
+      { url: 'https://cdn.com/t1.gpx', name: 'Outbound', color: '#e63946' },
+      { url: 'https://cdn.com/t2.gpx', name: 'Return', color: '#3a86ff' },
+    ]
+    render(<PostContentEmbed type="gpx" tracks={JSON.stringify(tracks)} />)
+    const gpxMap = await screen.findByTestId('gpx-map')
+    expect(gpxMap).toHaveAttribute('data-tracks', JSON.stringify(tracks))
+    expect(gpxMap).toHaveAttribute('data-url', '')
+  })
+
+  it('returns null for gpx type when neither url nor tracks provided', () => {
+    const { container } = render(<PostContentEmbed type="gpx" />)
+    expect(container).toBeEmptyDOMElement()
+  })
+
+  it('passes tracks and waypointImages together', async () => {
+    const tracks = [{ url: 'https://cdn.com/t1.gpx' }]
+    const images = { Summit: 'https://cdn.com/img.jpg' }
+    render(
+      <PostContentEmbed
+        type="gpx"
+        tracks={JSON.stringify(tracks)}
+        waypointImages={JSON.stringify(images)}
+      />,
+    )
+    const gpxMap = await screen.findByTestId('gpx-map')
+    expect(gpxMap).toHaveAttribute('data-tracks', JSON.stringify(tracks))
+    expect(gpxMap).toHaveAttribute(
+      'data-waypoint-images',
+      JSON.stringify(images),
+    )
   })
 })

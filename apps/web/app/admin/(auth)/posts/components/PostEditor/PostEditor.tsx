@@ -27,6 +27,7 @@ import { CategoryIconRenderer } from '@web/utils/categoryIcons'
 import { computeReadingTime } from '@web/utils/computeReadingTime'
 import { slugify } from '@web/utils/slugify'
 
+import { EmbedInsertModal } from '../EmbedInsertModal'
 import { GpxMapModal } from '../GpxMapModal'
 import { ImageInsertModal } from '../ImageInsertModal'
 import { ImagePicker } from '../ImagePicker'
@@ -47,7 +48,6 @@ import {
   StyledImagePickerButton,
   StyledLocaleTab,
   StyledLocaleTabs,
-  StyledMarkdownHint,
   StyledMetaGrid,
   StyledMetadataSection,
   StyledMobileContent,
@@ -234,6 +234,7 @@ export function PostEditor({
     ((image: CloudinaryImage) => void) | null
   >(null)
   const [isImageInsertModalOpen, setIsImageInsertModalOpen] = useState(false)
+  const [isEmbedInsertModalOpen, setIsEmbedInsertModalOpen] = useState(false)
   const [isGpxModalOpen, setIsGpxModalOpen] = useState(false)
   const [previewTab, setPreviewTab] = useState<
     'post' | 'post-mobile' | 'hero' | 'card'
@@ -724,6 +725,13 @@ export function PostEditor({
               </StyledImagePickerButton>
               <StyledImagePickerButton
                 type="button"
+                onClick={() => setIsEmbedInsertModalOpen(true)}
+                data-testid="open-embed-modal-button"
+              >
+                Insert Embed
+              </StyledImagePickerButton>
+              <StyledImagePickerButton
+                type="button"
                 onClick={() => setIsGpxModalOpen(true)}
                 data-testid="open-gpx-modal-button"
               >
@@ -740,57 +748,6 @@ export function PostEditor({
               data-testid="content-input"
               ref={textareaRef}
             />
-            <StyledMarkdownHint>
-              <summary>Image syntax</summary>
-              <pre>{`![params](url)  — all params optional
-
-size          small | medium           (default: full width)
-align         left | right             (default: none)
-caption       text                     (default: none)
-caption-pos   top | bottom             (default: bottom)
-alt           accessible description   (default: "")
-expand        true                     (default: false — click to enlarge)
-
-Example:
-![size=small&align=right&caption=My photo&alt=A forest path&expand=true](https://...)`}</pre>
-            </StyledMarkdownHint>
-            <StyledMarkdownHint>
-              <summary>Embed syntax</summary>
-              <pre>{`Use a fenced code block with the embed type as language:
-
-\`\`\`youtube
-https://www.youtube.com/embed/<video-id>
-\`\`\`
-
-\`\`\`maps
-https://www.google.com/maps/embed?pb=...
-\`\`\`
-
-\`\`\`openstreetmap
-https://www.openstreetmap.org/export/embed.html?...
-\`\`\`
-
-\`\`\`wikiloc
-https://www.wikiloc.com/wikiloc/embedv2.do?id=<trail-id>&elevation=on&images=on&maptype=H
-\`\`\`
-
-\`\`\`gpx
-https://your-cdn.com/routes/track.gpx
-\`\`\`
-
-\`\`\`gpx showWaypoints
-https://your-cdn.com/routes/track.gpx
-\`\`\`
-
-\`\`\`gpx showWaypoints allowDownload
-https://your-cdn.com/routes/track.gpx
-\`\`\`
-
-showWaypoints — collapsible waypoints table below the map.
-allowDownload — download GPX button below the map.
-
-Supported types: youtube · maps · openstreetmap · wikiloc · gpx`}</pre>
-            </StyledMarkdownHint>
           </FieldGroup>
         </StyledEditorPane>
 
@@ -925,6 +882,14 @@ Supported types: youtube · maps · openstreetmap · wikiloc · gpx`}</pre>
           contentPickerCallbackRef.current = onPicked
           setIsContentPickerOpen(true)
         }}
+      />
+      <EmbedInsertModal
+        isOpen={isEmbedInsertModalOpen}
+        onInsert={(markdown) => {
+          insertAtCursor(markdown)
+          setIsEmbedInsertModalOpen(false)
+        }}
+        onCancel={() => setIsEmbedInsertModalOpen(false)}
       />
       <GpxMapModal
         isOpen={isGpxModalOpen}

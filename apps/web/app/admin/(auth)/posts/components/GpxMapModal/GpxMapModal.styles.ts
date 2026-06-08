@@ -218,6 +218,91 @@ export const StyledRemoveButton = styled(Button).attrs({
   }
 `
 
+export const StyledTrackList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+`
+
+export const StyledTrackRow = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 0.75rem;
+`
+
+export const StyledTrackInputsRow = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 0.5rem;
+  align-items: center;
+`
+
+export const StyledColorChips = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+`
+
+export const StyledColorChip = styled.button<{
+  $color: string
+  $selected: boolean
+}>`
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: ${({ $color }) => $color};
+  border: 2px solid
+    ${({ $selected }) =>
+      $selected ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.15)'};
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition: border-color 0.1s;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+`
+
+export const StyledAddTrackButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'xs',
+})`
+  align-self: flex-start;
+  border-color: rgba(128, 128, 128, 0.3);
+  border-radius: 4px;
+  color: ${({ theme }) => theme.colors.white};
+  font-size: 0.72rem;
+  opacity: 0.65;
+  padding: 0.3rem 0.65rem;
+
+  &:hover:not(:disabled) {
+    opacity: 1;
+    border-color: rgba(128, 128, 128, 0.6);
+  }
+`
+
+export const StyledRemoveTrackButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'xs',
+})`
+  border: none;
+  color: ${({ theme }) => theme.colors.white};
+  font-size: 0.9rem;
+  line-height: 1;
+  opacity: 0.35;
+  padding: 2px 5px;
+  align-self: flex-start;
+
+  &:hover:not(:disabled) {
+    border: none;
+    opacity: 0.8;
+  }
+`
+
 export const StyledButtons = styled.div`
   display: flex;
   justify-content: flex-end;

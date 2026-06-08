@@ -3,7 +3,7 @@
 import L from 'leaflet'
 import 'leaflet-gpx'
 import 'leaflet/dist/leaflet.css'
-import { Fragment, useEffect, useRef, useState } from 'react'
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import {
   AttributionControl,
   CircleMarker,
@@ -29,13 +29,16 @@ import {
   StyledMapContainer,
   StyledRowChevron,
   StyledTableWrapper,
+  StyledTrackChip,
+  StyledTrackDot,
+  StyledTrackDownloadButton,
+  StyledTrackStrip,
+  StyledTrackToggle,
   StyledWaypointImageCard,
   StyledWaypointsDetails,
 } from './GpxMap.styles'
 
 // Fix broken L.Icon.Default paths (webpack/Next.js bundler mangles asset URLs).
-// Runs once at module load. Any marker that falls back to the default icon
-// will use the waypoint SVG instead of a broken-image placeholder.
 delete (L.Icon.Default.prototype as unknown as Record<string, unknown>)[
   '_getIconUrl'
 ]
@@ -72,6 +75,12 @@ export function parseWaypointsFromXml(text: string): Waypoint[] {
   })
 }
 
+export interface GpxTrackDef {
+  url: string
+  name?: string
+  color?: string
+}
+
 export interface GpxMapLabels {
   waypoints?: string
   colName?: string
@@ -81,12 +90,26 @@ export interface GpxMapLabels {
 }
 
 export interface GpxMapProps {
-  url: string
+  url?: string
+  tracks?: GpxTrackDef[]
   showWaypoints?: boolean
   allowDownload?: boolean
   waypointImages?: Record<string, string>
   downloadLabel?: string
   labels?: GpxMapLabels
+}
+
+const TRACK_COLORS = [
+  '#e63946',
+  '#3a86ff',
+  '#06d6a0',
+  '#fb8500',
+  '#8338ec',
+  '#ff006e',
+]
+
+function resolveTrackColor(track: GpxTrackDef, index: number): string {
+  return track.color || TRACK_COLORS[index % TRACK_COLORS.length]
 }
 
 function downloadGpx(url: string) {
@@ -180,21 +203,29 @@ function WaypointFocuser({ waypoint }: { waypoint: Waypoint | null }) {
   return null
 }
 
-function GpxTrack({
+function GpxTrackLayer({
   url,
+  color,
+  visible,
   waypointImages,
 }: {
   url: string
+  color: string
+  visible: boolean
   waypointImages?: Record<string, string>
 }) {
   const map = useMap()
   const layerRef = useRef<L.GPX | null>(null)
+  const waypointImagesRef = useRef(waypointImages)
+  useEffect(() => {
+    waypointImagesRef.current = waypointImages
+  }, [waypointImages])
 
   useEffect(() => {
     const layer = new L.GPX(url, {
       async: true,
       polyline_options: {
-        color: '#e63946',
+        color,
         weight: 3,
         opacity: 0.85,
       },
@@ -213,13 +244,14 @@ function GpxTrack({
 
     layer.on('loaded', () => {
       map.fitBounds(layer.getBounds())
-      if (waypointImages) {
+      const imgs = waypointImagesRef.current
+      if (imgs) {
         layer.eachLayer((l) => {
           const opts = (l as L.Marker).options as L.MarkerOptions & {
             title?: string
           }
           const name = opts?.title
-          const imgUrl = name ? waypointImages[name] : undefined
+          const imgUrl = name ? imgs[name] : undefined
           if (imgUrl) {
             ;(l as L.Marker).bindPopup(
               `<img src="${imgUrl}" style="width:180px;max-height:160px;object-fit:contain;display:block;" alt="${name}" />`,
@@ -230,20 +262,31 @@ function GpxTrack({
       }
     })
 
-    layer.addTo(map)
     layerRef.current = layer
 
     return () => {
       map.removeLayer(layer)
       layerRef.current = null
     }
-  }, [url, map])
+  }, [url, color, map])
+
+  useEffect(() => {
+    const layer = layerRef.current
+    /* istanbul ignore next */
+    if (!layer) return
+    if (visible) {
+      layer.addTo(map)
+    } else {
+      map.removeLayer(layer)
+    }
+  }, [url, visible, map])
 
   return null
 }
 
 export function GpxMap({
   url,
+  tracks,
   showWaypoints,
   allowDownload,
   waypointImages,
@@ -257,18 +300,48 @@ export function GpxMap({
     colElevation = 'Elevation',
     flyTo = 'View on map',
   } = labels ?? {}
-  const [waypoints, setWaypoints] = useState<Waypoint[]>([])
+
+  const resolvedTracks = useMemo<GpxTrackDef[]>(
+    () => tracks ?? (url ? [{ url }] : []),
+     
+    [tracks, url],
+  )
+
+  const isMultiTrack = resolvedTracks.length > 1
+
+  const [visibleTracks, setVisibleTracks] = useState<Record<number, boolean>>(
+    () => Object.fromEntries(resolvedTracks.map((_, i) => [i, true])),
+  )
+  const [perTrackWaypoints, setPerTrackWaypoints] = useState<
+    Record<number, Waypoint[]>
+  >({})
   const [focusedWaypoint, setFocusedWaypoint] = useState<Waypoint | null>(null)
-  const [expandedIndex, setExpandedIndex] = useState<number | null>(null)
+  const [expandedByIndex, setExpandedByIndex] = useState<
+    Record<number, number | null>
+  >({})
   const mapContainerRef = useRef<HTMLDivElement>(null)
+
+  const trackUrlsKey = resolvedTracks.map((t) => t.url).join(',')
 
   useEffect(() => {
     if (!showWaypoints) return
-    fetch(url)
-      .then((r) => r.text())
-      .then((text) => setWaypoints(parseWaypointsFromXml(text)))
-      .catch(() => setWaypoints([]))
-  }, [url, showWaypoints])
+    resolvedTracks.forEach((track, i) => {
+      fetch(track.url)
+        .then((r) => r.text())
+        .then((text) =>
+          setPerTrackWaypoints((prev) => ({
+            ...prev,
+            [i]: parseWaypointsFromXml(text),
+          })),
+        )
+        .catch(() => setPerTrackWaypoints((prev) => ({ ...prev, [i]: [] })))
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [trackUrlsKey, showWaypoints])
+
+  function toggleTrack(index: number) {
+    setVisibleTracks((prev) => ({ ...prev, [index]: !prev[index] }))
+  }
 
   function flyToWaypoint(wpt: Waypoint) {
     setFocusedWaypoint(wpt)
@@ -293,7 +366,15 @@ export function GpxMap({
             attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <GpxTrack url={url} waypointImages={waypointImages} />
+          {resolvedTracks.map((track, i) => (
+            <GpxTrackLayer
+              key={i}
+              url={track.url}
+              color={resolveTrackColor(track, i)}
+              visible={visibleTracks[i] ?? true}
+              waypointImages={waypointImages}
+            />
+          ))}
           <WaypointFocuser waypoint={focusedWaypoint} />
           {focusedWaypoint && (
             <CircleMarker
@@ -310,11 +391,11 @@ export function GpxMap({
         </MapContainer>
       </StyledMapContainer>
 
-      {allowDownload && (
+      {!isMultiTrack && allowDownload && (
         <StyledDownloadBar>
           <StyledDownloadButton
             aria-label={downloadLabel}
-            onClick={() => downloadGpx(url)}
+            onClick={() => downloadGpx(resolvedTracks[0]?.url ?? '')}
           >
             <DownloadIcon />
             {downloadLabel}
@@ -322,85 +403,132 @@ export function GpxMap({
         </StyledDownloadBar>
       )}
 
-      {showWaypoints && waypoints.length > 0 && (
-        <StyledWaypointsDetails>
-          <summary>
-            {waypointsLabel} ({waypoints.length})
-          </summary>
-          <StyledTableWrapper>
-            <table>
-              <thead>
-                <tr>
-                  <th>{colName}</th>
-                  <th>{colCoordinates}</th>
-                  <th>{colElevation}</th>
-                  <th />
-                </tr>
-              </thead>
-              <tbody>
-                {waypoints.map((wpt, i) => {
-                  const hasDetails = !!(waypointImages?.[wpt.name] || wpt.desc)
-                  const isExpanded = expandedIndex === i
-                  return (
-                    <Fragment key={`${wpt.name}-${i}`}>
-                      <tr
-                        onClick={
-                          hasDetails
-                            ? () => setExpandedIndex(isExpanded ? null : i)
-                            : undefined
-                        }
-                        data-expanded={
-                          hasDetails && isExpanded ? 'true' : undefined
-                        }
-                        data-clickable={hasDetails ? 'true' : undefined}
-                      >
-                        <td>
-                          {hasDetails && (
-                            <StyledRowChevron
-                              $expanded={isExpanded}
-                              data-testid="expand-chevron"
-                            >
-                              <ChevronIcon />
-                            </StyledRowChevron>
-                          )}
-                          {wpt.name || '—'}
-                        </td>
-                        <td>{`${wpt.lat.toFixed(5)}, ${wpt.lon.toFixed(5)}`}</td>
-                        <td>{wpt.ele != null ? `${wpt.ele}m` : '—'}</td>
-                        <td>
-                          <StyledLocateButton
-                            aria-label={flyTo}
-                            onClick={(e) => {
-                              e.stopPropagation()
-                              flyToWaypoint(wpt)
-                            }}
-                          >
-                            <MapPinIcon />
-                          </StyledLocateButton>
-                        </td>
-                      </tr>
-                      {hasDetails && isExpanded && (
-                        <tr data-details="true">
-                          <td colSpan={4}>
-                            {waypointImages?.[wpt.name] && (
-                              <StyledWaypointImageCard
-                                data-testid="waypoint-image-card"
-                                src={waypointImages[wpt.name]}
-                                alt={wpt.name}
-                              />
-                            )}
-                            {wpt.desc && <p>{wpt.desc}</p>}
-                          </td>
-                        </tr>
-                      )}
-                    </Fragment>
-                  )
-                })}
-              </tbody>
-            </table>
-          </StyledTableWrapper>
-        </StyledWaypointsDetails>
+      {isMultiTrack && (
+        <StyledTrackStrip>
+          {resolvedTracks.map((track, i) => {
+            const trackColor = resolveTrackColor(track, i)
+            const isVisible = visibleTracks[i] ?? true
+            const trackName = track.name || `Track ${i + 1}`
+            return (
+              <StyledTrackChip key={i}>
+                <StyledTrackToggle
+                  type="button"
+                  onClick={() => toggleTrack(i)}
+                  aria-pressed={isVisible}
+                  data-testid={`track-toggle-${i}`}
+                >
+                  <StyledTrackDot $color={trackColor} $active={isVisible} />
+                  {trackName}
+                </StyledTrackToggle>
+                {allowDownload && (
+                  <StyledTrackDownloadButton
+                    type="button"
+                    onClick={() => downloadGpx(track.url)}
+                    aria-label={`${downloadLabel} ${trackName}`}
+                    data-testid={`track-download-${i}`}
+                  >
+                    <DownloadIcon />
+                  </StyledTrackDownloadButton>
+                )}
+              </StyledTrackChip>
+            )
+          })}
+        </StyledTrackStrip>
       )}
+
+      {showWaypoints &&
+        resolvedTracks.map((track, trackIndex) => {
+          const trackWaypoints = perTrackWaypoints[trackIndex] ?? []
+          if (trackWaypoints.length === 0) return null
+          const sectionLabel =
+            isMultiTrack && track.name
+              ? `${waypointsLabel} – ${track.name} (${trackWaypoints.length})`
+              : `${waypointsLabel} (${trackWaypoints.length})`
+          const expandedIndex = expandedByIndex[trackIndex] ?? null
+          return (
+            <StyledWaypointsDetails key={trackIndex}>
+              <summary>{sectionLabel}</summary>
+              <StyledTableWrapper>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>{colName}</th>
+                      <th>{colCoordinates}</th>
+                      <th>{colElevation}</th>
+                      <th />
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {trackWaypoints.map((wpt, i) => {
+                      const hasDetails = !!(
+                        waypointImages?.[wpt.name] || wpt.desc
+                      )
+                      const isExpanded = expandedIndex === i
+                      return (
+                        <Fragment key={`${wpt.name}-${i}`}>
+                          <tr
+                            onClick={
+                              hasDetails
+                                ? () =>
+                                    setExpandedByIndex((prev) => ({
+                                      ...prev,
+                                      [trackIndex]: isExpanded ? null : i,
+                                    }))
+                                : undefined
+                            }
+                            data-expanded={
+                              hasDetails && isExpanded ? 'true' : undefined
+                            }
+                            data-clickable={hasDetails ? 'true' : undefined}
+                          >
+                            <td>
+                              {hasDetails && (
+                                <StyledRowChevron
+                                  $expanded={isExpanded}
+                                  data-testid="expand-chevron"
+                                >
+                                  <ChevronIcon />
+                                </StyledRowChevron>
+                              )}
+                              {wpt.name || '—'}
+                            </td>
+                            <td>{`${wpt.lat.toFixed(5)}, ${wpt.lon.toFixed(5)}`}</td>
+                            <td>{wpt.ele != null ? `${wpt.ele}m` : '—'}</td>
+                            <td>
+                              <StyledLocateButton
+                                aria-label={flyTo}
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  flyToWaypoint(wpt)
+                                }}
+                              >
+                                <MapPinIcon />
+                              </StyledLocateButton>
+                            </td>
+                          </tr>
+                          {hasDetails && isExpanded && (
+                            <tr data-details="true">
+                              <td colSpan={4}>
+                                {waypointImages?.[wpt.name] && (
+                                  <StyledWaypointImageCard
+                                    data-testid="waypoint-image-card"
+                                    src={waypointImages[wpt.name]}
+                                    alt={wpt.name}
+                                  />
+                                )}
+                                {wpt.desc && <p>{wpt.desc}</p>}
+                              </td>
+                            </tr>
+                          )}
+                        </Fragment>
+                      )
+                    })}
+                  </tbody>
+                </table>
+              </StyledTableWrapper>
+            </StyledWaypointsDetails>
+          )
+        })}
     </StyledGpxMap>
   )
 }
