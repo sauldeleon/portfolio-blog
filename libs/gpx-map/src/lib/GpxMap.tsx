@@ -12,6 +12,8 @@ import {
   useMap,
 } from 'react-leaflet'
 
+import { ChevronIcon, DownloadIcon, MapPinIcon } from '@sdlgr/icons'
+
 import {
   MAP_ICON_ANCHOR,
   MAP_ICON_END,
@@ -157,73 +159,6 @@ function downloadGpx(url: string) {
       document.body.removeChild(a)
       URL.revokeObjectURL(objectUrl)
     })
-}
-
-function DownloadIcon() {
-  return (
-    <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-      <line
-        x1="6.5"
-        y1="1"
-        x2="6.5"
-        y2="8.5"
-        stroke="currentColor"
-        strokeWidth="1.3"
-        strokeLinecap="round"
-      />
-      <polyline
-        points="4,6 6.5,8.5 9,6"
-        stroke="currentColor"
-        strokeWidth="1.3"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-      />
-      <line
-        x1="1.5"
-        y1="11.5"
-        x2="11.5"
-        y2="11.5"
-        stroke="currentColor"
-        strokeWidth="1.3"
-        strokeLinecap="round"
-      />
-    </svg>
-  )
-}
-
-function MapPinIcon() {
-  return (
-    <svg width="13" height="15" viewBox="0 0 13 15" fill="none">
-      <path
-        d="M6.5 1C4.01 1 2 3.01 2 5.5C2 8.75 6.5 14 6.5 14C6.5 14 11 8.75 11 5.5C11 3.01 8.99 1 6.5 1Z"
-        stroke="currentColor"
-        strokeWidth="1.3"
-        strokeLinejoin="round"
-      />
-      <circle
-        cx="6.5"
-        cy="5.5"
-        r="1.4"
-        stroke="currentColor"
-        strokeWidth="1.2"
-      />
-    </svg>
-  )
-}
-
-function ChevronIcon() {
-  return (
-    <svg width="9" height="9" viewBox="0 0 9 9" fill="none" aria-hidden="true">
-      <polyline
-        points="2.5,1.5 6.5,4.5 2.5,7.5"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
 }
 
 function WaypointFocuser({ waypoint }: { waypoint: Waypoint | null }) {
