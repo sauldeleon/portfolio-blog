@@ -1,5 +1,19 @@
 # Changelog Button component
 
+# [0.5.0](https://github.com/sauldeleon/portfolio-blog/compare/button-0.4.0...button-0.5.0) (2026-06-09)
+
+### Bug Fixes
+
+- typescript errors across libs and web ([84fdcf3](https://github.com/sauldeleon/portfolio-blog/commit/84fdcf3ac013d23a64eac997f9112378bcdf616b))
+
+### Features
+
+- add admin image manager with upload, edit, delete and picker ([#92](https://github.com/sauldeleon/portfolio-blog/issues/92)) ([922b455](https://github.com/sauldeleon/portfolio-blog/commit/922b455ea78bf7944646e5835922f370c64aedb2))
+- **admin:** category translations with per-locale slugs ([#90](https://github.com/sauldeleon/portfolio-blog/issues/90)) ([f7604aa](https://github.com/sauldeleon/portfolio-blog/commit/f7604aa8b75cb588e7c96e2bb81ba889477ff51b))
+- author field, checkbox/combobox libs, post table improvements, archive fixes ([#91](https://github.com/sauldeleon/portfolio-blog/issues/91)) ([66a900f](https://github.com/sauldeleon/portfolio-blog/commit/66a900fc0fff2f0ccf1924a8cdef3d6ad6376a2b))
+- **blog:** blog listing page with filters, pagination and post cards ([#88](https://github.com/sauldeleon/portfolio-blog/issues/88)) ([bc4f876](https://github.com/sauldeleon/portfolio-blog/commit/bc4f8760d4dafa077a77a709d45cf0256755556d)), closes [#06](https://github.com/sauldeleon/portfolio-blog/issues/06) [#10](https://github.com/sauldeleon/portfolio-blog/issues/10) [#06](https://github.com/sauldeleon/portfolio-blog/issues/06) [#10](https://github.com/sauldeleon/portfolio-blog/issues/10)
+- post detail page, bulk unarchive, button colorScheme, series delete fix ([#93](https://github.com/sauldeleon/portfolio-blog/issues/93)) ([dbcb0e6](https://github.com/sauldeleon/portfolio-blog/commit/dbcb0e6916a2cb50d292030c9017047f92a50a08))
+
 # [0.4.0](https://github.com/sauldeleon/portfolio-blog/compare/button-0.3.0...button-0.4.0) (2026-05-11)
 
 ### Features
