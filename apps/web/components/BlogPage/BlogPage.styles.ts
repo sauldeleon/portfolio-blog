@@ -51,3 +51,21 @@ export const StyledPaginationWrapper = styled.div`
 `
 
 export const StyledHeroWrapper = styled.div``
+
+export const StyledSubscribeBanner = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 2.5rem 0;
+  border-top: 1px solid rgba(251, 251, 251, 0.08);
+  margin-top: 1rem;
+`
+
+export const StyledSubscribeText = styled.p`
+  font-family: var(--font-roboto-mono);
+  font-weight: 300;
+  color: rgba(251, 251, 251, 0.7);
+  font-size: 0.9rem;
+  margin: 0;
+`

@@ -10,3 +10,7 @@ export const StyledPage = styled.main`
     padding: 0 2rem 5rem;
   }
 `
+
+export const StyledSubscribeWrapper = styled.div`
+  margin-top: 3rem;
+`

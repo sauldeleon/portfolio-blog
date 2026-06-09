@@ -67,6 +67,12 @@
     "confirm": "Confirm",
     "cancel": "Cancel"
   },
+  "publishNotify": {
+    "message": "Do you want to notify subscribers about this post?",
+    "publishAndNotify": "Publish & Notify",
+    "publishOnly": "Publish Only",
+    "cancel": "Cancel"
+  },
   "postEditor": {
     "newTitle": "New Post",
     "editTitle": "Edit Post",

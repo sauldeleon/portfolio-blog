@@ -58,6 +58,10 @@ jest.mock('@web/components/SeriesIndicator/SeriesIndicator', () => ({
   SeriesIndicator: () => <div data-testid="series-indicator" />,
 }))
 
+jest.mock('@web/components/SubscribeModal', () => ({
+  SubscribeModal: () => <div data-testid="subscribe-modal" />,
+}))
+
 jest.mock('@web/utils/metadata/inLanguage', () => ({
   buildAlternates: jest
     .fn()
@@ -85,6 +89,9 @@ jest.mock('date-fns', () => ({
 jest.mock('./page.next.styles', () => ({
   StyledPage: ({ children }: { children: React.ReactNode }) => (
     <main data-testid="styled-page">{children}</main>
+  ),
+  StyledSubscribeWrapper: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="subscribe-wrapper">{children}</div>
   ),
 }))
 

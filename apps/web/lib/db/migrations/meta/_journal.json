@@ -64,6 +64,13 @@
       "when": 1748200000000,
       "tag": "0009_users_name_required",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1749427200000,
+      "tag": "0010_subscriptions",
+      "breakpoints": true
     }
   ]
 }

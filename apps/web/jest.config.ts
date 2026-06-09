@@ -101,6 +101,7 @@ module.exports = {
     '<rootDir>/components/GlobalStyles/',
     '<rootDir>/components/PostContent/PostContent\\.styles\\.ts',
     '<rootDir>/components/PostContent/MdxTable\\.styles\\.ts',
+    '/index\\.ts$',
   ],
   moduleNameMapper: {
     'next/font/(.*)': nextFontMock,

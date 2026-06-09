@@ -39,6 +39,9 @@ jest.mock('@sdlgr/pagination', () => ({
 jest.mock('@web/components/LatestPostHero', () => ({
   LatestPostHero: () => <div data-testid="latest-post-hero" />,
 }))
+jest.mock('@web/components/SubscribeModal', () => ({
+  SubscribeModal: () => <div data-testid="subscribe-modal" />,
+}))
 
 const { BlogPage, mergeDateCounts } =
   require('./BlogPage') as typeof import('./BlogPage')

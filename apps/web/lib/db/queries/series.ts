@@ -157,6 +157,18 @@ export async function ensureSeries(seriesId: string): Promise<void> {
   await db.insert(series).values({ id: seriesId }).onConflictDoNothing()
 }
 
+export async function getSeriesTranslationsById(
+  seriesId: string,
+): Promise<Array<{ locale: string; title: string }>> {
+  return db
+    .select({
+      locale: seriesTranslations.locale,
+      title: seriesTranslations.title,
+    })
+    .from(seriesTranslations)
+    .where(eq(seriesTranslations.seriesId, seriesId))
+}
+
 export async function upsertSeriesTranslation(
   seriesId: string,
   locale: Locale,

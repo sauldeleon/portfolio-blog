@@ -3,12 +3,18 @@
  */
 const mockGetScheduledPostsToPublish = jest.fn()
 const mockUpdatePost = jest.fn()
+const mockGetPostTranslations = jest.fn()
 const mockRevalidateTag = jest.fn()
 const mockLoggerError = jest.fn()
+const mockSendNewPostNotifications = jest.fn()
 
 jest.mock('@web/lib/db/queries/posts', () => ({
   getScheduledPostsToPublish: mockGetScheduledPostsToPublish,
   updatePost: mockUpdatePost,
+  getPostTranslations: mockGetPostTranslations,
+}))
+jest.mock('@web/lib/email/sendNewPostNotifications', () => ({
+  sendNewPostNotifications: mockSendNewPostNotifications,
 }))
 
 jest.mock('next/cache', () => ({
@@ -42,6 +48,8 @@ describe('GET /api/cron/publish', () => {
     process.env.CRON_SECRET = 'test-secret-xyz'
     mockGetScheduledPostsToPublish.mockResolvedValue([])
     mockUpdatePost.mockResolvedValue(null)
+    mockGetPostTranslations.mockResolvedValue([])
+    mockSendNewPostNotifications.mockResolvedValue(undefined)
   })
 
   afterEach(() => {
@@ -110,6 +118,62 @@ describe('GET /api/cron/publish', () => {
     mockGetScheduledPostsToPublish.mockResolvedValue([])
     await GET(makeRequest('Bearer test-secret-xyz'))
     expect(mockRevalidateTag).not.toHaveBeenCalled()
+  })
+
+  it('fires notifications for each successfully published scheduled post', async () => {
+    const scheduledPosts = [
+      { id: 'post-1', scheduledAt: new Date('2024-01-10T08:00:00Z') },
+    ]
+    mockGetScheduledPostsToPublish.mockResolvedValue(scheduledPosts)
+    mockUpdatePost.mockResolvedValue({
+      id: 'post-1',
+      postNumber: 5,
+      status: 'published',
+    })
+    mockGetPostTranslations.mockResolvedValue([
+      { locale: 'en', title: 'Post 1', slug: 'post-1', excerpt: 'Excerpt' },
+    ])
+    await GET(makeRequest('Bearer test-secret-xyz'))
+    expect(mockSendNewPostNotifications).toHaveBeenCalledWith(
+      expect.objectContaining({
+        postId: 'post-1',
+        postNumber: 5,
+        translations: expect.objectContaining({
+          en: { title: 'Post 1', slug: 'post-1', excerpt: 'Excerpt' },
+        }),
+      }),
+    )
+  })
+
+  it('skips notifications for posts where updatePost returns null', async () => {
+    mockGetScheduledPostsToPublish.mockResolvedValue([
+      { id: 'post-1', scheduledAt: new Date() },
+    ])
+    mockUpdatePost.mockResolvedValue(null)
+    await GET(makeRequest('Bearer test-secret-xyz'))
+    expect(mockSendNewPostNotifications).not.toHaveBeenCalled()
+  })
+
+  it('logs error when sendNewPostNotifications rejects', async () => {
+    mockGetScheduledPostsToPublish.mockResolvedValue([
+      { id: 'post-1', scheduledAt: new Date('2024-01-10T08:00:00Z') },
+    ])
+    mockUpdatePost.mockResolvedValue({
+      id: 'post-1',
+      postNumber: 5,
+      status: 'published',
+    })
+    mockGetPostTranslations.mockResolvedValue([
+      { locale: 'en', title: 'Post 1', slug: 'post-1', excerpt: 'Excerpt' },
+    ])
+    const notifError = new Error('Notification failed')
+    mockSendNewPostNotifications.mockRejectedValue(notifError)
+    await GET(makeRequest('Bearer test-secret-xyz'))
+    await Promise.resolve()
+    expect(mockLoggerError).toHaveBeenCalledWith(
+      notifError,
+      'cron/publish: failed to send notifications',
+    )
   })
 
   it('returns 500 and logs error when getScheduledPostsToPublish throws', async () => {

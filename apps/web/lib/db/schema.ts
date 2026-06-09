@@ -126,6 +126,23 @@ export const users = pgTable(
   ],
 )
 
+export const subscriptions = pgTable('subscriptions', {
+  id: text('id').primaryKey(), // ULID
+  email: text('email').notNull().unique(),
+  name: text('name').notNull(),
+  status: text('status', { enum: ['pending', 'active', 'unsubscribed'] })
+    .notNull()
+    .default('pending'),
+  token: text('token').notNull().unique(),
+  locale: text('locale', { enum: ['en', 'es'] })
+    .notNull()
+    .default('en'),
+  createdAt: timestamp('created_at', { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  confirmedAt: timestamp('confirmed_at', { withTimezone: true }),
+})
+
 export type Category = typeof categories.$inferSelect
 export type NewCategory = typeof categories.$inferInsert
 export type CategoryTranslation = typeof categoryTranslations.$inferSelect
@@ -143,3 +160,6 @@ export type NewUser = typeof users.$inferInsert
 export type Locale = 'en' | 'es'
 export type PostStatus = 'draft' | 'published' | 'archived'
 export type CoverImageFit = 'cover' | 'contain'
+export type Subscription = typeof subscriptions.$inferSelect
+export type NewSubscription = typeof subscriptions.$inferInsert
+export type SubscriptionStatus = 'pending' | 'active' | 'unsubscribed'

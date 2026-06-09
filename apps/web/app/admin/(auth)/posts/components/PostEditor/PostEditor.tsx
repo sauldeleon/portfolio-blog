@@ -27,6 +27,7 @@ import { CategoryIconRenderer } from '@web/utils/categoryIcons'
 import { computeReadingTime } from '@web/utils/computeReadingTime'
 import { slugify } from '@web/utils/slugify'
 
+import { PublishNotifyModal } from '../../../components/PublishNotifyModal'
 import { EmbedInsertModal } from '../EmbedInsertModal'
 import { GpxMapModal } from '../GpxMapModal'
 import { ImageInsertModal } from '../ImageInsertModal'
@@ -236,6 +237,7 @@ export function PostEditor({
   const [isImageInsertModalOpen, setIsImageInsertModalOpen] = useState(false)
   const [isEmbedInsertModalOpen, setIsEmbedInsertModalOpen] = useState(false)
   const [isGpxModalOpen, setIsGpxModalOpen] = useState(false)
+  const [showPublishNotify, setShowPublishNotify] = useState(false)
   const [previewTab, setPreviewTab] = useState<
     'post' | 'post-mobile' | 'hero' | 'card'
   >('post')
@@ -365,21 +367,27 @@ export function PostEditor({
 
   const previewAuthor = users.find((u) => u.id === editAuthor)?.name ?? ''
 
-  async function handleSave(targetStatus: PostStatus = status) {
+  async function handleSave(
+    targetStatus: PostStatus = status,
+    notify?: boolean,
+  ) {
     setSaving(true)
     setError(null)
 
     try {
       const url = post ? `/api/posts/${post.post.id}/` : '/api/posts/'
+      const body = {
+        ...buildBody(targetStatus),
+        ...(targetStatus === 'published' && notify !== undefined
+          ? { notify }
+          : {}),
+      }
 
       if (!post) {
-        const { data: created } = await axios.post<{ id: string }>(
-          url,
-          buildBody(targetStatus),
-        )
+        const { data: created } = await axios.post<{ id: string }>(url, body)
         router.push(`/admin/posts/${created.id}`)
       } else {
-        await axios.put(url, buildBody(targetStatus))
+        await axios.put(url, body)
         setStatus(targetStatus)
         router.refresh()
       }
@@ -431,7 +439,7 @@ export function PostEditor({
 
           {status !== 'published' && status !== 'archived' && (
             <StyledPublishButton
-              onClick={() => handleSave('published')}
+              onClick={() => setShowPublishNotify(true)}
               disabled={saving || !canPublish()}
               title={
                 !hasBothTranslations
@@ -898,6 +906,18 @@ export function PostEditor({
           setIsGpxModalOpen(false)
         }}
         onCancel={() => setIsGpxModalOpen(false)}
+      />
+      <PublishNotifyModal
+        isOpen={showPublishNotify}
+        onPublishAndNotify={() => {
+          setShowPublishNotify(false)
+          void handleSave('published', true)
+        }}
+        onPublishOnly={() => {
+          setShowPublishNotify(false)
+          void handleSave('published', false)
+        }}
+        onCancel={() => setShowPublishNotify(false)}
       />
     </StyledWrapper>
   )

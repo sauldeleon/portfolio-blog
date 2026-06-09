@@ -68,6 +68,10 @@ jest.mock('@web/i18n/client', () => ({
         'postEditor.previewTabCard': 'Card',
         'postEditor.error': 'Something went wrong',
         'images.picker.title': 'Insert Image',
+        'publishNotify.message': 'Notify subscribers?',
+        'publishNotify.publishAndNotify': 'Publish & Notify',
+        'publishNotify.publishOnly': 'Publish Only',
+        'publishNotify.cancel': 'Cancel',
       }
       return translations[key] ?? key
     },
@@ -76,6 +80,10 @@ jest.mock('@web/i18n/client', () => ({
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
+}))
+
+jest.mock('../../../components/PublishNotifyModal', () => ({
+  PublishNotifyModal: () => null,
 }))
 
 jest.mock('../MarkdownPreview', () => ({

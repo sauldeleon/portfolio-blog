@@ -60,6 +60,10 @@ jest.mock('@web/i18n/client', () => ({
         'postEditor.actions.archive': 'Archive',
         'postEditor.actions.archiveDisabledPublished': 'Unpublish first',
         'postEditor.actions.unarchive': 'Unarchive',
+        'publishNotify.message': 'Notify subscribers?',
+        'publishNotify.publishAndNotify': 'Publish & Notify',
+        'publishNotify.publishOnly': 'Publish Only',
+        'publishNotify.cancel': 'Cancel',
         'postEditor.preview': 'Preview',
         'postEditor.previewLoading': 'Rendering…',
         'postEditor.previewTabPost': 'Post',
@@ -435,7 +439,7 @@ describe('PostEditor', () => {
       expect(screen.getByTestId('publish-button')).toBeDisabled()
     })
 
-    it('sends publish status when publish button clicked', async () => {
+    it('opens publish notify modal when publish button clicked', () => {
       renderApp(
         <PostEditor
           post={mockExistingPost}
@@ -444,11 +448,64 @@ describe('PostEditor', () => {
         />,
       )
       fireEvent.click(screen.getByTestId('publish-button'))
+      expect(
+        screen.getByTestId('publish-notify-publish-and-notify'),
+      ).toBeInTheDocument()
+      expect(
+        screen.getByTestId('publish-notify-publish-only'),
+      ).toBeInTheDocument()
+    })
+
+    it('sends publish with notify=true when Publish & Notify clicked', async () => {
+      renderApp(
+        <PostEditor
+          post={mockExistingPost}
+          categories={mockCategories}
+          users={mockUsers}
+        />,
+      )
+      fireEvent.click(screen.getByTestId('publish-button'))
+      fireEvent.click(screen.getByTestId('publish-notify-publish-and-notify'))
       await waitFor(() => expect(axios.put).toHaveBeenCalled())
       const body = (axios.put as jest.Mock).mock.calls[0][1] as {
         status: string
+        notify: boolean
       }
       expect(body.status).toBe('published')
+      expect(body.notify).toBe(true)
+    })
+
+    it('sends publish with notify=false when Publish Only clicked', async () => {
+      renderApp(
+        <PostEditor
+          post={mockExistingPost}
+          categories={mockCategories}
+          users={mockUsers}
+        />,
+      )
+      fireEvent.click(screen.getByTestId('publish-button'))
+      fireEvent.click(screen.getByTestId('publish-notify-publish-only'))
+      await waitFor(() => expect(axios.put).toHaveBeenCalled())
+      const body = (axios.put as jest.Mock).mock.calls[0][1] as {
+        status: string
+        notify: boolean
+      }
+      expect(body.status).toBe('published')
+      expect(body.notify).toBe(false)
+    })
+
+    it('does not call API when publish notify modal is cancelled', async () => {
+      renderApp(
+        <PostEditor
+          post={mockExistingPost}
+          categories={mockCategories}
+          users={mockUsers}
+        />,
+      )
+      fireEvent.click(screen.getByTestId('publish-button'))
+      fireEvent.click(screen.getByTestId('publish-notify-cancel'))
+      await new Promise((r) => setTimeout(r, 50))
+      expect(axios.put).not.toHaveBeenCalled()
     })
 
     it('PUT body contains only active locale translation', async () => {

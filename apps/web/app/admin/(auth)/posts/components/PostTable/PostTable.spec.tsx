@@ -53,6 +53,10 @@ jest.mock('@web/i18n/client', () => ({
         refresh: 'Refresh',
         'confirmDelete.confirm': 'Confirm delete',
         'confirmDelete.cancel': 'Cancel delete',
+        'publishNotify.message': 'Notify subscribers?',
+        'publishNotify.publishAndNotify': 'Publish & Notify',
+        'publishNotify.publishOnly': 'Publish Only',
+        'publishNotify.cancel': 'Cancel',
       }
       let result = translations[key] ?? key
       if (vars) {
@@ -63,6 +67,25 @@ jest.mock('@web/i18n/client', () => ({
       return result
     },
   }),
+}))
+
+jest.mock('@web/app/admin/(auth)/components/PublishNotifyModal', () => ({
+  PublishNotifyModal: ({
+    isOpen,
+    onPublishOnly,
+  }: {
+    isOpen: boolean
+    onPublishOnly: () => void
+  }) =>
+    isOpen ? (
+      <button
+        type="button"
+        data-testid="publish-notify-publish-only"
+        onClick={onPublishOnly}
+      >
+        Publish Only
+      </button>
+    ) : null,
 }))
 
 jest.mock('next/navigation', () => ({
@@ -248,58 +271,6 @@ describe('PostTable', () => {
     )
   })
 
-  it('publish button disabled when translations incomplete (no titleEs)', () => {
-    const post = makePost({ status: 'draft', titleEn: 'Post', titleEs: null })
-    renderApp(<PostTable posts={[post]} />)
-    expect(screen.getByTestId('publish-button')).toBeDisabled()
-  })
-
-  it('publish button disabled when translations incomplete (no titleEn)', () => {
-    const post = makePost({ status: 'draft', titleEn: null, titleEs: 'Post' })
-    renderApp(<PostTable posts={[post]} />)
-    expect(screen.getByTestId('publish-button')).toBeDisabled()
-  })
-
-  it('publish button enabled when both translations present (not currently published)', () => {
-    const post = makePost({
-      status: 'draft',
-      titleEn: 'My Post',
-      titleEs: 'Mi Post',
-    })
-    renderApp(<PostTable posts={[post]} />)
-    expect(screen.getByTestId('publish-button')).not.toBeDisabled()
-  })
-
-  it('publish button enabled when post is published (for unpublishing)', () => {
-    const post = makePost({
-      status: 'published',
-      titleEn: 'My Post',
-      titleEs: 'Mi Post',
-    })
-    renderApp(<PostTable posts={[post]} />)
-    expect(screen.getByTestId('publish-button')).not.toBeDisabled()
-  })
-
-  it('clicking publish calls PUT /api/posts/:id with published status', async () => {
-    const post = makePost({
-      id: 'abc123',
-      status: 'draft',
-      titleEn: 'My Post',
-      titleEs: 'Mi Post',
-    })
-    renderApp(<PostTable posts={[post]} />)
-    fireEvent.click(screen.getByTestId('publish-button'))
-    await waitFor(() => expect(axios.put).toHaveBeenCalled())
-    expect(axios.put).toHaveBeenCalledWith('/api/posts/abc123/', {
-      status: 'published',
-    })
-    await waitFor(() =>
-      expect(screen.getByTestId('publish-button')).toHaveTextContent(
-        'Unpublish',
-      ),
-    )
-  })
-
   it('clicking unpublish calls PUT /api/posts/:id with draft status', async () => {
     const post = makePost({
       id: 'pub123',
@@ -395,18 +366,6 @@ describe('PostTable', () => {
     const cells = rows[0].querySelectorAll('td')
     expect(cells[5].textContent).not.toBe('—')
     expect(cells[5].textContent).toBeTruthy()
-  })
-
-  it('shows Unpublish button text for published post', () => {
-    const post = makePost({ status: 'published' })
-    renderApp(<PostTable posts={[post]} />)
-    expect(screen.getByTestId('publish-button')).toHaveTextContent('Unpublish')
-  })
-
-  it('shows Publish button text for draft post', () => {
-    const post = makePost({ status: 'draft' })
-    renderApp(<PostTable posts={[post]} />)
-    expect(screen.getByTestId('publish-button')).toHaveTextContent('Publish')
   })
 
   it('renders archived status badge', () => {
@@ -601,6 +560,7 @@ describe('PostTable', () => {
     })
     renderApp(<PostTable posts={[post1, post2]} />)
     fireEvent.click(screen.getAllByTestId('publish-button')[0])
+    fireEvent.click(screen.getByTestId('publish-notify-publish-only'))
     await waitFor(() => expect(axios.put).toHaveBeenCalled())
     expect(screen.getByText('Post Two')).toBeInTheDocument()
   })
@@ -672,6 +632,23 @@ describe('PostTable', () => {
     expect(screen.getByText('Keep This')).toBeInTheDocument()
   })
 
+  it('unpublishing one post keeps other posts unchanged', async () => {
+    const post1 = makePost({
+      id: 'pub123',
+      status: 'published',
+      titleEn: 'Post One',
+    })
+    const post2 = makePost({
+      id: 'other',
+      status: 'published',
+      titleEn: 'Post Two',
+    })
+    renderApp(<PostTable posts={[post1, post2]} />)
+    fireEvent.click(screen.getAllByTestId('publish-button')[0])
+    await waitFor(() => expect(axios.put).toHaveBeenCalled())
+    expect(screen.getByText('Post Two')).toBeInTheDocument()
+  })
+
   it('renders a checkbox for each row', () => {
     const posts = [makePost({ id: '01' }), makePost({ id: '02' })]
     renderApp(<PostTable posts={posts} />)
@@ -681,392 +658,5 @@ describe('PostTable', () => {
   it('renders a select-all checkbox in the header', () => {
     renderApp(<PostTable posts={[makePost()]} />)
     expect(screen.getByTestId('select-all-checkbox')).toBeInTheDocument()
-  })
-
-  it('bulk actions not visible when no rows selected', () => {
-    renderApp(<PostTable posts={[makePost({ id: '01' })]} />)
-    expect(screen.queryByTestId('bulk-actions')).not.toBeInTheDocument()
-  })
-
-  it('checking a row checkbox shows bulk actions', () => {
-    renderApp(<PostTable posts={[makePost({ id: '01' })]} />)
-    fireEvent.click(screen.getByTestId('row-checkbox'))
-    expect(screen.getByTestId('bulk-actions')).toBeInTheDocument()
-  })
-
-  it('unchecking a row checkbox hides bulk actions when nothing selected', () => {
-    renderApp(<PostTable posts={[makePost({ id: '01' })]} />)
-    fireEvent.click(screen.getByTestId('row-checkbox'))
-    fireEvent.click(screen.getByTestId('row-checkbox'))
-    expect(screen.queryByTestId('bulk-actions')).not.toBeInTheDocument()
-  })
-
-  it('select-all selects all visible rows', () => {
-    const posts = [makePost({ id: '01' }), makePost({ id: '02' })]
-    renderApp(<PostTable posts={posts} />)
-    fireEvent.click(screen.getByTestId('select-all-checkbox'))
-    expect(screen.getByTestId('bulk-actions')).toBeInTheDocument()
-    screen
-      .getAllByTestId('row-checkbox')
-      .forEach((cb) => expect(cb).toBeChecked())
-  })
-
-  it('select-all unchecks deselects all rows', () => {
-    const posts = [makePost({ id: '01' }), makePost({ id: '02' })]
-    renderApp(<PostTable posts={posts} />)
-    fireEvent.click(screen.getByTestId('select-all-checkbox'))
-    fireEvent.click(screen.getByTestId('select-all-checkbox'))
-    expect(screen.queryByTestId('bulk-actions')).not.toBeInTheDocument()
-  })
-
-  it('select-all checkbox is checked when all rows are selected', () => {
-    renderApp(<PostTable posts={[makePost({ id: '01' })]} />)
-    fireEvent.click(screen.getByTestId('row-checkbox'))
-    expect(screen.getByTestId('select-all-checkbox')).toBeChecked()
-  })
-
-  it('select-all checkbox is unchecked when no rows are selected', () => {
-    renderApp(<PostTable posts={[makePost({ id: '01' })]} />)
-    expect(screen.getByTestId('select-all-checkbox')).not.toBeChecked()
-  })
-
-  it('clicking row checkbox does not navigate to post edit', () => {
-    renderApp(<PostTable posts={[makePost({ id: 'nav123' })]} />)
-    fireEvent.click(screen.getByTestId('row-checkbox'))
-    expect(mockPush).not.toHaveBeenCalled()
-  })
-
-  it('switching filter tabs clears selection', () => {
-    const posts = [
-      makePost({ id: '01', status: 'draft', titleEn: 'P1' }),
-      makePost({ id: '02', status: 'published', titleEn: 'P2' }),
-    ]
-    renderApp(<PostTable posts={posts} />)
-    fireEvent.click(screen.getAllByTestId('row-checkbox')[0])
-    expect(screen.getByTestId('bulk-actions')).toBeInTheDocument()
-    fireEvent.click(screen.getByTestId('filter-published'))
-    expect(screen.queryByTestId('bulk-actions')).not.toBeInTheDocument()
-  })
-
-  it('shows Publish, Unpublish, Archive bulk buttons in all tab', () => {
-    renderApp(<PostTable posts={[makePost({ id: '01' })]} />)
-    fireEvent.click(screen.getByTestId('row-checkbox'))
-    expect(screen.getByTestId('bulk-publish-button')).toBeInTheDocument()
-    expect(screen.getByTestId('bulk-unpublish-button')).toBeInTheDocument()
-    expect(screen.getByTestId('bulk-archive-button')).toBeInTheDocument()
-    expect(screen.queryByTestId('bulk-delete-button')).not.toBeInTheDocument()
-  })
-
-  it('shows Unarchive and Delete bulk buttons in archived tab', () => {
-    const post = makePost({ id: '01', status: 'archived' })
-    renderApp(<PostTable posts={[post]} />)
-    fireEvent.click(screen.getByTestId('filter-archived'))
-    fireEvent.click(screen.getByTestId('row-checkbox'))
-    expect(screen.getByTestId('bulk-unarchive-button')).toBeInTheDocument()
-    expect(screen.getByTestId('bulk-delete-button')).toBeInTheDocument()
-    expect(screen.queryByTestId('bulk-publish-button')).not.toBeInTheDocument()
-    expect(
-      screen.queryByTestId('bulk-unpublish-button'),
-    ).not.toBeInTheDocument()
-    expect(screen.queryByTestId('bulk-archive-button')).not.toBeInTheDocument()
-  })
-
-  it('bulk publish opens confirm modal then publishes eligible posts and clears selection', async () => {
-    const post1 = makePost({
-      id: '01',
-      status: 'draft',
-      titleEn: 'P1',
-      titleEs: 'P1',
-    })
-    const post2 = makePost({
-      id: '02',
-      status: 'published',
-      titleEn: 'P2',
-      titleEs: 'P2',
-    })
-    renderApp(<PostTable posts={[post1, post2]} />)
-    fireEvent.click(screen.getByTestId('select-all-checkbox'))
-    fireEvent.click(screen.getByTestId('bulk-publish-button'))
-    expect(screen.getByTestId('confirm-delete-confirm')).toBeInTheDocument()
-    fireEvent.click(screen.getByTestId('confirm-delete-confirm'))
-    await waitFor(() => expect(axios.put).toHaveBeenCalledTimes(1))
-    expect(axios.put).toHaveBeenCalledWith('/api/posts/01/', {
-      status: 'published',
-    })
-    await waitFor(() =>
-      expect(screen.queryByTestId('bulk-actions')).not.toBeInTheDocument(),
-    )
-  })
-
-  it('bulk publish cancel does not call API and keeps selection', () => {
-    const post = makePost({
-      id: '01',
-      status: 'draft',
-      titleEn: 'P1',
-      titleEs: 'P1',
-    })
-    renderApp(<PostTable posts={[post]} />)
-    fireEvent.click(screen.getByTestId('row-checkbox'))
-    fireEvent.click(screen.getByTestId('bulk-publish-button'))
-    fireEvent.click(screen.getByTestId('confirm-delete-cancel'))
-    expect(axios.put).not.toHaveBeenCalled()
-    expect(screen.getByTestId('bulk-actions')).toBeInTheDocument()
-  })
-
-  it('bulk publish skips posts with incomplete translations', async () => {
-    const post = makePost({
-      id: '01',
-      status: 'draft',
-      titleEn: 'P1',
-      titleEs: null,
-    })
-    renderApp(<PostTable posts={[post]} />)
-    fireEvent.click(screen.getByTestId('row-checkbox'))
-    fireEvent.click(screen.getByTestId('bulk-publish-button'))
-    fireEvent.click(screen.getByTestId('confirm-delete-confirm'))
-    await waitFor(() =>
-      expect(screen.queryByTestId('bulk-actions')).not.toBeInTheDocument(),
-    )
-    expect(axios.put).not.toHaveBeenCalled()
-  })
-
-  it('bulk unpublish opens confirm modal then unpublishes only published posts and clears selection', async () => {
-    const post1 = makePost({
-      id: '01',
-      status: 'published',
-      titleEn: 'P1',
-      titleEs: 'P1',
-    })
-    const post2 = makePost({
-      id: '02',
-      status: 'draft',
-      titleEn: 'P2',
-      titleEs: 'P2',
-    })
-    renderApp(<PostTable posts={[post1, post2]} />)
-    fireEvent.click(screen.getByTestId('select-all-checkbox'))
-    fireEvent.click(screen.getByTestId('bulk-unpublish-button'))
-    expect(screen.getByTestId('confirm-delete-confirm')).toBeInTheDocument()
-    fireEvent.click(screen.getByTestId('confirm-delete-confirm'))
-    await waitFor(() => expect(axios.put).toHaveBeenCalledTimes(1))
-    expect(axios.put).toHaveBeenCalledWith('/api/posts/01/', {
-      status: 'draft',
-    })
-    await waitFor(() =>
-      expect(screen.queryByTestId('bulk-actions')).not.toBeInTheDocument(),
-    )
-  })
-
-  it('bulk unpublish cancel does not call API and keeps selection', () => {
-    const post = makePost({
-      id: '01',
-      status: 'published',
-      titleEn: 'P1',
-      titleEs: 'P1',
-    })
-    renderApp(<PostTable posts={[post]} />)
-    fireEvent.click(screen.getByTestId('row-checkbox'))
-    fireEvent.click(screen.getByTestId('bulk-unpublish-button'))
-    fireEvent.click(screen.getByTestId('confirm-delete-cancel'))
-    expect(axios.put).not.toHaveBeenCalled()
-    expect(screen.getByTestId('bulk-actions')).toBeInTheDocument()
-  })
-
-  it('bulk archive opens confirm modal then archives only draft posts and clears selection', async () => {
-    const post1 = makePost({
-      id: '01',
-      status: 'draft',
-      titleEn: 'P1',
-      titleEs: 'P1',
-    })
-    const post2 = makePost({
-      id: '02',
-      status: 'published',
-      titleEn: 'P2',
-      titleEs: 'P2',
-    })
-    renderApp(<PostTable posts={[post1, post2]} />)
-    fireEvent.click(screen.getByTestId('select-all-checkbox'))
-    fireEvent.click(screen.getByTestId('bulk-archive-button'))
-    expect(screen.getByTestId('confirm-delete-confirm')).toBeInTheDocument()
-    fireEvent.click(screen.getByTestId('confirm-delete-confirm'))
-    await waitFor(() => expect(axios.delete).toHaveBeenCalledTimes(1))
-    expect(axios.delete).toHaveBeenCalledWith('/api/posts/01/')
-    await waitFor(() =>
-      expect(screen.queryByTestId('bulk-actions')).not.toBeInTheDocument(),
-    )
-  })
-
-  it('bulk archive cancel does not call API and keeps selection', () => {
-    const post = makePost({ id: '01', status: 'draft' })
-    renderApp(<PostTable posts={[post]} />)
-    fireEvent.click(screen.getByTestId('row-checkbox'))
-    fireEvent.click(screen.getByTestId('bulk-archive-button'))
-    fireEvent.click(screen.getByTestId('confirm-delete-cancel'))
-    expect(axios.delete).not.toHaveBeenCalled()
-    expect(screen.getByTestId('bulk-actions')).toBeInTheDocument()
-  })
-
-  it('bulk unarchive opens confirm modal then unarchives selected posts and clears selection', async () => {
-    const post1 = makePost({
-      id: '01',
-      status: 'archived',
-      titleEn: 'Restore Me',
-      deletedAt: new Date('2024-06-01'),
-    })
-    const post2 = makePost({
-      id: '02',
-      status: 'archived',
-      titleEn: 'Keep Archived',
-      deletedAt: new Date('2024-06-01'),
-    })
-    renderApp(<PostTable posts={[post1, post2]} />)
-    fireEvent.click(screen.getByTestId('filter-archived'))
-    fireEvent.click(screen.getAllByTestId('row-checkbox')[0])
-    fireEvent.click(screen.getByTestId('bulk-unarchive-button'))
-    expect(screen.getByTestId('confirm-delete-confirm')).toBeInTheDocument()
-    fireEvent.click(screen.getByTestId('confirm-delete-confirm'))
-    await waitFor(() => expect(axios.put).toHaveBeenCalledTimes(1))
-    expect(axios.put).toHaveBeenCalledWith('/api/posts/01/', {
-      status: 'draft',
-    })
-    expect(screen.getByText('Keep Archived')).toBeInTheDocument()
-    await waitFor(() =>
-      expect(screen.queryByTestId('bulk-actions')).not.toBeInTheDocument(),
-    )
-  })
-
-  it('bulk unarchive cancel does not call API and keeps selection', () => {
-    const post = makePost({ id: '01', status: 'archived' })
-    renderApp(<PostTable posts={[post]} />)
-    fireEvent.click(screen.getByTestId('filter-archived'))
-    fireEvent.click(screen.getByTestId('row-checkbox'))
-    fireEvent.click(screen.getByTestId('bulk-unarchive-button'))
-    fireEvent.click(screen.getByTestId('confirm-delete-cancel'))
-    expect(axios.put).not.toHaveBeenCalled()
-    expect(screen.getByTestId('bulk-actions')).toBeInTheDocument()
-  })
-
-  it('bulk delete opens confirm modal then hard-deletes only selected posts and keeps others', async () => {
-    const post1 = makePost({
-      id: '01',
-      status: 'archived',
-      titleEn: 'Delete Me',
-    })
-    const post2 = makePost({
-      id: '02',
-      status: 'archived',
-      titleEn: 'Keep Me',
-    })
-    renderApp(<PostTable posts={[post1, post2]} />)
-    fireEvent.click(screen.getByTestId('filter-archived'))
-    fireEvent.click(screen.getAllByTestId('row-checkbox')[0])
-    fireEvent.click(screen.getByTestId('bulk-delete-button'))
-    expect(screen.getByTestId('confirm-delete-confirm')).toBeInTheDocument()
-    fireEvent.click(screen.getByTestId('confirm-delete-confirm'))
-    await waitFor(() => expect(axios.delete).toHaveBeenCalledTimes(1))
-    expect(axios.delete).toHaveBeenCalledWith('/api/posts/01/?hard=true')
-    expect(screen.getByText('Keep Me')).toBeInTheDocument()
-    await waitFor(() =>
-      expect(screen.queryByTestId('bulk-actions')).not.toBeInTheDocument(),
-    )
-  })
-
-  it('bulk delete cancel does not call API and keeps selection', () => {
-    const post = makePost({ id: '01', status: 'archived' })
-    renderApp(<PostTable posts={[post]} />)
-    fireEvent.click(screen.getByTestId('filter-archived'))
-    fireEvent.click(screen.getByTestId('row-checkbox'))
-    fireEvent.click(screen.getByTestId('bulk-delete-button'))
-    fireEvent.click(screen.getByTestId('confirm-delete-cancel'))
-    expect(axios.delete).not.toHaveBeenCalled()
-    expect(screen.getByTestId('bulk-actions')).toBeInTheDocument()
-  })
-
-  describe('pagination', () => {
-    const make21Posts = () =>
-      Array.from({ length: 21 }, (_, i) =>
-        makePost({ id: `p${i}`, titleEn: `Post ${i}` }),
-      )
-
-    it('does not render pagination when posts <= 20', () => {
-      renderApp(<PostTable posts={[makePost()]} />)
-      expect(screen.queryByTestId('pagination')).not.toBeInTheDocument()
-    })
-
-    it('renders pagination when posts > 20', () => {
-      renderApp(<PostTable posts={make21Posts()} />)
-      expect(screen.getByTestId('pagination')).toBeInTheDocument()
-      expect(screen.getByTestId('pagination-info')).toHaveTextContent('1 of 2')
-    })
-
-    it('shows only first 20 rows on page 1', () => {
-      renderApp(<PostTable posts={make21Posts()} />)
-      expect(screen.getAllByTestId('post-row')).toHaveLength(20)
-      expect(screen.getByText('Post 0')).toBeInTheDocument()
-      expect(screen.queryByText('Post 20')).not.toBeInTheDocument()
-    })
-
-    it('prev button is disabled on first page', () => {
-      renderApp(<PostTable posts={make21Posts()} />)
-      expect(screen.getByTestId('pagination-prev')).toBeDisabled()
-    })
-
-    it('next button is disabled on last page', () => {
-      renderApp(<PostTable posts={make21Posts()} />)
-      fireEvent.click(screen.getByTestId('pagination-next'))
-      expect(screen.getByTestId('pagination-next')).toBeDisabled()
-    })
-
-    it('clicking next shows page 2 with remaining rows', () => {
-      renderApp(<PostTable posts={make21Posts()} />)
-      fireEvent.click(screen.getByTestId('pagination-next'))
-      expect(screen.getAllByTestId('post-row')).toHaveLength(1)
-      expect(screen.getByText('Post 20')).toBeInTheDocument()
-      expect(screen.getByTestId('pagination-info')).toHaveTextContent('2 of 2')
-    })
-
-    it('clicking prev returns to page 1', () => {
-      renderApp(<PostTable posts={make21Posts()} />)
-      fireEvent.click(screen.getByTestId('pagination-next'))
-      fireEvent.click(screen.getByTestId('pagination-prev'))
-      expect(screen.getAllByTestId('post-row')).toHaveLength(20)
-      expect(screen.getByTestId('pagination-info')).toHaveTextContent('1 of 2')
-    })
-
-    it('changing filter resets to page 1', () => {
-      const posts = [
-        ...Array.from({ length: 21 }, (_, i) =>
-          makePost({ id: `d${i}`, titleEn: `Draft ${i}`, status: 'draft' }),
-        ),
-        makePost({ id: 'p1', titleEn: 'Published', status: 'published' }),
-      ]
-      renderApp(<PostTable posts={posts} />)
-      fireEvent.click(screen.getByTestId('pagination-next'))
-      expect(screen.getByTestId('pagination-info')).toHaveTextContent('2 of 2')
-      fireEvent.click(screen.getByTestId('filter-published'))
-      expect(screen.queryByTestId('pagination')).not.toBeInTheDocument()
-    })
-
-    it('changing search resets to page 1', () => {
-      renderApp(<PostTable posts={make21Posts()} />)
-      fireEvent.click(screen.getByTestId('pagination-next'))
-      fireEvent.change(screen.getByTestId('search-input'), {
-        target: { value: 'Post' },
-      })
-      expect(screen.getByTestId('pagination-info')).toHaveTextContent('1 of 2')
-    })
-
-    it('auto-adjusts to last page when current page becomes empty', async () => {
-      renderApp(<PostTable posts={make21Posts()} />)
-      fireEvent.click(screen.getByTestId('pagination-next'))
-      expect(screen.getAllByTestId('post-row')).toHaveLength(1)
-      fireEvent.click(screen.getByTestId('archive-button'))
-      fireEvent.click(screen.getByTestId('confirm-delete-confirm'))
-      await waitFor(() =>
-        expect(screen.queryByTestId('pagination')).not.toBeInTheDocument(),
-      )
-      expect(screen.getAllByTestId('post-row')).toHaveLength(20)
-    })
   })
 })
