@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`SubscribePage renders with SubscribeForm 1`] = `
+.c0 {
+  width: 100%;
+  max-width: 720px;
+  padding: 4rem 1rem 6rem;
+  margin: 0 auto;
+}
+
+@media (width >= 768px) {
+  .c0 {
+    padding: 5rem 2rem 8rem;
+  }
+}
+
+<body>
+  <div>
+    <main
+      class="c0"
+    >
+      <div
+        data-lng="en"
+        data-testid="subscribe-form"
+      />
+    </main>
+  </div>
+</body>
+`;

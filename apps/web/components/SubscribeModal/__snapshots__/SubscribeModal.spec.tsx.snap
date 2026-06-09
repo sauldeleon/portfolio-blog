@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`SubscribeModal renders trigger button 1`] = `
+.c0 {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  cursor: pointer;
+  border: 1px solid #FBFBFB;
+  padding: 15px 20px;
+}
+
+.c1 {
+  transition: background-color 0.15s ease,color 0.15s ease;
+}
+
+.c1:hover:not(:disabled) {
+  background-color: #FBFBFB;
+  color: #000000;
+}
+
+<body>
+  <div>
+    <button
+      aria-label="Subscribe to blog"
+      class="c0 c1"
+    >
+      Subscribe
+    </button>
+  </div>
+</body>
+`;

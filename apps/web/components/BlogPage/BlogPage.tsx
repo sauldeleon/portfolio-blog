@@ -6,6 +6,7 @@ import { Pagination } from '@sdlgr/pagination'
 import { PostCard } from '@sdlgr/post-card'
 
 import { LatestPostHero } from '@web/components/LatestPostHero'
+import { SubscribeModal } from '@web/components/SubscribeModal'
 import { getServerTranslation } from '@web/i18n/server'
 import {
   getCategories,
@@ -28,6 +29,8 @@ import {
   StyledHeroWrapper,
   StyledPage,
   StyledPaginationWrapper,
+  StyledSubscribeBanner,
+  StyledSubscribeText,
 } from './BlogPage.styles'
 
 const POSTS_PER_PAGE = 9
@@ -144,6 +147,10 @@ export async function BlogPage({
     : allDates
 
   const { t } = await getServerTranslation({ ns: 'blogPage', language: lng })
+  const { t: tSubscribe } = await getServerTranslation({
+    ns: 'subscribe',
+    language: lng,
+  })
 
   const monthNames = Array.from({ length: 12 }, (_, i) =>
     format(new Date(2024, i, 1), 'MMM', { locale }),
@@ -225,6 +232,15 @@ export async function BlogPage({
           nextLabel={t('pagination.next')}
         />
       </StyledPaginationWrapper>
+
+      <StyledSubscribeBanner>
+        <StyledSubscribeText>{tSubscribe('subtitle')}</StyledSubscribeText>
+        <SubscribeModal
+          lng={lng}
+          buttonLabel={tSubscribe('buttonLabel')}
+          buttonAriaLabel={tSubscribe('buttonAriaLabel')}
+        />
+      </StyledSubscribeBanner>
     </StyledPage>
   )
 }

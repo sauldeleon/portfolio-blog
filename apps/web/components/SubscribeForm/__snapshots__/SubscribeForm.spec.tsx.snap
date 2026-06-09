@@ -1,0 +1,188 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`SubscribeForm renders form fields and titles 1`] = `
+.c9 {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  cursor: pointer;
+  border: 1px solid #FBFBFB;
+  background-color: #FBFBFB;
+  color: #000000;
+  padding: 15px 20px;
+}
+
+.c9:hover:not(:disabled) {
+  background-color: transparent;
+  color: #FBFBFB;
+}
+
+.c9:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.c0 {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+  max-width: 420px;
+}
+
+.c1 {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.c2 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 400;
+  color: #fbfbfb;
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.c3 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 300;
+  color: rgba(251, 251, 251, 0.7);
+  font-size: 0.9rem;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.c5 {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.c6 {
+  font-family: var(--font-roboto-mono);
+  font-weight: 500;
+  color: #fbfbfb;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.c7 {
+  background: transparent;
+  border: 1px solid rgba(251, 251, 251, 0.2);
+  border-radius: 2px;
+  color: #fbfbfb;
+  font-family: var(--font-roboto-mono);
+  font-size: 0.9rem;
+  padding: 0.625rem 0.75rem;
+  width: 100%;
+  transition: border-color 0.15s ease;
+  box-sizing: border-box;
+}
+
+.c7:focus {
+  border-color: #98dfd6;
+  outline: none;
+}
+
+.c7::placeholder {
+  color: rgba(251, 251, 251, 0.3);
+}
+
+.c7[aria-invalid='true'] {
+  border-color: #b04b2f;
+}
+
+.c4 {
+  display: none;
+}
+
+.c8 {
+  width: 100%;
+  min-height: 65px;
+}
+
+<body>
+  <div>
+    <form
+      class="c0"
+      novalidate=""
+    >
+      <div
+        class="c1"
+      >
+        <h2
+          class="c2"
+        >
+          title
+        </h2>
+        <p
+          class="c3"
+        >
+          subtitle
+        </p>
+      </div>
+      <input
+        aria-hidden="true"
+        autocomplete="off"
+        class="c4"
+        name="honeypot"
+        tabindex="-1"
+        type="text"
+      />
+      <div
+        class="c5"
+      >
+        <label
+          class="c6"
+          for="subscribe-name"
+        >
+          nameLabel
+        </label>
+        <input
+          autocomplete="name"
+          class="c7"
+          id="subscribe-name"
+          name="name"
+          placeholder="namePlaceholder"
+          type="text"
+        />
+      </div>
+      <div
+        class="c5"
+      >
+        <label
+          class="c6"
+          for="subscribe-email"
+        >
+          emailLabel
+        </label>
+        <input
+          autocomplete="email"
+          class="c7"
+          id="subscribe-email"
+          name="email"
+          placeholder="emailPlaceholder"
+          type="email"
+        />
+      </div>
+      <div
+        class="c8"
+      >
+        <div
+          data-testid="turnstile"
+        />
+      </div>
+      <button
+        class="c9"
+        disabled=""
+        type="submit"
+      >
+        submitLabel
+      </button>
+    </form>
+  </div>
+</body>
+`;

@@ -4,6 +4,7 @@ import {
   getAllSeriesWithTranslations,
   getPostsForSeries,
   getSeriesForAdmin,
+  getSeriesTranslationsById,
   seriesOrderExistsForSeries,
   upsertSeriesTranslation,
 } from './series'
@@ -214,5 +215,18 @@ describe('upsertSeriesTranslation', () => {
     await upsertSeriesTranslation('my-series', 'en', 'My Series')
 
     expect(mockDb.insert).toHaveBeenCalledTimes(2)
+  })
+})
+
+describe('getSeriesTranslationsById', () => {
+  it('returns translations for the given series id', async () => {
+    const mockRows = [
+      { locale: 'en', title: 'My Series' },
+      { locale: 'es', title: 'Mi Serie' },
+    ]
+    mockDb.select.mockReturnValue(makeChain(mockRows))
+    const result = await getSeriesTranslationsById('series-123')
+    expect(result).toEqual(mockRows)
+    expect(mockDb.select).toHaveBeenCalledTimes(1)
   })
 })

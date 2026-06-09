@@ -9,6 +9,7 @@ import { JsonLd } from '@web/components/JsonLd/JsonLd'
 import { PostContent } from '@web/components/PostContent/PostContent'
 import { RelatedPosts } from '@web/components/RelatedPosts/RelatedPosts'
 import { SeriesIndicator } from '@web/components/SeriesIndicator/SeriesIndicator'
+import { SubscribeModal } from '@web/components/SubscribeModal'
 import { getServerTranslation } from '@web/i18n/server'
 import { getCategoryTranslations } from '@web/lib/db/queries/categories'
 import { getPostByNumber, getPublishedPosts } from '@web/lib/db/queries/posts'
@@ -26,7 +27,7 @@ import {
 } from '@web/utils/metadata/inLanguage'
 import { getSiteUrl } from '@web/utils/url/generateUrl'
 
-import { StyledPage } from './page.next.styles'
+import { StyledPage, StyledSubscribeWrapper } from './page.next.styles'
 
 export const revalidate = 3600
 
@@ -133,6 +134,10 @@ export async function generateMetadata({ params }: RouteProps) {
 export default async function BlogPostPage({ params }: RouteProps) {
   const { lng, id, slug } = await params
   const { t } = await getServerTranslation({ ns: 'blogPage', language: lng })
+  const { t: tSubscribe } = await getServerTranslation({
+    ns: 'subscribe',
+    language: lng,
+  })
 
   const postNumber = parseInt(id, 10)
   if (isNaN(postNumber)) return notFound()
@@ -189,6 +194,13 @@ export default async function BlogPostPage({ params }: RouteProps) {
         />
       )}
       <RelatedPosts postId={post.id} lng={lng} />
+      <StyledSubscribeWrapper>
+        <SubscribeModal
+          lng={lng}
+          buttonLabel={tSubscribe('buttonLabel')}
+          buttonAriaLabel={tSubscribe('buttonAriaLabel')}
+        />
+      </StyledSubscribeWrapper>
     </StyledPage>
   )
 }

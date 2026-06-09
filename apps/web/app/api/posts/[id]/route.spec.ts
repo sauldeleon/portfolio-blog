@@ -17,8 +17,12 @@ const mockSeriesOrderExistsForSeries = jest.fn()
 
 const mockRevalidateTag = jest.fn()
 const mockLoggerError = jest.fn()
+const mockSendNewPostNotifications = jest.fn()
 
 jest.mock('next/cache', () => ({ revalidateTag: mockRevalidateTag }))
+jest.mock('@web/lib/email/sendNewPostNotifications', () => ({
+  sendNewPostNotifications: mockSendNewPostNotifications,
+}))
 jest.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
 jest.mock('@web/lib/logger', () => ({
   logger: {
@@ -208,6 +212,8 @@ describe('GET /api/posts/[id]', () => {
 describe('PUT /api/posts/[id]', () => {
   beforeEach(() => {
     jest.clearAllMocks()
+    mockGetPostStatus.mockResolvedValue('draft')
+    mockSendNewPostNotifications.mockResolvedValue(undefined)
   })
 
   it('returns 401 when not authenticated', async () => {
@@ -314,6 +320,60 @@ describe('PUT /api/posts/[id]', () => {
       'id',
       expect.objectContaining({ publishedAt: expect.any(Date) }),
     )
+  })
+
+  it('fires new post notifications when status changes from draft to published', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockGetPostStatus.mockResolvedValue('draft')
+    mockGetPostTranslations.mockResolvedValue([
+      {
+        locale: 'en',
+        title: 'My Post',
+        slug: 'my-post',
+        excerpt: 'An excerpt',
+      },
+      {
+        locale: 'es',
+        title: 'Mi Post',
+        slug: 'mi-post',
+        excerpt: 'Un resumen',
+      },
+    ])
+    mockUpdatePost.mockResolvedValue({
+      ...mockPost,
+      postNumber: 42,
+      status: 'published',
+    })
+    await PUT(makePutRequest({ status: 'published' }), makeParams('id'))
+    expect(mockSendNewPostNotifications).toHaveBeenCalledWith(
+      expect.objectContaining({
+        postId: 'id',
+        postNumber: 42,
+        translations: expect.objectContaining({
+          en: { title: 'My Post', slug: 'my-post', excerpt: 'An excerpt' },
+        }),
+      }),
+    )
+  })
+
+  it('does not fire notifications when post was already published', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockGetPostStatus.mockResolvedValue('published')
+    mockGetPostTranslations.mockResolvedValue([
+      { locale: 'en' },
+      { locale: 'es' },
+    ])
+    mockUpdatePost.mockResolvedValue({ ...mockPost, status: 'published' })
+    await PUT(makePutRequest({ status: 'published' }), makeParams('id'))
+    expect(mockSendNewPostNotifications).not.toHaveBeenCalled()
+  })
+
+  it('does not fire notifications when status is not published', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockUpdatePost.mockResolvedValue({ ...mockPost, status: 'draft' })
+    await PUT(makePutRequest({ status: 'draft' }), makeParams('id'))
+    expect(mockSendNewPostNotifications).not.toHaveBeenCalled()
+    expect(mockGetPostStatus).not.toHaveBeenCalled()
   })
 
   it('clears publishedAt when status changes to draft', async () => {

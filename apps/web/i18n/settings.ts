@@ -8,6 +8,7 @@ import header from './locales/en/header.json'
 import homepage from './locales/en/homepage.json'
 import notFound from './locales/en/notFound.json'
 import portfolioPage from './locales/en/portfolioPage.json'
+import subscribe from './locales/en/subscribe.json'
 
 export const fallbackLng = 'en'
 export const languages = [fallbackLng, 'es']
@@ -25,5 +26,6 @@ export const resources = {
     experiencePage,
     portfolioPage,
     notFound,
+    subscribe,
   },
 } as const
