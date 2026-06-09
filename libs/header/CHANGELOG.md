@@ -1,5 +1,7 @@
 # Changelog Header component
 
+## [0.1.6](https://github.com/sauldeleon/portfolio-blog/compare/header-0.1.5...header-0.1.6) (2026-06-09)
+
 ## [0.1.5](https://github.com/sauldeleon/portfolio-blog/compare/header-0.1.4...header-0.1.5) (2026-05-11)
 
 ### Bug Fixes
