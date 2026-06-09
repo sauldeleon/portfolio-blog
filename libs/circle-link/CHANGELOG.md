@@ -1,5 +1,7 @@
 # Changelog Circle Link component
 
+## [0.2.5](https://github.com/sauldeleon/portfolio-blog/compare/circle-link-0.2.4...circle-link-0.2.5) (2026-06-09)
+
 ## [0.2.4](https://github.com/sauldeleon/portfolio-blog/compare/circle-link-0.2.3...circle-link-0.2.4) (2026-05-11)
 
 ## [0.2.3](https://github.com/sauldeleon/portfolio-blog/compare/circle-link-0.2.2...circle-link-0.2.3) (2024-01-08)

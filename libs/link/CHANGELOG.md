@@ -1,5 +1,11 @@
 # Changelog Link component
 
+## [0.2.6](https://github.com/sauldeleon/portfolio-blog/compare/link-0.2.5...link-0.2.6) (2026-06-09)
+
+### Bug Fixes
+
+- typescript errors across libs and web ([84fdcf3](https://github.com/sauldeleon/portfolio-blog/commit/84fdcf3ac013d23a64eac997f9112378bcdf616b))
+
 ## [0.2.5](https://github.com/sauldeleon/portfolio-blog/compare/link-0.2.4...link-0.2.5) (2026-05-11)
 
 ## [0.2.4](https://github.com/sauldeleon/portfolio-blog/compare/link-0.2.3...link-0.2.4) (2024-01-08)

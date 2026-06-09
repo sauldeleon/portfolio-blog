@@ -1,5 +1,7 @@
 # Changelog i18n tools library
 
+## [0.0.5](https://github.com/sauldeleon/portfolio-blog/compare/i18n-tools-0.0.4...i18n-tools-0.0.5) (2026-06-09)
+
 ## [0.0.4](https://github.com/sauldeleon/portfolio-blog/compare/i18n-tools-0.0.3...i18n-tools-0.0.4) (2026-05-11)
 
 ## [0.0.3](https://github.com/sauldeleon/portfolio-blog/compare/i18n-tools-0.0.2...i18n-tools-0.0.3) (2024-01-08)

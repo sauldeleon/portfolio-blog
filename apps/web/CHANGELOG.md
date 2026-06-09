@@ -1,5 +1,40 @@
 # Changelog web app
 
+# [0.10.0](https://github.com/sauldeleon/portfolio-blog/compare/web-0.9.0...web-0.10.0) (2026-06-09)
+
+### Bug Fixes
+
+- add descriptive aria-label to Read more links for SEO and a11y ([#102](https://github.com/sauldeleon/portfolio-blog/issues/102)) ([30a6dcc](https://github.com/sauldeleon/portfolio-blog/commit/30a6dccbd381591f865739556e55490fb7ba265e))
+- add mainEntity to home ProfilePage schema ([#99](https://github.com/sauldeleon/portfolio-blog/issues/99)) ([a4e9048](https://github.com/sauldeleon/portfolio-blog/commit/a4e90480a0c3a6bd5103779a66ad674458d2c23c))
+- correct X.com share URL and enrich blog post OG/Twitter metadata ([#98](https://github.com/sauldeleon/portfolio-blog/issues/98)) ([9e9305a](https://github.com/sauldeleon/portfolio-blog/commit/9e9305aad335739cc9e7a3591b463ff1eca7ffee))
+- remove headers() from blog post generateMetadata to enable static generation ([f34dbec](https://github.com/sauldeleon/portfolio-blog/commit/f34dbec07b19ac45bd99f0f67ec8c1e3e237de14))
+- typescript errors across libs and web ([84fdcf3](https://github.com/sauldeleon/portfolio-blog/commit/84fdcf3ac013d23a64eac997f9112378bcdf616b))
+- update E2E tests for a11y heading and portals changes ([#96](https://github.com/sauldeleon/portfolio-blog/issues/96)) ([3659e44](https://github.com/sauldeleon/portfolio-blog/commit/3659e44f791d467c319becb4cc87d6e2ed10ad17))
+
+### Features
+
+- **#84:** isr cache revalidation and auth rate limiting ([#94](https://github.com/sauldeleon/portfolio-blog/issues/94)) ([9fd1cd7](https://github.com/sauldeleon/portfolio-blog/commit/9fd1cd73750a7af38663fb9144d291bceb29f713)), closes [#84](https://github.com/sauldeleon/portfolio-blog/issues/84) [#84](https://github.com/sauldeleon/portfolio-blog/issues/84)
+- a11y improvements, skip-to-content, and tech brand colors in skills ([e374be0](https://github.com/sauldeleon/portfolio-blog/commit/e374be060aabb02e460072f5f3578aac599b5a85))
+- add admin image manager with upload, edit, delete and picker ([#92](https://github.com/sauldeleon/portfolio-blog/issues/92)) ([922b455](https://github.com/sauldeleon/portfolio-blog/commit/922b455ea78bf7944646e5835922f370c64aedb2))
+- add pagination to admin posts table (20 rows per page) ([#103](https://github.com/sauldeleon/portfolio-blog/issues/103)) ([cabe93e](https://github.com/sauldeleon/portfolio-blog/commit/cabe93eb39bee4617fdd77b4fb3c690fd2fca5de))
+- add search input to admin images manager ([#97](https://github.com/sauldeleon/portfolio-blog/issues/97)) ([662bf54](https://github.com/sauldeleon/portfolio-blog/commit/662bf54415ee3e210f118a4503809624e2455781))
+- **admin:** category translations with per-locale slugs ([#90](https://github.com/sauldeleon/portfolio-blog/issues/90)) ([f7604aa](https://github.com/sauldeleon/portfolio-blog/commit/f7604aa8b75cb588e7c96e2bb81ba889477ff51b))
+- author field, checkbox/combobox libs, post table improvements, archive fixes ([#91](https://github.com/sauldeleon/portfolio-blog/issues/91)) ([66a900f](https://github.com/sauldeleon/portfolio-blog/commit/66a900fc0fff2f0ccf1924a8cdef3d6ad6376a2b))
+- **blog:** blog listing page with filters, pagination and post cards ([#88](https://github.com/sauldeleon/portfolio-blog/issues/88)) ([bc4f876](https://github.com/sauldeleon/portfolio-blog/commit/bc4f8760d4dafa077a77a709d45cf0256755556d)), closes [#06](https://github.com/sauldeleon/portfolio-blog/issues/06) [#10](https://github.com/sauldeleon/portfolio-blog/issues/10) [#06](https://github.com/sauldeleon/portfolio-blog/issues/06) [#10](https://github.com/sauldeleon/portfolio-blog/issues/10)
+- **blog:** CMS foundation — DB schema, auth, public API, image upload ([#87](https://github.com/sauldeleon/portfolio-blog/issues/87)) ([9fa9d10](https://github.com/sauldeleon/portfolio-blog/commit/9fa9d108f6ed465d9223364b9ccdd7361980550d)), closes [#68](https://github.com/sauldeleon/portfolio-blog/issues/68) [#86](https://github.com/sauldeleon/portfolio-blog/issues/86) [#01](https://github.com/sauldeleon/portfolio-blog/issues/01) [#03](https://github.com/sauldeleon/portfolio-blog/issues/03) [#02](https://github.com/sauldeleon/portfolio-blog/issues/02) [#04](https://github.com/sauldeleon/portfolio-blog/issues/04)
+- **blog:** syntax highlighting, TOC, copy button, related posts, SEO metadata ([#89](https://github.com/sauldeleon/portfolio-blog/issues/89)) ([2206f5c](https://github.com/sauldeleon/portfolio-blog/commit/2206f5c64fee006952690bf9598d23e15d6b6718)), closes [#7](https://github.com/sauldeleon/portfolio-blog/issues/7) [#8](https://github.com/sauldeleon/portfolio-blog/issues/8) [#9](https://github.com/sauldeleon/portfolio-blog/issues/9)
+- category icon badges, admin preview tabs, and PostCard gradient ([#100](https://github.com/sauldeleon/portfolio-blog/issues/100)) ([5421e12](https://github.com/sauldeleon/portfolio-blog/commit/5421e1224b6ab81b32d50abe5de5b937158ca0c7))
+- experience page sticky nav, tech colors, and ToC UX improvements ([cf91fd5](https://github.com/sauldeleon/portfolio-blog/commit/cf91fd53c705a75bce2cdc52ab2444fd89475003))
+- gpx map editor integration with waypoint images, i18n, and UX improvements ([#107](https://github.com/sauldeleon/portfolio-blog/issues/107)) ([28a7aeb](https://github.com/sauldeleon/portfolio-blog/commit/28a7aebcebfcffba00788bc59c1fc50b9c650367))
+- limit waypoint select dropdown to 5 visible items ([#108](https://github.com/sauldeleon/portfolio-blog/issues/108)) ([abf9532](https://github.com/sauldeleon/portfolio-blog/commit/abf953237f79b98b47eeeeee77b2db03420ac13e))
+- post detail page, bulk unarchive, button colorScheme, series delete fix ([#93](https://github.com/sauldeleon/portfolio-blog/issues/93)) ([dbcb0e6](https://github.com/sauldeleon/portfolio-blog/commit/dbcb0e6916a2cb50d292030c9017047f92a50a08))
+- subscription system with email notifications ([#111](https://github.com/sauldeleon/portfolio-blog/issues/111)) ([bde09cd](https://github.com/sauldeleon/portfolio-blog/commit/bde09cd68119a5d2af9edaa1fe82a952ee3067c8))
+- user roles management, RBAC, and admin users CRUD ([#104](https://github.com/sauldeleon/portfolio-blog/issues/104)) ([eb62aef](https://github.com/sauldeleon/portfolio-blog/commit/eb62aefb165c25d3d50b8e00a25bf6086a10a83a))
+
+### Performance Improvements
+
+- convert blog OG image to JPEG 1200x630 (2.9MB -> 387KB) ([#105](https://github.com/sauldeleon/portfolio-blog/issues/105)) ([a50c764](https://github.com/sauldeleon/portfolio-blog/commit/a50c76400954b1f452dccefb4c74312b249d5340))
+
 # [0.9.0](https://github.com/sauldeleon/portfolio-blog/compare/web-0.8.0...web-0.9.0) (2026-05-11)
 
 ### Bug Fixes

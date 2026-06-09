@@ -1,5 +1,12 @@
 # Changelog Assets library
 
+# [0.7.0](https://github.com/sauldeleon/portfolio-blog/compare/assets-0.6.0...assets-0.7.0) (2026-06-09)
+
+### Features
+
+- category icon badges, admin preview tabs, and PostCard gradient ([#100](https://github.com/sauldeleon/portfolio-blog/issues/100)) ([5421e12](https://github.com/sauldeleon/portfolio-blog/commit/5421e1224b6ab81b32d50abe5de5b937158ca0c7))
+- post detail page, bulk unarchive, button colorScheme, series delete fix ([#93](https://github.com/sauldeleon/portfolio-blog/issues/93)) ([dbcb0e6](https://github.com/sauldeleon/portfolio-blog/commit/dbcb0e6916a2cb50d292030c9017047f92a50a08))
+
 # [0.6.0](https://github.com/sauldeleon/portfolio-blog/compare/assets-0.5.0...assets-0.6.0) (2026-05-11)
 
 ### Features
