@@ -189,7 +189,7 @@ export const StyledWaypointsDetails = styled.details`
   summary {
     cursor: pointer;
     padding: 0.6rem 1rem;
-    font-size: 0.875rem;
+    font-size: 0.8rem;
     font-weight: 600;
     user-select: none;
     list-style: none;
@@ -210,7 +210,7 @@ export const StyledWaypointsDetails = styled.details`
   table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.8rem;
+    font-size: 0.72rem;
 
     th,
     td {
