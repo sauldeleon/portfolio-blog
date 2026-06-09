@@ -171,4 +171,37 @@ describe('POST /api/subscribe', () => {
     expect(res.status).toBe(500)
     expect(mockLoggerError).toHaveBeenCalled()
   })
+
+  it('skips rate limiting and proceeds when ratelimit is null', async () => {
+    jest.resetModules()
+    jest.mock('@web/lib/ratelimit', () => ({ ratelimit: null }))
+    jest.mock('@web/lib/db/queries/subscriptions', () => ({
+      getSubscriptionByEmail: mockGetSubscriptionByEmail,
+      createSubscription: mockCreateSubscription,
+    }))
+    jest.mock('@web/lib/email/sendConfirmationEmail', () => ({
+      sendConfirmationEmail: mockSendConfirmationEmail,
+    }))
+    jest.mock('@web/lib/turnstile/verify', () => ({
+      verifyTurnstile: mockVerifyTurnstile,
+    }))
+    jest.mock('@web/lib/logger', () => ({
+      logger: {
+        error: mockLoggerError,
+        info: mockLoggerInfo,
+        debug: jest.fn(),
+        warn: jest.fn(),
+      },
+    }))
+    const { POST: postFn } = require('./route') as {
+      POST: (req: import('next/server').NextRequest) => Promise<Response>
+    }
+    mockVerifyTurnstile.mockResolvedValue(true)
+    mockGetSubscriptionByEmail.mockResolvedValue(null)
+    mockCreateSubscription.mockResolvedValue(mockSubscription)
+    mockSendConfirmationEmail.mockResolvedValue(undefined)
+    const res = await postFn(makeRequest(validBody))
+    expect(res.status).toBe(201)
+    expect(mockRatelimit.limit).not.toHaveBeenCalled()
+  })
 })

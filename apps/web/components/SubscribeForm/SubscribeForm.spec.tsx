@@ -11,6 +11,8 @@ const mockT = jest.fn((key: string, opts?: { email?: string }) =>
 const mockUseClientTranslation = jest.fn()
 const mockFetch = jest.fn()
 const mockTurnstileOnSuccess = jest.fn()
+const mockTurnstileOnError = jest.fn()
+const mockTurnstileOnExpire = jest.fn()
 
 jest.mock('@web/i18n/client', () => ({
   useClientTranslation: () => mockUseClientTranslation(),
@@ -19,11 +21,17 @@ jest.mock('@web/i18n/client', () => ({
 jest.mock('@marsidev/react-turnstile', () => ({
   Turnstile: ({
     onSuccess,
+    onError,
+    onExpire,
   }: {
     onSuccess: (token: string) => void
+    onError: () => void
+    onExpire: () => void
     siteKey: string
   }) => {
     mockTurnstileOnSuccess.mockImplementation(onSuccess)
+    mockTurnstileOnError.mockImplementation(onError)
+    mockTurnstileOnExpire.mockImplementation(onExpire)
     return <div data-testid="turnstile" />
   },
 }))
@@ -177,5 +185,77 @@ describe('SubscribeForm', () => {
     expect(
       screen.getByRole('button', { name: 'submitLabel' }),
     ).not.toBeDisabled()
+  })
+
+  it('enables submit when turnstile fires onError (allows submission with error token)', () => {
+    renderApp(<SubscribeForm lng="en" />)
+    expect(screen.getByRole('button', { name: 'submitLabel' })).toBeDisabled()
+    act(() => mockTurnstileOnError())
+    expect(
+      screen.getByRole('button', { name: 'submitLabel' }),
+    ).not.toBeDisabled()
+  })
+
+  it('disables submit when turnstile fires onExpire', () => {
+    renderApp(<SubscribeForm lng="en" />)
+    act(() => mockTurnstileOnSuccess('token'))
+    expect(
+      screen.getByRole('button', { name: 'submitLabel' }),
+    ).not.toBeDisabled()
+    act(() => mockTurnstileOnExpire())
+    expect(screen.getByRole('button', { name: 'submitLabel' })).toBeDisabled()
+  })
+
+  it('submits with __cf_error__ token when turnstile fires onError', async () => {
+    renderApp(<SubscribeForm lng="en" />)
+    act(() => mockTurnstileOnError())
+    await userEvent.type(screen.getByLabelText('nameLabel'), 'Test User')
+    await userEvent.type(
+      screen.getByLabelText('emailLabel'),
+      'test@example.com',
+    )
+    await userEvent.click(screen.getByRole('button', { name: 'submitLabel' }))
+    await waitFor(() => {
+      expect(mockFetch).toHaveBeenCalledWith(
+        '/api/subscribe',
+        expect.objectContaining({
+          body: expect.stringContaining('"turnstileToken":"__cf_error__"'),
+        }),
+      )
+    })
+  })
+
+  it('button not disabled and turnstile hidden when NEXT_PUBLIC_TURNSTILE_SITE_KEY is undefined', () => {
+    const env = { ...originalEnv }
+    delete env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
+    process.env = env
+    renderApp(<SubscribeForm lng="en" />)
+    expect(screen.queryByTestId('turnstile')).not.toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'submitLabel' }),
+    ).not.toBeDisabled()
+  })
+
+  it('shows submitting text on button while form is pending', async () => {
+    let resolveFetch!: (value: unknown) => void
+    mockFetch.mockImplementationOnce(
+      () =>
+        new Promise((resolve) => {
+          resolveFetch = resolve
+        }),
+    )
+    renderApp(<SubscribeForm lng="en" />)
+    act(() => mockTurnstileOnSuccess('token'))
+    await userEvent.type(screen.getByLabelText('nameLabel'), 'Test User')
+    await userEvent.type(
+      screen.getByLabelText('emailLabel'),
+      'test@example.com',
+    )
+    await userEvent.click(screen.getByRole('button', { name: 'submitLabel' }))
+    expect(
+        await screen.findByRole('button', { name: 'submitting' }),
+      ).toBeInTheDocument()
+    resolveFetch({ ok: true, json: async () => ({ ok: true }) })
+    expect(await screen.findByRole('status')).toBeInTheDocument()
   })
 })

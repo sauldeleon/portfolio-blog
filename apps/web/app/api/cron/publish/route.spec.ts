@@ -154,6 +154,28 @@ describe('GET /api/cron/publish', () => {
     expect(mockSendNewPostNotifications).not.toHaveBeenCalled()
   })
 
+  it('logs error when sendNewPostNotifications rejects', async () => {
+    mockGetScheduledPostsToPublish.mockResolvedValue([
+      { id: 'post-1', scheduledAt: new Date('2024-01-10T08:00:00Z') },
+    ])
+    mockUpdatePost.mockResolvedValue({
+      id: 'post-1',
+      postNumber: 5,
+      status: 'published',
+    })
+    mockGetPostTranslations.mockResolvedValue([
+      { locale: 'en', title: 'Post 1', slug: 'post-1', excerpt: 'Excerpt' },
+    ])
+    const notifError = new Error('Notification failed')
+    mockSendNewPostNotifications.mockRejectedValue(notifError)
+    await GET(makeRequest('Bearer test-secret-xyz'))
+    await Promise.resolve()
+    expect(mockLoggerError).toHaveBeenCalledWith(
+      notifError,
+      'cron/publish: failed to send notifications',
+    )
+  })
+
   it('returns 500 and logs error when getScheduledPostsToPublish throws', async () => {
     const err = new Error('DB error')
     mockGetScheduledPostsToPublish.mockRejectedValue(err)

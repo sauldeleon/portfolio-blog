@@ -128,6 +128,40 @@ describe('sendConfirmationEmail', () => {
     )
   })
 
+  it('uses onboarding@resend.dev as from address when RESEND_FROM_EMAIL is not set', async () => {
+    const originalFrom = process.env.RESEND_FROM_EMAIL
+    delete process.env.RESEND_FROM_EMAIL
+    jest.resetModules()
+    jest.mock('./resend', () => ({
+      resend: { emails: { send: mockResendSend } },
+    }))
+    jest.mock('@react-email/components', () => ({ render: mockRender }))
+    jest.mock('@web/utils/url/generateUrl', () => ({
+      getSiteUrl: mockGetSiteUrl,
+    }))
+    jest.mock('./templates/ConfirmSubscription', () => ({
+      ConfirmSubscriptionEmail: jest.fn(() => null),
+    }))
+    jest.mock('@web/lib/logger', () => ({
+      logger: { error: mockLoggerError },
+    }))
+    const { sendConfirmationEmail: send } =
+      require('./sendConfirmationEmail') as typeof import('./sendConfirmationEmail')
+    mockRender.mockResolvedValue('<html>email</html>')
+    mockResendSend.mockResolvedValue({ data: { id: 'id' }, error: null })
+    await send({
+      to: 'user@example.com',
+      name: 'User',
+      token: 'abc',
+      locale: 'en',
+      translations,
+    })
+    expect(mockResendSend).toHaveBeenCalledWith(
+      expect.objectContaining({ from: 'onboarding@resend.dev' }),
+    )
+    process.env.RESEND_FROM_EMAIL = originalFrom
+  })
+
   it('skips sending when resend is null', async () => {
     jest.resetModules()
     jest.mock('./resend', () => ({ resend: null }))

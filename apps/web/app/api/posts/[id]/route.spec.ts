@@ -356,6 +356,31 @@ describe('PUT /api/posts/[id]', () => {
     )
   })
 
+  it('does not fire notifications when notify=false is passed', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockGetPostStatus.mockResolvedValue('draft')
+    mockGetPostTranslations.mockResolvedValue([
+      {
+        locale: 'en',
+        title: 'My Post',
+        slug: 'my-post',
+        excerpt: 'An excerpt',
+      },
+      {
+        locale: 'es',
+        title: 'Mi Post',
+        slug: 'mi-post',
+        excerpt: 'Un resumen',
+      },
+    ])
+    mockUpdatePost.mockResolvedValue({ ...mockPost, status: 'published' })
+    await PUT(
+      makePutRequest({ status: 'published', notify: false }),
+      makeParams('id'),
+    )
+    expect(mockSendNewPostNotifications).not.toHaveBeenCalled()
+  })
+
   it('does not fire notifications when post was already published', async () => {
     mockAuth.mockResolvedValue({ user: { name: 'admin' } })
     mockGetPostStatus.mockResolvedValue('published')
@@ -636,6 +661,38 @@ describe('PUT /api/posts/[id]', () => {
       makeParams('post-123'),
     )
     expect(res.status).toBe(200)
+  })
+
+  it('logs error when sendNewPostNotifications rejects', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockGetPostStatus.mockResolvedValue('draft')
+    mockGetPostTranslations.mockResolvedValue([
+      {
+        locale: 'en',
+        title: 'My Post',
+        slug: 'my-post',
+        excerpt: 'An excerpt',
+      },
+      {
+        locale: 'es',
+        title: 'Mi Post',
+        slug: 'mi-post',
+        excerpt: 'Un resumen',
+      },
+    ])
+    mockUpdatePost.mockResolvedValue({
+      ...mockPost,
+      postNumber: 42,
+      status: 'published',
+    })
+    const notifError = new Error('Notification failed')
+    mockSendNewPostNotifications.mockRejectedValue(notifError)
+    await PUT(makePutRequest({ status: 'published' }), makeParams('id'))
+    await Promise.resolve()
+    expect(mockLoggerError).toHaveBeenCalledWith(
+      notifError,
+      'PUT /api/posts/[id]: failed to send notifications',
+    )
   })
 
   it('returns 500 and logs error when updatePost throws', async () => {

@@ -292,6 +292,41 @@ describe('sendNewPostNotifications', () => {
     expect(templateArg.seriesTitle).toBeUndefined()
   })
 
+  it('uses onboarding@resend.dev as from address when RESEND_FROM_EMAIL is not set', async () => {
+    const originalFrom = process.env.RESEND_FROM_EMAIL
+    delete process.env.RESEND_FROM_EMAIL
+    jest.resetModules()
+    jest.mock('./resend', () => ({
+      resend: { emails: { send: mockResendSend } },
+    }))
+    jest.mock('@react-email/components', () => ({ render: mockRender }))
+    jest.mock('@web/utils/url/generateUrl', () => ({
+      getSiteUrl: mockGetSiteUrl,
+    }))
+    jest.mock('./templates/NewPostEmail', () => ({
+      NewPostEmail: (...args: unknown[]) => mockNewPostEmail(...args),
+    }))
+    jest.mock('@web/lib/db/queries/subscriptions', () => ({
+      getActiveSubscribers: mockGetActiveSubscribers,
+    }))
+    jest.mock('@web/lib/db/queries/series', () => ({
+      getSeriesTranslationsById: mockGetSeriesTranslationsById,
+    }))
+    jest.mock('@web/i18n/server', () => ({
+      getServerTranslation: mockGetServerTranslation,
+    }))
+    jest.mock('@web/lib/logger', () => ({
+      logger: { error: mockLoggerError },
+    }))
+    const { sendNewPostNotifications: send } =
+      require('./sendNewPostNotifications') as typeof import('./sendNewPostNotifications')
+    await send({ postId: 'p1', postNumber: 1, translations: mockTranslations })
+    expect(mockResendSend).toHaveBeenCalledWith(
+      expect.objectContaining({ from: 'onboarding@resend.dev' }),
+    )
+    process.env.RESEND_FROM_EMAIL = originalFrom
+  })
+
   it('returns early when resend is null', async () => {
     jest.resetModules()
     jest.mock('./resend', () => ({ resend: null }))

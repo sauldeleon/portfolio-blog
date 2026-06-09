@@ -42,9 +42,12 @@ describe('Admin posts — publish lifecycle', () => {
 
     cy.get('[data-testid="save-button"]').should('not.be.disabled').click()
 
-    // Publish from editor — wait for PUT response
+    // Publish from editor — choose "Publish Only" to skip email notifications
     cy.intercept('PUT', /\/api\/posts\//).as('publishReq')
     cy.get('[data-testid="publish-button"]').should('not.be.disabled').click()
+    cy.get('[data-testid="publish-notify-publish-only"]')
+      .should('be.visible')
+      .click()
     cy.wait('@publishReq').its('response.statusCode').should('eq', 200)
     cy.get('[data-testid="status-badge"]', { timeout: 10000 }).should(
       'contain.text',

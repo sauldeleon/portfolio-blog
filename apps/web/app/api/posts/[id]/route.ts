@@ -83,6 +83,7 @@ const updatePostSchema = z.object({
   scheduledAt: z.string().nullable().optional(),
   seriesId: z.string().nullable().optional(),
   seriesOrder: z.number().int().nullable().optional(),
+  notify: z.boolean().optional(),
   seriesTitles: z
     .object({ en: z.string().optional(), es: z.string().optional() })
     .optional(),
@@ -217,7 +218,11 @@ export async function PUT(
       }
     }
 
-    if (data.status === 'published' && prevStatus !== 'published') {
+    if (
+      data.status === 'published' &&
+      prevStatus !== 'published' &&
+      data.notify !== false
+    ) {
       const allTranslations = await getPostTranslations(id)
       const translationsByLocale: Partial<
         Record<'en' | 'es', { title: string; excerpt: string; slug: string }>

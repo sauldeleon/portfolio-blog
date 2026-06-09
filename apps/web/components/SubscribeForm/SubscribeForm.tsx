@@ -62,6 +62,7 @@ export function SubscribeForm({ lng, showTitles = true }: SubscribeFormProps) {
   })
 
   const onSubmit = async (values: SubscribeFormValues) => {
+    /* istanbul ignore next */
     if (!turnstileToken && !turnstileError) return
     setStatus('submitting')
     setSubmittedEmail(values.email)

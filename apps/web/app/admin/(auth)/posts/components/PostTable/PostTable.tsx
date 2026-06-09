@@ -6,6 +6,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 
 import { ConfirmDeleteModal } from '@web/app/admin/(auth)/components/ConfirmDeleteModal'
+import { PublishNotifyModal } from '@web/app/admin/(auth)/components/PublishNotifyModal'
 import { useClientTranslation } from '@web/i18n/client'
 import type { AdminPost } from '@web/lib/db/queries/posts'
 
@@ -99,6 +100,8 @@ export function PostTable({ posts }: PostTableProps) {
   const [filter, setFilter] = useState<StatusFilter>(initialFilter)
   const [search, setSearch] = useState('')
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
+  const [publishNotifyTarget, setPublishNotifyTarget] =
+    useState<AdminPost | null>(null)
   const [bulkPublishPending, setBulkPublishPending] = useState(false)
   const [bulkUnpublishPending, setBulkUnpublishPending] = useState(false)
   const [bulkArchivePending, setBulkArchivePending] = useState(false)
@@ -204,21 +207,31 @@ export function PostTable({ posts }: PostTableProps) {
     })
   }
 
-  async function handleTogglePublish(e: React.MouseEvent, post: AdminPost) {
+  function handleTogglePublish(e: React.MouseEvent, post: AdminPost) {
     e.stopPropagation()
-    const isPublished = post.status === 'published'
-    const newStatus = isPublished ? 'draft' : 'published'
-    await axios.put(`/api/posts/${post.id}/`, { status: newStatus })
+    if (post.status !== 'published') {
+      setPublishNotifyTarget(post)
+      return
+    }
+    void axios.put(`/api/posts/${post.id}/`, { status: 'draft' })
+    queryClient.setQueryData<AdminPost[]>(QUERY_KEY, (old) => {
+      /* istanbul ignore next */
+      if (!old) return []
+      return old.map((p) =>
+        p.id === post.id ? { ...p, status: 'draft', publishedAt: null } : p,
+      )
+    })
+  }
+
+  async function handleConfirmPublish(post: AdminPost, notify: boolean) {
+    setPublishNotifyTarget(null)
+    await axios.put(`/api/posts/${post.id}/`, { status: 'published', notify })
     queryClient.setQueryData<AdminPost[]>(QUERY_KEY, (old) => {
       /* istanbul ignore next */
       if (!old) return []
       return old.map((p) =>
         p.id === post.id
-          ? {
-              ...p,
-              status: newStatus,
-              publishedAt: newStatus === 'published' ? new Date() : null,
-            }
+          ? { ...p, status: 'published', publishedAt: new Date() }
           : p,
       )
     })
@@ -253,13 +266,13 @@ export function PostTable({ posts }: PostTableProps) {
     setBulkPublishPending(true)
   }
 
-  async function handleConfirmBulkPublish() {
+  async function handleConfirmBulkPublish(notify: boolean) {
     const toPublish = selectedPosts.filter(
       (p) => p.status !== 'published' && canPublish(p),
     )
     await Promise.all(
       toPublish.map((p) =>
-        axios.put(`/api/posts/${p.id}/`, { status: 'published' }),
+        axios.put(`/api/posts/${p.id}/`, { status: 'published', notify }),
       ),
     )
     queryClient.setQueryData<AdminPost[]>(QUERY_KEY, (old) => {
@@ -664,12 +677,23 @@ export function PostTable({ posts }: PostTableProps) {
         onConfirm={handleConfirmHardDelete}
         onCancel={handleCancelHardDelete}
       />
-      <ConfirmDeleteModal
+      <PublishNotifyModal
+        isOpen={!!publishNotifyTarget}
+        onPublishAndNotify={() =>
+          publishNotifyTarget &&
+          void handleConfirmPublish(publishNotifyTarget, true)
+        }
+        onPublishOnly={() =>
+          publishNotifyTarget &&
+          void handleConfirmPublish(publishNotifyTarget, false)
+        }
+        onCancel={() => setPublishNotifyTarget(null)}
+      />
+      <PublishNotifyModal
         isOpen={bulkPublishPending}
-        message={t('posts.bulkPublishConfirm')}
-        onConfirm={handleConfirmBulkPublish}
+        onPublishAndNotify={() => void handleConfirmBulkPublish(true)}
+        onPublishOnly={() => void handleConfirmBulkPublish(false)}
         onCancel={() => setBulkPublishPending(false)}
-        variant="warning"
       />
       <ConfirmDeleteModal
         isOpen={bulkUnpublishPending}
