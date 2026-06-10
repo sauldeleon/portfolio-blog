@@ -14,6 +14,18 @@ import {
 } from '@react-email/components'
 import * as React from 'react'
 
+import {
+  bodyStyle,
+  cardStyle,
+  containerStyle,
+  coverImageStyle,
+  footerSectionStyle,
+  hrStyle,
+  logoLinkStyle,
+  smallTextStyle,
+  unsubscribeLinkStyle,
+} from './emailStyles'
+
 export interface ConfirmSubscriptionEmailProps {
   name: string
   confirmUrl: string
@@ -59,7 +71,7 @@ export function ConfirmSubscriptionEmail({
                 src={blogImageUrl}
                 alt="sawl.dev"
                 width="560"
-                style={blogImageStyle}
+                style={coverImageStyle}
               />
             )}
 
@@ -90,42 +102,8 @@ export function ConfirmSubscriptionEmail({
 
 export default ConfirmSubscriptionEmail
 
-const bodyStyle: React.CSSProperties = {
-  backgroundColor: '#000000',
-  fontFamily: '"Roboto Mono", "Courier New", Courier, monospace',
-  margin: '0',
-  padding: '0',
-}
-
-const containerStyle: React.CSSProperties = {
-  maxWidth: '560px',
-  margin: '0 auto',
-  padding: '40px 24px',
-}
-
 const headerStyle: React.CSSProperties = {
   marginBottom: '32px',
-}
-
-const logoLinkStyle: React.CSSProperties = {
-  color: '#98DFD6',
-  fontSize: '24px',
-  fontWeight: '500',
-  textDecoration: 'none',
-  letterSpacing: '2px',
-}
-
-const cardStyle: React.CSSProperties = {
-  backgroundColor: '#0a0a0a',
-  border: '1px solid #222222',
-  borderRadius: '4px',
-  overflow: 'hidden',
-}
-
-const blogImageStyle: React.CSSProperties = {
-  display: 'block',
-  width: '100%',
-  maxWidth: '100%',
 }
 
 const contentStyle: React.CSSProperties = {
@@ -160,26 +138,4 @@ const buttonStyle: React.CSSProperties = {
   textTransform: 'uppercase',
   borderRadius: '2px',
   marginBottom: '32px',
-}
-
-const smallTextStyle: React.CSSProperties = {
-  color: '#555555',
-  fontSize: '12px',
-  lineHeight: '1.6',
-  margin: '0',
-}
-
-const hrStyle: React.CSSProperties = {
-  borderColor: '#1a1a1a',
-  margin: '24px 0',
-}
-
-const footerSectionStyle: React.CSSProperties = {
-  textAlign: 'center',
-}
-
-const unsubscribeLinkStyle: React.CSSProperties = {
-  color: '#555555',
-  fontSize: '12px',
-  textDecoration: 'underline',
 }

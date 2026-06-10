@@ -2,11 +2,13 @@
 
 import { useState } from 'react'
 
-import { Modal } from '@sdlgr/modal'
-
 import { SubscribeForm } from '@web/components/SubscribeForm'
 
-import { StyledModalBody, StyledTriggerButton } from './SubscribeModal.styles'
+import {
+  StyledModal,
+  StyledModalBody,
+  StyledTriggerButton,
+} from './SubscribeModal.styles'
 
 export interface SubscribeModalProps {
   lng: string
@@ -31,11 +33,11 @@ export function SubscribeModal({
         {buttonLabel}
       </StyledTriggerButton>
 
-      <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
+      <StyledModal isOpen={isOpen} setIsOpen={setIsOpen}>
         <StyledModalBody>
           <SubscribeForm lng={lng} />
         </StyledModalBody>
-      </Modal>
+      </StyledModal>
     </>
   )
 }

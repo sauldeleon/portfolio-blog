@@ -13,6 +13,7 @@ function schemeColor(theme: DefaultTheme, scheme: ButtonColorScheme): string {
 const sharedButtonStyles = css`
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
   background: transparent;
   cursor: pointer;
@@ -29,6 +30,7 @@ const buttonSizeStyles: Record<ButtonSize, ReturnType<typeof css>> = {
   `,
   md: css`
     padding: 15px 20px;
+    font-size: 0.9rem;
   `,
   lg: css`
     padding: 1.25rem 2rem;

@@ -19,7 +19,7 @@ import {
   seriesOrderExistsForSeries,
   upsertSeriesTranslation,
 } from '@web/lib/db/queries/series'
-import { sendNewPostNotifications } from '@web/lib/email/sendNewPostNotifications'
+import { notifyPostPublished } from '@web/lib/email/notifyPostPublished'
 import { logger } from '@web/lib/logger'
 import { computeReadingTime } from '@web/utils/computeReadingTime'
 
@@ -223,28 +223,9 @@ export async function PUT(
       prevStatus !== 'published' &&
       data.notify !== false
     ) {
-      const allTranslations = await getPostTranslations(id)
-      const translationsByLocale: Partial<
-        Record<'en' | 'es', { title: string; excerpt: string; slug: string }>
-      > = {}
-      for (const t of allTranslations) {
-        translationsByLocale[t.locale as 'en' | 'es'] = {
-          title: t.title,
-          slug: t.slug,
-          excerpt: t.excerpt,
-        }
-      }
-      sendNewPostNotifications({
-        postId: id,
-        postNumber: post.postNumber,
-        translations: translationsByLocale,
-        coverImage: post.coverImage,
-        category: post.category,
-        tags: post.tags,
-        seriesId: post.seriesId,
-        seriesOrder: post.seriesOrder,
-      }).catch((err) =>
-        logger.error(err, 'PUT /api/posts/[id]: failed to send notifications'),
+      notifyPostPublished(
+        post,
+        'PUT /api/posts/[id]: failed to send notifications',
       )
     }
 

@@ -1,6 +1,17 @@
 import styled from 'styled-components'
 
 import { Button } from '@sdlgr/button'
+import { Modal } from '@sdlgr/modal'
+
+export const StyledModal = styled(Modal)`
+  ${({ theme }) => theme.helpers.border.gradientShared}
+  ${({ theme }) => theme.helpers.border.gradientBottom}
+  border-radius: 0;
+
+  ${({ theme }) => theme.media.up.md} {
+    max-width: 520px;
+  }
+`
 
 export const StyledTriggerButton = styled(Button)`
   transition:

@@ -4,6 +4,7 @@ exports[`SubscribeForm renders form fields and titles 1`] = `
 .c9 {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
   background: transparent;
   cursor: pointer;
@@ -11,6 +12,7 @@ exports[`SubscribeForm renders form fields and titles 1`] = `
   background-color: #FBFBFB;
   color: #000000;
   padding: 15px 20px;
+  font-size: 0.9rem;
 }
 
 .c9:hover:not(:disabled) {

@@ -4,6 +4,7 @@ exports[`Footer should render successfully 1`] = `
 .c10 {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
   background: transparent;
   cursor: pointer;

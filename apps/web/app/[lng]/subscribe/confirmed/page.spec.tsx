@@ -26,6 +26,14 @@ jest.mock(
     },
 )
 
+jest.mock(
+  'next/image',
+  () =>
+    function MockImage({ src, alt }: { src: string; alt: string }) {
+      return <img src={src} alt={alt} />
+    },
+)
+
 function makeParams(lng: Locale, token?: string) {
   return {
     params: Promise.resolve({ lng }),
@@ -76,6 +84,26 @@ describe('[lng]/subscribe/confirmed — page', () => {
     const ui = await Page(makeParams('en', 'tok'))
     render(ui)
     expect(screen.getByText('backToBlog')).toBeInTheDocument()
+  })
+
+  it('renders subscribe image on success', async () => {
+    const { confirmSubscription } = require('@web/lib/db/queries/subscriptions')
+    confirmSubscription.mockResolvedValue({
+      id: '1',
+      status: 'active',
+      token: 'tok',
+    })
+    const ui = await Page(makeParams('en', 'valid-token'))
+    render(ui)
+    expect(screen.getByAltText('confirmed.imageAlt')).toBeInTheDocument()
+  })
+
+  it('does not render subscribe image on error', async () => {
+    const { confirmSubscription } = require('@web/lib/db/queries/subscriptions')
+    confirmSubscription.mockResolvedValue(null)
+    const ui = await Page(makeParams('en', 'bad-token'))
+    render(ui)
+    expect(screen.queryByAltText('confirmed.imageAlt')).not.toBeInTheDocument()
   })
 })
 

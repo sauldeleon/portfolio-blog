@@ -17,11 +17,11 @@ const mockSeriesOrderExistsForSeries = jest.fn()
 
 const mockRevalidateTag = jest.fn()
 const mockLoggerError = jest.fn()
-const mockSendNewPostNotifications = jest.fn()
+const mockNotifyPostPublished = jest.fn()
 
 jest.mock('next/cache', () => ({ revalidateTag: mockRevalidateTag }))
-jest.mock('@web/lib/email/sendNewPostNotifications', () => ({
-  sendNewPostNotifications: mockSendNewPostNotifications,
+jest.mock('@web/lib/email/notifyPostPublished', () => ({
+  notifyPostPublished: mockNotifyPostPublished,
 }))
 jest.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
 jest.mock('@web/lib/logger', () => ({
@@ -213,7 +213,7 @@ describe('PUT /api/posts/[id]', () => {
   beforeEach(() => {
     jest.clearAllMocks()
     mockGetPostStatus.mockResolvedValue('draft')
-    mockSendNewPostNotifications.mockResolvedValue(undefined)
+    mockNotifyPostPublished.mockResolvedValue(undefined)
   })
 
   it('returns 401 when not authenticated', async () => {
@@ -326,33 +326,15 @@ describe('PUT /api/posts/[id]', () => {
     mockAuth.mockResolvedValue({ user: { name: 'admin' } })
     mockGetPostStatus.mockResolvedValue('draft')
     mockGetPostTranslations.mockResolvedValue([
-      {
-        locale: 'en',
-        title: 'My Post',
-        slug: 'my-post',
-        excerpt: 'An excerpt',
-      },
-      {
-        locale: 'es',
-        title: 'Mi Post',
-        slug: 'mi-post',
-        excerpt: 'Un resumen',
-      },
+      { locale: 'en' },
+      { locale: 'es' },
     ])
-    mockUpdatePost.mockResolvedValue({
-      ...mockPost,
-      postNumber: 42,
-      status: 'published',
-    })
+    const updatedPost = { ...mockPost, postNumber: 42, status: 'published' }
+    mockUpdatePost.mockResolvedValue(updatedPost)
     await PUT(makePutRequest({ status: 'published' }), makeParams('id'))
-    expect(mockSendNewPostNotifications).toHaveBeenCalledWith(
-      expect.objectContaining({
-        postId: 'id',
-        postNumber: 42,
-        translations: expect.objectContaining({
-          en: { title: 'My Post', slug: 'my-post', excerpt: 'An excerpt' },
-        }),
-      }),
+    expect(mockNotifyPostPublished).toHaveBeenCalledWith(
+      updatedPost,
+      'PUT /api/posts/[id]: failed to send notifications',
     )
   })
 
@@ -360,25 +342,15 @@ describe('PUT /api/posts/[id]', () => {
     mockAuth.mockResolvedValue({ user: { name: 'admin' } })
     mockGetPostStatus.mockResolvedValue('draft')
     mockGetPostTranslations.mockResolvedValue([
-      {
-        locale: 'en',
-        title: 'My Post',
-        slug: 'my-post',
-        excerpt: 'An excerpt',
-      },
-      {
-        locale: 'es',
-        title: 'Mi Post',
-        slug: 'mi-post',
-        excerpt: 'Un resumen',
-      },
+      { locale: 'en' },
+      { locale: 'es' },
     ])
     mockUpdatePost.mockResolvedValue({ ...mockPost, status: 'published' })
     await PUT(
       makePutRequest({ status: 'published', notify: false }),
       makeParams('id'),
     )
-    expect(mockSendNewPostNotifications).not.toHaveBeenCalled()
+    expect(mockNotifyPostPublished).not.toHaveBeenCalled()
   })
 
   it('does not fire notifications when post was already published', async () => {
@@ -390,14 +362,14 @@ describe('PUT /api/posts/[id]', () => {
     ])
     mockUpdatePost.mockResolvedValue({ ...mockPost, status: 'published' })
     await PUT(makePutRequest({ status: 'published' }), makeParams('id'))
-    expect(mockSendNewPostNotifications).not.toHaveBeenCalled()
+    expect(mockNotifyPostPublished).not.toHaveBeenCalled()
   })
 
   it('does not fire notifications when status is not published', async () => {
     mockAuth.mockResolvedValue({ user: { name: 'admin' } })
     mockUpdatePost.mockResolvedValue({ ...mockPost, status: 'draft' })
     await PUT(makePutRequest({ status: 'draft' }), makeParams('id'))
-    expect(mockSendNewPostNotifications).not.toHaveBeenCalled()
+    expect(mockNotifyPostPublished).not.toHaveBeenCalled()
     expect(mockGetPostStatus).not.toHaveBeenCalled()
   })
 
@@ -661,38 +633,6 @@ describe('PUT /api/posts/[id]', () => {
       makeParams('post-123'),
     )
     expect(res.status).toBe(200)
-  })
-
-  it('logs error when sendNewPostNotifications rejects', async () => {
-    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
-    mockGetPostStatus.mockResolvedValue('draft')
-    mockGetPostTranslations.mockResolvedValue([
-      {
-        locale: 'en',
-        title: 'My Post',
-        slug: 'my-post',
-        excerpt: 'An excerpt',
-      },
-      {
-        locale: 'es',
-        title: 'Mi Post',
-        slug: 'mi-post',
-        excerpt: 'Un resumen',
-      },
-    ])
-    mockUpdatePost.mockResolvedValue({
-      ...mockPost,
-      postNumber: 42,
-      status: 'published',
-    })
-    const notifError = new Error('Notification failed')
-    mockSendNewPostNotifications.mockRejectedValue(notifError)
-    await PUT(makePutRequest({ status: 'published' }), makeParams('id'))
-    await Promise.resolve()
-    expect(mockLoggerError).toHaveBeenCalledWith(
-      notifError,
-      'PUT /api/posts/[id]: failed to send notifications',
-    )
   })
 
   it('returns 500 and logs error when updatePost throws', async () => {

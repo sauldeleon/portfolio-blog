@@ -26,6 +26,14 @@ jest.mock(
     },
 )
 
+jest.mock(
+  'next/image',
+  () =>
+    function MockImage({ src, alt }: { src: string; alt: string }) {
+      return <img src={src} alt={alt} />
+    },
+)
+
 function makeParams(lng: Locale, token?: string) {
   return {
     params: Promise.resolve({ lng }),
@@ -72,6 +80,24 @@ describe('[lng]/subscribe/unsubscribed — page', () => {
     const ui = await Page(makeParams('en', 'tok'))
     render(ui)
     expect(screen.getByText('backToBlog')).toBeInTheDocument()
+  })
+
+  it('renders unsubscribe image on success', async () => {
+    const { unsubscribeByToken } = require('@web/lib/db/queries/subscriptions')
+    unsubscribeByToken.mockResolvedValue({ id: '1', status: 'unsubscribed' })
+    const ui = await Page(makeParams('en', 'valid-token'))
+    render(ui)
+    expect(screen.getByAltText('unsubscribed.imageAlt')).toBeInTheDocument()
+  })
+
+  it('does not render unsubscribe image on error', async () => {
+    const { unsubscribeByToken } = require('@web/lib/db/queries/subscriptions')
+    unsubscribeByToken.mockResolvedValue(null)
+    const ui = await Page(makeParams('en', 'bad-token'))
+    render(ui)
+    expect(
+      screen.queryByAltText('unsubscribed.imageAlt'),
+    ).not.toBeInTheDocument()
   })
 })
 

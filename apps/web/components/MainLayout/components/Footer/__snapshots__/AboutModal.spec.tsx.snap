@@ -85,6 +85,7 @@ exports[`AboutModal should render 1`] = `
 .c4 {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
   background: transparent;
   cursor: pointer;
