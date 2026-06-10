@@ -4,6 +4,7 @@ exports[`Button should render contained with colorScheme danger 1`] = `
 .c0 {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
   background: transparent;
   cursor: pointer;
@@ -29,6 +30,7 @@ exports[`Button should render contained with colorScheme success 1`] = `
 .c0 {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
   background: transparent;
   cursor: pointer;
@@ -54,6 +56,7 @@ exports[`Button should render contained with size xs 1`] = `
 .c0 {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
   background: transparent;
   cursor: pointer;
@@ -77,6 +80,7 @@ exports[`Button should render ghost with colorScheme danger 1`] = `
 .c0 {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
   background: transparent;
   cursor: pointer;
@@ -122,6 +126,7 @@ exports[`Button should render ghost with colorScheme success 1`] = `
 .c0 {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
   background: transparent;
   cursor: pointer;
@@ -167,6 +172,7 @@ exports[`Button should render ghost with colorScheme warning 1`] = `
 .c0 {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
   background: transparent;
   cursor: pointer;
@@ -212,6 +218,7 @@ exports[`Button should render inverted with size xs 1`] = `
 .c0 {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
   background: transparent;
   cursor: pointer;
@@ -247,6 +254,7 @@ exports[`Button should render variant contained with size sm 1`] = `
 .c0 {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
   background: transparent;
   cursor: pointer;
@@ -270,6 +278,7 @@ exports[`Button should render variant ghost 1`] = `
 .c0 {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
   background: transparent;
   cursor: pointer;
@@ -277,6 +286,7 @@ exports[`Button should render variant ghost 1`] = `
   border: 1px solid transparent;
   font-family: inherit;
   padding: 15px 20px;
+  font-size: 0.9rem;
 }
 
 .c0:hover:not(:disabled) {
@@ -307,6 +317,7 @@ exports[`Button should render variant ghost with size lg 1`] = `
 .c0 {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
   background: transparent;
   cursor: pointer;
@@ -345,6 +356,7 @@ exports[`Button should render variant ghost with size sm 1`] = `
 .c0 {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
   background: transparent;
   cursor: pointer;
@@ -383,6 +395,7 @@ exports[`Button should render variant ghost with size xs 1`] = `
 .c0 {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
   background: transparent;
   cursor: pointer;
@@ -421,6 +434,7 @@ exports[`Button should render variant inverted 1`] = `
 .c0 {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
   background: transparent;
   cursor: pointer;
@@ -428,6 +442,7 @@ exports[`Button should render variant inverted 1`] = `
   background-color: #FBFBFB;
   color: #000000;
   padding: 15px 20px;
+  font-size: 0.9rem;
 }
 
 .c0:hover:not(:disabled) {
@@ -455,6 +470,7 @@ exports[`Button should render variant inverted with size lg 1`] = `
 .c0 {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
   background: transparent;
   cursor: pointer;
@@ -490,6 +506,7 @@ exports[`Button should render variant inverted with size sm 1`] = `
 .c0 {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
   background: transparent;
   cursor: pointer;

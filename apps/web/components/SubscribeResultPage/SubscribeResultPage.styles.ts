@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 
-export const StyledConfirmPage = styled.main`
+export const StyledResultPage = styled.main`
   width: 100%;
-  max-width: 560px;
+  max-width: 700px;
   padding: 5rem 1rem 8rem;
   margin: 0 auto;
   display: flex;
@@ -10,7 +10,7 @@ export const StyledConfirmPage = styled.main`
   gap: 1rem;
 `
 
-export const StyledConfirmTitle = styled.h1`
+export const StyledResultTitle = styled.h1`
   font-family: var(--font-roboto-mono);
   font-weight: 400;
   color: #98dfd6;
@@ -18,7 +18,7 @@ export const StyledConfirmTitle = styled.h1`
   margin: 0;
 `
 
-export const StyledConfirmText = styled.p`
+export const StyledResultText = styled.p`
   font-family: var(--font-roboto-mono);
   font-weight: 300;
   color: rgba(251, 251, 251, 0.7);
@@ -27,10 +27,16 @@ export const StyledConfirmText = styled.p`
   margin: 0;
 `
 
-export const StyledConfirmLink = styled.a`
+export const StyledResultLink = styled.a`
   font-family: var(--font-roboto-mono);
   font-size: 0.875rem;
   color: #98dfd6;
   text-decoration: underline;
   margin-top: 1rem;
+`
+
+export const StyledResultImageWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  height: 320px;
 `

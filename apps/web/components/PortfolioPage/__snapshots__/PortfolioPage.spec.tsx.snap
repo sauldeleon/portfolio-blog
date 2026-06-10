@@ -4,16 +4,19 @@ exports[`PortfolioPage should render successfully 1`] = `
 .c107 {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
   background: transparent;
   cursor: pointer;
   border: 1px solid #FBFBFB;
   padding: 15px 20px;
+  font-size: 0.9rem;
 }
 
 .c3 {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
   background: transparent;
   cursor: pointer;
@@ -21,6 +24,7 @@ exports[`PortfolioPage should render successfully 1`] = `
   border: 1px solid transparent;
   font-family: inherit;
   padding: 15px 20px;
+  font-size: 0.9rem;
 }
 
 .c3:hover:not(:disabled) {

@@ -50,6 +50,7 @@ export default function RootLayout({ children, params }: RootLayoutProps) {
       dir={dir(lng)}
       data-testid="root-html"
       className={robotoMonoClassName}
+      data-scroll-behavior="smooth"
     >
       <head>
         <link

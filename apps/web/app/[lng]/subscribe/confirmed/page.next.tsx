@@ -1,15 +1,7 @@
-import Link from 'next/link'
-
+import { SubscribeResultPage } from '@web/components/SubscribeResultPage'
 import { getServerTranslation } from '@web/i18n/server'
 import { confirmSubscription } from '@web/lib/db/queries/subscriptions'
 import { Locale } from '@web/lib/db/schema'
-
-import {
-  StyledConfirmLink,
-  StyledConfirmPage,
-  StyledConfirmText,
-  StyledConfirmTitle,
-} from './page.next.styles'
 
 interface RouteProps {
   params: Promise<{ lng: Locale }>
@@ -37,16 +29,15 @@ export default async function ConfirmedPage({
   }
 
   return (
-    <StyledConfirmPage>
-      <StyledConfirmTitle>
-        {success ? t('confirmed.title') : t('confirmed.error')}
-      </StyledConfirmTitle>
-      {success && (
-        <StyledConfirmText>{t('confirmed.message')}</StyledConfirmText>
-      )}
-      <StyledConfirmLink as={Link} href={`/${lng}/blog`}>
-        {t('backToBlog')}
-      </StyledConfirmLink>
-    </StyledConfirmPage>
+    <SubscribeResultPage
+      success={success}
+      successTitle={t('confirmed.title')}
+      successMessage={t('confirmed.message')}
+      errorTitle={t('confirmed.error')}
+      backToLabel={t('backToBlog')}
+      backToHref={`/${lng}/blog`}
+      imageSrc="/assets/subscribe.png"
+      imageAlt={t('confirmed.imageAlt')}
+    />
   )
 }

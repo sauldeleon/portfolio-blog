@@ -4,11 +4,13 @@ exports[`SubscribeModal renders trigger button 1`] = `
 .c0 {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
   background: transparent;
   cursor: pointer;
   border: 1px solid #FBFBFB;
   padding: 15px 20px;
+  font-size: 0.9rem;
 }
 
 .c1 {

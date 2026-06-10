@@ -1,15 +1,7 @@
-import Link from 'next/link'
-
+import { SubscribeResultPage } from '@web/components/SubscribeResultPage'
 import { getServerTranslation } from '@web/i18n/server'
 import { unsubscribeByToken } from '@web/lib/db/queries/subscriptions'
 import { Locale } from '@web/lib/db/schema'
-
-import {
-  StyledConfirmLink,
-  StyledConfirmPage,
-  StyledConfirmText,
-  StyledConfirmTitle,
-} from '../confirmed/page.next.styles'
 
 interface RouteProps {
   params: Promise<{ lng: Locale }>
@@ -37,16 +29,15 @@ export default async function UnsubscribedPage({
   }
 
   return (
-    <StyledConfirmPage>
-      <StyledConfirmTitle>
-        {success ? t('unsubscribed.title') : t('unsubscribed.error')}
-      </StyledConfirmTitle>
-      {success && (
-        <StyledConfirmText>{t('unsubscribed.message')}</StyledConfirmText>
-      )}
-      <StyledConfirmLink as={Link} href={`/${lng}/blog`}>
-        {t('backToBlog')}
-      </StyledConfirmLink>
-    </StyledConfirmPage>
+    <SubscribeResultPage
+      success={success}
+      successTitle={t('unsubscribed.title')}
+      successMessage={t('unsubscribed.message')}
+      errorTitle={t('unsubscribed.error')}
+      backToLabel={t('backToBlog')}
+      backToHref={`/${lng}/blog`}
+      imageSrc="/assets/unsubscribe.png"
+      imageAlt={t('unsubscribed.imageAlt')}
+    />
   )
 }

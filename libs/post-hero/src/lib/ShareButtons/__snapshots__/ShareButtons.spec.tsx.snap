@@ -17,6 +17,7 @@ exports[`ShareButtons matches snapshot 1`] = `
 .c5 {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
   background: transparent;
   cursor: pointer;
@@ -24,6 +25,7 @@ exports[`ShareButtons matches snapshot 1`] = `
   border: 1px solid transparent;
   font-family: inherit;
   padding: 15px 20px;
+  font-size: 0.9rem;
 }
 
 .c5:hover:not(:disabled) {

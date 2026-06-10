@@ -3,18 +3,16 @@
  */
 const mockGetScheduledPostsToPublish = jest.fn()
 const mockUpdatePost = jest.fn()
-const mockGetPostTranslations = jest.fn()
+const mockNotifyPostPublished = jest.fn()
 const mockRevalidateTag = jest.fn()
 const mockLoggerError = jest.fn()
-const mockSendNewPostNotifications = jest.fn()
 
 jest.mock('@web/lib/db/queries/posts', () => ({
   getScheduledPostsToPublish: mockGetScheduledPostsToPublish,
   updatePost: mockUpdatePost,
-  getPostTranslations: mockGetPostTranslations,
 }))
-jest.mock('@web/lib/email/sendNewPostNotifications', () => ({
-  sendNewPostNotifications: mockSendNewPostNotifications,
+jest.mock('@web/lib/email/notifyPostPublished', () => ({
+  notifyPostPublished: mockNotifyPostPublished,
 }))
 
 jest.mock('next/cache', () => ({
@@ -48,8 +46,7 @@ describe('GET /api/cron/publish', () => {
     process.env.CRON_SECRET = 'test-secret-xyz'
     mockGetScheduledPostsToPublish.mockResolvedValue([])
     mockUpdatePost.mockResolvedValue(null)
-    mockGetPostTranslations.mockResolvedValue([])
-    mockSendNewPostNotifications.mockResolvedValue(undefined)
+    mockNotifyPostPublished.mockResolvedValue(undefined)
   })
 
   afterEach(() => {
@@ -125,23 +122,21 @@ describe('GET /api/cron/publish', () => {
       { id: 'post-1', scheduledAt: new Date('2024-01-10T08:00:00Z') },
     ]
     mockGetScheduledPostsToPublish.mockResolvedValue(scheduledPosts)
-    mockUpdatePost.mockResolvedValue({
+    const updatedPost = {
       id: 'post-1',
       postNumber: 5,
       status: 'published',
-    })
-    mockGetPostTranslations.mockResolvedValue([
-      { locale: 'en', title: 'Post 1', slug: 'post-1', excerpt: 'Excerpt' },
-    ])
+      coverImage: null,
+      category: 'engineering',
+      tags: [],
+      seriesId: null,
+      seriesOrder: null,
+    }
+    mockUpdatePost.mockResolvedValue(updatedPost)
     await GET(makeRequest('Bearer test-secret-xyz'))
-    expect(mockSendNewPostNotifications).toHaveBeenCalledWith(
-      expect.objectContaining({
-        postId: 'post-1',
-        postNumber: 5,
-        translations: expect.objectContaining({
-          en: { title: 'Post 1', slug: 'post-1', excerpt: 'Excerpt' },
-        }),
-      }),
+    expect(mockNotifyPostPublished).toHaveBeenCalledWith(
+      updatedPost,
+      'cron/publish: failed to send notifications',
     )
   })
 
@@ -151,29 +146,7 @@ describe('GET /api/cron/publish', () => {
     ])
     mockUpdatePost.mockResolvedValue(null)
     await GET(makeRequest('Bearer test-secret-xyz'))
-    expect(mockSendNewPostNotifications).not.toHaveBeenCalled()
-  })
-
-  it('logs error when sendNewPostNotifications rejects', async () => {
-    mockGetScheduledPostsToPublish.mockResolvedValue([
-      { id: 'post-1', scheduledAt: new Date('2024-01-10T08:00:00Z') },
-    ])
-    mockUpdatePost.mockResolvedValue({
-      id: 'post-1',
-      postNumber: 5,
-      status: 'published',
-    })
-    mockGetPostTranslations.mockResolvedValue([
-      { locale: 'en', title: 'Post 1', slug: 'post-1', excerpt: 'Excerpt' },
-    ])
-    const notifError = new Error('Notification failed')
-    mockSendNewPostNotifications.mockRejectedValue(notifError)
-    await GET(makeRequest('Bearer test-secret-xyz'))
-    await Promise.resolve()
-    expect(mockLoggerError).toHaveBeenCalledWith(
-      notifError,
-      'cron/publish: failed to send notifications',
-    )
+    expect(mockNotifyPostPublished).not.toHaveBeenCalled()
   })
 
   it('returns 500 and logs error when getScheduledPostsToPublish throws', async () => {
