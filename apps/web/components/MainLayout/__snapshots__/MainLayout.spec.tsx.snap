@@ -907,7 +907,7 @@ exports[`MainLayout should render successfully 1`] = `
       </main>
       <div
         class="CookieConsent"
-        style="align-items: center; background: rgb(251, 251, 251); color: white; display: flex; flex-wrap: wrap; justify-content: space-between; left: 0px; position: fixed; width: 100%; z-index: 999; font-family: var(--font-roboto-mono); bottom: 0px;"
+        style="align-items: center; background: rgb(251, 251, 251); color: white; display: flex; flex-wrap: wrap; justify-content: space-between; left: 0px; position: fixed; width: 100%; z-index: 999; font-family: var(--font-roboto-mono); padding-bottom: max(env(safe-area-inset-bottom), 16px); bottom: 0px;"
       >
         <div
           class=""

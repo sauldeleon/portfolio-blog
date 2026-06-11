@@ -21,7 +21,8 @@ export async function SeriesIndicator({
 
   if (seriesPosts.length === 0) return null
 
-  const heading = t('seriesIndicator.heading', { seriesId })
+  const seriesTitle = seriesPosts[0]?.seriesTitle ?? seriesId
+  const heading = t('seriesIndicator.heading', { seriesId: seriesTitle })
   const partLabel =
     seriesOrder != null
       ? t('seriesIndicator.part', { order: seriesOrder })
