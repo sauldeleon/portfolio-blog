@@ -618,6 +618,27 @@ export function GpxMap({
         </StyledTrackStrip>
       )}
 
+      {resolvedTracks.map((track, i) => {
+        if (!track.showElevation) return null
+        if (!(visibleTracks[i] ?? /* istanbul ignore next */ true)) return null
+        const elevData = elevationDataByTrack[i]
+        if (!elevData || elevData.length === 0) return null
+        const color = resolveTrackColor(track, i)
+        const label = isMultiTrack ? track.name : undefined
+        return (
+          <ElevationProfile
+            key={i}
+            data={elevData}
+            color={color}
+            label={label}
+            onHoverPoint={(lat, lon, clr) =>
+              setElevationCursor({ lat, lon, color: clr })
+            }
+            onHoverEnd={() => setElevationCursor(null)}
+          />
+        )
+      })}
+
       {resolvedTracks.map((track, trackIndex) => {
         const effectiveShowWaypoints = track.showWaypoints ?? showWaypoints
         if (!effectiveShowWaypoints) return null
@@ -714,27 +735,6 @@ export function GpxMap({
               </table>
             </StyledTableWrapper>
           </StyledWaypointsDetails>
-        )
-      })}
-
-      {resolvedTracks.map((track, i) => {
-        if (!track.showElevation) return null
-        if (!(visibleTracks[i] ?? /* istanbul ignore next */ true)) return null
-        const elevData = elevationDataByTrack[i]
-        if (!elevData || elevData.length === 0) return null
-        const color = resolveTrackColor(track, i)
-        const label = isMultiTrack ? track.name : undefined
-        return (
-          <ElevationProfile
-            key={i}
-            data={elevData}
-            color={color}
-            label={label}
-            onHoverPoint={(lat, lon, clr) =>
-              setElevationCursor({ lat, lon, color: clr })
-            }
-            onHoverEnd={() => setElevationCursor(null)}
-          />
         )
       })}
     </StyledGpxMap>
