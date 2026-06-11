@@ -66,7 +66,7 @@ export function PostContentEmbed({
       <iframe
         src={url}
         allowFullScreen
-        allow="pointer-lock"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; pointer-lock"
         title={type ?? 'embed'}
       />
     </StyledEmbedWrapper>

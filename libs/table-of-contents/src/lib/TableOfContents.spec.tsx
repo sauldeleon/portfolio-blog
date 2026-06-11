@@ -1,4 +1,4 @@
-import { act, screen } from '@testing-library/react'
+import { act, fireEvent, screen, waitFor } from '@testing-library/react'
 
 import { renderWithTheme } from '@sdlgr/test-utils'
 
@@ -18,6 +18,7 @@ beforeAll(() => {
       unobserve: jest.fn(),
     }
   }) as unknown as typeof IntersectionObserver
+  jest.spyOn(window.history, 'pushState').mockImplementation(() => undefined)
 })
 
 beforeEach(() => {
@@ -300,5 +301,138 @@ describe('TableOfContents', () => {
       />,
     )
     expect(screen.getByRole('link', { name: 'Top Level' })).toBeInTheDocument()
+  })
+
+  describe('link click scrolling', () => {
+    let headingEl: HTMLElement
+    let scrollIntoView: jest.Mock
+
+    beforeEach(() => {
+      headingEl = document.createElement('h2')
+      headingEl.id = 'introduction'
+      scrollIntoView = jest.fn()
+      headingEl.scrollIntoView = scrollIntoView
+      document.body.appendChild(headingEl)
+    })
+
+    afterEach(() => {
+      document.body.removeChild(headingEl)
+    })
+
+    it('scrolls immediately when all images are loaded', () => {
+      renderWithTheme(
+        <TableOfContents entries={entries} label="Table of contents" />,
+      )
+      fireEvent.click(screen.getByRole('link', { name: 'Introduction' }))
+      expect(scrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth' })
+      expect(window.history.pushState).toHaveBeenCalledWith(
+        null,
+        '',
+        '#introduction',
+      )
+    })
+
+    it('does nothing when target element not found in DOM', () => {
+      renderWithTheme(
+        <TableOfContents
+          entries={[{ depth: 2, text: 'Missing', id: 'not-in-dom' }]}
+          label="Table of contents"
+        />,
+      )
+      expect(() =>
+        fireEvent.click(screen.getByRole('link', { name: 'Missing' })),
+      ).not.toThrow()
+      expect(scrollIntoView).not.toHaveBeenCalled()
+    })
+
+    it('waits for pending images then scrolls on load', async () => {
+      const img = document.createElement('img')
+      Object.defineProperty(img, 'complete', {
+        get: () => false,
+        configurable: true,
+      })
+      document.body.appendChild(img)
+
+      renderWithTheme(
+        <TableOfContents entries={entries} label="Table of contents" />,
+      )
+      fireEvent.click(screen.getByRole('link', { name: 'Introduction' }))
+      expect(scrollIntoView).not.toHaveBeenCalled()
+
+      fireEvent.load(img)
+      await waitFor(() =>
+        expect(scrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth' }),
+      )
+
+      document.body.removeChild(img)
+    })
+
+    it('waits for pending images then scrolls on error', async () => {
+      const img = document.createElement('img')
+      Object.defineProperty(img, 'complete', {
+        get: () => false,
+        configurable: true,
+      })
+      document.body.appendChild(img)
+
+      renderWithTheme(
+        <TableOfContents entries={entries} label="Table of contents" />,
+      )
+      fireEvent.click(screen.getByRole('link', { name: 'Introduction' }))
+      expect(scrollIntoView).not.toHaveBeenCalled()
+
+      fireEvent.error(img)
+      await waitFor(() =>
+        expect(scrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth' }),
+      )
+
+      document.body.removeChild(img)
+    })
+
+    it('scrolls via fallback timeout when images never load', () => {
+      const img = document.createElement('img')
+      Object.defineProperty(img, 'complete', {
+        get: () => false,
+        configurable: true,
+      })
+      document.body.appendChild(img)
+
+      renderWithTheme(
+        <TableOfContents entries={entries} label="Table of contents" />,
+      )
+      fireEvent.click(screen.getByRole('link', { name: 'Introduction' }))
+      expect(scrollIntoView).not.toHaveBeenCalled()
+
+      act(() => {
+        jest.advanceTimersByTime(2000)
+      })
+      expect(scrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth' })
+
+      document.body.removeChild(img)
+    })
+
+    it('clears fallback timeout when images load before timeout', async () => {
+      const img = document.createElement('img')
+      Object.defineProperty(img, 'complete', {
+        get: () => false,
+        configurable: true,
+      })
+      document.body.appendChild(img)
+
+      renderWithTheme(
+        <TableOfContents entries={entries} label="Table of contents" />,
+      )
+      fireEvent.click(screen.getByRole('link', { name: 'Introduction' }))
+
+      fireEvent.load(img)
+      await waitFor(() => expect(scrollIntoView).toHaveBeenCalledTimes(1))
+
+      act(() => {
+        jest.advanceTimersByTime(2000)
+      })
+      expect(scrollIntoView).toHaveBeenCalledTimes(1)
+
+      document.body.removeChild(img)
+    })
   })
 })

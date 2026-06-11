@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 import {
   StyledLink,
@@ -20,9 +20,48 @@ export interface TableOfContentsProps {
   label: string
 }
 
+function scrollToId(id: string) {
+  const target = document.getElementById(id)
+  if (!target) return
+
+  window.history.pushState(null, '', `#${id}`)
+
+  const images = Array.from(document.querySelectorAll<HTMLImageElement>('img'))
+  const pending = images.filter((img) => !img.complete)
+
+  const doScroll = () => target.scrollIntoView({ behavior: 'smooth' })
+
+  if (pending.length === 0) {
+    doScroll()
+    return
+  }
+
+  const fallback = setTimeout(doScroll, 2000)
+  Promise.all(
+    pending.map(
+      (img) =>
+        new Promise<void>((resolve) => {
+          img.addEventListener('load', () => resolve(), { once: true })
+          img.addEventListener('error', () => resolve(), { once: true })
+        }),
+    ),
+  ).then(() => {
+    clearTimeout(fallback)
+    doScroll()
+  })
+}
+
 export function TableOfContents({ entries, label }: TableOfContentsProps) {
   const [activeId, setActiveId] = useState<string | null>(null)
   const observerRef = useRef<IntersectionObserver | null>(null)
+
+  const handleLinkClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+      e.preventDefault()
+      scrollToId(id)
+    },
+    [],
+  )
 
   useEffect(() => {
     if (entries.length === 0) return
@@ -43,7 +82,7 @@ export function TableOfContents({ entries, label }: TableOfContentsProps) {
 
     entries.forEach(({ id }) => {
       const el = document.getElementById(id)
-      if (el) observerRef.current!.observe(el)
+      if (el) observerRef.current?.observe(el)
     })
 
     return () => {
@@ -88,6 +127,7 @@ export function TableOfContents({ entries, label }: TableOfContentsProps) {
               $depth={depth}
               $active={activeId === id}
               aria-current={activeId === id ? 'location' : undefined}
+              onClick={(e) => handleLinkClick(e, id)}
             >
               {text}
             </StyledLink>
