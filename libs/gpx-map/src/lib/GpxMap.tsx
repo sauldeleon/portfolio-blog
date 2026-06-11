@@ -89,12 +89,17 @@ export function parseWaypointsFromXml(text: string): Waypoint[] {
   })
 }
 
-export function parseElevationFromXml(
-  text: string,
-): Array<{ distance: number; elevation: number }> {
+export type ElevationPoint = {
+  distance: number
+  elevation: number
+  lat: number
+  lon: number
+}
+
+export function parseElevationFromXml(text: string): ElevationPoint[] {
   const doc = new DOMParser().parseFromString(text, 'text/xml')
   const points = Array.from(doc.querySelectorAll('trkpt'))
-  const result: Array<{ distance: number; elevation: number }> = []
+  const result: ElevationPoint[] = []
   let cumKm = 0
   let prevLat: number | null = null
   let prevLon: number | null = null
@@ -120,6 +125,8 @@ export function parseElevationFromXml(
     result.push({
       distance: Math.round(cumKm * 100) / 100,
       elevation: Math.round(ele),
+      lat,
+      lon,
     })
     prevLat = lat
     prevLon = lon
@@ -154,10 +161,14 @@ function ElevationProfile({
   data,
   color,
   label,
+  onHoverPoint,
+  onHoverEnd,
 }: {
-  data: Array<{ distance: number; elevation: number }>
+  data: ElevationPoint[]
   color: string
   label?: string
+  onHoverPoint?: (lat: number, lon: number, color: string) => void
+  onHoverEnd?: () => void
 }) {
   /* istanbul ignore next */
   if (data.length === 0) return null
@@ -168,6 +179,14 @@ function ElevationProfile({
         <AreaChart
           data={data}
           margin={{ top: 4, right: 8, bottom: 0, left: 0 }}
+          onMouseMove={(state) => {
+            const idx = state.activeTooltipIndex
+            if (onHoverPoint && idx != null) {
+              const pt = data[Number(idx)]
+              if (pt) onHoverPoint(pt.lat, pt.lon, color)
+            }
+          }}
+          onMouseLeave={() => onHoverEnd?.()}
         >
           <XAxis
             dataKey="distance"
@@ -422,8 +441,13 @@ export function GpxMap({
     Record<number, Waypoint[]>
   >({})
   const [elevationDataByTrack, setElevationDataByTrack] = useState<
-    Record<number, Array<{ distance: number; elevation: number }>>
+    Record<number, ElevationPoint[]>
   >({})
+  const [elevationCursor, setElevationCursor] = useState<{
+    lat: number
+    lon: number
+    color: string
+  } | null>(null)
   const [focusedWaypoint, setFocusedWaypoint] = useState<Waypoint | null>(null)
   const [expandedByIndex, setExpandedByIndex] = useState<
     Record<number, number | null>
@@ -517,6 +541,19 @@ export function GpxMap({
                 fillOpacity: 0.35,
                 weight: 2,
               }}
+            />
+          )}
+          {elevationCursor && (
+            <CircleMarker
+              center={[elevationCursor.lat, elevationCursor.lon]}
+              radius={4}
+              pathOptions={{
+                color: elevationCursor.color,
+                fillColor: '#fff',
+                fillOpacity: 1,
+                weight: 2,
+              }}
+              data-testid="elevation-cursor"
             />
           )}
         </MapContainer>
@@ -693,6 +730,10 @@ export function GpxMap({
             data={elevData}
             color={color}
             label={label}
+            onHoverPoint={(lat, lon, clr) =>
+              setElevationCursor({ lat, lon, color: clr })
+            }
+            onHoverEnd={() => setElevationCursor(null)}
           />
         )
       })}

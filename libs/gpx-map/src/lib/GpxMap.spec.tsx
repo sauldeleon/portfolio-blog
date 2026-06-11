@@ -20,8 +20,42 @@ jest.mock('leaflet/dist/leaflet.css', () => ({}))
 jest.mock('leaflet-gpx', () => ({}))
 
 jest.mock('recharts', () => ({
-  AreaChart: ({ children }: { children: React.ReactNode }) => (
-    <div data-testid="area-chart">{children}</div>
+  AreaChart: ({
+    children,
+    data,
+    onMouseMove,
+    onMouseLeave,
+  }: {
+    children: React.ReactNode
+    data?: Array<{ lat: number; lon: number; [key: string]: unknown }>
+    onMouseMove?: (state: {
+      activeTooltipIndex: string | null | undefined
+    }) => void
+    onMouseLeave?: () => void
+  }) => (
+    <div data-testid="area-chart">
+      <button
+        data-testid="area-chart-trigger-hover"
+        onClick={() => {
+          if (onMouseMove && data?.length) {
+            onMouseMove({ activeTooltipIndex: '0' })
+          }
+        }}
+      />
+      <button
+        data-testid="area-chart-trigger-hover-no-index"
+        onClick={() => onMouseMove?.({ activeTooltipIndex: null })}
+      />
+      <button
+        data-testid="area-chart-trigger-hover-oob"
+        onClick={() => onMouseMove?.({ activeTooltipIndex: '9999' })}
+      />
+      <button
+        data-testid="area-chart-trigger-leave"
+        onClick={() => onMouseLeave?.()}
+      />
+      {children}
+    </div>
   ),
   Area: () => null,
   XAxis: () => null,
@@ -79,14 +113,19 @@ jest.mock('react-leaflet', () => ({
   CircleMarker: ({
     center,
     radius,
+    pathOptions,
+    'data-testid': testId,
   }: {
     center: [number, number]
     radius: number
+    pathOptions?: { color?: string }
+    'data-testid'?: string
   }) => (
     <div
-      data-testid="circle-marker"
+      data-testid={testId ?? 'circle-marker'}
       data-center={JSON.stringify(center)}
       data-radius={radius}
+      data-color={pathOptions?.color}
     />
   ),
   useMap: jest.fn(),
@@ -1390,6 +1429,8 @@ describe('parseElevationFromXml', () => {
     expect(result).toHaveLength(1)
     expect(result[0].distance).toBe(0)
     expect(result[0].elevation).toBe(100)
+    expect(result[0].lat).toBe(43.5)
+    expect(result[0].lon).toBe(-5.6)
   })
 
   it('calculates cumulative distance for two points', () => {
@@ -1569,5 +1610,44 @@ describe('GpxMap showElevation', () => {
     expect(screen.queryByTestId('elevation-chart')).not.toBeInTheDocument()
     fireEvent.click(screen.getByTestId('track-toggle-0'))
     expect(screen.getByTestId('elevation-chart')).toBeInTheDocument()
+  })
+
+  it('shows elevation cursor circle on map when hovering elevation chart', async () => {
+    render(
+      <GpxMap
+        tracks={[{ url: GPX_URL, showElevation: true, color: '#ff0000' }]}
+      />,
+    )
+    await screen.findByTestId('elevation-chart')
+    expect(screen.queryByTestId('elevation-cursor')).not.toBeInTheDocument()
+    fireEvent.click(screen.getByTestId('area-chart-trigger-hover'))
+    const cursor = screen.getByTestId('elevation-cursor')
+    const center = JSON.parse(cursor.getAttribute('data-center') ?? '[]')
+    expect(center[0]).toBe(43.5)
+    expect(center[1]).toBe(-5.6)
+    expect(cursor.getAttribute('data-color')).toBe('#ff0000')
+  })
+
+  it('removes elevation cursor when mouse leaves elevation chart', async () => {
+    render(<GpxMap tracks={[{ url: GPX_URL, showElevation: true }]} />)
+    await screen.findByTestId('elevation-chart')
+    fireEvent.click(screen.getByTestId('area-chart-trigger-hover'))
+    expect(screen.getByTestId('elevation-cursor')).toBeInTheDocument()
+    fireEvent.click(screen.getByTestId('area-chart-trigger-leave'))
+    expect(screen.queryByTestId('elevation-cursor')).not.toBeInTheDocument()
+  })
+
+  it('does not show cursor when hover fires with null index', async () => {
+    render(<GpxMap tracks={[{ url: GPX_URL, showElevation: true }]} />)
+    await screen.findByTestId('elevation-chart')
+    fireEvent.click(screen.getByTestId('area-chart-trigger-hover-no-index'))
+    expect(screen.queryByTestId('elevation-cursor')).not.toBeInTheDocument()
+  })
+
+  it('does not show cursor when hover fires with out-of-bounds index', async () => {
+    render(<GpxMap tracks={[{ url: GPX_URL, showElevation: true }]} />)
+    await screen.findByTestId('elevation-chart')
+    fireEvent.click(screen.getByTestId('area-chart-trigger-hover-oob'))
+    expect(screen.queryByTestId('elevation-cursor')).not.toBeInTheDocument()
   })
 })
