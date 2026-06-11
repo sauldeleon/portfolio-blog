@@ -332,6 +332,7 @@ export const StyledToolbarRow = styled.div`
 
 export const StyledTextareaWrapper = styled.div`
   position: relative;
+  width: 100%;
 `
 
 export const StyledEditEmbedButton = styled(Button).attrs({
