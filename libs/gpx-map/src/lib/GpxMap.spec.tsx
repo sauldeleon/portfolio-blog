@@ -1546,4 +1546,28 @@ describe('GpxMap showElevation', () => {
     expect(await screen.findByTestId('elevation-chart')).toBeInTheDocument()
     expect(screen.queryByTestId('elevation-label')).not.toBeInTheDocument()
   })
+
+  it('hides elevation chart when track is toggled off', async () => {
+    const TRACKS: GpxTrackDef[] = [
+      { url: GPX_URL, showElevation: true },
+      { url: 'https://example.com/t2.gpx' },
+    ]
+    render(<GpxMap tracks={TRACKS} />)
+    expect(await screen.findByTestId('elevation-chart')).toBeInTheDocument()
+    fireEvent.click(screen.getByTestId('track-toggle-0'))
+    expect(screen.queryByTestId('elevation-chart')).not.toBeInTheDocument()
+  })
+
+  it('shows elevation chart again when track is toggled back on', async () => {
+    const TRACKS: GpxTrackDef[] = [
+      { url: GPX_URL, showElevation: true },
+      { url: 'https://example.com/t2.gpx' },
+    ]
+    render(<GpxMap tracks={TRACKS} />)
+    expect(await screen.findByTestId('elevation-chart')).toBeInTheDocument()
+    fireEvent.click(screen.getByTestId('track-toggle-0'))
+    expect(screen.queryByTestId('elevation-chart')).not.toBeInTheDocument()
+    fireEvent.click(screen.getByTestId('track-toggle-0'))
+    expect(screen.getByTestId('elevation-chart')).toBeInTheDocument()
+  })
 })

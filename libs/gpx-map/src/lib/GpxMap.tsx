@@ -682,6 +682,7 @@ export function GpxMap({
 
       {resolvedTracks.map((track, i) => {
         if (!track.showElevation) return null
+        if (!(visibleTracks[i] ?? /* istanbul ignore next */ true)) return null
         const elevData = elevationDataByTrack[i]
         if (!elevData || elevData.length === 0) return null
         const color = resolveTrackColor(track, i)
