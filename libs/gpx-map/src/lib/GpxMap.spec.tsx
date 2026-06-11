@@ -9,10 +9,28 @@ import {
 import React from 'react'
 import { useMap } from 'react-leaflet'
 
-import { GpxMap, GpxTrackDef, parseWaypointsFromXml } from './GpxMap'
+import {
+  GpxMap,
+  GpxTrackDef,
+  parseElevationFromXml,
+  parseWaypointsFromXml,
+} from './GpxMap'
 
 jest.mock('leaflet/dist/leaflet.css', () => ({}))
 jest.mock('leaflet-gpx', () => ({}))
+
+jest.mock('recharts', () => ({
+  AreaChart: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="area-chart">{children}</div>
+  ),
+  Area: () => null,
+  XAxis: () => null,
+  YAxis: () => null,
+  Tooltip: () => null,
+  ResponsiveContainer: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="responsive-container">{children}</div>
+  ),
+}))
 
 jest.mock('leaflet', () => {
   const on = jest.fn()
@@ -77,6 +95,16 @@ jest.mock('react-leaflet', () => ({
 jest.mock('./GpxMap.styles', () => ({
   StyledGpxMap: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="gpx-map-wrapper">{children}</div>
+  ),
+  StyledElevationChart: ({
+    children,
+    'data-testid': testId,
+  }: {
+    children: React.ReactNode
+    'data-testid'?: string
+  }) => <div data-testid={testId ?? 'elevation-chart'}>{children}</div>,
+  StyledElevationLabel: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="elevation-label">{children}</div>
   ),
 
   StyledMapContainer: require('react').forwardRef(
@@ -255,6 +283,17 @@ const GPX_XML_WITH_WAYPOINTS = `<?xml version="1.0"?>
 </gpx>`
 
 const GPX_XML_NO_WAYPOINTS = `<?xml version="1.0"?><gpx xmlns="http://www.topografix.com/GPX/1/1"></gpx>`
+
+const GPX_XML_WITH_TRKPTS = `<?xml version="1.0"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1">
+  <trk>
+    <trkseg>
+      <trkpt lat="43.5" lon="-5.6"><ele>100</ele></trkpt>
+      <trkpt lat="43.51" lon="-5.61"><ele>110</ele></trkpt>
+      <trkpt lat="43.52" lon="-5.62"><ele>120</ele></trkpt>
+    </trkseg>
+  </trk>
+</gpx>`
 
 describe('GpxMap', () => {
   const mockFitBounds = jest.fn()
@@ -1336,5 +1375,175 @@ describe('parseWaypointsFromXml', () => {
     const xml = `<gpx><wpt lat="0" lon="0"><name>A</name></wpt></gpx>`
     const [wpt] = parseWaypointsFromXml(xml)
     expect(wpt.sym).toBe('')
+  })
+})
+
+describe('parseElevationFromXml', () => {
+  it('returns empty array when no trkpt elements', () => {
+    const xml = `<?xml version="1.0"?><gpx xmlns="http://www.topografix.com/GPX/1/1"></gpx>`
+    expect(parseElevationFromXml(xml)).toEqual([])
+  })
+
+  it('returns single point with distance 0 for single trkpt', () => {
+    const xml = `<gpx><trk><trkseg><trkpt lat="43.5" lon="-5.6"><ele>100</ele></trkpt></trkseg></trk></gpx>`
+    const result = parseElevationFromXml(xml)
+    expect(result).toHaveLength(1)
+    expect(result[0].distance).toBe(0)
+    expect(result[0].elevation).toBe(100)
+  })
+
+  it('calculates cumulative distance for two points', () => {
+    const xml = `<gpx><trk><trkseg>
+      <trkpt lat="43.5" lon="-5.6"><ele>100</ele></trkpt>
+      <trkpt lat="43.51" lon="-5.61"><ele>110</ele></trkpt>
+    </trkseg></trk></gpx>`
+    const result = parseElevationFromXml(xml)
+    expect(result).toHaveLength(2)
+    expect(result[0].distance).toBe(0)
+    expect(result[1].distance).toBeGreaterThan(0)
+    expect(result[1].elevation).toBe(110)
+  })
+
+  it('skips points without ele element', () => {
+    const xml = `<gpx><trk><trkseg>
+      <trkpt lat="43.5" lon="-5.6"><ele>100</ele></trkpt>
+      <trkpt lat="43.51" lon="-5.61"></trkpt>
+      <trkpt lat="43.52" lon="-5.62"><ele>120</ele></trkpt>
+    </trkseg></trk></gpx>`
+    const result = parseElevationFromXml(xml)
+    expect(result).toHaveLength(2)
+    expect(result[0].elevation).toBe(100)
+    expect(result[1].elevation).toBe(120)
+  })
+
+  it('downsamples to max 300 points when more than 300 points', () => {
+    const points = Array.from(
+      { length: 400 },
+      (_, i) =>
+        `<trkpt lat="${43 + i * 0.001}" lon="${-5 + i * 0.001}"><ele>${100 + i}</ele></trkpt>`,
+    ).join('\n')
+    const xml = `<gpx><trk><trkseg>${points}</trkseg></trk></gpx>`
+    const result = parseElevationFromXml(xml)
+    expect(result.length).toBeLessThanOrEqual(300)
+  })
+
+  it('always includes last point when downsampling', () => {
+    const points = Array.from(
+      { length: 400 },
+      (_, i) =>
+        `<trkpt lat="${43 + i * 0.001}" lon="${-5 + i * 0.001}"><ele>${100 + i}</ele></trkpt>`,
+    ).join('\n')
+    const xml = `<gpx><trk><trkseg>${points}</trkseg></trk></gpx>`
+    const result = parseElevationFromXml(xml)
+    expect(result[result.length - 1].elevation).toBe(499)
+  })
+
+  it('first result always has distance 0', () => {
+    const result = parseElevationFromXml(GPX_XML_WITH_TRKPTS)
+    expect(result[0].distance).toBe(0)
+  })
+
+  it('rounds elevation to nearest integer', () => {
+    const xml = `<gpx><trk><trkseg><trkpt lat="43.5" lon="-5.6"><ele>100.7</ele></trkpt></trkseg></trk></gpx>`
+    const result = parseElevationFromXml(xml)
+    expect(result[0].elevation).toBe(101)
+  })
+
+  it('defaults lat and lon to 0 when attributes are missing on trkpt', () => {
+    const xml = `<gpx><trk><trkseg><trkpt><ele>100</ele></trkpt></trkseg></trk></gpx>`
+    const result = parseElevationFromXml(xml)
+    expect(result).toHaveLength(1)
+    expect(result[0].distance).toBe(0)
+    expect(result[0].elevation).toBe(100)
+  })
+})
+
+describe('GpxMap showElevation', () => {
+  const mockFitBounds = jest.fn()
+  const mockRemoveLayer = jest.fn()
+  const mockFlyTo = jest.fn()
+  const mockSetMaxZoom = jest.fn()
+
+  beforeEach(() => {
+    mockFitBounds.mockReset()
+    mockRemoveLayer.mockReset()
+    mockFlyTo.mockReset()
+    mockSetMaxZoom.mockReset()
+    MockGPX.mockClear()
+    mockOn.mockClear()
+    mockAddTo.mockClear()
+    mockGetBounds.mockReset()
+    mockGetBounds.mockReturnValue({ _bounds: true })
+    mockEachLayer.mockReset()
+    window.HTMLElement.prototype.scrollIntoView = jest.fn()
+    ;(useMap as jest.Mock).mockReturnValue({
+      fitBounds: mockFitBounds,
+      removeLayer: mockRemoveLayer,
+      flyTo: mockFlyTo,
+      setMaxZoom: mockSetMaxZoom,
+    })
+    global.fetch = jest.fn().mockResolvedValue({
+      text: jest.fn().mockResolvedValue(GPX_XML_WITH_TRKPTS),
+    } as unknown as Response)
+  })
+
+  it('does not render elevation chart when showElevation is false', () => {
+    render(<GpxMap url={GPX_URL} />)
+    expect(screen.queryByTestId('elevation-chart')).not.toBeInTheDocument()
+  })
+
+  it('does not fetch when showElevation is false', () => {
+    render(<GpxMap url={GPX_URL} />)
+    expect(global.fetch).not.toHaveBeenCalled()
+  })
+
+  it('fetches and renders elevation chart when showElevation is true', async () => {
+    render(<GpxMap tracks={[{ url: GPX_URL, showElevation: true }]} />)
+    expect(await screen.findByTestId('elevation-chart')).toBeInTheDocument()
+  })
+
+  it('does not render chart when fetched data has no trkpt', async () => {
+    global.fetch = jest.fn().mockResolvedValue({
+      text: jest.fn().mockResolvedValue(GPX_XML_NO_WAYPOINTS),
+    } as unknown as Response)
+    render(<GpxMap tracks={[{ url: GPX_URL, showElevation: true }]} />)
+    await waitFor(() => expect(global.fetch).toHaveBeenCalled())
+    expect(screen.queryByTestId('elevation-chart')).not.toBeInTheDocument()
+  })
+
+  it('does not set waypoints on fetch failure when only showElevation is set', async () => {
+    global.fetch = jest.fn().mockRejectedValue(new Error('network'))
+    render(<GpxMap tracks={[{ url: GPX_URL, showElevation: true }]} />)
+    await waitFor(() => expect(global.fetch).toHaveBeenCalled())
+    expect(screen.queryByTestId('elevation-chart')).not.toBeInTheDocument()
+  })
+
+  it('fetches once for track with both showWaypoints and showElevation', async () => {
+    render(
+      <GpxMap
+        tracks={[{ url: GPX_URL, showWaypoints: true, showElevation: true }]}
+      />,
+    )
+    await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(1))
+  })
+
+  it('shows elevation label for multi-track when showElevation', async () => {
+    const TRACKS: GpxTrackDef[] = [
+      {
+        url: 'https://example.com/t1.gpx',
+        name: 'Outbound',
+        showElevation: true,
+      },
+      { url: 'https://example.com/t2.gpx', name: 'Return' },
+    ]
+    render(<GpxMap tracks={TRACKS} />)
+    expect(await screen.findByTestId('elevation-label')).toBeInTheDocument()
+    expect(screen.getByTestId('elevation-label')).toHaveTextContent('Outbound')
+  })
+
+  it('does not show elevation label for single-track', async () => {
+    render(<GpxMap tracks={[{ url: GPX_URL, showElevation: true }]} />)
+    expect(await screen.findByTestId('elevation-chart')).toBeInTheDocument()
+    expect(screen.queryByTestId('elevation-label')).not.toBeInTheDocument()
   })
 })

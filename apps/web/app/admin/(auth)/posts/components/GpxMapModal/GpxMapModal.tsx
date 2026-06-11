@@ -57,6 +57,7 @@ interface TrackInput {
   color: string
   allowDownload: boolean
   showWaypoints: boolean
+  showElevation: boolean
 }
 
 const TRACK_COLORS = [
@@ -77,6 +78,7 @@ function initTrack(): TrackInput {
     color: '',
     allowDownload: false,
     showWaypoints: false,
+    showElevation: false,
   }
 }
 
@@ -94,6 +96,7 @@ function buildTrackLine(track: TrackInput): string {
   const flags = [
     ...(track.allowDownload ? ['download'] : []),
     ...(track.showWaypoints ? ['showWaypoints'] : []),
+    ...(track.showElevation ? ['elevation'] : []),
   ].join(' ')
 
   if (!name && !color && !flags) return `track:${url}`
@@ -447,6 +450,21 @@ export function GpxMapModal({
                         data-testid={`gpx-track-show-waypoints-${index}`}
                       />
                       Show waypoints table
+                    </label>
+                  </StyledCheckboxRow>
+                  <StyledCheckboxRow>
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={track.showElevation}
+                        onChange={(e) =>
+                          updateTrack(index, {
+                            showElevation: e.target.checked,
+                          })
+                        }
+                        data-testid={`track-show-elevation-${index}`}
+                      />
+                      Elevation profile
                     </label>
                   </StyledCheckboxRow>
                   {showWaypointSection && (

@@ -1169,6 +1169,7 @@ describe('GpxMapModal initialValues', () => {
               color: '#3a86ff',
               allowDownload: true,
               showWaypoints: false,
+              showElevation: false,
             },
           ],
           mappingsByTrack: {},
@@ -1204,5 +1205,44 @@ describe('GpxMapModal initialValues', () => {
       />,
     )
     expect(screen.getByTestId('gpx-track-url-0')).toHaveValue('')
+  })
+})
+
+describe('GpxMapModal elevation profile', () => {
+  beforeEach(() => {
+    jest.useFakeTimers()
+  })
+
+  afterEach(() => {
+    jest.useRealTimers()
+  })
+
+  it('renders elevation profile checkbox per track', () => {
+    renderApp(<GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />)
+    expect(screen.getByTestId('track-show-elevation-0')).toBeInTheDocument()
+  })
+
+  it('elevation profile checkbox is unchecked by default', () => {
+    renderApp(<GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />)
+    expect(screen.getByTestId('track-show-elevation-0')).not.toBeChecked()
+  })
+
+  it('checking elevation checkbox and inserting generates markdown with elevation flag', () => {
+    const onInsert = jest.fn()
+    renderApp(<GpxMapModal isOpen onInsert={onInsert} onCancel={jest.fn()} />)
+    fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+      target: { value: 'https://example.com/track.gpx' },
+    })
+    fireEvent.click(screen.getByTestId('track-show-elevation-0'))
+    fireEvent.click(screen.getByTestId('gpx-modal-insert'))
+    expect(onInsert).toHaveBeenCalledWith(
+      '\n\n```gpx\ntrack:https://example.com/track.gpx ||| elevation\n```\n\n',
+    )
+  })
+
+  it('elevation flag appears in preview when checked', () => {
+    renderApp(<GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />)
+    fireEvent.click(screen.getByTestId('track-show-elevation-0'))
+    expect(screen.getByTestId('gpx-preview')).toHaveTextContent('||| elevation')
   })
 })

@@ -87,6 +87,7 @@
     "react-overlays": "5.2.1",
     "react-select": "5.10.2",
     "react-use-is-scrolling": "0.0.2",
+    "recharts": "3.8.1",
     "rehype-pretty-code": "0.14.3",
     "remark-gfm": "4.0.1",
     "resend": "6.12.4",

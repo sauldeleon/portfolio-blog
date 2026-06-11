@@ -10,6 +10,7 @@ describe('parseGpxBody', () => {
       color: '',
       allowDownload: false,
       showWaypoints: false,
+      showElevation: false,
     })
   })
 
@@ -75,6 +76,7 @@ describe('parseGpxBody', () => {
       color: '#3a86ff',
       allowDownload: true,
       showWaypoints: true,
+      showElevation: false,
     })
   })
 
@@ -141,6 +143,18 @@ describe('parseGpxBody', () => {
     )
     expect(tracks).toHaveLength(1)
     expect(Object.keys(mappingsByTrack)).toHaveLength(0)
+  })
+
+  it('parses track with elevation flag as showElevation: true', () => {
+    const { tracks } = parseGpxBody(
+      'track:https://cdn.com/route.gpx ||| elevation',
+    )
+    expect(tracks[0].showElevation).toBe(true)
+  })
+
+  it('parses track without elevation flag as showElevation: false', () => {
+    const { tracks } = parseGpxBody('track:https://cdn.com/route.gpx')
+    expect(tracks[0].showElevation).toBe(false)
   })
 })
 

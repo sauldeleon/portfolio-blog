@@ -523,6 +523,26 @@ describe('remarkEmbeds', () => {
       })
     })
 
+    it('parses elevation flag in track line as showElevation: true', () => {
+      const [result] = runPlugin([
+        {
+          type: 'code',
+          lang: 'gpx',
+          value: 'track:https://cdn.com/t1.gpx ||| elevation',
+        },
+      ])
+      expect(result.attributes).toContainEqual({
+        type: 'mdxJsxAttribute',
+        name: 'tracks',
+        value: JSON.stringify([
+          {
+            url: 'https://cdn.com/t1.gpx',
+            showElevation: true,
+          },
+        ]),
+      })
+    })
+
     it('parses per-track image lines with numeric prefix into track waypointImages', () => {
       const [result] = runPlugin([
         {

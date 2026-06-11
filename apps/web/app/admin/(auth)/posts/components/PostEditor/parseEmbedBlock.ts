@@ -22,6 +22,7 @@ export interface ParsedGpxTrack {
   color: string
   allowDownload: boolean
   showWaypoints: boolean
+  showElevation: boolean
 }
 
 export interface ParsedGpx {
@@ -116,6 +117,7 @@ function parseTrackLine(line: string): ParsedGpxTrack {
     color,
     allowDownload: flagsStr.includes('download'),
     showWaypoints: flagsStr.includes('showWaypoints'),
+    showElevation: flagsStr.includes('elevation'),
   }
 }
 
