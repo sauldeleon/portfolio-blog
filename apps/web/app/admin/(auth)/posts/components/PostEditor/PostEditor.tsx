@@ -40,6 +40,7 @@ import {
   StyledArchiveButton,
   StyledBackLink,
   StyledContentTextarea,
+  StyledEditEmbedButton,
   StyledEditorLayout,
   StyledEditorPane,
   StyledError,
@@ -61,10 +62,18 @@ import {
   StyledPublishButton,
   StyledSaveButton,
   StyledStatusBadge,
+  StyledTextareaWrapper,
   StyledTitleRow,
   StyledToolbarRow,
   StyledWrapper,
 } from './PostEditor.styles'
+import type {
+  DetectedEmbed,
+  ParsedEmbed,
+  ParsedGpx,
+  ParsedImage,
+} from './parseEmbedBlock'
+import { detectEmbedAtCursor } from './parseEmbedBlock'
 
 type Locale = 'en' | 'es'
 
@@ -237,7 +246,18 @@ export function PostEditor({
   const [isImageInsertModalOpen, setIsImageInsertModalOpen] = useState(false)
   const [isEmbedInsertModalOpen, setIsEmbedInsertModalOpen] = useState(false)
   const [isGpxModalOpen, setIsGpxModalOpen] = useState(false)
+  const [imageModalKey, setImageModalKey] = useState(0)
+  const [embedModalKey, setEmbedModalKey] = useState(0)
+  const [gpxModalKey, setGpxModalKey] = useState(0)
   const [showPublishNotify, setShowPublishNotify] = useState(false)
+  const [editingEmbed, setEditingEmbed] = useState<DetectedEmbed | null>(null)
+  const [imageInitialValues, setImageInitialValues] =
+    useState<ParsedImage | null>(null)
+  const [embedInitialValues, setEmbedInitialValues] =
+    useState<ParsedEmbed | null>(null)
+  const [gpxInitialValues, setGpxInitialValues] = useState<ParsedGpx | null>(
+    null,
+  )
   const [previewTab, setPreviewTab] = useState<
     'post' | 'post-mobile' | 'hero' | 'card'
   >('post')
@@ -274,6 +294,45 @@ export function PostEditor({
       markdown +
       currentLocale.content.slice(end)
     updateLocale(activeLocale, { content: newContent })
+  }
+
+  function handleTextareaClick() {
+    const el = textareaRef.current
+    /* istanbul ignore next */
+    if (!el) return
+    const detected = detectEmbedAtCursor(
+      currentLocale.content,
+      el.selectionStart,
+    )
+    setEditingEmbed(detected)
+  }
+
+  function replaceBlock(start: number, end: number, markdown: string) {
+    updateLocale(activeLocale, {
+      content:
+        currentLocale.content.slice(0, start) +
+        markdown +
+        currentLocale.content.slice(end),
+    })
+    setEditingEmbed(null)
+  }
+
+  function handleEditEmbed() {
+    /* istanbul ignore next */
+    if (!editingEmbed) return
+    if (editingEmbed.type === 'image') {
+      setImageInitialValues(editingEmbed.parsed as ParsedImage)
+      setImageModalKey((k) => k + 1)
+      setIsImageInsertModalOpen(true)
+    } else if (editingEmbed.type === 'embed') {
+      setEmbedInitialValues(editingEmbed.parsed as ParsedEmbed)
+      setEmbedModalKey((k) => k + 1)
+      setIsEmbedInsertModalOpen(true)
+    } else {
+      setGpxInitialValues(editingEmbed.parsed as ParsedGpx)
+      setGpxModalKey((k) => k + 1)
+      setIsGpxModalOpen(true)
+    }
   }
 
   function handlePick(image: CloudinaryImage) {
@@ -726,36 +785,64 @@ export function PostEditor({
             <StyledToolbarRow>
               <StyledImagePickerButton
                 type="button"
-                onClick={() => setIsImageInsertModalOpen(true)}
+                onClick={() => {
+                  setEditingEmbed(null)
+                  setImageInitialValues(null)
+                  setImageModalKey((k) => k + 1)
+                  setIsImageInsertModalOpen(true)
+                }}
                 data-testid="open-image-picker-button"
               >
                 {t('images.picker.title')}
               </StyledImagePickerButton>
               <StyledImagePickerButton
                 type="button"
-                onClick={() => setIsEmbedInsertModalOpen(true)}
+                onClick={() => {
+                  setEditingEmbed(null)
+                  setEmbedInitialValues(null)
+                  setEmbedModalKey((k) => k + 1)
+                  setIsEmbedInsertModalOpen(true)
+                }}
                 data-testid="open-embed-modal-button"
               >
                 Insert Embed
               </StyledImagePickerButton>
               <StyledImagePickerButton
                 type="button"
-                onClick={() => setIsGpxModalOpen(true)}
+                onClick={() => {
+                  setEditingEmbed(null)
+                  setGpxInitialValues(null)
+                  setGpxModalKey((k) => k + 1)
+                  setIsGpxModalOpen(true)
+                }}
                 data-testid="open-gpx-modal-button"
               >
                 Insert GPX Map
               </StyledImagePickerButton>
             </StyledToolbarRow>
-            <StyledContentTextarea
-              id={`content-${activeLocale}`}
-              value={currentLocale.content}
-              onChange={(e) =>
-                updateLocale(activeLocale, { content: e.target.value })
-              }
-              placeholder={t('postEditor.fields.contentPlaceholder')}
-              data-testid="content-input"
-              ref={textareaRef}
-            />
+            <StyledTextareaWrapper>
+              <StyledContentTextarea
+                id={`content-${activeLocale}`}
+                value={currentLocale.content}
+                onChange={(e) => {
+                  updateLocale(activeLocale, { content: e.target.value })
+                  setEditingEmbed(null)
+                }}
+                onClick={handleTextareaClick}
+                placeholder={t('postEditor.fields.contentPlaceholder')}
+                data-testid="content-input"
+                ref={textareaRef}
+              />
+              {editingEmbed && (
+                <StyledEditEmbedButton
+                  type="button"
+                  onClick={handleEditEmbed}
+                  data-testid="edit-embed-button"
+                >
+                  Edit {editingEmbed.type}
+                </StyledEditEmbedButton>
+              )}
+            </StyledTextareaWrapper>
           </FieldGroup>
         </StyledEditorPane>
 
@@ -879,12 +966,26 @@ export function PostEditor({
         zIndex={1100}
       />
       <ImageInsertModal
+        key={imageModalKey}
         isOpen={isImageInsertModalOpen}
+        initialValues={imageInitialValues}
         onInsert={(markdown) => {
-          insertAtCursor(markdown)
+          if (editingEmbed?.type === 'image') {
+            replaceBlock(
+              editingEmbed.blockStart,
+              editingEmbed.blockEnd,
+              markdown,
+            )
+          } else {
+            insertAtCursor(markdown)
+          }
           setIsImageInsertModalOpen(false)
+          setImageInitialValues(null)
         }}
-        onCancel={() => setIsImageInsertModalOpen(false)}
+        onCancel={() => {
+          setIsImageInsertModalOpen(false)
+          setImageInitialValues(null)
+        }}
         pickerOpen={isContentPickerOpen}
         onRequestImagePick={(onPicked) => {
           contentPickerCallbackRef.current = onPicked
@@ -892,20 +993,48 @@ export function PostEditor({
         }}
       />
       <EmbedInsertModal
+        key={embedModalKey}
         isOpen={isEmbedInsertModalOpen}
+        initialValues={embedInitialValues}
         onInsert={(markdown) => {
-          insertAtCursor(markdown)
+          if (editingEmbed?.type === 'embed') {
+            replaceBlock(
+              editingEmbed.blockStart,
+              editingEmbed.blockEnd,
+              markdown,
+            )
+          } else {
+            insertAtCursor(markdown)
+          }
           setIsEmbedInsertModalOpen(false)
+          setEmbedInitialValues(null)
         }}
-        onCancel={() => setIsEmbedInsertModalOpen(false)}
+        onCancel={() => {
+          setIsEmbedInsertModalOpen(false)
+          setEmbedInitialValues(null)
+        }}
       />
       <GpxMapModal
+        key={gpxModalKey}
         isOpen={isGpxModalOpen}
+        initialValues={gpxInitialValues}
         onInsert={(markdown) => {
-          insertAtCursor(markdown)
+          if (editingEmbed?.type === 'gpx') {
+            replaceBlock(
+              editingEmbed.blockStart,
+              editingEmbed.blockEnd,
+              markdown,
+            )
+          } else {
+            insertAtCursor(markdown)
+          }
           setIsGpxModalOpen(false)
+          setGpxInitialValues(null)
         }}
-        onCancel={() => setIsGpxModalOpen(false)}
+        onCancel={() => {
+          setIsGpxModalOpen(false)
+          setGpxInitialValues(null)
+        }}
       />
       <PublishNotifyModal
         isOpen={showPublishNotify}

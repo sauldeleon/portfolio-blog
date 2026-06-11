@@ -180,6 +180,19 @@ export const StyledLayerButton = styled.button<{ $active: boolean }>`
   }
 `
 
+export const StyledElevationChart = styled.div`
+  padding: 0.5rem 0.25rem 0.25rem;
+  border-top: 1px solid rgba(251, 251, 251, 0.06);
+`
+
+export const StyledElevationLabel = styled.div`
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(251, 251, 251, 0.35);
+  padding: 0 0.5rem 0.25rem;
+`
+
 export const StyledWaypointsDetails = styled.details`
   margin-top: 0.75rem;
   border: 1px solid rgba(128, 128, 128, 0.25);

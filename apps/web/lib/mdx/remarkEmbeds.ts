@@ -6,6 +6,7 @@ export interface TrackDef {
   color?: string
   allowDownload?: boolean
   showWaypoints?: boolean
+  showElevation?: boolean
   waypointImages?: Record<string, string>
 }
 
@@ -19,6 +20,7 @@ function parseTrackLine(line: string): TrackDef {
     color: parts[2] || undefined,
     ...(flags.includes('download') ? { allowDownload: true } : {}),
     ...(flags.includes('showWaypoints') ? { showWaypoints: true } : {}),
+    ...(flags.includes('elevation') ? { showElevation: true } : {}),
   }
 }
 

@@ -241,6 +241,7 @@ export const StyledMobileContent = styled.div`
 `
 
 export const StyledContentTextarea = styled(Textarea)`
+  width: 100%;
   min-height: 400px;
   font-family: 'Courier New', monospace;
   font-size: 0.75rem;
@@ -328,6 +329,34 @@ export const StyledToolbarRow = styled.div`
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
+`
+
+export const StyledTextareaWrapper = styled.div`
+  position: relative;
+  width: 100%;
+`
+
+export const StyledEditEmbedButton = styled(Button).attrs({
+  variant: 'contained',
+  size: 'sm',
+})`
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 1;
+  font-family: inherit;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.25rem 0.6rem;
+  background: rgba(58, 134, 255, 0.15);
+  border-color: rgba(58, 134, 255, 0.4);
+  color: ${({ theme }) => theme.colors.white};
+
+  &:hover {
+    background: rgba(58, 134, 255, 0.3);
+    border-color: rgba(58, 134, 255, 0.7);
+  }
 `
 
 export const StyledImagePickerButton = styled(Button).attrs({

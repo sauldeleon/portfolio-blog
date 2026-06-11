@@ -11,6 +11,14 @@ import {
   TileLayer,
   useMap,
 } from 'react-leaflet'
+import {
+  Area,
+  AreaChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts'
 
 import { ChevronIcon, DownloadIcon, MapPinIcon } from '@sdlgr/icons'
 
@@ -26,6 +34,8 @@ import {
 import {
   StyledDownloadBar,
   StyledDownloadButton,
+  StyledElevationChart,
+  StyledElevationLabel,
   StyledGpxMap,
   StyledLayerButton,
   StyledLayerSwitcher,
@@ -79,12 +89,152 @@ export function parseWaypointsFromXml(text: string): Waypoint[] {
   })
 }
 
+export type ElevationPoint = {
+  distance: number
+  elevation: number
+  lat: number
+  lon: number
+}
+
+export function parseElevationFromXml(text: string): ElevationPoint[] {
+  const doc = new DOMParser().parseFromString(text, 'text/xml')
+  const points = Array.from(doc.querySelectorAll('trkpt'))
+  const result: ElevationPoint[] = []
+  let cumKm = 0
+  let prevLat: number | null = null
+  let prevLon: number | null = null
+
+  for (const pt of points) {
+    const lat = parseFloat(pt.getAttribute('lat') ?? '0')
+    const lon = parseFloat(pt.getAttribute('lon') ?? '0')
+    const eleText = pt.querySelector('ele')?.textContent
+    if (!eleText) continue
+    const ele = parseFloat(eleText)
+
+    if (prevLat !== null && prevLon !== null) {
+      const R = 6371
+      const dLat = ((lat - prevLat) * Math.PI) / 180
+      const dLon = ((lon - prevLon) * Math.PI) / 180
+      const a =
+        Math.sin(dLat / 2) ** 2 +
+        Math.cos((prevLat * Math.PI) / 180) *
+          Math.cos((lat * Math.PI) / 180) *
+          Math.sin(dLon / 2) ** 2
+      cumKm += R * 2 * Math.asin(Math.sqrt(a))
+    }
+    result.push({
+      distance: Math.round(cumKm * 100) / 100,
+      elevation: Math.round(ele),
+      lat,
+      lon,
+    })
+    prevLat = lat
+    prevLon = lon
+  }
+
+  // Downsample to max 300 points for performance
+  if (result.length > 300) {
+    const step = Math.ceil(result.length / 300)
+    return result.filter((_, i) => i % step === 0 || i === result.length - 1)
+  }
+  return result
+}
+
+/* istanbul ignore next */
+function elevationXTickFormatter(v: number) {
+  return `${v}km`
+}
+/* istanbul ignore next */
+function elevationYTickFormatter(v: number) {
+  return `${v}m`
+}
+/* istanbul ignore next */
+function elevationTooltipFormatter(v: unknown) {
+  return [`${v}m`, 'Elevation']
+}
+/* istanbul ignore next */
+function elevationLabelFormatter(v: unknown) {
+  return `${v}km`
+}
+
+function ElevationProfile({
+  data,
+  color,
+  label,
+  onHoverPoint,
+  onHoverEnd,
+}: {
+  data: ElevationPoint[]
+  color: string
+  label?: string
+  onHoverPoint?: (lat: number, lon: number, color: string) => void
+  onHoverEnd?: () => void
+}) {
+  /* istanbul ignore next */
+  if (data.length === 0) return null
+  return (
+    <StyledElevationChart data-testid="elevation-chart">
+      {label && <StyledElevationLabel>{label}</StyledElevationLabel>}
+      <ResponsiveContainer width="100%" height={110}>
+        <AreaChart
+          data={data}
+          margin={{ top: 4, right: 8, bottom: 0, left: 0 }}
+          onMouseMove={(state) => {
+            const idx = state.activeTooltipIndex
+            if (onHoverPoint && idx != null) {
+              const pt = data[Number(idx)]
+              if (pt) onHoverPoint(pt.lat, pt.lon, color)
+            }
+          }}
+          onMouseLeave={() => onHoverEnd?.()}
+        >
+          <XAxis
+            dataKey="distance"
+            tickFormatter={elevationXTickFormatter}
+            tick={{ fontSize: 9, fill: 'rgba(251,251,251,0.4)' }}
+            tickLine={false}
+            axisLine={false}
+            interval="preserveStartEnd"
+          />
+          <YAxis
+            tickFormatter={elevationYTickFormatter}
+            tick={{ fontSize: 9, fill: 'rgba(251,251,251,0.4)' }}
+            tickLine={false}
+            axisLine={false}
+            width={38}
+          />
+          <Tooltip
+            formatter={elevationTooltipFormatter}
+            labelFormatter={elevationLabelFormatter}
+            contentStyle={{
+              background: '#1a1a1a',
+              border: '1px solid rgba(251,251,251,0.1)',
+              fontSize: '0.65rem',
+            }}
+          />
+          <Area
+            type="monotone"
+            dataKey="elevation"
+            stroke={color}
+            fill={color}
+            fillOpacity={0.18}
+            strokeWidth={1.5}
+            dot={false}
+            isAnimationActive={false}
+          />
+        </AreaChart>
+      </ResponsiveContainer>
+    </StyledElevationChart>
+  )
+}
+
 export interface GpxTrackDef {
   url: string
   name?: string
   color?: string
   allowDownload?: boolean
   showWaypoints?: boolean
+  showElevation?: boolean
   waypointImages?: Record<string, string>
 }
 
@@ -290,6 +440,14 @@ export function GpxMap({
   const [perTrackWaypoints, setPerTrackWaypoints] = useState<
     Record<number, Waypoint[]>
   >({})
+  const [elevationDataByTrack, setElevationDataByTrack] = useState<
+    Record<number, ElevationPoint[]>
+  >({})
+  const [elevationCursor, setElevationCursor] = useState<{
+    lat: number
+    lon: number
+    color: string
+  } | null>(null)
   const [focusedWaypoint, setFocusedWaypoint] = useState<Waypoint | null>(null)
   const [expandedByIndex, setExpandedByIndex] = useState<
     Record<number, number | null>
@@ -297,22 +455,37 @@ export function GpxMap({
   const mapContainerRef = useRef<HTMLDivElement>(null)
 
   const trackUrlsKey = resolvedTracks
-    .map((t) => `${t.url}|${t.showWaypoints}`)
+    .map(
+      (t) => `${t.url}|${t.showWaypoints ?? false}|${t.showElevation ?? false}`,
+    )
     .join(',')
 
   useEffect(() => {
     resolvedTracks.forEach((track, i) => {
       const effectiveShowWaypoints = track.showWaypoints ?? showWaypoints
-      if (!effectiveShowWaypoints) return
+      const needsFetch = effectiveShowWaypoints || track.showElevation
+      if (!needsFetch) return
       fetch(track.url)
         .then((r) => r.text())
-        .then((text) =>
-          setPerTrackWaypoints((prev) => ({
-            ...prev,
-            [i]: parseWaypointsFromXml(text),
-          })),
-        )
-        .catch(() => setPerTrackWaypoints((prev) => ({ ...prev, [i]: [] })))
+        .then((text) => {
+          if (effectiveShowWaypoints) {
+            setPerTrackWaypoints((prev) => ({
+              ...prev,
+              [i]: parseWaypointsFromXml(text),
+            }))
+          }
+          if (track.showElevation) {
+            setElevationDataByTrack((prev) => ({
+              ...prev,
+              [i]: parseElevationFromXml(text),
+            }))
+          }
+        })
+        .catch(() => {
+          if (effectiveShowWaypoints) {
+            setPerTrackWaypoints((prev) => ({ ...prev, [i]: [] }))
+          }
+        })
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [trackUrlsKey, showWaypoints])
@@ -368,6 +541,19 @@ export function GpxMap({
                 fillOpacity: 0.35,
                 weight: 2,
               }}
+            />
+          )}
+          {elevationCursor && (
+            <CircleMarker
+              center={[elevationCursor.lat, elevationCursor.lon]}
+              radius={4}
+              pathOptions={{
+                color: elevationCursor.color,
+                fillColor: '#fff',
+                fillOpacity: 1,
+                weight: 2,
+              }}
+              data-testid="elevation-cursor"
             />
           )}
         </MapContainer>
@@ -431,6 +617,27 @@ export function GpxMap({
           })}
         </StyledTrackStrip>
       )}
+
+      {resolvedTracks.map((track, i) => {
+        if (!track.showElevation) return null
+        if (!(visibleTracks[i] ?? /* istanbul ignore next */ true)) return null
+        const elevData = elevationDataByTrack[i]
+        if (!elevData || elevData.length === 0) return null
+        const color = resolveTrackColor(track, i)
+        const label = isMultiTrack ? track.name : undefined
+        return (
+          <ElevationProfile
+            key={i}
+            data={elevData}
+            color={color}
+            label={label}
+            onHoverPoint={(lat, lon, clr) =>
+              setElevationCursor({ lat, lon, color: clr })
+            }
+            onHoverEnd={() => setElevationCursor(null)}
+          />
+        )
+      })}
 
       {resolvedTracks.map((track, trackIndex) => {
         const effectiveShowWaypoints = track.showWaypoints ?? showWaypoints

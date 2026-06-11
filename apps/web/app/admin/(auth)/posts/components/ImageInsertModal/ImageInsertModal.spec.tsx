@@ -705,6 +705,105 @@ describe('ImageInsertModal', () => {
   })
 })
 
+describe('ImageInsertModal initialValues', () => {
+  it('pre-fills image url and shows thumb when initialValues provided', () => {
+    const onInsert = jest.fn()
+    renderApp(
+      <ImageInsertModal
+        isOpen
+        onInsert={onInsert}
+        onCancel={jest.fn()}
+        pickerOpen={false}
+        onRequestImagePick={jest.fn()}
+        initialValues={{
+          url: 'https://cdn.com/existing.jpg',
+          altText: 'Existing alt',
+          caption: 'Existing caption',
+          captionPos: 'top',
+          size: 'small',
+          align: 'right',
+          expand: true,
+        }}
+      />,
+    )
+    expect(screen.getByTestId('selected-image-thumb')).toHaveAttribute(
+      'src',
+      'https://cdn.com/existing.jpg',
+    )
+    expect(screen.getByTestId('alt-text-input')).toHaveValue('Existing alt')
+    expect(screen.getByTestId('caption-input')).toHaveValue('Existing caption')
+    expect(screen.getByTestId('caption-pos-checkbox')).toBeChecked()
+    expect(screen.getByTestId('expand-checkbox')).toBeChecked()
+    // Verify size/align pre-fill by checking the generated markdown
+    fireEvent.click(screen.getByTestId('image-modal-insert'))
+    expect(onInsert).toHaveBeenCalledWith(expect.stringContaining('size=small'))
+    expect((onInsert.mock.calls[0] as [string])[0]).toContain('align=right')
+  })
+
+  it('pre-fills photo meta when initialValues has photoMeta', () => {
+    renderApp(
+      <ImageInsertModal
+        isOpen
+        onInsert={jest.fn()}
+        onCancel={jest.fn()}
+        pickerOpen={false}
+        onRequestImagePick={jest.fn()}
+        initialValues={{
+          url: 'https://cdn.com/photo.jpg',
+          altText: '',
+          caption: '',
+          captionPos: 'bottom',
+          size: 'full',
+          align: 'none',
+          expand: false,
+          photoMeta: { iso: '400', aperture: 'f/2.8', exposure: '1/250' },
+        }}
+      />,
+    )
+    expect(screen.getByTestId('photo-meta-checkbox')).toBeChecked()
+    expect(screen.getByTestId('photo-iso-input')).toHaveValue('400')
+    expect(screen.getByTestId('photo-aperture-input')).toHaveValue('f/2.8')
+    expect(screen.getByTestId('photo-exposure-input')).toHaveValue('1/250')
+  })
+
+  it('does not pre-fill when initialValues is null', () => {
+    renderApp(
+      <ImageInsertModal
+        isOpen
+        onInsert={jest.fn()}
+        onCancel={jest.fn()}
+        pickerOpen={false}
+        onRequestImagePick={jest.fn()}
+        initialValues={null}
+      />,
+    )
+    expect(screen.queryByTestId('selected-image-thumb')).not.toBeInTheDocument()
+    expect(screen.getByTestId('alt-text-input')).toHaveValue('')
+  })
+
+  it('insert button enabled when initialValues provides url', () => {
+    renderApp(
+      <ImageInsertModal
+        isOpen
+        onInsert={jest.fn()}
+        onCancel={jest.fn()}
+        pickerOpen={false}
+        onRequestImagePick={jest.fn()}
+        initialValues={{
+          url: 'https://cdn.com/existing.jpg',
+          altText: '',
+          caption: '',
+          captionPos: 'bottom',
+          size: 'full',
+          align: 'none',
+          expand: false,
+        }}
+      />,
+    )
+    expect(screen.getByTestId('image-modal-insert')).not.toBeDisabled()
+  })
+})
+
 describe('buildImageMarkdown', () => {
   const base = {
     url: 'https://cdn.com/img.jpg',
