@@ -212,6 +212,43 @@ describe('EmbedInsertModal', () => {
   })
 })
 
+describe('EmbedInsertModal initialValues', () => {
+  it('pre-fills type and url when initialValues provided', () => {
+    const onInsert = jest.fn()
+    renderApp(
+      <EmbedInsertModal
+        isOpen
+        onInsert={onInsert}
+        onCancel={jest.fn()}
+        initialValues={{
+          type: 'maps',
+          url: 'https://maps.google.com/embed?pb=123',
+        }}
+      />,
+    )
+    expect(screen.getByTestId('embed-url-input')).toHaveValue(
+      'https://maps.google.com/embed?pb=123',
+    )
+    // Verify the type pre-fill via the generated markdown
+    fireEvent.click(screen.getByTestId('embed-modal-insert'))
+    expect(onInsert).toHaveBeenCalledWith(
+      '\n\n```maps\nhttps://maps.google.com/embed?pb=123\n```\n\n',
+    )
+  })
+
+  it('does not pre-fill when initialValues is null', () => {
+    renderApp(
+      <EmbedInsertModal
+        isOpen
+        onInsert={jest.fn()}
+        onCancel={jest.fn()}
+        initialValues={null}
+      />,
+    )
+    expect(screen.getByTestId('embed-url-input')).toHaveValue('')
+  })
+})
+
 describe('buildEmbedMarkdown', () => {
   it('builds youtube markdown', () => {
     expect(

@@ -1153,3 +1153,56 @@ describe('GpxMapModal', () => {
     })
   })
 })
+
+describe('GpxMapModal initialValues', () => {
+  it('pre-fills tracks when initialValues provided', () => {
+    renderApp(
+      <GpxMapModal
+        isOpen
+        onInsert={jest.fn()}
+        onCancel={jest.fn()}
+        initialValues={{
+          tracks: [
+            {
+              url: 'https://cdn.com/route.gpx',
+              name: 'My Trail',
+              color: '#3a86ff',
+              allowDownload: true,
+              showWaypoints: false,
+            },
+          ],
+          mappingsByTrack: {},
+        }}
+      />,
+    )
+    expect(screen.getByTestId('gpx-track-url-0')).toHaveValue(
+      'https://cdn.com/route.gpx',
+    )
+    expect(screen.getByTestId('gpx-track-name-0')).toHaveValue('My Trail')
+    expect(screen.getByTestId('gpx-track-allow-download-0')).toBeChecked()
+  })
+
+  it('does not pre-fill when initialValues is null', () => {
+    renderApp(
+      <GpxMapModal
+        isOpen
+        onInsert={jest.fn()}
+        onCancel={jest.fn()}
+        initialValues={null}
+      />,
+    )
+    expect(screen.getByTestId('gpx-track-url-0')).toHaveValue('')
+  })
+
+  it('uses initTrack when initialValues has empty tracks array', () => {
+    renderApp(
+      <GpxMapModal
+        isOpen
+        onInsert={jest.fn()}
+        onCancel={jest.fn()}
+        initialValues={{ tracks: [], mappingsByTrack: {} }}
+      />,
+    )
+    expect(screen.getByTestId('gpx-track-url-0')).toHaveValue('')
+  })
+})

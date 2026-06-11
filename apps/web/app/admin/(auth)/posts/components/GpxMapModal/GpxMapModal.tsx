@@ -8,6 +8,7 @@ import { Select } from '@sdlgr/select'
 import type { CloudinaryImage } from '@web/lib/cloudinary/images'
 
 import { ImagePicker } from '../ImagePicker'
+import type { ParsedGpx } from '../PostEditor/parseEmbedBlock'
 import {
   StyledAddRow,
   StyledAddTrackButton,
@@ -42,6 +43,7 @@ export interface GpxMapModalProps {
   isOpen: boolean
   onInsert: (markdown: string) => void
   onCancel: () => void
+  initialValues?: ParsedGpx | null
 }
 
 interface WaypointMapping {
@@ -117,8 +119,15 @@ function shiftDown<T>(
   return next
 }
 
-export function GpxMapModal({ isOpen, onInsert, onCancel }: GpxMapModalProps) {
-  const [tracks, setTracks] = useState<TrackInput[]>([initTrack()])
+export function GpxMapModal({
+  isOpen,
+  onInsert,
+  onCancel,
+  initialValues,
+}: GpxMapModalProps) {
+  const [tracks, setTracks] = useState<TrackInput[]>(
+    initialValues?.tracks.length ? initialValues.tracks : [initTrack()],
+  )
   const [fetchedWaypointsByTrack, setFetchedWaypointsByTrack] = useState<
     Record<number, string[]>
   >({})
@@ -130,7 +139,7 @@ export function GpxMapModal({ isOpen, onInsert, onCancel }: GpxMapModalProps) {
   >({})
   const [mappingsByTrack, setMappingsByTrack] = useState<
     Record<number, WaypointMapping[]>
-  >({})
+  >(initialValues?.mappingsByTrack ?? {})
   const [pendingWaypointByTrack, setPendingWaypointByTrack] = useState<
     Record<number, string>
   >({})

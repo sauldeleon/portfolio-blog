@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { RenderModalBackdropProps } from 'react-overlays/Modal'
 
+import type { ParsedEmbed } from '../PostEditor/parseEmbedBlock'
 import {
   StyledBackdrop,
   StyledButtons,
@@ -21,6 +22,7 @@ export interface EmbedInsertModalProps {
   isOpen: boolean
   onInsert: (markdown: string) => void
   onCancel: () => void
+  initialValues?: ParsedEmbed | null
 }
 
 type EmbedType = 'youtube' | 'maps' | 'openstreetmap' | 'wikiloc'
@@ -50,9 +52,12 @@ export function EmbedInsertModal({
   isOpen,
   onInsert,
   onCancel,
+  initialValues,
 }: EmbedInsertModalProps) {
-  const [embedType, setEmbedType] = useState<EmbedType>('youtube')
-  const [url, setUrl] = useState('')
+  const [embedType, setEmbedType] = useState<EmbedType>(
+    initialValues?.type ?? 'youtube',
+  )
+  const [url, setUrl] = useState(initialValues?.url ?? '')
 
   function handleInsert() {
     /* istanbul ignore next */

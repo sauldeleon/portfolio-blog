@@ -5,6 +5,7 @@ import { RenderModalBackdropProps } from 'react-overlays/Modal'
 
 import type { CloudinaryImage } from '@web/lib/cloudinary/images'
 
+import type { ParsedImage } from '../PostEditor/parseEmbedBlock'
 import {
   StyledBackdrop,
   StyledButtons,
@@ -32,6 +33,7 @@ export interface ImageInsertModalProps {
   onCancel: () => void
   pickerOpen: boolean
   onRequestImagePick: (onPicked: (image: CloudinaryImage) => void) => void
+  initialValues?: ParsedImage | null
 }
 
 type Size = 'full' | 'small' | 'medium'
@@ -72,20 +74,35 @@ export function ImageInsertModal({
   onCancel,
   pickerOpen,
   onRequestImagePick,
+  initialValues,
 }: ImageInsertModalProps) {
   const [selectedImage, setSelectedImage] = useState<CloudinaryImage | null>(
-    null,
+    initialValues
+      ? ({ url: initialValues.url } as unknown as CloudinaryImage)
+      : null,
   )
-  const [altText, setAltText] = useState('')
-  const [caption, setCaption] = useState('')
-  const [captionPos, setCaptionPos] = useState<'top' | 'bottom'>('bottom')
-  const [size, setSize] = useState<Size>('full')
-  const [align, setAlign] = useState<Align>('none')
-  const [expand, setExpand] = useState(false)
-  const [photoMetaEnabled, setPhotoMetaEnabled] = useState(false)
-  const [photoIso, setPhotoIso] = useState('')
-  const [photoExposure, setPhotoExposure] = useState('')
-  const [photoAperture, setPhotoAperture] = useState('')
+  const [altText, setAltText] = useState(initialValues?.altText ?? '')
+  const [caption, setCaption] = useState(initialValues?.caption ?? '')
+  const [captionPos, setCaptionPos] = useState<'top' | 'bottom'>(
+    initialValues?.captionPos ?? 'bottom',
+  )
+  const [size, setSize] = useState<Size>(initialValues?.size ?? 'full')
+  const [align, setAlign] = useState<Align>(initialValues?.align ?? 'none')
+  const [expand, setExpand] = useState(initialValues?.expand ?? false)
+  const [photoMetaEnabled, setPhotoMetaEnabled] = useState(
+    !!(
+      initialValues?.photoMeta?.iso ||
+      initialValues?.photoMeta?.aperture ||
+      initialValues?.photoMeta?.exposure
+    ),
+  )
+  const [photoIso, setPhotoIso] = useState(initialValues?.photoMeta?.iso ?? '')
+  const [photoExposure, setPhotoExposure] = useState(
+    initialValues?.photoMeta?.exposure ?? '',
+  )
+  const [photoAperture, setPhotoAperture] = useState(
+    initialValues?.photoMeta?.aperture ?? '',
+  )
 
   function handleInsert() {
     /* istanbul ignore next */

@@ -416,6 +416,76 @@ describe('PostEditor — image picker', () => {
     fireEvent.click(screen.getByTestId('content-picker-insert'))
     expect(screen.queryByTestId('content-image-picker')).not.toBeInTheDocument()
   })
+
+  it('shows edit button when cursor is inside an image block', () => {
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+    const textarea = screen.getByTestId('content-input') as HTMLTextAreaElement
+    const content = 'Hello\n\n![alt=Test](https://cdn.com/img.jpg)\n\nWorld'
+    fireEvent.change(textarea, { target: { value: content } })
+    textarea.selectionStart = content.indexOf('![') + 3
+    textarea.selectionEnd = content.indexOf('![') + 3
+    fireEvent.click(textarea)
+    expect(screen.getByTestId('edit-embed-button')).toBeInTheDocument()
+    expect(screen.getByTestId('edit-embed-button')).toHaveTextContent(
+      'Edit image',
+    )
+  })
+
+  it('opens image modal when edit button clicked on image block', () => {
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+    const textarea = screen.getByTestId('content-input') as HTMLTextAreaElement
+    const content = 'Hello\n\n![](https://cdn.com/img.jpg)\n\nWorld'
+    fireEvent.change(textarea, { target: { value: content } })
+    textarea.selectionStart = content.indexOf('![') + 2
+    textarea.selectionEnd = content.indexOf('![') + 2
+    fireEvent.click(textarea)
+    fireEvent.click(screen.getByTestId('edit-embed-button'))
+    expect(screen.getByTestId('image-insert-modal')).toBeInTheDocument()
+  })
+
+  it('replaces image block on modal insert', () => {
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+    const textarea = screen.getByTestId('content-input') as HTMLTextAreaElement
+    const content = 'Before\n\n![alt=Old](https://cdn.com/old.jpg)\n\nAfter'
+    fireEvent.change(textarea, { target: { value: content } })
+    textarea.selectionStart = content.indexOf('![') + 2
+    textarea.selectionEnd = content.indexOf('![') + 2
+    fireEvent.click(textarea)
+    fireEvent.click(screen.getByTestId('edit-embed-button'))
+    fireEvent.click(screen.getByTestId('modal-insert'))
+    const newContent = (
+      screen.getByTestId('content-input') as HTMLTextAreaElement
+    ).value
+    expect(newContent).not.toContain('https://cdn.com/old.jpg')
+    expect(newContent).toContain('Before')
+    expect(newContent).toContain('After')
+  })
+
+  it('clears edit state when image toolbar button clicked', () => {
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+    const textarea = screen.getByTestId('content-input') as HTMLTextAreaElement
+    const content = 'Hello\n\n![](https://cdn.com/img.jpg)\n\nWorld'
+    fireEvent.change(textarea, { target: { value: content } })
+    textarea.selectionStart = content.indexOf('![') + 2
+    textarea.selectionEnd = content.indexOf('![') + 2
+    fireEvent.click(textarea)
+    expect(screen.getByTestId('edit-embed-button')).toBeInTheDocument()
+    fireEvent.click(screen.getByTestId('open-image-picker-button'))
+    expect(screen.queryByTestId('edit-embed-button')).not.toBeInTheDocument()
+  })
+
+  it('cancel on image modal during edit closes modal', () => {
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+    const textarea = screen.getByTestId('content-input') as HTMLTextAreaElement
+    const content = 'Hello\n\n![](https://cdn.com/img.jpg)\n\nWorld'
+    fireEvent.change(textarea, { target: { value: content } })
+    textarea.selectionStart = content.indexOf('![') + 2
+    textarea.selectionEnd = content.indexOf('![') + 2
+    fireEvent.click(textarea)
+    fireEvent.click(screen.getByTestId('edit-embed-button'))
+    fireEvent.click(screen.getByTestId('modal-cancel'))
+    expect(screen.queryByTestId('image-insert-modal')).not.toBeInTheDocument()
+  })
 })
 
 export {}
