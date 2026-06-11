@@ -241,6 +241,7 @@ export const StyledMobileContent = styled.div`
 `
 
 export const StyledContentTextarea = styled(Textarea)`
+  width: 100%;
   min-height: 400px;
   font-family: 'Courier New', monospace;
   font-size: 0.75rem;
