@@ -21,6 +21,7 @@ const mockSeriesPost = (overrides: Record<string, unknown> = {}) => ({
   title: 'Part One',
   slug: 'part-one',
   seriesId: 'my-series',
+  seriesTitle: 'My Series Title',
   seriesOrder: 1,
   status: 'published' as const,
   category: 'engineering',
@@ -71,6 +72,37 @@ describe('SeriesIndicator', () => {
     })
     renderApp(result)
     expect(screen.getByText(/seriesIndicator\.heading/)).toBeInTheDocument()
+  })
+
+  it('uses translated series title in heading, not raw series id', async () => {
+    mockGetPostsBySeries.mockResolvedValue([
+      mockSeriesPost({ seriesTitle: 'My Great Series' }),
+    ])
+    const result = await SeriesIndicator({
+      postId: '01JX002',
+      seriesId: 'my-series',
+      seriesOrder: null,
+      lng: 'en',
+    })
+    renderApp(result)
+    const heading = screen.getByText(/seriesIndicator\.heading/)
+    expect(heading.textContent).toContain('My Great Series')
+    expect(heading.textContent).not.toContain('my-series')
+  })
+
+  it('falls back to seriesId in heading when seriesTitle is null', async () => {
+    mockGetPostsBySeries.mockResolvedValue([
+      mockSeriesPost({ seriesTitle: null }),
+    ])
+    const result = await SeriesIndicator({
+      postId: '01JX002',
+      seriesId: 'my-series',
+      seriesOrder: null,
+      lng: 'en',
+    })
+    renderApp(result)
+    const heading = screen.getByText(/seriesIndicator\.heading/)
+    expect(heading.textContent).toContain('my-series')
   })
 
   it('renders part label when seriesOrder is provided', async () => {

@@ -21,6 +21,7 @@ export function CookieBanner() {
         background: mainTheme.colors.white,
         fontFamily: mainTheme.fonts.bodyFont,
         alignItems: 'center',
+        paddingBottom: 'max(env(safe-area-inset-bottom), 16px)',
       }}
       acceptOnScroll
       acceptOnScrollPercentage={75}
