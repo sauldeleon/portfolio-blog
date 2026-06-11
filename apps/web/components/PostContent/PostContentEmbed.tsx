@@ -63,7 +63,12 @@ export function PostContentEmbed({
 
   return (
     <StyledEmbedWrapper data-testid="post-embed-wrapper">
-      <iframe src={url} allowFullScreen title={type ?? 'embed'} />
+      <iframe
+        src={url}
+        allowFullScreen
+        allow="pointer-lock"
+        title={type ?? 'embed'}
+      />
     </StyledEmbedWrapper>
   )
 }
