@@ -78,6 +78,7 @@ export const posts = pgTable(
     updatedAt: timestamp('updated_at', { withTimezone: true })
       .notNull()
       .defaultNow(),
+    likes: integer('likes').notNull().default(0),
     deletedAt: timestamp('deleted_at', { withTimezone: true }), // soft delete
     previewToken: text('preview_token').unique(),
   },

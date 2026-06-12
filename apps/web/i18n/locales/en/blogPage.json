@@ -24,5 +24,7 @@
   "codeCopied": "Copied!",
   "share": "Share",
   "share.copyLink": "Copy link",
-  "share.copied": "Copied!"
+  "share.copied": "Copied!",
+  "likeButton.like": "Like this post",
+  "likeButton.liked": "Liked!"
 }

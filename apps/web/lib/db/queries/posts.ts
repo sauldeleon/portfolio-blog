@@ -36,6 +36,7 @@ export type PublicPost = {
   seriesId: string | null
   seriesOrder: number | null
   seriesTitle: string | null
+  likes: number
   publishedAt: Date | null
   createdAt: Date
   updatedAt: Date
@@ -80,6 +81,7 @@ const publicFields = {
   seriesId: posts.seriesId,
   seriesOrder: posts.seriesOrder,
   seriesTitle: seriesTranslations.title,
+  likes: posts.likes,
   publishedAt: posts.publishedAt,
   createdAt: posts.createdAt,
   updatedAt: posts.updatedAt,
@@ -739,6 +741,15 @@ export async function getPublishedPostCountByCategory(
 export type ScheduledPost = {
   id: string
   scheduledAt: Date
+}
+
+export async function incrementPostLikes(postId: string): Promise<number> {
+  const rows = await db
+    .update(posts)
+    .set({ likes: sql`${posts.likes} + 1` })
+    .where(eq(posts.id, postId))
+    .returning({ likes: posts.likes })
+  return rows[0]?.likes ?? 0
 }
 
 export async function getScheduledPostsToPublish(): Promise<ScheduledPost[]> {

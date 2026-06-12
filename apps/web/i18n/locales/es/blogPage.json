@@ -24,5 +24,7 @@
   "codeCopied": "¡Copiado!",
   "share": "Compartir",
   "share.copyLink": "Copiar enlace",
-  "share.copied": "¡Copiado!"
+  "share.copied": "¡Copiado!",
+  "likeButton.like": "Me gusta este artículo",
+  "likeButton.liked": "¡Me gusta!"
 }

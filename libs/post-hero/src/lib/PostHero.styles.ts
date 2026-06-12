@@ -91,6 +91,15 @@ export const StyledTag = styled.span`
   border-radius: 2px;
 `
 
+export const StyledMetaRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+`
+
 export const StyledMeta = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -99,7 +108,12 @@ export const StyledMeta = styled.div`
   color: ${({ theme }) => theme.colors.white};
   font-size: 0.875rem;
   opacity: 0.7;
-  margin-top: 0.75rem;
+`
+
+export const StyledMetaActions = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 `
 
 export const StyledMetaSep = styled.span`

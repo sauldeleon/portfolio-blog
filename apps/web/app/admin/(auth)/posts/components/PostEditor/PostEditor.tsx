@@ -247,8 +247,8 @@ export function PostEditor({
   const [isEmbedInsertModalOpen, setIsEmbedInsertModalOpen] = useState(false)
   const [isGpxModalOpen, setIsGpxModalOpen] = useState(false)
   const [imageModalKey, setImageModalKey] = useState(0)
-  const [embedModalKey, setEmbedModalKey] = useState(1)
-  const [gpxModalKey, setGpxModalKey] = useState(2)
+  const [embedModalKey, setEmbedModalKey] = useState(0)
+  const [gpxModalKey, setGpxModalKey] = useState(0)
   const [showPublishNotify, setShowPublishNotify] = useState(false)
   const [editingEmbed, setEditingEmbed] = useState<DetectedEmbed | null>(null)
   const [imageInitialValues, setImageInitialValues] =
@@ -966,7 +966,7 @@ export function PostEditor({
         zIndex={1100}
       />
       <ImageInsertModal
-        key={imageModalKey}
+        key={`image-${imageModalKey}`}
         isOpen={isImageInsertModalOpen}
         initialValues={imageInitialValues}
         onInsert={(markdown) => {
@@ -993,7 +993,7 @@ export function PostEditor({
         }}
       />
       <EmbedInsertModal
-        key={embedModalKey}
+        key={`embed-${embedModalKey}`}
         isOpen={isEmbedInsertModalOpen}
         initialValues={embedInitialValues}
         onInsert={(markdown) => {
@@ -1015,7 +1015,7 @@ export function PostEditor({
         }}
       />
       <GpxMapModal
-        key={gpxModalKey}
+        key={`gpx-${gpxModalKey}`}
         isOpen={isGpxModalOpen}
         initialValues={gpxInitialValues}
         onInsert={(markdown) => {

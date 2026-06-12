@@ -13,7 +13,7 @@ export const StyledModal = styled(Modal)`
   }
 `
 
-export const StyledTriggerButton = styled(Button)`
+export const StyledTriggerButton = styled(Button)<{ $compact?: boolean }>`
   transition:
     background-color 0.15s ease,
     color 0.15s ease;
@@ -22,6 +22,13 @@ export const StyledTriggerButton = styled(Button)`
     background-color: ${({ theme }) => theme.colors.white};
     color: ${({ theme }) => theme.colors.black};
   }
+
+  ${({ $compact }) =>
+    $compact &&
+    `
+    font-size: 0.75rem;
+    padding: 0.3rem 0.75rem;
+  `}
 `
 
 export const StyledModalBody = styled.div`

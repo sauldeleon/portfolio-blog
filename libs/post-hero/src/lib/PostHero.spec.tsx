@@ -128,6 +128,21 @@ describe('PostHero', () => {
     expect(screen.queryByTestId('share-buttons')).not.toBeInTheDocument()
   })
 
+  it('renders actions when provided', () => {
+    renderWithTheme(
+      <PostHero
+        {...defaultProps}
+        actions={<button data-testid="hero-action">Like</button>}
+      />,
+    )
+    expect(screen.getByTestId('hero-action')).toBeInTheDocument()
+  })
+
+  it('does not render actions wrapper when actions not provided', () => {
+    renderWithTheme(<PostHero {...defaultProps} />)
+    expect(screen.queryByTestId('hero-action')).not.toBeInTheDocument()
+  })
+
   it('matches snapshot', () => {
     const { baseElement } = renderWithTheme(<PostHero {...defaultProps} />)
     expect(baseElement).toMatchSnapshot()
