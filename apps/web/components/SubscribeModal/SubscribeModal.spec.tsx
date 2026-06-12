@@ -38,6 +38,21 @@ describe('SubscribeModal', () => {
     expect(baseElement).toMatchSnapshot()
   })
 
+  it('renders compact button when compact is true', () => {
+    const { baseElement } = renderApp(
+      <SubscribeModal
+        lng="en"
+        buttonLabel="Subscribe"
+        buttonAriaLabel="Subscribe to blog"
+        compact
+      />,
+    )
+    expect(
+      screen.getByRole('button', { name: 'Subscribe to blog' }),
+    ).toBeInTheDocument()
+    expect(baseElement).toMatchSnapshot()
+  })
+
   it('opens modal on button click', async () => {
     renderApp(
       <SubscribeModal
