@@ -1,4 +1,4 @@
-import { revalidateTag } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
@@ -230,6 +230,10 @@ export async function PUT(
     }
 
     logger.info({ id, status: data.status }, 'PUT /api/posts/[id]: updated')
+    const updatedTranslations = await getPostTranslations(id)
+    for (const t of updatedTranslations) {
+      revalidatePath(`/${t.locale}/blog/${post.postNumber}/${t.slug}`)
+    }
     revalidateTag('posts', 'default')
     revalidateTag(`post-${id}`, 'default')
     return NextResponse.json(post)
