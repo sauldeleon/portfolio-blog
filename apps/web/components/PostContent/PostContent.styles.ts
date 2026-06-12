@@ -302,3 +302,75 @@ export const StyledEmbedWrapper = styled.div`
     border: none;
   }
 `
+
+export const StyledEmbed360Wrapper = styled.div`
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  height: 0;
+  margin: 2rem 0;
+  border-radius: 2px;
+  overflow: hidden;
+  background: #000;
+`
+
+export const StyledEmbed360Thumbnail = styled.img`
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.4;
+`
+
+export const StyledEmbed360Overlay = styled.div`
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  text-align: center;
+`
+
+export const StyledEmbed360Badge = styled.span`
+  font-family: var(--font-roboto-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.colors.orange};
+  border: 1px solid ${({ theme }) => theme.colors.orange};
+  border-radius: 2px;
+  padding: 0.2rem 0.6rem;
+`
+
+export const StyledEmbed360Info = styled.p`
+  font-size: 0.8rem;
+  color: ${({ theme }) => theme.colors.white};
+  opacity: 0.7;
+  margin: 0;
+  max-width: 32rem;
+`
+
+export const StyledEmbed360Link = styled.a`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: ${({ theme }) => theme.colors.white};
+  background: #ff0000;
+  border-radius: 2px;
+  padding: 0.45rem 1rem;
+  text-decoration: none !important;
+  transition: opacity 0.15s;
+
+  &:hover {
+    opacity: 0.85;
+    color: ${({ theme }) => theme.colors.white};
+    text-decoration: none !important;
+  }
+`

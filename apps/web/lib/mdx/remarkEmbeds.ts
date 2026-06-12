@@ -1,4 +1,11 @@
-const EMBED_LANGS = ['youtube', 'maps', 'wikiloc', 'openstreetmap', 'gpx']
+const EMBED_LANGS = [
+  'youtube',
+  'youtube-360',
+  'maps',
+  'wikiloc',
+  'openstreetmap',
+  'gpx',
+]
 
 export interface TrackDef {
   url: string

@@ -20,5 +20,9 @@
     "iso": "ISO",
     "aperture": "Aperture",
     "exposure": "Exposure"
+  },
+  "embed": {
+    "watchOnYouTube": "Watch on YouTube",
+    "360info": "360° videos must be watched directly on YouTube — embedded players don't support interactive 360° viewing."
   }
 }

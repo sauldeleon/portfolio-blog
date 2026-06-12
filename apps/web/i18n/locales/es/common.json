@@ -20,5 +20,9 @@
     "iso": "ISO",
     "aperture": "Apertura",
     "exposure": "Exposición"
+  },
+  "embed": {
+    "watchOnYouTube": "Ver en YouTube",
+    "360info": "Los vídeos 360° deben verse directamente en YouTube — los reproductores integrados no admiten la visualización 360° interactiva."
   }
 }

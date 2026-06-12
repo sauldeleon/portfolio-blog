@@ -249,6 +249,96 @@ describe('EmbedInsertModal initialValues', () => {
   })
 })
 
+describe('EmbedInsertModal 360°', () => {
+  it('shows 360 checkbox when embed type is youtube', () => {
+    renderApp(
+      <EmbedInsertModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+    )
+    expect(screen.getByTestId('embed-is360-checkbox')).toBeInTheDocument()
+  })
+
+  it('hides 360 checkbox when embed type is maps', () => {
+    renderApp(
+      <EmbedInsertModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+    )
+    fireEvent.click(screen.getByTestId('embed-type-maps'))
+    expect(screen.queryByTestId('embed-is360-checkbox')).not.toBeInTheDocument()
+  })
+
+  it('checking 360 updates preview to youtube-360 type', () => {
+    renderApp(
+      <EmbedInsertModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+    )
+    fireEvent.change(screen.getByTestId('embed-url-input'), {
+      target: { value: 'https://www.youtube.com/embed/abc' },
+    })
+    fireEvent.click(screen.getByTestId('embed-is360-checkbox'))
+    expect(screen.getByTestId('embed-preview').textContent).toBe(
+      '```youtube-360\nhttps://www.youtube.com/embed/abc\n```',
+    )
+  })
+
+  it('inserts youtube-360 markdown when 360 checkbox is checked', () => {
+    const onInsert = jest.fn()
+    renderApp(
+      <EmbedInsertModal isOpen onInsert={onInsert} onCancel={jest.fn()} />,
+    )
+    fireEvent.change(screen.getByTestId('embed-url-input'), {
+      target: { value: 'https://www.youtube.com/embed/xyz' },
+    })
+    fireEvent.click(screen.getByTestId('embed-is360-checkbox'))
+    fireEvent.click(screen.getByTestId('embed-modal-insert'))
+    expect(onInsert).toHaveBeenCalledWith(
+      '\n\n```youtube-360\nhttps://www.youtube.com/embed/xyz\n```\n\n',
+    )
+  })
+
+  it('resets is360 after insert', () => {
+    renderApp(
+      <EmbedInsertModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+    )
+    fireEvent.change(screen.getByTestId('embed-url-input'), {
+      target: { value: 'https://www.youtube.com/embed/xyz' },
+    })
+    fireEvent.click(screen.getByTestId('embed-is360-checkbox'))
+    fireEvent.click(screen.getByTestId('embed-modal-insert'))
+    expect(screen.getByTestId('embed-is360-checkbox')).not.toBeChecked()
+  })
+
+  it('switching away from youtube resets is360', () => {
+    renderApp(
+      <EmbedInsertModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+    )
+    fireEvent.click(screen.getByTestId('embed-is360-checkbox'))
+    fireEvent.click(screen.getByTestId('embed-type-maps'))
+    fireEvent.click(screen.getByTestId('embed-type-youtube'))
+    expect(screen.getByTestId('embed-is360-checkbox')).not.toBeChecked()
+  })
+
+  it('initialValues with youtube-360 sets type to youtube and checks 360', () => {
+    const onInsert = jest.fn()
+    renderApp(
+      <EmbedInsertModal
+        isOpen
+        onInsert={onInsert}
+        onCancel={jest.fn()}
+        initialValues={{
+          type: 'youtube-360',
+          url: 'https://www.youtube.com/embed/abc123',
+        }}
+      />,
+    )
+    expect(screen.getByTestId('embed-is360-checkbox')).toBeChecked()
+    expect(screen.getByTestId('embed-url-input')).toHaveValue(
+      'https://www.youtube.com/embed/abc123',
+    )
+    fireEvent.click(screen.getByTestId('embed-modal-insert'))
+    expect(onInsert).toHaveBeenCalledWith(
+      '\n\n```youtube-360\nhttps://www.youtube.com/embed/abc123\n```\n\n',
+    )
+  })
+})
+
 describe('buildEmbedMarkdown', () => {
   it('builds youtube markdown', () => {
     expect(
