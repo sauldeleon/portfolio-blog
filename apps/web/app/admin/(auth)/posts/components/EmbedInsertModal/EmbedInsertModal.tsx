@@ -8,6 +8,8 @@ import {
   StyledBackdrop,
   StyledButtons,
   StyledCancelButton,
+  StyledCheckboxLabel,
+  StyledCheckboxRow,
   StyledEmbedInsertModal,
   StyledInput,
   StyledInsertButton,
@@ -44,7 +46,7 @@ const PLACEHOLDERS: Record<EmbedType, string> = {
     'https://www.wikiloc.com/wikiloc/embedv2.do?id=<trail-id>&elevation=on&images=on&maptype=H',
 }
 
-export function buildEmbedMarkdown(type: EmbedType, url: string): string {
+export function buildEmbedMarkdown(type: string, url: string): string {
   return `\n\n\`\`\`${type}\n${url.trim()}\n\`\`\`\n\n`
 }
 
@@ -55,19 +57,31 @@ export function EmbedInsertModal({
   initialValues,
 }: EmbedInsertModalProps) {
   const [embedType, setEmbedType] = useState<EmbedType>(
-    initialValues?.type ?? 'youtube',
+    initialValues?.type === 'youtube-360'
+      ? 'youtube'
+      : (initialValues?.type ?? 'youtube'),
   )
   const [url, setUrl] = useState(initialValues?.url ?? '')
+  const [is360, setIs360] = useState(initialValues?.type === 'youtube-360')
+
+  function handleTypeChange(type: EmbedType) {
+    setEmbedType(type)
+    if (type !== 'youtube') setIs360(false)
+  }
 
   function handleInsert() {
     /* istanbul ignore next */
     if (!url.trim()) return
-    onInsert(buildEmbedMarkdown(embedType, url))
+    const finalType =
+      embedType === 'youtube' && is360 ? 'youtube-360' : embedType
+    onInsert(buildEmbedMarkdown(finalType, url))
     setEmbedType('youtube')
     setUrl('')
+    setIs360(false)
   }
 
-  const preview = url.trim() ? buildEmbedMarkdown(embedType, url).trim() : null
+  const finalType = embedType === 'youtube' && is360 ? 'youtube-360' : embedType
+  const preview = url.trim() ? buildEmbedMarkdown(finalType, url).trim() : null
 
   return (
     <StyledEmbedInsertModal
@@ -86,7 +100,7 @@ export function EmbedInsertModal({
               key={type}
               type="button"
               $active={embedType === type}
-              onClick={() => setEmbedType(type)}
+              onClick={() => handleTypeChange(type)}
               data-testid={`embed-type-${type}`}
             >
               {LABELS[type]}
@@ -103,6 +117,21 @@ export function EmbedInsertModal({
           placeholder={PLACEHOLDERS[embedType]}
           data-testid="embed-url-input"
         />
+
+        {embedType === 'youtube' && (
+          <StyledCheckboxRow>
+            <input
+              id="embed-is360"
+              type="checkbox"
+              checked={is360}
+              onChange={(e) => setIs360(e.target.checked)}
+              data-testid="embed-is360-checkbox"
+            />
+            <StyledCheckboxLabel htmlFor="embed-is360">
+              360° video (links to YouTube instead of embedding)
+            </StyledCheckboxLabel>
+          </StyledCheckboxRow>
+        )}
 
         {preview && (
           <StyledPreview data-testid="embed-preview">{preview}</StyledPreview>

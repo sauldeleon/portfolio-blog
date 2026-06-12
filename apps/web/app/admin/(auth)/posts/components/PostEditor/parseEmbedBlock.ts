@@ -1,4 +1,9 @@
-export type EmbedType = 'youtube' | 'maps' | 'openstreetmap' | 'wikiloc'
+export type EmbedType =
+  | 'youtube'
+  | 'youtube-360'
+  | 'maps'
+  | 'openstreetmap'
+  | 'wikiloc'
 
 export interface ParsedImage {
   url: string
@@ -35,7 +40,13 @@ export type DetectedEmbed =
   | { type: 'embed'; blockStart: number; blockEnd: number; parsed: ParsedEmbed }
   | { type: 'gpx'; blockStart: number; blockEnd: number; parsed: ParsedGpx }
 
-const EMBED_TYPES: EmbedType[] = ['youtube', 'maps', 'openstreetmap', 'wikiloc']
+const EMBED_TYPES: EmbedType[] = [
+  'youtube',
+  'youtube-360',
+  'maps',
+  'openstreetmap',
+  'wikiloc',
+]
 
 function parseImageParams(params: string): Omit<ParsedImage, 'url'> {
   const result: Omit<ParsedImage, 'url'> = {
@@ -183,7 +194,7 @@ export function detectEmbedAtCursor(
   }
 
   // Code fence blocks: ```type\n...\n```
-  const fenceRe = /```([a-z]+)\n([\s\S]*?)```/g
+  const fenceRe = /```([a-z0-9-]+)\n([\s\S]*?)```/g
   while ((m = fenceRe.exec(content)) !== null) {
     const { index } = m
     const blockEnd = index + m[0].length

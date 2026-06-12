@@ -118,6 +118,19 @@ export const StyledPreview = styled.pre`
   word-break: break-all;
 `
 
+export const StyledCheckboxRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`
+
+export const StyledCheckboxLabel = styled.label`
+  font-size: 0.75rem;
+  color: ${({ theme }) => theme.colors.white};
+  opacity: 0.7;
+  cursor: pointer;
+`
+
 export const StyledButtons = styled.div`
   display: flex;
   justify-content: flex-end;

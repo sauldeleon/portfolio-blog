@@ -12,6 +12,8 @@ jest.mock('@web/i18n/client', () => ({
         'gpxMap.colCoordinates': 'Coordinates',
         'gpxMap.colElevation': 'Elevation',
         'gpxMap.flyTo': 'View on map',
+        'embed.watchOnYouTube': 'Watch on YouTube',
+        'embed.360info': '360 info text',
       }
       return map[key] ?? key
     },
@@ -21,6 +23,40 @@ jest.mock('@web/i18n/client', () => ({
 jest.mock('./PostContent.styles', () => ({
   StyledEmbedWrapper: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="post-embed-wrapper">{children}</div>
+  ),
+  StyledEmbed360Wrapper: ({
+    children,
+    ...props
+  }: React.HTMLAttributes<HTMLDivElement>) => <div {...props}>{children}</div>,
+  StyledEmbed360Thumbnail: ({
+    src,
+    alt,
+    ...props
+  }: React.ImgHTMLAttributes<HTMLImageElement>) => (
+    <img
+      src={src}
+      alt={alt}
+      data-testid="post-embed-360-thumbnail"
+      {...props}
+    />
+  ),
+  StyledEmbed360Overlay: ({ children }: { children: React.ReactNode }) => (
+    <div>{children}</div>
+  ),
+  StyledEmbed360Badge: ({ children }: { children: React.ReactNode }) => (
+    <span>{children}</span>
+  ),
+  StyledEmbed360Info: ({ children }: { children: React.ReactNode }) => (
+    <p>{children}</p>
+  ),
+  StyledEmbed360Link: ({
+    children,
+    href,
+    ...props
+  }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
+    <a href={href} data-testid="post-embed-360-link" {...props}>
+      {children}
+    </a>
   ),
 }))
 
@@ -220,5 +256,42 @@ describe('PostContentEmbed', () => {
       'data-waypoint-images',
       JSON.stringify(images),
     )
+  })
+
+  it('renders 360 card with thumbnail and watch link for youtube-360 type', () => {
+    render(
+      <PostContentEmbed
+        type="youtube-360"
+        url="https://www.youtube.com/embed/abc123"
+      />,
+    )
+    expect(screen.getByTestId('post-embed-360-wrapper')).toBeInTheDocument()
+    const thumbnail = screen.getByTestId('post-embed-360-thumbnail')
+    expect(thumbnail).toHaveAttribute(
+      'src',
+      'https://img.youtube.com/vi/abc123/hqdefault.jpg',
+    )
+    const link = screen.getByTestId('post-embed-360-link')
+    expect(link).toHaveAttribute(
+      'href',
+      'https://www.youtube.com/watch?v=abc123',
+    )
+    expect(link).toHaveTextContent('Watch on YouTube')
+    expect(screen.getByText('360 info text')).toBeInTheDocument()
+  })
+
+  it('renders 360 card without thumbnail when url has no youtube video id', () => {
+    render(
+      <PostContentEmbed
+        type="youtube-360"
+        url="https://example.com/not-youtube"
+      />,
+    )
+    expect(screen.getByTestId('post-embed-360-wrapper')).toBeInTheDocument()
+    expect(
+      screen.queryByTestId('post-embed-360-thumbnail'),
+    ).not.toBeInTheDocument()
+    const link = screen.getByTestId('post-embed-360-link')
+    expect(link).toHaveAttribute('href', 'https://example.com/not-youtube')
   })
 })
