@@ -16,10 +16,14 @@ const mockUpsertSeriesTranslation = jest.fn()
 const mockSeriesOrderExistsForSeries = jest.fn()
 
 const mockRevalidateTag = jest.fn()
+const mockRevalidatePath = jest.fn()
 const mockLoggerError = jest.fn()
 const mockNotifyPostPublished = jest.fn()
 
-jest.mock('next/cache', () => ({ revalidateTag: mockRevalidateTag }))
+jest.mock('next/cache', () => ({
+  revalidateTag: mockRevalidateTag,
+  revalidatePath: mockRevalidatePath,
+}))
 jest.mock('@web/lib/email/notifyPostPublished', () => ({
   notifyPostPublished: mockNotifyPostPublished,
 }))
@@ -69,6 +73,7 @@ const { DELETE, GET, PUT } = require('./route') as {
 
 const mockPost = {
   id: '01JWTEST000000000000000000',
+  postNumber: 42,
   category: 'engineering',
   tags: [],
   status: 'draft',
@@ -214,6 +219,7 @@ describe('PUT /api/posts/[id]', () => {
     jest.clearAllMocks()
     mockGetPostStatus.mockResolvedValue('draft')
     mockNotifyPostPublished.mockResolvedValue(undefined)
+    mockGetPostTranslations.mockResolvedValue([])
   })
 
   it('returns 401 when not authenticated', async () => {
@@ -426,6 +432,26 @@ describe('PUT /api/posts/[id]', () => {
       'post-01JWTEST000000000000000000',
       'default',
     )
+  })
+
+  it('calls revalidatePath for each translation after update', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockUpdatePost.mockResolvedValue({ ...mockPost, postNumber: 42 })
+    mockGetPostTranslations.mockResolvedValue([
+      { locale: 'en', slug: 'my-post' },
+      { locale: 'es', slug: 'mi-post' },
+    ])
+    await PUT(makePutRequest({ tags: ['react'] }), makeParams('id'))
+    expect(mockRevalidatePath).toHaveBeenCalledWith('/en/blog/42/my-post')
+    expect(mockRevalidatePath).toHaveBeenCalledWith('/es/blog/42/mi-post')
+  })
+
+  it('does not call revalidatePath when post has no translations', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockUpdatePost.mockResolvedValue(mockPost)
+    mockGetPostTranslations.mockResolvedValue([])
+    await PUT(makePutRequest({ tags: ['react'] }), makeParams('id'))
+    expect(mockRevalidatePath).not.toHaveBeenCalled()
   })
 
   it('upserts translations when provided', async () => {
