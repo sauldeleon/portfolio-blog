@@ -7,6 +7,7 @@ import { TableOfContents } from '@sdlgr/table-of-contents'
 
 import { JsonLd } from '@web/components/JsonLd/JsonLd'
 import { PostContent } from '@web/components/PostContent/PostContent'
+import { PostLikeButton } from '@web/components/PostLikeButton'
 import { RelatedPosts } from '@web/components/RelatedPosts/RelatedPosts'
 import { SeriesIndicator } from '@web/components/SeriesIndicator/SeriesIndicator'
 import { SubscribeModal } from '@web/components/SubscribeModal'
@@ -27,7 +28,7 @@ import {
 } from '@web/utils/metadata/inLanguage'
 import { getSiteUrl } from '@web/utils/url/generateUrl'
 
-import { StyledPage, StyledSubscribeWrapper } from './page.next.styles'
+import { StyledPage } from './page.next.styles'
 
 export const revalidate = 3600
 
@@ -177,6 +178,17 @@ export default async function BlogPostPage({ params }: RouteProps) {
         copyLinkLabel={t('share.copyLink')}
         copiedLabel={t('share.copied')}
         categoryIcon={<CategoryIconRenderer slug={post.category} aria-hidden />}
+        actions={
+          <>
+            <PostLikeButton postId={post.id} initialLikes={post.likes} />
+            <SubscribeModal
+              lng={lng}
+              buttonLabel={tSubscribe('buttonLabel')}
+              buttonAriaLabel={tSubscribe('buttonAriaLabel')}
+              compact
+            />
+          </>
+        }
       />
       {toc.length > 0 && <TableOfContents entries={toc} label={t('toc')} />}
       <PostContent>
@@ -194,13 +206,6 @@ export default async function BlogPostPage({ params }: RouteProps) {
         />
       )}
       <RelatedPosts postId={post.id} lng={lng} />
-      <StyledSubscribeWrapper>
-        <SubscribeModal
-          lng={lng}
-          buttonLabel={tSubscribe('buttonLabel')}
-          buttonAriaLabel={tSubscribe('buttonAriaLabel')}
-        />
-      </StyledSubscribeWrapper>
     </StyledPage>
   )
 }

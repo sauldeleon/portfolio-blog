@@ -20,6 +20,7 @@ import {
   getRelatedPosts,
   getScheduledPostsToPublish,
   hardDeletePost,
+  incrementPostLikes,
   restorePost,
   slugExistsForLocale,
   softDeletePost,
@@ -881,5 +882,19 @@ describe('getScheduledPostsToPublish', () => {
     })
     const result = await getScheduledPostsToPublish()
     expect(result[0].scheduledAt).toBe(date)
+  })
+})
+
+describe('incrementPostLikes', () => {
+  it('returns updated likes count', async () => {
+    mockDb.update.mockReturnValue(makeChain([{ likes: 5 }]))
+    const result = await incrementPostLikes('post-id')
+    expect(result).toBe(5)
+  })
+
+  it('returns 0 when no rows returned', async () => {
+    mockDb.update.mockReturnValue(makeChain([]))
+    const result = await incrementPostLikes('nonexistent')
+    expect(result).toBe(0)
   })
 })

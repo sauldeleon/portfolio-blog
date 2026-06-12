@@ -101,6 +101,10 @@ jest.mock('@web/components/PostContent/PostContent', () => ({
   ),
 }))
 
+jest.mock('@web/components/PostLikeButton', () => ({
+  PostLikeButton: () => <div data-testid="post-like-button" />,
+}))
+
 const publishedPost = {
   id: '01JXYZ',
   postNumber: 1,
@@ -113,6 +117,7 @@ const publishedPost = {
   category: 'Tech',
   tags: ['next.js', 'react'],
   author: 'Jane Doe',
+  likes: 0,
   publishedAt: new Date('2024-01-01T00:00:00.000Z'),
   updatedAt: new Date('2024-06-15T00:00:00.000Z'),
   content: 'Hello world content',

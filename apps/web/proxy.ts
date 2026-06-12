@@ -36,10 +36,12 @@ export async function handleMiddleware(
 
   const method = req.method
   const isWriteMethod = ['POST', 'PUT', 'DELETE'].includes(method)
+  const isLikeEndpoint = /^\/api\/posts\/[^/]+\/like\/?$/.test(pathname)
   const isProtectedApi =
-    pathname.startsWith('/api/posts') ||
-    pathname.startsWith('/api/categories') ||
-    pathname === '/api/upload'
+    !isLikeEndpoint &&
+    (pathname.startsWith('/api/posts') ||
+      pathname.startsWith('/api/categories') ||
+      pathname === '/api/upload')
 
   if (isProtectedApi && isWriteMethod && !isAuthenticated) {
     return new NextResponse('Unauthorized', { status: 401 })

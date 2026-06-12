@@ -14,12 +14,14 @@ export interface SubscribeModalProps {
   lng: string
   buttonLabel: string
   buttonAriaLabel: string
+  compact?: boolean
 }
 
 export function SubscribeModal({
   lng,
   buttonLabel,
   buttonAriaLabel,
+  compact,
 }: SubscribeModalProps) {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -29,6 +31,7 @@ export function SubscribeModal({
         variant="contained"
         onClick={() => setIsOpen(true)}
         aria-label={buttonAriaLabel}
+        $compact={compact}
       >
         {buttonLabel}
       </StyledTriggerButton>

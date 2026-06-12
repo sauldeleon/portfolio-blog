@@ -10,6 +10,8 @@ import {
   StyledHeader,
   StyledHeroContent,
   StyledMeta,
+  StyledMetaActions,
+  StyledMetaRow,
   StyledMetaSep,
   StyledPostTitle,
   StyledSeriesBadge,
@@ -34,6 +36,7 @@ export interface PostHeroProps {
   copyLinkLabel?: string
   copiedLabel?: string
   categoryIcon?: ReactNode
+  actions?: ReactNode
 }
 
 export function PostHero({
@@ -52,6 +55,7 @@ export function PostHero({
   copyLinkLabel,
   copiedLabel,
   categoryIcon,
+  actions,
 }: PostHeroProps) {
   return (
     <StyledHeader>
@@ -85,29 +89,32 @@ export function PostHero({
           ))}
         </StyledBadgeRow>
         <StyledPostTitle>{title}</StyledPostTitle>
-        <StyledMeta>
-          <span>{author}</span>
-          {publishedAt && (
-            <>
-              <StyledMetaSep aria-hidden>|</StyledMetaSep>
-              <time dateTime={publishedAt}>{publishedAt}</time>
-            </>
-          )}
-          <StyledMetaSep aria-hidden>|</StyledMetaSep>
-          <span data-testid="reading-time">{readingTime} min</span>
-          {url && (
-            <>
-              <StyledMetaSep aria-hidden>|</StyledMetaSep>
-              <ShareButtons
-                url={url}
-                title={title}
-                label={shareLabel}
-                copyLinkLabel={copyLinkLabel}
-                copiedLabel={copiedLabel}
-              />
-            </>
-          )}
-        </StyledMeta>
+        <StyledMetaRow>
+          <StyledMeta>
+            <span>{author}</span>
+            {publishedAt && (
+              <>
+                <StyledMetaSep aria-hidden>|</StyledMetaSep>
+                <time dateTime={publishedAt}>{publishedAt}</time>
+              </>
+            )}
+            <StyledMetaSep aria-hidden>|</StyledMetaSep>
+            <span data-testid="reading-time">{readingTime} min</span>
+            {url && (
+              <>
+                <StyledMetaSep aria-hidden>|</StyledMetaSep>
+                <ShareButtons
+                  url={url}
+                  title={title}
+                  label={shareLabel}
+                  copyLinkLabel={copyLinkLabel}
+                  copiedLabel={copiedLabel}
+                />
+              </>
+            )}
+          </StyledMeta>
+          {actions && <StyledMetaActions>{actions}</StyledMetaActions>}
+        </StyledMetaRow>
       </StyledHeroContent>
     </StyledHeader>
   )
