@@ -61,11 +61,15 @@ export function ImageManager() {
 
   const editTarget = images.find((img) => img.publicId === editTargetId) ?? null
 
-  const filteredImages = search
-    ? images.filter((img) =>
-        img.publicId.toLowerCase().includes(search.toLowerCase()),
-      )
-    : images
+  const filteredImages = (
+    search
+      ? images.filter((img) =>
+          img.publicId.toLowerCase().includes(search.toLowerCase()),
+        )
+      : [...images]
+  ).sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  )
 
   const renameMutation = useMutation({
     mutationFn: async ({

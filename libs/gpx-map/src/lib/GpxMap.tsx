@@ -172,6 +172,14 @@ function ElevationProfile({
 }) {
   /* istanbul ignore next */
   if (data.length === 0) return null
+  const elevations = data.map((p) => p.elevation)
+  const minEle = Math.min(...elevations)
+  const maxEle = Math.max(...elevations)
+  const pad = (maxEle - minEle) * 0.15 + 10
+  const yDomain: [number, number] = [
+    Math.floor((minEle - pad) / 10) * 10,
+    Math.ceil((maxEle + pad) / 10) * 10,
+  ]
   return (
     <StyledElevationChart data-testid="elevation-chart">
       {label && <StyledElevationLabel>{label}</StyledElevationLabel>}
@@ -197,6 +205,7 @@ function ElevationProfile({
             interval="preserveStartEnd"
           />
           <YAxis
+            domain={yDomain}
             tickFormatter={elevationYTickFormatter}
             tick={{ fontSize: 9, fill: 'rgba(251,251,251,0.4)' }}
             tickLine={false}

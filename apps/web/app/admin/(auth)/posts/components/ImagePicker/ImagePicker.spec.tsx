@@ -1,5 +1,6 @@
 import { act, fireEvent, screen, waitFor } from '@testing-library/react'
 import axios from 'axios'
+import { useState } from 'react'
 
 import { renderApp } from '@sdlgr/test-utils'
 
@@ -43,7 +44,7 @@ const mockImages = [
     width: 800,
     height: 600,
     format: 'jpg',
-    createdAt: '2024-01-01T00:00:00Z',
+    createdAt: '2024-01-02T00:00:00Z',
     bytes: 12345,
   },
   {
@@ -52,7 +53,7 @@ const mockImages = [
     width: 400,
     height: 300,
     format: 'jpg',
-    createdAt: '2024-01-02T00:00:00Z',
+    createdAt: '2024-01-01T00:00:00Z',
     bytes: 9876,
   },
 ]
@@ -135,30 +136,182 @@ describe('ImagePicker', () => {
     expect(screen.getByTestId('picker-loading')).toBeInTheDocument()
   })
 
-  it('shows empty state when no images match search', async () => {
+  it('shows empty state when API search returns no results', async () => {
+    jest
+      .spyOn(axios, 'get')
+      .mockResolvedValueOnce({
+        data: { images: mockImages, nextCursor: undefined },
+      })
+      .mockResolvedValueOnce({ data: { images: [], nextCursor: undefined } })
+
     renderApp(
       <ImagePicker open={true} onClose={mockOnClose} onPick={mockOnPick} />,
     )
     await waitFor(() =>
       expect(screen.getAllByTestId('image-picker-item')).toHaveLength(2),
     )
+
+    jest.useFakeTimers()
     fireEvent.change(screen.getByTestId('image-picker-search'), {
       target: { value: 'zzznomatch' },
     })
-    expect(screen.getByTestId('picker-empty')).toBeInTheDocument()
+    act(() => jest.advanceTimersByTime(300))
+    jest.useRealTimers()
+
+    expect(await screen.findByTestId('picker-empty')).toBeInTheDocument()
+    expect(axios.get).toHaveBeenCalledWith('/api/images/?search=zzznomatch')
   })
 
-  it('filters images by search term', async () => {
+  it('calls API with search term after debounce', async () => {
+    jest
+      .spyOn(axios, 'get')
+      .mockResolvedValueOnce({
+        data: { images: mockImages, nextCursor: undefined },
+      })
+      .mockResolvedValueOnce({
+        data: { images: [mockImages[0]], nextCursor: undefined },
+      })
+
     renderApp(
       <ImagePicker open={true} onClose={mockOnClose} onPick={mockOnPick} />,
     )
     await waitFor(() =>
       expect(screen.getAllByTestId('image-picker-item')).toHaveLength(2),
     )
+
+    jest.useFakeTimers()
     fireEvent.change(screen.getByTestId('image-picker-search'), {
       target: { value: 'mountain' },
     })
-    expect(screen.getAllByTestId('image-picker-item')).toHaveLength(1)
+    expect(axios.get).toHaveBeenCalledTimes(1)
+    act(() => jest.advanceTimersByTime(300))
+    jest.useRealTimers()
+
+    await waitFor(() =>
+      expect(screen.getAllByTestId('image-picker-item')).toHaveLength(1),
+    )
+    expect(axios.get).toHaveBeenCalledWith('/api/images/?search=mountain')
+  })
+
+  it('clears previous debounce timer when user types again before it fires', async () => {
+    jest
+      .spyOn(axios, 'get')
+      .mockResolvedValueOnce({
+        data: { images: mockImages, nextCursor: undefined },
+      })
+      .mockResolvedValueOnce({
+        data: { images: [mockImages[0]], nextCursor: undefined },
+      })
+
+    renderApp(
+      <ImagePicker open={true} onClose={mockOnClose} onPick={mockOnPick} />,
+    )
+    await waitFor(() =>
+      expect(screen.getAllByTestId('image-picker-item')).toHaveLength(2),
+    )
+
+    jest.useFakeTimers()
+    fireEvent.change(screen.getByTestId('image-picker-search'), {
+      target: { value: 'mo' },
+    })
+    fireEvent.change(screen.getByTestId('image-picker-search'), {
+      target: { value: 'mountain' },
+    })
+    act(() => jest.advanceTimersByTime(300))
+    jest.useRealTimers()
+
+    await waitFor(() =>
+      expect(screen.getAllByTestId('image-picker-item')).toHaveLength(1),
+    )
+    expect(axios.get).toHaveBeenCalledTimes(2)
+    expect(axios.get).toHaveBeenLastCalledWith('/api/images/?search=mountain')
+  })
+
+  it('clears pending debounce timer when picker reopens', async () => {
+    jest
+      .spyOn(axios, 'get')
+      .mockResolvedValueOnce({
+        data: { images: mockImages, nextCursor: undefined },
+      })
+      .mockResolvedValueOnce({
+        data: { images: [mockImages[0]], nextCursor: undefined },
+      })
+
+    function PickerWithToggle() {
+      const [open, setOpen] = useState(true)
+      return (
+        <>
+          <button
+            data-testid="toggle-picker2"
+            onClick={() => setOpen((o) => !o)}
+          />
+          <ImagePicker open={open} onClose={mockOnClose} onPick={mockOnPick} />
+        </>
+      )
+    }
+
+    renderApp(<PickerWithToggle />)
+    await waitFor(() =>
+      expect(screen.getAllByTestId('image-picker-item')).toHaveLength(2),
+    )
+
+    jest.useFakeTimers()
+    fireEvent.change(screen.getByTestId('image-picker-search'), {
+      target: { value: 'mountain' },
+    })
+    fireEvent.click(screen.getByTestId('toggle-picker2'))
+    jest.useRealTimers()
+
+    fireEvent.click(screen.getByTestId('toggle-picker2'))
+
+    await waitFor(() =>
+      expect(screen.getAllByTestId('image-picker-item')).toHaveLength(1),
+    )
+    expect(axios.get).toHaveBeenCalledWith('/api/images/?search=mountain')
+  })
+
+  it('calls fetchImages when search is cleared', async () => {
+    jest
+      .spyOn(axios, 'get')
+      .mockResolvedValueOnce({
+        data: { images: mockImages, nextCursor: undefined },
+      })
+      .mockResolvedValueOnce({
+        data: { images: [mockImages[0]], nextCursor: undefined },
+      })
+      .mockResolvedValueOnce({
+        data: { images: mockImages, nextCursor: undefined },
+      })
+
+    renderApp(
+      <ImagePicker open={true} onClose={mockOnClose} onPick={mockOnPick} />,
+    )
+    await waitFor(() =>
+      expect(screen.getAllByTestId('image-picker-item')).toHaveLength(2),
+    )
+
+    jest.useFakeTimers()
+    fireEvent.change(screen.getByTestId('image-picker-search'), {
+      target: { value: 'mountain' },
+    })
+    act(() => jest.advanceTimersByTime(300))
+    jest.useRealTimers()
+
+    await waitFor(() =>
+      expect(screen.getAllByTestId('image-picker-item')).toHaveLength(1),
+    )
+
+    jest.useFakeTimers()
+    fireEvent.change(screen.getByTestId('image-picker-search'), {
+      target: { value: '' },
+    })
+    act(() => jest.advanceTimersByTime(300))
+    jest.useRealTimers()
+
+    await waitFor(() =>
+      expect(screen.getAllByTestId('image-picker-item')).toHaveLength(2),
+    )
+    expect(axios.get).toHaveBeenLastCalledWith('/api/images/')
   })
 
   it('calls onPick with image object when image clicked', async () => {
@@ -431,6 +584,89 @@ describe('ImagePicker', () => {
     expect(
       screen.getAllByTestId('image-name').map((el) => el.getAttribute('title')),
     ).toContain('forest')
+  })
+
+  it('does not add duplicate images when load more returns already-loaded items', async () => {
+    jest
+      .spyOn(axios, 'get')
+      .mockResolvedValueOnce({
+        data: { images: mockImages, nextCursor: 'cursor-abc' },
+      })
+      .mockResolvedValueOnce({
+        data: { images: mockImages, nextCursor: undefined },
+      })
+
+    renderApp(
+      <ImagePicker open={true} onClose={mockOnClose} onPick={mockOnPick} />,
+    )
+
+    await waitFor(() =>
+      expect(screen.getAllByTestId('image-picker-item')).toHaveLength(2),
+    )
+
+    await act(async () => {
+      observerCallback(
+        [{ isIntersecting: true }] as IntersectionObserverEntry[],
+        {} as IntersectionObserver,
+      )
+    })
+
+    await waitFor(() =>
+      expect(screen.queryByTestId('load-more-loading')).not.toBeInTheDocument(),
+    )
+
+    expect(screen.getAllByTestId('image-picker-item')).toHaveLength(2)
+  })
+
+  it('resets image list when picker is reopened to avoid stale duplicates', async () => {
+    jest
+      .spyOn(axios, 'get')
+      .mockResolvedValueOnce({
+        data: { images: mockImages, nextCursor: 'cursor-abc' },
+      })
+      .mockResolvedValueOnce({
+        data: { images: mockImagesPage2, nextCursor: undefined },
+      })
+      .mockResolvedValueOnce({
+        data: { images: mockImages, nextCursor: undefined },
+      })
+
+    function PickerWithToggle() {
+      const [open, setOpen] = useState(true)
+      return (
+        <>
+          <button
+            data-testid="toggle-picker"
+            onClick={() => setOpen((o) => !o)}
+          />
+          <ImagePicker open={open} onClose={mockOnClose} onPick={mockOnPick} />
+        </>
+      )
+    }
+
+    renderApp(<PickerWithToggle />)
+
+    await waitFor(() =>
+      expect(screen.getAllByTestId('image-picker-item')).toHaveLength(2),
+    )
+
+    await act(async () => {
+      observerCallback(
+        [{ isIntersecting: true }] as IntersectionObserverEntry[],
+        {} as IntersectionObserver,
+      )
+    })
+
+    await waitFor(() =>
+      expect(screen.getAllByTestId('image-picker-item')).toHaveLength(3),
+    )
+
+    fireEvent.click(screen.getByTestId('toggle-picker'))
+    fireEvent.click(screen.getByTestId('toggle-picker'))
+
+    await waitFor(() =>
+      expect(screen.getAllByTestId('image-picker-item')).toHaveLength(2),
+    )
   })
 
   it('disconnects IntersectionObserver on unmount', async () => {

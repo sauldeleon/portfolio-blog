@@ -59,6 +59,8 @@ export function ImagePicker({
   const sentinelRef = useRef<HTMLDivElement>(null)
   const nextCursorRef = useRef<string | undefined>(undefined)
   const loadingMoreRef = useRef(false)
+  const searchTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const searchRef = useRef(search)
 
   useEffect(() => {
     nextCursorRef.current = nextCursor
@@ -67,6 +69,26 @@ export function ImagePicker({
   useEffect(() => {
     loadingMoreRef.current = loadingMore
   }, [loadingMore])
+
+  useEffect(() => {
+    searchRef.current = search
+  }, [search])
+
+  const fetchSearch = useCallback(async (term: string) => {
+    setLoading(true)
+    try {
+      const { data } = await axios.get<{
+        images: CloudinaryImage[]
+        nextCursor?: string
+      }>(`/api/images/?search=${encodeURIComponent(term)}`)
+      setImages(data.images)
+      setNextCursor(data.nextCursor)
+    } catch {
+      // leave images empty on error
+    } finally {
+      setLoading(false)
+    }
+  }, [])
 
   const fetchImages = useCallback(async () => {
     setLoading(true)
@@ -90,9 +112,22 @@ export function ImagePicker({
   }, [])
 
   useEffect(() => {
+    if (!open) return
+    if (searchTimerRef.current) {
+      clearTimeout(searchTimerRef.current)
+      searchTimerRef.current = null
+    }
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    if (open) void fetchImages()
-  }, [open, fetchImages])
+    setImages([])
+    nextCursorRef.current = undefined
+    if (searchRef.current.trim()) {
+       
+      void fetchSearch(searchRef.current.trim())
+    } else {
+       
+      void fetchImages()
+    }
+  }, [open, fetchImages, fetchSearch])
 
   const loadMore = useCallback(async () => {
     const cursor = nextCursorRef.current
@@ -107,7 +142,13 @@ export function ImagePicker({
         images: CloudinaryImage[]
         nextCursor?: string
       }>(`/api/images/?cursor=${cursor}`)
-      setImages((prev) => [...prev, ...data.images])
+      setImages((prev) => {
+        const existingIds = new Set(prev.map((img) => img.publicId))
+        return [
+          ...prev,
+          ...data.images.filter((img) => !existingIds.has(img.publicId)),
+        ]
+      })
       setNextCursor(data.nextCursor)
     } catch {
       // leave current images on error
@@ -189,8 +230,24 @@ export function ImagePicker({
     if (file) void handleUpload(file)
   }
 
-  const filtered = images.filter((img) =>
-    img.publicId.toLowerCase().includes(search.toLowerCase()),
+  function handleSearchChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const value = e.target.value
+    setSearch(value)
+    if (searchTimerRef.current) clearTimeout(searchTimerRef.current)
+    searchTimerRef.current = setTimeout(() => {
+      searchTimerRef.current = null
+      setImages([])
+      nextCursorRef.current = undefined
+      if (value.trim()) {
+        void fetchSearch(value.trim())
+      } else {
+        void fetchImages()
+      }
+    }, 300)
+  }
+
+  const displayImages = [...images].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
   )
 
   return (
@@ -245,7 +302,7 @@ export function ImagePicker({
           type="text"
           placeholder={t('images.picker.search')}
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={handleSearchChange}
           data-testid="image-picker-search"
         />
       </StyledSearchWrapper>
@@ -255,14 +312,14 @@ export function ImagePicker({
             {t('images.picker.loading')}
           </StyledEmptyState>
         )}
-        {!loading && filtered.length === 0 && (
+        {!loading && displayImages.length === 0 && (
           <StyledEmptyState data-testid="picker-empty">
             {t('images.picker.empty')}
           </StyledEmptyState>
         )}
-        {!loading && filtered.length > 0 && (
+        {!loading && displayImages.length > 0 && (
           <StyledGrid>
-            {filtered.map((image) => (
+            {displayImages.map((image) => (
               <StyledImageItem
                 key={image.publicId}
                 onClick={() => onPick(image)}

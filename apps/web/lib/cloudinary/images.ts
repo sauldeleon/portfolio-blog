@@ -12,7 +12,8 @@ export interface CloudinaryImage {
 
 export async function listImages(
   nextCursor?: string,
-  maxResults = 20,
+  maxResults = 50,
+  search?: string,
 ): Promise<{ images: CloudinaryImage[]; nextCursor?: string }> {
   cloudinary.config({
     cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
@@ -20,8 +21,12 @@ export async function listImages(
     api_secret: process.env.CLOUDINARY_API_SECRET,
   })
 
+  const expression = search
+    ? `folder:"sawl.dev - blog" AND filename:*${search}*`
+    : 'folder:"sawl.dev - blog"'
+
   let query = cloudinary.search
-    .expression('folder:"sawl.dev - blog"')
+    .expression(expression)
     .sort_by('created_at', 'desc')
     .max_results(maxResults)
 
