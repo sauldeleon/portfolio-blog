@@ -28,7 +28,7 @@ export async function notifyPostPublished(
         excerpt: t.excerpt,
       }
     }
-    sendNewPostNotifications({
+    await sendNewPostNotifications({
       postId: post.id,
       postNumber: post.postNumber,
       translations: translationsByLocale,
@@ -37,7 +37,7 @@ export async function notifyPostPublished(
       tags: post.tags,
       seriesId: post.seriesId,
       seriesOrder: post.seriesOrder,
-    }).catch((err) => logger.error(err, logContext))
+    })
   } catch (err) {
     logger.error(err, logContext)
   }

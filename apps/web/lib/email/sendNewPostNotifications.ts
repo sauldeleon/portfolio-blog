@@ -61,62 +61,67 @@ export async function sendNewPostNotifications({
     seriesTitlesByLocale = new Map(rows.map((r) => [r.locale, r.title]))
   }
 
-  await Promise.allSettled(
-    subscribers.map(async (subscriber) => {
-      const locale = subscriber.locale
-      const postTranslation = translations[locale] ?? translations['en']
-      if (!postTranslation) return
+  const payloads = (
+    await Promise.all(
+      subscribers.map(async (subscriber) => {
+        const locale = subscriber.locale
+        const postTranslation = translations[locale] ?? translations['en']
+        if (!postTranslation) return null
 
-      const { t } = await getServerTranslation({
-        ns: 'subscribe',
-        language: locale,
-      })
+        const { t } = await getServerTranslation({
+          ns: 'subscribe',
+          language: locale,
+        })
 
-      const seriesTitle = seriesTitlesByLocale
-        ? (seriesTitlesByLocale.get(locale) ?? seriesTitlesByLocale.get('en'))
-        : undefined
+        const seriesTitle = seriesTitlesByLocale
+          ? (seriesTitlesByLocale.get(locale) ?? seriesTitlesByLocale.get('en'))
+          : undefined
 
-      const postUrl = `${siteUrl}/${locale}/blog/${postNumber}/${postTranslation.slug}`
-      const unsubscribeUrl = `${siteUrl}/${locale}/subscribe/unsubscribed?token=${subscriber.token}`
+        const postUrl = `${siteUrl}/${locale}/blog/${postNumber}/${postTranslation.slug}`
+        const unsubscribeUrl = `${siteUrl}/${locale}/subscribe/unsubscribed?token=${subscriber.token}`
 
-      const html = await render(
-        NewPostEmail({
-          postTitle: postTranslation.title,
-          postExcerpt: postTranslation.excerpt,
-          postUrl,
-          unsubscribeUrl,
-          siteUrl,
-          coverImageUrl,
-          category: category ?? undefined,
-          tags,
-          seriesTitle,
-          seriesOrder,
-          previewText: t('notification.previewText'),
-          teaser: t('notification.teaser' as Parameters<typeof t>[0]),
-          heading: t('notification.heading' as Parameters<typeof t>[0]),
-          buttonLabel: t('notification.buttonLabel' as Parameters<typeof t>[0]),
-          footerText: t('notification.footerText' as Parameters<typeof t>[0]),
-          unsubscribeText: t(
-            'notification.unsubscribeText' as Parameters<typeof t>[0],
-          ),
-        }),
-      )
-
-      const { error } = await resend.emails.send({
-        from: FROM_EMAIL,
-        to: subscriber.email,
-        subject: t('notification.subject' as Parameters<typeof t>[0], {
-          title: postTranslation.title,
-        }),
-        html,
-      })
-
-      if (error) {
-        logger.error(
-          { error, email: subscriber.email, postId },
-          'sendNewPostNotifications: Resend rejected send',
+        const html = await render(
+          NewPostEmail({
+            postTitle: postTranslation.title,
+            postExcerpt: postTranslation.excerpt,
+            postUrl,
+            unsubscribeUrl,
+            siteUrl,
+            coverImageUrl,
+            category: category ?? undefined,
+            tags,
+            seriesTitle,
+            seriesOrder,
+            previewText: t('notification.previewText'),
+            teaser: t('notification.teaser'),
+            heading: t('notification.heading'),
+            buttonLabel: t('notification.buttonLabel'),
+            footerText: t('notification.footerText'),
+            unsubscribeText: t('notification.unsubscribeText'),
+          }),
         )
-      }
-    }),
-  )
+
+        return {
+          from: FROM_EMAIL,
+          to: subscriber.email,
+          subject: t('notification.subject', { title: postTranslation.title }),
+          html,
+        }
+      }),
+    )
+  ).filter((p): p is NonNullable<typeof p> => p !== null)
+
+  if (payloads.length === 0) return
+
+  const BATCH_SIZE = 100
+  for (let i = 0; i < payloads.length; i += BATCH_SIZE) {
+    const chunk = payloads.slice(i, i + BATCH_SIZE)
+    const { error } = await resend.batch.send(chunk)
+    if (error) {
+      logger.error(
+        { error, postId },
+        'sendNewPostNotifications: Resend batch send failed',
+      )
+    }
+  }
 }
