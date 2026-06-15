@@ -35,6 +35,7 @@ export interface NewPostEmailProps {
   unsubscribeUrl: string
   siteUrl: string
   previewText: string
+  greeting: string
   teaser: string
   heading: string
   buttonLabel: string
@@ -54,6 +55,7 @@ export function NewPostEmail({
   unsubscribeUrl,
   siteUrl,
   previewText,
+  greeting,
   teaser,
   heading,
   buttonLabel,
@@ -87,6 +89,10 @@ export function NewPostEmail({
 
           <Section style={teaserSectionStyle}>
             <Text style={teaserLineStyle}>— {teaser} —</Text>
+          </Section>
+
+          <Section style={greetingSectionStyle}>
+            <Text style={greetingStyle}>{greeting}</Text>
           </Section>
 
           <Section style={cardStyle}>
@@ -246,4 +252,15 @@ const buttonStyle: React.CSSProperties = {
   textTransform: 'uppercase',
   borderRadius: '2px',
   marginBottom: '28px',
+}
+
+const greetingSectionStyle: React.CSSProperties = {
+  marginBottom: '20px',
+}
+
+const greetingStyle: React.CSSProperties = {
+  color: '#FBFBFB',
+  fontSize: '18px',
+  fontWeight: '400',
+  margin: '0',
 }

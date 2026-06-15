@@ -1,6 +1,7 @@
 import { render } from '@react-email/components'
 
 import { getServerTranslation } from '@web/i18n/server'
+import { getCategoryTranslations } from '@web/lib/db/queries/categories'
 import { getSeriesTranslationsById } from '@web/lib/db/queries/series'
 import { getActiveSubscribers } from '@web/lib/db/queries/subscriptions'
 import { logger } from '@web/lib/logger'
@@ -55,6 +56,12 @@ export async function sendNewPostNotifications({
   const siteUrl = getSiteUrl()
   const coverImageUrl = toCoverImageUrl(coverImage)
 
+  let categoryNamesByLocale: Map<string, string> | null = null
+  if (category) {
+    const rows = await getCategoryTranslations(category)
+    categoryNamesByLocale = new Map(rows.map((r) => [r.locale, r.name]))
+  }
+
   let seriesTitlesByLocale: Map<string, string> | null = null
   if (seriesId) {
     const rows = await getSeriesTranslationsById(seriesId)
@@ -73,6 +80,11 @@ export async function sendNewPostNotifications({
           language: locale,
         })
 
+        const categoryName = categoryNamesByLocale
+          ? (categoryNamesByLocale.get(locale) ??
+            categoryNamesByLocale.get('en'))
+          : undefined
+
         const seriesTitle = seriesTitlesByLocale
           ? (seriesTitlesByLocale.get(locale) ?? seriesTitlesByLocale.get('en'))
           : undefined
@@ -88,11 +100,12 @@ export async function sendNewPostNotifications({
             unsubscribeUrl,
             siteUrl,
             coverImageUrl,
-            category: category ?? undefined,
+            category: categoryName,
             tags,
             seriesTitle,
             seriesOrder,
             previewText: t('notification.previewText'),
+            greeting: t('notification.greeting', { name: subscriber.name }),
             teaser: t('notification.teaser'),
             heading: t('notification.heading'),
             buttonLabel: t('notification.buttonLabel'),

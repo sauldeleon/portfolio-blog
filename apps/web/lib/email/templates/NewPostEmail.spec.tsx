@@ -15,6 +15,7 @@ const baseProps = {
   unsubscribeUrl: 'https://example.com/en/subscribe/unsubscribed?token=tok',
   siteUrl: 'https://example.com',
   previewText: 'New post from sawl.dev',
+  greeting: "Hi John, there's a new post.",
   teaser: 'New post',
   heading: 'NEW POST',
   buttonLabel: 'Read more',
@@ -27,6 +28,12 @@ describe('NewPostEmail', () => {
     expect(
       renderToStaticMarkup(React.createElement(NewPostEmail, baseProps)),
     ).toMatchSnapshot()
+  })
+
+  it('renders greeting text', () => {
+    expect(
+      renderToStaticMarkup(React.createElement(NewPostEmail, baseProps)),
+    ).toContain('Hi John, there&#x27;s a new post.')
   })
 
   it('renders with coverImageUrl', () => {

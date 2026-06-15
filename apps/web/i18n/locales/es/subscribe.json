@@ -33,6 +33,7 @@
   "backToBlog": "Volver al blog",
   "notification.subject": "Nuevo post: {{title}}",
   "notification.previewText": "Se ha publicado un nuevo post en sawl.dev.",
+  "notification.greeting": "Hola {{name}}, hay un nuevo post.",
   "notification.teaser": "Acaba de publicarse una nueva entrada.",
   "notification.heading": "Nuevo post",
   "notification.buttonLabel": "Leer post",
