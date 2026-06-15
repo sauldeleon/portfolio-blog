@@ -59,11 +59,11 @@ export function OgImageTemplate({
                 fontWeight: 600,
                 textTransform: 'uppercase',
                 letterSpacing: '0.12em',
-                color: '#4ade80',
-                background: 'rgba(74, 222, 128, 0.1)',
+                color: '#98DFD6',
+                background: 'rgba(152, 223, 214, 0.1)',
                 padding: '6px 14px',
                 borderRadius: '4px',
-                border: '1px solid rgba(74, 222, 128, 0.3)',
+                border: '1px solid rgba(152, 223, 214, 0.3)',
               }}
             >
               {category}
@@ -88,7 +88,8 @@ export function OgImageTemplate({
           style={{
             marginTop: '32px',
             fontSize: '18px',
-            color: 'rgba(251, 251, 251, 0.5)',
+            color: '#FBFBFB',
+            textShadow: '0 1px 4px rgba(0,0,0,0.8)',
           }}
         >
           sawl.dev
