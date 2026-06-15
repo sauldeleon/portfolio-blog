@@ -306,8 +306,8 @@ export const StyledEmbedWrapper = styled.div`
 export const StyledEmbed360Wrapper = styled.div`
   position: relative;
   width: 100%;
-  padding-bottom: 56.25%;
-  height: 0;
+  aspect-ratio: 16 / 9;
+  min-height: 300px;
   margin: 2rem 0;
   border-radius: 2px;
   overflow: hidden;
@@ -333,6 +333,11 @@ export const StyledEmbed360Overlay = styled.div`
   gap: 0.75rem;
   padding: 1.5rem;
   text-align: center;
+
+  @media (max-width: 640px) {
+    gap: 0.5rem;
+    padding: 1rem;
+  }
 `
 
 export const StyledEmbed360Badge = styled.span`
