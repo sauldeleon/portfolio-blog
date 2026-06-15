@@ -93,6 +93,7 @@ export async function sendNewPostNotifications({
             seriesTitle,
             seriesOrder,
             previewText: t('notification.previewText'),
+            greeting: t('notification.greeting', { name: subscriber.name }),
             teaser: t('notification.teaser'),
             heading: t('notification.heading'),
             buttonLabel: t('notification.buttonLabel'),

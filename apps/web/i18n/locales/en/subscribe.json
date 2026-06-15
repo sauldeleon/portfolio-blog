@@ -33,6 +33,7 @@
   "backToBlog": "Back to blog",
   "notification.subject": "New post: {{title}}",
   "notification.previewText": "A new post has been published on sawl.dev.",
+  "notification.greeting": "Hi {{name}}, there's a new post.",
   "notification.teaser": "A new post has just been published.",
   "notification.heading": "New post",
   "notification.buttonLabel": "Read post",
