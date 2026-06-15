@@ -9,6 +9,7 @@ const mockGetServerTranslation = jest.fn()
 const mockLoggerError = jest.fn()
 const mockNewPostEmail = jest.fn(() => null)
 const mockGetSeriesTranslationsById = jest.fn()
+const mockGetCategoryTranslations = jest.fn()
 
 jest.mock('@react-email/components', () => ({ render: mockRender }))
 jest.mock('@web/utils/url/generateUrl', () => ({ getSiteUrl: mockGetSiteUrl }))
@@ -23,6 +24,9 @@ jest.mock('@web/lib/db/queries/subscriptions', () => ({
 }))
 jest.mock('@web/lib/db/queries/series', () => ({
   getSeriesTranslationsById: mockGetSeriesTranslationsById,
+}))
+jest.mock('@web/lib/db/queries/categories', () => ({
+  getCategoryTranslations: mockGetCategoryTranslations,
 }))
 jest.mock('@web/i18n/server', () => ({
   getServerTranslation: mockGetServerTranslation,
@@ -65,6 +69,7 @@ beforeEach(() => {
   mockGetActiveSubscribers.mockResolvedValue([mockSubscriber])
   mockGetServerTranslation.mockResolvedValue({ t: mockT })
   mockGetSeriesTranslationsById.mockResolvedValue([])
+  mockGetCategoryTranslations.mockResolvedValue([])
 })
 
 describe('sendNewPostNotifications', () => {
@@ -227,7 +232,11 @@ describe('sendNewPostNotifications', () => {
     expect(templateArg.teaser).toBe('notification.teaser')
   })
 
-  it('passes category and tags to template', async () => {
+  it('passes translated category name and tags to template', async () => {
+    mockGetCategoryTranslations.mockResolvedValue([
+      { locale: 'en', name: 'Engineering' },
+      { locale: 'es', name: 'Ingeniería' },
+    ])
     await sendNewPostNotifications({
       postId: 'p1',
       postNumber: 1,
@@ -235,12 +244,66 @@ describe('sendNewPostNotifications', () => {
       category: 'engineering',
       tags: ['REACT', 'TYPESCRIPT', 'NEXTJS'],
     })
+    expect(mockGetCategoryTranslations).toHaveBeenCalledWith('engineering')
     const templateArg = mockNewPostEmail.mock.calls[0][0] as Record<
       string,
       unknown
     >
-    expect(templateArg.category).toBe('engineering')
+    expect(templateArg.category).toBe('Engineering')
     expect(templateArg.tags).toEqual(['REACT', 'TYPESCRIPT', 'NEXTJS'])
+  })
+
+  it('passes locale-specific category name to template', async () => {
+    const esSubscriber = { ...mockSubscriber, locale: 'es' as const }
+    mockGetActiveSubscribers.mockResolvedValue([esSubscriber])
+    mockGetCategoryTranslations.mockResolvedValue([
+      { locale: 'en', name: 'Engineering' },
+      { locale: 'es', name: 'Ingeniería' },
+    ])
+    await sendNewPostNotifications({
+      postId: 'p1',
+      postNumber: 1,
+      translations: mockTranslations,
+      category: 'engineering',
+    })
+    const templateArg = mockNewPostEmail.mock.calls[0][0] as Record<
+      string,
+      unknown
+    >
+    expect(templateArg.category).toBe('Ingeniería')
+  })
+
+  it('falls back to en category name when subscriber locale has no category translation', async () => {
+    const esSubscriber = { ...mockSubscriber, locale: 'es' as const }
+    mockGetActiveSubscribers.mockResolvedValue([esSubscriber])
+    mockGetCategoryTranslations.mockResolvedValue([
+      { locale: 'en', name: 'Engineering' },
+    ])
+    await sendNewPostNotifications({
+      postId: 'p1',
+      postNumber: 1,
+      translations: mockTranslations,
+      category: 'engineering',
+    })
+    const templateArg = mockNewPostEmail.mock.calls[0][0] as Record<
+      string,
+      unknown
+    >
+    expect(templateArg.category).toBe('Engineering')
+  })
+
+  it('does not look up category when category is not provided', async () => {
+    await sendNewPostNotifications({
+      postId: 'p1',
+      postNumber: 1,
+      translations: mockTranslations,
+    })
+    expect(mockGetCategoryTranslations).not.toHaveBeenCalled()
+    const templateArg = mockNewPostEmail.mock.calls[0][0] as Record<
+      string,
+      unknown
+    >
+    expect(templateArg.category).toBeUndefined()
   })
 
   it('looks up series title and passes it to template when seriesId provided', async () => {
