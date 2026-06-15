@@ -169,6 +169,10 @@ export const StyledPreviewPane = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 300px;
+  max-height: calc(100vh - 2rem);
+  position: sticky;
+  top: 1rem;
+  align-self: start;
   border: 1px solid rgba(251, 251, 251, 0.06);
   border-radius: 2px;
   overflow: hidden;
@@ -179,6 +183,48 @@ export const StyledPreviewTabsBar = styled.div`
   gap: 0;
   border-bottom: 1px solid rgba(251, 251, 251, 0.08);
   flex-shrink: 0;
+  align-items: center;
+`
+
+export const StyledPreviewControls = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+  padding: 0 0.5rem;
+`
+
+export const StyledAutoRenderLabel = styled.label`
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.6rem;
+  color: rgba(251, 251, 251, 0.4);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+
+  input[type='checkbox'] {
+    accent-color: ${({ theme }) => theme.colors.green};
+    cursor: pointer;
+  }
+`
+
+export const StyledUpdatePreviewButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'xs',
+})`
+  font-family: inherit;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.2rem 0.5rem;
+  color: ${({ theme }) => theme.colors.green};
+  opacity: 0.8;
+
+  &:hover {
+    opacity: 1;
+  }
 `
 
 export const StyledPreviewTab = styled(Button).attrs({

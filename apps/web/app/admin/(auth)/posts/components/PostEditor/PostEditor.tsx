@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import axios, { isAxiosError } from 'axios'
 import { useRouter } from 'next/navigation'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -40,6 +40,7 @@ import { PostCardPreview } from './PostCardPreview'
 import {
   StyledActions,
   StyledArchiveButton,
+  StyledAutoRenderLabel,
   StyledBackLink,
   StyledContentTextarea,
   StyledEditEmbedButton,
@@ -58,6 +59,7 @@ import {
   StyledMobileFrame,
   StyledPageHeader,
   StyledPreviewContent,
+  StyledPreviewControls,
   StyledPreviewPane,
   StyledPreviewTab,
   StyledPreviewTabsBar,
@@ -68,6 +70,7 @@ import {
   StyledTitleRow,
   StyledTocPreview,
   StyledToolbarRow,
+  StyledUpdatePreviewButton,
   StyledWrapper,
 } from './PostEditor.styles'
 import type {
@@ -264,7 +267,14 @@ export function PostEditor({
   const [previewTab, setPreviewTab] = useState<
     'post' | 'post-mobile' | 'hero' | 'card' | 'toc'
   >('post')
+  const [autoRender, setAutoRender] = useState(true)
+  const [previewContent, setPreviewContent] = useState(currentLocale.content)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (autoRender) setPreviewContent(currentLocale.content)
+  }, [currentLocale.content, autoRender])
 
   function handleSeriesIdChange(newId: string) {
     setSeriesId(newId)
@@ -886,11 +896,30 @@ export function PostEditor({
             >
               {t('postEditor.previewTabToc')}
             </StyledPreviewTab>
+            <StyledPreviewControls>
+              {!autoRender && (
+                <StyledUpdatePreviewButton
+                  onClick={() => setPreviewContent(currentLocale.content)}
+                  data-testid="update-preview-button"
+                >
+                  {t('postEditor.updatePreview')}
+                </StyledUpdatePreviewButton>
+              )}
+              <StyledAutoRenderLabel>
+                <input
+                  type="checkbox"
+                  checked={autoRender}
+                  onChange={(e) => setAutoRender(e.target.checked)}
+                  data-testid="auto-render-checkbox"
+                />
+                {t('postEditor.autoRender')}
+              </StyledAutoRenderLabel>
+            </StyledPreviewControls>
           </StyledPreviewTabsBar>
           <StyledPreviewContent>
             {previewTab === 'post' && (
               <MarkdownPreview
-                content={currentLocale.content}
+                content={previewContent}
                 loadingLabel={t('postEditor.previewLoading')}
               />
             )}
@@ -898,7 +927,7 @@ export function PostEditor({
               <StyledMobileFrame data-testid="mobile-frame">
                 <StyledMobileContent>
                   <MarkdownPreview
-                    content={currentLocale.content}
+                    content={previewContent}
                     loadingLabel={t('postEditor.previewLoading')}
                   />
                 </StyledMobileContent>
@@ -935,7 +964,7 @@ export function PostEditor({
                 title={currentLocale.title}
                 slug={currentLocale.slug}
                 excerpt={currentLocale.excerpt}
-                content={currentLocale.content}
+                content={previewContent}
                 categoryName={
                   categories.find((c) => c.slug === category)?.name ?? ''
                 }

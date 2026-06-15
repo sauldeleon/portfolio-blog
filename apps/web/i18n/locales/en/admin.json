@@ -137,6 +137,8 @@
     "previewTabHero": "Hero",
     "previewTabCard": "Card",
     "previewTabToc": "Table of Contents",
+    "autoRender": "Auto",
+    "updatePreview": "Render",
     "share": "Share",
     "shareCopyLink": "Copy link",
     "shareCopied": "Copied!",

@@ -67,6 +67,8 @@ jest.mock('@web/i18n/client', () => ({
         'postEditor.previewTabHero': 'Hero',
         'postEditor.previewTabCard': 'Card',
         'postEditor.previewTabToc': 'Table of Contents',
+        'postEditor.autoRender': 'Auto',
+        'postEditor.updatePreview': 'Render',
         'postEditor.error': 'Something went wrong',
         'images.picker.title': 'Insert Image',
         'publishNotify.message': 'Notify subscribers?',
@@ -1284,6 +1286,61 @@ describe('PostEditor', () => {
         fireEvent.click(screen.getByTestId('preview-tab-post'))
         expect(screen.getByTestId('markdown-preview')).toBeInTheDocument()
         expect(screen.queryByTestId('toc-preview')).not.toBeInTheDocument()
+      })
+    })
+
+    describe('auto-render', () => {
+      it('renders auto-render checkbox checked by default', () => {
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+        expect(screen.getByTestId('auto-render-checkbox')).toBeChecked()
+      })
+
+      it('does not show update button when auto-render is enabled', () => {
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+        expect(
+          screen.queryByTestId('update-preview-button'),
+        ).not.toBeInTheDocument()
+      })
+
+      it('shows update button when auto-render is disabled', () => {
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+        fireEvent.click(screen.getByTestId('auto-render-checkbox'))
+        expect(screen.getByTestId('update-preview-button')).toBeInTheDocument()
+      })
+
+      it('preview does not update when auto-render is off and content changes', () => {
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+        fireEvent.click(screen.getByTestId('auto-render-checkbox'))
+        fireEvent.change(screen.getByTestId('content-input'), {
+          target: { value: '# New heading' },
+        })
+        expect(screen.getByTestId('markdown-preview')).not.toHaveTextContent(
+          '# New heading',
+        )
+      })
+
+      it('clicking update button syncs preview when auto-render is off', () => {
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+        fireEvent.click(screen.getByTestId('auto-render-checkbox'))
+        fireEvent.change(screen.getByTestId('content-input'), {
+          target: { value: '# Manual heading' },
+        })
+        fireEvent.click(screen.getByTestId('update-preview-button'))
+        expect(screen.getByTestId('markdown-preview')).toHaveTextContent(
+          '# Manual heading',
+        )
+      })
+
+      it('re-enabling auto-render immediately syncs preview', () => {
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+        fireEvent.click(screen.getByTestId('auto-render-checkbox'))
+        fireEvent.change(screen.getByTestId('content-input'), {
+          target: { value: '# Auto heading' },
+        })
+        fireEvent.click(screen.getByTestId('auto-render-checkbox'))
+        expect(screen.getByTestId('markdown-preview')).toHaveTextContent(
+          '# Auto heading',
+        )
       })
     })
   })
