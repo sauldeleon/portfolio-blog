@@ -22,7 +22,7 @@ export async function listImages(
   })
 
   const expression = search
-    ? `folder:"sawl.dev - blog" AND filename:*${search}*`
+    ? `folder:"sawl.dev - blog" AND filename:${search.toLowerCase()}*`
     : 'folder:"sawl.dev - blog"'
 
   let query = cloudinary.search

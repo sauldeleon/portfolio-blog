@@ -89,7 +89,15 @@ describe('listImages', () => {
     mockExecute.mockResolvedValue({ resources: [] })
     await listImages(undefined, undefined, 'mountain')
     expect(mockSearch.expression).toHaveBeenCalledWith(
-      'folder:"sawl.dev - blog" AND filename:*mountain*',
+      'folder:"sawl.dev - blog" AND filename:mountain*',
+    )
+  })
+
+  it('lowercases the search term in the expression', async () => {
+    mockExecute.mockResolvedValue({ resources: [] })
+    await listImages(undefined, undefined, 'Mountain')
+    expect(mockSearch.expression).toHaveBeenCalledWith(
+      'folder:"sawl.dev - blog" AND filename:mountain*',
     )
   })
 

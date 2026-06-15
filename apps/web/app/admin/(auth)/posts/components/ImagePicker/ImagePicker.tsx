@@ -121,10 +121,8 @@ export function ImagePicker({
     setImages([])
     nextCursorRef.current = undefined
     if (searchRef.current.trim()) {
-       
       void fetchSearch(searchRef.current.trim())
     } else {
-       
       void fetchImages()
     }
   }, [open, fetchImages, fetchSearch])
