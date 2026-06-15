@@ -19,7 +19,9 @@
   "photoMeta": {
     "iso": "ISO",
     "aperture": "Apertura",
-    "exposure": "Exposición"
+    "exposure": "Exposición",
+    "focalLength": "Distancia focal",
+    "panoramicCount": "Fotos panorámica"
   },
   "embed": {
     "watchOnYouTube": "Ver en YouTube",

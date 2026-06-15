@@ -18,11 +18,13 @@ import {
 } from '@sdlgr/input'
 import { PostHero } from '@sdlgr/post-hero'
 import { Select } from '@sdlgr/select'
+import { TableOfContents } from '@sdlgr/table-of-contents'
 
 import { useClientTranslation } from '@web/i18n/client'
 import type { CloudinaryImage } from '@web/lib/cloudinary/images'
 import type { UserRecord } from '@web/lib/db/queries/users'
 import type { PostStatus } from '@web/lib/db/schema'
+import { extractToc } from '@web/lib/mdx/remarkHeadings'
 import { CategoryIconRenderer } from '@web/utils/categoryIcons'
 import { computeReadingTime } from '@web/utils/computeReadingTime'
 import { slugify } from '@web/utils/slugify'
@@ -64,6 +66,7 @@ import {
   StyledStatusBadge,
   StyledTextareaWrapper,
   StyledTitleRow,
+  StyledTocPreview,
   StyledToolbarRow,
   StyledWrapper,
 } from './PostEditor.styles'
@@ -259,7 +262,7 @@ export function PostEditor({
     null,
   )
   const [previewTab, setPreviewTab] = useState<
-    'post' | 'post-mobile' | 'hero' | 'card'
+    'post' | 'post-mobile' | 'hero' | 'card' | 'toc'
   >('post')
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -876,6 +879,13 @@ export function PostEditor({
             >
               {t('postEditor.previewTabCard')}
             </StyledPreviewTab>
+            <StyledPreviewTab
+              $active={previewTab === 'toc'}
+              onClick={() => setPreviewTab('toc')}
+              data-testid="preview-tab-toc"
+            >
+              {t('postEditor.previewTabToc')}
+            </StyledPreviewTab>
           </StyledPreviewTabsBar>
           <StyledPreviewContent>
             {previewTab === 'post' && (
@@ -940,6 +950,14 @@ export function PostEditor({
                 lng={activeLocale}
                 postNumber={post?.post.postNumber ?? undefined}
               />
+            )}
+            {previewTab === 'toc' && (
+              <StyledTocPreview data-testid="toc-preview">
+                <TableOfContents
+                  entries={extractToc(currentLocale.content)}
+                  label={t('postEditor.previewTabToc')}
+                />
+              </StyledTocPreview>
             )}
           </StyledPreviewContent>
         </StyledPreviewPane>

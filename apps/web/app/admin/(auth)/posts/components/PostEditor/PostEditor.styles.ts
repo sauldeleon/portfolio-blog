@@ -380,3 +380,9 @@ export const StyledImagePickerButton = styled(Button).attrs({
     border-color: ${({ theme }) => theme.colors.green};
   }
 `
+
+export const StyledTocPreview = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1rem;
+`

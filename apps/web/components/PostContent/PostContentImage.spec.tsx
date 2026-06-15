@@ -9,6 +9,8 @@ jest.mock('@web/i18n/client', () => ({
         'photoMeta.iso': 'ISO',
         'photoMeta.aperture': 'Aperture',
         'photoMeta.exposure': 'Exposure',
+        'photoMeta.focalLength': 'Focal length',
+        'photoMeta.panoramicCount': 'Panoramic shots',
       }
       return map[key] ?? key
     },
@@ -289,5 +291,40 @@ describe('PostContentImage', () => {
     )
     const items = screen.getAllByTestId('post-photo-meta-item')
     expect(items).toHaveLength(2)
+  })
+
+  it('renders photo meta strip when photo-focal-length is present', () => {
+    render(<PostContentImage src="/img.jpg" alt="photo-focal-length=50mm" />)
+    expect(screen.getByTestId('post-photo-meta')).toBeInTheDocument()
+    expect(screen.getByText('50mm')).toBeInTheDocument()
+  })
+
+  it('renders photo meta strip when photo-panoramic-count is present', () => {
+    render(<PostContentImage src="/img.jpg" alt="photo-panoramic-count=12" />)
+    expect(screen.getByTestId('post-photo-meta')).toBeInTheDocument()
+    expect(screen.getByText('12')).toBeInTheDocument()
+  })
+
+  it('renders focal length label', () => {
+    render(<PostContentImage src="/img.jpg" alt="photo-focal-length=50mm" />)
+    const labels = screen.getAllByTestId('post-photo-meta-label')
+    expect(labels[0]).toHaveTextContent('Focal length')
+  })
+
+  it('renders panoramic count label', () => {
+    render(<PostContentImage src="/img.jpg" alt="photo-panoramic-count=6" />)
+    const labels = screen.getAllByTestId('post-photo-meta-label')
+    expect(labels[0]).toHaveTextContent('Panoramic shots')
+  })
+
+  it('renders all five photo meta items when all params provided', () => {
+    render(
+      <PostContentImage
+        src="/img.jpg"
+        alt="photo-iso=400&photo-aperture=f/2.8&photo-exposure=1/250&photo-focal-length=50mm&photo-panoramic-count=12"
+      />,
+    )
+    const items = screen.getAllByTestId('post-photo-meta-item')
+    expect(items).toHaveLength(5)
   })
 })

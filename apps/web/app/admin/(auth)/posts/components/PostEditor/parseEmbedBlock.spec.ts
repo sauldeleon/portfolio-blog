@@ -225,6 +225,34 @@ describe('detectEmbedAtCursor', () => {
       expect(result.parsed.photoMeta?.exposure).toBe('1/250')
     })
 
+    it('parses photo-focal-length param', () => {
+      const content =
+        '\n\n![photo-focal-length=50mm](https://cdn.com/img.jpg)\n\n'
+      const result = detectEmbedAtCursor(content, 5)
+      if (result?.type !== 'image') throw new Error('expected image')
+      expect(result.parsed.photoMeta?.focalLength).toBe('50mm')
+    })
+
+    it('parses photo-panoramic-count param', () => {
+      const content =
+        '\n\n![photo-panoramic-count=12](https://cdn.com/img.jpg)\n\n'
+      const result = detectEmbedAtCursor(content, 5)
+      if (result?.type !== 'image') throw new Error('expected image')
+      expect(result.parsed.photoMeta?.panoramicCount).toBe('12')
+    })
+
+    it('parses all photo meta params including new fields', () => {
+      const content =
+        '\n\n![photo-iso=400&photo-aperture=f/2.8&photo-exposure=1/250&photo-focal-length=50mm&photo-panoramic-count=12](https://cdn.com/img.jpg)\n\n'
+      const result = detectEmbedAtCursor(content, 5)
+      if (result?.type !== 'image') throw new Error('expected image')
+      expect(result.parsed.photoMeta?.iso).toBe('400')
+      expect(result.parsed.photoMeta?.aperture).toBe('f/2.8')
+      expect(result.parsed.photoMeta?.exposure).toBe('1/250')
+      expect(result.parsed.photoMeta?.focalLength).toBe('50mm')
+      expect(result.parsed.photoMeta?.panoramicCount).toBe('12')
+    })
+
     it('defaults to full/none/bottom/false when no params', () => {
       const content = '\n\n![](https://cdn.com/img.jpg)\n\n'
       const result = detectEmbedAtCursor(content, 5)

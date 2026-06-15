@@ -47,7 +47,13 @@ export function buildImageMarkdown(opts: {
   size: Size
   align: Align
   expand: boolean
-  photoMeta?: { iso?: string; exposure?: string; aperture?: string }
+  photoMeta?: {
+    iso?: string
+    exposure?: string
+    aperture?: string
+    focalLength?: string
+    panoramicCount?: string
+  }
 }): string {
   const parts: string[] = []
   if (opts.size !== 'full') parts.push(`size=${opts.size}`)
@@ -64,6 +70,10 @@ export function buildImageMarkdown(opts: {
     parts.push(`photo-aperture=${opts.photoMeta.aperture.trim()}`)
   if (opts.photoMeta?.exposure?.trim())
     parts.push(`photo-exposure=${opts.photoMeta.exposure.trim()}`)
+  if (opts.photoMeta?.focalLength?.trim())
+    parts.push(`photo-focal-length=${opts.photoMeta.focalLength.trim()}`)
+  if (opts.photoMeta?.panoramicCount?.trim())
+    parts.push(`photo-panoramic-count=${opts.photoMeta.panoramicCount.trim()}`)
   const params = parts.join('&')
   return `\n\n![${params}](${opts.url})\n\n`
 }
@@ -93,7 +103,9 @@ export function ImageInsertModal({
     !!(
       initialValues?.photoMeta?.iso ||
       initialValues?.photoMeta?.aperture ||
-      initialValues?.photoMeta?.exposure
+      initialValues?.photoMeta?.exposure ||
+      initialValues?.photoMeta?.focalLength ||
+      initialValues?.photoMeta?.panoramicCount
     ),
   )
   const [photoIso, setPhotoIso] = useState(initialValues?.photoMeta?.iso ?? '')
@@ -102,6 +114,12 @@ export function ImageInsertModal({
   )
   const [photoAperture, setPhotoAperture] = useState(
     initialValues?.photoMeta?.aperture ?? '',
+  )
+  const [photoFocalLength, setPhotoFocalLength] = useState(
+    initialValues?.photoMeta?.focalLength ?? '',
+  )
+  const [photoPanoramicCount, setPhotoPanoramicCount] = useState(
+    initialValues?.photoMeta?.panoramicCount ?? '',
   )
 
   function handleInsert() {
@@ -116,7 +134,13 @@ export function ImageInsertModal({
       align,
       expand,
       photoMeta: photoMetaEnabled
-        ? { iso: photoIso, exposure: photoExposure, aperture: photoAperture }
+        ? {
+            iso: photoIso,
+            exposure: photoExposure,
+            aperture: photoAperture,
+            focalLength: photoFocalLength,
+            panoramicCount: photoPanoramicCount,
+          }
         : undefined,
     })
     onInsert(markdown)
@@ -131,6 +155,8 @@ export function ImageInsertModal({
     setPhotoIso('')
     setPhotoExposure('')
     setPhotoAperture('')
+    setPhotoFocalLength('')
+    setPhotoPanoramicCount('')
   }
 
   const preview = selectedImage
@@ -143,7 +169,13 @@ export function ImageInsertModal({
         align,
         expand,
         photoMeta: photoMetaEnabled
-          ? { iso: photoIso, exposure: photoExposure, aperture: photoAperture }
+          ? {
+              iso: photoIso,
+              exposure: photoExposure,
+              aperture: photoAperture,
+              focalLength: photoFocalLength,
+              panoramicCount: photoPanoramicCount,
+            }
           : undefined,
       }).trim()
     : null
@@ -297,6 +329,30 @@ export function ImageInsertModal({
                 onChange={(e) => setPhotoExposure(e.target.value)}
                 placeholder="e.g. 1/250"
                 data-testid="photo-exposure-input"
+              />
+            </StyledPhotoMetaField>
+            <StyledPhotoMetaField>
+              <StyledLabel htmlFor="photo-focal-length">
+                Focal length
+              </StyledLabel>
+              <StyledInput
+                id="photo-focal-length"
+                value={photoFocalLength}
+                onChange={(e) => setPhotoFocalLength(e.target.value)}
+                placeholder="e.g. 50mm"
+                data-testid="photo-focal-length-input"
+              />
+            </StyledPhotoMetaField>
+            <StyledPhotoMetaField>
+              <StyledLabel htmlFor="photo-panoramic-count">
+                Panoramic shots
+              </StyledLabel>
+              <StyledInput
+                id="photo-panoramic-count"
+                value={photoPanoramicCount}
+                onChange={(e) => setPhotoPanoramicCount(e.target.value)}
+                placeholder="e.g. 12"
+                data-testid="photo-panoramic-count-input"
               />
             </StyledPhotoMetaField>
           </StyledPhotoMetaInputRow>
