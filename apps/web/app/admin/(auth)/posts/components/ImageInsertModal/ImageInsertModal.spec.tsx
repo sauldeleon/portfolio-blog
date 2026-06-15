@@ -519,6 +519,12 @@ describe('ImageInsertModal', () => {
     expect(screen.queryByTestId('photo-iso-input')).not.toBeInTheDocument()
     expect(screen.queryByTestId('photo-aperture-input')).not.toBeInTheDocument()
     expect(screen.queryByTestId('photo-exposure-input')).not.toBeInTheDocument()
+    expect(
+      screen.queryByTestId('photo-focal-length-input'),
+    ).not.toBeInTheDocument()
+    expect(
+      screen.queryByTestId('photo-panoramic-count-input'),
+    ).not.toBeInTheDocument()
   })
 
   it('shows photo meta inputs when checkbox checked', () => {
@@ -535,6 +541,10 @@ describe('ImageInsertModal', () => {
     expect(screen.getByTestId('photo-iso-input')).toBeInTheDocument()
     expect(screen.getByTestId('photo-aperture-input')).toBeInTheDocument()
     expect(screen.getByTestId('photo-exposure-input')).toBeInTheDocument()
+    expect(screen.getByTestId('photo-focal-length-input')).toBeInTheDocument()
+    expect(
+      screen.getByTestId('photo-panoramic-count-input'),
+    ).toBeInTheDocument()
   })
 
   it('includes photo-iso param when set', () => {
@@ -658,6 +668,54 @@ describe('ImageInsertModal', () => {
     )
   })
 
+  it('includes photo-focal-length param when set', () => {
+    const onInsert = jest.fn()
+    const onRequestImagePick = jest.fn()
+    renderApp(
+      <ImageInsertModal
+        isOpen
+        onInsert={onInsert}
+        onCancel={jest.fn()}
+        pickerOpen={false}
+        onRequestImagePick={onRequestImagePick}
+      />,
+    )
+    fireEvent.click(screen.getByTestId('pick-image-button'))
+    pickImage(onRequestImagePick)
+    fireEvent.click(screen.getByTestId('photo-meta-checkbox'))
+    fireEvent.change(screen.getByTestId('photo-focal-length-input'), {
+      target: { value: '50mm' },
+    })
+    fireEvent.click(screen.getByTestId('image-modal-insert'))
+    expect(onInsert).toHaveBeenCalledWith(
+      '\n\n![photo-focal-length=50mm](https://cdn.com/photo.jpg)\n\n',
+    )
+  })
+
+  it('includes photo-panoramic-count param when set', () => {
+    const onInsert = jest.fn()
+    const onRequestImagePick = jest.fn()
+    renderApp(
+      <ImageInsertModal
+        isOpen
+        onInsert={onInsert}
+        onCancel={jest.fn()}
+        pickerOpen={false}
+        onRequestImagePick={onRequestImagePick}
+      />,
+    )
+    fireEvent.click(screen.getByTestId('pick-image-button'))
+    pickImage(onRequestImagePick)
+    fireEvent.click(screen.getByTestId('photo-meta-checkbox'))
+    fireEvent.change(screen.getByTestId('photo-panoramic-count-input'), {
+      target: { value: '12' },
+    })
+    fireEvent.click(screen.getByTestId('image-modal-insert'))
+    expect(onInsert).toHaveBeenCalledWith(
+      '\n\n![photo-panoramic-count=12](https://cdn.com/photo.jpg)\n\n',
+    )
+  })
+
   it('resets photo meta state after insert', () => {
     const onInsert = jest.fn()
     const onRequestImagePick = jest.fn()
@@ -676,8 +734,20 @@ describe('ImageInsertModal', () => {
     fireEvent.change(screen.getByTestId('photo-iso-input'), {
       target: { value: '400' },
     })
+    fireEvent.change(screen.getByTestId('photo-focal-length-input'), {
+      target: { value: '50mm' },
+    })
+    fireEvent.change(screen.getByTestId('photo-panoramic-count-input'), {
+      target: { value: '12' },
+    })
     fireEvent.click(screen.getByTestId('image-modal-insert'))
     expect(screen.queryByTestId('photo-iso-input')).not.toBeInTheDocument()
+    expect(
+      screen.queryByTestId('photo-focal-length-input'),
+    ).not.toBeInTheDocument()
+    expect(
+      screen.queryByTestId('photo-panoramic-count-input'),
+    ).not.toBeInTheDocument()
     expect(screen.getByTestId('photo-meta-checkbox')).not.toBeChecked()
   })
 
@@ -756,7 +826,13 @@ describe('ImageInsertModal initialValues', () => {
           size: 'full',
           align: 'none',
           expand: false,
-          photoMeta: { iso: '400', aperture: 'f/2.8', exposure: '1/250' },
+          photoMeta: {
+            iso: '400',
+            aperture: 'f/2.8',
+            exposure: '1/250',
+            focalLength: '50mm',
+            panoramicCount: '12',
+          },
         }}
       />,
     )
@@ -764,6 +840,56 @@ describe('ImageInsertModal initialValues', () => {
     expect(screen.getByTestId('photo-iso-input')).toHaveValue('400')
     expect(screen.getByTestId('photo-aperture-input')).toHaveValue('f/2.8')
     expect(screen.getByTestId('photo-exposure-input')).toHaveValue('1/250')
+    expect(screen.getByTestId('photo-focal-length-input')).toHaveValue('50mm')
+    expect(screen.getByTestId('photo-panoramic-count-input')).toHaveValue('12')
+  })
+
+  it('enables photo meta when only focalLength provided', () => {
+    renderApp(
+      <ImageInsertModal
+        isOpen
+        onInsert={jest.fn()}
+        onCancel={jest.fn()}
+        pickerOpen={false}
+        onRequestImagePick={jest.fn()}
+        initialValues={{
+          url: 'https://cdn.com/photo.jpg',
+          altText: '',
+          caption: '',
+          captionPos: 'bottom',
+          size: 'full',
+          align: 'none',
+          expand: false,
+          photoMeta: { focalLength: '35mm' },
+        }}
+      />,
+    )
+    expect(screen.getByTestId('photo-meta-checkbox')).toBeChecked()
+    expect(screen.getByTestId('photo-focal-length-input')).toHaveValue('35mm')
+  })
+
+  it('enables photo meta when only panoramicCount provided', () => {
+    renderApp(
+      <ImageInsertModal
+        isOpen
+        onInsert={jest.fn()}
+        onCancel={jest.fn()}
+        pickerOpen={false}
+        onRequestImagePick={jest.fn()}
+        initialValues={{
+          url: 'https://cdn.com/photo.jpg',
+          altText: '',
+          caption: '',
+          captionPos: 'bottom',
+          size: 'full',
+          align: 'none',
+          expand: false,
+          photoMeta: { panoramicCount: '8' },
+        }}
+      />,
+    )
+    expect(screen.getByTestId('photo-meta-checkbox')).toBeChecked()
+    expect(screen.getByTestId('photo-panoramic-count-input')).toHaveValue('8')
   })
 
   it('does not pre-fill when initialValues is null', () => {
@@ -923,6 +1049,35 @@ describe('buildImageMarkdown', () => {
       }),
     ).toBe(
       '\n\n![photo-iso=800&photo-aperture=f/4&photo-exposure=1/500](https://cdn.com/img.jpg)\n\n',
+    )
+  })
+
+  it('adds photo-focal-length param', () => {
+    expect(
+      buildImageMarkdown({ ...base, photoMeta: { focalLength: '50mm' } }),
+    ).toBe('\n\n![photo-focal-length=50mm](https://cdn.com/img.jpg)\n\n')
+  })
+
+  it('adds photo-panoramic-count param', () => {
+    expect(
+      buildImageMarkdown({ ...base, photoMeta: { panoramicCount: '12' } }),
+    ).toBe('\n\n![photo-panoramic-count=12](https://cdn.com/img.jpg)\n\n')
+  })
+
+  it('adds all five photo meta params', () => {
+    expect(
+      buildImageMarkdown({
+        ...base,
+        photoMeta: {
+          iso: '800',
+          aperture: 'f/4',
+          exposure: '1/500',
+          focalLength: '50mm',
+          panoramicCount: '12',
+        },
+      }),
+    ).toBe(
+      '\n\n![photo-iso=800&photo-aperture=f/4&photo-exposure=1/500&photo-focal-length=50mm&photo-panoramic-count=12](https://cdn.com/img.jpg)\n\n',
     )
   })
 

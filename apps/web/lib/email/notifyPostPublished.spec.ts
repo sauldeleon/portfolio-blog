@@ -93,7 +93,6 @@ describe('notifyPostPublished', () => {
     const err = new Error('Notification failed')
     mockSendNewPostNotifications.mockRejectedValue(err)
     await notifyPostPublished(mockPost, 'test-context')
-    await Promise.resolve()
     expect(mockLoggerError).toHaveBeenCalledWith(err, 'test-context')
   })
 

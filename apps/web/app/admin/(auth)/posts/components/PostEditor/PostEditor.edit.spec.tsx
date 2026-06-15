@@ -70,6 +70,7 @@ jest.mock('@web/i18n/client', () => ({
         'postEditor.previewTabPostMobile': 'Post Mobile',
         'postEditor.previewTabHero': 'Hero',
         'postEditor.previewTabCard': 'Card',
+        'postEditor.previewTabToc': 'Table of Contents',
         'postEditor.error': 'Something went wrong',
         'images.picker.title': 'Insert Image',
       }
@@ -187,6 +188,14 @@ jest.mock('@sdlgr/post-hero', () => ({
 
 jest.mock('./PostCardPreview', () => ({
   PostCardPreview: () => <div data-testid="post-card-preview-mock" />,
+}))
+
+jest.mock('@sdlgr/table-of-contents', () => ({
+  TableOfContents: () => <nav data-testid="toc-mock" />,
+}))
+
+jest.mock('@web/lib/mdx/remarkHeadings', () => ({
+  extractToc: () => [],
 }))
 
 jest.mock('./CoverImageInput', () => ({

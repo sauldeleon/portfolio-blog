@@ -66,6 +66,9 @@ jest.mock('@web/i18n/client', () => ({
         'postEditor.previewTabPostMobile': 'Post Mobile',
         'postEditor.previewTabHero': 'Hero',
         'postEditor.previewTabCard': 'Card',
+        'postEditor.previewTabToc': 'Table of Contents',
+        'postEditor.autoRender': 'Auto',
+        'postEditor.updatePreview': 'Render',
         'postEditor.error': 'Something went wrong',
         'images.picker.title': 'Insert Image',
         'publishNotify.message': 'Notify subscribers?',
@@ -255,6 +258,45 @@ jest.mock('@sdlgr/post-hero', () => ({
       <span data-testid="reading-time">{readingTime}</span>
     </div>
   ),
+}))
+
+jest.mock('@sdlgr/table-of-contents', () => ({
+  TableOfContents: ({
+    entries,
+    label,
+  }: {
+    entries: { id: string; text: string; depth: number }[]
+    label: string
+  }) => (
+    <nav data-testid="toc-mock">
+      <span data-testid="toc-label">{label}</span>
+      <ul>
+        {entries.map((e) => (
+          <li key={e.id} data-testid="toc-entry">
+            {e.text}
+          </li>
+        ))}
+      </ul>
+    </nav>
+  ),
+}))
+
+jest.mock('@web/lib/mdx/remarkHeadings', () => ({
+  extractToc: (content: string) => {
+    const lines = content.split('\n')
+    return lines
+      .filter((l) => l.startsWith('#'))
+      .map((l) => {
+        const match = l.match(/^(#+)\s+(.+)/)
+        if (!match) return null
+        return {
+          depth: match[1].length,
+          text: match[2],
+          id: match[2].toLowerCase().replace(/\s+/g, '-'),
+        }
+      })
+      .filter(Boolean)
+  },
 }))
 
 jest.mock('./PostCardPreview', () => ({
@@ -1157,7 +1199,7 @@ describe('PostEditor', () => {
     })
 
     describe('preview tabs', () => {
-      it('renders all four preview tabs', () => {
+      it('renders all five preview tabs', () => {
         renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
         expect(screen.getByTestId('preview-tab-post')).toBeInTheDocument()
         expect(
@@ -1165,6 +1207,7 @@ describe('PostEditor', () => {
         ).toBeInTheDocument()
         expect(screen.getByTestId('preview-tab-hero')).toBeInTheDocument()
         expect(screen.getByTestId('preview-tab-card')).toBeInTheDocument()
+        expect(screen.getByTestId('preview-tab-toc')).toBeInTheDocument()
       })
 
       it('Post tab is active by default and shows markdown preview', () => {
@@ -1207,6 +1250,97 @@ describe('PostEditor', () => {
         fireEvent.click(screen.getByTestId('preview-tab-post'))
         expect(screen.getByTestId('markdown-preview')).toBeInTheDocument()
         expect(screen.queryByTestId('post-hero-mock')).not.toBeInTheDocument()
+      })
+
+      it('clicking TOC tab shows toc preview and hides markdown preview', () => {
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+        fireEvent.click(screen.getByTestId('preview-tab-toc'))
+        expect(screen.getByTestId('toc-preview')).toBeInTheDocument()
+        expect(screen.getByTestId('toc-mock')).toBeInTheDocument()
+        expect(screen.queryByTestId('markdown-preview')).not.toBeInTheDocument()
+      })
+
+      it('TOC tab renders extracted headings from content', () => {
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+        fireEvent.change(screen.getByTestId('content-input'), {
+          target: { value: '# My Heading\n\n## Sub Heading' },
+        })
+        fireEvent.click(screen.getByTestId('preview-tab-toc'))
+        const entries = screen.getAllByTestId('toc-entry')
+        expect(entries).toHaveLength(2)
+        expect(entries[0]).toHaveTextContent('My Heading')
+        expect(entries[1]).toHaveTextContent('Sub Heading')
+      })
+
+      it('TOC tab passes label to TableOfContents', () => {
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+        fireEvent.click(screen.getByTestId('preview-tab-toc'))
+        expect(screen.getByTestId('toc-label')).toHaveTextContent(
+          'Table of Contents',
+        )
+      })
+
+      it('switching back from TOC tab to Post tab shows markdown preview', () => {
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+        fireEvent.click(screen.getByTestId('preview-tab-toc'))
+        fireEvent.click(screen.getByTestId('preview-tab-post'))
+        expect(screen.getByTestId('markdown-preview')).toBeInTheDocument()
+        expect(screen.queryByTestId('toc-preview')).not.toBeInTheDocument()
+      })
+    })
+
+    describe('auto-render', () => {
+      it('renders auto-render checkbox checked by default', () => {
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+        expect(screen.getByTestId('auto-render-checkbox')).toBeChecked()
+      })
+
+      it('does not show update button when auto-render is enabled', () => {
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+        expect(
+          screen.queryByTestId('update-preview-button'),
+        ).not.toBeInTheDocument()
+      })
+
+      it('shows update button when auto-render is disabled', () => {
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+        fireEvent.click(screen.getByTestId('auto-render-checkbox'))
+        expect(screen.getByTestId('update-preview-button')).toBeInTheDocument()
+      })
+
+      it('preview does not update when auto-render is off and content changes', () => {
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+        fireEvent.click(screen.getByTestId('auto-render-checkbox'))
+        fireEvent.change(screen.getByTestId('content-input'), {
+          target: { value: '# New heading' },
+        })
+        expect(screen.getByTestId('markdown-preview')).not.toHaveTextContent(
+          '# New heading',
+        )
+      })
+
+      it('clicking update button syncs preview when auto-render is off', () => {
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+        fireEvent.click(screen.getByTestId('auto-render-checkbox'))
+        fireEvent.change(screen.getByTestId('content-input'), {
+          target: { value: '# Manual heading' },
+        })
+        fireEvent.click(screen.getByTestId('update-preview-button'))
+        expect(screen.getByTestId('markdown-preview')).toHaveTextContent(
+          '# Manual heading',
+        )
+      })
+
+      it('re-enabling auto-render immediately syncs preview', () => {
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+        fireEvent.click(screen.getByTestId('auto-render-checkbox'))
+        fireEvent.change(screen.getByTestId('content-input'), {
+          target: { value: '# Auto heading' },
+        })
+        fireEvent.click(screen.getByTestId('auto-render-checkbox'))
+        expect(screen.getByTestId('markdown-preview')).toHaveTextContent(
+          '# Auto heading',
+        )
       })
     })
   })

@@ -223,7 +223,7 @@ export async function PUT(
       prevStatus !== 'published' &&
       data.notify !== false
     ) {
-      notifyPostPublished(
+      await notifyPostPublished(
         post,
         'PUT /api/posts/[id]: failed to send notifications',
       )

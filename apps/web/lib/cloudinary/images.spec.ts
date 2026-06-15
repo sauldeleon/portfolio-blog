@@ -28,6 +28,7 @@ const { listImages, destroyImage, renameImage } = require('./images') as {
   listImages: (
     nextCursor?: string,
     maxResults?: number,
+    search?: string,
   ) => Promise<{
     images: import('./images').CloudinaryImage[]
     nextCursor?: string
@@ -74,14 +75,38 @@ describe('listImages', () => {
       'folder:"sawl.dev - blog"',
     )
     expect(mockSearch.sort_by).toHaveBeenCalledWith('created_at', 'desc')
-    expect(mockSearch.max_results).toHaveBeenCalledWith(20)
+    expect(mockSearch.max_results).toHaveBeenCalledWith(50)
     expect(mockSearch.next_cursor).not.toHaveBeenCalled()
   })
 
   it('calls search with custom maxResults', async () => {
     mockExecute.mockResolvedValue({ resources: [] })
-    await listImages(undefined, 50)
-    expect(mockSearch.max_results).toHaveBeenCalledWith(50)
+    await listImages(undefined, 100)
+    expect(mockSearch.max_results).toHaveBeenCalledWith(100)
+  })
+
+  it('uses search expression when search term provided', async () => {
+    mockExecute.mockResolvedValue({ resources: [] })
+    await listImages(undefined, undefined, 'mountain')
+    expect(mockSearch.expression).toHaveBeenCalledWith(
+      'folder:"sawl.dev - blog" AND filename:mountain*',
+    )
+  })
+
+  it('lowercases the search term in the expression', async () => {
+    mockExecute.mockResolvedValue({ resources: [] })
+    await listImages(undefined, undefined, 'Mountain')
+    expect(mockSearch.expression).toHaveBeenCalledWith(
+      'folder:"sawl.dev - blog" AND filename:mountain*',
+    )
+  })
+
+  it('uses base expression when search term is not provided', async () => {
+    mockExecute.mockResolvedValue({ resources: [] })
+    await listImages(undefined, undefined, undefined)
+    expect(mockSearch.expression).toHaveBeenCalledWith(
+      'folder:"sawl.dev - blog"',
+    )
   })
 
   it('passes next_cursor when nextCursor param is provided', async () => {

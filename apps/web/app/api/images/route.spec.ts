@@ -27,9 +27,13 @@ const { GET, PATCH } = require('./route') as {
   PATCH: (request: NextRequest) => Promise<Response>
 }
 
-function makeRequest(cursor?: string) {
-  const url = cursor
-    ? `http://localhost/api/images/?cursor=${cursor}`
+function makeRequest(cursor?: string, search?: string) {
+  const params = new URLSearchParams()
+  if (cursor) params.set('cursor', cursor)
+  if (search) params.set('search', search)
+  const qs = params.toString()
+  const url = qs
+    ? `http://localhost/api/images/?${qs}`
     : 'http://localhost/api/images/'
   return new NextRequest(url)
 }
@@ -92,14 +96,29 @@ describe('GET /api/images', () => {
     mockAuth.mockResolvedValue({ user: { name: 'admin' } })
     mockListImages.mockResolvedValue({ images: mockImages })
     await GET(makeRequest('cursor-xyz-789'))
-    expect(mockListImages).toHaveBeenCalledWith('cursor-xyz-789')
+    expect(mockListImages).toHaveBeenCalledWith(
+      'cursor-xyz-789',
+      undefined,
+      undefined,
+    )
   })
 
   it('passes undefined cursor when no query param', async () => {
     mockAuth.mockResolvedValue({ user: { name: 'admin' } })
     mockListImages.mockResolvedValue({ images: mockImages })
     await GET(makeRequest())
-    expect(mockListImages).toHaveBeenCalledWith(undefined)
+    expect(mockListImages).toHaveBeenCalledWith(undefined, undefined, undefined)
+  })
+
+  it('passes search query param to listImages', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    mockListImages.mockResolvedValue({ images: mockImages })
+    await GET(makeRequest(undefined, 'mountain'))
+    expect(mockListImages).toHaveBeenCalledWith(
+      undefined,
+      undefined,
+      'mountain',
+    )
   })
 
   it('returns 500 and logs error when listImages throws', async () => {

@@ -13,7 +13,13 @@ export interface ParsedImage {
   size: 'full' | 'small' | 'medium'
   align: 'none' | 'left' | 'right'
   expand: boolean
-  photoMeta?: { iso?: string; aperture?: string; exposure?: string }
+  photoMeta?: {
+    iso?: string
+    aperture?: string
+    exposure?: string
+    focalLength?: string
+    panoramicCount?: string
+  }
 }
 
 export interface ParsedEmbed {
@@ -63,6 +69,8 @@ function parseImageParams(params: string): Omit<ParsedImage, 'url'> {
   let iso = ''
   let aperture = ''
   let exposure = ''
+  let focalLength = ''
+  let panoramicCount = ''
   let hasPhotoMeta = false
 
   for (const part of params.split('&')) {
@@ -101,10 +109,19 @@ function parseImageParams(params: string): Omit<ParsedImage, 'url'> {
         exposure = value
         hasPhotoMeta = true
         break
+      case 'photo-focal-length':
+        focalLength = value
+        hasPhotoMeta = true
+        break
+      case 'photo-panoramic-count':
+        panoramicCount = value
+        hasPhotoMeta = true
+        break
     }
   }
 
-  if (hasPhotoMeta) result.photoMeta = { iso, aperture, exposure }
+  if (hasPhotoMeta)
+    result.photoMeta = { iso, aperture, exposure, focalLength, panoramicCount }
 
   return result
 }

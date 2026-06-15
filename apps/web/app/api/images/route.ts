@@ -10,7 +10,8 @@ export async function GET(request: NextRequest) {
 
   try {
     const cursor = request.nextUrl.searchParams.get('cursor') ?? undefined
-    const { images, nextCursor } = await listImages(cursor)
+    const search = request.nextUrl.searchParams.get('search') ?? undefined
+    const { images, nextCursor } = await listImages(cursor, undefined, search)
     logger.debug({ count: images.length }, 'GET /api/images')
     return NextResponse.json(
       { images, ...(nextCursor ? { nextCursor } : {}) },

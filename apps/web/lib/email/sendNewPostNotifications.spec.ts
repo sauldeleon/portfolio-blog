@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 const mockRender = jest.fn()
-const mockResendSend = jest.fn()
+const mockBatchSend = jest.fn()
 const mockGetActiveSubscribers = jest.fn()
 const mockGetSiteUrl = jest.fn(() => 'https://example.com')
 const mockGetServerTranslation = jest.fn()
@@ -13,7 +13,7 @@ const mockGetSeriesTranslationsById = jest.fn()
 jest.mock('@react-email/components', () => ({ render: mockRender }))
 jest.mock('@web/utils/url/generateUrl', () => ({ getSiteUrl: mockGetSiteUrl }))
 jest.mock('./resend', () => ({
-  resend: { emails: { send: mockResendSend } },
+  resend: { batch: { send: mockBatchSend } },
 }))
 jest.mock('./templates/NewPostEmail', () => ({
   NewPostEmail: (...args: unknown[]) => mockNewPostEmail(...args),
@@ -61,7 +61,7 @@ function mockT(key: string, opts?: Record<string, string>) {
 beforeEach(() => {
   jest.clearAllMocks()
   mockRender.mockResolvedValue('<html>post email</html>')
-  mockResendSend.mockResolvedValue({ data: { id: 'email-id' }, error: null })
+  mockBatchSend.mockResolvedValue({ data: [{ id: 'email-id' }], error: null })
   mockGetActiveSubscribers.mockResolvedValue([mockSubscriber])
   mockGetServerTranslation.mockResolvedValue({ t: mockT })
   mockGetSeriesTranslationsById.mockResolvedValue([])
@@ -75,7 +75,7 @@ describe('sendNewPostNotifications', () => {
       postNumber: 1,
       translations: mockTranslations,
     })
-    expect(mockResendSend).not.toHaveBeenCalled()
+    expect(mockBatchSend).not.toHaveBeenCalled()
   })
 
   it('sends email to each active subscriber', async () => {
@@ -84,13 +84,13 @@ describe('sendNewPostNotifications', () => {
       postNumber: 7,
       translations: mockTranslations,
     })
-    expect(mockResendSend).toHaveBeenCalledTimes(1)
-    expect(mockResendSend).toHaveBeenCalledWith(
+    expect(mockBatchSend).toHaveBeenCalledTimes(1)
+    expect(mockBatchSend).toHaveBeenCalledWith([
       expect.objectContaining({
         to: 'user@example.com',
         html: '<html>post email</html>',
       }),
-    )
+    ])
   })
 
   it('builds correct post and unsubscribe URLs', async () => {
@@ -131,11 +131,11 @@ describe('sendNewPostNotifications', () => {
       postNumber: 1,
       translations: { es: mockTranslations.es },
     })
-    expect(mockResendSend).not.toHaveBeenCalled()
+    expect(mockBatchSend).not.toHaveBeenCalled()
   })
 
   it('logs error when Resend rejects but does not throw', async () => {
-    mockResendSend.mockResolvedValue({
+    mockBatchSend.mockResolvedValue({
       data: null,
       error: { message: 'Resend error' },
     })
@@ -147,8 +147,8 @@ describe('sendNewPostNotifications', () => {
       }),
     ).resolves.toBeUndefined()
     expect(mockLoggerError).toHaveBeenCalledWith(
-      expect.objectContaining({ email: 'user@example.com' }),
-      'sendNewPostNotifications: Resend rejected send',
+      expect.objectContaining({ postId: 'p1' }),
+      'sendNewPostNotifications: Resend batch send failed',
     )
   })
 
@@ -167,7 +167,13 @@ describe('sendNewPostNotifications', () => {
       postNumber: 1,
       translations: mockTranslations,
     })
-    expect(mockResendSend).toHaveBeenCalledTimes(2)
+    expect(mockBatchSend).toHaveBeenCalledTimes(1)
+    expect(mockBatchSend).toHaveBeenCalledWith(
+      expect.arrayContaining([
+        expect.objectContaining({ to: 'user@example.com' }),
+        expect.objectContaining({ to: 'other@example.com' }),
+      ]),
+    )
   })
 
   it('builds cover image URL from cloudinary public id and env var', async () => {
@@ -297,7 +303,7 @@ describe('sendNewPostNotifications', () => {
     delete process.env.RESEND_FROM_EMAIL
     jest.resetModules()
     jest.mock('./resend', () => ({
-      resend: { emails: { send: mockResendSend } },
+      resend: { batch: { send: mockBatchSend } },
     }))
     jest.mock('@react-email/components', () => ({ render: mockRender }))
     jest.mock('@web/utils/url/generateUrl', () => ({
@@ -321,15 +327,16 @@ describe('sendNewPostNotifications', () => {
     const { sendNewPostNotifications: send } =
       require('./sendNewPostNotifications') as typeof import('./sendNewPostNotifications')
     await send({ postId: 'p1', postNumber: 1, translations: mockTranslations })
-    expect(mockResendSend).toHaveBeenCalledWith(
+    expect(mockBatchSend).toHaveBeenCalledWith([
       expect.objectContaining({ from: 'onboarding@resend.dev' }),
-    )
+    ])
     process.env.RESEND_FROM_EMAIL = originalFrom
   })
 
   it('returns early when resend is null', async () => {
     jest.resetModules()
     jest.mock('./resend', () => ({ resend: null }))
+
     jest.mock('@react-email/components', () => ({ render: mockRender }))
     jest.mock('@web/utils/url/generateUrl', () => ({
       getSiteUrl: mockGetSiteUrl,

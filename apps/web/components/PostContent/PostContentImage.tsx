@@ -35,7 +35,15 @@ export function PostContentImage({ src, alt }: { src?: string; alt?: string }) {
   const photoIso = options?.get('photo-iso')
   const photoAperture = options?.get('photo-aperture')
   const photoExposure = options?.get('photo-exposure')
-  const hasPhotoMeta = !!(photoIso || photoAperture || photoExposure)
+  const photoFocalLength = options?.get('photo-focal-length')
+  const photoPanoramicCount = options?.get('photo-panoramic-count')
+  const hasPhotoMeta = !!(
+    photoIso ||
+    photoAperture ||
+    photoExposure ||
+    photoFocalLength ||
+    photoPanoramicCount
+  )
 
   const sizes =
     size === 'small'
@@ -67,27 +75,43 @@ export function PostContentImage({ src, alt }: { src?: string; alt?: string }) {
         {hasPhotoMeta && (
           <StyledPhotoMeta data-testid="post-photo-meta">
             {photoIso && (
-              <StyledPhotoMetaItem>
-                <StyledPhotoMetaLabel>
+              <StyledPhotoMetaItem data-testid="post-photo-meta-item">
+                <StyledPhotoMetaLabel data-testid="post-photo-meta-label">
                   {t('photoMeta.iso')}
                 </StyledPhotoMetaLabel>
                 <span>{photoIso}</span>
               </StyledPhotoMetaItem>
             )}
             {photoAperture && (
-              <StyledPhotoMetaItem>
-                <StyledPhotoMetaLabel>
+              <StyledPhotoMetaItem data-testid="post-photo-meta-item">
+                <StyledPhotoMetaLabel data-testid="post-photo-meta-label">
                   {t('photoMeta.aperture')}
                 </StyledPhotoMetaLabel>
                 <span>{photoAperture}</span>
               </StyledPhotoMetaItem>
             )}
             {photoExposure && (
-              <StyledPhotoMetaItem>
-                <StyledPhotoMetaLabel>
+              <StyledPhotoMetaItem data-testid="post-photo-meta-item">
+                <StyledPhotoMetaLabel data-testid="post-photo-meta-label">
                   {t('photoMeta.exposure')}
                 </StyledPhotoMetaLabel>
                 <span>{photoExposure}</span>
+              </StyledPhotoMetaItem>
+            )}
+            {photoFocalLength && (
+              <StyledPhotoMetaItem data-testid="post-photo-meta-item">
+                <StyledPhotoMetaLabel data-testid="post-photo-meta-label">
+                  {t('photoMeta.focalLength')}
+                </StyledPhotoMetaLabel>
+                <span>{photoFocalLength}</span>
+              </StyledPhotoMetaItem>
+            )}
+            {photoPanoramicCount && (
+              <StyledPhotoMetaItem data-testid="post-photo-meta-item">
+                <StyledPhotoMetaLabel data-testid="post-photo-meta-label">
+                  {t('photoMeta.panoramicCount')}
+                </StyledPhotoMetaLabel>
+                <span>{photoPanoramicCount}</span>
               </StyledPhotoMetaItem>
             )}
           </StyledPhotoMeta>
