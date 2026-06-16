@@ -21,6 +21,11 @@ jest.mock('@web/lib/db/queries/posts', () => ({
   getPostByPreviewToken: mockGetPostByPreviewToken,
 }))
 
+const mockAuth = jest.fn()
+jest.mock('@web/lib/auth/config', () => ({
+  auth: () => mockAuth(),
+}))
+
 jest.mock('@sdlgr/post-hero', () => {
   const React = require('react')
   return {
@@ -93,6 +98,15 @@ describe('blog/preview/[token] - PreviewPage', () => {
   beforeEach(() => {
     jest.clearAllMocks()
     mockPostComments.mockReturnValue(<div data-testid="post-comments" />)
+    mockAuth.mockResolvedValue({ user: { role: 'admin' } })
+  })
+
+  it('calls notFound when unauthenticated', async () => {
+    mockAuth.mockResolvedValue(null)
+    const { default: PreviewPage } = require('./page.next')
+    await PreviewPage({ params: Promise.resolve({ token: 'valid-token' }) })
+    expect(mockNotFound).toHaveBeenCalledTimes(1)
+    expect(mockGetPostByPreviewToken).not.toHaveBeenCalled()
   })
 
   it('calls notFound when token is invalid (null result)', async () => {

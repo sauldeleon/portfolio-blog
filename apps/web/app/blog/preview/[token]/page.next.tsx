@@ -6,6 +6,7 @@ import { PostHero } from '@sdlgr/post-hero'
 import { PostComments } from '@web/components/PostComments'
 import { PostContent } from '@web/components/PostContent/PostContent'
 import { PreviewBanner } from '@web/components/PreviewBanner'
+import { auth } from '@web/lib/auth/config'
 import { getPostByPreviewToken } from '@web/lib/db/queries/posts'
 import { renderMDX } from '@web/lib/mdx/renderMDX'
 import { computeReadingTime } from '@web/utils/computeReadingTime'
@@ -17,6 +18,9 @@ interface RouteProps {
 }
 
 export default async function PreviewPage({ params }: RouteProps) {
+  const session = await auth()
+  if (!session) return notFound()
+
   const { token } = await params
   const result = await getPostByPreviewToken(token)
   if (!result) return notFound()
