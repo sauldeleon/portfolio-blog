@@ -245,4 +245,22 @@ describe('blog/preview/[token] - PreviewPage', () => {
       undefined,
     )
   })
+
+  it('falls back to 0 when postNumber is null', async () => {
+    mockGetPostByPreviewToken.mockResolvedValue({
+      post: { ...mockPost, postNumber: null },
+      translations: mockTranslations,
+      authorName: 'Jane Doe',
+    })
+    mockHeaders.mockResolvedValue(makeHeadersList('en'))
+    const { default: PreviewPage } = require('./page.next')
+    const ui = await PreviewPage({
+      params: Promise.resolve({ token: 'valid-token' }),
+    })
+    render(ui)
+    expect(mockPostComments).toHaveBeenCalledWith(
+      expect.objectContaining({ postNumber: 0 }),
+      undefined,
+    )
+  })
 })
