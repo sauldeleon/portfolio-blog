@@ -36,12 +36,23 @@ jest.mock('@web/lib/mdx/renderMDX', () => ({
   renderMDX: jest.fn().mockReturnValue(null),
 }))
 
-jest.mock(
-  '@web/components/StyledComponentsRegistry/StyledComponentsRegistry',
-  () =>
-    ({ children }: { children: React.ReactNode }) =>
-      children,
-)
+jest.mock('@web/components/PreviewBanner', () => ({
+  PreviewBanner: ({ label }: { label: string }) => (
+    <div data-testid="preview-banner">{label}</div>
+  ),
+}))
+
+jest.mock('@web/components/PostContent/PostContent', () => ({
+  PostContent: ({ children }: { children: React.ReactNode }) => (
+    <article data-testid="post-content">{children}</article>
+  ),
+}))
+
+jest.mock('./page.next.styles', () => ({
+  StyledPage: ({ children }: { children: React.ReactNode }) => (
+    <main data-testid="styled-page">{children}</main>
+  ),
+}))
 
 const mockPost = {
   id: '01ABC',
@@ -125,7 +136,7 @@ describe('blog/preview/[token] - PreviewPage', () => {
     })
     render(ui)
     expect(screen.getByTestId('preview-banner')).toHaveTextContent(
-      'PREVIEW MODE',
+      'Admin preview — this post is not publicly visible',
     )
   })
 

@@ -3,10 +3,13 @@ import { notFound } from 'next/navigation'
 
 import { PostHero } from '@sdlgr/post-hero'
 
-import StyledComponentsRegistry from '@web/components/StyledComponentsRegistry/StyledComponentsRegistry'
+import { PostContent } from '@web/components/PostContent/PostContent'
+import { PreviewBanner } from '@web/components/PreviewBanner'
 import { getPostByPreviewToken } from '@web/lib/db/queries/posts'
 import { renderMDX } from '@web/lib/mdx/renderMDX'
 import { computeReadingTime } from '@web/utils/computeReadingTime'
+
+import { StyledPage } from './page.next.styles'
 
 interface RouteProps {
   params: Promise<{ token: string }>
@@ -31,20 +34,18 @@ export default async function PreviewPage({ params }: RouteProps) {
   if (!translation) return notFound()
 
   return (
-    <StyledComponentsRegistry>
-      <main>
-        <div data-testid="preview-banner">PREVIEW MODE</div>
-        <PostHero
-          title={translation.title}
-          coverImagePublicId={post.coverImage}
-          category={post.category}
-          author={authorName}
-          publishedAt={null}
-          readingTime={computeReadingTime(translation.content)}
-          lng={lng}
-        />
-        <article>{renderMDX(translation.content)}</article>
-      </main>
-    </StyledComponentsRegistry>
+    <StyledPage>
+      <PreviewBanner label="Admin preview — this post is not publicly visible" />
+      <PostHero
+        title={translation.title}
+        coverImagePublicId={post.coverImage}
+        category={post.category}
+        author={authorName}
+        publishedAt={null}
+        readingTime={computeReadingTime(translation.content)}
+        lng={lng}
+      />
+      <PostContent>{renderMDX(translation.content)}</PostContent>
+    </StyledPage>
   )
 }
