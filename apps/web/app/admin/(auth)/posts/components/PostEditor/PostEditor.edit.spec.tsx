@@ -71,6 +71,9 @@ jest.mock('@web/i18n/client', () => ({
         'postEditor.previewTabHero': 'Hero',
         'postEditor.previewTabCard': 'Card',
         'postEditor.previewTabToc': 'Table of Contents',
+        'postEditor.draftPreviewLabel': 'Preview:',
+        'postEditor.draftPreviewCopy': 'Copy',
+        'postEditor.draftPreviewCopied': 'Copied!',
         'postEditor.error': 'Something went wrong',
         'images.picker.title': 'Insert Image',
       }
@@ -990,6 +993,88 @@ describe('PostEditor', () => {
       )
       fireEvent.click(screen.getByTestId('preview-tab-card'))
       expect(screen.getByTestId('post-card-preview-mock')).toBeInTheDocument()
+    })
+  })
+
+  describe('draft preview URL', () => {
+    beforeEach(() => {
+      Object.defineProperty(navigator, 'clipboard', {
+        value: { writeText: jest.fn().mockResolvedValue(undefined) },
+        writable: true,
+        configurable: true,
+      })
+    })
+
+    it('shows draft preview row for draft post with postNumber and slug', () => {
+      renderApp(
+        <PostEditor
+          post={mockExistingPost}
+          categories={mockCategories}
+          users={mockUsers}
+        />,
+      )
+      expect(screen.getByTestId('draft-preview-row')).toBeInTheDocument()
+      expect(screen.getByTestId('draft-preview-link')).toHaveAttribute(
+        'href',
+        '/en/blog/7/my-post',
+      )
+    })
+
+    it('does not show draft preview row for published post', () => {
+      renderApp(
+        <PostEditor
+          post={{
+            ...mockExistingPost,
+            post: { ...mockExistingPost.post, status: 'published' },
+          }}
+          categories={mockCategories}
+          users={mockUsers}
+        />,
+      )
+      expect(screen.queryByTestId('draft-preview-row')).not.toBeInTheDocument()
+    })
+
+    it('does not show draft preview row when postNumber is null', () => {
+      renderApp(
+        <PostEditor
+          post={{
+            ...mockExistingPost,
+            post: { ...mockExistingPost.post, postNumber: null },
+          }}
+          categories={mockCategories}
+          users={mockUsers}
+        />,
+      )
+      expect(screen.queryByTestId('draft-preview-row')).not.toBeInTheDocument()
+    })
+
+    it('copy button writes full URL to clipboard and shows Copied!', async () => {
+      jest.useFakeTimers()
+      renderApp(
+        <PostEditor
+          post={mockExistingPost}
+          categories={mockCategories}
+          users={mockUsers}
+        />,
+      )
+      fireEvent.click(screen.getByTestId('draft-preview-copy-button'))
+      await waitFor(() => {
+        expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
+          expect.stringContaining('/en/blog/7/my-post'),
+        )
+      })
+      await waitFor(() => {
+        expect(
+          screen.getByTestId('draft-preview-copy-button'),
+        ).toHaveTextContent('Copied!')
+      })
+      jest.runAllTimers()
+      await waitFor(() => {
+        expect(
+          screen.getByTestId('draft-preview-copy-button'),
+        ).toHaveTextContent('Copy')
+      })
+      jest.useRealTimers()
     })
   })
 })

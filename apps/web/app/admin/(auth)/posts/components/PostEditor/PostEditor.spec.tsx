@@ -69,6 +69,10 @@ jest.mock('@web/i18n/client', () => ({
         'postEditor.previewTabToc': 'Table of Contents',
         'postEditor.autoRender': 'Auto',
         'postEditor.updatePreview': 'Render',
+        'postEditor.draftPreviewLabel': 'Preview:',
+        'postEditor.draftPreviewCopy': 'Copy',
+        'postEditor.draftPreviewCopied': 'Copied!',
+        'postEditor.fields.commentsEnabled': 'Comments enabled',
         'postEditor.error': 'Something went wrong',
         'images.picker.title': 'Insert Image',
         'publishNotify.message': 'Notify subscribers?',
@@ -452,6 +456,7 @@ const mockExistingPost: PostEditorProps['post'] = {
     seriesOrder: 2,
     scheduledAt: null,
     authorId: 'user-1',
+    commentsEnabled: true,
   },
   translations: [
     {
@@ -1054,6 +1059,63 @@ describe('PostEditor', () => {
       })
     })
 
+    describe('commentsEnabled field', () => {
+      it('renders comments enabled checkbox checked by default', () => {
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+        expect(screen.getByTestId('comments-enabled-checkbox')).toBeChecked()
+      })
+
+      it('unchecking checkbox sets commentsEnabled to false', () => {
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+        fireEvent.click(screen.getByTestId('comments-enabled-checkbox'))
+        expect(
+          screen.getByTestId('comments-enabled-checkbox'),
+        ).not.toBeChecked()
+      })
+
+      it('POST body includes commentsEnabled true by default', async () => {
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+        fillMandatoryFields()
+        fireEvent.click(screen.getByTestId('save-button'))
+        await waitFor(() => expect(axios.post).toHaveBeenCalled())
+        const body = (axios.post as jest.Mock).mock.calls[0][1] as Record<
+          string,
+          unknown
+        >
+        expect(body).toHaveProperty('commentsEnabled', true)
+      })
+
+      it('POST body includes commentsEnabled false when unchecked', async () => {
+        renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+        fillMandatoryFields()
+        fireEvent.click(screen.getByTestId('comments-enabled-checkbox'))
+        fireEvent.click(screen.getByTestId('save-button'))
+        await waitFor(() => expect(axios.post).toHaveBeenCalled())
+        const body = (axios.post as jest.Mock).mock.calls[0][1] as Record<
+          string,
+          unknown
+        >
+        expect(body).toHaveProperty('commentsEnabled', false)
+      })
+
+      it('initialises checkbox from existing post commentsEnabled false', () => {
+        const postWithCommentsDisabled = {
+          ...mockExistingPost,
+          post: { ...mockExistingPost.post, commentsEnabled: false },
+        }
+        renderApp(
+          <PostEditor
+            post={postWithCommentsDisabled}
+            categories={mockCategories}
+            users={mockUsers}
+          />,
+        )
+        expect(
+          screen.getByTestId('comments-enabled-checkbox'),
+        ).not.toBeChecked()
+      })
+    })
+
     describe('author field', () => {
       it('renders author select with first user as default', () => {
         renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
@@ -1415,5 +1477,10 @@ describe('PostEditor', () => {
       )
       expect(screen.queryByTestId('gpx-map-modal-mock')).not.toBeInTheDocument()
     })
+  })
+
+  it('does not show draft preview row for new post', () => {
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+    expect(screen.queryByTestId('draft-preview-row')).not.toBeInTheDocument()
   })
 })

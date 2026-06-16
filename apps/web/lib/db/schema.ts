@@ -1,5 +1,7 @@
 import { sql } from 'drizzle-orm'
 import {
+  AnyPgColumn,
+  boolean,
   check,
   index,
   integer,
@@ -79,6 +81,7 @@ export const posts = pgTable(
       .notNull()
       .defaultNow(),
     likes: integer('likes').notNull().default(0),
+    commentsEnabled: boolean('comments_enabled').notNull().default(true),
     deletedAt: timestamp('deleted_at', { withTimezone: true }), // soft delete
     previewToken: text('preview_token').unique(),
   },
@@ -127,6 +130,24 @@ export const users = pgTable(
   ],
 )
 
+export const comments = pgTable('comments', {
+  id: text('id').primaryKey(), // ULID
+  postId: text('post_id')
+    .notNull()
+    .references(() => posts.id, { onDelete: 'cascade' }),
+  parentId: text('parent_id').references((): AnyPgColumn => comments.id, {
+    onDelete: 'cascade',
+  }),
+  username: text('username').notNull(),
+  body: text('body').notNull(),
+  status: text('status', { enum: ['pending', 'approved', 'rejected'] })
+    .notNull()
+    .default('pending'),
+  createdAt: timestamp('created_at', { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+})
+
 export const subscriptions = pgTable('subscriptions', {
   id: text('id').primaryKey(), // ULID
   email: text('email').notNull().unique(),
@@ -164,3 +185,6 @@ export type CoverImageFit = 'cover' | 'contain'
 export type Subscription = typeof subscriptions.$inferSelect
 export type NewSubscription = typeof subscriptions.$inferInsert
 export type SubscriptionStatus = 'pending' | 'active' | 'unsubscribed'
+export type Comment = typeof comments.$inferSelect
+export type NewComment = typeof comments.$inferInsert
+export type CommentStatus = 'pending' | 'approved' | 'rejected'

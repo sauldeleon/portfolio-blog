@@ -10,6 +10,7 @@ import {
   getPostByPreviewToken,
   getPostBySlug,
   getPostForEdit,
+  getPostMeta,
   getPostPublishedDates,
   getPostStatus,
   getPostTranslations,
@@ -418,6 +419,22 @@ describe('getPostStatus', () => {
   it('returns null when post not found', async () => {
     mockDb.select.mockReturnValue(makeChain([]))
     const result = await getPostStatus('nonexistent')
+    expect(result).toBeNull()
+  })
+})
+
+describe('getPostMeta', () => {
+  it('returns status and commentsEnabled when post exists', async () => {
+    mockDb.select.mockReturnValue(
+      makeChain([{ status: 'published', commentsEnabled: true }]),
+    )
+    const result = await getPostMeta('01JWTEST000000000000000000')
+    expect(result).toEqual({ status: 'published', commentsEnabled: true })
+  })
+
+  it('returns null when post not found', async () => {
+    mockDb.select.mockReturnValue(makeChain([]))
+    const result = await getPostMeta('nonexistent')
     expect(result).toBeNull()
   })
 })

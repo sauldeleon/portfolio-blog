@@ -432,3 +432,47 @@ export const StyledTocPreview = styled.div`
   justify-content: center;
   padding: 2rem 1rem;
 `
+
+export const StyledDraftPreviewRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`
+
+export const StyledDraftPreviewLabel = styled.span`
+  font-size: 0.65rem;
+  color: ${({ theme }) => theme.colors.white};
+  opacity: 0.45;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+`
+
+export const StyledDraftPreviewLink = styled.a`
+  font-size: 0.65rem;
+  color: ${({ theme }) => theme.colors.yellow};
+  text-decoration: none;
+  opacity: 0.8;
+  font-family: monospace;
+
+  &:hover {
+    opacity: 1;
+    text-decoration: underline;
+  }
+`
+
+export const StyledDraftPreviewCopyButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'xs',
+})`
+  font-family: inherit;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.15rem 0.4rem;
+  color: ${({ theme }) => theme.colors.yellow};
+  opacity: 0.7;
+
+  &:hover {
+    opacity: 1;
+  }
+`

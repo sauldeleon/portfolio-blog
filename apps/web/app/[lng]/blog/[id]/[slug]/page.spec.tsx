@@ -54,6 +54,11 @@ jest.mock('@web/components/RelatedPosts/RelatedPosts', () => ({
   RelatedPosts: () => <div data-testid="related-posts" />,
 }))
 
+const mockPostComments = jest.fn()
+jest.mock('@web/components/PostComments', () => ({
+  PostComments: (...args: unknown[]) => mockPostComments(...args),
+}))
+
 jest.mock('@web/components/SeriesIndicator/SeriesIndicator', () => ({
   SeriesIndicator: () => <div data-testid="series-indicator" />,
 }))
@@ -105,6 +110,17 @@ jest.mock('@web/components/PostLikeButton', () => ({
   PostLikeButton: () => <div data-testid="post-like-button" />,
 }))
 
+jest.mock('@web/components/PreviewBanner', () => ({
+  PreviewBanner: ({ label }: { label: string }) => (
+    <div data-testid="preview-banner">{label}</div>
+  ),
+}))
+
+const mockAuth = jest.fn()
+jest.mock('@web/lib/auth/config', () => ({
+  auth: () => mockAuth(),
+}))
+
 const publishedPost = {
   id: '01JXYZ',
   postNumber: 1,
@@ -124,12 +140,15 @@ const publishedPost = {
   seriesId: null,
   seriesOrder: null,
   seriesTitle: null,
+  commentsEnabled: true,
 }
 
 describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
   beforeEach(() => {
     jest.clearAllMocks()
     mockPostHero.mockReturnValue(<div data-testid="post-hero" />)
+    mockPostComments.mockReturnValue(<div data-testid="post-comments" />)
+    mockAuth.mockResolvedValue(null)
     mockGetServerTranslation.mockResolvedValue({ t: (key: string) => key })
     mockGetCategoryTranslations.mockResolvedValue([
       {
@@ -174,6 +193,27 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
       params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
     })
     expect(mockNotFound).toHaveBeenCalledTimes(1)
+  })
+
+  it('shows PreviewBanner when admin views a draft post', async () => {
+    mockAuth.mockResolvedValue({ user: { role: 'admin' } })
+    mockGetPostByNumber.mockResolvedValue({ ...publishedPost, status: 'draft' })
+    const { default: BlogPostPage } = require('./page.next')
+    const ui = await BlogPostPage({
+      params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
+    })
+    render(ui)
+    expect(screen.getByTestId('preview-banner')).toBeInTheDocument()
+  })
+
+  it('does not show PreviewBanner for published post', async () => {
+    mockGetPostByNumber.mockResolvedValue(publishedPost)
+    const { default: BlogPostPage } = require('./page.next')
+    const ui = await BlogPostPage({
+      params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
+    })
+    render(ui)
+    expect(screen.queryByTestId('preview-banner')).not.toBeInTheDocument()
   })
 
   it('calls redirect when slug does not match', async () => {
@@ -224,6 +264,32 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
     })
     render(ui)
     expect(screen.getByTestId('related-posts')).toBeInTheDocument()
+  })
+
+  it('renders PostComments section', async () => {
+    mockGetPostByNumber.mockResolvedValue(publishedPost)
+    const { default: BlogPostPage } = require('./page.next')
+    const ui = await BlogPostPage({
+      params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
+    })
+    render(ui)
+    expect(screen.getByTestId('post-comments')).toBeInTheDocument()
+  })
+
+  it('passes commentsEnabled from post to PostComments', async () => {
+    mockGetPostByNumber.mockResolvedValue({
+      ...publishedPost,
+      commentsEnabled: false,
+    })
+    const { default: BlogPostPage } = require('./page.next')
+    const ui = await BlogPostPage({
+      params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
+    })
+    render(ui)
+    expect(mockPostComments).toHaveBeenCalledWith(
+      expect.objectContaining({ commentsEnabled: false }),
+      undefined,
+    )
   })
 
   it('renders JSON-LD script tag', async () => {

@@ -49,6 +49,12 @@ export function AdminNav({ role }: AdminNavProps) {
       >
         {t('nav.images')}
       </StyledNavLink>
+      <StyledNavLink
+        href="/admin/comments"
+        $active={pathname.startsWith('/admin/comments')}
+      >
+        {t('nav.comments')}
+      </StyledNavLink>
       {role === 'admin' && (
         <StyledNavLink
           href="/admin/users"

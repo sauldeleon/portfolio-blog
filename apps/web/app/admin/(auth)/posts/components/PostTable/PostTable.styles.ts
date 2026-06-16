@@ -221,6 +221,26 @@ export const StyledHardDeleteButton = styled(Button).attrs({
   letter-spacing: 0.08em;
 `
 
+export const StyledCommentsButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'xs',
+})<{ $enabled: boolean }>`
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: ${({ $enabled, theme }) =>
+    $enabled ? theme.colors.green : theme.colors.orange};
+  border-color: ${({ $enabled, theme }) =>
+    $enabled ? `${theme.colors.green}40` : `${theme.colors.orange}40`};
+  opacity: 0.7;
+
+  &:hover {
+    opacity: 1;
+    border-color: ${({ $enabled, theme }) =>
+      $enabled ? theme.colors.green : theme.colors.orange};
+  }
+`
+
 export const StyledEmpty = styled.div`
   padding: 4rem 0;
   text-align: center;

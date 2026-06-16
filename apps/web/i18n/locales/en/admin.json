@@ -16,6 +16,7 @@
     "categories": "Categories",
     "series": "Series",
     "images": "Images",
+    "comments": "Comments",
     "users": "Users",
     "logout": "Logout"
   },
@@ -51,6 +52,8 @@
     "archiveDisabledPublished": "Unpublish the post before archiving",
     "hardDelete": "Delete",
     "hardDeleteConfirm": "Permanently delete this post? This cannot be undone.",
+    "commentsEnabled": "Comments on",
+    "commentsDisabled": "Comments off",
     "bulkPublishConfirm": "Publish selected posts? Only eligible (draft with both translations) will be published.",
     "bulkUnpublishConfirm": "Unpublish selected posts? Only currently published posts will be affected.",
     "bulkArchiveConfirm": "Archive selected posts? Only draft posts will be archived. You can restore them later.",
@@ -103,6 +106,7 @@
       "coverImage": "Cover Image",
       "coverImagePlaceholder": "No cover image selected",
       "coverImageClear": "Remove cover image",
+      "commentsEnabled": "Comments enabled",
       "coverImageFit": "Cover image fit",
       "coverImageFitCover": "Cover (fill)",
       "coverImageFitContain": "Contain (full image)",
@@ -142,6 +146,9 @@
     "share": "Share",
     "shareCopyLink": "Copy link",
     "shareCopied": "Copied!",
+    "draftPreviewLabel": "Preview:",
+    "draftPreviewCopy": "Copy",
+    "draftPreviewCopied": "Copied!",
     "error": "Something went wrong, please try again"
   },
   "images": {
@@ -251,6 +258,36 @@
       "esTitlePlaceholder": "Título de la serie",
       "create": "Create series",
       "error": "Something went wrong, please try again"
+    }
+  },
+  "comments": {
+    "title": "Comments",
+    "searchPlaceholder": "Filter by post ID…",
+    "empty": "No comments found",
+    "approve": "Approve",
+    "reject": "Reject",
+    "delete": "Delete",
+    "deleteConfirm": "Permanently delete this comment? This cannot be undone.",
+    "showMore": "Show more",
+    "showLess": "Show less",
+    "filters": {
+      "all": "All",
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    },
+    "table": {
+      "username": "User",
+      "body": "Comment",
+      "post": "Post",
+      "status": "Status",
+      "createdAt": "Date",
+      "actions": "Actions"
+    },
+    "status": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected"
     }
   },
   "users": {
