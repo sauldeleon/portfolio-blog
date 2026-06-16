@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 
 import { PostHero } from '@sdlgr/post-hero'
 
+import { PostComments } from '@web/components/PostComments'
 import { PostContent } from '@web/components/PostContent/PostContent'
 import { PreviewBanner } from '@web/components/PreviewBanner'
 import { getPostByPreviewToken } from '@web/lib/db/queries/posts'
@@ -46,6 +47,14 @@ export default async function PreviewPage({ params }: RouteProps) {
         lng={lng}
       />
       <PostContent>{renderMDX(translation.content)}</PostContent>
+      <PostComments
+        postId={post.id}
+        postTitle={translation.title}
+        postNumber={post.postNumber ?? 0}
+        postSlug={translation.slug}
+        lng={lng}
+        commentsEnabled={post.commentsEnabled}
+      />
     </StyledPage>
   )
 }
