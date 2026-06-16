@@ -6,12 +6,15 @@ import { PostHero } from '@sdlgr/post-hero'
 import { TableOfContents } from '@sdlgr/table-of-contents'
 
 import { JsonLd } from '@web/components/JsonLd/JsonLd'
+import { PostComments } from '@web/components/PostComments'
 import { PostContent } from '@web/components/PostContent/PostContent'
 import { PostLikeButton } from '@web/components/PostLikeButton'
+import { PreviewBanner } from '@web/components/PreviewBanner'
 import { RelatedPosts } from '@web/components/RelatedPosts/RelatedPosts'
 import { SeriesIndicator } from '@web/components/SeriesIndicator/SeriesIndicator'
 import { SubscribeModal } from '@web/components/SubscribeModal'
 import { getServerTranslation } from '@web/i18n/server'
+import { auth } from '@web/lib/auth/config'
 import { getCategoryTranslations } from '@web/lib/db/queries/categories'
 import { getPostByNumber, getPublishedPosts } from '@web/lib/db/queries/posts'
 import { Locale } from '@web/lib/db/schema'
@@ -143,7 +146,12 @@ export default async function BlogPostPage({ params }: RouteProps) {
   const postNumber = parseInt(id, 10)
   if (isNaN(postNumber)) return notFound()
   const post = await getPostByNumber(postNumber, lng as Locale)
-  if (!post || post.status !== 'published') return notFound()
+  if (!post) return notFound()
+  const isPreview = post.status !== 'published'
+  if (isPreview) {
+    const session = await auth()
+    if (!session) return notFound()
+  }
   if (post.slug !== slug)
     return redirect(`/${lng}/blog/${post.postNumber}/${post.slug}`)
 
@@ -160,6 +168,7 @@ export default async function BlogPostPage({ params }: RouteProps) {
 
   return (
     <StyledPage>
+      {isPreview && <PreviewBanner label={t('preview.banner')} />}
       <JsonLd data={generateArticleJsonLd(post, lng, postUrl)} />
       <PostHero
         title={post.title}
@@ -206,6 +215,14 @@ export default async function BlogPostPage({ params }: RouteProps) {
         />
       )}
       <RelatedPosts postId={post.id} lng={lng} />
+      <PostComments
+        postId={post.id}
+        postTitle={post.title}
+        postNumber={post.postNumber}
+        postSlug={post.slug}
+        lng={lng}
+        commentsEnabled={post.commentsEnabled}
+      />
     </StyledPage>
   )
 }

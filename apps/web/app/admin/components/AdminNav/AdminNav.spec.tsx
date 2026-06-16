@@ -15,6 +15,7 @@ jest.mock('@web/i18n/client', () => ({
         'nav.categories': 'Categories',
         'nav.series': 'Series',
         'nav.images': 'Images',
+        'nav.comments': 'Comments',
         'nav.users': 'Users',
         'nav.logout': 'Logout',
       }
@@ -81,6 +82,20 @@ describe('AdminNav', () => {
       'href',
       '/admin/images',
     )
+  })
+
+  it('renders Comments link', () => {
+    renderApp(<AdminNav />)
+    expect(screen.getByRole('link', { name: 'Comments' })).toHaveAttribute(
+      'href',
+      '/admin/comments',
+    )
+  })
+
+  it('marks Comments link active when on comments route', () => {
+    ;(usePathname as jest.Mock).mockReturnValue('/admin/comments')
+    renderApp(<AdminNav />)
+    expect(screen.getByRole('link', { name: 'Comments' })).toBeInTheDocument()
   })
 
   it('renders Logout button', () => {

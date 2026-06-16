@@ -26,5 +26,19 @@
   "share.copyLink": "Copy link",
   "share.copied": "Copied!",
   "likeButton.like": "Like this post",
-  "likeButton.liked": "Liked!"
+  "likeButton.liked": "Liked!",
+  "comments.title": "Comments",
+  "comments.empty": "No comments yet. Be the first!",
+  "comments.form.username": "Name",
+  "comments.form.usernamePlaceholder": "Your name",
+  "comments.form.body": "Comment",
+  "comments.form.bodyPlaceholder": "Write your comment…",
+  "comments.form.submit": "Post comment",
+  "comments.form.submitting": "Posting…",
+  "comments.form.success": "Your comment has been submitted and is awaiting moderation.",
+  "comments.form.error": "Something went wrong, please try again.",
+  "comments.error": "Failed to load comments.",
+  "comments.disabled": "Comments are disabled for this post.",
+  "comments.replyTo": "Reply to {{username}}",
+  "preview.banner": "Admin preview — this post is not publicly visible"
 }

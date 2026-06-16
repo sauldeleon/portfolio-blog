@@ -83,6 +83,7 @@ const updatePostSchema = z.object({
   scheduledAt: z.string().nullable().optional(),
   seriesId: z.string().nullable().optional(),
   seriesOrder: z.number().int().nullable().optional(),
+  commentsEnabled: z.boolean().optional(),
   notify: z.boolean().optional(),
   seriesTitles: z
     .object({ en: z.string().optional(), es: z.string().optional() })

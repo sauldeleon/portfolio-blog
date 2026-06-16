@@ -37,6 +37,7 @@ export type PublicPost = {
   seriesOrder: number | null
   seriesTitle: string | null
   likes: number
+  commentsEnabled: boolean
   publishedAt: Date | null
   createdAt: Date
   updatedAt: Date
@@ -64,6 +65,7 @@ export type AdminPost = {
   updatedAt: Date
   deletedAt: Date | null
   previewToken: string | null
+  commentsEnabled: boolean
   titleEn: string | null
   slugEn: string | null
   titleEs: string | null
@@ -82,6 +84,7 @@ const publicFields = {
   seriesOrder: posts.seriesOrder,
   seriesTitle: seriesTranslations.title,
   likes: posts.likes,
+  commentsEnabled: posts.commentsEnabled,
   publishedAt: posts.publishedAt,
   createdAt: posts.createdAt,
   updatedAt: posts.updatedAt,
@@ -391,6 +394,7 @@ export async function getAllPosts(): Promise<AdminPost[]> {
     updated_at: Date
     deleted_at: Date | null
     preview_token: string | null
+    comments_enabled: boolean
     title_en: string | null
     slug_en: string | null
     title_es: string | null
@@ -403,7 +407,7 @@ export async function getAllPosts(): Promise<AdminPost[]> {
         p.id, p.category, p.tags, p.status,
         p.cover_image, p.cover_image_fit, p.series_id, p.series_order,
         p.scheduled_at, p.published_at, p.created_at, p.updated_at, p.deleted_at,
-        p.preview_token,
+        p.preview_token, p.comments_enabled,
         en_t.title AS title_en, en_t.slug AS slug_en,
         es_t.title AS title_es, es_t.slug AS slug_es
       FROM posts p
@@ -431,6 +435,7 @@ export async function getAllPosts(): Promise<AdminPost[]> {
     updatedAt: r.updated_at,
     deletedAt: r.deleted_at,
     previewToken: r.preview_token,
+    commentsEnabled: r.comments_enabled,
     titleEn: r.title_en,
     slugEn: r.slug_en,
     titleEs: r.title_es,
@@ -507,6 +512,17 @@ export async function getPostStatus(id: string): Promise<PostStatus | null> {
     .where(eq(posts.id, id))
     .limit(1)
   return row?.status ?? null
+}
+
+export async function getPostMeta(
+  id: string,
+): Promise<{ status: PostStatus; commentsEnabled: boolean } | null> {
+  const [row] = await db
+    .select({ status: posts.status, commentsEnabled: posts.commentsEnabled })
+    .from(posts)
+    .where(eq(posts.id, id))
+    .limit(1)
+  return row ?? null
 }
 
 export async function softDeletePost(id: string): Promise<void> {

@@ -1,0 +1,1 @@
+export { CommentsPageView } from './CommentsPageView'

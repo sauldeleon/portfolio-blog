@@ -43,6 +43,10 @@ import {
   StyledAutoRenderLabel,
   StyledBackLink,
   StyledContentTextarea,
+  StyledDraftPreviewCopyButton,
+  StyledDraftPreviewLabel,
+  StyledDraftPreviewLink,
+  StyledDraftPreviewRow,
   StyledEditEmbedButton,
   StyledEditorLayout,
   StyledEditorPane,
@@ -124,6 +128,7 @@ export interface PostEditorPost {
   seriesOrder: number | null
   scheduledAt: Date | null
   authorId: string | null
+  commentsEnabled: boolean
 }
 
 export type PostEditorSeries = {
@@ -217,6 +222,9 @@ export function PostEditor({
   const [scheduledAt, setScheduledAt] = useState<Date | null>(
     post?.post.scheduledAt ?? null,
   )
+  const [commentsEnabled, setCommentsEnabled] = useState(
+    post?.post.commentsEnabled ?? true,
+  )
   const [editAuthor, setEditAuthor] = useState(
     post ? (post.post.authorId ?? '') : (currentUserId ?? users[0]?.id ?? ''),
   )
@@ -244,6 +252,7 @@ export function PostEditor({
   }).success
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [urlCopied, setUrlCopied] = useState(false)
   const [isPickerOpen, setIsPickerOpen] = useState(false)
   const [isContentPickerOpen, setIsContentPickerOpen] = useState(false)
   const contentPickerCallbackRef = useRef<
@@ -417,6 +426,7 @@ export function PostEditor({
         seriesId: seriesIdValue,
         seriesOrder: seriesOrderValue,
         scheduledAt: scheduledAtValue,
+        commentsEnabled,
         ...(seriesTitlesValue ? { seriesTitles: seriesTitlesValue } : {}),
         translations,
       }
@@ -432,12 +442,32 @@ export function PostEditor({
       ...(seriesIdValue ? { seriesId: seriesIdValue } : {}),
       ...(seriesOrderValue != null ? { seriesOrder: seriesOrderValue } : {}),
       scheduledAt: scheduledAtValue,
+      commentsEnabled,
       ...(seriesTitlesValue ? { seriesTitles: seriesTitlesValue } : {}),
       translations,
     }
   }
 
   const previewAuthor = users.find((u) => u.id === editAuthor)?.name ?? ''
+
+  const draftPreviewPath =
+    post &&
+    status !== 'published' &&
+    post.post.postNumber != null &&
+    currentLocale.slug
+      ? `/${activeLocale}/blog/${post.post.postNumber}/${currentLocale.slug}`
+      : null
+
+  function handleCopyPreviewUrl() {
+    /* istanbul ignore next */
+    if (!draftPreviewPath) return
+    void navigator.clipboard
+      .writeText(window.location.origin + draftPreviewPath)
+      .then(() => {
+        setUrlCopied(true)
+        setTimeout(() => setUrlCopied(false), 2000)
+      })
+  }
 
   async function handleSave(
     targetStatus: PostStatus = status,
@@ -496,6 +526,29 @@ export function PostEditor({
               {t(`postEditor.status.${status}`)}
             </StyledStatusBadge>
           </StyledTitleRow>
+          {draftPreviewPath && (
+            <StyledDraftPreviewRow data-testid="draft-preview-row">
+              <StyledDraftPreviewLabel>
+                {t('postEditor.draftPreviewLabel')}
+              </StyledDraftPreviewLabel>
+              <StyledDraftPreviewLink
+                href={draftPreviewPath}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-testid="draft-preview-link"
+              >
+                {draftPreviewPath}
+              </StyledDraftPreviewLink>
+              <StyledDraftPreviewCopyButton
+                onClick={handleCopyPreviewUrl}
+                data-testid="draft-preview-copy-button"
+              >
+                {urlCopied
+                  ? t('postEditor.draftPreviewCopied')
+                  : t('postEditor.draftPreviewCopy')}
+              </StyledDraftPreviewCopyButton>
+            </StyledDraftPreviewRow>
+          )}
         </StyledHeaderLeft>
 
         <StyledActions>
@@ -738,6 +791,19 @@ export function PostEditor({
                   onChange={setScheduledAt}
                   placeholder={t('postEditor.fields.scheduledAtPlaceholder')}
                   data-testid="scheduled-at-picker"
+                />
+              </FieldGroup>
+
+              <FieldGroup>
+                <FieldLabel htmlFor="meta-comments-enabled">
+                  {t('postEditor.fields.commentsEnabled')}
+                </FieldLabel>
+                <input
+                  id="meta-comments-enabled"
+                  type="checkbox"
+                  checked={commentsEnabled}
+                  onChange={(e) => setCommentsEnabled(e.target.checked)}
+                  data-testid="comments-enabled-checkbox"
                 />
               </FieldGroup>
 

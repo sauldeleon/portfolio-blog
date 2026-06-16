@@ -44,6 +44,8 @@ jest.mock('@web/i18n/client', () => ({
         'posts.bulkArchiveConfirm': 'Archive selected posts?',
         'posts.bulkUnarchiveConfirm': 'Unarchive selected posts?',
         'posts.bulkDeleteConfirm': 'Permanently delete selected posts?',
+        'posts.commentsEnabled': 'Comments on',
+        'posts.commentsDisabled': 'Comments off',
         'posts.archiveDisabledPublished': 'Unpublish the post before archiving',
         'posts.empty': 'No posts found',
         'posts.newPost': 'New post',
@@ -113,6 +115,7 @@ const makePost = (overrides: Partial<AdminPost> = {}): AdminPost => ({
   slugEn: 'test-post',
   titleEs: 'Post de prueba',
   slugEs: 'post-de-prueba',
+  commentsEnabled: true,
   ...overrides,
 })
 
@@ -658,5 +661,54 @@ describe('PostTable', () => {
   it('renders a select-all checkbox in the header', () => {
     renderApp(<PostTable posts={[makePost()]} />)
     expect(screen.getByTestId('select-all-checkbox')).toBeInTheDocument()
+  })
+
+  it('renders comments toggle button showing Comments on when enabled', () => {
+    renderApp(<PostTable posts={[makePost({ commentsEnabled: true })]} />)
+    expect(screen.getByTestId('comments-toggle-button')).toHaveTextContent(
+      'Comments on',
+    )
+  })
+
+  it('renders comments toggle button showing Comments off when disabled', () => {
+    renderApp(<PostTable posts={[makePost({ commentsEnabled: false })]} />)
+    expect(screen.getByTestId('comments-toggle-button')).toHaveTextContent(
+      'Comments off',
+    )
+  })
+
+  it('clicking toggle calls PUT with commentsEnabled false when currently enabled', async () => {
+    const post = makePost({ id: 'tog123', commentsEnabled: true })
+    renderApp(<PostTable posts={[post]} />)
+    fireEvent.click(screen.getByTestId('comments-toggle-button'))
+    await waitFor(() => expect(axios.put).toHaveBeenCalled())
+    expect(axios.put).toHaveBeenCalledWith('/api/posts/tog123/', {
+      commentsEnabled: false,
+    })
+  })
+
+  it('clicking toggle calls PUT with commentsEnabled true when currently disabled', async () => {
+    const post = makePost({ id: 'tog456', commentsEnabled: false })
+    renderApp(<PostTable posts={[post]} />)
+    fireEvent.click(screen.getByTestId('comments-toggle-button'))
+    await waitFor(() => expect(axios.put).toHaveBeenCalled())
+    expect(axios.put).toHaveBeenCalledWith('/api/posts/tog456/', {
+      commentsEnabled: true,
+    })
+  })
+
+  it('toggle button updates label in UI after click and leaves other posts unchanged', async () => {
+    const post1 = makePost({ id: 'tog789', commentsEnabled: true })
+    const post2 = makePost({ id: 'other99', commentsEnabled: true })
+    renderApp(<PostTable posts={[post1, post2]} />)
+    fireEvent.click(screen.getAllByTestId('comments-toggle-button')[0])
+    await waitFor(() =>
+      expect(
+        screen.getAllByTestId('comments-toggle-button')[0],
+      ).toHaveTextContent('Comments off'),
+    )
+    expect(
+      screen.getAllByTestId('comments-toggle-button')[1],
+    ).toHaveTextContent('Comments on')
   })
 })

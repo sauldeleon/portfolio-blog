@@ -27,6 +27,7 @@ import {
   StyledButtonGroup,
   StyledCheckboxTd,
   StyledCheckboxTh,
+  StyledCommentsButton,
   StyledCount,
   StyledEditButton,
   StyledEmDash,
@@ -219,6 +220,19 @@ export function PostTable({ posts }: PostTableProps) {
       if (!old) return []
       return old.map((p) =>
         p.id === post.id ? { ...p, status: 'draft', publishedAt: null } : p,
+      )
+    })
+  }
+
+  async function handleToggleComments(e: React.MouseEvent, post: AdminPost) {
+    e.stopPropagation()
+    const next = !post.commentsEnabled
+    await axios.put(`/api/posts/${post.id}/`, { commentsEnabled: next })
+    queryClient.setQueryData<AdminPost[]>(QUERY_KEY, (old) => {
+      /* istanbul ignore next */
+      if (!old) return []
+      return old.map((p) =>
+        p.id === post.id ? { ...p, commentsEnabled: next } : p,
       )
     })
   }
@@ -603,6 +617,15 @@ export function PostTable({ posts }: PostTableProps) {
                         : t('posts.publish')}
                     </StyledPublishButton>
                   )}
+                  <StyledCommentsButton
+                    $enabled={post.commentsEnabled}
+                    onClick={(e) => void handleToggleComments(e, post)}
+                    data-testid="comments-toggle-button"
+                  >
+                    {post.commentsEnabled
+                      ? t('posts.commentsEnabled')
+                      : t('posts.commentsDisabled')}
+                  </StyledCommentsButton>
                   {post.status === 'archived' ? (
                     <>
                       <StyledArchiveButton

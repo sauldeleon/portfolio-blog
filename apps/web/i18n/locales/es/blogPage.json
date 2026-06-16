@@ -26,5 +26,19 @@
   "share.copyLink": "Copiar enlace",
   "share.copied": "¡Copiado!",
   "likeButton.like": "Me gusta este artículo",
-  "likeButton.liked": "¡Me gusta!"
+  "likeButton.liked": "¡Me gusta!",
+  "comments.title": "Comentarios",
+  "comments.empty": "Aún no hay comentarios. ¡Sé el primero!",
+  "comments.form.username": "Nombre",
+  "comments.form.usernamePlaceholder": "Tu nombre",
+  "comments.form.body": "Comentario",
+  "comments.form.bodyPlaceholder": "Escribe tu comentario…",
+  "comments.form.submit": "Publicar comentario",
+  "comments.form.submitting": "Publicando…",
+  "comments.form.success": "Tu comentario ha sido enviado y está pendiente de moderación.",
+  "comments.form.error": "Algo salió mal, por favor inténtalo de nuevo.",
+  "comments.error": "No se pudieron cargar los comentarios.",
+  "comments.disabled": "Los comentarios están desactivados para esta publicación.",
+  "comments.replyTo": "Responder a {{username}}",
+  "preview.banner": "Vista previa — esta publicación no es visible públicamente"
 }
