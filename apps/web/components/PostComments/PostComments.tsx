@@ -148,7 +148,7 @@ export function PostComments({
                 onClick={() => handleReply(comment.id, comment.username)}
                 data-testid="reply-button"
               >
-                ↳ reply
+                {t('comments.reply')}
               </StyledReplyButton>
 
               {comment.replies.length > 0 && (
@@ -182,7 +182,7 @@ export function PostComments({
                         onClick={() => handleReply(reply.id, reply.username)}
                         data-testid="reply-button"
                       >
-                        ↳ reply
+                        {t('comments.reply')}
                       </StyledReplyButton>
                     </StyledCommentItem>
                   ))}

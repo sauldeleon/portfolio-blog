@@ -11,9 +11,11 @@ jest.mock('axios', () => ({
 
 jest.mock('@web/i18n/client', () => ({
   useClientTranslation: jest.fn().mockReturnValue({
-    t: jest.fn((key: string, opts?: { username?: string }) =>
-      opts?.username ? `Reply to ${opts.username}` : key,
-    ),
+    t: jest.fn((key: string, opts?: { username?: string }) => {
+      if (opts?.username) return `Reply to ${opts.username}`
+      if (key === 'comments.reply') return '↳ Reply'
+      return key
+    }),
   }),
 }))
 

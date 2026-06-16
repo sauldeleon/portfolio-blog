@@ -8,6 +8,10 @@ jest.mock('next/navigation', () => ({
   redirect: mockRedirect,
 }))
 
+jest.mock('next/server', () => ({
+  connection: jest.fn().mockResolvedValue(undefined),
+}))
+
 const mockGetPostByNumber = jest.fn()
 const mockGetPublishedPosts = jest.fn()
 
