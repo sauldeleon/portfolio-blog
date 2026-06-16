@@ -3,15 +3,24 @@ import { notFound } from 'next/navigation'
 
 import { PostHero } from '@sdlgr/post-hero'
 
+import { PostComments } from '@web/components/PostComments'
+import { PostContent } from '@web/components/PostContent/PostContent'
+import { PreviewBanner } from '@web/components/PreviewBanner'
+import { auth } from '@web/lib/auth/config'
 import { getPostByPreviewToken } from '@web/lib/db/queries/posts'
 import { renderMDX } from '@web/lib/mdx/renderMDX'
 import { computeReadingTime } from '@web/utils/computeReadingTime'
+
+import { StyledPage } from './page.next.styles'
 
 interface RouteProps {
   params: Promise<{ token: string }>
 }
 
 export default async function PreviewPage({ params }: RouteProps) {
+  const session = await auth()
+  if (!session) return notFound()
+
   const { token } = await params
   const result = await getPostByPreviewToken(token)
   if (!result) return notFound()
@@ -30,8 +39,8 @@ export default async function PreviewPage({ params }: RouteProps) {
   if (!translation) return notFound()
 
   return (
-    <main>
-      <div data-testid="preview-banner">PREVIEW MODE</div>
+    <StyledPage>
+      <PreviewBanner label="Admin preview — this post is not publicly visible" />
       <PostHero
         title={translation.title}
         coverImagePublicId={post.coverImage}
@@ -41,7 +50,15 @@ export default async function PreviewPage({ params }: RouteProps) {
         readingTime={computeReadingTime(translation.content)}
         lng={lng}
       />
-      <article>{renderMDX(translation.content)}</article>
-    </main>
+      <PostContent>{renderMDX(translation.content)}</PostContent>
+      <PostComments
+        postId={post.id}
+        postTitle={translation.title}
+        postNumber={post.postNumber ?? 0}
+        postSlug={translation.slug}
+        lng={lng}
+        commentsEnabled={post.commentsEnabled}
+      />
+    </StyledPage>
   )
 }

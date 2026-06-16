@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+import React from 'react'
 
 import { PostHero } from '@sdlgr/post-hero'
 
@@ -20,6 +21,11 @@ jest.mock('@web/lib/db/queries/posts', () => ({
   getPostByPreviewToken: mockGetPostByPreviewToken,
 }))
 
+const mockAuth = jest.fn()
+jest.mock('@web/lib/auth/config', () => ({
+  auth: () => mockAuth(),
+}))
+
 jest.mock('@sdlgr/post-hero', () => {
   const React = require('react')
   return {
@@ -35,22 +41,49 @@ jest.mock('@web/lib/mdx/renderMDX', () => ({
   renderMDX: jest.fn().mockReturnValue(null),
 }))
 
+const mockPostComments = jest.fn()
+jest.mock('@web/components/PostComments', () => ({
+  PostComments: (...args: unknown[]) => mockPostComments(...args),
+}))
+
+jest.mock('@web/components/PreviewBanner', () => ({
+  PreviewBanner: ({ label }: { label: string }) => (
+    <div data-testid="preview-banner">{label}</div>
+  ),
+}))
+
+jest.mock('@web/components/PostContent/PostContent', () => ({
+  PostContent: ({ children }: { children: React.ReactNode }) => (
+    <article data-testid="post-content">{children}</article>
+  ),
+}))
+
+jest.mock('./page.next.styles', () => ({
+  StyledPage: ({ children }: { children: React.ReactNode }) => (
+    <main data-testid="styled-page">{children}</main>
+  ),
+}))
+
 const mockPost = {
   id: '01ABC',
+  postNumber: 7,
   coverImage: 'blog/cover',
   category: 'Tech',
   authorId: 'user-1',
+  commentsEnabled: true,
 }
 
 const mockTranslations = [
   {
     locale: 'en',
     title: 'English Title',
+    slug: 'english-title',
     content: 'English content',
   },
   {
     locale: 'es',
     title: 'Spanish Title',
+    slug: 'spanish-title',
     content: 'Spanish content',
   },
 ]
@@ -64,6 +97,16 @@ function makeHeadersList(acceptLanguage: string) {
 describe('blog/preview/[token] - PreviewPage', () => {
   beforeEach(() => {
     jest.clearAllMocks()
+    mockPostComments.mockReturnValue(<div data-testid="post-comments" />)
+    mockAuth.mockResolvedValue({ user: { role: 'admin' } })
+  })
+
+  it('calls notFound when unauthenticated', async () => {
+    mockAuth.mockResolvedValue(null)
+    const { default: PreviewPage } = require('./page.next')
+    await PreviewPage({ params: Promise.resolve({ token: 'valid-token' }) })
+    expect(mockNotFound).toHaveBeenCalledTimes(1)
+    expect(mockGetPostByPreviewToken).not.toHaveBeenCalled()
   })
 
   it('calls notFound when token is invalid (null result)', async () => {
@@ -117,7 +160,7 @@ describe('blog/preview/[token] - PreviewPage', () => {
     })
     render(ui)
     expect(screen.getByTestId('preview-banner')).toHaveTextContent(
-      'PREVIEW MODE',
+      'Admin preview — this post is not publicly visible',
     )
   })
 
@@ -174,6 +217,49 @@ describe('blog/preview/[token] - PreviewPage', () => {
     render(ui)
     expect(PostHero).toHaveBeenCalledWith(
       expect.objectContaining({ title: 'French Title' }),
+      undefined,
+    )
+  })
+
+  it('renders PostComments with correct props', async () => {
+    mockGetPostByPreviewToken.mockResolvedValue({
+      post: mockPost,
+      translations: mockTranslations,
+      authorName: 'Jane Doe',
+    })
+    mockHeaders.mockResolvedValue(makeHeadersList('en'))
+    const { default: PreviewPage } = require('./page.next')
+    const ui = await PreviewPage({
+      params: Promise.resolve({ token: 'valid-token' }),
+    })
+    render(ui)
+    expect(screen.getByTestId('post-comments')).toBeInTheDocument()
+    expect(mockPostComments).toHaveBeenCalledWith(
+      expect.objectContaining({
+        postId: '01ABC',
+        postNumber: 7,
+        postSlug: 'english-title',
+        lng: 'en',
+        commentsEnabled: true,
+      }),
+      undefined,
+    )
+  })
+
+  it('falls back to 0 when postNumber is null', async () => {
+    mockGetPostByPreviewToken.mockResolvedValue({
+      post: { ...mockPost, postNumber: null },
+      translations: mockTranslations,
+      authorName: 'Jane Doe',
+    })
+    mockHeaders.mockResolvedValue(makeHeadersList('en'))
+    const { default: PreviewPage } = require('./page.next')
+    const ui = await PreviewPage({
+      params: Promise.resolve({ token: 'valid-token' }),
+    })
+    render(ui)
+    expect(mockPostComments).toHaveBeenCalledWith(
+      expect.objectContaining({ postNumber: 0 }),
       undefined,
     )
   })

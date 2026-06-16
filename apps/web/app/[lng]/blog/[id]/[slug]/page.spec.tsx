@@ -8,10 +8,6 @@ jest.mock('next/navigation', () => ({
   redirect: mockRedirect,
 }))
 
-jest.mock('next/server', () => ({
-  connection: jest.fn().mockResolvedValue(undefined),
-}))
-
 const mockGetPostByNumber = jest.fn()
 const mockGetPublishedPosts = jest.fn()
 
@@ -114,17 +110,6 @@ jest.mock('@web/components/PostLikeButton', () => ({
   PostLikeButton: () => <div data-testid="post-like-button" />,
 }))
 
-jest.mock('@web/components/PreviewBanner', () => ({
-  PreviewBanner: ({ label }: { label: string }) => (
-    <div data-testid="preview-banner">{label}</div>
-  ),
-}))
-
-const mockAuth = jest.fn()
-jest.mock('@web/lib/auth/config', () => ({
-  auth: () => mockAuth(),
-}))
-
 const publishedPost = {
   id: '01JXYZ',
   postNumber: 1,
@@ -152,7 +137,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
     jest.clearAllMocks()
     mockPostHero.mockReturnValue(<div data-testid="post-hero" />)
     mockPostComments.mockReturnValue(<div data-testid="post-comments" />)
-    mockAuth.mockResolvedValue(null)
     mockGetServerTranslation.mockResolvedValue({ t: (key: string) => key })
     mockGetCategoryTranslations.mockResolvedValue([
       {
@@ -197,27 +181,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
       params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
     })
     expect(mockNotFound).toHaveBeenCalledTimes(1)
-  })
-
-  it('shows PreviewBanner when admin views a draft post', async () => {
-    mockAuth.mockResolvedValue({ user: { role: 'admin' } })
-    mockGetPostByNumber.mockResolvedValue({ ...publishedPost, status: 'draft' })
-    const { default: BlogPostPage } = require('./page.next')
-    const ui = await BlogPostPage({
-      params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
-    })
-    render(ui)
-    expect(screen.getByTestId('preview-banner')).toBeInTheDocument()
-  })
-
-  it('does not show PreviewBanner for published post', async () => {
-    mockGetPostByNumber.mockResolvedValue(publishedPost)
-    const { default: BlogPostPage } = require('./page.next')
-    const ui = await BlogPostPage({
-      params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
-    })
-    render(ui)
-    expect(screen.queryByTestId('preview-banner')).not.toBeInTheDocument()
   })
 
   it('calls redirect when slug does not match', async () => {

@@ -457,6 +457,7 @@ const mockExistingPost: PostEditorProps['post'] = {
     scheduledAt: null,
     authorId: 'user-1',
     commentsEnabled: true,
+    previewToken: 'preview-tok',
   },
   translations: [
     {

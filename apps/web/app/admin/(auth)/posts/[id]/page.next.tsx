@@ -50,6 +50,8 @@ export default async function EditPostPage({ params }: EditPostPageProps) {
       seriesOrder: postData.post.seriesOrder,
       scheduledAt: postData.post.scheduledAt,
       authorId: postData.post.authorId,
+      commentsEnabled: postData.post.commentsEnabled,
+      previewToken: postData.post.previewToken,
     },
     translations: postData.translations.map((t) => ({
       locale: t.locale,
