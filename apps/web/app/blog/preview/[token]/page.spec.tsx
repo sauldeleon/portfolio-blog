@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+import React from 'react'
 
 import { PostHero } from '@sdlgr/post-hero'
 
@@ -34,6 +35,13 @@ jest.mock('@sdlgr/post-hero', () => {
 jest.mock('@web/lib/mdx/renderMDX', () => ({
   renderMDX: jest.fn().mockReturnValue(null),
 }))
+
+jest.mock(
+  '@web/components/StyledComponentsRegistry/StyledComponentsRegistry',
+  () =>
+    ({ children }: { children: React.ReactNode }) =>
+      children,
+)
 
 const mockPost = {
   id: '01ABC',

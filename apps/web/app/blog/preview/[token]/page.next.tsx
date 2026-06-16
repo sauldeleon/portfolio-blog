@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 
 import { PostHero } from '@sdlgr/post-hero'
 
+import StyledComponentsRegistry from '@web/components/StyledComponentsRegistry/StyledComponentsRegistry'
 import { getPostByPreviewToken } from '@web/lib/db/queries/posts'
 import { renderMDX } from '@web/lib/mdx/renderMDX'
 import { computeReadingTime } from '@web/utils/computeReadingTime'
@@ -30,18 +31,20 @@ export default async function PreviewPage({ params }: RouteProps) {
   if (!translation) return notFound()
 
   return (
-    <main>
-      <div data-testid="preview-banner">PREVIEW MODE</div>
-      <PostHero
-        title={translation.title}
-        coverImagePublicId={post.coverImage}
-        category={post.category}
-        author={authorName}
-        publishedAt={null}
-        readingTime={computeReadingTime(translation.content)}
-        lng={lng}
-      />
-      <article>{renderMDX(translation.content)}</article>
-    </main>
+    <StyledComponentsRegistry>
+      <main>
+        <div data-testid="preview-banner">PREVIEW MODE</div>
+        <PostHero
+          title={translation.title}
+          coverImagePublicId={post.coverImage}
+          category={post.category}
+          author={authorName}
+          publishedAt={null}
+          readingTime={computeReadingTime(translation.content)}
+          lng={lng}
+        />
+        <article>{renderMDX(translation.content)}</article>
+      </main>
+    </StyledComponentsRegistry>
   )
 }
