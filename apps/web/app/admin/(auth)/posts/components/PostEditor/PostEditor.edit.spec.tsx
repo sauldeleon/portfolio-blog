@@ -350,6 +350,8 @@ const mockExistingPost: PostEditorProps['post'] = {
     seriesOrder: 2,
     scheduledAt: null,
     authorId: 'user-1',
+    commentsEnabled: true,
+    previewToken: 'preview-tok',
   },
   translations: [
     {
@@ -1016,7 +1018,7 @@ describe('PostEditor', () => {
       expect(screen.getByTestId('draft-preview-row')).toBeInTheDocument()
       expect(screen.getByTestId('draft-preview-link')).toHaveAttribute(
         'href',
-        '/en/blog/7/my-post',
+        '/blog/preview/preview-tok',
       )
     })
 
@@ -1034,12 +1036,12 @@ describe('PostEditor', () => {
       expect(screen.queryByTestId('draft-preview-row')).not.toBeInTheDocument()
     })
 
-    it('does not show draft preview row when postNumber is null', () => {
+    it('does not show draft preview row when previewToken is null', () => {
       renderApp(
         <PostEditor
           post={{
             ...mockExistingPost,
-            post: { ...mockExistingPost.post, postNumber: null },
+            post: { ...mockExistingPost.post, previewToken: null },
           }}
           categories={mockCategories}
           users={mockUsers}
@@ -1060,7 +1062,7 @@ describe('PostEditor', () => {
       fireEvent.click(screen.getByTestId('draft-preview-copy-button'))
       await waitFor(() => {
         expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
-          expect.stringContaining('/en/blog/7/my-post'),
+          expect.stringContaining('/blog/preview/preview-tok'),
         )
       })
       await waitFor(() => {

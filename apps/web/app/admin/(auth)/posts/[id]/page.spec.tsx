@@ -81,6 +81,7 @@ const mockPostData = {
     seriesId: null,
     seriesOrder: null,
     authorId: 'user-1',
+    commentsEnabled: true,
     scheduledAt: null,
     publishedAt: null,
     createdAt: new Date('2024-01-01'),

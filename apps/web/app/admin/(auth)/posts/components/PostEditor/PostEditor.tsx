@@ -129,6 +129,7 @@ export interface PostEditorPost {
   scheduledAt: Date | null
   authorId: string | null
   commentsEnabled: boolean
+  previewToken: string | null
 }
 
 export type PostEditorSeries = {
@@ -451,11 +452,8 @@ export function PostEditor({
   const previewAuthor = users.find((u) => u.id === editAuthor)?.name ?? ''
 
   const draftPreviewPath =
-    post &&
-    status !== 'published' &&
-    post.post.postNumber != null &&
-    currentLocale.slug
-      ? `/${activeLocale}/blog/${post.post.postNumber}/${currentLocale.slug}`
+    post && status !== 'published' && post.post.previewToken
+      ? `/blog/preview/${post.post.previewToken}`
       : null
 
   function handleCopyPreviewUrl() {
