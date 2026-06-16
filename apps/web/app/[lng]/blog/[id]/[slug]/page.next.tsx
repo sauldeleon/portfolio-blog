@@ -1,6 +1,7 @@
 import { format } from 'date-fns'
 import { Locale as DateLocale, enUS, es } from 'date-fns/locale'
 import { notFound, redirect } from 'next/navigation'
+import { connection } from 'next/server'
 
 import { PostHero } from '@sdlgr/post-hero'
 import { TableOfContents } from '@sdlgr/table-of-contents'
@@ -149,6 +150,7 @@ export default async function BlogPostPage({ params }: RouteProps) {
   if (!post) return notFound()
   const isPreview = post.status !== 'published'
   if (isPreview) {
+    await connection()
     const session = await auth()
     if (!session) return notFound()
   }

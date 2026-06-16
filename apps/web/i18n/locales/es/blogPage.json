@@ -39,6 +39,7 @@
   "comments.form.error": "Algo salió mal, por favor inténtalo de nuevo.",
   "comments.error": "No se pudieron cargar los comentarios.",
   "comments.disabled": "Los comentarios están desactivados para esta publicación.",
+  "comments.reply": "↳ Responder",
   "comments.replyTo": "Responder a {{username}}",
   "preview.banner": "Vista previa — esta publicación no es visible públicamente"
 }
