@@ -35,6 +35,7 @@ import { GpxMapModal } from '../GpxMapModal'
 import { ImageInsertModal } from '../ImageInsertModal'
 import { ImagePicker } from '../ImagePicker'
 import { MarkdownPreview } from '../MarkdownPreview'
+import { SlideshowInsertModal } from '../SlideshowInsertModal'
 import { CoverImageInput } from './CoverImageInput'
 import { PostCardPreview } from './PostCardPreview'
 import {
@@ -42,6 +43,7 @@ import {
   StyledArchiveButton,
   StyledAutoRenderLabel,
   StyledBackLink,
+  StyledCheckboxFieldLabel,
   StyledContentTextarea,
   StyledDraftPreviewCopyButton,
   StyledDraftPreviewLabel,
@@ -82,6 +84,7 @@ import type {
   ParsedEmbed,
   ParsedGpx,
   ParsedImage,
+  ParsedSlideshow,
 } from './parseEmbedBlock'
 import { detectEmbedAtCursor } from './parseEmbedBlock'
 
@@ -274,6 +277,10 @@ export function PostEditor({
   const [gpxInitialValues, setGpxInitialValues] = useState<ParsedGpx | null>(
     null,
   )
+  const [isSlideshowModalOpen, setIsSlideshowModalOpen] = useState(false)
+  const [slideshowModalKey, setSlideshowModalKey] = useState(0)
+  const [slideshowInitialValues, setSlideshowInitialValues] =
+    useState<ParsedSlideshow | null>(null)
   const [previewTab, setPreviewTab] = useState<
     'post' | 'post-mobile' | 'hero' | 'card' | 'toc'
   >('post')
@@ -351,6 +358,10 @@ export function PostEditor({
       setEmbedInitialValues(editingEmbed.parsed as ParsedEmbed)
       setEmbedModalKey((k) => k + 1)
       setIsEmbedInsertModalOpen(true)
+    } else if (editingEmbed.type === 'slideshow') {
+      setSlideshowInitialValues(editingEmbed.parsed as ParsedSlideshow)
+      setSlideshowModalKey((k) => k + 1)
+      setIsSlideshowModalOpen(true)
     } else {
       setGpxInitialValues(editingEmbed.parsed as ParsedGpx)
       setGpxModalKey((k) => k + 1)
@@ -793,19 +804,6 @@ export function PostEditor({
               </FieldGroup>
 
               <FieldGroup>
-                <FieldLabel htmlFor="meta-comments-enabled">
-                  {t('postEditor.fields.commentsEnabled')}
-                </FieldLabel>
-                <input
-                  id="meta-comments-enabled"
-                  type="checkbox"
-                  checked={commentsEnabled}
-                  onChange={(e) => setCommentsEnabled(e.target.checked)}
-                  data-testid="comments-enabled-checkbox"
-                />
-              </FieldGroup>
-
-              <FieldGroup>
                 <FieldLabel htmlFor="meta-cover-image-fit">
                   {t('postEditor.fields.coverImageFit')}
                 </FieldLabel>
@@ -852,6 +850,17 @@ export function PostEditor({
                   />
                 )}
               </FieldGroup>
+
+              <StyledCheckboxFieldLabel>
+                <input
+                  id="meta-comments-enabled"
+                  type="checkbox"
+                  checked={commentsEnabled}
+                  onChange={(e) => setCommentsEnabled(e.target.checked)}
+                  data-testid="comments-enabled-checkbox"
+                />
+                {t('postEditor.fields.commentsEnabled')}
+              </StyledCheckboxFieldLabel>
             </StyledMetaGrid>
           </StyledMetadataSection>
 
@@ -895,6 +904,18 @@ export function PostEditor({
                 data-testid="open-gpx-modal-button"
               >
                 Insert GPX Map
+              </StyledImagePickerButton>
+              <StyledImagePickerButton
+                type="button"
+                onClick={() => {
+                  setEditingEmbed(null)
+                  setSlideshowInitialValues(null)
+                  setSlideshowModalKey((k) => k + 1)
+                  setIsSlideshowModalOpen(true)
+                }}
+                data-testid="open-slideshow-modal-button"
+              >
+                Insert Slideshow
               </StyledImagePickerButton>
             </StyledToolbarRow>
             <StyledTextareaWrapper>
@@ -1145,6 +1166,33 @@ export function PostEditor({
         onCancel={() => {
           setIsGpxModalOpen(false)
           setGpxInitialValues(null)
+        }}
+      />
+      <SlideshowInsertModal
+        key={`slideshow-${slideshowModalKey}`}
+        isOpen={isSlideshowModalOpen}
+        initialValues={slideshowInitialValues}
+        onInsert={(markdown) => {
+          if (editingEmbed?.type === 'slideshow') {
+            replaceBlock(
+              editingEmbed.blockStart,
+              editingEmbed.blockEnd,
+              markdown,
+            )
+          } else {
+            insertAtCursor(markdown)
+          }
+          setIsSlideshowModalOpen(false)
+          setSlideshowInitialValues(null)
+        }}
+        onCancel={() => {
+          setIsSlideshowModalOpen(false)
+          setSlideshowInitialValues(null)
+        }}
+        pickerOpen={isContentPickerOpen}
+        onRequestImagePick={(onPicked) => {
+          contentPickerCallbackRef.current = onPicked
+          setIsContentPickerOpen(true)
         }}
       />
       <PublishNotifyModal

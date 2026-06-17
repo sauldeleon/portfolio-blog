@@ -10,6 +10,7 @@ import { CodeBlock } from '@sdlgr/code-block'
 import { MdxTable } from '@web/components/PostContent/MdxTable'
 import { PostContentEmbed } from '@web/components/PostContent/PostContentEmbed'
 import { PostContentImage } from '@web/components/PostContent/PostContentImage'
+import { PostContentSlideshow } from '@web/components/PostContent/PostContentSlideshow'
 
 import { serializePreview } from '../../actions/serializePreview'
 import { StyledLoading, StyledPreviewWrapper } from './MarkdownPreview.styles'
@@ -44,6 +45,7 @@ const MDX_COMPONENTS = {
   pre: PreCodeBlock,
   img: PostContentImage,
   Embed: PostContentEmbed,
+  Slideshow: PostContentSlideshow,
   h1: H1AsH2,
   table: TableComponent,
 }

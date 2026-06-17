@@ -41,10 +41,22 @@ export interface ParsedGpx {
   mappingsByTrack: Record<number, Array<{ name: string; imageUrl: string }>>
 }
 
+export type ParsedSlideshowSlide = ParsedImage
+
+export interface ParsedSlideshow {
+  slides: ParsedSlideshowSlide[]
+}
+
 export type DetectedEmbed =
   | { type: 'image'; blockStart: number; blockEnd: number; parsed: ParsedImage }
   | { type: 'embed'; blockStart: number; blockEnd: number; parsed: ParsedEmbed }
   | { type: 'gpx'; blockStart: number; blockEnd: number; parsed: ParsedGpx }
+  | {
+      type: 'slideshow'
+      blockStart: number
+      blockEnd: number
+      parsed: ParsedSlideshow
+    }
 
 const EMBED_TYPES: EmbedType[] = [
   'youtube',
@@ -193,24 +205,11 @@ export function detectEmbedAtCursor(
   content: string,
   pos: number,
 ): DetectedEmbed | null {
-  // Image blocks: ![params](url)
-  const imageRe = /!\[([^\]]*)\]\(([^)]+)\)/g
   let m: RegExpExecArray | null
-  while ((m = imageRe.exec(content)) !== null) {
-    const { index } = m
-    const blockEnd = index + m[0].length
-    if (pos >= index && pos <= blockEnd) {
-      const { start, end } = adjustBounds(content, index, blockEnd)
-      return {
-        type: 'image',
-        blockStart: start,
-        blockEnd: end,
-        parsed: { url: m[2], ...parseImageParams(m[1]) },
-      }
-    }
-  }
 
-  // Code fence blocks: ```type\n...\n```
+  // Code fence blocks first: ```type\n...\n```
+  // Must run before image check so that ![...](url) lines inside fences
+  // are not mistakenly detected as standalone images.
   const fenceRe = /```([a-z0-9-]+)\n([\s\S]*?)```/g
   while ((m = fenceRe.exec(content)) !== null) {
     const { index } = m
@@ -230,6 +229,21 @@ export function detectEmbedAtCursor(
         }
       }
 
+      if (fenceType === 'slideshow') {
+        const slideRe = /!\[([^\]]*)\]\(([^)]+)\)/g
+        const slides: ParsedSlideshowSlide[] = []
+        let sm: RegExpExecArray | null
+        while ((sm = slideRe.exec(body)) !== null) {
+          slides.push({ url: sm[2], ...parseImageParams(sm[1]) })
+        }
+        return {
+          type: 'slideshow',
+          blockStart: start,
+          blockEnd: end,
+          parsed: { slides },
+        }
+      }
+
       if ((EMBED_TYPES as string[]).includes(fenceType)) {
         return {
           type: 'embed',
@@ -237,6 +251,22 @@ export function detectEmbedAtCursor(
           blockEnd: end,
           parsed: { type: fenceType as EmbedType, url: body },
         }
+      }
+    }
+  }
+
+  // Standalone image blocks: ![params](url)
+  const imageRe = /!\[([^\]]*)\]\(([^)]+)\)/g
+  while ((m = imageRe.exec(content)) !== null) {
+    const { index } = m
+    const blockEnd = index + m[0].length
+    if (pos >= index && pos <= blockEnd) {
+      const { start, end } = adjustBounds(content, index, blockEnd)
+      return {
+        type: 'image',
+        blockStart: start,
+        blockEnd: end,
+        parsed: { url: m[2], ...parseImageParams(m[1]) },
       }
     }
   }

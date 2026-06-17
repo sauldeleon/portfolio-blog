@@ -244,9 +244,17 @@ export function ImagePicker({
     }, 300)
   }
 
-  const displayImages = [...images].sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-  )
+  const seen = new Set<string>()
+  const displayImages = images
+    .filter((img) => {
+      if (seen.has(img.publicId)) return false
+      seen.add(img.publicId)
+      return true
+    })
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    )
 
   return (
     <StyledSidebar

@@ -669,6 +669,23 @@ describe('ImagePicker', () => {
     )
   })
 
+  it('deduplicates images with the same publicId in the display list', async () => {
+    jest.spyOn(axios, 'get').mockResolvedValue({
+      data: {
+        images: [mockImages[0], mockImages[1], mockImages[0]],
+        nextCursor: undefined,
+      },
+    })
+
+    renderApp(
+      <ImagePicker open={true} onClose={mockOnClose} onPick={mockOnPick} />,
+    )
+
+    await waitFor(() =>
+      expect(screen.getAllByTestId('image-picker-item')).toHaveLength(2),
+    )
+  })
+
   it('disconnects IntersectionObserver on unmount', async () => {
     const { unmount } = renderApp(
       <ImagePicker open={true} onClose={mockOnClose} onPick={mockOnPick} />,

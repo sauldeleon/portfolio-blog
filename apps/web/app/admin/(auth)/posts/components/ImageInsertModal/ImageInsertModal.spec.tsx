@@ -6,6 +6,33 @@ import type { CloudinaryImage } from '@web/lib/cloudinary/images'
 
 import { ImageInsertModal, buildImageMarkdown } from './ImageInsertModal'
 
+jest.mock('@sdlgr/select', () => ({
+  Select: ({
+    value,
+    onChange,
+    'data-testid': testId,
+    isSearchable,
+    isClearable: _isClearable,
+  }: {
+    value: string
+    onChange: (v: string) => void
+    'data-testid'?: string
+    isSearchable?: boolean
+    isClearable?: boolean
+  }) => {
+    if (isSearchable) {
+      return (
+        <input
+          data-testid={testId}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+        />
+      )
+    }
+    return null
+  },
+}))
+
 const mockPickedImage: CloudinaryImage = {
   url: 'https://cdn.com/photo.jpg',
   publicId: 'photo',
@@ -684,7 +711,7 @@ describe('ImageInsertModal', () => {
     pickImage(onRequestImagePick)
     fireEvent.click(screen.getByTestId('photo-meta-checkbox'))
     fireEvent.change(screen.getByTestId('photo-focal-length-input'), {
-      target: { value: '50mm' },
+      target: { value: '50' },
     })
     fireEvent.click(screen.getByTestId('image-modal-insert'))
     expect(onInsert).toHaveBeenCalledWith(
@@ -735,7 +762,7 @@ describe('ImageInsertModal', () => {
       target: { value: '400' },
     })
     fireEvent.change(screen.getByTestId('photo-focal-length-input'), {
-      target: { value: '50mm' },
+      target: { value: '50' },
     })
     fireEvent.change(screen.getByTestId('photo-panoramic-count-input'), {
       target: { value: '12' },
@@ -840,7 +867,7 @@ describe('ImageInsertModal initialValues', () => {
     expect(screen.getByTestId('photo-iso-input')).toHaveValue('400')
     expect(screen.getByTestId('photo-aperture-input')).toHaveValue('f/2.8')
     expect(screen.getByTestId('photo-exposure-input')).toHaveValue('1/250')
-    expect(screen.getByTestId('photo-focal-length-input')).toHaveValue('50mm')
+    expect(screen.getByTestId('photo-focal-length-input')).toHaveValue(50)
     expect(screen.getByTestId('photo-panoramic-count-input')).toHaveValue('12')
   })
 
@@ -865,7 +892,7 @@ describe('ImageInsertModal initialValues', () => {
       />,
     )
     expect(screen.getByTestId('photo-meta-checkbox')).toBeChecked()
-    expect(screen.getByTestId('photo-focal-length-input')).toHaveValue('35mm')
+    expect(screen.getByTestId('photo-focal-length-input')).toHaveValue(35)
   })
 
   it('enables photo meta when only panoramicCount provided', () => {

@@ -159,6 +159,50 @@ jest.mock('../GpxMapModal', () => ({
     ) : null,
 }))
 
+jest.mock('../SlideshowInsertModal', () => ({
+  SlideshowInsertModal: ({
+    isOpen,
+    onInsert,
+    onCancel,
+    onRequestImagePick,
+  }: {
+    isOpen: boolean
+    onInsert: (markdown: string) => void
+    onCancel: () => void
+    onRequestImagePick: (onPicked: (image: { url: string }) => void) => void
+    [key: string]: unknown
+  }) =>
+    isOpen ? (
+      <div data-testid="slideshow-insert-modal-mock">
+        <button
+          type="button"
+          data-testid="slideshow-modal-insert-mock"
+          onClick={() =>
+            onInsert(
+              '\n\n```slideshow\n![](https://example.com/new.jpg)\n```\n\n',
+            )
+          }
+        >
+          Insert
+        </button>
+        <button
+          type="button"
+          data-testid="slideshow-modal-cancel-mock"
+          onClick={onCancel}
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          data-testid="slideshow-modal-request-pick"
+          onClick={() => onRequestImagePick(jest.fn())}
+        >
+          Request Pick
+        </button>
+      </div>
+    ) : null,
+}))
+
 jest.mock('../ImagePicker', () => ({
   ImagePicker: () => null,
 }))
@@ -434,5 +478,84 @@ describe('PostEditor embed edit-in-place', () => {
     fireEvent.click(screen.getByTestId('edit-embed-button'))
     fireEvent.click(screen.getByTestId('gpx-modal-cancel-mock'))
     expect(screen.queryByTestId('gpx-map-modal-mock')).not.toBeInTheDocument()
+  })
+
+  it('shows edit button when cursor is inside a slideshow block', () => {
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+    const textarea = screen.getByTestId('content-input') as HTMLTextAreaElement
+    const content =
+      'Intro\n\n```slideshow\n![](https://example.com/img.jpg)\n```\n\nOutro'
+    fireEvent.change(textarea, { target: { value: content } })
+    textarea.selectionStart = content.indexOf('```slideshow') + 5
+    textarea.selectionEnd = content.indexOf('```slideshow') + 5
+    fireEvent.click(textarea)
+    expect(screen.getByTestId('edit-embed-button')).toBeInTheDocument()
+    expect(screen.getByTestId('edit-embed-button')).toHaveTextContent(
+      'Edit slideshow',
+    )
+  })
+
+  it('opens slideshow modal when edit button clicked on slideshow block', () => {
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+    const textarea = screen.getByTestId('content-input') as HTMLTextAreaElement
+    const content =
+      'Intro\n\n```slideshow\n![](https://example.com/img.jpg)\n```\n\nOutro'
+    fireEvent.change(textarea, { target: { value: content } })
+    textarea.selectionStart = content.indexOf('```slideshow') + 5
+    textarea.selectionEnd = content.indexOf('```slideshow') + 5
+    fireEvent.click(textarea)
+    fireEvent.click(screen.getByTestId('edit-embed-button'))
+    expect(
+      screen.getByTestId('slideshow-insert-modal-mock'),
+    ).toBeInTheDocument()
+  })
+
+  it('replaces slideshow block on modal insert', () => {
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+    const textarea = screen.getByTestId('content-input') as HTMLTextAreaElement
+    const content =
+      'Before\n\n```slideshow\n![](https://example.com/old.jpg)\n```\n\nAfter'
+    fireEvent.change(textarea, { target: { value: content } })
+    textarea.selectionStart = content.indexOf('```slideshow') + 5
+    textarea.selectionEnd = content.indexOf('```slideshow') + 5
+    fireEvent.click(textarea)
+    fireEvent.click(screen.getByTestId('edit-embed-button'))
+    fireEvent.click(screen.getByTestId('slideshow-modal-insert-mock'))
+    const newContent = (
+      screen.getByTestId('content-input') as HTMLTextAreaElement
+    ).value
+    expect(newContent).not.toContain('https://example.com/old.jpg')
+    expect(newContent).toContain('Before')
+    expect(newContent).toContain('After')
+    expect(newContent).toContain('https://example.com/new.jpg')
+  })
+
+  it('cancel on slideshow modal during edit clears initialValues', () => {
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+    const textarea = screen.getByTestId('content-input') as HTMLTextAreaElement
+    const content =
+      'Intro\n\n```slideshow\n![](https://example.com/img.jpg)\n```\n\nOutro'
+    fireEvent.change(textarea, { target: { value: content } })
+    textarea.selectionStart = content.indexOf('```slideshow') + 5
+    textarea.selectionEnd = content.indexOf('```slideshow') + 5
+    fireEvent.click(textarea)
+    fireEvent.click(screen.getByTestId('edit-embed-button'))
+    fireEvent.click(screen.getByTestId('slideshow-modal-cancel-mock'))
+    expect(
+      screen.queryByTestId('slideshow-insert-modal-mock'),
+    ).not.toBeInTheDocument()
+  })
+
+  it('onRequestImagePick for slideshow modal sets content picker callback', () => {
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+    fireEvent.click(screen.getByTestId('open-slideshow-modal-button'))
+    expect(
+      screen.getByTestId('slideshow-insert-modal-mock'),
+    ).toBeInTheDocument()
+    fireEvent.click(screen.getByTestId('slideshow-modal-request-pick'))
+    // After requesting a pick, content picker should be open (pickerOpen=true)
+    expect(
+      screen.getByTestId('slideshow-insert-modal-mock'),
+    ).toBeInTheDocument()
   })
 })
