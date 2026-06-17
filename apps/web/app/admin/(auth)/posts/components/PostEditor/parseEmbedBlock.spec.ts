@@ -424,6 +424,67 @@ describe('detectEmbedAtCursor', () => {
     })
   })
 
+  describe('slideshow blocks', () => {
+    const slideshowContent =
+      '\n\n```slideshow\n![caption=Sunset&alt=A sunset photo&photo-iso=400&photo-aperture=f/2.8&photo-exposure=1/250&photo-focal-length=50mm&photo-panoramic-count=3](https://example.com/img1.jpg)\n![](https://example.com/img2.jpg)\n```\n\n'
+
+    it('detects a slideshow block when cursor is inside', () => {
+      const fenceStart = slideshowContent.indexOf('```slideshow')
+      const result = detectEmbedAtCursor(slideshowContent, fenceStart + 5)
+      expect(result).not.toBeNull()
+      expect(result?.type).toBe('slideshow')
+    })
+
+    it('parses slide URL from the block', () => {
+      const fenceStart = slideshowContent.indexOf('```slideshow')
+      const result = detectEmbedAtCursor(slideshowContent, fenceStart + 5)
+      if (result?.type !== 'slideshow') throw new Error('expected slideshow')
+      expect(result.parsed.slides).toHaveLength(2)
+      expect(result.parsed.slides[0].url).toBe('https://example.com/img1.jpg')
+      expect(result.parsed.slides[1].url).toBe('https://example.com/img2.jpg')
+    })
+
+    it('parses slide with photo metadata', () => {
+      const fenceStart = slideshowContent.indexOf('```slideshow')
+      const result = detectEmbedAtCursor(slideshowContent, fenceStart + 5)
+      if (result?.type !== 'slideshow') throw new Error('expected slideshow')
+      const slide = result.parsed.slides[0]
+      expect(slide.photoMeta?.iso).toBe('400')
+      expect(slide.photoMeta?.aperture).toBe('f/2.8')
+      expect(slide.photoMeta?.exposure).toBe('1/250')
+      expect(slide.photoMeta?.focalLength).toBe('50mm')
+      expect(slide.photoMeta?.panoramicCount).toBe('3')
+    })
+
+    it('parses slide with caption and alt text', () => {
+      const fenceStart = slideshowContent.indexOf('```slideshow')
+      const result = detectEmbedAtCursor(slideshowContent, fenceStart + 5)
+      if (result?.type !== 'slideshow') throw new Error('expected slideshow')
+      const slide = result.parsed.slides[0]
+      expect(slide.caption).toBe('Sunset')
+      expect(slide.altText).toBe('A sunset photo')
+    })
+
+    it('detects slideshow (not image) when cursor is on an image line inside the fence', () => {
+      const imageLineStart = slideshowContent.indexOf('![caption=')
+      const result = detectEmbedAtCursor(slideshowContent, imageLineStart + 5)
+      expect(result?.type).toBe('slideshow')
+    })
+
+    it('returns null when cursor is outside the slideshow block', () => {
+      const result = detectEmbedAtCursor(slideshowContent, 1)
+      expect(result).toBeNull()
+    })
+
+    it('handles empty slideshow body with no image lines', () => {
+      const emptySlideshow = '\n\n```slideshow\n```\n\n'
+      const fenceStart = emptySlideshow.indexOf('```slideshow')
+      const result = detectEmbedAtCursor(emptySlideshow, fenceStart + 5)
+      if (result?.type !== 'slideshow') throw new Error('expected slideshow')
+      expect(result.parsed.slides).toEqual([])
+    })
+  })
+
   it('returns null for plain text content', () => {
     expect(detectEmbedAtCursor('Just some plain text here.', 5)).toBeNull()
   })

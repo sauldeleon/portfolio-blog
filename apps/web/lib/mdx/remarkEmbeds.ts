@@ -40,7 +40,32 @@ export function remarkEmbeds() {
         meta?: string | null
         value?: string
       }
-      if (n.type !== 'code' || !EMBED_LANGS.includes(n.lang ?? '')) return node
+      if (n.type !== 'code') return node
+
+      if (n.lang === 'slideshow') {
+        const lines = (n.value ?? '').trim().split('\n').filter(Boolean)
+        const slides = lines
+          .map((line) => {
+            const m = line.match(/^!\[([^\]]*)\]\(([^)]+)\)$/)
+            if (!m) return null
+            return { src: m[2], alt: m[1] }
+          })
+          .filter(Boolean)
+        return {
+          type: 'mdxJsxFlowElement',
+          name: 'Slideshow',
+          attributes: [
+            {
+              type: 'mdxJsxAttribute',
+              name: 'slides',
+              value: JSON.stringify(slides),
+            },
+          ],
+          children: [],
+        }
+      }
+
+      if (!EMBED_LANGS.includes(n.lang ?? '')) return node
 
       const metaFlags = (n.meta ?? '').split(' ').filter(Boolean)
       const showWaypoints = metaFlags.includes('showWaypoints')

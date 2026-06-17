@@ -644,4 +644,77 @@ describe('remarkEmbeds', () => {
       value: '',
     })
   })
+
+  describe('slideshow blocks', () => {
+    it('transforms slideshow block into Slideshow element with slides JSON', () => {
+      const [result] = runPlugin([
+        {
+          type: 'code',
+          lang: 'slideshow',
+          value:
+            '![alt=A sunset photo](https://example.com/img1.jpg)\n![](https://example.com/img2.jpg)',
+        },
+      ])
+      expect(result.type).toBe('mdxJsxFlowElement')
+      expect(result.name).toBe('Slideshow')
+      expect(result.attributes).toContainEqual({
+        type: 'mdxJsxAttribute',
+        name: 'slides',
+        value: JSON.stringify([
+          { src: 'https://example.com/img1.jpg', alt: 'alt=A sunset photo' },
+          { src: 'https://example.com/img2.jpg', alt: '' },
+        ]),
+      })
+    })
+
+    it('ignores non-image-markdown lines in slideshow block', () => {
+      const [result] = runPlugin([
+        {
+          type: 'code',
+          lang: 'slideshow',
+          value:
+            'this is not an image line\n![](https://example.com/img.jpg)\nanother plain line',
+        },
+      ])
+      expect(result.attributes).toContainEqual({
+        type: 'mdxJsxAttribute',
+        name: 'slides',
+        value: JSON.stringify([
+          { src: 'https://example.com/img.jpg', alt: '' },
+        ]),
+      })
+    })
+
+    it('produces empty slides array when block has no valid image lines', () => {
+      const [result] = runPlugin([
+        {
+          type: 'code',
+          lang: 'slideshow',
+          value: 'no images here\njust plain text',
+        },
+      ])
+      expect(result.attributes).toContainEqual({
+        type: 'mdxJsxAttribute',
+        name: 'slides',
+        value: JSON.stringify([]),
+      })
+    })
+
+    it('passes through non-code nodes unchanged', () => {
+      const node = { type: 'paragraph', value: 'hello' }
+      const [result] = runPlugin([node as CodeNode])
+      expect(result).toEqual(node)
+    })
+
+    it('produces empty slides array when value is undefined', () => {
+      const [result] = runPlugin([
+        { type: 'code', lang: 'slideshow', value: undefined },
+      ])
+      expect(result.attributes).toContainEqual({
+        type: 'mdxJsxAttribute',
+        name: 'slides',
+        value: JSON.stringify([]),
+      })
+    })
+  })
 })

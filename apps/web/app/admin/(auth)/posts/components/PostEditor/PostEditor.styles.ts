@@ -194,6 +194,24 @@ export const StyledPreviewControls = styled.div`
   padding: 0 0.5rem;
 `
 
+export const StyledCheckboxFieldLabel = styled.label`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: ${({ theme }) => theme.colors.white};
+  opacity: 0.5;
+  cursor: pointer;
+
+  input[type='checkbox'] {
+    accent-color: ${({ theme }) => theme.colors.green};
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+`
+
 export const StyledAutoRenderLabel = styled.label`
   display: flex;
   align-items: center;
@@ -395,13 +413,13 @@ export const StyledEditEmbedButton = styled(Button).attrs({
   text-transform: uppercase;
   letter-spacing: 0.1em;
   padding: 0.25rem 0.6rem;
-  background: rgba(58, 134, 255, 0.15);
-  border-color: rgba(58, 134, 255, 0.4);
+  background: rgba(58, 134, 255, 0.3);
+  border-color: rgba(58, 134, 255, 0.6);
   color: ${({ theme }) => theme.colors.white};
 
   &:hover {
-    background: rgba(58, 134, 255, 0.3);
-    border-color: rgba(58, 134, 255, 0.7);
+    background: rgba(58, 134, 255, 0.45);
+    border-color: rgba(58, 134, 255, 0.85);
   }
 `
 

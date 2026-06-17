@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import { RenderModalBackdropProps } from 'react-overlays/Modal'
 
+import { Select } from '@sdlgr/select'
+
 import type { CloudinaryImage } from '@web/lib/cloudinary/images'
 
 import type { ParsedImage } from '../PostEditor/parseEmbedBlock'
@@ -26,6 +28,57 @@ import {
   StyledSegmentButton,
   StyledSegmentRow,
 } from './ImageInsertModal.styles'
+
+const ISO_OPTIONS = [
+  '100',
+  '200',
+  '400',
+  '800',
+  '1600',
+  '3200',
+  '6400',
+  '12800',
+  '25600',
+  '51200',
+].map((v) => ({ value: v, label: v }))
+
+const APERTURE_OPTIONS = [
+  'f/1.4',
+  'f/1.8',
+  'f/2',
+  'f/2.8',
+  'f/4',
+  'f/5.6',
+  'f/8',
+  'f/9',
+  'f/10',
+  'f/11',
+  'f/16',
+  'f/22',
+].map((v) => ({ value: v, label: v }))
+
+const SHUTTER_SPEED_OPTIONS = [
+  '1/8000',
+  '1/4000',
+  '1/2000',
+  '1/1000',
+  '1/500',
+  '1/400',
+  '1/320',
+  '1/250',
+  '1/125',
+  '1/60',
+  '1/30',
+  '1/15',
+  '1/8',
+  '1/4',
+  '1/2',
+  '1s',
+  '2s',
+  '5s',
+  '10s',
+  '30s',
+].map((v) => ({ value: v, label: v }))
 
 export interface ImageInsertModalProps {
   isOpen: boolean
@@ -116,7 +169,7 @@ export function ImageInsertModal({
     initialValues?.photoMeta?.aperture ?? '',
   )
   const [photoFocalLength, setPhotoFocalLength] = useState(
-    initialValues?.photoMeta?.focalLength ?? '',
+    initialValues?.photoMeta?.focalLength?.replace(/mm$/, '') ?? '',
   )
   const [photoPanoramicCount, setPhotoPanoramicCount] = useState(
     initialValues?.photoMeta?.panoramicCount ?? '',
@@ -138,7 +191,7 @@ export function ImageInsertModal({
             iso: photoIso,
             exposure: photoExposure,
             aperture: photoAperture,
-            focalLength: photoFocalLength,
+            focalLength: photoFocalLength ? `${photoFocalLength}mm` : '',
             panoramicCount: photoPanoramicCount,
           }
         : undefined,
@@ -173,7 +226,7 @@ export function ImageInsertModal({
               iso: photoIso,
               exposure: photoExposure,
               aperture: photoAperture,
-              focalLength: photoFocalLength,
+              focalLength: photoFocalLength ? `${photoFocalLength}mm` : '',
               panoramicCount: photoPanoramicCount,
             }
           : undefined,
@@ -303,30 +356,39 @@ export function ImageInsertModal({
           <StyledPhotoMetaInputRow>
             <StyledPhotoMetaField>
               <StyledLabel htmlFor="photo-iso">ISO</StyledLabel>
-              <StyledInput
+              <Select
                 id="photo-iso"
                 value={photoIso}
-                onChange={(e) => setPhotoIso(e.target.value)}
+                onChange={setPhotoIso}
+                options={ISO_OPTIONS}
+                isSearchable
+                isClearable
                 placeholder="e.g. 400"
                 data-testid="photo-iso-input"
               />
             </StyledPhotoMetaField>
             <StyledPhotoMetaField>
               <StyledLabel htmlFor="photo-aperture">Aperture</StyledLabel>
-              <StyledInput
+              <Select
                 id="photo-aperture"
                 value={photoAperture}
-                onChange={(e) => setPhotoAperture(e.target.value)}
+                onChange={setPhotoAperture}
+                options={APERTURE_OPTIONS}
+                isSearchable
+                isClearable
                 placeholder="e.g. f/2.8"
                 data-testid="photo-aperture-input"
               />
             </StyledPhotoMetaField>
             <StyledPhotoMetaField>
-              <StyledLabel htmlFor="photo-exposure">Exposure</StyledLabel>
-              <StyledInput
+              <StyledLabel htmlFor="photo-exposure">Shutter speed</StyledLabel>
+              <Select
                 id="photo-exposure"
                 value={photoExposure}
-                onChange={(e) => setPhotoExposure(e.target.value)}
+                onChange={setPhotoExposure}
+                options={SHUTTER_SPEED_OPTIONS}
+                isSearchable
+                isClearable
                 placeholder="e.g. 1/250"
                 data-testid="photo-exposure-input"
               />
@@ -337,9 +399,11 @@ export function ImageInsertModal({
               </StyledLabel>
               <StyledInput
                 id="photo-focal-length"
+                type="number"
+                min="1"
                 value={photoFocalLength}
                 onChange={(e) => setPhotoFocalLength(e.target.value)}
-                placeholder="e.g. 50mm"
+                placeholder="e.g. 50"
                 data-testid="photo-focal-length-input"
               />
             </StyledPhotoMetaField>

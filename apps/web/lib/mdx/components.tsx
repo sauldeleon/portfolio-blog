@@ -4,6 +4,7 @@ import { CodeBlock } from '@sdlgr/code-block'
 import { MdxTable } from '@web/components/PostContent/MdxTable'
 import { PostContentEmbed } from '@web/components/PostContent/PostContentEmbed'
 import { PostContentImage } from '@web/components/PostContent/PostContentImage'
+import { PostContentSlideshow } from '@web/components/PostContent/PostContentSlideshow'
 
 export interface MdxComponentLabels {
   copyLabel: string
@@ -14,6 +15,7 @@ export function createMdxComponents(labels: MdxComponentLabels) {
   return {
     Callout,
     Embed: PostContentEmbed,
+    Slideshow: PostContentSlideshow,
     img: PostContentImage,
     h1: ({ children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
       <h2 {...props}>{children}</h2>

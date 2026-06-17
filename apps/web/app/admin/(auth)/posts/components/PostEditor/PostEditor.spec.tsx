@@ -134,6 +134,41 @@ jest.mock('../EmbedInsertModal', () => ({
     ) : null,
 }))
 
+jest.mock('../SlideshowInsertModal', () => ({
+  SlideshowInsertModal: ({
+    isOpen,
+    onInsert,
+    onCancel,
+  }: {
+    isOpen: boolean
+    onInsert: (markdown: string) => void
+    onCancel: () => void
+    [key: string]: unknown
+  }) =>
+    isOpen ? (
+      <div data-testid="slideshow-insert-modal-mock">
+        <button
+          type="button"
+          data-testid="slideshow-modal-insert-mock"
+          onClick={() =>
+            onInsert(
+              '\n\n```slideshow\n![](https://example.com/1.jpg)\n```\n\n',
+            )
+          }
+        >
+          Insert
+        </button>
+        <button
+          type="button"
+          data-testid="slideshow-modal-cancel-mock"
+          onClick={onCancel}
+        >
+          Cancel
+        </button>
+      </div>
+    ) : null,
+}))
+
 jest.mock('../GpxMapModal', () => ({
   GpxMapModal: ({
     isOpen,
@@ -1477,6 +1512,47 @@ describe('PostEditor', () => {
         'Hello \n\n```gpx\nhttps://example.com/track.gpx\n```\n\n',
       )
       expect(screen.queryByTestId('gpx-map-modal-mock')).not.toBeInTheDocument()
+    })
+  })
+
+  describe('Slideshow insert modal', () => {
+    it('does not show slideshow modal by default', () => {
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+      expect(
+        screen.queryByTestId('slideshow-insert-modal-mock'),
+      ).not.toBeInTheDocument()
+    })
+
+    it('shows slideshow modal when insert slideshow button clicked', () => {
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+      fireEvent.click(screen.getByTestId('open-slideshow-modal-button'))
+      expect(
+        screen.getByTestId('slideshow-insert-modal-mock'),
+      ).toBeInTheDocument()
+    })
+
+    it('closes slideshow modal when cancel is clicked', () => {
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+      fireEvent.click(screen.getByTestId('open-slideshow-modal-button'))
+      fireEvent.click(screen.getByTestId('slideshow-modal-cancel-mock'))
+      expect(
+        screen.queryByTestId('slideshow-insert-modal-mock'),
+      ).not.toBeInTheDocument()
+    })
+
+    it('inserts markdown at cursor and closes modal on insert', () => {
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+      fireEvent.change(screen.getByTestId('content-input'), {
+        target: { value: 'Hello ' },
+      })
+      fireEvent.click(screen.getByTestId('open-slideshow-modal-button'))
+      fireEvent.click(screen.getByTestId('slideshow-modal-insert-mock'))
+      expect(screen.getByTestId('content-input')).toHaveValue(
+        'Hello \n\n```slideshow\n![](https://example.com/1.jpg)\n```\n\n',
+      )
+      expect(
+        screen.queryByTestId('slideshow-insert-modal-mock'),
+      ).not.toBeInTheDocument()
     })
   })
 
