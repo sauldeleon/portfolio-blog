@@ -46,21 +46,40 @@ const slideInFromLeft = keyframes`
   to { transform: translateX(0); }
 `
 
+const slideOutToLeft = keyframes`
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+`
+
+const slideOutToRight = keyframes`
+  from { transform: translateX(0); }
+  to { transform: translateX(100%); }
+`
+
 export const StyledSlideshowSlide = styled.div<{
   $direction: 'next' | 'prev' | 'none'
+  $exiting?: boolean
 }>`
   position: absolute;
   inset: 0;
 
-  ${({ $direction }) => {
+  ${({ $direction, $exiting }) => {
     if ($direction === 'next')
-      return css`
-        animation: ${slideInFromRight} 0.35s ease;
-      `
+      return $exiting
+        ? css`
+            animation: ${slideOutToLeft} 0.35s ease forwards;
+          `
+        : css`
+            animation: ${slideInFromRight} 0.35s ease;
+          `
     if ($direction === 'prev')
-      return css`
-        animation: ${slideInFromLeft} 0.35s ease;
-      `
+      return $exiting
+        ? css`
+            animation: ${slideOutToRight} 0.35s ease forwards;
+          `
+        : css`
+            animation: ${slideInFromLeft} 0.35s ease;
+          `
     return ''
   }}
 `
@@ -81,10 +100,15 @@ export const StyledSlideshowArrow = styled.button<{ $side: 'prev' | 'next' }>`
 
   display: grid;
   place-items: center;
-  width: 2.25rem;
-  height: 2.25rem;
+  width: 1.75rem;
+  height: 1.75rem;
   padding: 0;
   margin: 0;
+
+  svg {
+    width: 7px;
+    height: 12px;
+  }
 
   background: rgba(0, 0, 0, 0.4);
   border: none;
@@ -105,8 +129,13 @@ export const StyledSlideshowArrow = styled.button<{ $side: 'prev' | 'next' }>`
   }
 
   ${({ theme }) => theme.media.up.md} {
-    width: 2.75rem;
-    height: 2.75rem;
+    width: 2.25rem;
+    height: 2.25rem;
+
+    svg {
+      width: 10px;
+      height: 16px;
+    }
   }
 `
 

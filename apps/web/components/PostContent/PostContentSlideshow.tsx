@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import { useClientTranslation } from '@web/i18n/client'
@@ -39,7 +39,18 @@ export function PostContentSlideshow({
   const [currentIndex, setCurrentIndex] = useState(0)
   const [direction, setDirection] = useState<'next' | 'prev' | 'none'>('none')
   const [expanded, setExpanded] = useState(false)
+  const [exiting, setExiting] = useState<{
+    index: number
+    direction: 'next' | 'prev'
+  } | null>(null)
+  const exitTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const { t } = useClientTranslation('common')
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(exitTimerRef.current ?? undefined)
+    }
+  }, [])
 
   let slides: Slide[] = []
   try {
@@ -74,13 +85,25 @@ export function PostContentSlideshow({
   const canGoNext = currentIndex < slides.length - 1
 
   function goPrev() {
+    clearTimeout(exitTimerRef.current ?? undefined)
+    setExiting({ index: currentIndex, direction: 'prev' })
     setDirection('prev')
     setCurrentIndex((i) => i - 1)
+    exitTimerRef.current = setTimeout(
+      /* istanbul ignore next */ () => setExiting(null),
+      350,
+    )
   }
 
   function goNext() {
+    clearTimeout(exitTimerRef.current ?? undefined)
+    setExiting({ index: currentIndex, direction: 'next' })
     setDirection('next')
     setCurrentIndex((i) => i + 1)
+    exitTimerRef.current = setTimeout(
+      /* istanbul ignore next */ () => setExiting(null),
+      350,
+    )
   }
 
   return (
@@ -92,7 +115,26 @@ export function PostContentSlideshow({
             onClick={expandable ? () => setExpanded(true) : undefined}
             data-testid="slideshow-image-wrapper"
           >
-            <StyledSlideshowSlide key={currentIndex} $direction={direction}>
+            {exiting !== null && (
+              <StyledSlideshowSlide
+                key={`exit-${exiting.index}`}
+                $direction={exiting.direction}
+                $exiting
+                aria-hidden="true"
+              >
+                <Image
+                  src={slides[exiting.index].src}
+                  alt=""
+                  fill
+                  sizes="(max-width: 1440px) 100vw, 1440px"
+                  style={{ objectFit: 'contain' }}
+                />
+              </StyledSlideshowSlide>
+            )}
+            <StyledSlideshowSlide
+              key={`enter-${currentIndex}`}
+              $direction={direction}
+            >
               <Image
                 src={current.src}
                 alt={cleanAlt}
