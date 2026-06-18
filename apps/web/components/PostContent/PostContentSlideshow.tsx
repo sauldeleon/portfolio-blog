@@ -19,7 +19,6 @@ import {
 import {
   StyledSlideshow,
   StyledSlideshowArrow,
-  StyledSlideshowCaptionOverlay,
   StyledSlideshowCounter,
   StyledSlideshowImageArea,
   StyledSlideshowImageWrapper,
@@ -56,7 +55,6 @@ export function PostContentSlideshow({
     ? new URLSearchParams(current.alt)
     : null
   const caption = options?.get('caption')
-  const captionPos = options?.get('caption-pos') ?? 'bottom'
   const cleanAlt = options?.get('alt') ?? (options ? '' : (current.alt ?? ''))
   const expandable = options?.get('expand') === 'true'
   const photoIso = options?.get('photo-iso')
@@ -104,14 +102,6 @@ export function PostContentSlideshow({
               />
             </StyledSlideshowSlide>
           </StyledSlideshowImageWrapper>
-          {caption && (
-            <StyledSlideshowCaptionOverlay
-              $pos={captionPos === 'top' ? 'top' : 'bottom'}
-              data-testid="slideshow-caption"
-            >
-              {caption}
-            </StyledSlideshowCaptionOverlay>
-          )}
           <StyledSlideshowArrow
             $side="prev"
             type="button"
@@ -161,6 +151,11 @@ export function PostContentSlideshow({
             </svg>
           </StyledSlideshowArrow>
         </StyledSlideshowImageArea>
+        {caption && (
+          <StyledCaption data-testid="slideshow-caption">
+            {caption}
+          </StyledCaption>
+        )}
         {hasPhotoMeta && (
           <StyledPhotoMeta data-testid="slideshow-photo-meta">
             {photoIso && (

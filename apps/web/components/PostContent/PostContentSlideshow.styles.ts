@@ -65,26 +65,6 @@ export const StyledSlideshowSlide = styled.div<{
   }}
 `
 
-export const StyledSlideshowCaptionOverlay = styled.div<{
-  $pos: 'top' | 'bottom'
-}>`
-  position: absolute;
-  left: 0;
-  right: 0;
-  ${({ $pos }) => ($pos === 'top' ? 'top: 0;' : 'bottom: 0;')}
-  z-index: 3;
-  padding: 0.4rem 0.75rem;
-  background: linear-gradient(
-    ${({ $pos }) => ($pos === 'top' ? 'to bottom' : 'to top')},
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.55) 100%
-  );
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.9);
-  line-height: 1.4;
-  pointer-events: none;
-`
-
 export const StyledSlideshowNav = styled.div`
   display: flex;
   justify-content: center;

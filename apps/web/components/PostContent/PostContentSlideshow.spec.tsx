@@ -164,7 +164,7 @@ describe('PostContentSlideshow', () => {
     )
   })
 
-  it('shows caption at top when caption-pos=top', () => {
+  it('shows caption below image regardless of caption-pos param', () => {
     renderWithTheme(
       <PostContentSlideshow
         slides={JSON.stringify([
