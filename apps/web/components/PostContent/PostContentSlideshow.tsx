@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import { useClientTranslation } from '@web/i18n/client'
@@ -20,6 +20,7 @@ import {
   StyledSlideshow,
   StyledSlideshowArrow,
   StyledSlideshowCounter,
+  StyledSlideshowImageArea,
   StyledSlideshowImageWrapper,
   StyledSlideshowNav,
   StyledSlideshowSlide,
@@ -38,7 +39,20 @@ export function PostContentSlideshow({
   const [currentIndex, setCurrentIndex] = useState(0)
   const [direction, setDirection] = useState<'next' | 'prev' | 'none'>('none')
   const [expanded, setExpanded] = useState(false)
+  const [exiting, setExiting] = useState<{
+    index: number
+    direction: 'next' | 'prev'
+  } | null>(null)
+  const exitTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined,
+  )
   const { t } = useClientTranslation('common')
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(exitTimerRef.current)
+    }
+  }, [])
 
   let slides: Slide[] = []
   try {
@@ -54,7 +68,6 @@ export function PostContentSlideshow({
     ? new URLSearchParams(current.alt)
     : null
   const caption = options?.get('caption')
-  const captionPos = options?.get('caption-pos') ?? 'bottom'
   const cleanAlt = options?.get('alt') ?? (options ? '' : (current.alt ?? ''))
   const expandable = options?.get('expand') === 'true'
   const photoIso = options?.get('photo-iso')
@@ -74,38 +87,119 @@ export function PostContentSlideshow({
   const canGoNext = currentIndex < slides.length - 1
 
   function goPrev() {
+    clearTimeout(exitTimerRef.current)
+    setExiting({ index: currentIndex, direction: 'prev' })
     setDirection('prev')
     setCurrentIndex((i) => i - 1)
+    exitTimerRef.current = setTimeout(
+      /* istanbul ignore next */ () => setExiting(null),
+      350,
+    )
   }
 
   function goNext() {
+    clearTimeout(exitTimerRef.current)
+    setExiting({ index: currentIndex, direction: 'next' })
     setDirection('next')
     setCurrentIndex((i) => i + 1)
+    exitTimerRef.current = setTimeout(
+      /* istanbul ignore next */ () => setExiting(null),
+      350,
+    )
   }
 
   return (
     <>
       <StyledSlideshow data-testid="post-slideshow">
-        {caption && captionPos === 'top' && (
+        <StyledSlideshowImageArea>
+          <StyledSlideshowImageWrapper
+            $expandable={expandable}
+            onClick={expandable ? () => setExpanded(true) : undefined}
+            data-testid="slideshow-image-wrapper"
+          >
+            {exiting !== null && (
+              <StyledSlideshowSlide
+                key={`exit-${exiting.index}`}
+                $direction={exiting.direction}
+                $exiting
+                aria-hidden="true"
+              >
+                <Image
+                  src={slides[exiting.index].src}
+                  alt=""
+                  fill
+                  sizes="(max-width: 1440px) 100vw, 1440px"
+                  style={{ objectFit: 'contain' }}
+                />
+              </StyledSlideshowSlide>
+            )}
+            <StyledSlideshowSlide
+              key={`enter-${currentIndex}`}
+              $direction={direction}
+            >
+              <Image
+                src={current.src}
+                alt={cleanAlt}
+                fill
+                sizes="(max-width: 1440px) 100vw, 1440px"
+                style={{ objectFit: 'contain' }}
+              />
+            </StyledSlideshowSlide>
+          </StyledSlideshowImageWrapper>
+          <StyledSlideshowArrow
+            $side="prev"
+            type="button"
+            onClick={goPrev}
+            disabled={!canGoPrev}
+            aria-label="Previous slide"
+            data-testid="slideshow-prev"
+          >
+            <svg
+              width="10"
+              height="16"
+              viewBox="0 0 10 16"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M8 2L2 8L8 14"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </StyledSlideshowArrow>
+          <StyledSlideshowArrow
+            $side="next"
+            type="button"
+            onClick={goNext}
+            disabled={!canGoNext}
+            aria-label="Next slide"
+            data-testid="slideshow-next"
+          >
+            <svg
+              width="10"
+              height="16"
+              viewBox="0 0 10 16"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M2 2L8 8L2 14"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </StyledSlideshowArrow>
+        </StyledSlideshowImageArea>
+        {caption && (
           <StyledCaption data-testid="slideshow-caption">
             {caption}
           </StyledCaption>
         )}
-        <StyledSlideshowImageWrapper
-          $expandable={expandable}
-          onClick={expandable ? () => setExpanded(true) : undefined}
-          data-testid="slideshow-image-wrapper"
-        >
-          <StyledSlideshowSlide key={currentIndex} $direction={direction}>
-            <Image
-              src={current.src}
-              alt={cleanAlt}
-              fill
-              sizes="(max-width: 1440px) 100vw, 1440px"
-              style={{ objectFit: 'contain' }}
-            />
-          </StyledSlideshowSlide>
-        </StyledSlideshowImageWrapper>
         {hasPhotoMeta && (
           <StyledPhotoMeta data-testid="slideshow-photo-meta">
             {photoIso && (
@@ -150,33 +244,10 @@ export function PostContentSlideshow({
             )}
           </StyledPhotoMeta>
         )}
-        {caption && captionPos !== 'top' && (
-          <StyledCaption data-testid="slideshow-caption">
-            {caption}
-          </StyledCaption>
-        )}
         <StyledSlideshowNav>
-          <StyledSlideshowArrow
-            type="button"
-            onClick={goPrev}
-            disabled={!canGoPrev}
-            aria-label="Previous slide"
-            data-testid="slideshow-prev"
-          >
-            ←
-          </StyledSlideshowArrow>
           <StyledSlideshowCounter data-testid="slideshow-counter">
             {currentIndex + 1} / {slides.length}
           </StyledSlideshowCounter>
-          <StyledSlideshowArrow
-            type="button"
-            onClick={goNext}
-            disabled={!canGoNext}
-            aria-label="Next slide"
-            data-testid="slideshow-next"
-          >
-            →
-          </StyledSlideshowArrow>
         </StyledSlideshowNav>
       </StyledSlideshow>
       {expandable &&

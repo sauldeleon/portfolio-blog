@@ -164,7 +164,7 @@ describe('PostContentSlideshow', () => {
     )
   })
 
-  it('shows caption at top when caption-pos=top', () => {
+  it('shows caption below image regardless of caption-pos param', () => {
     renderWithTheme(
       <PostContentSlideshow
         slides={JSON.stringify([
@@ -268,6 +268,25 @@ describe('PostContentSlideshow', () => {
     )
     fireEvent.click(screen.getByTestId('slideshow-image-wrapper'))
     fireEvent.click(screen.getByTestId('slideshow-image-modal'))
+    expect(
+      screen.queryByTestId('slideshow-image-modal'),
+    ).not.toBeInTheDocument()
+  })
+
+  it('clicking prev/next on expandable slideshow does not open modal', () => {
+    renderWithTheme(
+      <PostContentSlideshow
+        slides={JSON.stringify([
+          { src: '/img1.jpg', alt: 'expand=true&alt=first' },
+          { src: '/img2.jpg', alt: 'expand=true&alt=second' },
+        ])}
+      />,
+    )
+    fireEvent.click(screen.getByTestId('slideshow-next'))
+    expect(
+      screen.queryByTestId('slideshow-image-modal'),
+    ).not.toBeInTheDocument()
+    fireEvent.click(screen.getByTestId('slideshow-prev'))
     expect(
       screen.queryByTestId('slideshow-image-modal'),
     ).not.toBeInTheDocument()

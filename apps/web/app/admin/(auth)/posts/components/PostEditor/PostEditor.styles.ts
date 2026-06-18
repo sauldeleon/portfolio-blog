@@ -494,3 +494,33 @@ export const StyledDraftPreviewCopyButton = styled(Button).attrs({
     opacity: 1;
   }
 `
+
+export const StyledPublishedUrlLink = styled.a`
+  font-size: 0.65rem;
+  color: ${({ theme }) => theme.colors.green};
+  text-decoration: none;
+  opacity: 0.8;
+  font-family: monospace;
+
+  &:hover {
+    opacity: 1;
+    text-decoration: underline;
+  }
+`
+
+export const StyledPublishedUrlCopyButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'xs',
+})`
+  font-family: inherit;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.15rem 0.4rem;
+  color: ${({ theme }) => theme.colors.green};
+  opacity: 0.7;
+
+  &:hover {
+    opacity: 1;
+  }
+`

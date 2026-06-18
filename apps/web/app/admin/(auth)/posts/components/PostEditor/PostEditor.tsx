@@ -70,6 +70,8 @@ import {
   StyledPreviewTab,
   StyledPreviewTabsBar,
   StyledPublishButton,
+  StyledPublishedUrlCopyButton,
+  StyledPublishedUrlLink,
   StyledSaveButton,
   StyledStatusBadge,
   StyledTextareaWrapper,
@@ -257,6 +259,9 @@ export function PostEditor({
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [urlCopied, setUrlCopied] = useState(false)
+  const [copiedPublishedLocale, setCopiedPublishedLocale] = useState<
+    string | null
+  >(null)
   const [isPickerOpen, setIsPickerOpen] = useState(false)
   const [isContentPickerOpen, setIsContentPickerOpen] = useState(false)
   const contentPickerCallbackRef = useRef<
@@ -478,6 +483,26 @@ export function PostEditor({
       })
   }
 
+  const publishedPaths =
+    post && status === 'published' && post.post.postNumber
+      ? post.translations
+          .filter((tr) => tr.slug)
+          .map((tr) => ({
+            locale: tr.locale,
+            path: `/${tr.locale}/blog/${post.post.postNumber}/${tr.slug}`,
+          }))
+      : []
+
+  function handleCopyPublishedUrl(path: string, locale: string) {
+    /* istanbul ignore next */
+    void navigator.clipboard
+      .writeText(window.location.origin + path)
+      .then(() => {
+        setCopiedPublishedLocale(locale)
+        setTimeout(() => setCopiedPublishedLocale(null), 2000)
+      })
+  }
+
   async function handleSave(
     targetStatus: PostStatus = status,
     notify?: boolean,
@@ -558,6 +583,34 @@ export function PostEditor({
               </StyledDraftPreviewCopyButton>
             </StyledDraftPreviewRow>
           )}
+          {publishedPaths.map(({ locale, path }) => (
+            <StyledDraftPreviewRow
+              key={locale}
+              data-testid={`published-url-row-${locale}`}
+            >
+              <StyledDraftPreviewLabel>
+                {t('postEditor.publishedUrlLabel', {
+                  locale: locale.toUpperCase(),
+                })}
+              </StyledDraftPreviewLabel>
+              <StyledPublishedUrlLink
+                href={path}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-testid={`published-url-link-${locale}`}
+              >
+                {path}
+              </StyledPublishedUrlLink>
+              <StyledPublishedUrlCopyButton
+                onClick={() => handleCopyPublishedUrl(path, locale)}
+                data-testid={`published-url-copy-${locale}`}
+              >
+                {copiedPublishedLocale === locale
+                  ? t('postEditor.publishedUrlCopied')
+                  : t('postEditor.publishedUrlCopy')}
+              </StyledPublishedUrlCopyButton>
+            </StyledDraftPreviewRow>
+          ))}
         </StyledHeaderLeft>
 
         <StyledActions>

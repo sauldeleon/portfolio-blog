@@ -74,6 +74,9 @@ jest.mock('@web/i18n/client', () => ({
         'postEditor.draftPreviewLabel': 'Preview:',
         'postEditor.draftPreviewCopy': 'Copy',
         'postEditor.draftPreviewCopied': 'Copied!',
+        'postEditor.publishedUrlLabel': 'Live ({{locale}}):',
+        'postEditor.publishedUrlCopy': 'Copy',
+        'postEditor.publishedUrlCopied': 'Copied!',
         'postEditor.error': 'Something went wrong',
         'images.picker.title': 'Insert Image',
       }
@@ -1075,6 +1078,103 @@ describe('PostEditor', () => {
         expect(
           screen.getByTestId('draft-preview-copy-button'),
         ).toHaveTextContent('Copy')
+      })
+      jest.useRealTimers()
+    })
+  })
+
+  describe('published URL rows', () => {
+    const publishedPost: PostEditorProps['post'] = {
+      post: {
+        ...mockExistingPost.post,
+        status: 'published',
+        previewToken: null,
+      },
+      translations: mockExistingPost.translations,
+    }
+
+    beforeEach(() => {
+      Object.defineProperty(navigator, 'clipboard', {
+        value: { writeText: jest.fn().mockResolvedValue(undefined) },
+        writable: true,
+        configurable: true,
+      })
+    })
+
+    it('shows published URL rows for each translation when published', () => {
+      renderApp(
+        <PostEditor
+          post={publishedPost}
+          categories={mockCategories}
+          users={mockUsers}
+        />,
+      )
+      expect(screen.getByTestId('published-url-row-en')).toBeInTheDocument()
+      expect(screen.getByTestId('published-url-row-es')).toBeInTheDocument()
+      expect(screen.getByTestId('published-url-link-en')).toHaveAttribute(
+        'href',
+        '/en/blog/7/my-post',
+      )
+      expect(screen.getByTestId('published-url-link-es')).toHaveAttribute(
+        'href',
+        '/es/blog/7/mi-post',
+      )
+    })
+
+    it('does not show published URL rows for draft posts', () => {
+      renderApp(
+        <PostEditor
+          post={mockExistingPost}
+          categories={mockCategories}
+          users={mockUsers}
+        />,
+      )
+      expect(
+        screen.queryByTestId('published-url-row-en'),
+      ).not.toBeInTheDocument()
+    })
+
+    it('does not show published URL rows when postNumber is null', () => {
+      renderApp(
+        <PostEditor
+          post={{
+            post: { ...publishedPost.post, postNumber: null },
+            translations: publishedPost.translations,
+          }}
+          categories={mockCategories}
+          users={mockUsers}
+        />,
+      )
+      expect(
+        screen.queryByTestId('published-url-row-en'),
+      ).not.toBeInTheDocument()
+    })
+
+    it('copy button writes URL to clipboard and shows Copied!', async () => {
+      jest.useFakeTimers()
+      renderApp(
+        <PostEditor
+          post={publishedPost}
+          categories={mockCategories}
+          users={mockUsers}
+        />,
+      )
+      fireEvent.click(screen.getByTestId('published-url-copy-en'))
+      await waitFor(() => {
+        expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
+          expect.stringContaining('/en/blog/7/my-post'),
+        )
+      })
+      await waitFor(() => {
+        expect(screen.getByTestId('published-url-copy-en')).toHaveTextContent(
+          'Copied!',
+        )
+      })
+      jest.runAllTimers()
+      await waitFor(() => {
+        expect(screen.getByTestId('published-url-copy-en')).toHaveTextContent(
+          'Copy',
+        )
       })
       jest.useRealTimers()
     })

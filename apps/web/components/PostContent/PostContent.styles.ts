@@ -260,28 +260,52 @@ export const StyledModalDownload = styled.a`
 export const StyledPhotoMeta = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 1.25rem;
+  gap: 0.35rem 0.75rem;
   justify-content: center;
-  padding: 0.5rem 0.75rem;
+  padding: 0.4rem 0.5rem;
   margin-top: 0.25rem;
   border-top: 1px solid rgba(251, 251, 251, 0.08);
+
+  ${({ theme }) => theme.media.up.md} {
+    gap: 1.25rem;
+    padding: 0.5rem 0.75rem;
+  }
 `
 
 export const StyledPhotoMetaItem = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 0.15rem;
+  gap: 0.25rem;
   font-family: var(--font-roboto-mono);
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   color: rgba(251, 251, 251, 0.7);
+
+  ${({ theme }) => theme.media.up.md} {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+    font-size: 0.75rem;
+  }
 `
 
 export const StyledPhotoMetaLabel = styled.span`
-  font-size: 0.6rem;
+  font-size: 0.55rem;
   color: rgba(251, 251, 251, 0.4);
   text-transform: uppercase;
   letter-spacing: 0.08em;
+
+  &::after {
+    content: ':';
+  }
+
+  ${({ theme }) => theme.media.up.md} {
+    font-size: 0.6rem;
+
+    &::after {
+      content: '';
+    }
+  }
 `
 
 export const StyledEmbedWrapper = styled.div`

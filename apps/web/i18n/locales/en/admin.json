@@ -149,6 +149,9 @@
     "draftPreviewLabel": "Preview:",
     "draftPreviewCopy": "Copy",
     "draftPreviewCopied": "Copied!",
+    "publishedUrlLabel": "Live ({{locale}}):",
+    "publishedUrlCopy": "Copy",
+    "publishedUrlCopied": "Copied!",
     "error": "Something went wrong, please try again"
   },
   "images": {
