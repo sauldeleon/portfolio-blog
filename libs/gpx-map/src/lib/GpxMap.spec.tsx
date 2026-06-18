@@ -1055,6 +1055,22 @@ describe('GpxMap', () => {
         .filter((r) => r.getAttribute('data-details') === 'true')
       expect(detailRows[0]).not.toHaveTextContent('—')
     })
+
+    it('shows image card when waypointImages keyed by waypoint index', async () => {
+      render(
+        <GpxMap
+          url={GPX_URL}
+          showWaypoints
+          waypointImages={{ '1': 'https://cdn.com/idx-img.jpg' }}
+        />,
+      )
+      await screen.findByText('Summit')
+      const rows = screen.getAllByRole('row')
+      fireEvent.click(rows[2])
+      const img = screen.getByTestId('waypoint-image-card')
+      expect(img).toHaveAttribute('src', 'https://cdn.com/idx-img.jpg')
+      expect(img).toHaveAttribute('alt', 'Summit')
+    })
   })
 
   describe('multi-track', () => {

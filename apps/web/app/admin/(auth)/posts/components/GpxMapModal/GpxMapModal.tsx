@@ -49,6 +49,7 @@ export interface GpxMapModalProps {
 interface WaypointMapping {
   name: string
   imageUrl: string
+  fetchIdx?: number
 }
 
 interface TrackInput {
@@ -87,6 +88,24 @@ function parseWaypointNames(text: string): string[] {
   return Array.from(doc.querySelectorAll('wpt'))
     .map((wpt) => wpt.querySelector('name')?.textContent ?? '')
     .filter(Boolean)
+}
+
+function getAvailableWaypoints(
+  fetched: string[],
+  mappings: WaypointMapping[],
+): Array<{ name: string; fetchIdx: number }> {
+  const mappedFetchIdxSet = new Set(
+    mappings.filter((m) => m.fetchIdx !== undefined).map((m) => m.fetchIdx!),
+  )
+  const initialMappingNames = new Set(
+    mappings.filter((m) => m.fetchIdx === undefined).map((m) => m.name),
+  )
+  return fetched
+    .map((name, fetchIdx) => ({ name, fetchIdx }))
+    .filter(
+      ({ name, fetchIdx }) =>
+        !mappedFetchIdxSet.has(fetchIdx) && !initialMappingNames.has(name),
+    )
 }
 
 function buildTrackLine(track: TrackInput): string {
@@ -144,7 +163,7 @@ export function GpxMapModal({
     Record<number, WaypointMapping[]>
   >(initialValues?.mappingsByTrack ?? {})
   const [pendingWaypointByTrack, setPendingWaypointByTrack] = useState<
-    Record<number, string>
+    Record<number, number | undefined>
   >({})
   const [isImagePickerOpenForTrack, setIsImagePickerOpenForTrack] = useState<
     number | null
@@ -158,13 +177,14 @@ export function GpxMapModal({
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setPendingWaypointByTrack((prev) => {
-      const next = { ...prev }
+      const next: Record<number, number | undefined> = { ...prev }
       tracks.forEach((_, i) => {
-        const available = (fetchedWaypointsByTrack[i] ?? []).filter(
-          (n) => !(mappingsByTrack[i] ?? []).some((m) => m.name === n),
+        const available = getAvailableWaypoints(
+          fetchedWaypointsByTrack[i] ?? [],
+          mappingsByTrack[i] ?? [],
         )
-        if (!available.includes(next[i] ?? '')) {
-          next[i] = available[0] ?? ''
+        if (!available.some((a) => a.fetchIdx === next[i])) {
+          next[i] = available[0]?.fetchIdx
         }
       })
       return next
@@ -277,7 +297,9 @@ export function GpxMapModal({
     activeEntries.forEach(({ origIdx }, outputIdx) => {
       const ms = mappingsByTrack[origIdx] ?? []
       ms.forEach((m) => {
-        imageLines.push(`${outputIdx}:${m.name}=${m.imageUrl}`)
+        imageLines.push(
+          `${outputIdx}:${m.fetchIdx !== undefined ? m.fetchIdx : m.name}=${m.imageUrl}`,
+        )
       })
     })
 
@@ -298,25 +320,30 @@ export function GpxMapModal({
     /* istanbul ignore next */
     if (
       isImagePickerOpenForTrack === null ||
-      !pendingWaypointByTrack[isImagePickerOpenForTrack]
+      pendingWaypointByTrack[isImagePickerOpenForTrack] === undefined
     )
       return
     const trackIdx = isImagePickerOpenForTrack
-    const waypointName = pendingWaypointByTrack[trackIdx]
+    const fetchIdx = pendingWaypointByTrack[trackIdx]!
+    /* istanbul ignore next */
+    const waypointName = fetchedWaypointsByTrack[trackIdx]?.[fetchIdx] ?? ''
     setMappingsByTrack((prev) => ({
       ...prev,
       [trackIdx]: [
         ...(prev[trackIdx] ?? []),
-        { name: waypointName, imageUrl: image.url },
+        { name: waypointName, fetchIdx, imageUrl: image.url },
       ],
     }))
     setIsImagePickerOpenForTrack(null)
   }
 
-  function removeMapping(trackIdx: number, name: string) {
+  function removeMapping(trackIdx: number, mappingIdx: number) {
     setMappingsByTrack((prev) => {
       const existing = prev[trackIdx] ?? /* istanbul ignore next */ []
-      return { ...prev, [trackIdx]: existing.filter((m) => m.name !== name) }
+      return {
+        ...prev,
+        [trackIdx]: existing.filter((_, i) => i !== mappingIdx),
+      }
     })
   }
 
@@ -329,7 +356,9 @@ export function GpxMapModal({
   tracks.forEach((_, trackIdx) => {
     const ms = mappingsByTrack[trackIdx] ?? []
     ms.forEach((m) => {
-      previewImageLines.push(`${trackIdx}:${m.name}=${m.imageUrl}`)
+      previewImageLines.push(
+        `${trackIdx}:${m.fetchIdx !== undefined ? m.fetchIdx : m.name}=${m.imageUrl}`,
+      )
     })
   })
   const previewContent = [...previewTrackLines, ...previewImageLines].join('\n')
@@ -364,11 +393,8 @@ export function GpxMapModal({
               const error = fetchErrorByTrack[index]
               const fetched = fetchedWaypointsByTrack[index] ?? []
               const trackMappings = mappingsByTrack[index] ?? []
-              const pendingWaypoint =
-                pendingWaypointByTrack[index] ?? /* istanbul ignore next */ ''
-              const available = fetched.filter(
-                (n) => !trackMappings.some((m) => m.name === n),
-              )
+              const pendingWaypoint = pendingWaypointByTrack[index]
+              const available = getAvailableWaypoints(fetched, trackMappings)
               const showWaypointSection =
                 track.showWaypoints && (loading || error || fetched.length > 0)
               return (
@@ -489,9 +515,9 @@ export function GpxMapModal({
 
                       {trackMappings.length > 0 && (
                         <StyledMappingsList>
-                          {trackMappings.map((m) => (
+                          {trackMappings.map((m, mappingIdx) => (
                             <StyledMappingRow
-                              key={m.name}
+                              key={mappingIdx}
                               data-testid={`mapping-row-${index}`}
                             >
                               <StyledMappingThumb
@@ -507,7 +533,7 @@ export function GpxMapModal({
                               <StyledRemoveButton
                                 type="button"
                                 aria-label={`Remove image for ${m.name}`}
-                                onClick={() => removeMapping(index, m.name)}
+                                onClick={() => removeMapping(index, mappingIdx)}
                                 data-testid={`mapping-remove-${index}`}
                               >
                                 ×
@@ -520,15 +546,22 @@ export function GpxMapModal({
                       {available.length > 0 && (
                         <StyledAddRow>
                           <Select
-                            value={pendingWaypoint}
+                            value={
+                              pendingWaypoint !== undefined
+                                ? String(pendingWaypoint)
+                                : ''
+                            }
                             onChange={(v) =>
                               setPendingWaypointByTrack((prev) => ({
                                 ...prev,
-                                [index]: v,
+                                [index]:
+                                  v !== ''
+                                    ? parseInt(v, 10)
+                                    : /* istanbul ignore next */ undefined,
                               }))
                             }
-                            options={available.map((name) => ({
-                              value: name,
+                            options={available.map(({ name, fetchIdx }) => ({
+                              value: String(fetchIdx),
                               label: name,
                             }))}
                             isSearchable
@@ -537,7 +570,7 @@ export function GpxMapModal({
                           />
                           <StyledPickImageButton
                             type="button"
-                            disabled={!pendingWaypoint}
+                            disabled={pendingWaypoint === undefined}
                             onClick={() => setIsImagePickerOpenForTrack(index)}
                             data-testid={`pick-image-button-${index}`}
                           >

@@ -677,9 +677,10 @@ export function GpxMap({
                   {trackWaypoints.map((wpt, i) => {
                     const effectiveImages =
                       track.waypointImages ?? waypointImages
-                    const hasDetails = !!(
-                      effectiveImages?.[wpt.name] || wpt.desc
-                    )
+                    const wptImage =
+                      effectiveImages?.[String(i)] ??
+                      effectiveImages?.[wpt.name]
+                    const hasDetails = !!(wptImage || wpt.desc)
                     const isExpanded = expandedIndex === i
                     return (
                       <Fragment key={`${wpt.name}-${i}`}>
@@ -726,10 +727,10 @@ export function GpxMap({
                         {hasDetails && isExpanded && (
                           <tr data-details="true">
                             <td colSpan={4}>
-                              {effectiveImages?.[wpt.name] && (
+                              {wptImage && (
                                 <StyledWaypointImageCard
                                   data-testid="waypoint-image-card"
-                                  src={effectiveImages[wpt.name]}
+                                  src={wptImage}
                                   alt={wpt.name}
                                 />
                               )}

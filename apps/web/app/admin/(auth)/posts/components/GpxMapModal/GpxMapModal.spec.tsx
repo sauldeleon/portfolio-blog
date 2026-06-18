@@ -886,8 +886,9 @@ describe('GpxMapModal', () => {
         jest.advanceTimersByTime(600)
       })
       expect(await screen.findByTestId('waypoint-select-0')).toBeInTheDocument()
+      // 'Water Source' is at fetchIdx 1
       fireEvent.change(screen.getByTestId('waypoint-select-0'), {
-        target: { value: 'Water Source' },
+        target: { value: '1' },
       })
       fireEvent.click(screen.getByTestId('pick-image-button-0'))
       fireEvent.click(screen.getByTestId('image-picker-pick'))
@@ -909,12 +910,44 @@ describe('GpxMapModal', () => {
         jest.advanceTimersByTime(600)
       })
       expect(await screen.findByTestId('waypoint-select-0')).toBeInTheDocument()
+      // 'Water Source' is at fetchIdx 1
       fireEvent.change(screen.getByTestId('waypoint-select-0'), {
-        target: { value: 'Water Source' },
+        target: { value: '1' },
       })
-      expect(screen.getByTestId('waypoint-select-0')).toHaveValue(
-        'Water Source',
+      expect(screen.getByTestId('waypoint-select-0')).toHaveValue('1')
+    })
+
+    it('keeps duplicate-named waypoints separate in dropdown', async () => {
+      setupFetch(`<?xml version="1.0"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1">
+  <wpt lat="43.5" lon="-5.6"><name>Summit</name></wpt>
+  <wpt lat="43.6" lon="-5.7"><name>Summit</name></wpt>
+</gpx>`)
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/track.gpx' },
+      })
+      act(() => {
+        jest.advanceTimersByTime(600)
+      })
+      expect(await screen.findByTestId('waypoint-select-0')).toBeInTheDocument()
+      // Both Summit entries appear (fetchIdx 0 and 1)
+      const optsBefore = within(
+        screen.getByTestId('waypoint-select-0'),
+      ).getAllByRole('option')
+      expect(optsBefore).toHaveLength(2)
+      // Pick image for the first Summit (fetchIdx 0 selected by default)
+      fireEvent.click(screen.getByTestId('pick-image-button-0'))
+      fireEvent.click(screen.getByTestId('image-picker-pick'))
+      // Second Summit (fetchIdx 1) still in dropdown
+      const optsAfter = within(
+        screen.getByTestId('waypoint-select-0'),
+      ).getAllByRole('option')
+      expect(optsAfter).toHaveLength(1)
+      expect(optsAfter[0].textContent).toBe('Summit')
     })
 
     it('includes waypoint image lines in insert markdown', async () => {
@@ -935,7 +968,7 @@ describe('GpxMapModal', () => {
       fireEvent.click(screen.getByTestId('image-picker-pick'))
       fireEvent.click(screen.getByTestId('gpx-modal-insert'))
       expect(onInsert).toHaveBeenCalledWith(
-        '\n\n```gpx\ntrack:https://example.com/track.gpx ||| showWaypoints\n0:Summit=https://cdn.com/img.jpg\n```\n\n',
+        '\n\n```gpx\ntrack:https://example.com/track.gpx ||| showWaypoints\n0:0=https://cdn.com/img.jpg\n```\n\n',
       )
     })
 
@@ -957,7 +990,7 @@ describe('GpxMapModal', () => {
       fireEvent.click(screen.getByTestId('pick-image-button-0'))
       fireEvent.click(screen.getByTestId('image-picker-pick'))
       expect(screen.getByTestId('gpx-preview').textContent).toBe(
-        '```gpx\ntrack:https://example.com/track.gpx ||| showWaypoints\n0:Summit=https://cdn.com/img.jpg\n```',
+        '```gpx\ntrack:https://example.com/track.gpx ||| showWaypoints\n0:0=https://cdn.com/img.jpg\n```',
       )
     })
 
@@ -1205,6 +1238,36 @@ describe('GpxMapModal initialValues', () => {
       />,
     )
     expect(screen.getByTestId('gpx-track-url-0')).toHaveValue('')
+  })
+
+  it('uses waypoint name as key when mapping has no fetchIdx (legacy format)', () => {
+    const onInsert = jest.fn()
+    renderApp(
+      <GpxMapModal
+        isOpen
+        onInsert={onInsert}
+        onCancel={jest.fn()}
+        initialValues={{
+          tracks: [
+            {
+              url: 'https://cdn.com/route.gpx',
+              name: '',
+              color: '',
+              allowDownload: false,
+              showWaypoints: false,
+              showElevation: false,
+            },
+          ],
+          mappingsByTrack: {
+            0: [{ name: 'Summit', imageUrl: 'https://cdn.com/img.jpg' }],
+          },
+        }}
+      />,
+    )
+    fireEvent.click(screen.getByTestId('gpx-modal-insert'))
+    expect(onInsert).toHaveBeenCalledWith(
+      '\n\n```gpx\ntrack:https://cdn.com/route.gpx\n0:Summit=https://cdn.com/img.jpg\n```\n\n',
+    )
   })
 })
 
