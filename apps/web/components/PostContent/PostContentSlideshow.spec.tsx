@@ -273,6 +273,25 @@ describe('PostContentSlideshow', () => {
     ).not.toBeInTheDocument()
   })
 
+  it('clicking prev/next on expandable slideshow does not open modal', () => {
+    renderWithTheme(
+      <PostContentSlideshow
+        slides={JSON.stringify([
+          { src: '/img1.jpg', alt: 'expand=true&alt=first' },
+          { src: '/img2.jpg', alt: 'expand=true&alt=second' },
+        ])}
+      />,
+    )
+    fireEvent.click(screen.getByTestId('slideshow-next'))
+    expect(
+      screen.queryByTestId('slideshow-image-modal'),
+    ).not.toBeInTheDocument()
+    fireEvent.click(screen.getByTestId('slideshow-prev'))
+    expect(
+      screen.queryByTestId('slideshow-image-modal'),
+    ).not.toBeInTheDocument()
+  })
+
   it('expand=false: clicking image wrapper does not open modal', () => {
     renderWithTheme(<PostContentSlideshow slides={singleSlide} />)
     fireEvent.click(screen.getByTestId('slideshow-image-wrapper'))
