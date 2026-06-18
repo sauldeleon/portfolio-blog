@@ -553,7 +553,7 @@ describe('CategoryTable', () => {
     fireEvent.change(screen.getByTestId('edit-name-input'), {
       target: { value: 'Montañismo' },
     })
-    expect(screen.getByTestId('edit-slug-input')).toHaveValue('montañismo')
+    expect(screen.getByTestId('edit-slug-input')).toHaveValue('montanismo')
   })
 
   it('stops auto-generating slug once user manually edits it', () => {
@@ -631,6 +631,6 @@ describe('CategoryTable', () => {
     fireEvent.change(screen.getByTestId('edit-name-input'), {
       target: { value: 'Montañismo' },
     })
-    expect(screen.getByTestId('edit-slug-input')).toHaveValue('montañismo')
+    expect(screen.getByTestId('edit-slug-input')).toHaveValue('montanismo')
   })
 })
