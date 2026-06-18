@@ -43,12 +43,14 @@ export function PostContentSlideshow({
     index: number
     direction: 'next' | 'prev'
   } | null>(null)
-  const exitTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const exitTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined,
+  )
   const { t } = useClientTranslation('common')
 
   useEffect(() => {
     return () => {
-      clearTimeout(exitTimerRef.current ?? undefined)
+      clearTimeout(exitTimerRef.current)
     }
   }, [])
 
@@ -85,7 +87,7 @@ export function PostContentSlideshow({
   const canGoNext = currentIndex < slides.length - 1
 
   function goPrev() {
-    clearTimeout(exitTimerRef.current ?? undefined)
+    clearTimeout(exitTimerRef.current)
     setExiting({ index: currentIndex, direction: 'prev' })
     setDirection('prev')
     setCurrentIndex((i) => i - 1)
@@ -96,7 +98,7 @@ export function PostContentSlideshow({
   }
 
   function goNext() {
-    clearTimeout(exitTimerRef.current ?? undefined)
+    clearTimeout(exitTimerRef.current)
     setExiting({ index: currentIndex, direction: 'next' })
     setDirection('next')
     setCurrentIndex((i) => i + 1)
