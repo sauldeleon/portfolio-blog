@@ -25,6 +25,7 @@ export const StyledGpxMapModal = styled(ModalOverlays)`
   box-shadow: 0 0 16px 4px rgba(152, 223, 214, 0.5);
   border-radius: 2px;
   background-color: ${({ theme }) => theme.colors.black};
+  overflow-y: auto;
 
   ${({ theme }) => theme.media.up.md} {
     top: 5vh;
@@ -34,7 +35,6 @@ export const StyledGpxMapModal = styled(ModalOverlays)`
     height: auto;
     max-width: min(900px, 90vw);
     max-height: 90vh;
-    overflow: hidden;
   }
 `
 
