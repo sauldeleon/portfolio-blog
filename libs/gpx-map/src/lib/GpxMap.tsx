@@ -387,8 +387,11 @@ function GpxTrackLayer({
           const imgUrl = name ? imgs[name] : undefined
           if (imgUrl) {
             ;(l as L.Marker).bindPopup(
-              `<img src="${imgUrl}" style="width:180px;max-height:160px;object-fit:contain;display:block;" alt="${name}" />`,
-              { maxWidth: 200 },
+              `<div style="background:#111;border-radius:6px;overflow:hidden;min-width:160px;max-width:200px;">` +
+                `<img src="${imgUrl}" style="width:100%;max-height:150px;object-fit:cover;display:block;" alt="${name}" />` +
+                `<p style="margin:0;padding:6px 8px;font-size:0.75rem;color:#eee;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${name}</p>` +
+                `</div>`,
+              { maxWidth: 210, className: 'gpx-waypoint-popup' },
             )
           }
         })

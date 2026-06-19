@@ -967,7 +967,11 @@ describe('GpxMap', () => {
       })
       expect(mockBindPopup).toHaveBeenCalledWith(
         expect.stringContaining('https://cdn.com/img.jpg'),
-        expect.objectContaining({ maxWidth: 200 }),
+        expect.objectContaining({ maxWidth: 210 }),
+      )
+      expect(mockBindPopup).toHaveBeenCalledWith(
+        expect.stringContaining('Refugio Mar'),
+        expect.anything(),
       )
     })
 
