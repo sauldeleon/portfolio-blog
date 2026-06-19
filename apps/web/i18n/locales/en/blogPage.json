@@ -41,5 +41,8 @@
   "comments.disabled": "Comments are disabled for this post.",
   "comments.reply": "↳ Reply",
   "comments.replyTo": "Reply to {{username}}",
-  "preview.banner": "Admin preview — this post is not publicly visible"
+  "preview.banner": "Admin preview — this post is not publicly visible",
+  "stickyBar.langLabel": "ES",
+  "stickyBar.langSwitchAria": "Switch to Spanish",
+  "stickyBar.scrollTopAria": "Back to top"
 }

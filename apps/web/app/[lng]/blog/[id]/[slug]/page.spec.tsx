@@ -110,6 +110,10 @@ jest.mock('@web/components/PostLikeButton', () => ({
   PostLikeButton: () => <div data-testid="post-like-button" />,
 }))
 
+jest.mock('@web/components/PostStickyBar', () => ({
+  PostStickyBar: () => <div data-testid="post-sticky-bar" />,
+}))
+
 const publishedPost = {
   id: '01JXYZ',
   postNumber: 1,

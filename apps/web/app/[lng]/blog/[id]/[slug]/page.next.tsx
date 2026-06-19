@@ -9,6 +9,7 @@ import { JsonLd } from '@web/components/JsonLd/JsonLd'
 import { PostComments } from '@web/components/PostComments'
 import { PostContent } from '@web/components/PostContent/PostContent'
 import { PostLikeButton } from '@web/components/PostLikeButton'
+import { PostStickyBar } from '@web/components/PostStickyBar'
 import { RelatedPosts } from '@web/components/RelatedPosts/RelatedPosts'
 import { SeriesIndicator } from '@web/components/SeriesIndicator/SeriesIndicator'
 import { SubscribeModal } from '@web/components/SubscribeModal'
@@ -143,7 +144,11 @@ export default async function BlogPostPage({ params }: RouteProps) {
 
   const postNumber = parseInt(id, 10)
   if (isNaN(postNumber)) return notFound()
-  const post = await getPostByNumber(postNumber, lng as Locale)
+  const altLng: Locale = lng === 'en' ? 'es' : 'en'
+  const [post, postAlt] = await Promise.all([
+    getPostByNumber(postNumber, lng as Locale),
+    getPostByNumber(postNumber, altLng),
+  ])
   if (!post || post.status !== 'published') return notFound()
   if (post.slug !== slug)
     return redirect(`/${lng}/blog/${post.postNumber}/${post.slug}`)
@@ -158,6 +163,7 @@ export default async function BlogPostPage({ params }: RouteProps) {
     getCategoryName(post.category, lng as Locale),
   ])
   const postUrl = `${getSiteUrl()}/${lng}/blog/${post.postNumber}/${post.slug}`
+  const altLangPath = `/${altLng}/blog/${postNumber}/${postAlt?.slug ?? post.slug}`
 
   return (
     <StyledPage>
@@ -190,6 +196,16 @@ export default async function BlogPostPage({ params }: RouteProps) {
             />
           </>
         }
+      />
+      <PostStickyBar
+        title={post.title}
+        url={postUrl}
+        altLangPath={altLangPath}
+        altLangLabel={t('stickyBar.langLabel')}
+        altLangAriaLabel={t('stickyBar.langSwitchAria')}
+        scrollTopAriaLabel={t('stickyBar.scrollTopAria')}
+        copyLinkLabel={t('share.copyLink')}
+        copiedLabel={t('share.copied')}
       />
       {toc.length > 0 && <TableOfContents entries={toc} label={t('toc')} />}
       <PostContent>
