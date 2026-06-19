@@ -41,5 +41,8 @@
   "comments.disabled": "Los comentarios están desactivados para esta publicación.",
   "comments.reply": "↳ Responder",
   "comments.replyTo": "Responder a {{username}}",
-  "preview.banner": "Vista previa — esta publicación no es visible públicamente"
+  "preview.banner": "Vista previa — esta publicación no es visible públicamente",
+  "stickyBar.langLabel": "EN",
+  "stickyBar.langSwitchAria": "Cambiar a inglés",
+  "stickyBar.scrollTopAria": "Volver arriba"
 }

@@ -45,7 +45,11 @@ describe('slugify', () => {
     expect(slugify('my-category')).toBe('my-category')
   })
 
-  it('preserves unicode letters', () => {
-    expect(slugify('Montañismo')).toBe('montañismo')
+  it('strips diacritics from unicode letters', () => {
+    expect(slugify('Montañismo')).toBe('montanismo')
+  })
+
+  it('strips accented vowels', () => {
+    expect(slugify('Góriz')).toBe('goriz')
   })
 })

@@ -1,0 +1,181 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`PostStickyBar matches snapshot 1`] = `
+.c0 {
+  height: 0;
+  overflow: hidden;
+}
+
+.c1 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9000;
+  height: 48px;
+  background: #000000;
+  color: #FBFBFB;
+  border-bottom: 1px solid rgba(152, 223, 214, 0.2);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease,visibility 0s 0.2s;
+}
+
+.c2 {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  height: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.c3 {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.75rem;
+  opacity: 0.8;
+  display: none;
+}
+
+.c4 {
+  display: flex;
+  align-items: center;
+}
+
+.c5 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.c6 {
+  display: block;
+  width: 1px;
+  height: 1rem;
+  background: rgba(152, 223, 214, 0.25);
+  flex-shrink: 0;
+}
+
+.c8 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: #FBFBFB;
+  width: 1.5rem;
+  height: 1.5rem;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.c8:hover {
+  opacity: 1;
+}
+
+.c7 {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: none;
+  border: none;
+  color: #FBFBFB;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  height: 1.5rem;
+  padding: 0 0.4rem;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.c7:hover {
+  opacity: 1;
+}
+
+@media (width >= 768px) {
+  .c1 {
+    height: 56px;
+  }
+}
+
+@media (width >= 1024px) {
+  .c2 {
+    padding: 0 2rem;
+  }
+}
+
+@media (width >= 480px) {
+  .c3 {
+    display: block;
+  }
+}
+
+<body>
+  <div>
+    <div
+      aria-hidden="true"
+      class="c0"
+      data-testid="sticky-bar-sentinel"
+    />
+    <div
+      aria-hidden="true"
+      class="c1"
+      data-testid="sticky-bar"
+    >
+      <div
+        class="c2"
+      >
+        <span
+          class="c3"
+        >
+          My Post Title
+        </span>
+        <div
+          class="c4"
+        >
+          <div
+            data-testid="share-buttons"
+            data-title="My Post Title"
+            data-url="https://example.com/en/blog/5/my-post"
+          />
+        </div>
+        <div
+          class="c5"
+        >
+          <span
+            aria-hidden="true"
+            class="c6"
+            data-testid="actions-divider"
+          />
+          <button
+            aria-label="Switch to Spanish"
+            class="c7"
+            data-testid="lang-switch-button"
+          >
+            ES
+          </button>
+          <button
+            aria-label="Back to top"
+            class="c8"
+            data-testid="scroll-top-button"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;

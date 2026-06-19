@@ -110,6 +110,10 @@ jest.mock('@web/components/PostLikeButton', () => ({
   PostLikeButton: () => <div data-testid="post-like-button" />,
 }))
 
+jest.mock('@web/components/PostStickyBar', () => ({
+  PostStickyBar: () => <div data-testid="post-sticky-bar" />,
+}))
+
 const publishedPost = {
   id: '01JXYZ',
   postNumber: 1,
@@ -200,6 +204,18 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
     })
     render(ui)
     expect(screen.getByTestId('post-hero')).toBeInTheDocument()
+  })
+
+  it('falls back to own slug for altLangPath when alt post not found', async () => {
+    mockGetPostByNumber
+      .mockResolvedValueOnce(publishedPost)
+      .mockResolvedValueOnce(null)
+    const { default: BlogPostPage } = require('./page.next')
+    const ui = await BlogPostPage({
+      params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
+    })
+    render(ui)
+    expect(screen.getByTestId('post-sticky-bar')).toBeInTheDocument()
   })
 
   it('passes url and share labels to PostHero', async () => {

@@ -1,6 +1,7 @@
 import { getPostTranslations } from '@web/lib/db/queries/posts'
 import { sendNewPostNotifications } from '@web/lib/email/sendNewPostNotifications'
 import { logger } from '@web/lib/logger'
+import { getSiteUrl } from '@web/utils/url/generateUrl'
 
 interface PostForNotification {
   id: string
@@ -12,15 +13,26 @@ interface PostForNotification {
   seriesOrder: number | null
 }
 
+type TranslationEntry = { title: string; excerpt: string; slug: string }
+
 export async function notifyPostPublished(
   post: PostForNotification,
   logContext: string,
 ): Promise<void> {
   try {
+    const siteUrl = getSiteUrl()
+
+    if (siteUrl.includes('localhost')) {
+      logger.warn(
+        { logContext },
+        'notifyPostPublished: skipping notifications on localhost',
+      )
+      return
+    }
+
     const allTranslations = await getPostTranslations(post.id)
-    const translationsByLocale: Partial<
-      Record<'en' | 'es', { title: string; excerpt: string; slug: string }>
-    > = {}
+    const translationsByLocale: Partial<Record<'en' | 'es', TranslationEntry>> =
+      {}
     for (const t of allTranslations) {
       translationsByLocale[t.locale as 'en' | 'es'] = {
         title: t.title,
@@ -28,6 +40,21 @@ export async function notifyPostPublished(
         excerpt: t.excerpt,
       }
     }
+
+    for (const [locale, translation] of Object.entries(
+      translationsByLocale,
+    ) as [string, TranslationEntry][]) {
+      const url = `${siteUrl}/${locale}/blog/${post.postNumber}/${translation.slug}`
+      const res = await fetch(url, { method: 'HEAD' })
+      if (!res.ok) {
+        logger.warn(
+          { url, status: res.status, logContext },
+          'notifyPostPublished: post page not reachable, skipping notifications',
+        )
+        return
+      }
+    }
+
     await sendNewPostNotifications({
       postId: post.id,
       postNumber: post.postNumber,
