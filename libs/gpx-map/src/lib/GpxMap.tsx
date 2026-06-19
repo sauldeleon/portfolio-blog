@@ -379,22 +379,34 @@ function GpxTrackLayer({
       map.fitBounds(layer.getBounds())
       const imgs = waypointImagesRef.current
       if (imgs) {
-        layer.eachLayer((l) => {
+        let wptIdx = 0
+        const bindToMarker = (l: L.Layer) => {
+          if ((l as L.LayerGroup).eachLayer) {
+            ;(l as L.LayerGroup).eachLayer(bindToMarker)
+            return
+          }
           const opts = (l as L.Marker).options as L.MarkerOptions & {
             title?: string
+            type?: string
           }
-          const name = opts?.title
-          const imgUrl = name ? imgs[name] : undefined
+          if (opts.type !== 'waypoint') return
+          const name = opts.title
+          const imgUrl = imgs[String(wptIdx)] ?? (name ? imgs[name] : undefined)
+          wptIdx++
           if (imgUrl) {
-            ;(l as L.Marker).bindPopup(
-              `<div style="background:#111;border-radius:6px;overflow:hidden;min-width:160px;max-width:200px;">` +
-                `<img src="${imgUrl}" style="width:100%;max-height:150px;object-fit:cover;display:block;" alt="${name}" />` +
-                `<p style="margin:0;padding:6px 8px;font-size:0.75rem;color:#eee;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${name}</p>` +
-                `</div>`,
-              { maxWidth: 210, className: 'gpx-waypoint-popup' },
-            )
+            const content =
+              `<div style="min-width:160px;max-width:200px;">` +
+              `<img src="${imgUrl}" style="width:100%;max-height:150px;object-fit:cover;display:block;" alt="${name ?? ''}" />` +
+              `<p style="margin:0;padding:6px 8px;font-size:0.75rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${name ?? ''}</p>` +
+              `</div>`
+            ;(l as L.Marker).unbindPopup().bindTooltip(content, {
+              className: 'gpx-waypoint-popup',
+              direction: 'top',
+              offset: [0, -20],
+            })
           }
-        })
+        }
+        layer.eachLayer(bindToMarker)
       }
     })
 

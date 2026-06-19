@@ -18,6 +18,47 @@ export const StyledMapContainer = styled.div`
     height: 100%;
     border-radius: 2px;
   }
+
+  .gpx-waypoint-popup .leaflet-popup-content-wrapper {
+    background: #111;
+    color: #eee;
+    border-radius: 8px;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+  }
+
+  .gpx-waypoint-popup .leaflet-popup-content {
+    margin: 0;
+  }
+
+  .gpx-waypoint-popup .leaflet-popup-tip {
+    background: #111;
+  }
+
+  .gpx-waypoint-popup .leaflet-popup-close-button {
+    color: rgba(255, 255, 255, 0.5);
+    top: 4px;
+    right: 6px;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+  .gpx-waypoint-popup.leaflet-tooltip {
+    background: #111;
+    color: #eee;
+    border: none;
+    border-radius: 8px;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+
+    &::before {
+      border-top-color: #111;
+    }
+  }
 `
 
 export const StyledDownloadBar = styled.div`
