@@ -948,10 +948,16 @@ describe('GpxMap', () => {
       expect(mockEachLayer).not.toHaveBeenCalled()
     })
 
-    it('binds popup to layer with matching title', () => {
-      const mockBindPopup = jest.fn()
+    const makeWptMarker = (title: string) => ({
+      options: { title, type: 'waypoint' },
+      unbindPopup: jest.fn().mockReturnThis(),
+      bindTooltip: jest.fn(),
+    })
+
+    it('unbinds popup and binds tooltip for waypoint with matching title', () => {
+      const marker = makeWptMarker('Refugio Mar')
       mockEachLayer.mockImplementationOnce((cb: (l: unknown) => void) => {
-        cb({ options: { title: 'Refugio Mar' }, bindPopup: mockBindPopup })
+        cb(marker)
       })
       render(
         <GpxMap
@@ -965,16 +971,75 @@ describe('GpxMap', () => {
       act(() => {
         loadedCallback()
       })
-      expect(mockBindPopup).toHaveBeenCalledWith(
+      expect(marker.unbindPopup).toHaveBeenCalled()
+      expect(marker.bindTooltip).toHaveBeenCalledWith(
         expect.stringContaining('https://cdn.com/img.jpg'),
-        expect.objectContaining({ maxWidth: 200 }),
+        expect.objectContaining({ className: 'gpx-waypoint-popup' }),
       )
     })
 
-    it('does not bind popup to layer without title', () => {
-      const mockBindPopup = jest.fn()
+    it('uses index-based key from waypointImages for tooltip', () => {
+      const marker = makeWptMarker('Brecha de Roland')
       mockEachLayer.mockImplementationOnce((cb: (l: unknown) => void) => {
-        cb({ options: {}, bindPopup: mockBindPopup })
+        cb(marker)
+      })
+      render(
+        <GpxMap
+          url={GPX_URL}
+          waypointImages={{ '0': 'https://cdn.com/idx.jpg' }}
+        />,
+      )
+      const loadedCallback = mockOn.mock.calls.find(
+        (c: [string, () => void]) => c[0] === 'loaded',
+      )?.[1]
+      act(() => {
+        loadedCallback()
+      })
+      expect(marker.bindTooltip).toHaveBeenCalledWith(
+        expect.stringContaining('https://cdn.com/idx.jpg'),
+        expect.anything(),
+      )
+    })
+
+    it('supports duplicate waypoint names via index-based lookup', () => {
+      const m0 = makeWptMarker('Summit')
+      const m1 = makeWptMarker('Summit')
+      mockEachLayer.mockImplementationOnce((cb: (l: unknown) => void) => {
+        cb(m0)
+        cb(m1)
+      })
+      render(
+        <GpxMap
+          url={GPX_URL}
+          waypointImages={{
+            '0': 'https://cdn.com/img0.jpg',
+            '1': 'https://cdn.com/img1.jpg',
+          }}
+        />,
+      )
+      const loadedCallback = mockOn.mock.calls.find(
+        (c: [string, () => void]) => c[0] === 'loaded',
+      )?.[1]
+      act(() => {
+        loadedCallback()
+      })
+      expect(m0.bindTooltip).toHaveBeenCalledWith(
+        expect.stringContaining('https://cdn.com/img0.jpg'),
+        expect.anything(),
+      )
+      expect(m1.bindTooltip).toHaveBeenCalledWith(
+        expect.stringContaining('https://cdn.com/img1.jpg'),
+        expect.anything(),
+      )
+    })
+
+    it('recursively iterates nested FeatureGroup to find markers', () => {
+      const marker = makeWptMarker('Refugio Mar')
+      const innerGroup = {
+        eachLayer: jest.fn((cb: (l: unknown) => void) => cb(marker)),
+      }
+      mockEachLayer.mockImplementationOnce((cb: (l: unknown) => void) => {
+        cb(innerGroup)
       })
       render(
         <GpxMap
@@ -988,13 +1053,20 @@ describe('GpxMap', () => {
       act(() => {
         loadedCallback()
       })
-      expect(mockBindPopup).not.toHaveBeenCalled()
+      expect(marker.bindTooltip).toHaveBeenCalledWith(
+        expect.stringContaining('https://cdn.com/img.jpg'),
+        expect.objectContaining({ className: 'gpx-waypoint-popup' }),
+      )
     })
 
-    it('does not bind popup when title not in waypointImages', () => {
-      const mockBindPopup = jest.fn()
+    it('skips unnamed waypoint when no index image exists', () => {
+      const marker = {
+        options: { type: 'waypoint' },
+        unbindPopup: jest.fn().mockReturnThis(),
+        bindTooltip: jest.fn(),
+      }
       mockEachLayer.mockImplementationOnce((cb: (l: unknown) => void) => {
-        cb({ options: { title: 'Unknown' }, bindPopup: mockBindPopup })
+        cb(marker)
       })
       render(
         <GpxMap
@@ -1008,13 +1080,88 @@ describe('GpxMap', () => {
       act(() => {
         loadedCallback()
       })
-      expect(mockBindPopup).not.toHaveBeenCalled()
+      expect(marker.unbindPopup).not.toHaveBeenCalled()
+      expect(marker.bindTooltip).not.toHaveBeenCalled()
+    })
+
+    it('skips non-waypoint layers (start/end markers)', () => {
+      const startMarker = {
+        options: {},
+        unbindPopup: jest.fn(),
+        bindTooltip: jest.fn(),
+      }
+      mockEachLayer.mockImplementationOnce((cb: (l: unknown) => void) => {
+        cb(startMarker)
+      })
+      render(
+        <GpxMap
+          url={GPX_URL}
+          waypointImages={{ '0': 'https://cdn.com/img.jpg' }}
+        />,
+      )
+      const loadedCallback = mockOn.mock.calls.find(
+        (c: [string, () => void]) => c[0] === 'loaded',
+      )?.[1]
+      act(() => {
+        loadedCallback()
+      })
+      expect(startMarker.unbindPopup).not.toHaveBeenCalled()
+      expect(startMarker.bindTooltip).not.toHaveBeenCalled()
+    })
+
+    it('does not bind tooltip when waypoint not in waypointImages', () => {
+      const marker = makeWptMarker('Unknown')
+      mockEachLayer.mockImplementationOnce((cb: (l: unknown) => void) => {
+        cb(marker)
+      })
+      render(
+        <GpxMap
+          url={GPX_URL}
+          waypointImages={{ 'Refugio Mar': 'https://cdn.com/img.jpg' }}
+        />,
+      )
+      const loadedCallback = mockOn.mock.calls.find(
+        (c: [string, () => void]) => c[0] === 'loaded',
+      )?.[1]
+      act(() => {
+        loadedCallback()
+      })
+      expect(marker.unbindPopup).not.toHaveBeenCalled()
+      expect(marker.bindTooltip).not.toHaveBeenCalled()
+    })
+
+    it('binds tooltip for waypoint with no title when index image exists', () => {
+      const marker = {
+        options: { type: 'waypoint' },
+        unbindPopup: jest.fn().mockReturnThis(),
+        bindTooltip: jest.fn(),
+      }
+      mockEachLayer.mockImplementationOnce((cb: (l: unknown) => void) => {
+        cb(marker)
+      })
+      render(
+        <GpxMap
+          url={GPX_URL}
+          waypointImages={{ '0': 'https://cdn.com/notitle.jpg' }}
+        />,
+      )
+      const loadedCallback = mockOn.mock.calls.find(
+        (c: [string, () => void]) => c[0] === 'loaded',
+      )?.[1]
+      act(() => {
+        loadedCallback()
+      })
+      expect(marker.unbindPopup).toHaveBeenCalled()
+      expect(marker.bindTooltip).toHaveBeenCalledWith(
+        expect.stringContaining('https://cdn.com/notitle.jpg'),
+        expect.objectContaining({ className: 'gpx-waypoint-popup' }),
+      )
     })
 
     it('uses per-track waypointImages when provided on track def', () => {
-      const mockBindPopup = jest.fn()
+      const marker = makeWptMarker('Summit')
       mockEachLayer.mockImplementationOnce((cb: (l: unknown) => void) => {
-        cb({ options: { title: 'Summit' }, bindPopup: mockBindPopup })
+        cb(marker)
       })
       render(
         <GpxMap
@@ -1032,7 +1179,7 @@ describe('GpxMap', () => {
       act(() => {
         loadedCallback()
       })
-      expect(mockBindPopup).toHaveBeenCalledWith(
+      expect(marker.bindTooltip).toHaveBeenCalledWith(
         expect.stringContaining('https://cdn.com/track-img.jpg'),
         expect.anything(),
       )

@@ -108,23 +108,25 @@ export const StyledSlideshowArrow = styled.button<{ $side: 'prev' | 'next' }>`
   svg {
     width: 7px;
     height: 12px;
+    translate: ${({ $side }) => ($side === 'next' ? '1px 0' : '-1px 0')};
   }
 
-  background: rgba(0, 0, 0, 0.4);
-  border: none;
+  background: rgba(0, 0, 0, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.6);
   border-radius: 50%;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
   cursor: pointer;
   color: ${({ theme }) => theme.colors.white};
-  opacity: 0.75;
+  opacity: 1;
 
   &:hover:not(:disabled) {
-    opacity: 1;
-    background: rgba(0, 0, 0, 0.65);
+    background: rgba(0, 0, 0, 0.8);
+    border-color: ${({ theme }) => theme.colors.green};
     color: ${({ theme }) => theme.colors.green};
   }
 
   &:disabled {
-    opacity: 0.15;
+    opacity: 0.2;
     cursor: not-allowed;
   }
 
@@ -135,6 +137,7 @@ export const StyledSlideshowArrow = styled.button<{ $side: 'prev' | 'next' }>`
     svg {
       width: 10px;
       height: 16px;
+      translate: ${({ $side }) => ($side === 'next' ? '1px 0' : '-1px 0')};
     }
   }
 `
