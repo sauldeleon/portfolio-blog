@@ -206,6 +206,18 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
     expect(screen.getByTestId('post-hero')).toBeInTheDocument()
   })
 
+  it('falls back to own slug for altLangPath when alt post not found', async () => {
+    mockGetPostByNumber
+      .mockResolvedValueOnce(publishedPost)
+      .mockResolvedValueOnce(null)
+    const { default: BlogPostPage } = require('./page.next')
+    const ui = await BlogPostPage({
+      params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
+    })
+    render(ui)
+    expect(screen.getByTestId('post-sticky-bar')).toBeInTheDocument()
+  })
+
   it('passes url and share labels to PostHero', async () => {
     process.env.BASE_URL = 'https://example.com'
     mockGetPostByNumber.mockResolvedValue(publishedPost)
