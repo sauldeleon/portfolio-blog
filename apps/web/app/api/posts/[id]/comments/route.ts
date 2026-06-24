@@ -51,9 +51,15 @@ export async function POST(
     request.headers.get('x-real-ip') ??
     'anonymous'
 
+  logger.info(
+    { postId: id, ip, method: request.method, url: request.url },
+    'POST /api/posts/[id]/comments: received',
+  )
+
   if (ratelimit) {
     const { success } = await ratelimit.limit(`comment:${ip}`)
     if (!success) {
+      logger.warn({ postId: id, ip }, 'POST comment: rate limited')
       return NextResponse.json({ error: 'Too many requests' }, { status: 429 })
     }
   }
@@ -62,11 +68,16 @@ export async function POST(
   try {
     body = await request.json()
   } catch {
+    logger.warn({ postId: id, ip }, 'POST comment: invalid JSON body')
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
   }
 
   const parsed = createCommentSchema.safeParse(body)
   if (!parsed.success) {
+    logger.warn(
+      { postId: id, ip, issues: parsed.error.issues },
+      'POST comment: schema validation failed',
+    )
     return NextResponse.json({ error: parsed.error.issues }, { status: 400 })
   }
 
@@ -83,19 +94,38 @@ export async function POST(
   } = parsed.data
 
   if (honeypot) {
+    logger.warn({ postId: id, ip }, 'POST comment: honeypot triggered')
     return NextResponse.json({ ok: true })
   }
 
   const isValid = await verifyTurnstile(turnstileToken)
+  logger.debug(
+    { postId: id, ip, turnstileValid: isValid },
+    'POST comment: turnstile verified',
+  )
   if (!isValid) {
+    logger.warn({ postId: id, ip }, 'POST comment: turnstile rejected')
     return NextResponse.json({ error: 'Invalid captcha' }, { status: 422 })
   }
 
   const meta = await getPostMeta(id)
+  logger.debug(
+    {
+      postId: id,
+      status: meta?.status,
+      commentsEnabled: meta?.commentsEnabled,
+    },
+    'POST comment: post meta resolved',
+  )
   if (!meta || (meta.status !== 'published' && meta.status !== 'draft')) {
+    logger.warn(
+      { postId: id, status: meta?.status },
+      'POST comment: post not found or not commentable',
+    )
     return NextResponse.json({ error: 'Post not found' }, { status: 404 })
   }
   if (!meta.commentsEnabled) {
+    logger.warn({ postId: id }, 'POST comment: comments disabled for post')
     return NextResponse.json(
       { error: 'Comments are disabled for this post' },
       { status: 403 },
@@ -114,6 +144,11 @@ export async function POST(
       username: sanitizedUsername,
       body: sanitizedBody,
     })
+
+    logger.info(
+      { postId: id, ip, commentId: comment.id, parentId: parentId ?? null },
+      'POST comment: comment created',
+    )
 
     await notifyNewComment({
       username: sanitizedUsername,

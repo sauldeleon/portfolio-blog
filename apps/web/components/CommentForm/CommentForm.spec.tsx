@@ -1,5 +1,6 @@
 import { act, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import axios from 'axios'
 
 import { renderApp } from '@sdlgr/test-utils'
 
@@ -9,10 +10,13 @@ const mockT = jest.fn((key: string, opts?: { username?: string }) =>
   opts?.username ? `Reply to ${opts.username}` : key,
 )
 const mockUseClientTranslation = jest.fn()
-const mockFetch = jest.fn()
 const mockTurnstileOnSuccess = jest.fn()
 const mockTurnstileOnError = jest.fn()
 const mockTurnstileOnExpire = jest.fn()
+
+jest.mock('axios', () => ({ post: jest.fn() }))
+
+const mockAxiosPost = jest.mocked(axios.post)
 
 jest.mock('@web/i18n/client', () => ({
   useClientTranslation: () => mockUseClientTranslation(),
@@ -47,8 +51,7 @@ const defaultProps = {
 beforeEach(() => {
   jest.clearAllMocks()
   mockUseClientTranslation.mockReturnValue({ t: mockT })
-  global.fetch = mockFetch
-  mockFetch.mockResolvedValue({ ok: true })
+  mockAxiosPost.mockResolvedValue({ data: {} })
   process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY = 'test-site-key'
 })
 
@@ -108,12 +111,9 @@ describe('CommentForm', () => {
     await user.click(screen.getByRole('button'))
 
     await waitFor(() => {
-      expect(mockFetch).toHaveBeenCalledWith(
-        '/api/posts/post-ulid-123/comments',
-        expect.objectContaining({
-          method: 'POST',
-          body: expect.stringContaining('"username":"tester"'),
-        }),
+      expect(mockAxiosPost).toHaveBeenCalledWith(
+        '/api/posts/post-ulid-123/comments/',
+        expect.objectContaining({ username: 'tester' }),
       )
     })
   })
@@ -135,7 +135,7 @@ describe('CommentForm', () => {
   })
 
   it('shows error message on failed submit', async () => {
-    mockFetch.mockResolvedValue({ ok: false })
+    mockAxiosPost.mockRejectedValue(new Error('fail'))
     const user = userEvent.setup()
     renderApp(<CommentForm {...defaultProps} />)
     act(() => mockTurnstileOnSuccess('my-token'))
@@ -149,8 +149,8 @@ describe('CommentForm', () => {
     })
   })
 
-  it('shows error message when fetch throws', async () => {
-    mockFetch.mockRejectedValue(new Error('network'))
+  it('shows error message when the request throws', async () => {
+    mockAxiosPost.mockRejectedValue(new Error('network'))
     const user = userEvent.setup()
     renderApp(<CommentForm {...defaultProps} />)
     act(() => mockTurnstileOnSuccess('my-token'))
@@ -201,7 +201,7 @@ describe('CommentForm', () => {
     await waitFor(() => {
       expect(screen.getAllByRole('alert').length).toBeGreaterThan(0)
     })
-    expect(mockFetch).not.toHaveBeenCalled()
+    expect(mockAxiosPost).not.toHaveBeenCalled()
   })
 
   it('sends __cf_error__ token when captcha errored but form valid', async () => {
@@ -214,11 +214,9 @@ describe('CommentForm', () => {
     await user.click(screen.getByRole('button'))
 
     await waitFor(() => {
-      expect(mockFetch).toHaveBeenCalledWith(
+      expect(mockAxiosPost).toHaveBeenCalledWith(
         expect.any(String),
-        expect.objectContaining({
-          body: expect.stringContaining('"turnstileToken":"__cf_error__"'),
-        }),
+        expect.objectContaining({ turnstileToken: '__cf_error__' }),
       )
     })
   })
@@ -239,11 +237,9 @@ describe('CommentForm', () => {
     await user.click(screen.getByRole('button'))
 
     await waitFor(() => {
-      expect(mockFetch).toHaveBeenCalledWith(
+      expect(mockAxiosPost).toHaveBeenCalledWith(
         expect.any(String),
-        expect.objectContaining({
-          body: expect.stringContaining('"parentId":"parent-id"'),
-        }),
+        expect.objectContaining({ parentId: 'parent-id' }),
       )
     })
   })

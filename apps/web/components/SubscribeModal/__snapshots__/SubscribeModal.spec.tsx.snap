@@ -11,6 +11,20 @@ exports[`SubscribeModal renders compact button when compact is true 1`] = `
   border: 1px solid #FBFBFB;
   padding: 15px 20px;
   font-size: 0.9rem;
+  transition: opacity 0.15s,border-color 0.15s,color 0.15s;
+}
+
+.c0:hover:not(:disabled) {
+  opacity: 0.8;
+}
+
+.c0:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.c0:focus-visible {
+  outline: #FBFBFB auto 1px;
 }
 
 .c1 {
@@ -47,6 +61,20 @@ exports[`SubscribeModal renders trigger button 1`] = `
   border: 1px solid #FBFBFB;
   padding: 15px 20px;
   font-size: 0.9rem;
+  transition: opacity 0.15s,border-color 0.15s,color 0.15s;
+}
+
+.c0:hover:not(:disabled) {
+  opacity: 0.8;
+}
+
+.c0:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.c0:focus-visible {
+  outline: #FBFBFB auto 1px;
 }
 
 .c1 {

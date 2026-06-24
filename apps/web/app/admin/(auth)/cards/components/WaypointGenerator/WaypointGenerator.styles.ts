@@ -1,0 +1,50 @@
+import styled from 'styled-components'
+
+export const StyledForm = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+`
+
+export const StyledLangToggle = styled.div`
+  display: flex;
+  gap: 0.5rem;
+`
+
+export const StyledSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+`
+
+export const StyledSectionTitle = styled.h3`
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.colors.white};
+  opacity: 0.4;
+  margin: 0;
+`
+
+export const StyledGpxRow = styled.div`
+  display: flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+
+  > *:first-child {
+    flex: 1;
+  }
+`
+
+export const StyledError = styled.p`
+  font-size: 0.75rem;
+  color: ${({ theme }) => theme.colors.orange};
+  margin: 0;
+`
+
+export const StyledList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+`

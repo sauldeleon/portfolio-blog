@@ -1,5 +1,6 @@
 'use client'
 
+import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { RenderModalBackdropProps } from 'react-overlays/Modal'
 
@@ -90,12 +91,18 @@ function parseWaypointNames(text: string): string[] {
     .filter(Boolean)
 }
 
+function hasFetchedWaypointIndex(
+  mapping: WaypointMapping,
+): mapping is WaypointMapping & { fetchIdx: number } {
+  return mapping.fetchIdx !== undefined
+}
+
 function getAvailableWaypoints(
   fetched: string[],
   mappings: WaypointMapping[],
 ): Array<{ name: string; fetchIdx: number }> {
   const mappedFetchIdxSet = new Set(
-    mappings.filter((m) => m.fetchIdx !== undefined).map((m) => m.fetchIdx!),
+    mappings.filter(hasFetchedWaypointIndex).map((m) => m.fetchIdx),
   )
   const initialMappingNames = new Set(
     mappings.filter((m) => m.fetchIdx === undefined).map((m) => m.name),
@@ -225,9 +232,12 @@ export function GpxMapModal({
       controllers.push(controller)
 
       const timer = setTimeout(() => {
-        fetch(url, { signal: controller.signal })
-          .then((r) => r.text())
-          .then((text) => {
+        axios
+          .get<string>(url, {
+            signal: controller.signal,
+            responseType: 'text',
+          })
+          .then(({ data: text }) => {
             setFetchedWaypointsByTrack((prev) => ({
               ...prev,
               [i]: parseWaypointNames(text),
@@ -317,14 +327,12 @@ export function GpxMapModal({
   }
 
   function handleImagePick(image: CloudinaryImage) {
-    /* istanbul ignore next */
-    if (
-      isImagePickerOpenForTrack === null ||
-      pendingWaypointByTrack[isImagePickerOpenForTrack] === undefined
-    )
-      return
     const trackIdx = isImagePickerOpenForTrack
-    const fetchIdx = pendingWaypointByTrack[trackIdx]!
+    /* istanbul ignore next */
+    if (trackIdx === null) return
+    const fetchIdx = pendingWaypointByTrack[trackIdx]
+    /* istanbul ignore next */
+    if (fetchIdx === undefined) return
     /* istanbul ignore next */
     const waypointName = fetchedWaypointsByTrack[trackIdx]?.[fetchIdx] ?? ''
     setMappingsByTrack((prev) => ({

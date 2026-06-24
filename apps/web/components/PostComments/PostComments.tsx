@@ -94,7 +94,7 @@ export function PostComments({
 
   useEffect(() => {
     void axios
-      .get<{ comments: CommentRecord[] }>(`/api/posts/${postId}/comments`)
+      .get<{ comments: CommentRecord[] }>(`/api/posts/${postId}/comments/`)
       .then(({ data }) => {
         setComments(data.comments)
       })

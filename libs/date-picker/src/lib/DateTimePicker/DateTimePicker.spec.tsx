@@ -178,4 +178,23 @@ describe('DateTimePicker', () => {
       ).not.toBeInTheDocument()
     })
   })
+
+  describe('outside click', () => {
+    it('closes popover on mousedown outside the wrapper', () => {
+      renderApp(<DateTimePicker value={null} onChange={noop} />)
+      fireEvent.click(screen.getByTestId('datetime-picker-trigger'))
+      expect(screen.getByTestId('datetime-picker-popover')).toBeInTheDocument()
+      fireEvent.mouseDown(document.body)
+      expect(
+        screen.queryByTestId('datetime-picker-popover'),
+      ).not.toBeInTheDocument()
+    })
+
+    it('keeps popover open on mousedown inside the wrapper', () => {
+      renderApp(<DateTimePicker value={null} onChange={noop} />)
+      fireEvent.click(screen.getByTestId('datetime-picker-trigger'))
+      fireEvent.mouseDown(screen.getByTestId('datetime-picker-popover'))
+      expect(screen.getByTestId('datetime-picker-popover')).toBeInTheDocument()
+    })
+  })
 })

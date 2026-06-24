@@ -60,12 +60,27 @@ export const StyledContainedButton = styled.button<{
   ${sharedButtonStyles}
   border: 1px solid ${({ theme }) => theme.colors.white};
   ${({ $size }) => buttonSizeStyles[$size]}
+  transition:
+    opacity 0.15s,
+    border-color 0.15s,
+    color 0.15s;
   ${({ theme, $colorScheme }) =>
     $colorScheme &&
     css`
       color: ${schemeColor(theme, $colorScheme)};
       border-color: ${schemeColor(theme, $colorScheme)};
     `}
+
+  &:hover:not(:disabled) {
+    opacity: 0.8;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  ${({ theme }) => theme.helpers.focusVisible};
 `
 
 export const StyledInvertedButton = styled.button<{ $size: ButtonSize }>`

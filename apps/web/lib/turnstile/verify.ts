@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 const TURNSTILE_VERIFY_URL =
   'https://challenges.cloudflare.com/turnstile/v0/siteverify'
 
@@ -6,14 +8,14 @@ export async function verifyTurnstile(token: string): Promise<boolean> {
   if (!secret) return true
   if (process.env.NODE_ENV !== 'production') return true
 
-  const res = await fetch(TURNSTILE_VERIFY_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({ secret, response: token }),
-  })
-
-  if (!res.ok) return false
-
-  const data = (await res.json()) as { success: boolean }
-  return data.success === true
+  try {
+    const res = await axios.post<{ success: boolean }>(
+      TURNSTILE_VERIFY_URL,
+      new URLSearchParams({ secret, response: token }),
+      { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
+    )
+    return res.data.success === true
+  } catch {
+    return false
+  }
 }

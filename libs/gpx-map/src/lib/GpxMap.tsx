@@ -1,5 +1,6 @@
 'use client'
 
+import axios from 'axios'
 import L from 'leaflet'
 import 'leaflet-gpx'
 import 'leaflet/dist/leaflet.css'
@@ -305,18 +306,16 @@ function resolveTrackColor(track: GpxTrackDef, index: number): string {
 }
 
 function downloadGpx(url: string) {
-  fetch(url)
-    .then((r) => r.blob())
-    .then((blob) => {
-      const objectUrl = URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = objectUrl
-      a.download = url.split('/').pop() || 'track.gpx'
-      document.body.appendChild(a)
-      a.click()
-      document.body.removeChild(a)
-      URL.revokeObjectURL(objectUrl)
-    })
+  axios.get<Blob>(url, { responseType: 'blob' }).then(({ data: blob }) => {
+    const objectUrl = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = objectUrl
+    a.download = url.split('/').pop() || 'track.gpx'
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(objectUrl)
+  })
 }
 
 function TileProviderMaxZoom({ maxZoom }: { maxZoom: number }) {
@@ -340,11 +339,13 @@ function GpxTrackLayer({
   url,
   color,
   visible,
+  showWaypoints,
   waypointImages,
 }: {
   url: string
   color: string
   visible: boolean
+  showWaypoints: boolean
   waypointImages?: Record<string, string>
 }) {
   const map = useMap()
@@ -373,12 +374,17 @@ function GpxTrackLayer({
         endIcon: MAP_ICON_END,
         wptIcons: WPT_ICON_URLS,
       },
+      gpx_options: {
+        parseElements: showWaypoints
+          ? ['track', 'route', 'waypoint']
+          : ['track', 'route'],
+      },
     })
 
     layer.on('loaded', () => {
       map.fitBounds(layer.getBounds())
       const imgs = waypointImagesRef.current
-      if (imgs) {
+      if (showWaypoints && imgs) {
         let wptIdx = 0
         const bindToMarker = (l: L.Layer) => {
           if ((l as L.LayerGroup).eachLayer) {
@@ -416,7 +422,7 @@ function GpxTrackLayer({
       map.removeLayer(layer)
       layerRef.current = null
     }
-  }, [url, color, map])
+  }, [url, color, map, showWaypoints])
 
   useEffect(() => {
     const layer = layerRef.current
@@ -489,9 +495,9 @@ export function GpxMap({
       const effectiveShowWaypoints = track.showWaypoints ?? showWaypoints
       const needsFetch = effectiveShowWaypoints || track.showElevation
       if (!needsFetch) return
-      fetch(track.url)
-        .then((r) => r.text())
-        .then((text) => {
+      axios
+        .get<string>(track.url, { responseType: 'text' })
+        .then(({ data: text }) => {
           if (effectiveShowWaypoints) {
             setPerTrackWaypoints((prev) => ({
               ...prev,
@@ -551,6 +557,7 @@ export function GpxMap({
               url={track.url}
               color={resolveTrackColor(track, i)}
               visible={visibleTracks[i] ?? true}
+              showWaypoints={track.showWaypoints ?? showWaypoints ?? false}
               waypointImages={track.waypointImages ?? waypointImages}
             />
           ))}

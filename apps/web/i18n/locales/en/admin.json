@@ -16,6 +16,7 @@
     "categories": "Categories",
     "series": "Series",
     "images": "Images",
+    "cards": "Cards",
     "comments": "Comments",
     "users": "Users",
     "logout": "Logout"
@@ -271,6 +272,7 @@
     "reject": "Reject",
     "delete": "Delete",
     "deleteConfirm": "Permanently delete this comment? This cannot be undone.",
+    "bulkDeleteConfirm": "Permanently delete selected comments? This cannot be undone.",
     "showMore": "Show more",
     "showLess": "Show less",
     "filters": {
@@ -341,6 +343,92 @@
       "save": "Save",
       "saving": "Saving…",
       "error": "Reset failed, please try again"
+    }
+  },
+  "cards": {
+    "title": "Cards",
+    "tabs": {
+      "route": "Route",
+      "canyonSummary": "Canyon (summary)",
+      "canyonData": "Canyon (data)",
+      "ferrata": "Via Ferrata",
+      "waypointsGpx": "Waypoints (GPX)",
+      "waypointSingle": "Waypoint (single)"
+    },
+    "sections": {
+      "header": "Header",
+      "metrics": "Metrics",
+      "gpx": "GPX",
+      "times": "Times",
+      "techSheet": "Tech sheet",
+      "flow": "Flow",
+      "ferrata": "Ferrata",
+      "location": "Location",
+      "altimeterScale": "Altimeter scale"
+    },
+    "fields": {
+      "title": "Title",
+      "date": "Date",
+      "grade": "Grade",
+      "aqua": "Aqua",
+      "commitment": "Commitment",
+      "distance": "Distance",
+      "ascent": "Ascent (D+)",
+      "descentAccum": "Descent (D−)",
+      "descent": "Descent",
+      "moving": "Moving (H:MM)",
+      "stopped": "Stopped (H:MM)",
+      "total": "Total (H:MM)",
+      "start": "Start",
+      "end": "End",
+      "return": "Return",
+      "returnTime": "Return (H:MM)",
+      "approach": "Approach (H:MM)",
+      "inCanyon": "In canyon (H:MM)",
+      "maxRappel": "Max rappel",
+      "rappels": "Rappels",
+      "rope": "Rope",
+      "cars": "Cars",
+      "season": "Season",
+      "cable": "Cable length",
+      "vertical": "Vertical drop",
+      "gpxUrl": "GPX url",
+      "name": "Name",
+      "category": "Category",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "elevation": "Elevation (m)",
+      "minElevation": "Min elevation (m)",
+      "maxElevation": "Max elevation (m)"
+    },
+    "flow": {
+      "observed": "Observed flow",
+      "affects": "Does the flow affect the rappels?",
+      "phenomena": "Observed phenomena"
+    },
+    "actions": {
+      "parse": "Parse",
+      "parsing": "Parsing…",
+      "generate": "Generate",
+      "generating": "Generating…",
+      "download": "Download PNG",
+      "upload": "Upload to Cloudinary",
+      "uploading": "Uploading…",
+      "uploaded": "Uploaded ↗"
+    },
+    "placeholders": {
+      "canyonName": "Canyon name",
+      "routeName": "Route name",
+      "ferrataName": "Via Ferrata name",
+      "waypointName": "Waypoint name",
+      "gpxUrl": "https://example.com/route.gpx",
+      "return": "20 min · 1:20"
+    },
+    "errors": {
+      "gpxParse": "Could not parse GPX file",
+      "pngExport": "PNG export failed",
+      "noWaypoints": "No waypoints with elevation found",
+      "upload": "Upload failed"
     }
   }
 }

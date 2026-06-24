@@ -1,6 +1,15 @@
-import { SVGProps } from 'react'
+import type { SVGProps } from 'react'
 
-function PortalIcon(props: SVGProps<SVGSVGElement>) {
+interface SVGRProps {
+  title?: string
+  titleId?: string
+}
+
+function PortalIcon({
+  title,
+  titleId,
+  ...props
+}: SVGProps<SVGSVGElement> & SVGRProps) {
   return (
     <svg
       role="img"
@@ -9,8 +18,10 @@ function PortalIcon(props: SVGProps<SVGSVGElement>) {
       viewBox="0 0 188 358"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      aria-labelledby={titleId}
       {...props}
     >
+      {title ? <title id={titleId}>{title}</title> : null}
       <path
         d="M129 26C146.523 57.0467 158 113.941 158 178.816C158 243.346 146.392 299.847 129.024 331M97 357C96.7747 357 96.5497 356.996 96.325 356.989C63.4989 355.916 37 276.638 37 179C37 82.4184 62.9284 3.80259 95.2615 1.07329C95.839 1.02454 96.4185 1 97 1"
         stroke="currentColor"

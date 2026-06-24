@@ -16,6 +16,9 @@ declare module 'leaflet' {
       wptIcons?: Record<string, string | L.Icon>
       wptTypeIcons?: Record<string, string | L.Icon>
     }
+    gpx_options?: {
+      parseElements?: Array<'track' | 'route' | 'waypoint'>
+    }
   }
 
   class GPX extends L.FeatureGroup {

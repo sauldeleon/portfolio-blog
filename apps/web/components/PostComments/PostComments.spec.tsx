@@ -87,6 +87,7 @@ describe('PostComments', () => {
     mockAxiosGet.mockResolvedValue({ data: { comments: [] } })
     renderApp(<PostComments {...baseProps} />)
     expect(screen.getAllByText('comments.title').length).toBeGreaterThan(0)
+    expect(await screen.findByText('comments.empty')).toBeInTheDocument()
   })
 
   it('shows empty state when no comments', async () => {
@@ -156,6 +157,7 @@ describe('PostComments', () => {
     mockAxiosGet.mockResolvedValue({ data: { comments: [] } })
     renderApp(<PostComments {...baseProps} />)
     expect(screen.getByTestId('comment-form')).toBeInTheDocument()
+    expect(await screen.findByText('comments.empty')).toBeInTheDocument()
   })
 
   it('sets reply context when reply button clicked on root comment', async () => {

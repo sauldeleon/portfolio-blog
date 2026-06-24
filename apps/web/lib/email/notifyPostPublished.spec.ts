@@ -1,6 +1,20 @@
 /**
  * @jest-environment node
  */
+import axios, { AxiosError } from 'axios'
+
+function makeAxiosError(status: number): AxiosError {
+  return new AxiosError('error', String(status), undefined, undefined, {
+    status,
+    data: {},
+    statusText: 'Error',
+    headers: {},
+    config: {} as never,
+  })
+}
+
+let mockAxiosHead: jest.SpyInstance
+
 const mockGetPostTranslations = jest.fn()
 const mockSendNewPostNotifications = jest.fn()
 const mockLoggerError = jest.fn()
@@ -49,9 +63,13 @@ describe('notifyPostPublished', () => {
   beforeEach(() => {
     jest.clearAllMocks()
     mockGetSiteUrl.mockReturnValue('https://sawl.dev')
-    global.fetch = jest.fn().mockResolvedValue({ ok: true, status: 200 })
+    mockAxiosHead = jest.spyOn(axios, 'head').mockResolvedValue({})
     mockGetPostTranslations.mockResolvedValue([])
     mockSendNewPostNotifications.mockResolvedValue(undefined)
+  })
+
+  afterEach(() => {
+    jest.restoreAllMocks()
   })
 
   it('calls sendNewPostNotifications with built translations', async () => {
@@ -149,9 +167,8 @@ describe('notifyPostPublished', () => {
         { locale: 'en', title: 'My Post', slug: 'my-post', excerpt: 'Excerpt' },
       ])
       await notifyPostPublished(mockPost, 'test-context')
-      expect(global.fetch).toHaveBeenCalledWith(
+      expect(mockAxiosHead).toHaveBeenCalledWith(
         'https://sawl.dev/en/blog/5/my-post',
-        { method: 'HEAD' },
       )
     })
 
@@ -160,9 +177,8 @@ describe('notifyPostPublished', () => {
         { locale: 'es', title: 'Mi Post', slug: 'mi-post', excerpt: 'Resumen' },
       ])
       await notifyPostPublished(mockPost, 'test-context')
-      expect(global.fetch).toHaveBeenCalledWith(
+      expect(mockAxiosHead).toHaveBeenCalledWith(
         'https://sawl.dev/es/blog/5/mi-post',
-        { method: 'HEAD' },
       )
     })
 
@@ -180,15 +196,11 @@ describe('notifyPostPublished', () => {
         { locale: 'en', title: 'My Post', slug: 'my-post', excerpt: 'Excerpt' },
         { locale: 'es', title: 'Mi Post', slug: 'mi-post', excerpt: 'Resumen' },
       ])
-      global.fetch = jest
-        .fn()
-        .mockImplementation((url: string) =>
-          Promise.resolve(
-            url.includes('/en/')
-              ? { ok: false, status: 404 }
-              : { ok: true, status: 200 },
-          ),
-        ) as jest.Mock
+      mockAxiosHead.mockImplementation((url: string) =>
+        url.includes('/en/')
+          ? Promise.reject(makeAxiosError(404))
+          : Promise.resolve({}),
+      )
       await notifyPostPublished(mockPost, 'test-context')
       expect(mockSendNewPostNotifications).not.toHaveBeenCalled()
     })
@@ -198,15 +210,11 @@ describe('notifyPostPublished', () => {
         { locale: 'en', title: 'My Post', slug: 'my-post', excerpt: 'Excerpt' },
         { locale: 'es', title: 'Mi Post', slug: 'mi-post', excerpt: 'Resumen' },
       ])
-      global.fetch = jest
-        .fn()
-        .mockImplementation((url: string) =>
-          Promise.resolve(
-            url.includes('/es/')
-              ? { ok: false, status: 500 }
-              : { ok: true, status: 200 },
-          ),
-        ) as jest.Mock
+      mockAxiosHead.mockImplementation((url: string) =>
+        url.includes('/es/')
+          ? Promise.reject(makeAxiosError(500))
+          : Promise.resolve({}),
+      )
       await notifyPostPublished(mockPost, 'test-context')
       expect(mockSendNewPostNotifications).not.toHaveBeenCalled()
     })
@@ -215,9 +223,7 @@ describe('notifyPostPublished', () => {
       mockGetPostTranslations.mockResolvedValue([
         { locale: 'en', title: 'My Post', slug: 'my-post', excerpt: 'Excerpt' },
       ])
-      global.fetch = jest
-        .fn()
-        .mockResolvedValue({ ok: false, status: 404 }) as jest.Mock
+      mockAxiosHead.mockRejectedValue(makeAxiosError(404))
       await notifyPostPublished(mockPost, 'test-context')
       expect(mockLoggerWarn).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -234,16 +240,16 @@ describe('notifyPostPublished', () => {
         { locale: 'en', title: 'My Post', slug: 'my-post', excerpt: 'Excerpt' },
       ])
       const fetchErr = new Error('Network error')
-      global.fetch = jest.fn().mockRejectedValue(fetchErr) as jest.Mock
+      mockAxiosHead.mockRejectedValue(fetchErr)
       await notifyPostPublished(mockPost, 'test-context')
       expect(mockLoggerError).toHaveBeenCalledWith(fetchErr, 'test-context')
       expect(mockSendNewPostNotifications).not.toHaveBeenCalled()
     })
 
-    it('does not call fetch when translations are empty', async () => {
+    it('does not call the reachability check when translations are empty', async () => {
       mockGetPostTranslations.mockResolvedValue([])
       await notifyPostPublished(mockPost, 'test-context')
-      expect(global.fetch).not.toHaveBeenCalled()
+      expect(mockAxiosHead).not.toHaveBeenCalled()
     })
   })
 })

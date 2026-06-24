@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor, within } from '@testing-library/react'
+import { act, fireEvent, screen, waitFor, within } from '@testing-library/react'
 import axios, { AxiosError } from 'axios'
 
 import { renderApp } from '@sdlgr/test-utils'
@@ -22,7 +22,12 @@ jest.mock('@sdlgr/select', () => ({
         {options.find((o) => o.value === value)?.label ?? ''}
       </button>
       {options.map((opt) => (
-        <div key={opt.value} role="option" onClick={() => onChange(opt.value)}>
+        <div
+          key={opt.value}
+          role="option"
+          aria-selected={opt.value === value}
+          onClick={() => onChange(opt.value)}
+        >
           {opt.label}
         </div>
       ))}
@@ -251,7 +256,12 @@ describe('UserForm', () => {
     await waitFor(() =>
       expect(screen.getByTestId('submit-button')).toBeDisabled(),
     )
-    resolveRequest?.({ data: {} })
+    await act(async () => {
+      resolveRequest?.({ data: {} })
+    })
+    await waitFor(() =>
+      expect(mockRouterPush).toHaveBeenCalledWith('/admin/users'),
+    )
   })
 
   it('sends correct POST body', async () => {

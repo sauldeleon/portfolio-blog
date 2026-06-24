@@ -1,8 +1,12 @@
 import { act, fireEvent, screen, waitFor, within } from '@testing-library/react'
+import axios from 'axios'
 
 import { renderApp } from '@sdlgr/test-utils'
 
 import { GpxMapModal } from './GpxMapModal'
+
+jest.mock('axios', () => ({ get: jest.fn() }))
+const mockAxiosGet = jest.mocked(axios.get)
 
 const GPX_XML = `<?xml version="1.0"?>
 <gpx xmlns="http://www.topografix.com/GPX/1/1">
@@ -71,15 +75,14 @@ jest.mock('../ImagePicker', () => ({
     ) : null,
 }))
 
-function setupFetch(xml = GPX_XML) {
-  global.fetch = jest.fn().mockResolvedValue({
-    text: jest.fn().mockResolvedValue(xml),
-  } as unknown as Response)
+function setupAxiosGet(xml = GPX_XML) {
+  mockAxiosGet.mockResolvedValue({ data: xml })
 }
 
 describe('GpxMapModal', () => {
   beforeEach(() => {
     jest.useFakeTimers()
+    mockAxiosGet.mockReset()
   })
 
   afterEach(() => {
@@ -625,7 +628,7 @@ describe('GpxMapModal', () => {
     })
 
     it('shows loading state while fetching waypoints', async () => {
-      setupFetch()
+      setupAxiosGet()
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )
@@ -643,7 +646,7 @@ describe('GpxMapModal', () => {
     })
 
     it('shows waypoints dropdown after successful fetch', async () => {
-      setupFetch()
+      setupAxiosGet()
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )
@@ -654,6 +657,13 @@ describe('GpxMapModal', () => {
       act(() => {
         jest.advanceTimersByTime(600)
       })
+      expect(mockAxiosGet).toHaveBeenCalledWith(
+        'https://example.com/track.gpx',
+        expect.objectContaining({
+          responseType: 'text',
+          signal: expect.any(Object),
+        }),
+      )
       expect(await screen.findByTestId('waypoint-select-0')).toBeInTheDocument()
       const options = within(
         screen.getByTestId('waypoint-select-0'),
@@ -665,7 +675,7 @@ describe('GpxMapModal', () => {
     })
 
     it('shows error state when fetch fails', async () => {
-      global.fetch = jest.fn().mockRejectedValue(new Error('network'))
+      mockAxiosGet.mockRejectedValue(new Error('network'))
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )
@@ -680,7 +690,6 @@ describe('GpxMapModal', () => {
     })
 
     it('does not fetch before debounce delay', () => {
-      global.fetch = jest.fn()
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )
@@ -691,11 +700,11 @@ describe('GpxMapModal', () => {
       act(() => {
         jest.advanceTimersByTime(400)
       })
-      expect(global.fetch).not.toHaveBeenCalled()
+      expect(mockAxiosGet).not.toHaveBeenCalled()
     })
 
     it('opens image picker when pick image button clicked', async () => {
-      setupFetch()
+      setupAxiosGet()
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )
@@ -714,7 +723,7 @@ describe('GpxMapModal', () => {
     })
 
     it('closes image picker when close button clicked', async () => {
-      setupFetch()
+      setupAxiosGet()
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )
@@ -734,7 +743,7 @@ describe('GpxMapModal', () => {
     })
 
     it('adds mapping row after picking image', async () => {
-      setupFetch()
+      setupAxiosGet()
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )
@@ -759,7 +768,7 @@ describe('GpxMapModal', () => {
     })
 
     it('closes image picker after picking image', async () => {
-      setupFetch()
+      setupAxiosGet()
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )
@@ -779,7 +788,7 @@ describe('GpxMapModal', () => {
     })
 
     it('removes mapped waypoint from dropdown after pick', async () => {
-      setupFetch()
+      setupAxiosGet()
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )
@@ -800,7 +809,7 @@ describe('GpxMapModal', () => {
     })
 
     it('closes dropdown when all waypoints are mapped', async () => {
-      setupFetch(`<?xml version="1.0"?>
+      setupAxiosGet(`<?xml version="1.0"?>
 <gpx xmlns="http://www.topografix.com/GPX/1/1">
   <wpt lat="43.5" lon="-5.6"><name>Summit</name></wpt>
 </gpx>`)
@@ -826,7 +835,7 @@ describe('GpxMapModal', () => {
     })
 
     it('removes mapping row when remove button clicked', async () => {
-      setupFetch()
+      setupAxiosGet()
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )
@@ -847,7 +856,7 @@ describe('GpxMapModal', () => {
     })
 
     it('re-adds waypoint to dropdown after mapping removed', async () => {
-      setupFetch()
+      setupAxiosGet()
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )
@@ -874,7 +883,7 @@ describe('GpxMapModal', () => {
     })
 
     it('can change pending waypoint via select', async () => {
-      setupFetch()
+      setupAxiosGet()
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )
@@ -898,7 +907,7 @@ describe('GpxMapModal', () => {
     })
 
     it('selected waypoint persists when not mapped', async () => {
-      setupFetch()
+      setupAxiosGet()
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )
@@ -918,7 +927,7 @@ describe('GpxMapModal', () => {
     })
 
     it('keeps duplicate-named waypoints separate in dropdown', async () => {
-      setupFetch(`<?xml version="1.0"?>
+      setupAxiosGet(`<?xml version="1.0"?>
 <gpx xmlns="http://www.topografix.com/GPX/1/1">
   <wpt lat="43.5" lon="-5.6"><name>Summit</name></wpt>
   <wpt lat="43.6" lon="-5.7"><name>Summit</name></wpt>
@@ -952,7 +961,7 @@ describe('GpxMapModal', () => {
 
     it('includes waypoint image lines in insert markdown', async () => {
       const onInsert = jest.fn()
-      setupFetch()
+      setupAxiosGet()
       renderApp(<GpxMapModal isOpen onInsert={onInsert} onCancel={jest.fn()} />)
       fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
         target: { value: 'https://example.com/track.gpx' },
@@ -973,7 +982,7 @@ describe('GpxMapModal', () => {
     })
 
     it('preview includes waypoint image lines', async () => {
-      setupFetch()
+      setupAxiosGet()
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )
@@ -996,7 +1005,7 @@ describe('GpxMapModal', () => {
 
     it('resets mappings and waypoints after insert', async () => {
       const onInsert = jest.fn()
-      setupFetch()
+      setupAxiosGet()
       renderApp(<GpxMapModal isOpen onInsert={onInsert} onCancel={jest.fn()} />)
       fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
         target: { value: 'https://example.com/track.gpx' },
@@ -1018,7 +1027,7 @@ describe('GpxMapModal', () => {
     })
 
     it('filters out waypoints with no name element', async () => {
-      setupFetch(`<?xml version="1.0"?>
+      setupAxiosGet(`<?xml version="1.0"?>
 <gpx xmlns="http://www.topografix.com/GPX/1/1">
   <wpt lat="43.5" lon="-5.6"><name>Summit</name></wpt>
   <wpt lat="43.6" lon="-5.7"></wpt>
@@ -1041,13 +1050,9 @@ describe('GpxMapModal', () => {
     })
 
     it('shows separate waypoint dropdowns per track', async () => {
-      global.fetch = jest.fn().mockResolvedValue({
-        text: jest
-          .fn()
-          .mockResolvedValue(
-            `<?xml version="1.0"?><gpx xmlns="http://www.topografix.com/GPX/1/1"><wpt lat="0" lon="0"><name>Summit</name></wpt></gpx>`,
-          ),
-      } as unknown as Response)
+      setupAxiosGet(
+        `<?xml version="1.0"?><gpx xmlns="http://www.topografix.com/GPX/1/1"><wpt lat="0" lon="0"><name>Summit</name></wpt></gpx>`,
+      )
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )
@@ -1063,6 +1068,14 @@ describe('GpxMapModal', () => {
       act(() => {
         jest.advanceTimersByTime(600)
       })
+      expect(mockAxiosGet).toHaveBeenCalledWith(
+        'https://example.com/t1.gpx',
+        expect.objectContaining({ responseType: 'text' }),
+      )
+      expect(mockAxiosGet).toHaveBeenCalledWith(
+        'https://example.com/t2.gpx',
+        expect.objectContaining({ responseType: 'text' }),
+      )
       expect(await screen.findByTestId('waypoint-select-0')).toBeInTheDocument()
       expect(await screen.findByTestId('waypoint-select-1')).toBeInTheDocument()
       const opts0 = within(
@@ -1076,10 +1089,10 @@ describe('GpxMapModal', () => {
     })
 
     it('does not set fetch error when fetch is aborted before completing', async () => {
-      let rejectFetch!: (e: Error) => void
-      global.fetch = jest.fn().mockReturnValue(
-        new Promise<Response>((_, reject) => {
-          rejectFetch = reject
+      let rejectRequest!: (e: Error) => void
+      mockAxiosGet.mockReturnValue(
+        new Promise((_, reject) => {
+          rejectRequest = reject
         }),
       )
       renderApp(
@@ -1096,16 +1109,16 @@ describe('GpxMapModal', () => {
       fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
       // Reject the aborted fetch — guard should prevent setFetchError
       await act(async () => {
-        rejectFetch(new Error('network'))
+        rejectRequest(new Error('network'))
       })
       expect(screen.queryByTestId('fetch-error-0')).not.toBeInTheDocument()
     })
 
     it('does not update state when aborted fetch resolves', async () => {
-      let resolveFetch!: (r: Response) => void
-      global.fetch = jest.fn().mockReturnValue(
-        new Promise<Response>((resolve) => {
-          resolveFetch = resolve
+      let resolveRequest!: (r: { data: string }) => void
+      mockAxiosGet.mockReturnValue(
+        new Promise((resolve) => {
+          resolveRequest = resolve
         }),
       )
       renderApp(
@@ -1122,9 +1135,7 @@ describe('GpxMapModal', () => {
       fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
       // Resolve after abort — finally guard should skip setFetchLoading
       await act(async () => {
-        resolveFetch({
-          text: jest.fn().mockResolvedValue(GPX_XML),
-        } as unknown as Response)
+        resolveRequest({ data: GPX_XML })
       })
       expect(
         screen.queryByTestId('waypoint-images-section-0'),
@@ -1134,7 +1145,7 @@ describe('GpxMapModal', () => {
 
   describe('per-track state shift on remove', () => {
     it('preserves track-0 waypoint state when removing track 1', async () => {
-      setupFetch()
+      setupAxiosGet()
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )
@@ -1157,7 +1168,7 @@ describe('GpxMapModal', () => {
     })
 
     it('shifts track-1 waypoint state to track-0 when removing track 0', async () => {
-      setupFetch()
+      setupAxiosGet()
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
       )

@@ -142,6 +142,24 @@ describe('handleMiddleware', () => {
       expect(res).toBeUndefined()
     })
 
+    it('allows unauthenticated POST /api/posts/:id/comments', async () => {
+      const req = makeReq(
+        '/api/posts/01KTS15Y8MWBG5WXWE2EJASF32/comments',
+        'POST',
+      )
+      const res = await handleMiddleware(req)
+      expect(res).toBeUndefined()
+    })
+
+    it('allows unauthenticated POST /api/posts/:id/comments with trailing slash', async () => {
+      const req = makeReq(
+        '/api/posts/01KTS15Y8MWBG5WXWE2EJASF32/comments/',
+        'POST',
+      )
+      const res = await handleMiddleware(req)
+      expect(res).toBeUndefined()
+    })
+
     it('allows GET requests to /api/categories without auth', async () => {
       const req = makeReq('/api/categories', 'GET')
       const res = await handleMiddleware(req)

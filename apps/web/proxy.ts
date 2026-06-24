@@ -37,8 +37,10 @@ export async function handleMiddleware(
   const method = req.method
   const isWriteMethod = ['POST', 'PUT', 'DELETE'].includes(method)
   const isLikeEndpoint = /^\/api\/posts\/[^/]+\/like\/?$/.test(pathname)
+  const isCommentsEndpoint = /^\/api\/posts\/[^/]+\/comments\/?$/.test(pathname)
+  const isPublicPostWriteEndpoint = isLikeEndpoint || isCommentsEndpoint
   const isProtectedApi =
-    !isLikeEndpoint &&
+    !isPublicPostWriteEndpoint &&
     (pathname.startsWith('/api/posts') ||
       pathname.startsWith('/api/categories') ||
       pathname === '/api/upload')

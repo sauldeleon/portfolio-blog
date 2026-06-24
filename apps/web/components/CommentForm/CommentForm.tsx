@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Turnstile } from '@marsidev/react-turnstile'
+import axios from 'axios'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -77,29 +78,22 @@ export function CommentForm({
     setStatus('submitting')
 
     try {
-      const res = await fetch(`/api/posts/${postId}/comments`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          username: values.username,
-          body: values.body,
-          honeypot: values.honeypot,
-          turnstileToken: turnstileToken ?? '__cf_error__',
-          postTitle,
-          postNumber,
-          postSlug,
-          postLng,
-          parentId: replyToId ?? null,
-        }),
+      // Trailing slash matches `trailingSlash: true`, avoiding a 308 redirect
+      // that would drop this POST's body on the way to the comments route.
+      await axios.post(`/api/posts/${postId}/comments/`, {
+        username: values.username,
+        body: values.body,
+        honeypot: values.honeypot,
+        turnstileToken: turnstileToken ?? '__cf_error__',
+        postTitle,
+        postNumber,
+        postSlug,
+        postLng,
+        parentId: replyToId ?? null,
       })
-
-      if (res.ok) {
-        setStatus('success')
-        reset()
-        onCancelReply?.()
-      } else {
-        setStatus('error')
-      }
+      setStatus('success')
+      reset()
+      onCancelReply?.()
     } catch {
       setStatus('error')
     }

@@ -17,6 +17,7 @@ jest.mock('@web/i18n/client', () => ({
         'comments.reject': 'Reject',
         'comments.delete': 'Delete',
         'comments.deleteConfirm': 'Permanently delete this comment?',
+        'comments.bulkDeleteConfirm': 'Permanently delete selected comments?',
         'comments.filters.all': 'All',
         'comments.filters.pending': 'Pending',
         'comments.filters.approved': 'Approved',
@@ -290,8 +291,24 @@ describe('CommentsTable', () => {
     renderApp(<CommentsTable initialComments={[makeComment()]} />)
     fireEvent.click(screen.getByTestId('row-checkbox'))
     fireEvent.click(screen.getByTestId('bulk-delete-button'))
+    expect(axios.delete).not.toHaveBeenCalled()
+    expect(
+      screen.getByText('Permanently delete selected comments?'),
+    ).toBeInTheDocument()
+    fireEvent.click(screen.getByTestId('confirm-delete-confirm'))
     await waitFor(() => {
       expect(axios.delete).toHaveBeenCalledWith('/api/comments/c1')
     })
+  })
+
+  it('cancels bulk delete without calling API', () => {
+    renderApp(<CommentsTable initialComments={[makeComment()]} />)
+    fireEvent.click(screen.getByTestId('row-checkbox'))
+    fireEvent.click(screen.getByTestId('bulk-delete-button'))
+    fireEvent.click(screen.getByTestId('confirm-delete-cancel'))
+    expect(axios.delete).not.toHaveBeenCalled()
+    expect(
+      screen.queryByText('Permanently delete selected comments?'),
+    ).not.toBeInTheDocument()
   })
 })

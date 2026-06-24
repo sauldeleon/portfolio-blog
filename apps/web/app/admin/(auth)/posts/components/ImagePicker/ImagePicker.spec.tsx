@@ -100,6 +100,18 @@ beforeAll(() => {
   }) as unknown as typeof IntersectionObserver
 })
 
+async function dropUploadFiles(files: File[]) {
+  fireEvent.drop(screen.getByTestId('upload-dropzone'), {
+    dataTransfer: { files },
+  })
+  await act(async () => undefined)
+}
+
+async function changeUploadInput(input: HTMLInputElement) {
+  fireEvent.change(input)
+  await act(async () => undefined)
+}
+
 describe('ImagePicker', () => {
   beforeEach(() => {
     jest.clearAllMocks()
@@ -512,7 +524,9 @@ describe('ImagePicker', () => {
   })
 
   it('shows load-more-loading indicator while loading next page', async () => {
-    let resolveSecond: (value: unknown) => void
+    let resolveSecond: (value: unknown) => void = () => {
+      throw new Error('Second page resolver was not initialized')
+    }
     const secondCall = new Promise((resolve) => {
       resolveSecond = resolve
     })
@@ -542,7 +556,7 @@ describe('ImagePicker', () => {
     expect(await screen.findByTestId('load-more-loading')).toBeInTheDocument()
 
     await act(async () => {
-      resolveSecond!({
+      resolveSecond({
         data: { images: mockImagesPage2, nextCursor: undefined },
       })
     })
@@ -777,7 +791,9 @@ describe('ImagePicker', () => {
     })
 
     it('shows uploading text while upload is in progress', async () => {
-      let resolveUpload: (value: unknown) => void
+      let resolveUpload: (value: unknown) => void = () => {
+        throw new Error('Upload resolver was not initialized')
+      }
       const uploadPromise = new Promise((resolve) => {
         resolveUpload = resolve
       })
@@ -793,16 +809,14 @@ describe('ImagePicker', () => {
       )
 
       const file = new File(['content'], 'test.jpg', { type: 'image/jpeg' })
-      fireEvent.drop(screen.getByTestId('upload-dropzone'), {
-        dataTransfer: { files: [file] },
-      })
+      await dropUploadFiles([file])
 
       expect(screen.getByTestId('upload-dropzone')).toHaveTextContent(
         'Uploading…',
       )
 
       await act(async () => {
-        resolveUpload!({ data: uploadedImage })
+        resolveUpload({ data: uploadedImage })
       })
       await waitFor(() =>
         expect(screen.getByTestId('upload-dropzone')).not.toHaveTextContent(
@@ -812,7 +826,9 @@ describe('ImagePicker', () => {
     })
 
     it('prepends uploaded image immediately before background refresh', async () => {
-      let resolveGet: (value: unknown) => void
+      let resolveGet: (value: unknown) => void = () => {
+        throw new Error('Background refresh resolver was not initialized')
+      }
       const getPromise = new Promise((resolve) => {
         resolveGet = resolve
       })
@@ -832,9 +848,7 @@ describe('ImagePicker', () => {
       )
 
       const file = new File(['content'], 'test.jpg', { type: 'image/jpeg' })
-      fireEvent.drop(screen.getByTestId('upload-dropzone'), {
-        dataTransfer: { files: [file] },
-      })
+      await dropUploadFiles([file])
 
       // Image is prepended from upload, before background GET resolves
       await waitFor(() =>
@@ -845,7 +859,7 @@ describe('ImagePicker', () => {
       )
 
       await act(async () => {
-        resolveGet!({ data: { images: mockImages, nextCursor: undefined } })
+        resolveGet({ data: { images: mockImages, nextCursor: undefined } })
       })
     })
 
@@ -870,9 +884,7 @@ describe('ImagePicker', () => {
       )
 
       const file = new File(['content'], 'test.jpg', { type: 'image/jpeg' })
-      fireEvent.drop(screen.getByTestId('upload-dropzone'), {
-        dataTransfer: { files: [file] },
-      })
+      await dropUploadFiles([file])
 
       await waitFor(() =>
         expect(screen.getAllByTestId('image-picker-item')).toHaveLength(3),
@@ -901,9 +913,7 @@ describe('ImagePicker', () => {
       )
 
       const file = new File(['content'], 'test.jpg', { type: 'image/jpeg' })
-      fireEvent.drop(screen.getByTestId('upload-dropzone'), {
-        dataTransfer: { files: [file] },
-      })
+      await dropUploadFiles([file])
 
       await waitFor(() =>
         expect(screen.getAllByTestId('image-picker-item')).toHaveLength(3),
@@ -914,7 +924,9 @@ describe('ImagePicker', () => {
     })
 
     it('preserves uploaded image when initial fetch resolves after upload', async () => {
-      let resolveInitialGet: (value: unknown) => void
+      let resolveInitialGet: (value: unknown) => void = () => {
+        throw new Error('Initial image fetch resolver was not initialized')
+      }
       const initialGetPromise = new Promise((resolve) => {
         resolveInitialGet = resolve
       })
@@ -933,13 +945,11 @@ describe('ImagePicker', () => {
       expect(screen.getByTestId('picker-loading')).toBeInTheDocument()
 
       const file = new File(['content'], 'test.jpg', { type: 'image/jpeg' })
-      fireEvent.drop(screen.getByTestId('upload-dropzone'), {
-        dataTransfer: { files: [file] },
-      })
+      await dropUploadFiles([file])
 
       // Resolve initial GET after upload to trigger the race condition
       await act(async () => {
-        resolveInitialGet!({
+        resolveInitialGet({
           data: { images: mockImages, nextCursor: undefined },
         })
       })
@@ -969,9 +979,7 @@ describe('ImagePicker', () => {
       )
 
       const file = new File(['content'], 'test.jpg', { type: 'image/jpeg' })
-      fireEvent.drop(screen.getByTestId('upload-dropzone'), {
-        dataTransfer: { files: [file] },
-      })
+      await dropUploadFiles([file])
 
       await waitFor(() =>
         expect(screen.getAllByTestId('image-picker-item')).toHaveLength(3),
@@ -992,9 +1000,7 @@ describe('ImagePicker', () => {
       )
 
       const file = new File(['content'], 'test.jpg', { type: 'image/jpeg' })
-      fireEvent.drop(screen.getByTestId('upload-dropzone'), {
-        dataTransfer: { files: [file] },
-      })
+      await dropUploadFiles([file])
 
       expect(await screen.findByTestId('upload-error')).toHaveTextContent(
         'Upload failed, please try again',
@@ -1015,14 +1021,10 @@ describe('ImagePicker', () => {
       )
 
       const file = new File(['content'], 'test.jpg', { type: 'image/jpeg' })
-      fireEvent.drop(screen.getByTestId('upload-dropzone'), {
-        dataTransfer: { files: [file] },
-      })
+      await dropUploadFiles([file])
       await screen.findByTestId('upload-error')
 
-      fireEvent.drop(screen.getByTestId('upload-dropzone'), {
-        dataTransfer: { files: [file] },
-      })
+      await dropUploadFiles([file])
       await waitFor(() =>
         expect(screen.queryByTestId('upload-error')).not.toBeInTheDocument(),
       )
@@ -1043,9 +1045,7 @@ describe('ImagePicker', () => {
       )
 
       const file = new File(['content'], 'my-photo.jpg', { type: 'image/jpeg' })
-      fireEvent.drop(screen.getByTestId('upload-dropzone'), {
-        dataTransfer: { files: [file] },
-      })
+      await dropUploadFiles([file])
 
       expect(capturedFormData?.get('name')).toBe('my-photo')
     })
@@ -1060,9 +1060,7 @@ describe('ImagePicker', () => {
         expect(screen.getAllByTestId('image-picker-item')).toHaveLength(2),
       )
 
-      fireEvent.drop(screen.getByTestId('upload-dropzone'), {
-        dataTransfer: { files: [] },
-      })
+      await dropUploadFiles([])
 
       expect(postSpy).not.toHaveBeenCalled()
     })
@@ -1083,7 +1081,7 @@ describe('ImagePicker', () => {
         value: [file],
         configurable: true,
       })
-      fireEvent.change(input)
+      await changeUploadInput(input)
 
       await waitFor(() =>
         expect(screen.getAllByTestId('image-picker-item')).toHaveLength(3),
@@ -1108,7 +1106,7 @@ describe('ImagePicker', () => {
         value: null,
         configurable: true,
       })
-      fireEvent.change(input)
+      await changeUploadInput(input)
 
       expect(postSpy).not.toHaveBeenCalled()
     })
@@ -1128,7 +1126,9 @@ describe('ImagePicker', () => {
   })
 
   it('does not load more when already loading more', async () => {
-    let resolveSecond: (value: unknown) => void
+    let resolveSecond: (value: unknown) => void = () => {
+      throw new Error('Second page resolver was not initialized')
+    }
     const secondCall = new Promise((resolve) => {
       resolveSecond = resolve
     })
@@ -1165,7 +1165,7 @@ describe('ImagePicker', () => {
     })
 
     await act(async () => {
-      resolveSecond!({
+      resolveSecond({
         data: { images: mockImagesPage2, nextCursor: undefined },
       })
     })

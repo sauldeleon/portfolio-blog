@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor, within } from '@testing-library/react'
+import { act, fireEvent, screen, waitFor, within } from '@testing-library/react'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 
@@ -306,6 +306,7 @@ jest.mock('@sdlgr/select', () => ({
           <div
             key={opt.value}
             role="option"
+            aria-selected={opt.value === value}
             onClick={() => onChange(opt.value)}
           >
             {opt.label}
@@ -1073,7 +1074,9 @@ describe('PostEditor', () => {
           screen.getByTestId('draft-preview-copy-button'),
         ).toHaveTextContent('Copied!')
       })
-      jest.runAllTimers()
+      act(() => {
+        jest.runAllTimers()
+      })
       await waitFor(() => {
         expect(
           screen.getByTestId('draft-preview-copy-button'),
@@ -1170,7 +1173,9 @@ describe('PostEditor', () => {
           'Copied!',
         )
       })
-      jest.runAllTimers()
+      act(() => {
+        jest.runAllTimers()
+      })
       await waitFor(() => {
         expect(screen.getByTestId('published-url-copy-en')).toHaveTextContent(
           'Copy',
