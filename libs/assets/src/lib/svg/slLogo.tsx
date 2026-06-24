@@ -1,6 +1,15 @@
-import { SVGProps } from 'react'
+import type { SVGProps } from 'react'
 
-function SLLogoIcon(props: SVGProps<SVGSVGElement>) {
+interface SVGRProps {
+  title?: string
+  titleId?: string
+}
+
+function SLLogoIcon({
+  title,
+  titleId,
+  ...props
+}: SVGProps<SVGSVGElement> & SVGRProps) {
   return (
     <svg
       width="145"
@@ -8,8 +17,10 @@ function SLLogoIcon(props: SVGProps<SVGSVGElement>) {
       viewBox="0 0 145 75"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      aria-labelledby={titleId}
       {...props}
     >
+      {title ? <title id={titleId}>{title}</title> : null}
       <path
         fillRule="evenodd"
         clipRule="evenodd"

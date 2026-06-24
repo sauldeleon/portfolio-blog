@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Turnstile } from '@marsidev/react-turnstile'
+import axios from 'axios'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -68,10 +69,9 @@ export function SubscribeForm({ lng, showTitles = true }: SubscribeFormProps) {
     setSubmittedEmail(values.email)
 
     try {
-      const res = await fetch('/api/subscribe', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
+      const { data } = await axios.post<{ alreadySubscribed?: boolean }>(
+        '/api/subscribe/',
+        {
           ...values,
           turnstileToken: turnstileToken ?? '__cf_error__',
           locale: lng,
@@ -84,21 +84,10 @@ export function SubscribeForm({ lng, showTitles = true }: SubscribeFormProps) {
             footerText: t('email.footerText'),
             unsubscribeText: t('email.unsubscribeText'),
           },
-        }),
-      })
+        },
+      )
 
-      const data = (await res.json()) as {
-        ok?: boolean
-        alreadySubscribed?: boolean
-      }
-
-      if (data.alreadySubscribed) {
-        setStatus('alreadySubscribed')
-      } else if (res.ok) {
-        setStatus('success')
-      } else {
-        setStatus('error')
-      }
+      setStatus(data.alreadySubscribed ? 'alreadySubscribed' : 'success')
     } catch {
       setStatus('error')
     }

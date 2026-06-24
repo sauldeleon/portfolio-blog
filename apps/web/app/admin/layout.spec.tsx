@@ -1,4 +1,6 @@
 import { render, screen } from '@testing-library/react'
+import { Children } from 'react'
+import type { ReactElement, ReactNode } from 'react'
 
 import AdminLayout from './layout.next'
 
@@ -35,13 +37,26 @@ jest.mock('@web/components/MainLayout/MainLayout', () => {
   }
 })
 
+function bodyChildren(layout: ReactElement): ReactNode {
+  const { children: htmlChildren } = layout.props
+  const body = Children.only(htmlChildren) as ReactElement<{
+    children: ReactNode
+  }>
+  const { children: bodyContent } = body.props
+  return bodyContent
+}
+
 describe('AdminLayout', () => {
   it('renders the main layout and children', () => {
-    render(
-      <AdminLayout>
-        <div data-testid="child-content">Hello</div>
-      </AdminLayout>,
-    )
+    const layout = AdminLayout({
+      children: <div data-testid="child-content">Hello</div>,
+    })
+
+    expect(layout.type).toBe('html')
+    expect(layout.props.lang).toBe('en')
+
+    render(<>{bodyChildren(layout)}</>)
+
     expect(screen.getByTestId('main-layout')).toBeInTheDocument()
     expect(screen.getByTestId('admin-layout')).toBeInTheDocument()
     expect(screen.getByTestId('child-content')).toBeInTheDocument()

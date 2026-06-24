@@ -1,5 +1,6 @@
 import { act, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import axios from 'axios'
 
 import { renderApp } from '@sdlgr/test-utils'
 
@@ -9,10 +10,13 @@ const mockT = jest.fn((key: string, opts?: { email?: string }) =>
   opts?.email ? `Success email: ${opts.email}` : key,
 )
 const mockUseClientTranslation = jest.fn()
-const mockFetch = jest.fn()
 const mockTurnstileOnSuccess = jest.fn()
 const mockTurnstileOnError = jest.fn()
 const mockTurnstileOnExpire = jest.fn()
+
+jest.mock('axios', () => ({ post: jest.fn() }))
+
+const mockAxiosPost = jest.mocked(axios.post)
 
 jest.mock('@web/i18n/client', () => ({
   useClientTranslation: () => mockUseClientTranslation(),
@@ -36,8 +40,6 @@ jest.mock('@marsidev/react-turnstile', () => ({
   },
 }))
 
-global.fetch = mockFetch
-
 const originalEnv = process.env
 
 beforeEach(() => {
@@ -47,10 +49,7 @@ beforeEach(() => {
     NEXT_PUBLIC_TURNSTILE_SITE_KEY: 'test-site-key',
   }
   mockUseClientTranslation.mockReturnValue({ t: mockT })
-  mockFetch.mockResolvedValue({
-    ok: true,
-    json: async () => ({ ok: true }),
-  })
+  mockAxiosPost.mockResolvedValue({ data: {} })
 })
 
 afterAll(() => {
@@ -95,10 +94,7 @@ describe('SubscribeForm', () => {
   })
 
   it('shows alreadySubscribed message when already subscribed', async () => {
-    mockFetch.mockResolvedValueOnce({
-      ok: true,
-      json: async () => ({ ok: true, alreadySubscribed: true }),
-    })
+    mockAxiosPost.mockResolvedValueOnce({ data: { alreadySubscribed: true } })
     renderApp(<SubscribeForm lng="en" />)
 
     act(() => mockTurnstileOnSuccess('turnstile-token'))
@@ -115,11 +111,8 @@ describe('SubscribeForm', () => {
     })
   })
 
-  it('shows error message on fetch failure', async () => {
-    mockFetch.mockResolvedValueOnce({
-      ok: false,
-      json: async () => ({ error: 'Failed' }),
-    })
+  it('shows error message on request failure', async () => {
+    mockAxiosPost.mockRejectedValueOnce(new Error('Failed'))
     renderApp(<SubscribeForm lng="en" />)
 
     act(() => mockTurnstileOnSuccess('turnstile-token'))
@@ -137,7 +130,7 @@ describe('SubscribeForm', () => {
   })
 
   it('shows error on network failure', async () => {
-    mockFetch.mockRejectedValueOnce(new Error('Network error'))
+    mockAxiosPost.mockRejectedValueOnce(new Error('Network error'))
     renderApp(<SubscribeForm lng="en" />)
 
     act(() => mockTurnstileOnSuccess('turnstile-token'))
@@ -216,11 +209,9 @@ describe('SubscribeForm', () => {
     )
     await userEvent.click(screen.getByRole('button', { name: 'submitLabel' }))
     await waitFor(() => {
-      expect(mockFetch).toHaveBeenCalledWith(
-        '/api/subscribe',
-        expect.objectContaining({
-          body: expect.stringContaining('"turnstileToken":"__cf_error__"'),
-        }),
+      expect(mockAxiosPost).toHaveBeenCalledWith(
+        '/api/subscribe/',
+        expect.objectContaining({ turnstileToken: '__cf_error__' }),
       )
     })
   })
@@ -238,7 +229,7 @@ describe('SubscribeForm', () => {
 
   it('shows submitting text on button while form is pending', async () => {
     let resolveFetch!: (value: unknown) => void
-    mockFetch.mockImplementationOnce(
+    mockAxiosPost.mockImplementationOnce(
       () =>
         new Promise((resolve) => {
           resolveFetch = resolve
@@ -253,9 +244,9 @@ describe('SubscribeForm', () => {
     )
     await userEvent.click(screen.getByRole('button', { name: 'submitLabel' }))
     expect(
-        await screen.findByRole('button', { name: 'submitting' }),
-      ).toBeInTheDocument()
-    resolveFetch({ ok: true, json: async () => ({ ok: true }) })
+      await screen.findByRole('button', { name: 'submitting' }),
+    ).toBeInTheDocument()
+    resolveFetch({ data: {} })
     expect(await screen.findByRole('status')).toBeInTheDocument()
   })
 })

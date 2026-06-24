@@ -238,16 +238,16 @@ jest.mock('@sdlgr/select', () => ({
     options,
     'data-testid': testId,
     isSearchable,
-    isCreatable,
+    isCrea,
   }: {
     value: string
     onChange: (v: string) => void
     options: Array<{ value: string; label: string }>
     'data-testid'?: string
     isSearchable?: boolean
-    isCreatable?: boolean
+    isCrea?: boolean
   }) => {
-    if (isSearchable || isCreatable) {
+    if (isSearchable || isCrea) {
       return (
         <input
           data-testid={testId}

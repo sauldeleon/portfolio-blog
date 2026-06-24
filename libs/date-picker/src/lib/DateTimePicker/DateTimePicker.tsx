@@ -1,7 +1,7 @@
 'use client'
 
 import { format } from 'date-fns'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { DayPicker } from 'react-day-picker'
 
 import {
@@ -25,6 +25,19 @@ export function DateTimePicker({
   'data-testid': testId = 'datetime-picker',
 }: DateTimePickerProps) {
   const [open, setOpen] = useState(false)
+  const wrapperRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!open) return
+    function handlePointerDown(event: MouseEvent) {
+      const node = wrapperRef.current as HTMLDivElement
+      if (!node.contains(event.target as Node)) {
+        setOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handlePointerDown)
+    return () => document.removeEventListener('mousedown', handlePointerDown)
+  }, [open])
 
   function handleDaySelect(day: Date | undefined) {
     if (!day) {
@@ -43,7 +56,7 @@ export function DateTimePicker({
   }
 
   return (
-    <StyledWrapper data-testid={testId}>
+    <StyledWrapper ref={wrapperRef} data-testid={testId}>
       <StyledTrigger
         type="button"
         onClick={() => setOpen((o) => !o)}

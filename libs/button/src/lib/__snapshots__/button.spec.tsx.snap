@@ -11,8 +11,22 @@ exports[`Button should render contained with colorScheme danger 1`] = `
   border: 1px solid #FBFBFB;
   padding: 0.5rem 1rem;
   font-size: 0.6rem;
+  transition: opacity 0.15s,border-color 0.15s,color 0.15s;
   color: #B04B2F;
   border-color: #B04B2F;
+}
+
+.c0:hover:not(:disabled) {
+  opacity: 0.8;
+}
+
+.c0:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.c0:focus-visible {
+  outline: #FBFBFB auto 1px;
 }
 
 <body>
@@ -37,8 +51,22 @@ exports[`Button should render contained with colorScheme success 1`] = `
   border: 1px solid #FBFBFB;
   padding: 0.5rem 1rem;
   font-size: 0.6rem;
+  transition: opacity 0.15s,border-color 0.15s,color 0.15s;
   color: #98DFD6;
   border-color: #98DFD6;
+}
+
+.c0:hover:not(:disabled) {
+  opacity: 0.8;
+}
+
+.c0:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.c0:focus-visible {
+  outline: #FBFBFB auto 1px;
 }
 
 <body>
@@ -63,6 +91,20 @@ exports[`Button should render contained with size xs 1`] = `
   border: 1px solid #FBFBFB;
   padding: 0.25rem 0.625rem;
   font-size: 0.6rem;
+  transition: opacity 0.15s,border-color 0.15s,color 0.15s;
+}
+
+.c0:hover:not(:disabled) {
+  opacity: 0.8;
+}
+
+.c0:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.c0:focus-visible {
+  outline: #FBFBFB auto 1px;
 }
 
 <body>
@@ -261,6 +303,20 @@ exports[`Button should render variant contained with size sm 1`] = `
   border: 1px solid #FBFBFB;
   padding: 0.5rem 1rem;
   font-size: 0.6rem;
+  transition: opacity 0.15s,border-color 0.15s,color 0.15s;
+}
+
+.c0:hover:not(:disabled) {
+  opacity: 0.8;
+}
+
+.c0:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.c0:focus-visible {
+  outline: #FBFBFB auto 1px;
 }
 
 <body>

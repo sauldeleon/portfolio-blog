@@ -1,5 +1,6 @@
 'use client'
 
+import axios, { isAxiosError } from 'axios'
 import { useState } from 'react'
 
 import { useClientTranslation } from '@web/i18n/client'
@@ -49,20 +50,19 @@ export function PostLikeButton({
     setLoading(true)
 
     try {
-      const res = await fetch(`/api/posts/${postId}/like`, { method: 'POST' })
-      if (res.ok) {
-        const data = (await res.json()) as { likes: number }
-        setCount(data.likes)
-        saveLikedPost(postId)
-      } else if (res.status === 429) {
+      const { data } = await axios.post<{ likes: number }>(
+        `/api/posts/${postId}/like/`,
+      )
+      setCount(data.likes)
+      saveLikedPost(postId)
+    } catch (err) {
+      if (isAxiosError(err) && err.response?.status === 429) {
+        // Already liked recently — treat as success, keep the optimistic state.
         saveLikedPost(postId)
       } else {
         setLiked(false)
         setCount((c) => c - 1)
       }
-    } catch {
-      setLiked(false)
-      setCount((c) => c - 1)
     } finally {
       setLoading(false)
     }

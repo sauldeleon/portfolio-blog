@@ -11,6 +11,20 @@ exports[`PortfolioPage should render successfully 1`] = `
   border: 1px solid #FBFBFB;
   padding: 15px 20px;
   font-size: 0.9rem;
+  transition: opacity 0.15s,border-color 0.15s,color 0.15s;
+}
+
+.c107:hover:not(:disabled) {
+  opacity: 0.8;
+}
+
+.c107:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.c107:focus-visible {
+  outline: #FBFBFB auto 1px;
 }
 
 .c3 {

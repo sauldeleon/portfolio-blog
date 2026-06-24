@@ -6,6 +6,7 @@ import {
   waitFor,
   within,
 } from '@testing-library/react'
+import axios from 'axios'
 import React from 'react'
 import { useMap } from 'react-leaflet'
 
@@ -15,6 +16,19 @@ import {
   parseElevationFromXml,
   parseWaypointsFromXml,
 } from './GpxMap'
+
+jest.mock('axios', () => ({ get: jest.fn() }))
+const mockAxiosGet = jest.mocked(axios.get)
+const mockAxiosGetData = (data: unknown) => {
+  mockAxiosGet.mockResolvedValue({ data })
+}
+const mockAxiosGetPending = () => {
+  mockAxiosGet.mockReturnValue(
+    new Promise(() => {
+      // Intentionally pending for tests that only inspect GPX layer options.
+    }) as ReturnType<typeof axios.get>,
+  )
+}
 
 jest.mock('leaflet/dist/leaflet.css', () => ({}))
 jest.mock('leaflet-gpx', () => ({}))
@@ -358,9 +372,8 @@ describe('GpxMap', () => {
       flyTo: mockFlyTo,
       setMaxZoom: mockSetMaxZoom,
     })
-    global.fetch = jest.fn().mockResolvedValue({
-      text: jest.fn().mockResolvedValue(GPX_XML_WITH_WAYPOINTS),
-    } as unknown as Response)
+    mockAxiosGet.mockReset()
+    mockAxiosGetData(GPX_XML_WITH_WAYPOINTS)
   })
 
   it('renders gpx map wrapper', () => {
@@ -419,7 +432,19 @@ describe('GpxMap', () => {
           Summit: expect.stringContaining('data:image/svg+xml'),
         }),
       }),
+      gpx_options: { parseElements: ['track', 'route'] },
     })
+  })
+
+  it('enables waypoint parsing for the GPX layer when showWaypoints is true', () => {
+    mockAxiosGetPending()
+    render(<GpxMap url={GPX_URL} showWaypoints />)
+    expect(MockGPX).toHaveBeenCalledWith(
+      GPX_URL,
+      expect.objectContaining({
+        gpx_options: { parseElements: ['track', 'route', 'waypoint'] },
+      }),
+    )
   })
 
   it('registers loaded event on GPX layer', () => {
@@ -539,16 +564,15 @@ describe('GpxMap', () => {
 
     it('download button fetches url and triggers file download', async () => {
       const mockBlob = new Blob(['<gpx/>'], { type: 'application/gpx+xml' })
-      global.fetch = jest.fn().mockResolvedValue({
-        blob: jest.fn().mockResolvedValue(mockBlob),
-        text: jest.fn().mockResolvedValue(''),
-      } as unknown as Response)
+      mockAxiosGetData(mockBlob)
 
       render(<GpxMap url={GPX_URL} allowDownload />)
       fireEvent.click(screen.getByRole('button', { name: 'Download GPX' }))
 
       await waitFor(() => {
-        expect(global.fetch).toHaveBeenCalledWith(GPX_URL)
+        expect(mockAxiosGet).toHaveBeenCalledWith(GPX_URL, {
+          responseType: 'blob',
+        })
         expect(URL.createObjectURL).toHaveBeenCalledWith(mockBlob)
         expect(mockAnchorClick).toHaveBeenCalled()
         expect(URL.revokeObjectURL).toHaveBeenCalledWith('blob:mock-url')
@@ -558,10 +582,7 @@ describe('GpxMap', () => {
 
     it('uses track.gpx fallback filename when url has no filename segment', async () => {
       const mockBlob = new Blob(['<gpx/>'])
-      global.fetch = jest.fn().mockResolvedValue({
-        blob: jest.fn().mockResolvedValue(mockBlob),
-        text: jest.fn().mockResolvedValue(''),
-      } as unknown as Response)
+      mockAxiosGetData(mockBlob)
 
       render(<GpxMap url="https://example.com/" allowDownload />)
       fireEvent.click(screen.getByRole('button', { name: 'Download GPX' }))
@@ -572,15 +593,16 @@ describe('GpxMap', () => {
 
     it('download button with no tracks calls downloadGpx with empty string', async () => {
       const mockBlob = new Blob([''])
-      global.fetch = jest.fn().mockResolvedValue({
-        blob: jest.fn().mockResolvedValue(mockBlob),
-        text: jest.fn().mockResolvedValue(''),
-      } as unknown as Response)
+      mockAxiosGetData(mockBlob)
       render(<GpxMap allowDownload />)
       fireEvent.click(
         within(screen.getByTestId('download-bar')).getByRole('button'),
       )
-      await waitFor(() => expect(global.fetch).toHaveBeenCalledWith(''))
+      await waitFor(() =>
+        expect(mockAxiosGet).toHaveBeenCalledWith('', {
+          responseType: 'blob',
+        }),
+      )
     })
 
     it('multi-track download button triggers file download for that track', async () => {
@@ -589,10 +611,7 @@ describe('GpxMap', () => {
         { url: 'https://example.com/t2.gpx', name: 'Return' },
       ]
       const mockBlob = new Blob(['<gpx/>'], { type: 'application/gpx+xml' })
-      global.fetch = jest.fn().mockResolvedValue({
-        blob: jest.fn().mockResolvedValue(mockBlob),
-        text: jest.fn().mockResolvedValue(''),
-      } as unknown as Response)
+      mockAxiosGetData(mockBlob)
 
       render(
         <GpxMap
@@ -604,7 +623,12 @@ describe('GpxMap', () => {
       fireEvent.click(screen.getByTestId('track-download-1'))
 
       await waitFor(() => {
-        expect(global.fetch).toHaveBeenCalledWith('https://example.com/t2.gpx')
+        expect(mockAxiosGet).toHaveBeenCalledWith(
+          'https://example.com/t2.gpx',
+          {
+            responseType: 'blob',
+          },
+        )
         expect(mockAnchorClick).toHaveBeenCalled()
       })
     })
@@ -681,7 +705,7 @@ describe('GpxMap', () => {
   describe('showWaypoints', () => {
     it('does not fetch when showWaypoints is false', () => {
       render(<GpxMap url={GPX_URL} />)
-      expect(global.fetch).not.toHaveBeenCalled()
+      expect(mockAxiosGet).not.toHaveBeenCalled()
     })
 
     it('does not show waypoints section when showWaypoints is false', () => {
@@ -706,12 +730,10 @@ describe('GpxMap', () => {
     })
 
     it('shows dash for missing name and ele', async () => {
-      global.fetch = jest.fn().mockResolvedValue({
-        text: jest.fn().mockResolvedValue(`<?xml version="1.0"?>
+      mockAxiosGetData(`<?xml version="1.0"?>
 <gpx xmlns="http://www.topografix.com/GPX/1/1">
   <wpt lat="43.5" lon="-5.6"></wpt>
-</gpx>`),
-      } as unknown as Response)
+</gpx>`)
       render(<GpxMap url={GPX_URL} showWaypoints />)
       expect(await screen.findByTestId('waypoints-details')).toBeInTheDocument()
       expect(screen.getAllByText('—').length).toBeGreaterThanOrEqual(2)
@@ -719,18 +741,16 @@ describe('GpxMap', () => {
     })
 
     it('does not show waypoints details when GPX has no waypoints', async () => {
-      global.fetch = jest.fn().mockResolvedValue({
-        text: jest.fn().mockResolvedValue(GPX_XML_NO_WAYPOINTS),
-      } as unknown as Response)
+      mockAxiosGetData(GPX_XML_NO_WAYPOINTS)
       render(<GpxMap url={GPX_URL} showWaypoints />)
-      await waitFor(() => expect(global.fetch).toHaveBeenCalled())
+      await waitFor(() => expect(mockAxiosGet).toHaveBeenCalled())
       expect(screen.queryByTestId('waypoints-details')).not.toBeInTheDocument()
     })
 
     it('does not show waypoints details when fetch fails', async () => {
-      global.fetch = jest.fn().mockRejectedValue(new Error('network'))
+      mockAxiosGet.mockRejectedValue(new Error('network'))
       render(<GpxMap url={GPX_URL} showWaypoints />)
-      await waitFor(() => expect(global.fetch).toHaveBeenCalled())
+      await waitFor(() => expect(mockAxiosGet).toHaveBeenCalled())
       expect(screen.queryByTestId('waypoints-details')).not.toBeInTheDocument()
     })
 
@@ -847,12 +867,10 @@ describe('GpxMap', () => {
     })
 
     it('does not show expand chevron when waypoint has no image or desc', async () => {
-      global.fetch = jest.fn().mockResolvedValue({
-        text: jest.fn().mockResolvedValue(`<?xml version="1.0"?>
+      mockAxiosGetData(`<?xml version="1.0"?>
 <gpx xmlns="http://www.topografix.com/GPX/1/1">
   <wpt lat="43.5" lon="-5.6"><name>Plain</name></wpt>
-</gpx>`),
-      } as unknown as Response)
+</gpx>`)
       render(<GpxMap url={GPX_URL} showWaypoints />)
       await screen.findByText('Plain')
       expect(screen.queryByTestId('expand-chevron')).not.toBeInTheDocument()
@@ -922,9 +940,11 @@ describe('GpxMap', () => {
     })
 
     it('calls eachLayer on loaded event when waypointImages provided', () => {
+      mockAxiosGetPending()
       render(
         <GpxMap
           url={GPX_URL}
+          showWaypoints
           waypointImages={{ 'Refugio Mar': 'https://cdn.com/img.jpg' }}
         />,
       )
@@ -948,6 +968,22 @@ describe('GpxMap', () => {
       expect(mockEachLayer).not.toHaveBeenCalled()
     })
 
+    it('does not call eachLayer when waypointImages are provided but showWaypoints is false', () => {
+      render(
+        <GpxMap
+          url={GPX_URL}
+          waypointImages={{ 'Refugio Mar': 'https://cdn.com/img.jpg' }}
+        />,
+      )
+      const loadedCallback = mockOn.mock.calls.find(
+        (c: [string, () => void]) => c[0] === 'loaded',
+      )?.[1]
+      act(() => {
+        loadedCallback()
+      })
+      expect(mockEachLayer).not.toHaveBeenCalled()
+    })
+
     const makeWptMarker = (title: string) => ({
       options: { title, type: 'waypoint' },
       unbindPopup: jest.fn().mockReturnThis(),
@@ -955,6 +991,7 @@ describe('GpxMap', () => {
     })
 
     it('unbinds popup and binds tooltip for waypoint with matching title', () => {
+      mockAxiosGetPending()
       const marker = makeWptMarker('Refugio Mar')
       mockEachLayer.mockImplementationOnce((cb: (l: unknown) => void) => {
         cb(marker)
@@ -962,6 +999,7 @@ describe('GpxMap', () => {
       render(
         <GpxMap
           url={GPX_URL}
+          showWaypoints
           waypointImages={{ 'Refugio Mar': 'https://cdn.com/img.jpg' }}
         />,
       )
@@ -979,6 +1017,7 @@ describe('GpxMap', () => {
     })
 
     it('uses index-based key from waypointImages for tooltip', () => {
+      mockAxiosGetPending()
       const marker = makeWptMarker('Brecha de Roland')
       mockEachLayer.mockImplementationOnce((cb: (l: unknown) => void) => {
         cb(marker)
@@ -986,6 +1025,7 @@ describe('GpxMap', () => {
       render(
         <GpxMap
           url={GPX_URL}
+          showWaypoints
           waypointImages={{ '0': 'https://cdn.com/idx.jpg' }}
         />,
       )
@@ -1002,6 +1042,7 @@ describe('GpxMap', () => {
     })
 
     it('supports duplicate waypoint names via index-based lookup', () => {
+      mockAxiosGetPending()
       const m0 = makeWptMarker('Summit')
       const m1 = makeWptMarker('Summit')
       mockEachLayer.mockImplementationOnce((cb: (l: unknown) => void) => {
@@ -1011,6 +1052,7 @@ describe('GpxMap', () => {
       render(
         <GpxMap
           url={GPX_URL}
+          showWaypoints
           waypointImages={{
             '0': 'https://cdn.com/img0.jpg',
             '1': 'https://cdn.com/img1.jpg',
@@ -1034,6 +1076,7 @@ describe('GpxMap', () => {
     })
 
     it('recursively iterates nested FeatureGroup to find markers', () => {
+      mockAxiosGetPending()
       const marker = makeWptMarker('Refugio Mar')
       const innerGroup = {
         eachLayer: jest.fn((cb: (l: unknown) => void) => cb(marker)),
@@ -1044,6 +1087,7 @@ describe('GpxMap', () => {
       render(
         <GpxMap
           url={GPX_URL}
+          showWaypoints
           waypointImages={{ 'Refugio Mar': 'https://cdn.com/img.jpg' }}
         />,
       )
@@ -1060,6 +1104,7 @@ describe('GpxMap', () => {
     })
 
     it('skips unnamed waypoint when no index image exists', () => {
+      mockAxiosGetPending()
       const marker = {
         options: { type: 'waypoint' },
         unbindPopup: jest.fn().mockReturnThis(),
@@ -1071,6 +1116,7 @@ describe('GpxMap', () => {
       render(
         <GpxMap
           url={GPX_URL}
+          showWaypoints
           waypointImages={{ 'Refugio Mar': 'https://cdn.com/img.jpg' }}
         />,
       )
@@ -1085,6 +1131,7 @@ describe('GpxMap', () => {
     })
 
     it('skips non-waypoint layers (start/end markers)', () => {
+      mockAxiosGetPending()
       const startMarker = {
         options: {},
         unbindPopup: jest.fn(),
@@ -1096,6 +1143,7 @@ describe('GpxMap', () => {
       render(
         <GpxMap
           url={GPX_URL}
+          showWaypoints
           waypointImages={{ '0': 'https://cdn.com/img.jpg' }}
         />,
       )
@@ -1110,6 +1158,7 @@ describe('GpxMap', () => {
     })
 
     it('does not bind tooltip when waypoint not in waypointImages', () => {
+      mockAxiosGetPending()
       const marker = makeWptMarker('Unknown')
       mockEachLayer.mockImplementationOnce((cb: (l: unknown) => void) => {
         cb(marker)
@@ -1117,6 +1166,7 @@ describe('GpxMap', () => {
       render(
         <GpxMap
           url={GPX_URL}
+          showWaypoints
           waypointImages={{ 'Refugio Mar': 'https://cdn.com/img.jpg' }}
         />,
       )
@@ -1131,6 +1181,7 @@ describe('GpxMap', () => {
     })
 
     it('binds tooltip for waypoint with no title when index image exists', () => {
+      mockAxiosGetPending()
       const marker = {
         options: { type: 'waypoint' },
         unbindPopup: jest.fn().mockReturnThis(),
@@ -1142,6 +1193,7 @@ describe('GpxMap', () => {
       render(
         <GpxMap
           url={GPX_URL}
+          showWaypoints
           waypointImages={{ '0': 'https://cdn.com/notitle.jpg' }}
         />,
       )
@@ -1159,6 +1211,7 @@ describe('GpxMap', () => {
     })
 
     it('uses per-track waypointImages when provided on track def', () => {
+      mockAxiosGetPending()
       const marker = makeWptMarker('Summit')
       mockEachLayer.mockImplementationOnce((cb: (l: unknown) => void) => {
         cb(marker)
@@ -1168,6 +1221,7 @@ describe('GpxMap', () => {
           tracks={[
             {
               url: GPX_URL,
+              showWaypoints: true,
               waypointImages: { Summit: 'https://cdn.com/track-img.jpg' },
             },
           ]}
@@ -1344,9 +1398,13 @@ describe('GpxMap', () => {
 
     it('fetches waypoints from all tracks when showWaypoints is true', async () => {
       render(<GpxMap tracks={TRACKS} showWaypoints />)
-      await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(2))
-      expect(global.fetch).toHaveBeenCalledWith('https://example.com/t1.gpx')
-      expect(global.fetch).toHaveBeenCalledWith('https://example.com/t2.gpx')
+      await waitFor(() => expect(mockAxiosGet).toHaveBeenCalledTimes(2))
+      expect(mockAxiosGet).toHaveBeenCalledWith('https://example.com/t1.gpx', {
+        responseType: 'text',
+      })
+      expect(mockAxiosGet).toHaveBeenCalledWith('https://example.com/t2.gpx', {
+        responseType: 'text',
+      })
     })
 
     it('fetches only track with per-track showWaypoints when global prop is false', async () => {
@@ -1362,10 +1420,49 @@ describe('GpxMap', () => {
           ]}
         />,
       )
-      await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(1))
-      expect(global.fetch).toHaveBeenCalledWith('https://example.com/t1.gpx')
-      expect(global.fetch).not.toHaveBeenCalledWith(
+      await waitFor(() => expect(mockAxiosGet).toHaveBeenCalledTimes(1))
+      expect(mockAxiosGet).toHaveBeenCalledWith('https://example.com/t1.gpx', {
+        responseType: 'text',
+      })
+      expect(mockAxiosGet).not.toHaveBeenCalledWith(
         'https://example.com/t2.gpx',
+        expect.anything(),
+      )
+    })
+
+    it('uses per-track showWaypoints to control GPX waypoint parsing', () => {
+      mockAxiosGetPending()
+      render(
+        <GpxMap
+          showWaypoints
+          tracks={[
+            {
+              url: 'https://example.com/t1.gpx',
+              name: 'T1',
+              showWaypoints: false,
+            },
+            {
+              url: 'https://example.com/t2.gpx',
+              name: 'T2',
+              showWaypoints: true,
+            },
+          ]}
+        />,
+      )
+
+      expect(MockGPX).toHaveBeenNthCalledWith(
+        1,
+        'https://example.com/t1.gpx',
+        expect.objectContaining({
+          gpx_options: { parseElements: ['track', 'route'] },
+        }),
+      )
+      expect(MockGPX).toHaveBeenNthCalledWith(
+        2,
+        'https://example.com/t2.gpx',
+        expect.objectContaining({
+          gpx_options: { parseElements: ['track', 'route', 'waypoint'] },
+        }),
       )
     })
 
@@ -1686,9 +1783,8 @@ describe('GpxMap showElevation', () => {
       flyTo: mockFlyTo,
       setMaxZoom: mockSetMaxZoom,
     })
-    global.fetch = jest.fn().mockResolvedValue({
-      text: jest.fn().mockResolvedValue(GPX_XML_WITH_TRKPTS),
-    } as unknown as Response)
+    mockAxiosGet.mockReset()
+    mockAxiosGetData(GPX_XML_WITH_TRKPTS)
   })
 
   it('does not render elevation chart when showElevation is false', () => {
@@ -1698,7 +1794,7 @@ describe('GpxMap showElevation', () => {
 
   it('does not fetch when showElevation is false', () => {
     render(<GpxMap url={GPX_URL} />)
-    expect(global.fetch).not.toHaveBeenCalled()
+    expect(mockAxiosGet).not.toHaveBeenCalled()
   })
 
   it('fetches and renders elevation chart when showElevation is true', async () => {
@@ -1707,18 +1803,16 @@ describe('GpxMap showElevation', () => {
   })
 
   it('does not render chart when fetched data has no trkpt', async () => {
-    global.fetch = jest.fn().mockResolvedValue({
-      text: jest.fn().mockResolvedValue(GPX_XML_NO_WAYPOINTS),
-    } as unknown as Response)
+    mockAxiosGetData(GPX_XML_NO_WAYPOINTS)
     render(<GpxMap tracks={[{ url: GPX_URL, showElevation: true }]} />)
-    await waitFor(() => expect(global.fetch).toHaveBeenCalled())
+    await waitFor(() => expect(mockAxiosGet).toHaveBeenCalled())
     expect(screen.queryByTestId('elevation-chart')).not.toBeInTheDocument()
   })
 
   it('does not set waypoints on fetch failure when only showElevation is set', async () => {
-    global.fetch = jest.fn().mockRejectedValue(new Error('network'))
+    mockAxiosGet.mockRejectedValue(new Error('network'))
     render(<GpxMap tracks={[{ url: GPX_URL, showElevation: true }]} />)
-    await waitFor(() => expect(global.fetch).toHaveBeenCalled())
+    await waitFor(() => expect(mockAxiosGet).toHaveBeenCalled())
     expect(screen.queryByTestId('elevation-chart')).not.toBeInTheDocument()
   })
 
@@ -1728,7 +1822,7 @@ describe('GpxMap showElevation', () => {
         tracks={[{ url: GPX_URL, showWaypoints: true, showElevation: true }]}
       />,
     )
-    await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(1))
+    await waitFor(() => expect(mockAxiosGet).toHaveBeenCalledTimes(1))
   })
 
   it('shows elevation label for multi-track when showElevation', async () => {

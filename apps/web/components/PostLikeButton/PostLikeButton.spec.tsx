@@ -1,29 +1,39 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react'
+import axios, { AxiosError } from 'axios'
 
 import { renderApp } from '@sdlgr/test-utils'
 
+import { PostLikeButton } from './PostLikeButton'
+
 const mockT = jest.fn((key: string) => key)
-const mockFetch = jest.fn()
 
 jest.mock('@web/i18n/client', () => ({
   useClientTranslation: () => ({ t: mockT }),
 }))
 
-global.fetch = mockFetch
+let mockAxiosPost: jest.SpyInstance
+
+function makeAxiosError(status: number): AxiosError {
+  return new AxiosError('error', String(status), undefined, undefined, {
+    status,
+    data: {},
+    statusText: 'Error',
+    headers: {},
+    config: {} as never,
+  })
+}
 
 const STORAGE_KEY = 'liked_posts'
 
-const { PostLikeButton } =
-  require('./PostLikeButton') as typeof import('./PostLikeButton')
-
 beforeEach(() => {
-  jest.clearAllMocks()
   localStorage.clear()
-  mockFetch.mockResolvedValue({
-    ok: true,
-    status: 200,
-    json: async () => ({ likes: 10 }),
-  })
+  mockAxiosPost = jest
+    .spyOn(axios, 'post')
+    .mockResolvedValue({ data: { likes: 10 } })
+})
+
+afterEach(() => {
+  jest.restoreAllMocks()
 })
 
 describe('PostLikeButton', () => {
@@ -72,28 +82,22 @@ describe('PostLikeButton', () => {
   it('saves post id to localStorage after successful like', async () => {
     renderApp(<PostLikeButton postId="post-1" initialLikes={0} />)
     fireEvent.click(screen.getByTestId('like-button'))
-    await waitFor(() => expect(mockFetch).toHaveBeenCalled())
+    await waitFor(() => expect(mockAxiosPost).toHaveBeenCalled())
     const stored = JSON.parse(
       localStorage.getItem(STORAGE_KEY) ?? '[]',
     ) as string[]
     expect(stored).toContain('post-1')
   })
 
-  it('calls correct API endpoint', async () => {
+  it('calls the correct API endpoint (trailing slash)', async () => {
     renderApp(<PostLikeButton postId="post-abc" initialLikes={0} />)
     fireEvent.click(screen.getByTestId('like-button'))
-    await waitFor(() => expect(mockFetch).toHaveBeenCalled())
-    expect(mockFetch).toHaveBeenCalledWith('/api/posts/post-abc/like', {
-      method: 'POST',
-    })
+    await waitFor(() => expect(mockAxiosPost).toHaveBeenCalled())
+    expect(mockAxiosPost).toHaveBeenCalledWith('/api/posts/post-abc/like/')
   })
 
   it('reverts optimistic update on non-429 error response', async () => {
-    mockFetch.mockResolvedValue({
-      ok: false,
-      status: 500,
-      json: async () => ({}),
-    })
+    mockAxiosPost.mockRejectedValue(makeAxiosError(500))
     renderApp(<PostLikeButton postId="post-1" initialLikes={5} />)
     fireEvent.click(screen.getByTestId('like-button'))
     expect(screen.getByTestId('like-count')).toHaveTextContent('6')
@@ -104,11 +108,7 @@ describe('PostLikeButton', () => {
   })
 
   it('keeps liked state on 429 response (already liked server-side)', async () => {
-    mockFetch.mockResolvedValue({
-      ok: false,
-      status: 429,
-      json: async () => ({}),
-    })
+    mockAxiosPost.mockRejectedValue(makeAxiosError(429))
     renderApp(<PostLikeButton postId="post-1" initialLikes={5} />)
     fireEvent.click(screen.getByTestId('like-button'))
     await waitFor(() =>
@@ -122,7 +122,7 @@ describe('PostLikeButton', () => {
   })
 
   it('reverts optimistic update on network error', async () => {
-    mockFetch.mockRejectedValue(new Error('network'))
+    mockAxiosPost.mockRejectedValue(new Error('network'))
     renderApp(<PostLikeButton postId="post-1" initialLikes={5} />)
     fireEvent.click(screen.getByTestId('like-button'))
     await waitFor(() =>
@@ -138,7 +138,7 @@ describe('PostLikeButton', () => {
       expect(screen.getByTestId('like-button')).toBeDisabled(),
     )
     fireEvent.click(screen.getByTestId('like-button'))
-    expect(mockFetch).not.toHaveBeenCalled()
+    expect(mockAxiosPost).not.toHaveBeenCalled()
   })
 
   it('handles corrupted localStorage gracefully', () => {
@@ -149,11 +149,7 @@ describe('PostLikeButton', () => {
 
   it('does not duplicate post in localStorage on 429', async () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(['post-1']))
-    mockFetch.mockResolvedValue({
-      ok: false,
-      status: 429,
-      json: async () => ({}),
-    })
+    mockAxiosPost.mockRejectedValue(makeAxiosError(429))
     renderApp(<PostLikeButton postId="post-1" initialLikes={0} />)
     fireEvent.click(screen.getByTestId('like-button'))
     await waitFor(() =>

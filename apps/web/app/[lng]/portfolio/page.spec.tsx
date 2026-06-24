@@ -1,6 +1,14 @@
+import { screen } from '@testing-library/react'
+
 import { renderApp } from '@sdlgr/test-utils'
 
 import Page, { generateMetadata, revalidate } from './page.next'
+
+jest.mock('@web/components/PortfolioPage/PortfolioPage', () => ({
+  PortfolioPage: ({ lng }: { lng: string }) => (
+    <div data-testid="portfolio-page" data-lng={lng} />
+  ),
+}))
 
 describe('[lng]/portfolio route -  page', () => {
   it('should render successfully', async () => {
@@ -8,6 +16,10 @@ describe('[lng]/portfolio route -  page', () => {
       await Page({ params: Promise.resolve({ lng: 'en' }) }),
     )
     expect(baseElement).toBeTruthy()
+    expect(screen.getByTestId('portfolio-page')).toHaveAttribute(
+      'data-lng',
+      'en',
+    )
   })
 
   it('should render successfully in Spanish', async () => {
@@ -15,6 +27,10 @@ describe('[lng]/portfolio route -  page', () => {
       await Page({ params: Promise.resolve({ lng: 'es' }) }),
     )
     expect(baseElement).toBeTruthy()
+    expect(screen.getByTestId('portfolio-page')).toHaveAttribute(
+      'data-lng',
+      'es',
+    )
   })
 })
 

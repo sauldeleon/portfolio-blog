@@ -58,6 +58,7 @@ export function CommentsTable({ initialComments }: CommentsTableProps) {
   const queryClient = useQueryClient()
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('pending')
   const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null)
+  const [bulkDeletePending, setBulkDeletePending] = useState(false)
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set())
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
 
@@ -161,14 +162,17 @@ export function CommentsTable({ initialComments }: CommentsTableProps) {
     setSelectedIds(new Set())
   }
 
-  async function handleBulkDelete() {
+  async function handleConfirmBulkDelete() {
     const ids = [...selectedIds]
+
+    const idsToDelete = new Set(ids)
     await Promise.all(ids.map((id) => axios.delete(`/api/comments/${id}`)))
     queryClient.setQueryData<CommentRecord[]>(
       QUERY_KEY(statusFilter),
       /* istanbul ignore next */
-      (old) => old?.filter((c) => !ids.includes(c.id)) ?? [],
+      (old) => old?.filter((c) => !idsToDelete.has(c.id)) ?? [],
     )
+    setBulkDeletePending(false)
     setSelectedIds(new Set())
   }
 
@@ -207,7 +211,7 @@ export function CommentsTable({ initialComments }: CommentsTableProps) {
                 {t('comments.reject')}
               </StyledBulkRejectButton>
               <StyledBulkDeleteButton
-                onClick={() => void handleBulkDelete()}
+                onClick={() => setBulkDeletePending(true)}
                 data-testid="bulk-delete-button"
               >
                 {t('comments.delete')}
@@ -330,6 +334,12 @@ export function CommentsTable({ initialComments }: CommentsTableProps) {
         message={t('comments.deleteConfirm')}
         onConfirm={handleConfirmDelete}
         onCancel={handleCancelDelete}
+      />
+      <ConfirmDeleteModal
+        isOpen={bulkDeletePending}
+        message={t('comments.bulkDeleteConfirm')}
+        onConfirm={handleConfirmBulkDelete}
+        onCancel={() => setBulkDeletePending(false)}
       />
     </StyledWrapper>
   )

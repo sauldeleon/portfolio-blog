@@ -17,12 +17,14 @@ jest.mock('react-overlays', () => ({
     children,
     onHide,
     renderBackdrop,
+    enforceFocus: _enforceFocus,
     ...rest
   }: {
     show: boolean
     children: React.ReactNode
     onHide: () => void
     renderBackdrop?: (props: Record<string, unknown>) => React.ReactNode
+    enforceFocus?: boolean
     [key: string]: unknown
   }) => {
     if (!show) return null

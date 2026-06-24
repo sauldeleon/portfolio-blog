@@ -1,3 +1,5 @@
+import axios, { isAxiosError } from 'axios'
+
 import { getPostTranslations } from '@web/lib/db/queries/posts'
 import { sendNewPostNotifications } from '@web/lib/email/sendNewPostNotifications'
 import { logger } from '@web/lib/logger'
@@ -45,13 +47,19 @@ export async function notifyPostPublished(
       translationsByLocale,
     ) as [string, TranslationEntry][]) {
       const url = `${siteUrl}/${locale}/blog/${post.postNumber}/${translation.slug}`
-      const res = await fetch(url, { method: 'HEAD' })
-      if (!res.ok) {
-        logger.warn(
-          { url, status: res.status, logContext },
-          'notifyPostPublished: post page not reachable, skipping notifications',
-        )
-        return
+      try {
+        await axios.head(url)
+      } catch (err) {
+        // Reachable but non-2xx → skip quietly; network/other errors bubble
+        // up to the outer handler so they're logged as errors.
+        if (isAxiosError(err) && err.response) {
+          logger.warn(
+            { url, status: err.response.status, logContext },
+            'notifyPostPublished: post page not reachable, skipping notifications',
+          )
+          return
+        }
+        throw err
       }
     }
 
