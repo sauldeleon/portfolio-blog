@@ -115,15 +115,15 @@ function decodeXml(s: string): string {
     .replace(/&amp;/g, '&')
 }
 
-/** Resolve a waypoint's category from its name, then its GPX symbol. */
+/** Resolve a waypoint's category from its GPX symbol, then its name. */
 export function resolveCategory(
   name: string | undefined,
   sym: string | undefined,
 ): string {
-  const n = norm(name ?? '')
-  for (const [key, cat] of NAME_KEYS) if (n.includes(key)) return cat
   const s = sym?.trim().toLowerCase()
   if (s && SYM_MAP[s]) return SYM_MAP[s]
+  const n = norm(name ?? '')
+  for (const [key, cat] of NAME_KEYS) if (n.includes(key)) return cat
   return 'info'
 }
 

@@ -21,9 +21,11 @@ const H = 320
 
 export interface WaypointCardData {
   name: string
-  lat: number
-  lon: number
-  ele: number
+  /** Coordinates; omitted when unreliable (e.g. deep canyon / via ferrata). */
+  lat?: number
+  lon?: number
+  /** Elevation in metres; omitted hides the value and the altimeter scale. */
+  ele?: number
   /** Min/max elevation across the set, for the altimeter scale. */
   emin: number
   emax: number
@@ -71,8 +73,6 @@ export function waypointCard(data: WaypointCardData): string {
   const ity = by + (bs - 96) / 2
   const CX = 226
 
-  const coords = `${data.lat.toFixed(5)}, ${data.lon.toFixed(5)}`
-
   const { size: tsize, lines } = fitTitle(data.name, 700)
   let title: string
   if (lines.length === 1) {
@@ -86,35 +86,53 @@ export function waypointCard(data: WaypointCardData): string {
 
   const dataY = 280
   const yc = dataY - 9
-  const crosshair =
-    `<g transform="translate(${CX},${yc - 9})" fill="none" stroke="${COLD}" stroke-width="2.4" stroke-linecap="round">` +
-    `<circle cx="9" cy="9" r="8.5"/><path d="M9 -1 L9 3 M9 15 L9 19 M-1 9 L3 9 M15 9 L19 9"/>` +
-    `<circle cx="9" cy="9" r="1.6" fill="${COLD}"/></g>`
-  const coordsX = CX + 30
-  const coordsW = tw(coords, 'mono', 26)
-  const triX = coordsX + coordsW + 34
-  const tri =
+  const triMark = (triX: number): string =>
     `<g transform="translate(${triX.toFixed(0)},${yc - 8})">` +
     `<path d="M9 0 L18 16 L0 16 Z" fill="none" stroke="${AMBER}" stroke-width="2.6" stroke-linejoin="round"/></g>`
-  const altX = triX + 30
-  const dataRow =
-    `${crosshair}<text x="${coordsX}" y="${dataY}" font-family="Roboto Mono" font-size="26" fill="${COLD}">${coords}</text>` +
-    `${tri}<text x="${altX.toFixed(0)}" y="${dataY}" font-family="Roboto Mono" font-size="26" font-weight="bold" fill="${BONE}">${data.ele} m</text>`
+  const eleText = (altX: number, ele: number): string =>
+    `<text x="${altX.toFixed(0)}" y="${dataY}" font-family="Roboto Mono" font-size="26" font-weight="bold" fill="${BONE}">${ele} m</text>`
 
-  const ax = 992
-  const aTop = 80
-  const aBot = 244
-  const aH = aBot - aTop
-  const rawFrac =
-    data.emax > data.emin ? (data.ele - data.emin) / (data.emax - data.emin) : 0
-  const frac = Math.max(0, Math.min(1, rawFrac))
-  const fillTop = aBot - frac * aH
-  const alti =
-    `<rect x="${ax - 7}" y="${aTop}" width="14" height="${aH}" rx="7" fill="${TRACK_BG}"/>` +
-    `<rect x="${ax - 7}" y="${fillTop.toFixed(1)}" width="14" height="${(aBot - fillTop).toFixed(1)}" rx="7" fill="url(#altgrad)"/>` +
-    `<circle cx="${ax}" cy="${fillTop.toFixed(1)}" r="9" fill="${AMBER}" stroke="${BG_BOT}" stroke-width="3"/>` +
-    `<text x="${ax}" y="${aTop - 12}" text-anchor="middle" font-family="Roboto Mono" font-size="19" fill="${COLD}">${data.emax}</text>` +
-    `<text x="${ax}" y="${aBot + 26}" text-anchor="middle" font-family="Roboto Mono" font-size="19" fill="${COLD}">${data.emin}</text>`
+  let dataRow = ''
+  let markerX = CX
+  if (
+    data.lat != null &&
+    data.lon != null &&
+    Number.isFinite(data.lat) &&
+    Number.isFinite(data.lon)
+  ) {
+    const coords = `${data.lat.toFixed(5)}, ${data.lon.toFixed(5)}`
+    const crosshair =
+      `<g transform="translate(${CX},${yc - 9})" fill="none" stroke="${COLD}" stroke-width="2.4" stroke-linecap="round">` +
+      `<circle cx="9" cy="9" r="8.5"/><path d="M9 -1 L9 3 M9 15 L9 19 M-1 9 L3 9 M15 9 L19 9"/>` +
+      `<circle cx="9" cy="9" r="1.6" fill="${COLD}"/></g>`
+    const coordsX = CX + 30
+    dataRow += `${crosshair}<text x="${coordsX}" y="${dataY}" font-family="Roboto Mono" font-size="26" fill="${COLD}">${coords}</text>`
+    markerX = coordsX + tw(coords, 'mono', 26) + 34
+  }
+  if (data.ele != null && Number.isFinite(data.ele)) {
+    // Elevation marker follows the coordinates, or left-aligns when absent.
+    dataRow += `${triMark(markerX)}${eleText(markerX + 30, data.ele)}`
+  }
+
+  let alti = ''
+  if (data.ele != null && Number.isFinite(data.ele)) {
+    const ax = 992
+    const aTop = 80
+    const aBot = 244
+    const aH = aBot - aTop
+    const rawFrac =
+      data.emax > data.emin
+        ? (data.ele - data.emin) / (data.emax - data.emin)
+        : 0
+    const frac = Math.max(0, Math.min(1, rawFrac))
+    const fillTop = aBot - frac * aH
+    alti =
+      `<rect x="${ax - 7}" y="${aTop}" width="14" height="${aH}" rx="7" fill="${TRACK_BG}"/>` +
+      `<rect x="${ax - 7}" y="${fillTop.toFixed(1)}" width="14" height="${(aBot - fillTop).toFixed(1)}" rx="7" fill="url(#altgrad)"/>` +
+      `<circle cx="${ax}" cy="${fillTop.toFixed(1)}" r="9" fill="${AMBER}" stroke="${BG_BOT}" stroke-width="3"/>` +
+      `<text x="${ax}" y="${aTop - 12}" text-anchor="middle" font-family="Roboto Mono" font-size="19" fill="${COLD}">${data.emax}</text>` +
+      `<text x="${ax}" y="${aBot + 26}" text-anchor="middle" font-family="Roboto Mono" font-size="19" fill="${COLD}">${data.emin}</text>`
+  }
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
 <defs>

@@ -1,9 +1,11 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { act, fireEvent, screen, waitFor } from '@testing-library/react'
 import axios, { AxiosError } from 'axios'
+import { createRef } from 'react'
 
 import { renderApp } from '@sdlgr/test-utils'
 
 import { CardPreview } from './CardPreview'
+import type { CardPreviewHandle } from './CardPreview'
 
 function makeAxiosError(status: number, data: unknown): AxiosError {
   return new AxiosError('error', String(status), undefined, undefined, {
@@ -223,6 +225,40 @@ describe('CardPreview', () => {
     expect(screen.getByTestId('svg-container')).toBeInTheDocument()
   })
 
+  it('does not render a select control without onSelect', () => {
+    renderApp(<CardPreview svg={SAMPLE_SVG} cardWidth={100} cardHeight={50} />)
+    expect(screen.queryByTestId('card-select')).not.toBeInTheDocument()
+  })
+
+  it('calls onSelect when the clickable preview is clicked', () => {
+    const onSelect = jest.fn()
+    renderApp(
+      <CardPreview
+        svg={SAMPLE_SVG}
+        cardWidth={100}
+        cardHeight={50}
+        onSelect={onSelect}
+      />,
+    )
+    const frame = screen.getByTestId('card-select')
+    expect(frame.tagName).toBe('BUTTON')
+    fireEvent.click(frame)
+    expect(onSelect).toHaveBeenCalledTimes(1)
+  })
+
+  it('highlights the frame when selected', () => {
+    renderApp(
+      <CardPreview
+        svg={SAMPLE_SVG}
+        cardWidth={100}
+        cardHeight={50}
+        onSelect={jest.fn()}
+        selected
+      />,
+    )
+    expect(screen.getByTestId('card-select')).toBeInTheDocument()
+  })
+
   describe('upload to Cloudinary', () => {
     const SuccessImage = class {
       onload: (() => void) | null = null
@@ -239,16 +275,27 @@ describe('CardPreview', () => {
       expect(screen.getByTestId('upload-button')).toHaveTextContent(
         'Upload to Cloudinary',
       )
+      expect(screen.getByTestId('upload-button')).not.toBeDisabled()
+    })
+
+    it('disables the upload button when disableUpload is set', () => {
+      renderApp(
+        <CardPreview
+          svg={SAMPLE_SVG}
+          cardWidth={100}
+          cardHeight={50}
+          disableUpload
+        />,
+      )
+      expect(screen.getByTestId('upload-button')).toBeDisabled()
     })
 
     it('uploads the PNG and shows the link on success', async () => {
       const origImage = global.Image
       global.Image = SuccessImage
-      const postSpy = jest
-        .spyOn(axios, 'post')
-        .mockResolvedValue({
-          data: { url: 'https://res.cloudinary.com/x.png' },
-        })
+      const postSpy = jest.spyOn(axios, 'post').mockResolvedValue({
+        data: { url: 'https://res.cloudinary.com/x.png' },
+      })
       renderApp(
         <CardPreview
           svg={SAMPLE_SVG}
@@ -264,6 +311,73 @@ describe('CardPreview', () => {
       )
       expect(postSpy).toHaveBeenCalledWith('/api/upload', expect.any(FormData))
       global.Image = origImage
+    })
+
+    it('uses filename for the public name, altText and the file name', async () => {
+      const origImage = global.Image
+      global.Image = SuccessImage
+      const postSpy = jest
+        .spyOn(axios, 'post')
+        .mockResolvedValue({ data: { url: 'https://x/y.png' } })
+      renderApp(
+        <CardPreview
+          svg={SAMPLE_SVG}
+          cardWidth={100}
+          cardHeight={50}
+          filename="waypoint-route-1234-en-refugio"
+        />,
+      )
+      fireEvent.click(screen.getByTestId('upload-button'))
+      await screen.findByTestId('upload-link')
+      const fd = postSpy.mock.calls[0][1] as FormData
+      expect(fd.get('name')).toBe('waypoint-route-1234-en-refugio')
+      expect(fd.get('altText')).toBe('waypoint-route-1234-en-refugio')
+      expect((fd.get('file') as File).name).toBe(
+        'waypoint-route-1234-en-refugio.png',
+      )
+      global.Image = origImage
+    })
+
+    it('uploads via the imperative ref handle', async () => {
+      const origImage = global.Image
+      global.Image = SuccessImage
+      const postSpy = jest
+        .spyOn(axios, 'post')
+        .mockResolvedValue({ data: { url: 'https://x/y.png' } })
+      const ref = createRef<CardPreviewHandle>()
+      renderApp(
+        <CardPreview
+          ref={ref}
+          svg={SAMPLE_SVG}
+          cardWidth={100}
+          cardHeight={50}
+          filename="my-card"
+        />,
+      )
+      await act(async () => {
+        await ref.current?.upload()
+      })
+      expect(postSpy).toHaveBeenCalled()
+      expect(screen.getByTestId('upload-link')).toBeInTheDocument()
+      global.Image = origImage
+    })
+
+    it('does nothing via the ref handle when upload is disabled', async () => {
+      const postSpy = jest.spyOn(axios, 'post')
+      const ref = createRef<CardPreviewHandle>()
+      renderApp(
+        <CardPreview
+          ref={ref}
+          svg={SAMPLE_SVG}
+          cardWidth={100}
+          cardHeight={50}
+          disableUpload
+        />,
+      )
+      await act(async () => {
+        await ref.current?.upload()
+      })
+      expect(postSpy).not.toHaveBeenCalled()
     })
 
     it('shows the server error on a failed upload', async () => {

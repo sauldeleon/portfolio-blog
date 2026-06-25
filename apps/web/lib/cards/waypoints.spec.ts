@@ -18,17 +18,23 @@ describe('norm', () => {
 })
 
 describe('resolveCategory', () => {
-  it('matches a name keyword first', () => {
+  it('matches the GPX symbol first', () => {
+    expect(resolveCategory('Spot 1', 'Waterfall')).toBe('cascada')
+  })
+
+  it('lets the GPX symbol win over a matching name', () => {
+    // name would resolve to "cascada" but the symbol takes precedence
+    expect(resolveCategory('Cascada bonita', 'Summit')).toBe('summit')
+  })
+
+  it('falls back to the name when there is no symbol match', () => {
     expect(resolveCategory('Rápel del salto', undefined)).toBe('rappel')
+    expect(resolveCategory('Spot 1', 'mystery')).toBe('info')
   })
 
   it('matches encajonamiento and estrechamiento to canyon', () => {
     expect(resolveCategory('Encajonamiento', undefined)).toBe('canyon')
     expect(resolveCategory('Estrechamiento final', undefined)).toBe('canyon')
-  })
-
-  it('falls back to the GPX symbol when no name match', () => {
-    expect(resolveCategory('Spot 1', 'Waterfall')).toBe('cascada')
   })
 
   it('defaults to info when nothing matches', () => {

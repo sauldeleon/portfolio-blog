@@ -63,4 +63,49 @@ describe('waypointCard', () => {
     const svg = waypointCard({ ...base, name: 'A'.repeat(60) })
     expect(svg).toContain('font-size="34"')
   })
+
+  it('omits coordinates and the crosshair when lat/lon are not given', () => {
+    const svg = waypointCard({ ...base, lat: undefined, lon: undefined })
+    // still draws elevation
+    expect(svg).toContain('1850 m')
+    // no coordinate text and no crosshair marker
+    expect(svg).not.toContain('42.50000, -1.20000')
+    expect(svg).not.toContain('r="8.5"')
+  })
+
+  it('omits coordinates when only one of lat/lon is given', () => {
+    expect(waypointCard({ ...base, lon: undefined })).not.toContain('r="8.5"')
+    expect(waypointCard({ ...base, lat: undefined })).not.toContain('r="8.5"')
+  })
+
+  it('omits coordinates when lat/lon are not finite', () => {
+    expect(waypointCard({ ...base, lat: NaN })).not.toContain('r="8.5"')
+    expect(waypointCard({ ...base, lon: NaN })).not.toContain('r="8.5"')
+  })
+
+  it('omits the elevation value and the altimeter when ele is not given', () => {
+    const svg = waypointCard({ ...base, ele: undefined })
+    expect(svg).not.toContain('1850 m')
+    expect(svg).not.toContain('url(#altgrad)')
+    // scale-bound labels are gone too
+    expect(svg).not.toContain('>2500<')
+    // coordinates still render
+    expect(svg).toContain('42.50000, -1.20000')
+  })
+
+  it('omits the elevation when ele is not finite', () => {
+    expect(waypointCard({ ...base, ele: NaN })).not.toContain('url(#altgrad)')
+  })
+
+  it('renders an empty data row when neither coordinates nor ele are given', () => {
+    const svg = waypointCard({
+      ...base,
+      lat: undefined,
+      lon: undefined,
+      ele: undefined,
+    })
+    expect(svg).not.toContain('r="8.5"')
+    expect(svg).not.toContain('url(#altgrad)')
+    expect(svg).toContain('<svg')
+  })
 })

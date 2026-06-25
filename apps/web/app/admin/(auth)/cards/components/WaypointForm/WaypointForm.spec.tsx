@@ -55,10 +55,19 @@ jest.mock('@sdlgr/select', () => ({
 }))
 
 jest.mock('../CardPreview', () => ({
-  CardPreview: ({ svg, filename }: { svg: string; filename: string }) => (
+  CardPreview: ({
+    svg,
+    filename,
+    disableUpload,
+  }: {
+    svg: string
+    filename: string
+    disableUpload?: boolean
+  }) => (
     <div data-testid="card-preview">
       <span data-testid="cp-file">{filename}</span>
       <span data-testid="cp-len">{String(svg.length)}</span>
+      <span data-testid="cp-disabled">{String(disableUpload)}</span>
     </div>
   ),
 }))
@@ -81,6 +90,15 @@ describe('WaypointForm', () => {
     expect(screen.getByTestId('cp-file')).toHaveTextContent('en_refugio_foo')
     fireEvent.click(screen.getByTestId('wp-lang-es'))
     expect(screen.getByTestId('cp-file')).toHaveTextContent('es_refugio_foo')
+  })
+
+  it('disables upload until a name is provided', () => {
+    renderApp(<WaypointForm />)
+    expect(screen.getByTestId('cp-disabled')).toHaveTextContent('true')
+    fireEvent.change(screen.getByLabelText('Name'), {
+      target: { value: 'Refugio' },
+    })
+    expect(screen.getByTestId('cp-disabled')).toHaveTextContent('false')
   })
 
   it('selects a category', () => {

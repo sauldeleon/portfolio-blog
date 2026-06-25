@@ -364,7 +364,8 @@
       "flow": "Flow",
       "ferrata": "Ferrata",
       "location": "Location",
-      "altimeterScale": "Altimeter scale"
+      "altimeterScale": "Altimeter scale",
+      "editWaypoint": "Edit waypoint"
     },
     "fields": {
       "title": "Title",
@@ -412,9 +413,13 @@
       "generate": "Generate",
       "generating": "Generating…",
       "download": "Download PNG",
+      "downloadAll": "Download all (.zip)",
+      "downloading": "Preparing zip…",
       "upload": "Upload to Cloudinary",
+      "uploadAll": "Upload all to Cloudinary",
       "uploading": "Uploading…",
-      "uploaded": "Uploaded ↗"
+      "uploaded": "Uploaded ↗",
+      "done": "Done"
     },
     "placeholders": {
       "canyonName": "Canyon name",

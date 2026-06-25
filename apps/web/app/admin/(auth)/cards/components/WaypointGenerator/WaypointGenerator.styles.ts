@@ -48,3 +48,15 @@ export const StyledList = styled.div`
   flex-direction: column;
   gap: 1.5rem;
 `
+
+export const StyledPreviewStack = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
+export const StyledBulkBar = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+`
