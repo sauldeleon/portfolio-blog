@@ -14,6 +14,9 @@ export {
 export type { Waypoint } from './waypoints'
 export { waypointCard } from './waypointCard'
 export type { WaypointCardData } from './waypointCard'
+export { svgToPng } from './svgToPng'
+export { zipStore } from './zip'
+export type { ZipFile } from './zip'
 export {
   STRINGS,
   FLOW_LEVEL_KEYS,

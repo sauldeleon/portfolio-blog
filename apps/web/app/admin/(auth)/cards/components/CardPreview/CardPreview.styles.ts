@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const StyledWrapper = styled.div`
   display: flex;
@@ -6,12 +6,31 @@ export const StyledWrapper = styled.div`
   gap: 0.75rem;
 `
 
-export const StyledPreviewFrame = styled.div`
+export const StyledPreviewFrame = styled.div<{
+  $clickable?: boolean
+  $selected?: boolean
+}>`
   width: 100%;
   border-radius: 8px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid
+    ${({ theme, $selected }) =>
+      $selected ? theme.colors.green : 'rgba(255, 255, 255, 0.08)'};
   background: #0e1820;
+
+  ${({ $clickable }) =>
+    $clickable &&
+    css`
+      display: block;
+      padding: 0;
+      color: inherit;
+      cursor: pointer;
+      text-align: left;
+
+      &:hover {
+        border-color: rgba(255, 255, 255, 0.25);
+      }
+    `}
 `
 
 export const StyledSvgWrap = styled.div<{ $aspectRatio: number }>`
