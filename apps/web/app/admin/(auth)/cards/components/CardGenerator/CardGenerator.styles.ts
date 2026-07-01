@@ -38,20 +38,29 @@ export const StyledLayout = styled.div`
 `
 
 export const StyledPanelForm = styled.div`
-  position: sticky;
-  top: 1rem;
-  /* Lift the sticky panel's stacking context above the page footer so the
-     select dropdowns are not painted underneath it. */
-  z-index: 1;
+  min-width: 0;
 `
 
 export const StyledPanelPreview = styled.div`
   min-width: 0;
   display: flex;
   justify-content: center;
+  /* The preview column owns the scrollbar: it sticks to the viewport and scrolls
+     its (potentially long) card list internally, so the form on the left stays
+     fully visible and reachable. */
+  position: sticky;
+  top: 1rem;
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
 
   > * {
     width: 100%;
     max-width: 1200px;
+  }
+
+  @media (max-width: 900px) {
+    position: static;
+    max-height: none;
+    overflow: visible;
   }
 `

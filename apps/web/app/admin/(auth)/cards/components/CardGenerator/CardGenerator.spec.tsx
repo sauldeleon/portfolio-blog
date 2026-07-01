@@ -122,30 +122,6 @@ jest.mock('../FerrataForm', () => ({
   ),
 }))
 
-jest.mock('../SummaryCanyoningForm', () => ({
-  SummaryCanyoningForm: ({
-    value,
-    onChange,
-  }: {
-    value: { title?: string }
-    onChange: (v: unknown) => void
-  }) => (
-    <div data-testid="summary-canyoning-form-mock">
-      <input
-        data-testid="mock-sb-title"
-        value={value.title ?? ''}
-        onChange={(e) =>
-          onChange({
-            kind: 'summary-canyoning',
-            lang: 'es',
-            title: e.target.value,
-          })
-        }
-      />
-    </div>
-  ),
-}))
-
 jest.mock('../WaypointGenerator', () => ({
   WaypointGenerator: () => <div data-testid="waypoint-generator-mock" />,
 }))
@@ -154,20 +130,24 @@ jest.mock('../WaypointForm', () => ({
   WaypointForm: () => <div data-testid="waypoint-form-mock" />,
 }))
 
+jest.mock('../CanyonWaypointsGenerator', () => ({
+  CanyonWaypointsGenerator: () => (
+    <div data-testid="canyon-waypoints-generator-mock" />
+  ),
+}))
+
 describe('CardGenerator', () => {
   it('renders the title', () => {
     renderApp(<CardGenerator />)
     expect(screen.getByText('Cards')).toBeInTheDocument()
   })
 
-  it('renders all 4 card type buttons', () => {
+  it('renders the card type buttons', () => {
     renderApp(<CardGenerator />)
     expect(screen.getByTestId('card-type-canyoning-data')).toBeInTheDocument()
     expect(screen.getByTestId('card-type-summary-route')).toBeInTheDocument()
     expect(screen.getByTestId('card-type-summary-ferrata')).toBeInTheDocument()
-    expect(
-      screen.getByTestId('card-type-summary-canyoning'),
-    ).toBeInTheDocument()
+    expect(screen.getByTestId('card-type-canyon-waypoints')).toBeInTheDocument()
   })
 
   it('renders the RouteForm by default', () => {
@@ -298,33 +278,6 @@ describe('CardGenerator', () => {
     )
   })
 
-  it('switches to SummaryCanyoningForm when summary-canyoning selected', () => {
-    renderApp(<CardGenerator />)
-    fireEvent.click(screen.getByTestId('card-type-summary-canyoning'))
-    expect(
-      screen.getByTestId('summary-canyoning-form-mock'),
-    ).toBeInTheDocument()
-  })
-
-  it('summary-canyoning filename contains barranco_resumen slug', () => {
-    renderApp(<CardGenerator />)
-    fireEvent.click(screen.getByTestId('card-type-summary-canyoning'))
-    expect(screen.getByTestId('preview-filename').textContent).toContain(
-      'canyoning_summary',
-    )
-  })
-
-  it('summary-canyoning filename updates when title changes', () => {
-    renderApp(<CardGenerator />)
-    fireEvent.click(screen.getByTestId('card-type-summary-canyoning'))
-    fireEvent.change(screen.getByTestId('mock-sb-title'), {
-      target: { value: 'Mascún' },
-    })
-    expect(screen.getByTestId('preview-filename').textContent).toContain(
-      'mascun',
-    )
-  })
-
   it('switching kind resets form', () => {
     renderApp(<CardGenerator />)
     fireEvent.click(screen.getByTestId('card-type-summary-route'))
@@ -344,6 +297,25 @@ describe('CardGenerator', () => {
     renderApp(<CardGenerator />)
     fireEvent.click(screen.getByTestId('card-type-waypoint-single'))
     expect(screen.getByTestId('waypoint-form-mock')).toBeInTheDocument()
+  })
+
+  it('shows the canyon waypoints generator on the canyon-waypoints tab', () => {
+    renderApp(<CardGenerator />)
+    fireEvent.click(screen.getByTestId('card-type-canyon-waypoints'))
+    expect(
+      screen.getByTestId('canyon-waypoints-generator-mock'),
+    ).toBeInTheDocument()
+    expect(screen.queryByTestId('route-form-mock')).not.toBeInTheDocument()
+  })
+
+  it('returns to a spec form after leaving the canyon waypoints tab', () => {
+    renderApp(<CardGenerator />)
+    fireEvent.click(screen.getByTestId('card-type-canyon-waypoints'))
+    expect(
+      screen.getByTestId('canyon-waypoints-generator-mock'),
+    ).toBeInTheDocument()
+    fireEvent.click(screen.getByTestId('card-type-canyoning-data'))
+    expect(screen.getByTestId('canyoning-form-mock')).toBeInTheDocument()
   })
 
   it('returns to a spec form after leaving a waypoint tab', () => {

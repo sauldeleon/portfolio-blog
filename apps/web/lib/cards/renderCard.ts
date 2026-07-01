@@ -9,7 +9,6 @@ export function renderCard(spec: CardSpec): string {
       return canyoningCard(spec)
     case 'summary-route':
     case 'summary-ferrata':
-    case 'summary-canyoning':
       return summaryCard(spec)
   }
 }

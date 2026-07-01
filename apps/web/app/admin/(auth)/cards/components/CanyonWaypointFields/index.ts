@@ -1,0 +1,1 @@
+export { CanyonWaypointFields } from './CanyonWaypointFields'

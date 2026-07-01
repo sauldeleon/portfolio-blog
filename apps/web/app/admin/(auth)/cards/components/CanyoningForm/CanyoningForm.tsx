@@ -9,6 +9,7 @@ import type { CanyoningCardData, Lang } from '@web/lib/cards'
 import { CanyonGradeField } from '../CanyonGradeField'
 import { CardDateField } from '../CardDateField'
 import { FlowField } from '../FlowField'
+import { GpxUrlField } from '../GpxUrlField'
 import {
   StyledFieldRow,
   StyledForm,
@@ -113,6 +114,22 @@ export function CanyoningForm({ value, onChange }: CanyoningFormProps) {
             />
           </FieldGroup>
         </StyledFieldRow>
+      </StyledSection>
+
+      <StyledSection>
+        <StyledSectionTitle>{t('cards.sections.gpx')}</StyledSectionTitle>
+        <GpxUrlField
+          value={value.gpxUrl}
+          onChange={(gpxUrl) => set({ gpxUrl })}
+          onParsed={(m) =>
+            set({
+              date: m.date || value.date,
+              desnivel: m.descent || value.desnivel,
+              elevation: m.elevation,
+            })
+          }
+          idPrefix="bc"
+        />
       </StyledSection>
 
       <StyledSection>

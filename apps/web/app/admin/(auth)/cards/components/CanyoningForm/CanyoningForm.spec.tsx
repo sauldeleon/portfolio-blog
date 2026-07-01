@@ -79,6 +79,48 @@ jest.mock('../FlowField', () => ({
   ),
 }))
 
+type ParsedMetrics = {
+  date: string
+  descent: string
+  elevation: number[]
+}
+
+jest.mock('../GpxUrlField', () => ({
+  GpxUrlField: ({
+    value,
+    onChange,
+    onParsed,
+  }: {
+    value?: string
+    onChange: (v: string) => void
+    onParsed: (m: ParsedMetrics) => void
+  }) => (
+    <div>
+      <input
+        data-testid="bc-gpx"
+        value={value ?? ''}
+        onChange={(e) => onChange(e.target.value)}
+      />
+      <button
+        type="button"
+        data-testid="gpx-parsed-full"
+        onClick={() =>
+          onParsed({
+            date: '01 JUL 2025',
+            descent: '250 m',
+            elevation: [1, 2, 3],
+          })
+        }
+      />
+      <button
+        type="button"
+        data-testid="gpx-parsed-empty"
+        onClick={() => onParsed({ date: '', descent: '', elevation: [] })}
+      />
+    </div>
+  ),
+}))
+
 const base: CanyoningCardData = { kind: 'canyoning-data', lang: 'es' }
 
 describe('CanyoningForm', () => {
@@ -270,6 +312,48 @@ describe('CanyoningForm', () => {
     })
     expect(onChange).toHaveBeenCalledWith(
       expect.objectContaining({ season: 'jun-sep' }),
+    )
+  })
+
+  it('calls onChange when the gpx url changes', () => {
+    const onChange = jest.fn()
+    renderApp(<CanyoningForm value={base} onChange={onChange} />)
+    fireEvent.change(screen.getByTestId('bc-gpx'), {
+      target: { value: 'https://example.com/a.gpx' },
+    })
+    expect(onChange).toHaveBeenCalledWith(
+      expect.objectContaining({ gpxUrl: 'https://example.com/a.gpx' }),
+    )
+  })
+
+  it('prefills date, descent and elevation from a parsed gpx', () => {
+    const onChange = jest.fn()
+    renderApp(<CanyoningForm value={base} onChange={onChange} />)
+    fireEvent.click(screen.getByTestId('gpx-parsed-full'))
+    expect(onChange).toHaveBeenCalledWith(
+      expect.objectContaining({
+        date: '01 JUL 2025',
+        desnivel: '250 m',
+        elevation: [1, 2, 3],
+      }),
+    )
+  })
+
+  it('keeps existing date and descent when the gpx yields none', () => {
+    const onChange = jest.fn()
+    renderApp(
+      <CanyoningForm
+        value={{ ...base, date: '10 JUN 2025', desnivel: '300 m' }}
+        onChange={onChange}
+      />,
+    )
+    fireEvent.click(screen.getByTestId('gpx-parsed-empty'))
+    expect(onChange).toHaveBeenCalledWith(
+      expect.objectContaining({
+        date: '10 JUN 2025',
+        desnivel: '300 m',
+        elevation: [],
+      }),
     )
   })
 
