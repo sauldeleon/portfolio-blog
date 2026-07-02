@@ -54,6 +54,7 @@ export {
   PHENOMENA_KEYS,
 } from './theme'
 export { FONT_STYLE } from './fonts'
+export type { LangStrings } from './theme'
 export type {
   CardSpec,
   CanyoningCardData,

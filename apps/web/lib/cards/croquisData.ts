@@ -24,8 +24,8 @@ export interface CroquisObstacle {
   notes: CanyonWaypointNote[]
   lat?: number
   lon?: number
-  /** Optional illustrative photo shown on hover; falls back to a drawn scene. */
-  photo?: string
+  /** Illustrative photos shown on hover; falls back to a drawn scene when empty. */
+  photos?: string[]
 }
 
 /** Resolve the glyph type from a waypoint's category keys (null → not drawn). */
@@ -73,7 +73,7 @@ export function toCroquisObstacles(
       notes: wp.notes,
       lat: wp.lat,
       lon: wp.lon,
-      ...(wp.photo ? { photo: wp.photo } : {}),
+      ...(wp.photos?.length ? { photos: wp.photos } : {}),
     })
   }
   return out

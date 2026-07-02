@@ -1,6 +1,5 @@
 'use client'
 
-import axios, { isAxiosError } from 'axios'
 import { useMemo, useState } from 'react'
 
 import { Button } from '@sdlgr/button'
@@ -13,7 +12,11 @@ import {
   toCroquisObstacles,
   waypointSlug,
 } from '@web/lib/cards'
-import type { CanyonWaypoint, Lang } from '@web/lib/cards'
+import type { Lang } from '@web/lib/cards'
+import {
+  axiosErrorMessage,
+  fetchCanyonWaypoints,
+} from '@web/lib/cards/gpxImport'
 
 import {
   StyledError,
@@ -60,11 +63,7 @@ export function CroquisGenerator() {
     setLoading(true)
     setError(null)
     try {
-      const res = await axios.get<{ data?: CanyonWaypoint[] }>(
-        '/api/cards/canyon-waypoints',
-        { params: { url } },
-      )
-      const wpts = res.data.data
+      const wpts = await fetchCanyonWaypoints(url)
       if (!wpts) {
         setError(t('cards.errors.gpxParse'))
         return
@@ -75,11 +74,7 @@ export function CroquisGenerator() {
       }
       setText(serializeCanyonWaypoints(wpts))
     } catch (err) {
-      setError(
-        isAxiosError(err)
-          ? (err.response?.data?.error ?? t('cards.errors.gpxParse'))
-          : t('cards.errors.gpxParse'),
-      )
+      setError(axiosErrorMessage(err, t('cards.errors.gpxParse')))
     } finally {
       setLoading(false)
     }

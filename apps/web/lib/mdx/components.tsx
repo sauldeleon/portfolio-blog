@@ -12,13 +12,21 @@ export interface MdxComponentLabels {
   copiedLabel: string
 }
 
+/**
+ * Post-content embed components shared by every renderer (RSC + editor
+ * preview), so a new embed type is registered in exactly one place.
+ */
+export const POST_CONTENT_EMBEDS = {
+  Embed: PostContentEmbed,
+  Slideshow: PostContentSlideshow,
+  Croquis: PostContentCroquis,
+  img: PostContentImage,
+}
+
 export function createMdxComponents(labels: MdxComponentLabels) {
   return {
     Callout,
-    Embed: PostContentEmbed,
-    Slideshow: PostContentSlideshow,
-    Croquis: PostContentCroquis,
-    img: PostContentImage,
+    ...POST_CONTENT_EMBEDS,
     h1: ({ children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
       <h2 {...props}>{children}</h2>
     ),
