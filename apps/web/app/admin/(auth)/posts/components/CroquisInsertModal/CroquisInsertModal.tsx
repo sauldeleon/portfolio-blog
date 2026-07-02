@@ -1,6 +1,5 @@
 'use client'
 
-import axios, { isAxiosError } from 'axios'
 import { useState } from 'react'
 import { RenderModalBackdropProps } from 'react-overlays/Modal'
 
@@ -14,6 +13,10 @@ import {
   toCroquisObstacles,
 } from '@web/lib/cards'
 import type { CanyonWaypoint, Lang } from '@web/lib/cards'
+import {
+  axiosErrorMessage,
+  fetchCanyonWaypoints,
+} from '@web/lib/cards/gpxImport'
 import type { CloudinaryImage } from '@web/lib/cloudinary/images'
 
 import {
@@ -42,6 +45,8 @@ import {
   StyledPreviewBox,
   StyledSectionLabel,
   StyledTextarea,
+  StyledThumbChip,
+  StyledThumbGroup,
 } from './CroquisInsertModal.styles'
 
 interface IndexedWaypoint {
@@ -79,24 +84,36 @@ export function CroquisInsertModal({
   const waypoints = parseCanyonWaypointsText(text)
   const obstacles = toCroquisObstacles(waypoints)
 
-  // Only waypoints actually drawn in the croquis can carry a hover image.
+  // Only waypoints actually drawn in the croquis can carry hover images.
   const drawable: IndexedWaypoint[] = waypoints
     .map((wp, index) => ({ wp, index }))
     .filter(({ wp }) => isDrawableWaypoint(wp.categories))
-  const mapped = drawable.filter(({ wp }) => wp.photo)
-  const available = drawable.filter(({ wp }) => !wp.photo)
+  const withPhotos = drawable
+    .map(({ wp, index }) => ({ wp, index, photos: wp.photos ?? [] }))
+    .filter(({ photos }) => photos.length > 0)
 
   function writeWaypoints(next: CanyonWaypoint[]) {
     setText(serializeCanyonWaypoints(next))
   }
 
-  function setPhoto(index: number, photo: string | undefined) {
+  function addPhoto(index: number, photo: string) {
+    writeWaypoints(
+      waypoints.map((w, i) =>
+        i === index ? { ...w, photos: [...(w.photos ?? []), photo] } : w,
+      ),
+    )
+  }
+
+  function removePhoto(index: number, imageIndex: number) {
     writeWaypoints(
       waypoints.map((w, i) => {
         if (i !== index) return w
-        if (photo) return { ...w, photo }
+        // Only ever called for a waypoint that has photos (from the UI list).
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const photos = w.photos!.filter((_, j) => j !== imageIndex)
+        if (photos.length) return { ...w, photos }
         const next = { ...w }
-        delete next.photo
+        delete next.photos
         return next
       }),
     )
@@ -106,22 +123,14 @@ export function CroquisInsertModal({
     setLoading(true)
     setError(null)
     try {
-      const res = await axios.get<{ data?: CanyonWaypoint[] }>(
-        '/api/cards/canyon-waypoints',
-        { params: { url } },
-      )
-      const wpts = res.data.data
+      const wpts = await fetchCanyonWaypoints(url)
       if (!wpts || wpts.length === 0) {
         setError('Could not parse GPX file')
         return
       }
       setText(serializeCanyonWaypoints(wpts))
     } catch (err) {
-      setError(
-        isAxiosError(err)
-          ? (err.response?.data?.error ?? 'Could not parse GPX file')
-          : 'Could not parse GPX file',
-      )
+      setError(axiosErrorMessage(err, 'Could not parse GPX file'))
     } finally {
       setLoading(false)
     }
@@ -136,9 +145,8 @@ export function CroquisInsertModal({
   function handleImagePick(image: CloudinaryImage) {
     /* istanbul ignore next */
     if (pickingFor === null) return
-    setPhoto(pickingFor, image.url)
+    addPhoto(pickingFor, image.url)
     setPickingFor(null)
-    setPending(undefined)
   }
 
   function handleInsert() {
@@ -203,63 +211,67 @@ export function CroquisInsertModal({
             <StyledWaypointImagesSection data-testid="croquis-modal-waypoints">
               <StyledSectionLabel>Waypoint images</StyledSectionLabel>
 
-              {mapped.length > 0 && (
+              {withPhotos.length > 0 && (
                 <StyledMappingsList>
-                  {mapped.map(({ wp, index }) => (
+                  {withPhotos.map(({ wp, index, photos }) => (
                     <StyledMappingRow
                       key={index}
                       data-testid={`croquis-wp-row-${index}`}
                     >
-                      <StyledMappingThumb
-                        src={wp.photo}
-                        alt={wp.title}
-                        data-testid={`croquis-wp-thumb-${index}`}
-                      />
                       <StyledMappingName>
                         {wp.categories.join('/')}: {wp.title}
                       </StyledMappingName>
-                      <StyledRemoveButton
-                        type="button"
-                        aria-label={`Remove image for ${wp.title}`}
-                        onClick={() => setPhoto(index, undefined)}
-                        data-testid={`croquis-wp-remove-${index}`}
-                      >
-                        ×
-                      </StyledRemoveButton>
+                      <StyledThumbGroup>
+                        {photos.map((photo, imageIndex) => (
+                          <StyledThumbChip key={imageIndex}>
+                            <StyledMappingThumb
+                              src={photo}
+                              alt={wp.title}
+                              data-testid={`croquis-wp-thumb-${index}-${imageIndex}`}
+                            />
+                            <StyledRemoveButton
+                              type="button"
+                              aria-label={`Remove image ${imageIndex + 1} for ${wp.title}`}
+                              onClick={() => removePhoto(index, imageIndex)}
+                              data-testid={`croquis-wp-remove-${index}-${imageIndex}`}
+                            >
+                              ×
+                            </StyledRemoveButton>
+                          </StyledThumbChip>
+                        ))}
+                      </StyledThumbGroup>
                     </StyledMappingRow>
                   ))}
                 </StyledMappingsList>
               )}
 
-              {available.length > 0 && (
-                <StyledAddRow>
-                  <Select
-                    value={pending !== undefined ? String(pending) : ''}
-                    onChange={(v) =>
-                      setPending(
-                        v !== ''
-                          ? parseInt(v, 10)
-                          : /* istanbul ignore next */ undefined,
-                      )
-                    }
-                    options={available.map(({ wp, index }) => ({
-                      value: String(index),
-                      label: `${wp.categories.join('/')}: ${wp.title}`,
-                    }))}
-                    isSearchable
-                    maxMenuHeight={160}
-                    data-testid="croquis-wp-select"
-                  />
-                  <StyledPickImageButton
-                    type="button"
-                    disabled={pending === undefined}
-                    onClick={pickForPending}
-                    data-testid="croquis-wp-pick"
-                  >
-                    Pick image
-                  </StyledPickImageButton>
-                </StyledAddRow>
-              )}
+              <StyledAddRow>
+                <Select
+                  value={pending !== undefined ? String(pending) : ''}
+                  onChange={(v) =>
+                    setPending(
+                      v !== ''
+                        ? parseInt(v, 10)
+                        : /* istanbul ignore next */ undefined,
+                    )
+                  }
+                  options={drawable.map(({ wp, index }) => ({
+                    value: String(index),
+                    label: `${wp.categories.join('/')}: ${wp.title}`,
+                  }))}
+                  isSearchable
+                  maxMenuHeight={160}
+                  data-testid="croquis-wp-select"
+                />
+                <StyledPickImageButton
+                  type="button"
+                  disabled={pending === undefined}
+                  onClick={pickForPending}
+                  data-testid="croquis-wp-pick"
+                >
+                  Pick image
+                </StyledPickImageButton>
+              </StyledAddRow>
             </StyledWaypointImagesSection>
           )}
 

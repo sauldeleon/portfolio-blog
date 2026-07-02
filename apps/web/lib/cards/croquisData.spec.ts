@@ -94,16 +94,16 @@ describe('toCroquisObstacles', () => {
     expect(out[0].severity).toBe('easy')
   })
 
-  it('carries the waypoint photo through when present', () => {
+  it('carries the waypoint photos through when present', () => {
     const out = toCroquisObstacles([
-      wp({ title: 'Jump', photo: 'https://x/y.jpg' }),
+      wp({ title: 'Jump', photos: ['https://x/a.jpg', 'https://x/b.jpg'] }),
     ])
-    expect(out[0].photo).toBe('https://x/y.jpg')
+    expect(out[0].photos).toEqual(['https://x/a.jpg', 'https://x/b.jpg'])
   })
 
-  it('leaves photo undefined when the waypoint has none', () => {
+  it('leaves photos undefined when the waypoint has none', () => {
     const out = toCroquisObstacles([wp({ title: 'Jump' })])
-    expect(out[0].photo).toBeUndefined()
+    expect(out[0].photos).toBeUndefined()
   })
 
   it('carries notes and coordinates through', () => {

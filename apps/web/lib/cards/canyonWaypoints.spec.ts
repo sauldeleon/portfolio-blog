@@ -131,12 +131,24 @@ describe('parseCanyonWaypointsText', () => {
     expect(wp.notes).toEqual([{ text: 'Fuerte corriente', sub: false }])
   })
 
-  it('parses an img directive into the waypoint photo', () => {
+  it('parses an img directive into the waypoint photos', () => {
     const [wp] = parseCanyonWaypointsText(
       'salto: Salto - 42.6 0.1\n! side=right; img=https://cdn/x.jpg',
     )
-    expect(wp.photo).toBe('https://cdn/x.jpg')
+    expect(wp.photos).toEqual(['https://cdn/x.jpg'])
     expect(wp.side).toBe('right')
+  })
+
+  it('parses a comma-separated img directive into multiple photos', () => {
+    const [wp] = parseCanyonWaypointsText(
+      'salto: Salto - 42.6 0.1\n! img=https://cdn/a.jpg, https://cdn/b.jpg',
+    )
+    expect(wp.photos).toEqual(['https://cdn/a.jpg', 'https://cdn/b.jpg'])
+  })
+
+  it('leaves photos unset when the img directive has no real urls', () => {
+    const [wp] = parseCanyonWaypointsText('salto: Salto - 42.6 0.1\n! img=,')
+    expect(wp.photos).toBeUndefined()
   })
 
   it('ignores unknown or malformed directive tokens', () => {
@@ -286,7 +298,7 @@ describe('serializeCanyonWaypoints', () => {
     ).toEqual(original)
   })
 
-  it('emits and round-trips an img directive for the photo', () => {
+  it('emits and round-trips an img directive with multiple photos', () => {
     const original: CanyonWaypoint[] = [
       {
         categories: ['salto'],
@@ -294,11 +306,13 @@ describe('serializeCanyonWaypoints', () => {
         lat: 42.6,
         lon: 0.1,
         notes: [],
-        photo: 'https://cdn/x.jpg',
+        photos: ['https://cdn/a.jpg', 'https://cdn/b.jpg'],
       },
     ]
     const text = serializeCanyonWaypoints(original)
-    expect(text).toBe('salto: Salto - 42.6 0.1\n! img=https://cdn/x.jpg')
+    expect(text).toBe(
+      'salto: Salto - 42.6 0.1\n! img=https://cdn/a.jpg,https://cdn/b.jpg',
+    )
     expect(parseCanyonWaypointsText(text)).toEqual(original)
   })
 

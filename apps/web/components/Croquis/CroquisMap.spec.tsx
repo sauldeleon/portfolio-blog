@@ -6,6 +6,13 @@ import type { CroquisObstacle } from '@web/lib/cards'
 
 import { CroquisMap } from './CroquisMap'
 
+// jsdom's PointerEvent drops clientX; back it with MouseEvent so swipe coords
+// survive fireEvent.pointerDown/Up.
+beforeAll(() => {
+  // @ts-expect-error override for jsdom
+  window.PointerEvent = class extends MouseEvent {}
+})
+
 afterEach(() => jest.useRealTimers())
 
 function ob(overrides: Partial<CroquisObstacle> = {}): CroquisObstacle {
@@ -129,19 +136,132 @@ describe('CroquisMap', () => {
     )
   })
 
-  it('shows the obstacle photo when present', () => {
+  it('shows the obstacle photo when present (single, no thumbnail strip)', () => {
     renderApp(
-      <CroquisMap obstacles={[ob({ photo: 'https://x/y.jpg' })]} lang="en" />,
+      <CroquisMap
+        obstacles={[ob({ photos: ['https://x/y.jpg'] })]}
+        lang="en"
+      />,
     )
     fireEvent.mouseEnter(screen.getByTestId('croquis-obstacle-0'))
     const img = screen.getByAltText('Jump one') as HTMLImageElement
     expect(img.src).toBe('https://x/y.jpg')
+    expect(screen.queryByTestId('croquis-thumb-0')).not.toBeInTheDocument()
+  })
+
+  it('shows a thumbnail strip and switches the main image for multiple photos', () => {
+    renderApp(
+      <CroquisMap
+        obstacles={[ob({ photos: ['https://x/a.jpg', 'https://x/b.jpg'] })]}
+        lang="en"
+      />,
+    )
+    fireEvent.mouseEnter(screen.getByTestId('croquis-obstacle-0'))
+    expect((screen.getByAltText('Jump one') as HTMLImageElement).src).toBe(
+      'https://x/a.jpg',
+    )
+    expect(screen.getByTestId('croquis-thumb-0')).toBeInTheDocument()
+    expect(screen.getByTestId('croquis-thumb-1')).toBeInTheDocument()
+    fireEvent.click(screen.getByTestId('croquis-thumb-1'))
+    expect((screen.getByAltText('Jump one') as HTMLImageElement).src).toBe(
+      'https://x/b.jpg',
+    )
   })
 
   it('falls back to a drawn scene without a photo', () => {
     renderApp(<CroquisMap obstacles={[ob()]} lang="en" />)
     fireEvent.mouseEnter(screen.getByTestId('croquis-obstacle-0'))
     expect(screen.queryByRole('img')).not.toBeInTheDocument()
+  })
+
+  describe('gallery swipe + fullscreen', () => {
+    const twoPhotos = () =>
+      ob({ photos: ['https://x/a.jpg', 'https://x/b.jpg'] })
+
+    function openPopover(obstacle = twoPhotos()) {
+      renderApp(<CroquisMap obstacles={[obstacle]} lang="en" />)
+      fireEvent.mouseEnter(screen.getByTestId('croquis-obstacle-0'))
+      return screen.getByTestId('croquis-media')
+    }
+
+    const mainSrc = () =>
+      (screen.getByAltText('Jump one') as HTMLImageElement).src
+
+    it('swipes left to the next image and right to the previous', () => {
+      const media = openPopover()
+      expect(mainSrc()).toBe('https://x/a.jpg')
+      fireEvent.pointerDown(media, { clientX: 120 })
+      fireEvent.pointerUp(media, { clientX: 60 })
+      expect(mainSrc()).toBe('https://x/b.jpg')
+      fireEvent.pointerDown(media, { clientX: 60 })
+      fireEvent.pointerUp(media, { clientX: 120 })
+      expect(mainSrc()).toBe('https://x/a.jpg')
+    })
+
+    it('opens the fullscreen viewer on a plain tap', () => {
+      const media = openPopover()
+      fireEvent.pointerDown(media, { clientX: 100 })
+      fireEvent.pointerUp(media, { clientX: 108 })
+      expect(screen.getByTestId('croquis-lightbox-image')).toHaveAttribute(
+        'src',
+        'https://x/a.jpg',
+      )
+    })
+
+    it('ignores a pointer-up without a start', () => {
+      const media = openPopover()
+      fireEvent.pointerUp(media, { clientX: 50 })
+      expect(screen.queryByTestId('croquis-lightbox')).not.toBeInTheDocument()
+    })
+
+    it('does not open the viewer from a scene (photo-less) tap', () => {
+      const media = openPopover(ob())
+      fireEvent.pointerDown(media, { clientX: 10 })
+      fireEvent.pointerUp(media, { clientX: 12 })
+      expect(screen.queryByTestId('croquis-lightbox')).not.toBeInTheDocument()
+    })
+
+    it('does not switch or open on a single-photo swipe', () => {
+      const media = openPopover(ob({ photos: ['https://x/only.jpg'] }))
+      fireEvent.pointerDown(media, { clientX: 120 })
+      fireEvent.pointerUp(media, { clientX: 40 })
+      expect(mainSrc()).toBe('https://x/only.jpg')
+      expect(screen.queryByTestId('croquis-lightbox')).not.toBeInTheDocument()
+    })
+
+    it('navigates and closes the fullscreen viewer', () => {
+      const media = openPopover()
+      fireEvent.pointerDown(media, { clientX: 100 })
+      fireEvent.pointerUp(media, { clientX: 105 })
+      const lightImg = () =>
+        screen.getByTestId('croquis-lightbox-image') as HTMLImageElement
+      expect(lightImg().src).toBe('https://x/a.jpg')
+      fireEvent.click(screen.getByTestId('croquis-lightbox-next'))
+      expect(lightImg().src).toBe('https://x/b.jpg')
+      fireEvent.click(screen.getByTestId('croquis-lightbox-prev'))
+      expect(lightImg().src).toBe('https://x/a.jpg')
+      // Clicking the image itself does not close it.
+      fireEvent.click(lightImg())
+      expect(screen.getByTestId('croquis-lightbox')).toBeInTheDocument()
+      // A non-Escape key leaves it open; Escape closes it.
+      fireEvent.keyDown(document, { key: 'a' })
+      expect(screen.getByTestId('croquis-lightbox')).toBeInTheDocument()
+      fireEvent.keyDown(document, { key: 'Escape' })
+      expect(screen.queryByTestId('croquis-lightbox')).not.toBeInTheDocument()
+    })
+
+    it('closes the viewer on the backdrop and the close button', () => {
+      const media = openPopover()
+      fireEvent.pointerDown(media, { clientX: 100 })
+      fireEvent.pointerUp(media, { clientX: 100 })
+      fireEvent.click(screen.getByTestId('croquis-lightbox'))
+      expect(screen.queryByTestId('croquis-lightbox')).not.toBeInTheDocument()
+      // Reopen and close via the × button.
+      fireEvent.pointerDown(media, { clientX: 100 })
+      fireEvent.pointerUp(media, { clientX: 100 })
+      fireEvent.click(screen.getByTestId('croquis-lightbox-close'))
+      expect(screen.queryByTestId('croquis-lightbox')).not.toBeInTheDocument()
+    })
   })
 
   it('shows metres, side and severity chips', () => {

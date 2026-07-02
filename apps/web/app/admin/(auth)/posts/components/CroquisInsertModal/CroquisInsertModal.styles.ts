@@ -130,6 +130,19 @@ export const StyledParseButton = styled(Button).attrs({
   }
 `
 
+export const StyledThumbGroup = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  flex: 1;
+`
+
+export const StyledThumbChip = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+`
+
 export const StyledPreviewBox = styled.div`
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 4px;

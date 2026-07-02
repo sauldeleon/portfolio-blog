@@ -172,13 +172,32 @@ describe('CroquisInsertModal', () => {
     })
     fireEvent.click(screen.getByTestId('croquis-wp-pick'))
     fireEvent.click(screen.getByTestId('image-picker-pick'))
-    // The waypoint moves to the mappings list with its thumb.
-    expect(screen.getByTestId('croquis-wp-thumb-0')).toHaveAttribute(
+    // The waypoint gains a thumbnail in the mappings list.
+    expect(screen.getByTestId('croquis-wp-thumb-0-0')).toHaveAttribute(
       'src',
       'https://cdn/pick.jpg',
     )
     fireEvent.click(screen.getByTestId('croquis-modal-insert'))
     expect(onInsert.mock.calls[0][0]).toContain('img=https://cdn/pick.jpg')
+  })
+
+  it('adds several images to the same waypoint and removes one', () => {
+    open()
+    fireEvent.change(screen.getByTestId('croquis-modal-text'), {
+      target: { value: JUMP },
+    })
+    fireEvent.change(screen.getByTestId('croquis-wp-select'), {
+      target: { value: '0' },
+    })
+    fireEvent.click(screen.getByTestId('croquis-wp-pick'))
+    fireEvent.click(screen.getByTestId('image-picker-pick'))
+    fireEvent.click(screen.getByTestId('croquis-wp-pick'))
+    fireEvent.click(screen.getByTestId('image-picker-pick'))
+    expect(screen.getByTestId('croquis-wp-thumb-0-0')).toBeInTheDocument()
+    expect(screen.getByTestId('croquis-wp-thumb-0-1')).toBeInTheDocument()
+    fireEvent.click(screen.getByTestId('croquis-wp-remove-0-0'))
+    expect(screen.getByTestId('croquis-wp-thumb-0-0')).toBeInTheDocument()
+    expect(screen.queryByTestId('croquis-wp-thumb-0-1')).not.toBeInTheDocument()
   })
 
   it('closes the image picker without picking', () => {
@@ -207,15 +226,18 @@ describe('CroquisInsertModal', () => {
     })
     fireEvent.click(screen.getByTestId('croquis-wp-pick'))
     fireEvent.click(screen.getByTestId('image-picker-pick'))
-    expect(screen.getByTestId('croquis-wp-thumb-1')).toBeInTheDocument()
-    expect(screen.queryByTestId('croquis-wp-thumb-0')).not.toBeInTheDocument()
+    expect(screen.getByTestId('croquis-wp-thumb-1-0')).toBeInTheDocument()
+    expect(screen.queryByTestId('croquis-wp-thumb-0-0')).not.toBeInTheDocument()
+    // Removing it iterates past the other (unmapped) waypoint too.
+    fireEvent.click(screen.getByTestId('croquis-wp-remove-1-0'))
+    expect(screen.queryByTestId('croquis-wp-thumb-1-0')).not.toBeInTheDocument()
   })
 
   it('removes a waypoint image', () => {
     open({ initialValues: { text: `${JUMP}\n! img=https://cdn/x.jpg` } })
-    expect(screen.getByTestId('croquis-wp-thumb-0')).toBeInTheDocument()
-    fireEvent.click(screen.getByTestId('croquis-wp-remove-0'))
-    expect(screen.queryByTestId('croquis-wp-thumb-0')).not.toBeInTheDocument()
+    expect(screen.getByTestId('croquis-wp-thumb-0-0')).toBeInTheDocument()
+    fireEvent.click(screen.getByTestId('croquis-wp-remove-0-0'))
+    expect(screen.queryByTestId('croquis-wp-thumb-0-0')).not.toBeInTheDocument()
   })
 
   it('cancels', () => {

@@ -1,6 +1,6 @@
 'use client'
 
-import axios, { isAxiosError } from 'axios'
+import axios from 'axios'
 import { useCallback, useMemo, useState } from 'react'
 
 import { Button } from '@sdlgr/button'
@@ -9,6 +9,7 @@ import { CroquisMap } from '@web/components/Croquis'
 import { useClientTranslation } from '@web/i18n/client'
 import { croquisCard, svgToPng } from '@web/lib/cards'
 import type { CroquisObstacle, Lang } from '@web/lib/cards'
+import { axiosErrorMessage } from '@web/lib/cards/gpxImport'
 
 import {
   StyledActionBar,
@@ -85,11 +86,7 @@ export function Croquis({
       }
       setUploadedUrl(res.data.url)
     } catch (err) {
-      setUploadError(
-        isAxiosError(err)
-          ? (err.response?.data?.error ?? t('cards.errors.upload'))
-          : t('cards.errors.upload'),
-      )
+      setUploadError(axiosErrorMessage(err, t('cards.errors.upload')))
     } finally {
       setUploading(false)
     }
