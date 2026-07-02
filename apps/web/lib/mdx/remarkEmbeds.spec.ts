@@ -735,7 +735,7 @@ describe('remarkEmbeds', () => {
       expect(obstacles[0]).toMatchObject({
         type: 'salto',
         side: 'right',
-        photo: 'https://img/x.jpg',
+        photos: ['https://img/x.jpg'],
       })
     })
 

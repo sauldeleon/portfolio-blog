@@ -94,6 +94,106 @@ export const StyledPopover = styled.div<{ $hasPhoto: boolean }>`
   }
 `
 
+export const StyledLightbox = styled.div`
+  position: fixed;
+  inset: 0;
+  z-index: 1300;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+
+  img {
+    max-width: 92vw;
+    max-height: 92vh;
+    object-fit: contain;
+    cursor: default;
+  }
+`
+
+export const StyledLightboxClose = styled.button`
+  position: fixed;
+  top: 1rem;
+  right: 1.25rem;
+  background: none;
+  border: none;
+  color: ${({ theme }) => theme.colors.white};
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.8;
+
+  &:hover {
+    opacity: 1;
+  }
+`
+
+export const StyledLightboxNav = styled.div`
+  button {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(16, 28, 38, 0.7);
+    border: 1px solid #2f4a5a;
+    color: ${({ theme }) => theme.colors.white};
+    font-size: 1.6rem;
+    line-height: 1;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: 0.85;
+  }
+
+  button:hover {
+    opacity: 1;
+  }
+
+  button:first-child {
+    left: 1rem;
+  }
+
+  button:last-child {
+    right: 1rem;
+  }
+`
+
+export const StyledThumbs = styled.div`
+  display: flex;
+  gap: 0.35rem;
+  padding: 0.5rem 0.5rem 0;
+  overflow-x: auto;
+`
+
+export const StyledThumbButton = styled.button<{ $active: boolean }>`
+  flex: 0 0 auto;
+  width: 44px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid ${({ $active }) => ($active ? '#f4b83c' : '#2f4a5a')};
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  background: #0a1218;
+  opacity: ${({ $active }) => ($active ? 1 : 0.6)};
+  transition:
+    opacity 0.15s,
+    border-color 0.15s;
+
+  &:hover,
+  &:focus-visible {
+    opacity: 1;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+`
+
 export const StyledKind = styled.p`
   font-family: monospace;
   font-size: 0.64rem;

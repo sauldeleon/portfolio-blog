@@ -27,8 +27,8 @@ export interface CanyonWaypoint {
   severity?: CanyonSeverity
   /** Manual override for the drop-height pill (else parsed from the title). */
   meters?: string
-  /** Illustrative photo shown when hovering the obstacle in a croquis. */
-  photo?: string
+  /** Illustrative photos shown when hovering the obstacle in a croquis. */
+  photos?: string[]
 }
 
 /** Parsed manual overrides carried by a `! side=…; sev=…; m=…; img=…` directive. */
@@ -36,7 +36,7 @@ interface Overrides {
   side?: CanyonSide
   severity?: CanyonSeverity
   meters?: string
-  photo?: string
+  photos?: string[]
 }
 
 /** Category-prefix word (normalized, `/`-stripped) → category key. */
@@ -144,7 +144,13 @@ function parseDirective(line: string): Overrides {
     )
       out.severity = val
     else if (key === 'm') out.meters = val
-    else if (key === 'img') out.photo = val
+    else if (key === 'img') {
+      const photos = val
+        .split(',')
+        .map((s) => s.trim())
+        .filter(Boolean)
+      if (photos.length) out.photos = photos
+    }
   }
   return out
 }
@@ -161,7 +167,7 @@ function parseBody(
       if (d.side) over.side = d.side
       if (d.severity) over.severity = d.severity
       if (d.meters) over.meters = d.meters
-      if (d.photo) over.photo = d.photo
+      if (d.photos) over.photos = d.photos
     } else {
       const n = parseNote(line)
       if (n) notes.push(n)
@@ -179,7 +185,7 @@ function buildWaypoint(
   if (body.side) wp.side = body.side
   if (body.severity) wp.severity = body.severity
   if (body.meters) wp.meters = body.meters
-  if (body.photo) wp.photo = body.photo
+  if (body.photos) wp.photos = body.photos
   return wp
 }
 
@@ -257,7 +263,7 @@ export function serializeCanyonWaypoints(waypoints: CanyonWaypoint[]): string {
       if (w.side) dir.push(`side=${w.side}`)
       if (w.severity) dir.push(`sev=${w.severity}`)
       if (w.meters) dir.push(`m=${w.meters}`)
-      if (w.photo) dir.push(`img=${w.photo}`)
+      if (w.photos?.length) dir.push(`img=${w.photos.join(',')}`)
       const notes = w.notes.map((n) => `${n.sub ? ' ' : ''}- ${n.text}`)
       const lines = [head]
       if (dir.length) lines.push(`! ${dir.join('; ')}`)
