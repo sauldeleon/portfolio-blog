@@ -1,3 +1,5 @@
+import { parseCanyonWaypointsText, toCroquisObstacles } from '@web/lib/cards'
+
 const EMBED_LANGS = [
   'youtube',
   'youtube-360',
@@ -59,6 +61,24 @@ export function remarkEmbeds() {
               type: 'mdxJsxAttribute',
               name: 'slides',
               value: JSON.stringify(slides),
+            },
+          ],
+          children: [],
+        }
+      }
+
+      if (n.lang === 'croquis') {
+        const obstacles = toCroquisObstacles(
+          parseCanyonWaypointsText(n.value ?? ''),
+        )
+        return {
+          type: 'mdxJsxFlowElement',
+          name: 'Croquis',
+          attributes: [
+            {
+              type: 'mdxJsxAttribute',
+              name: 'obstacles',
+              value: JSON.stringify(obstacles),
             },
           ],
           children: [],

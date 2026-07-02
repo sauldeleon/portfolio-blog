@@ -22,6 +22,17 @@ describe('Admin cards — canyon waypoints generator', () => {
     })
   }
 
+  const openCroquis = (attempt = 0) => {
+    cy.get('[data-testid="card-type-croquis"]').click()
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(500)
+    cy.get('body').then(($body) => {
+      if ($body.find('[data-testid="cg-text"]').length === 0 && attempt < 8) {
+        openCroquis(attempt + 1)
+      }
+    })
+  }
+
   it('renders a preview from the canyon waypoints tab', () => {
     cy.visit('/admin/cards')
     cy.get('[data-testid="card-generator"]', { timeout: 15000 }).should(

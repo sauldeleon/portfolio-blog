@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react'
 import { CodeBlock } from '@sdlgr/code-block'
 
 import { MdxTable } from '@web/components/PostContent/MdxTable'
+import { PostContentCroquis } from '@web/components/PostContent/PostContentCroquis'
 import { PostContentEmbed } from '@web/components/PostContent/PostContentEmbed'
 import { PostContentImage } from '@web/components/PostContent/PostContentImage'
 import { PostContentSlideshow } from '@web/components/PostContent/PostContentSlideshow'
@@ -46,6 +47,7 @@ const MDX_COMPONENTS = {
   img: PostContentImage,
   Embed: PostContentEmbed,
   Slideshow: PostContentSlideshow,
+  Croquis: PostContentCroquis,
   h1: H1AsH2,
   table: TableComponent,
 }

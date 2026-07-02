@@ -203,6 +203,37 @@ jest.mock('../SlideshowInsertModal', () => ({
     ) : null,
 }))
 
+jest.mock('../CroquisInsertModal', () => ({
+  CroquisInsertModal: ({
+    isOpen,
+    onInsert,
+    onCancel,
+  }: {
+    isOpen: boolean
+    onInsert: (markdown: string) => void
+    onCancel: () => void
+    [key: string]: unknown
+  }) =>
+    isOpen ? (
+      <div data-testid="croquis-insert-modal-mock">
+        <button
+          type="button"
+          data-testid="croquis-modal-insert-mock"
+          onClick={() => onInsert('\n\n```croquis\nsalto: Jump 2m\n```\n\n')}
+        >
+          Insert
+        </button>
+        <button
+          type="button"
+          data-testid="croquis-modal-cancel-mock"
+          onClick={onCancel}
+        >
+          Cancel
+        </button>
+      </div>
+    ) : null,
+}))
+
 jest.mock('../ImagePicker', () => ({
   ImagePicker: () => null,
 }))
@@ -478,6 +509,67 @@ describe('PostEditor embed edit-in-place', () => {
     fireEvent.click(screen.getByTestId('edit-embed-button'))
     fireEvent.click(screen.getByTestId('gpx-modal-cancel-mock'))
     expect(screen.queryByTestId('gpx-map-modal-mock')).not.toBeInTheDocument()
+  })
+
+  it('opens the croquis modal from the toolbar and inserts a block', () => {
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+    fireEvent.change(screen.getByTestId('content-input'), {
+      target: { value: 'Intro' },
+    })
+    fireEvent.click(screen.getByTestId('open-croquis-modal-button'))
+    expect(screen.getByTestId('croquis-insert-modal-mock')).toBeInTheDocument()
+    fireEvent.click(screen.getByTestId('croquis-modal-insert-mock'))
+    expect(
+      (screen.getByTestId('content-input') as HTMLTextAreaElement).value,
+    ).toContain('```croquis')
+  })
+
+  it('shows edit button when cursor is inside a croquis block', () => {
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+    const textarea = screen.getByTestId('content-input') as HTMLTextAreaElement
+    const content = 'Intro\n\n```croquis\nsalto: Jump 2m\n```\n\nOutro'
+    fireEvent.change(textarea, { target: { value: content } })
+    textarea.selectionStart = content.indexOf('```croquis') + 3
+    textarea.selectionEnd = content.indexOf('```croquis') + 3
+    fireEvent.click(textarea)
+    expect(screen.getByTestId('edit-embed-button')).toHaveTextContent(
+      'Edit croquis',
+    )
+  })
+
+  it('opens the croquis modal when editing a croquis block and replaces it', () => {
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+    const textarea = screen.getByTestId('content-input') as HTMLTextAreaElement
+    const content = 'Before\n\n```croquis\nsalto: Old 3m\n```\n\nAfter'
+    fireEvent.change(textarea, { target: { value: content } })
+    textarea.selectionStart = content.indexOf('```croquis') + 3
+    textarea.selectionEnd = content.indexOf('```croquis') + 3
+    fireEvent.click(textarea)
+    fireEvent.click(screen.getByTestId('edit-embed-button'))
+    expect(screen.getByTestId('croquis-insert-modal-mock')).toBeInTheDocument()
+    fireEvent.click(screen.getByTestId('croquis-modal-insert-mock'))
+    const newContent = (
+      screen.getByTestId('content-input') as HTMLTextAreaElement
+    ).value
+    expect(newContent).not.toContain('Old 3m')
+    expect(newContent).toContain('Before')
+    expect(newContent).toContain('After')
+    expect(newContent).toContain('Jump 2m')
+  })
+
+  it('cancel on croquis modal during edit clears initialValues', () => {
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+    const textarea = screen.getByTestId('content-input') as HTMLTextAreaElement
+    const content = 'Intro\n\n```croquis\nsalto: Jump 2m\n```\n\nOutro'
+    fireEvent.change(textarea, { target: { value: content } })
+    textarea.selectionStart = content.indexOf('```croquis') + 3
+    textarea.selectionEnd = content.indexOf('```croquis') + 3
+    fireEvent.click(textarea)
+    fireEvent.click(screen.getByTestId('edit-embed-button'))
+    fireEvent.click(screen.getByTestId('croquis-modal-cancel-mock'))
+    expect(
+      screen.queryByTestId('croquis-insert-modal-mock'),
+    ).not.toBeInTheDocument()
   })
 
   it('shows edit button when cursor is inside a slideshow block', () => {

@@ -16,6 +16,7 @@ import type {
 import { CanyonWaypointsGenerator } from '../CanyonWaypointsGenerator'
 import { CanyoningForm } from '../CanyoningForm'
 import { CardPreview } from '../CardPreview'
+import { CroquisGenerator } from '../CroquisGenerator'
 import { FerrataForm } from '../FerrataForm'
 import { RouteForm } from '../RouteForm'
 import { WaypointForm } from '../WaypointForm'
@@ -30,12 +31,18 @@ import {
 } from './CardGenerator.styles'
 
 type CardKind = CardSpec['kind']
-type Tab = CardKind | 'waypoints' | 'waypoint-single' | 'canyon-waypoints'
+type Tab =
+  | CardKind
+  | 'waypoints'
+  | 'waypoint-single'
+  | 'canyon-waypoints'
+  | 'croquis'
 
 const TABS: Array<{ kind: Tab; labelKey: string }> = [
   { kind: 'summary-route', labelKey: 'cards.tabs.route' },
   { kind: 'canyoning-data', labelKey: 'cards.tabs.canyonData' },
   { kind: 'canyon-waypoints', labelKey: 'cards.tabs.canyonWaypoints' },
+  { kind: 'croquis', labelKey: 'cards.tabs.croquis' },
   { kind: 'summary-ferrata', labelKey: 'cards.tabs.ferrata' },
   { kind: 'waypoints', labelKey: 'cards.tabs.waypointsGpx' },
   { kind: 'waypoint-single', labelKey: 'cards.tabs.waypointSingle' },
@@ -45,6 +52,7 @@ const NON_SPEC_TABS: Tab[] = [
   'waypoints',
   'waypoint-single',
   'canyon-waypoints',
+  'croquis',
 ]
 
 const DEFAULT_CANYONING: CanyoningCardData = {
@@ -135,6 +143,8 @@ export function CardGenerator() {
         <WaypointForm />
       ) : activeKind === 'canyon-waypoints' ? (
         <CanyonWaypointsGenerator />
+      ) : activeKind === 'croquis' ? (
+        <CroquisGenerator />
       ) : (
         <StyledLayout>
           <StyledPanelForm>

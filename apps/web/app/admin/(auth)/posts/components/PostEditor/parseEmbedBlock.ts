@@ -47,6 +47,11 @@ export interface ParsedSlideshow {
   slides: ParsedSlideshowSlide[]
 }
 
+/** A croquis block carries the editable canyon-waypoint text verbatim. */
+export interface ParsedCroquis {
+  text: string
+}
+
 export type DetectedEmbed =
   | { type: 'image'; blockStart: number; blockEnd: number; parsed: ParsedImage }
   | { type: 'embed'; blockStart: number; blockEnd: number; parsed: ParsedEmbed }
@@ -56,6 +61,12 @@ export type DetectedEmbed =
       blockStart: number
       blockEnd: number
       parsed: ParsedSlideshow
+    }
+  | {
+      type: 'croquis'
+      blockStart: number
+      blockEnd: number
+      parsed: ParsedCroquis
     }
 
 const EMBED_TYPES: EmbedType[] = [
@@ -241,6 +252,15 @@ export function detectEmbedAtCursor(
           blockStart: start,
           blockEnd: end,
           parsed: { slides },
+        }
+      }
+
+      if (fenceType === 'croquis') {
+        return {
+          type: 'croquis',
+          blockStart: start,
+          blockEnd: end,
+          parsed: { text: body },
         }
       }
 

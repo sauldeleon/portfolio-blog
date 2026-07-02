@@ -8,6 +8,9 @@ export const AMBER = '#F4B83C'
 export const AMBER_DK = '#C98A1E'
 export const TRACK_BG = '#24384A'
 export const CONTOUR = '#2E4654'
+/** River-course colours for the croquis (flowing water + pool depth). */
+export const WATER = '#57BBCE'
+export const WATER_DEEP = '#2C7E90'
 
 /** Traffic-light colours for the waypoint severity indicator. */
 export const SEV_COLORS: Record<'easy' | 'caution' | 'danger', string> = {
@@ -96,6 +99,8 @@ export const STRINGS = {
     sev_easy: 'FÁCIL',
     sev_caution: 'ATENCIÓN',
     sev_danger: 'PELIGRO',
+    croquis_access: 'ACCESO',
+    croquis_exit: 'SALIDA',
     default_title: 'Resumen de ruta',
     flow_levels: {
       dry: 'Seco / residual',
@@ -188,6 +193,8 @@ export const STRINGS = {
     sev_easy: 'EASY',
     sev_caution: 'CAUTION',
     sev_danger: 'DANGER',
+    croquis_access: 'ACCESS',
+    croquis_exit: 'EXIT',
     default_title: 'Route summary',
     flow_levels: {
       dry: 'Dry / residual',

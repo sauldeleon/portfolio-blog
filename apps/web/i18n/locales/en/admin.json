@@ -351,6 +351,7 @@
       "route": "Route",
       "canyonData": "Canyon",
       "canyonWaypoints": "Canyon (waypoints)",
+      "croquis": "Croquis",
       "ferrata": "Via Ferrata",
       "waypointsGpx": "Waypoints (GPX)",
       "waypointSingle": "Waypoint (single)"
@@ -453,6 +454,9 @@
       "noWaypoints": "No waypoints with elevation found",
       "noWaypointsFound": "No waypoints found",
       "upload": "Upload failed"
+    },
+    "croquis": {
+      "empty": "Add jump, rappel or slide waypoints above to draw the croquis. Hover an element to see it."
     }
   }
 }

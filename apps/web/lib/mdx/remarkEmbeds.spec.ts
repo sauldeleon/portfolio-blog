@@ -717,4 +717,34 @@ describe('remarkEmbeds', () => {
       })
     })
   })
+
+  describe('croquis blocks', () => {
+    it('transforms a croquis block into a Croquis element with obstacles JSON', () => {
+      const [result] = runPlugin([
+        {
+          type: 'code',
+          lang: 'croquis',
+          value: 'salto: Jump 2m\n! side=right; img=https://img/x.jpg',
+        },
+      ])
+      expect(result.type).toBe('mdxJsxFlowElement')
+      expect(result.name).toBe('Croquis')
+      const attr = result.attributes?.find((a) => a.name === 'obstacles')
+      const obstacles = JSON.parse(attr?.value ?? '[]')
+      expect(obstacles).toHaveLength(1)
+      expect(obstacles[0]).toMatchObject({
+        type: 'salto',
+        side: 'right',
+        photo: 'https://img/x.jpg',
+      })
+    })
+
+    it('drops non-obstacle waypoints and handles an empty body', () => {
+      const [result] = runPlugin([
+        { type: 'code', lang: 'croquis', value: undefined },
+      ])
+      const attr = result.attributes?.find((a) => a.name === 'obstacles')
+      expect(attr?.value).toBe('[]')
+    })
+  })
 })

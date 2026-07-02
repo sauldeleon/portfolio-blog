@@ -485,6 +485,37 @@ describe('detectEmbedAtCursor', () => {
     })
   })
 
+  describe('croquis blocks', () => {
+    const croquisContent = [
+      'Intro',
+      '',
+      '```croquis',
+      'salto: Jump 2m - 42.6 0.1',
+      '! img=https://img.com/jump.jpg',
+      '```',
+      '',
+      'Outro',
+    ].join('\n')
+
+    it('detects a croquis block when the cursor is inside', () => {
+      const fenceStart = croquisContent.indexOf('```croquis')
+      const result = detectEmbedAtCursor(croquisContent, fenceStart + 5)
+      expect(result?.type).toBe('croquis')
+    })
+
+    it('carries the block body text verbatim', () => {
+      const fenceStart = croquisContent.indexOf('```croquis')
+      const result = detectEmbedAtCursor(croquisContent, fenceStart + 5)
+      if (result?.type !== 'croquis') throw new Error('expected croquis')
+      expect(result.parsed.text).toContain('salto: Jump 2m - 42.6 0.1')
+      expect(result.parsed.text).toContain('! img=https://img.com/jump.jpg')
+    })
+
+    it('returns null when the cursor is outside the croquis block', () => {
+      expect(detectEmbedAtCursor(croquisContent, 2)).toBeNull()
+    })
+  })
+
   it('returns null for plain text content', () => {
     expect(detectEmbedAtCursor('Just some plain text here.', 5)).toBeNull()
   })
