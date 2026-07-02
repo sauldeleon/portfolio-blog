@@ -118,13 +118,13 @@ function noteLines(notes: CanyonWaypointNote[]): NoteLine[] {
 }
 
 /** Pull the first "<n> m" height mention from a title (e.g. "Rappel 10m"). */
-function extractMeters(title: string): string | null {
+export function extractMeters(title: string): string | null {
   const m = /(\d+(?:[.,]\d+)?)\s*m\b/i.exec(title)
   return m ? `${m[1].replace(',', '.')} m` : null
 }
 
 /** Detect a left/right side mention (ES/EN) in a title. */
-function extractSide(title: string): 'left' | 'right' | null {
+export function extractSide(title: string): 'left' | 'right' | null {
   const n = norm(title)
   if (/\b(izquierda|izqda|izda|izq|left)\b/.test(n)) return 'left'
   if (/\b(derecha|dcha|dcho|right)\b/.test(n)) return 'right'
@@ -164,7 +164,10 @@ const CAUTION_KEYS = [
 ]
 
 /** Grade a waypoint's risk from its title + notes wording. Red beats amber. */
-function severity(title: string, notes: CanyonWaypointNote[]): Severity {
+export function detectSeverity(
+  title: string,
+  notes: CanyonWaypointNote[],
+): Severity {
   const hay = norm([title, ...notes.map((n) => n.text)].join(' \n '))
   if (DANGER_KEYS.some((k) => hay.includes(k))) return 'danger'
   if (CAUTION_KEYS.some((k) => hay.includes(k))) return 'caution'
@@ -247,7 +250,7 @@ export function canyonWaypointCard(data: CanyonWaypointCardData): {
   const cats: Record<string, string> = S.categories
   const catLabel = data.categories.map((c) => cats[c] ?? cats.info).join(' / ')
 
-  const sev: Severity = data.severity ?? severity(data.title, data.notes)
+  const sev: Severity = data.severity ?? detectSeverity(data.title, data.notes)
   const meters = data.meters ?? extractMeters(data.title)
   const side = data.side ?? extractSide(data.title)
   const sevColor = SEV_COLORS[sev]

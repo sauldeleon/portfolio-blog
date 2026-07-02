@@ -2,6 +2,7 @@ import { Callout } from '@sdlgr/callout'
 import { CodeBlock } from '@sdlgr/code-block'
 
 import { MdxTable } from '@web/components/PostContent/MdxTable'
+import { PostContentCroquis } from '@web/components/PostContent/PostContentCroquis'
 import { PostContentEmbed } from '@web/components/PostContent/PostContentEmbed'
 import { PostContentImage } from '@web/components/PostContent/PostContentImage'
 import { PostContentSlideshow } from '@web/components/PostContent/PostContentSlideshow'
@@ -16,6 +17,7 @@ export function createMdxComponents(labels: MdxComponentLabels) {
     Callout,
     Embed: PostContentEmbed,
     Slideshow: PostContentSlideshow,
+    Croquis: PostContentCroquis,
     img: PostContentImage,
     h1: ({ children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
       <h2 {...props}>{children}</h2>

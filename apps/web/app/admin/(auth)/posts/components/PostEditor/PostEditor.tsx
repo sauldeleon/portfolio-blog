@@ -30,6 +30,7 @@ import { computeReadingTime } from '@web/utils/computeReadingTime'
 import { slugify } from '@web/utils/slugify'
 
 import { PublishNotifyModal } from '../../../components/PublishNotifyModal'
+import { CroquisInsertModal } from '../CroquisInsertModal'
 import { EmbedInsertModal } from '../EmbedInsertModal'
 import { GpxMapModal } from '../GpxMapModal'
 import { ImageInsertModal } from '../ImageInsertModal'
@@ -83,6 +84,7 @@ import {
 } from './PostEditor.styles'
 import type {
   DetectedEmbed,
+  ParsedCroquis,
   ParsedEmbed,
   ParsedGpx,
   ParsedImage,
@@ -286,6 +288,10 @@ export function PostEditor({
   const [slideshowModalKey, setSlideshowModalKey] = useState(0)
   const [slideshowInitialValues, setSlideshowInitialValues] =
     useState<ParsedSlideshow | null>(null)
+  const [isCroquisModalOpen, setIsCroquisModalOpen] = useState(false)
+  const [croquisModalKey, setCroquisModalKey] = useState(0)
+  const [croquisInitialValues, setCroquisInitialValues] =
+    useState<ParsedCroquis | null>(null)
   const [previewTab, setPreviewTab] = useState<
     'post' | 'post-mobile' | 'hero' | 'card' | 'toc'
   >('post')
@@ -367,6 +373,10 @@ export function PostEditor({
       setSlideshowInitialValues(editingEmbed.parsed as ParsedSlideshow)
       setSlideshowModalKey((k) => k + 1)
       setIsSlideshowModalOpen(true)
+    } else if (editingEmbed.type === 'croquis') {
+      setCroquisInitialValues(editingEmbed.parsed as ParsedCroquis)
+      setCroquisModalKey((k) => k + 1)
+      setIsCroquisModalOpen(true)
     } else {
       setGpxInitialValues(editingEmbed.parsed as ParsedGpx)
       setGpxModalKey((k) => k + 1)
@@ -970,6 +980,18 @@ export function PostEditor({
               >
                 Insert Slideshow
               </StyledImagePickerButton>
+              <StyledImagePickerButton
+                type="button"
+                onClick={() => {
+                  setEditingEmbed(null)
+                  setCroquisInitialValues(null)
+                  setCroquisModalKey((k) => k + 1)
+                  setIsCroquisModalOpen(true)
+                }}
+                data-testid="open-croquis-modal-button"
+              >
+                Insert Croquis
+              </StyledImagePickerButton>
             </StyledToolbarRow>
             <StyledTextareaWrapper>
               <StyledContentTextarea
@@ -1246,6 +1268,29 @@ export function PostEditor({
         onRequestImagePick={(onPicked) => {
           contentPickerCallbackRef.current = onPicked
           setIsContentPickerOpen(true)
+        }}
+      />
+      <CroquisInsertModal
+        key={`croquis-${croquisModalKey}`}
+        isOpen={isCroquisModalOpen}
+        initialValues={croquisInitialValues}
+        lang={activeLocale}
+        onInsert={(markdown) => {
+          if (editingEmbed?.type === 'croquis') {
+            replaceBlock(
+              editingEmbed.blockStart,
+              editingEmbed.blockEnd,
+              markdown,
+            )
+          } else {
+            insertAtCursor(markdown)
+          }
+          setIsCroquisModalOpen(false)
+          setCroquisInitialValues(null)
+        }}
+        onCancel={() => {
+          setIsCroquisModalOpen(false)
+          setCroquisInitialValues(null)
         }}
       />
       <PublishNotifyModal

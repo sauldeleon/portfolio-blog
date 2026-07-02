@@ -136,6 +136,10 @@ jest.mock('../CanyonWaypointsGenerator', () => ({
   ),
 }))
 
+jest.mock('../CroquisGenerator', () => ({
+  CroquisGenerator: () => <div data-testid="croquis-generator-mock" />,
+}))
+
 describe('CardGenerator', () => {
   it('renders the title', () => {
     renderApp(<CardGenerator />)
@@ -148,6 +152,7 @@ describe('CardGenerator', () => {
     expect(screen.getByTestId('card-type-summary-route')).toBeInTheDocument()
     expect(screen.getByTestId('card-type-summary-ferrata')).toBeInTheDocument()
     expect(screen.getByTestId('card-type-canyon-waypoints')).toBeInTheDocument()
+    expect(screen.getByTestId('card-type-croquis')).toBeInTheDocument()
   })
 
   it('renders the RouteForm by default', () => {
@@ -314,6 +319,21 @@ describe('CardGenerator', () => {
     expect(
       screen.getByTestId('canyon-waypoints-generator-mock'),
     ).toBeInTheDocument()
+    fireEvent.click(screen.getByTestId('card-type-canyoning-data'))
+    expect(screen.getByTestId('canyoning-form-mock')).toBeInTheDocument()
+  })
+
+  it('shows the croquis generator on the croquis tab', () => {
+    renderApp(<CardGenerator />)
+    fireEvent.click(screen.getByTestId('card-type-croquis'))
+    expect(screen.getByTestId('croquis-generator-mock')).toBeInTheDocument()
+    expect(screen.queryByTestId('route-form-mock')).not.toBeInTheDocument()
+  })
+
+  it('returns to a spec form after leaving the croquis tab', () => {
+    renderApp(<CardGenerator />)
+    fireEvent.click(screen.getByTestId('card-type-croquis'))
+    expect(screen.getByTestId('croquis-generator-mock')).toBeInTheDocument()
     fireEvent.click(screen.getByTestId('card-type-canyoning-data'))
     expect(screen.getByTestId('canyoning-form-mock')).toBeInTheDocument()
   })
