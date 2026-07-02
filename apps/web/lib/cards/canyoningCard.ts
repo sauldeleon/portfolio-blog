@@ -3,9 +3,11 @@ import {
   badge,
   columnDivider,
   contours,
+  elevationProfile,
   esc,
   eyebrow,
   flowRow,
+  gradeSubLabel,
   hRule,
   tw,
 } from './primitives'
@@ -43,70 +45,62 @@ function fmtTime(s: string | undefined): string | null {
   return str
 }
 
-/** Sub-label for a grade token (v4, a3, III…). */
-function gradeSubLabel(
-  tok: string,
-  gVert: string,
-  gAqua: string,
-  gCommit: string,
-): string {
-  const c = tok[0]?.toLowerCase() ?? ''
-  if (c === 'v' && /\d/.test(tok)) return gVert
-  if (c === 'a' && /\d/.test(tok)) return gAqua
-  if (/^[IVXLCDM]+$/.test(tok)) return gCommit
-  return ''
-}
-
-/** Grade pills row (large, with sub-labels). */
-function gradePills(
+/** Grade-pills hero: canyon badge + up to three grade tokens with sub-labels. */
+function gradePillsHero(
+  x: number,
   grade: string,
   gVert: string,
   gAqua: string,
   gCommit: string,
-  difficultyLabel: string,
 ): string {
-  const gy = 206
-  const ph = 74
-  let px = CX0 + 2
-  const parts: string[] = [eyebrow(CX0, 184, difficultyLabel)]
+  const bs = 78
+  const by = 188
+  const ph = 58
+  const pillY = by + (bs - ph) / 2
+  const parts: string[] = [badge(x, by, bs, 'canyon')]
+  let px = x + bs + 24
   const tokens = String(grade || '—')
     .split(' ')
     .slice(0, 3)
   for (const tok of tokens) {
-    const pw = tw(tok, 'mono', 46) + 34
+    const pw = tw(tok, 'mono', 32) + 24
     const sl = gradeSubLabel(tok, gVert, gAqua, gCommit)
     parts.push(
-      `<rect x="${px.toFixed(1)}" y="${gy}" width="${pw.toFixed(1)}" height="${ph}" rx="16" fill="${BADGE_BG}" stroke="${AMBER}" stroke-width="1.4" stroke-opacity="0.5"/>` +
-        `<text x="${(px + pw / 2).toFixed(1)}" y="${gy + 53}" text-anchor="middle" font-family="Roboto Mono" font-weight="bold" font-size="46" fill="${BONE}">${esc(tok)}</text>`,
+      `<rect x="${px.toFixed(1)}" y="${pillY}" width="${pw.toFixed(1)}" height="${ph}" rx="12" fill="${BADGE_BG}" stroke="${AMBER}" stroke-width="1.4" stroke-opacity="0.5"/>`,
+      `<text x="${(px + pw / 2).toFixed(1)}" y="${pillY + 42}" text-anchor="middle" font-family="Roboto Mono" font-weight="bold" font-size="32" fill="${BONE}">${esc(tok)}</text>`,
     )
     if (sl) {
       parts.push(
-        `<text x="${(px + pw / 2).toFixed(1)}" y="${gy + ph + 22}" text-anchor="middle" font-family="Poppins" font-weight="500" font-size="13" letter-spacing="1.5" fill="${AMBER}">${sl}</text>`,
+        `<text x="${(px + pw / 2).toFixed(1)}" y="${pillY + ph + 18}" text-anchor="middle" font-family="Poppins" font-weight="500" font-size="12" letter-spacing="1.5" fill="${AMBER}">${sl}</text>`,
       )
     }
-    px += pw + 16
+    px += pw + 12
   }
   return parts.join('')
 }
 
-/** One metric hero (icon + value + label). */
+/** Standard metric hero (bs=78, by=188). */
 function hero(
   x: number,
   kind: Parameters<typeof badge>[3],
   value: string,
   label: string,
+  colW: number,
 ): string {
-  const bs = 72
-  const by = 372
-  const vx = x + bs + 22
+  const bs = 78
+  const by = 188
+  const vx = x + bs + 24
+  const avail = colW - (bs + 24) - 18
+  let vsz = 56
+  while (tw(value, 'mono', vsz) > avail && vsz > 30) vsz -= 2
   return (
     badge(x, by, bs, kind) +
-    `<text x="${vx}" y="${by + 44}" font-family="Roboto Mono" font-weight="bold" font-size="50" fill="${BONE}">${esc(String(value))}</text>` +
-    `<text x="${vx}" y="${by + 74}" font-family="Poppins" font-weight="500" font-size="19" letter-spacing="2" fill="${AMBER}">${esc(label)}</text>`
+    `<text x="${vx}" y="${by + 46}" font-family="Roboto Mono" font-weight="bold" font-size="${vsz}" fill="${BONE}">${esc(value)}</text>` +
+    `<text x="${vx}" y="${by + 80}" font-family="Poppins" font-weight="500" font-size="21" letter-spacing="2" fill="${AMBER}">${esc(label)}</text>`
   )
 }
 
-/** One time tile (icon + value + label, centred). */
+/** One time tile (icon + value + label, centred), by=396. */
 function tile(
   cx: number,
   kind: Parameters<typeof badge>[3],
@@ -115,23 +109,27 @@ function tile(
 ): string {
   const bs = 56
   const bx = cx - bs / 2
-  const by = 560
+  const by = 396
   return (
     badge(bx, by, bs, kind) +
-    `<text x="${cx.toFixed(1)}" y="${by + bs + 44}" text-anchor="middle" font-family="Roboto Mono" font-weight="bold" font-size="34" fill="${BONE}">${esc(String(value))}</text>` +
+    `<text x="${cx.toFixed(1)}" y="${by + bs + 44}" text-anchor="middle" font-family="Roboto Mono" font-weight="bold" font-size="34" fill="${BONE}">${esc(value)}</text>` +
     `<text x="${cx.toFixed(1)}" y="${by + bs + 74}" text-anchor="middle" font-family="Poppins" font-weight="500" font-size="17" letter-spacing="1.5" fill="${COLD}">${esc(label)}</text>`
   )
 }
 
-/** Generate SVG string for the canyoning data-only card (1600×900). */
+/**
+ * Generate the SVG for the canyon card (1600×900): grade + metrics, the
+ * activity time breakdown, the tech sheet, the observed flow, and — when a GPX
+ * yields an elevation series — the elevation profile (hidden otherwise).
+ */
 export function canyoningCard(data: CanyoningCardData): string {
   const S = STRINGS[data.lang]
 
   // --- header ---
   const title = data.title || S.default_title
-  let tsz = 64
-  while (tw(title, 'bold', tsz) > CW - 360 && tsz > 34) tsz -= 2
-  const titleSvg = `<text x="172" y="128" font-family="Poppins" font-weight="700" font-size="${tsz}" fill="${BONE}">${esc(title)}</text>`
+  let tsz = 50
+  while (tw(title, 'bold', tsz) > CW - 520 && tsz > 26) tsz -= 2
+  const titleSvg = `<text x="172" y="126" font-family="Poppins" font-weight="700" font-size="${tsz}" fill="${BONE}">${esc(title)}</text>`
 
   let chip = ''
   if (data.date) {
@@ -141,36 +139,47 @@ export function canyoningCard(data: CanyoningCardData): string {
       `<text x="${(CXR - 15).toFixed(0)}" y="82" text-anchor="end" font-family="Roboto Mono" font-size="23" fill="${BONE}">${esc(data.date)}</text>`
   }
 
-  // --- grade pills ---
-  const gradeSvg = gradePills(
-    data.grade ?? '—',
-    S.g_vert,
-    S.g_aqua,
-    S.g_commit,
-    S.difficulty,
-  )
+  // --- heroes (4 columns): grade, descent, longest rappel, count ---
+  const cw4 = CW / 4
+  const heroSvg =
+    gradePillsHero(
+      CX0 + cw4 * 0,
+      data.grade ?? '—',
+      S.g_vert,
+      S.g_aqua,
+      S.g_commit,
+    ) +
+    hero(CX0 + cw4 * 1, 'descent', data.desnivel ?? '—', S.desnivel, cw4) +
+    hero(CX0 + cw4 * 2, 'rappel', data.maxRappel ?? '—', S.max_rappel, cw4) +
+    hero(CX0 + cw4 * 3, 'drops', data.rappels ?? '—', S.rappels, cw4)
 
-  // --- 3 hero metrics ---
-  const heroSvg = [
-    hero(CX0 + (CW / 3) * 0, 'vertical', data.desnivel ?? '—', S.desnivel),
-    hero(CX0 + (CW / 3) * 1, 'rappel', data.maxRappel ?? '—', S.max_rappel),
-    hero(CX0 + (CW / 3) * 2, 'drops', data.rappels ?? '—', S.rappels),
-  ].join('')
+  // --- observed flow row (difficulty zone, below the grade hero) ---
+  const flowSvg = data.flowLevel
+    ? flowRow(
+        CX0,
+        290,
+        data.flowLevel,
+        data.flowRappels,
+        data.phenomena ?? [],
+        S,
+      )
+    : ''
 
-  // --- times tiles (4 columns) ---
-  const ncol = 4
-  const tileData: Array<[Parameters<typeof badge>[3], string, string]> = [
+  // --- activity time tiles (4 columns) ---
+  type TileEntry = [Parameters<typeof badge>[3], string, string]
+  const tileData: TileEntry[] = [
     ['hiker', fmtTime(data.approach) ?? '—', S.approach],
     ['canyon', fmtTime(data.inCanyon) ?? '—', S.in_canyon],
     ['return', fmtTime(data.returnTime) ?? '—', S.return],
     ['clock', fmtTime(data.total) ?? '—', S.total],
   ]
+  const ncol = tileData.length
   const centers = tileData.map((_, k) => CX0 + (CW / ncol) * (k + 0.5))
   const tilesSvg = tileData
     .map(([k, v, l], i) => tile(centers[i], k, v, l))
     .join('')
   const dividersSvg = Array.from({ length: ncol - 1 }, (_, k) =>
-    columnDivider(CX0 + (CW / ncol) * (k + 1), 572, 672),
+    columnDivider(CX0 + (CW / ncol) * (k + 1), 408, 518),
   ).join('')
 
   // --- tech strip ---
@@ -187,21 +196,18 @@ export function canyoningCard(data: CanyoningCardData): string {
         `<tspan fill="${AMBER}" font-weight="500" letter-spacing="1">${esc(lab)} </tspan><tspan fill="${BONE}" font-family="Roboto Mono">${esc(String(val))}</tspan>`,
     )
     techSvg =
-      eyebrow(CX0, 748, S.tech_header) +
-      `<text x="${CX0}" y="800" font-family="Poppins" font-size="24">${parts.join(sep)}</text>`
+      eyebrow(CX0, 602, S.tech_header) +
+      `<text x="${CX0}" y="644" font-family="Poppins" font-size="22">${parts.join(sep)}</text>`
   }
 
-  // Observed flow lives in the difficulty zone, to the right of the grade pills.
-  const flowSvg = data.flowLevel
-    ? flowRow(
-        700,
-        214,
-        data.flowLevel,
-        data.flowRappels,
-        data.phenomena ?? [],
-        S,
-      )
-    : ''
+  // --- elevation profile (only when a GPX yielded a series) ---
+  const elevation = data.elevation ?? []
+  const profileY = techSvg ? 672 : 602
+  const profileSvg =
+    elevation.length >= 2
+      ? eyebrow(CX0, profileY, S.profile) +
+        elevationProfile(elevation, CX0, CXR, profileY + 32, 860)
+      : ''
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
 <defs>
@@ -223,17 +229,15 @@ export function canyoningCard(data: CanyoningCardData): string {
   )}</g>
 <rect x="16" y="62" width="6" height="94" rx="3" fill="${AMBER}"/>
 ${badge(56, 46, 96, 'canyon')}
-<rect x="172" y="58" width="11" height="11" rx="2" fill="${AMBER}"/>
-<text x="194" y="69" font-family="Poppins" font-weight="500" font-size="21" letter-spacing="3" fill="${AMBER}">${esc(S.canyon_card)}</text>
+${eyebrow(172, 69, S.canyon_card)}
 ${titleSvg}
 ${chip}
-${gradeSvg}
-${hRule(CX0, CXR, 342)}
+${hRule(CX0, CXR, 336)}
 ${heroSvg}
-${hRule(CX0, CXR, 510)}
-${eyebrow(CX0, 547, S.times_header)}${dividersSvg}${tilesSvg}
-${hRule(CX0, CXR, 712)}
+${eyebrow(CX0, 383, S.times_header)}${dividersSvg}${tilesSvg}
+${hRule(CX0, CXR, 562)}
 ${techSvg}
 ${flowSvg}
+${profileSvg}
 </svg>`
 }

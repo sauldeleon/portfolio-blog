@@ -9,16 +9,15 @@ import { renderCard } from '@web/lib/cards'
 import type {
   CanyoningCardData,
   CardSpec,
-  SummaryCanyoningData,
   SummaryFerrataData,
   SummaryRouteData,
 } from '@web/lib/cards'
 
+import { CanyonWaypointsGenerator } from '../CanyonWaypointsGenerator'
 import { CanyoningForm } from '../CanyoningForm'
 import { CardPreview } from '../CardPreview'
 import { FerrataForm } from '../FerrataForm'
 import { RouteForm } from '../RouteForm'
-import { SummaryCanyoningForm } from '../SummaryCanyoningForm'
 import { WaypointForm } from '../WaypointForm'
 import { WaypointGenerator } from '../WaypointGenerator'
 import {
@@ -31,15 +30,21 @@ import {
 } from './CardGenerator.styles'
 
 type CardKind = CardSpec['kind']
-type Tab = CardKind | 'waypoints' | 'waypoint-single'
+type Tab = CardKind | 'waypoints' | 'waypoint-single' | 'canyon-waypoints'
 
 const TABS: Array<{ kind: Tab; labelKey: string }> = [
   { kind: 'summary-route', labelKey: 'cards.tabs.route' },
-  { kind: 'summary-canyoning', labelKey: 'cards.tabs.canyonSummary' },
   { kind: 'canyoning-data', labelKey: 'cards.tabs.canyonData' },
+  { kind: 'canyon-waypoints', labelKey: 'cards.tabs.canyonWaypoints' },
   { kind: 'summary-ferrata', labelKey: 'cards.tabs.ferrata' },
   { kind: 'waypoints', labelKey: 'cards.tabs.waypointsGpx' },
   { kind: 'waypoint-single', labelKey: 'cards.tabs.waypointSingle' },
+]
+
+const NON_SPEC_TABS: Tab[] = [
+  'waypoints',
+  'waypoint-single',
+  'canyon-waypoints',
 ]
 
 const DEFAULT_CANYONING: CanyoningCardData = {
@@ -51,10 +56,6 @@ const DEFAULT_FERRATA: SummaryFerrataData = {
   kind: 'summary-ferrata',
   lang: 'en',
 }
-const DEFAULT_SUMMARY_CANYONING: SummaryCanyoningData = {
-  kind: 'summary-canyoning',
-  lang: 'en',
-}
 
 function defaultSpec(kind: CardKind): CardSpec {
   switch (kind) {
@@ -64,8 +65,6 @@ function defaultSpec(kind: CardKind): CardSpec {
       return { ...DEFAULT_ROUTE }
     case 'summary-ferrata':
       return { ...DEFAULT_FERRATA }
-    case 'summary-canyoning':
-      return { ...DEFAULT_SUMMARY_CANYONING }
   }
 }
 
@@ -77,8 +76,6 @@ function cardSlug(kind: CardKind): string {
       return 'route'
     case 'summary-ferrata':
       return 'ferrata'
-    case 'summary-canyoning':
-      return 'canyoning_summary'
   }
 }
 
@@ -98,8 +95,8 @@ export function CardGenerator() {
 
   function handleKindChange(kind: Tab) {
     setActiveKind(kind)
-    if (kind !== 'waypoints' && kind !== 'waypoint-single') {
-      setSpec(defaultSpec(kind))
+    if (!NON_SPEC_TABS.includes(kind)) {
+      setSpec(defaultSpec(kind as CardKind))
     }
   }
 
@@ -136,6 +133,8 @@ export function CardGenerator() {
         <WaypointGenerator />
       ) : activeKind === 'waypoint-single' ? (
         <WaypointForm />
+      ) : activeKind === 'canyon-waypoints' ? (
+        <CanyonWaypointsGenerator />
       ) : (
         <StyledLayout>
           <StyledPanelForm>
@@ -147,12 +146,6 @@ export function CardGenerator() {
             )}
             {spec.kind === 'summary-ferrata' && (
               <FerrataForm value={spec} onChange={(next) => setSpec(next)} />
-            )}
-            {spec.kind === 'summary-canyoning' && (
-              <SummaryCanyoningForm
-                value={spec}
-                onChange={(next) => setSpec(next)}
-              />
             )}
           </StyledPanelForm>
 

@@ -80,6 +80,44 @@ export function hRule(x0: number, x1: number, y: number): string {
   return `<line x1="${x0}" y1="${y}" x2="${x1}" y2="${y}" stroke="${PANEL_STK}" stroke-width="1.5"/>`
 }
 
+/** Sub-label for a grade token (v4 → VERT, a3 → AQUA, III → COMM). */
+export function gradeSubLabel(
+  tok: string,
+  gVert: string,
+  gAqua: string,
+  gCommit: string,
+): string {
+  const c = tok[0]?.toLowerCase() ?? ''
+  if (c === 'v' && /\d/.test(tok)) return gVert
+  if (c === 'a' && /\d/.test(tok)) return gAqua
+  if (/^[IVXLCDM]+$/.test(tok)) return gCommit
+  return ''
+}
+
+/** Filled elevation polyline spanning [x0,x1] × [top,bottom]. */
+export function elevationProfile(
+  ele: number[],
+  x0: number,
+  x1: number,
+  top: number,
+  bottom: number,
+): string {
+  const min = Math.min(...ele)
+  const max = Math.max(...ele)
+  const span = max - min || 1
+  const n = ele.length
+  const pts = ele.map((e, i) => {
+    const x = x0 + ((x1 - x0) * i) / (n - 1)
+    const y = bottom - ((e - min) / span) * (bottom - top)
+    return `${x.toFixed(1)},${y.toFixed(1)}`
+  })
+  const area = `${x0.toFixed(1)},${bottom.toFixed(1)} ${pts.join(' ')} ${x1.toFixed(1)},${bottom.toFixed(1)}`
+  return (
+    `<polygon points="${area}" fill="${AMBER}" fill-opacity="0.08"/>` +
+    `<polyline points="${pts.join(' ')}" fill="none" stroke="${AMBER}" stroke-width="2.5" stroke-opacity="0.75"/>`
+  )
+}
+
 /** Phenomenon key → icon kind for the observed-flow event chips. */
 const PHENOMENON_ICON: Record<string, IconKind> = {
   backwash: 'ph_backwash',

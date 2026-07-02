@@ -32,11 +32,4 @@ describe('renderCard', () => {
     expect(svg).toContain('<svg')
     expect(svg).toContain('VÍA FERRATA')
   })
-
-  it('dispatches summary-canyoning to summaryCard', () => {
-    const spec: CardSpec = { kind: 'summary-canyoning', lang: 'es' }
-    const svg = renderCard(spec)
-    expect(svg).toContain('<svg')
-    expect(svg).toContain('BARRANCO')
-  })
 })

@@ -177,6 +177,20 @@ describe('WaypointGenerator', () => {
     expect(screen.getByText(fileFor('en', 'refugio'))).toBeInTheDocument()
   })
 
+  it('overrides the filename prefix with the name field', async () => {
+    jest.spyOn(axios, 'get').mockResolvedValue({ data: { data: waypoints } })
+    renderApp(<WaypointGenerator />)
+    fireEvent.change(screen.getByTestId('wp-gpx'), { target: { value: URL } })
+    fireEvent.click(screen.getByTestId('wp-generate'))
+    await screen.findByText(fileFor('en', 'refugio'))
+    fireEvent.change(screen.getByTestId('wp-name'), {
+      target: { value: 'My Trip' },
+    })
+    expect(
+      screen.getByText('waypoint-my_trip-1234-en-refugio'),
+    ).toBeInTheDocument()
+  })
+
   it('re-renders filenames in Spanish when the language toggles', async () => {
     jest.spyOn(axios, 'get').mockResolvedValue({ data: { data: waypoints } })
     renderApp(<WaypointGenerator />)
@@ -249,9 +263,9 @@ describe('WaypointGenerator', () => {
     fireEvent.change(screen.getByTestId('wp-gpx'), { target: { value: URL } })
     const button = screen.getByTestId('wp-generate')
     fireEvent.click(button)
-    await waitFor(() => expect(button).toHaveTextContent('Generating…'))
+    await waitFor(() => expect(button).toHaveTextContent('Parsing…'))
     resolve({ data: { data: waypoints } })
-    await waitFor(() => expect(button).toHaveTextContent('Generate'))
+    await waitFor(() => expect(button).toHaveTextContent('Parse'))
   })
 
   async function generate() {

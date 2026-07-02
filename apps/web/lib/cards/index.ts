@@ -14,6 +14,19 @@ export {
 export type { Waypoint } from './waypoints'
 export { waypointCard } from './waypointCard'
 export type { WaypointCardData } from './waypointCard'
+export {
+  parseCanyonWaypointsText,
+  parseCanyonWaypointsGpx,
+  serializeCanyonWaypoints,
+} from './canyonWaypoints'
+export type {
+  CanyonWaypoint,
+  CanyonWaypointNote,
+  CanyonSide,
+  CanyonSeverity,
+} from './canyonWaypoints'
+export { canyonWaypointCard } from './canyonWaypointCard'
+export type { CanyonWaypointCardData } from './canyonWaypointCard'
 export { svgToPng } from './svgToPng'
 export { zipStore } from './zip'
 export type { ZipFile } from './zip'
@@ -28,6 +41,5 @@ export type {
   CanyoningCardData,
   SummaryRouteData,
   SummaryFerrataData,
-  SummaryCanyoningData,
   Lang,
 } from './types'

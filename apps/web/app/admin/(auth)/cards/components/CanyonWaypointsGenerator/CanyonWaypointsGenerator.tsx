@@ -8,14 +8,16 @@ import { FieldGroup, FieldHelper, FieldLabel, Input } from '@sdlgr/input'
 
 import { useClientTranslation } from '@web/i18n/client'
 import {
+  canyonWaypointCard,
+  parseCanyonWaypointsText,
+  serializeCanyonWaypoints,
   svgToPng,
-  translateName,
-  waypointCard,
   waypointSlug,
   zipStore,
 } from '@web/lib/cards'
-import type { Lang, Waypoint, ZipFile } from '@web/lib/cards'
+import type { CanyonWaypoint, Lang, ZipFile } from '@web/lib/cards'
 
+import { CanyonWaypointFields } from '../CanyonWaypointFields'
 import {
   StyledLayout,
   StyledPanelForm,
@@ -23,8 +25,6 @@ import {
 } from '../CardGenerator/CardGenerator.styles'
 import { CardPreview } from '../CardPreview'
 import type { CardPreviewHandle } from '../CardPreview'
-import { WaypointFields } from '../WaypointFields'
-import type { WaypointState } from '../WaypointFields'
 import {
   StyledBulkBar,
   StyledError,
@@ -35,69 +35,86 @@ import {
   StyledPreviewStack,
   StyledSection,
   StyledSectionTitle,
-} from './WaypointGenerator.styles'
+  StyledTextarea,
+} from './CanyonWaypointsGenerator.styles'
 
 const LANGS: Lang[] = ['en', 'es']
 
-const CARD_W = 1080
-const CARD_H = 320
-
-/** Extract the GPX file's base name (no extension, percent-decoded) from its URL. */
-function gpxBaseName(url: string): string {
-  const path = url.split(/[?#]/)[0]
-  const raw = path.slice(path.lastIndexOf('/') + 1).replace(/\.gpx$/i, '')
-  try {
-    // Decode "%20" etc. so spaces survive slugification instead of leaving "20".
-    return decodeURIComponent(raw)
-  } catch {
-    return raw
-  }
-}
-
-/** Map parsed waypoints to editable form state, sharing one altimeter scale. */
-function toItems(waypoints: Waypoint[]): WaypointState[] {
-  const eles = waypoints.map((w) => w.ele)
-  const emin = String(Math.min(...eles))
-  const emax = String(Math.max(...eles))
-  return waypoints.map((w) => ({
-    name: w.name,
-    category: w.category,
-    lat: String(w.lat),
-    lon: String(w.lon),
-    ele: String(w.ele),
-    emin,
-    emax,
-  }))
-}
-
 /**
- * Generates a series of waypoint banner cards from the `<wpt>` elements of a
- * GPX file fetched through the server proxy. Each card can be clicked to tweak
- * its fields inline before exporting.
+ * Builds one card per canyon waypoint. The textarea is the editable source of
+ * truth (parsed live into a card list); a GPX url can be imported to pre-fill
+ * it. Each card can be downloaded/uploaded on its own, or exported together as
+ * a single zip. Card height grows with each waypoint's notes.
  */
-export function WaypointGenerator() {
+export function CanyonWaypointsGenerator() {
   const { t } = useClientTranslation('admin')
   const [lang, setLang] = useState<Lang>('en')
   const [name, setName] = useState('')
+  const [text, setText] = useState('')
   const [url, setUrl] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [items, setItems] = useState<WaypointState[]>([])
-  const [editing, setEditing] = useState<number | null>(null)
   const [uploadingAll, setUploadingAll] = useState(false)
   const [downloadingAll, setDownloadingAll] = useState(false)
-  // Captured at parse time so all cards in a batch share one upload signature.
-  const [gpxName, setGpxName] = useState('')
-  const [stamp, setStamp] = useState(0)
+  const [editing, setEditing] = useState<number | null>(null)
   const cardRefs = useRef<Array<CardPreviewHandle | null>>([])
 
-  async function handleGenerate() {
+  const waypoints = useMemo<CanyonWaypoint[]>(
+    () => parseCanyonWaypointsText(text),
+    [text],
+  )
+
+  function toggleEdit(index: number) {
+    setEditing((cur) => (cur === index ? null : index))
+  }
+
+  // Editing a single card patches its waypoint and rewrites the textarea, which
+  // stays the single source of truth (re-parsed into the card list).
+  function updateWaypoint(patch: Partial<CanyonWaypoint>) {
+    setText(
+      serializeCanyonWaypoints(
+        waypoints.map((w, i) => (i === editing ? { ...w, ...patch } : w)),
+      ),
+    )
+  }
+
+  const editItem = editing !== null ? waypoints[editing] : undefined
+
+  const base = name.trim() === '' ? 'canyon' : waypointSlug(name)
+
+  const cards = useMemo(
+    () =>
+      waypoints.map((wp, i) => {
+        const { svg, width, height } = canyonWaypointCard({
+          lang,
+          categories: wp.categories,
+          title: wp.title,
+          lat: wp.lat,
+          lon: wp.lon,
+          notes: wp.notes,
+          side: wp.side,
+          severity: wp.severity,
+          meters: wp.meters,
+        })
+        const order = String(i + 1).padStart(2, '0')
+        return {
+          key: `cw-${i}`,
+          svg,
+          width,
+          height,
+          filename: `canyon-waypoint-${base}-${lang}-${order}-${waypointSlug(wp.title)}`,
+          disableUpload: wp.title.trim() === '',
+        }
+      }),
+    [waypoints, lang, base],
+  )
+
+  async function handleImport() {
     setLoading(true)
     setError(null)
-    setEditing(null)
     try {
-      const res = await axios.get<{ data?: Waypoint[] }>(
-        '/api/cards/waypoints',
+      const res = await axios.get<{ data?: CanyonWaypoint[] }>(
+        '/api/cards/canyon-waypoints',
         { params: { url } },
       )
       const wpts = res.data.data
@@ -106,13 +123,10 @@ export function WaypointGenerator() {
         return
       }
       if (wpts.length === 0) {
-        setError(t('cards.errors.noWaypoints'))
-        setItems([])
+        setError(t('cards.errors.noWaypointsFound'))
         return
       }
-      setGpxName(waypointSlug(gpxBaseName(url)))
-      setStamp(Date.now())
-      setItems(toItems(wpts))
+      setText(serializeCanyonWaypoints(wpts))
     } catch (err) {
       setError(
         isAxiosError(err)
@@ -124,18 +138,6 @@ export function WaypointGenerator() {
     }
   }
 
-  function updateItem(patch: Partial<WaypointState>) {
-    setItems((prev) =>
-      prev.map((item, i) => (i === editing ? { ...item, ...patch } : item)),
-    )
-  }
-
-  function toggleEdit(index: number) {
-    setEditing((cur) => (cur === index ? null : index))
-  }
-
-  // Upload each card sequentially, reusing its own upload logic. Cards without
-  // a name no-op internally (their upload is disabled).
   async function handleUploadAll() {
     setUploadingAll(true)
     try {
@@ -147,63 +149,31 @@ export function WaypointGenerator() {
     }
   }
 
-  // Filename prefix: the manual name overrides the GPX-derived one when set.
-  const base = name.trim() !== '' ? waypointSlug(name) : gpxName
-
-  const cards = useMemo(
-    () =>
-      items.map((item, i) => {
-        const svg = waypointCard({
-          name: translateName(item.name, lang),
-          lat: item.lat.trim() === '' ? undefined : Number(item.lat),
-          lon: item.lon.trim() === '' ? undefined : Number(item.lon),
-          ele: item.ele.trim() === '' ? undefined : Number(item.ele),
-          emin: Number(item.emin) || 0,
-          emax: Number(item.emax) || 0,
-          category: item.category,
-          lang,
-        })
-        const nameSlug = waypointSlug(item.name)
-        return {
-          key: `wp-${i}`,
-          svg,
-          // Download filename and Cloudinary public_id share this single name.
-          filename: `waypoint-${base}-${stamp}-${lang}-${nameSlug}`,
-          disableUpload: item.name.trim() === '',
-        }
-      }),
-    [items, lang, base, stamp],
-  )
-
-  // Pack every card's PNG into a single uncompressed zip and download it once,
-  // avoiding the browser's "download multiple files" prompt.
   async function handleDownloadAll() {
     setDownloadingAll(true)
     try {
       const files: ZipFile[] = []
       for (const card of cards) {
-        const blob = await svgToPng(card.svg, CARD_W, CARD_H)
+        const blob = await svgToPng(card.svg, card.width, card.height)
         const data = new Uint8Array(await blob.arrayBuffer())
         files.push({ name: `${card.filename}.png`, data })
       }
       const zipBytes = zipStore(files)
-      const url = URL.createObjectURL(
+      const href = URL.createObjectURL(
         new Blob([zipBytes], { type: 'application/zip' }),
       )
       const a = document.createElement('a')
-      a.href = url
-      a.download = `waypoints-${base}-${lang}.zip`
+      a.href = href
+      a.download = `canyon-waypoints-${base}-${lang}.zip`
       a.click()
-      URL.revokeObjectURL(url)
+      URL.revokeObjectURL(href)
     } finally {
       setDownloadingAll(false)
     }
   }
 
-  const editItem = editing !== null ? items[editing] : undefined
-
   return (
-    <StyledLayout data-testid="waypoint-generator">
+    <StyledLayout data-testid="canyon-waypoints-generator">
       <StyledPanelForm>
         <StyledForm>
           <StyledLangToggle>
@@ -214,7 +184,7 @@ export function WaypointGenerator() {
                 variant="label"
                 active={lang === l}
                 onClick={() => setLang(l)}
-                data-testid={`wp-lang-${l}`}
+                data-testid={`cw-lang-${l}`}
               >
                 {l.toUpperCase()}
               </Button>
@@ -224,15 +194,15 @@ export function WaypointGenerator() {
           <StyledSection>
             <StyledSectionTitle>{t('cards.sections.files')}</StyledSectionTitle>
             <FieldGroup>
-              <FieldLabel htmlFor="wp-name">
+              <FieldLabel htmlFor="cw-name">
                 {t('cards.fields.fileNamePrefix')}
               </FieldLabel>
               <Input
-                id="wp-name"
+                id="cw-name"
                 value={name}
-                placeholder={t('cards.placeholders.routeName')}
+                placeholder={t('cards.placeholders.canyonName')}
                 onChange={(e) => setName(e.target.value)}
-                data-testid="wp-name"
+                data-testid="cw-name"
               />
               <FieldHelper>
                 {t('cards.fields.fileNamePrefixHelper')}
@@ -243,28 +213,28 @@ export function WaypointGenerator() {
           <StyledSection>
             <StyledSectionTitle>{t('cards.sections.gpx')}</StyledSectionTitle>
             <FieldGroup>
-              <FieldLabel htmlFor="wp-gpx">
+              <FieldLabel htmlFor="cw-gpx">
                 {t('cards.fields.gpxUrl')}
               </FieldLabel>
               <StyledGpxRow>
                 <Input
-                  id="wp-gpx"
+                  id="cw-gpx"
                   value={url}
                   placeholder={t('cards.placeholders.gpxUrl')}
                   onChange={(e) => {
                     setUrl(e.target.value)
                     if (error) setError(null)
                   }}
-                  data-testid="wp-gpx"
+                  data-testid="cw-gpx"
                 />
                 <Button
                   type="button"
                   variant="contained"
                   colorScheme="success"
                   size="sm"
-                  onClick={() => void handleGenerate()}
+                  onClick={() => void handleImport()}
                   disabled={!url || loading}
-                  data-testid="wp-generate"
+                  data-testid="cw-import"
                 >
                   {loading
                     ? t('cards.actions.parsing')
@@ -272,22 +242,43 @@ export function WaypointGenerator() {
                 </Button>
               </StyledGpxRow>
               {error && (
-                <StyledError data-testid="wp-error">{error}</StyledError>
+                <StyledError data-testid="cw-error">{error}</StyledError>
               )}
             </FieldGroup>
           </StyledSection>
 
+          <StyledSection>
+            <StyledSectionTitle>
+              {t('cards.sections.waypointsText')}
+            </StyledSectionTitle>
+            <FieldGroup>
+              <FieldLabel htmlFor="cw-text">
+                {t('cards.fields.waypointsText')}
+              </FieldLabel>
+              <StyledTextarea
+                id="cw-text"
+                value={text}
+                placeholder={t('cards.placeholders.waypointsText')}
+                onChange={(e) => setText(e.target.value)}
+                data-testid="cw-text"
+              />
+            </FieldGroup>
+          </StyledSection>
+
           {editItem && (
-            <StyledSection data-testid="wp-editor">
+            <StyledSection data-testid="cw-editor">
               <StyledSectionTitle>
                 {t('cards.sections.editWaypoint')}
               </StyledSectionTitle>
-              <WaypointFields value={editItem} onChange={updateItem} />
+              <CanyonWaypointFields
+                value={editItem}
+                onChange={updateWaypoint}
+              />
               <Button
                 type="button"
                 variant="label"
                 onClick={() => setEditing(null)}
-                data-testid="wp-editor-close"
+                data-testid="cw-editor-close"
               >
                 {t('cards.actions.done')}
               </Button>
@@ -307,7 +298,7 @@ export function WaypointGenerator() {
                 size="sm"
                 onClick={() => void handleDownloadAll()}
                 disabled={downloadingAll}
-                data-testid="wp-download-all"
+                data-testid="cw-download-all"
               >
                 {downloadingAll
                   ? t('cards.actions.downloading')
@@ -320,14 +311,14 @@ export function WaypointGenerator() {
                 size="sm"
                 onClick={() => void handleUploadAll()}
                 disabled={uploadingAll}
-                data-testid="wp-upload-all"
+                data-testid="cw-upload-all"
               >
                 {uploadingAll
                   ? t('cards.actions.uploading')
                   : t('cards.actions.uploadAll')}
               </Button>
             </StyledBulkBar>
-            <StyledList data-testid="wp-cards">
+            <StyledList data-testid="cw-cards">
               {cards.map((c, i) => (
                 <CardPreview
                   key={c.key}
@@ -335,8 +326,8 @@ export function WaypointGenerator() {
                     cardRefs.current[i] = el
                   }}
                   svg={c.svg}
-                  cardWidth={1080}
-                  cardHeight={320}
+                  cardWidth={c.width}
+                  cardHeight={c.height}
                   filename={c.filename}
                   disableUpload={c.disableUpload}
                   onSelect={() => toggleEdit(i)}

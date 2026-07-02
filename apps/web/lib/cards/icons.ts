@@ -33,6 +33,8 @@ export type IconKind =
   | 'poza'
   | 'slide'
   | 'downclimb'
+  | 'arrow_left'
+  | 'arrow_right'
 
 export function iconPath(kind: IconKind, sw = 5.4): string {
   const c = `fill="none" stroke="${AMBER}" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round"`
@@ -69,6 +71,8 @@ export function iconPath(kind: IconKind, sw = 5.4): string {
     poza: `<path d="M16 60 Q50 46 84 60 Q50 86 16 60 Z" ${c}/><path d="M36 60 Q50 53 64 60" ${c} stroke-opacity="0.6"/><path d="M50 16 C55 28 62 35 62 43 A12 12 0 1 1 38 43 C38 35 45 28 50 16 Z" ${c}/>`,
     slide: `<circle cx="26" cy="20" r="6" ${c}/><path d="M26 28 C26 60 74 52 74 82" ${c}/><path d="M66 74 L74 86 L82 74" ${c}/>`,
     downclimb: `<path d="M16 20 L16 40 L42 40 L42 60 L68 60 L68 80 L88 80" ${c}/><path d="M28 62 L28 88 M20 80 L28 88 L36 80" ${c}/>`,
+    arrow_left: `<path d="M84 50 L20 50 M44 26 L20 50 L44 74" ${c}/>`,
+    arrow_right: `<path d="M16 50 L80 50 M56 26 L80 50 L56 74" ${c}/>`,
   }
   return paths[kind] ?? paths['info']
 }

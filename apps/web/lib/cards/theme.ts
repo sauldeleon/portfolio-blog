@@ -9,6 +9,13 @@ export const AMBER_DK = '#C98A1E'
 export const TRACK_BG = '#24384A'
 export const CONTOUR = '#2E4654'
 
+/** Traffic-light colours for the waypoint severity indicator. */
+export const SEV_COLORS: Record<'easy' | 'caution' | 'danger', string> = {
+  easy: '#5FB98A',
+  caution: '#F4B83C',
+  danger: '#DB5A4A',
+}
+
 /** Difficulty colour for the observed-flow droplet, keyed by flow level. */
 export const FLOW_COLORS: Record<string, string> = {
   dry: '#94A8B3',
@@ -84,6 +91,11 @@ export const STRINGS = {
     tech_header: 'FICHA TÉCNICA',
     canyon_card: 'BARRANCO',
     ferrata_card: 'VÍA FERRATA',
+    side_left: 'IZDA',
+    side_right: 'DCHA',
+    sev_easy: 'FÁCIL',
+    sev_caution: 'ATENCIÓN',
+    sev_danger: 'PELIGRO',
     default_title: 'Resumen de ruta',
     flow_levels: {
       dry: 'Seco / residual',
@@ -171,6 +183,11 @@ export const STRINGS = {
     tech_header: 'TECH SHEET',
     canyon_card: 'CANYONING',
     ferrata_card: 'VIA FERRATA',
+    side_left: 'LEFT',
+    side_right: 'RIGHT',
+    sev_easy: 'EASY',
+    sev_caution: 'CAUTION',
+    sev_danger: 'DANGER',
     default_title: 'Route summary',
     flow_levels: {
       dry: 'Dry / residual',

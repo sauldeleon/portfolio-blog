@@ -7,22 +7,22 @@ describe('Admin auth — unauthenticated access', () => {
   })
 
   it('redirects /admin/categories to login when not authenticated', () => {
-    cy.visit('/admin/categories')
+    cy.visit('/admin/categories/')
     cy.url().should('include', '/admin/login')
   })
 
   it('redirects /admin/series to login when not authenticated', () => {
-    cy.visit('/admin/series')
+    cy.visit('/admin/series/')
     cy.url().should('include', '/admin/login')
   })
 
   it('redirects /admin/images to login when not authenticated', () => {
-    cy.visit('/admin/images')
+    cy.visit('/admin/images/')
     cy.url().should('include', '/admin/login')
   })
 
   it('allows visiting /admin/login without auth', () => {
-    cy.visit('/admin/login')
+    cy.visit('/admin/login/')
     cy.get('[data-testid="login-form"]').should('be.visible')
   })
 })
@@ -48,7 +48,7 @@ describe('Admin auth — editor role restrictions', () => {
   })
 
   it('redirects /admin/users to /admin/posts for editor role', () => {
-    cy.visit('/admin/users')
+    cy.visit('/admin/users/')
     cy.url({ timeout: 15000 }).should('include', '/admin/posts')
     cy.url().should('not.include', '/admin/users')
   })

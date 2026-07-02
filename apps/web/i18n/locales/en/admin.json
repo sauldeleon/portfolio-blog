@@ -349,8 +349,8 @@
     "title": "Cards",
     "tabs": {
       "route": "Route",
-      "canyonSummary": "Canyon (summary)",
-      "canyonData": "Canyon (data)",
+      "canyonData": "Canyon",
+      "canyonWaypoints": "Canyon (waypoints)",
       "ferrata": "Via Ferrata",
       "waypointsGpx": "Waypoints (GPX)",
       "waypointSingle": "Waypoint (single)"
@@ -365,7 +365,11 @@
       "ferrata": "Ferrata",
       "location": "Location",
       "altimeterScale": "Altimeter scale",
-      "editWaypoint": "Edit waypoint"
+      "editWaypoint": "Edit waypoint",
+      "waypointsText": "Waypoints",
+      "files": "Files",
+      "notes": "Notes",
+      "overrides": "Overrides"
     },
     "fields": {
       "title": "Title",
@@ -400,7 +404,22 @@
       "longitude": "Longitude",
       "elevation": "Elevation (m)",
       "minElevation": "Min elevation (m)",
-      "maxElevation": "Max elevation (m)"
+      "maxElevation": "Max elevation (m)",
+      "waypointsText": "One block per obstacle, separated by a --- line",
+      "fileNamePrefix": "File name",
+      "fileNamePrefixHelper": "Only used to name the downloaded files — not shown on the cards",
+      "categorySecondary": "Second category",
+      "categoryNone": "None",
+      "notes": "Notes (one per line, indent for nested)",
+      "side": "Side",
+      "severity": "Danger level",
+      "meters": "Drop height",
+      "auto": "Auto (from text)",
+      "sideLeft": "Left",
+      "sideRight": "Right",
+      "sevEasy": "Easy",
+      "sevCaution": "Caution",
+      "sevDanger": "Danger"
     },
     "flow": {
       "observed": "Observed flow",
@@ -410,8 +429,6 @@
     "actions": {
       "parse": "Parse",
       "parsing": "Parsing…",
-      "generate": "Generate",
-      "generating": "Generating…",
       "download": "Download PNG",
       "downloadAll": "Download all (.zip)",
       "downloading": "Preparing zip…",
@@ -427,12 +444,14 @@
       "ferrataName": "Via Ferrata name",
       "waypointName": "Waypoint name",
       "gpxUrl": "https://example.com/route.gpx",
-      "return": "20 min · 1:20"
+      "return": "20 min · 1:20",
+      "waypointsText": "salto: Jump 2m - 42.6092 0.1412\n- Bend on landing\n---\nrapel: Rappel 10m - 42.6056 0.1294\n- Access from ferrata"
     },
     "errors": {
       "gpxParse": "Could not parse GPX file",
       "pngExport": "PNG export failed",
       "noWaypoints": "No waypoints with elevation found",
+      "noWaypointsFound": "No waypoints found",
       "upload": "Upload failed"
     }
   }
