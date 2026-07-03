@@ -609,6 +609,20 @@ describe('GpxMap', () => {
     expect(mockFitBounds).toHaveBeenCalledWith({ _bounds: true })
   })
 
+  it('ignores a late loaded event after the layer is torn down', () => {
+    const { unmount } = render(<GpxMap url={GPX_URL} />)
+    const loadedCallback = mockOn.mock.calls.find(
+      (c: [string, () => void]) => c[0] === 'loaded',
+    )?.[1]
+    unmount()
+    mockFitBounds.mockClear()
+    // The async GPX load resolves after teardown; it must be a no-op.
+    act(() => {
+      loadedCallback()
+    })
+    expect(mockFitBounds).not.toHaveBeenCalled()
+  })
+
   it('removes layer on unmount', () => {
     const { unmount } = render(<GpxMap url={GPX_URL} />)
     unmount()

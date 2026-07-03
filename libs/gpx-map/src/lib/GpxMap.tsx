@@ -384,6 +384,10 @@ function GpxTrackLayer({
   }, [map])
 
   useEffect(() => {
+    // The GPX loads asynchronously; if this effect is torn down (unmount or dep
+    // change) before `loaded` fires, react-leaflet may have already removed the
+    // map, so fitBounds/bindPopup would run against a destroyed map. Guard it.
+    let cancelled = false
     const layer = new L.GPX(url, {
       async: true,
       polyline_options: {
@@ -410,6 +414,7 @@ function GpxTrackLayer({
     })
 
     layer.on('loaded', () => {
+      if (cancelled) return
       map.fitBounds(layer.getBounds())
       const imgs = waypointImagesRef.current
       if (showWaypoints) {
@@ -456,6 +461,7 @@ function GpxTrackLayer({
     layerRef.current = layer
 
     return () => {
+      cancelled = true
       map.removeLayer(layer)
       layerRef.current = null
     }
