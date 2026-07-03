@@ -86,15 +86,17 @@ function titleCase(s: string): string {
 }
 
 /**
- * The name shown above an obstacle: both categories for a combo (e.g.
- * "Salto / Rápel"), the rappel category for a rappel, else the first title word.
+ * The localised category shown above an obstacle (e.g. "Jump", "Slide",
+ * "Rappel", or "Jump / Rappel" for a combo). The height/side sit in the meta
+ * line below, so the label never echoes the raw, single-language title.
  */
 function nodeLabel(node: CroquisNode, S: LangStrings): string {
   if (node.obstacle.type === 'salto-rapel') {
     return `${titleCase(S.categories.salto)} / ${titleCase(S.categories.rappel)}`
   }
   if (node.obstacle.type === 'rapel') return titleCase(S.categories.rappel)
-  return node.obstacle.title.split(/\s+/)[0] || '—'
+  if (node.obstacle.type === 'tobogan') return titleCase(S.categories.tobogan)
+  return titleCase(S.categories.salto)
 }
 
 /** Glyph + severity dot + name + metrics for one obstacle (no hit region). */

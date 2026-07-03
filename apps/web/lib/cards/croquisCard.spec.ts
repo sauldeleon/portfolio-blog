@@ -64,14 +64,21 @@ describe('croquisNodeContent', () => {
     expect(croquisNodeContent(n, EN)).toContain('>Jump / Rappel<')
   })
 
-  it('labels other obstacles with the first title word', () => {
-    const [n] = layoutCroquis([ob({ title: 'Big jump' })]).nodes
-    expect(croquisNodeContent(n, EN)).toContain('>Big<')
+  it('labels a slide with its localised category, not the raw title', () => {
+    const [n] = layoutCroquis([ob({ type: 'tobogan', title: 'Tobogán' })]).nodes
+    expect(croquisNodeContent(n, EN)).toContain('>Slide<')
+    expect(croquisNodeContent(n, EN)).not.toContain('Tobogán')
   })
 
-  it('falls back to a dash for an empty title', () => {
-    const [n] = layoutCroquis([ob({ title: '' })]).nodes
-    expect(croquisNodeContent(n, EN)).toContain('>—<')
+  it('labels a jump with its localised category, ignoring the raw title', () => {
+    const [n] = layoutCroquis([ob({ type: 'salto', title: 'Big jump' })]).nodes
+    expect(croquisNodeContent(n, EN)).toContain('>Jump<')
+    expect(croquisNodeContent(n, EN)).not.toContain('Big')
+  })
+
+  it('localises the jump label in Spanish', () => {
+    const [n] = layoutCroquis([ob({ type: 'salto', title: 'Big jump' })]).nodes
+    expect(croquisNodeContent(n, STRINGS.es)).toContain('>Salto<')
   })
 
   it('shows metres and a left-side marker', () => {
