@@ -45,6 +45,14 @@ jest.mock('@web/components/PostContent/MdxTable', () => ({
   ),
 }))
 
+jest.mock('@web/components/PostContent/PostContentCroquis', () => ({
+  PostContentCroquis: ({ lang }: { lang?: string }) => (
+    <div data-testid="croquis-preview">
+      <span data-testid="croquis-lang">{lang}</span>
+    </div>
+  ),
+}))
+
 jest.mock('next-mdx-remote', () => ({
   MDXRemote: ({
     compiledSource,
@@ -57,6 +65,7 @@ jest.mock('next-mdx-remote', () => ({
       Embed?: React.ElementType<{ type?: string; url?: string }>
       h1?: React.ElementType<React.HTMLAttributes<HTMLHeadingElement>>
       table?: React.ElementType<React.HTMLAttributes<HTMLTableElement>>
+      Croquis?: React.ElementType<{ obstacles?: string; title?: string }>
     }
   }) => {
     const Pre = components?.pre
@@ -64,6 +73,7 @@ jest.mock('next-mdx-remote', () => ({
     const EmbedComp = components?.Embed
     const H1 = components?.h1
     const Table = components?.table
+    const Croquis = components?.Croquis
     return (
       <div data-testid="mdx-content">
         {compiledSource}
@@ -86,6 +96,7 @@ jest.mock('next-mdx-remote', () => ({
             </tbody>
           </Table>
         )}
+        {Croquis && <Croquis obstacles="[]" />}
       </div>
     )
   },
@@ -110,27 +121,31 @@ describe('MarkdownPreview', () => {
 
   it('renders nothing when content is empty', () => {
     const { container } = renderApp(
-      <MarkdownPreview content="" loadingLabel="Rendering…" />,
+      <MarkdownPreview content="" loadingLabel="Rendering…" lang="es" />,
     )
     expect(container).toBeEmptyDOMElement()
   })
 
   it('renders nothing when content is only whitespace', () => {
     const { container } = renderApp(
-      <MarkdownPreview content="   " loadingLabel="Rendering…" />,
+      <MarkdownPreview content="   " loadingLabel="Rendering…" lang="es" />,
     )
     expect(container).toBeEmptyDOMElement()
   })
 
   it('shows loading state while debouncing', () => {
-    renderApp(<MarkdownPreview content="# Hello" loadingLabel="Rendering…" />)
+    renderApp(
+      <MarkdownPreview content="# Hello" loadingLabel="Rendering…" lang="es" />,
+    )
     expect(screen.getByTestId('preview-loading')).toHaveTextContent(
       'Rendering…',
     )
   })
 
   it('renders preview after debounce resolves', async () => {
-    renderApp(<MarkdownPreview content="# Hello" loadingLabel="Rendering…" />)
+    renderApp(
+      <MarkdownPreview content="# Hello" loadingLabel="Rendering…" lang="es" />,
+    )
     await act(async () => {
       jest.advanceTimersByTime(500)
       await Promise.resolve()
@@ -141,7 +156,11 @@ describe('MarkdownPreview', () => {
 
   it('calls serializePreview with the content', async () => {
     renderApp(
-      <MarkdownPreview content="# Hello world" loadingLabel="Rendering…" />,
+      <MarkdownPreview
+        content="# Hello world"
+        loadingLabel="Rendering…"
+        lang="es"
+      />,
     )
     await act(async () => {
       jest.advanceTimersByTime(500)
@@ -152,7 +171,7 @@ describe('MarkdownPreview', () => {
 
   it('clears serialized state when content becomes empty', async () => {
     const { rerender } = renderApp(
-      <MarkdownPreview content="# Hello" loadingLabel="Rendering…" />,
+      <MarkdownPreview content="# Hello" loadingLabel="Rendering…" lang="es" />,
     )
     await act(async () => {
       jest.advanceTimersByTime(500)
@@ -160,24 +179,32 @@ describe('MarkdownPreview', () => {
     })
     expect(screen.getByTestId('markdown-preview')).toBeInTheDocument()
 
-    rerender(<MarkdownPreview content="" loadingLabel="Rendering…" />)
+    rerender(<MarkdownPreview content="" loadingLabel="Rendering…" lang="es" />)
     expect(screen.queryByTestId('markdown-preview')).not.toBeInTheDocument()
     expect(screen.queryByTestId('preview-loading')).not.toBeInTheDocument()
   })
 
   it('debounces: does not call serialize before 500ms', () => {
-    renderApp(<MarkdownPreview content="# Hello" loadingLabel="Rendering…" />)
+    renderApp(
+      <MarkdownPreview content="# Hello" loadingLabel="Rendering…" lang="es" />,
+    )
     jest.advanceTimersByTime(499)
     expect(mockSerializePreview).not.toHaveBeenCalled()
   })
 
   it('cancels previous timer when content changes', async () => {
     const { rerender } = render(
-      <MarkdownPreview content="# Hello" loadingLabel="Rendering…" />,
+      <MarkdownPreview content="# Hello" loadingLabel="Rendering…" lang="es" />,
       { wrapper: RenderProviders },
     )
     jest.advanceTimersByTime(400)
-    rerender(<MarkdownPreview content="# Updated" loadingLabel="Rendering…" />)
+    rerender(
+      <MarkdownPreview
+        content="# Updated"
+        loadingLabel="Rendering…"
+        lang="es"
+      />,
+    )
     jest.advanceTimersByTime(400)
     expect(mockSerializePreview).not.toHaveBeenCalled()
     await act(async () => {
@@ -191,7 +218,11 @@ describe('MarkdownPreview', () => {
   it('hides loading and shows nothing on serialization error', async () => {
     mockSerializePreview.mockRejectedValue(new Error('parse error'))
     renderApp(
-      <MarkdownPreview content="bad mdx {{{" loadingLabel="Rendering…" />,
+      <MarkdownPreview
+        content="bad mdx {{{"
+        loadingLabel="Rendering…"
+        lang="es"
+      />,
     )
     await act(async () => {
       jest.advanceTimersByTime(500)
@@ -202,7 +233,9 @@ describe('MarkdownPreview', () => {
   })
 
   it('renders CodeBlock for pre elements with language label', async () => {
-    renderApp(<MarkdownPreview content="# Hello" loadingLabel="Rendering…" />)
+    renderApp(
+      <MarkdownPreview content="# Hello" loadingLabel="Rendering…" lang="es" />,
+    )
     await act(async () => {
       jest.advanceTimersByTime(500)
       await Promise.resolve()
@@ -212,7 +245,9 @@ describe('MarkdownPreview', () => {
   })
 
   it('renders Embed component when present in compiled MDX', async () => {
-    renderApp(<MarkdownPreview content="# Hello" loadingLabel="Rendering…" />)
+    renderApp(
+      <MarkdownPreview content="# Hello" loadingLabel="Rendering…" lang="es" />,
+    )
     await act(async () => {
       jest.advanceTimersByTime(500)
       await Promise.resolve()
@@ -221,7 +256,9 @@ describe('MarkdownPreview', () => {
   })
 
   it('renders h1 as h2', async () => {
-    renderApp(<MarkdownPreview content="# Hello" loadingLabel="Rendering…" />)
+    renderApp(
+      <MarkdownPreview content="# Hello" loadingLabel="Rendering…" lang="es" />,
+    )
     await act(async () => {
       jest.advanceTimersByTime(500)
       await Promise.resolve()
@@ -231,11 +268,24 @@ describe('MarkdownPreview', () => {
   })
 
   it('renders MdxTable for table elements', async () => {
-    renderApp(<MarkdownPreview content="# Hello" loadingLabel="Rendering…" />)
+    renderApp(
+      <MarkdownPreview content="# Hello" loadingLabel="Rendering…" lang="es" />,
+    )
     await act(async () => {
       jest.advanceTimersByTime(500)
       await Promise.resolve()
     })
     expect(screen.getByTestId('mdx-table')).toBeInTheDocument()
+  })
+
+  it('localises the croquis preview to the previewed content locale', async () => {
+    renderApp(
+      <MarkdownPreview content="# Hello" loadingLabel="Rendering…" lang="es" />,
+    )
+    await act(async () => {
+      jest.advanceTimersByTime(500)
+      await Promise.resolve()
+    })
+    expect(screen.getByTestId('croquis-lang')).toHaveTextContent('es')
   })
 })

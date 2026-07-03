@@ -78,6 +78,12 @@ describe('PostContentCroquis', () => {
     expect(screen.getByTestId('cm-lang')).toHaveTextContent('es')
   })
 
+  it('lets an explicit lang prop override the UI language', () => {
+    mockLanguage = 'en'
+    renderApp(<PostContentCroquis obstacles={OB} lang="es" />)
+    expect(screen.getByTestId('cm-lang')).toHaveTextContent('es')
+  })
+
   it('passes the title through to the map', () => {
     renderApp(<PostContentCroquis obstacles={OB} title="Barranco X" />)
     expect(screen.getByTestId('cm-title')).toHaveTextContent('Barranco X')

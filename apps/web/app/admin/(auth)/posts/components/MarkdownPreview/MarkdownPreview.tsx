@@ -3,11 +3,13 @@
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote'
 import { MDXRemote } from 'next-mdx-remote'
 import type { ComponentPropsWithoutRef } from 'react'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { CodeBlock } from '@sdlgr/code-block'
 
 import { MdxTable } from '@web/components/PostContent/MdxTable'
+import { PostContentCroquis } from '@web/components/PostContent/PostContentCroquis'
+import type { Lang } from '@web/lib/cards'
 import { POST_CONTENT_EMBEDS } from '@web/lib/mdx/components'
 
 import { serializePreview } from '../../actions/serializePreview'
@@ -16,6 +18,8 @@ import { StyledLoading, StyledPreviewWrapper } from './MarkdownPreview.styles'
 export interface MarkdownPreviewProps {
   content: string
   loadingLabel: string
+  /** Content locale being previewed — the admin UI language may differ. */
+  lang: Lang
 }
 
 function PreCodeBlock(props: ComponentPropsWithoutRef<'pre'>) {
@@ -49,7 +53,18 @@ const MDX_COMPONENTS = {
 export function MarkdownPreview({
   content,
   loadingLabel,
+  lang,
 }: MarkdownPreviewProps) {
+  // The croquis localises to the previewed content locale, not the admin UI.
+  const components = useMemo(
+    () => ({
+      ...MDX_COMPONENTS,
+      Croquis: (props: { obstacles?: string; title?: string }) => (
+        <PostContentCroquis {...props} lang={lang} />
+      ),
+    }),
+    [lang],
+  )
   const [serialized, setSerialized] = useState<MDXRemoteSerializeResult | null>(
     null,
   )
@@ -96,7 +111,7 @@ export function MarkdownPreview({
 
   return (
     <StyledPreviewWrapper data-testid="markdown-preview">
-      <MDXRemote {...serialized} components={MDX_COMPONENTS} />
+      <MDXRemote {...serialized} components={components} />
     </StyledPreviewWrapper>
   )
 }

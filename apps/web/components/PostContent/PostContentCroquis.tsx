@@ -21,13 +21,18 @@ import {
  * arrives as a JSON string from the remark transform; the map itself is the
  * shared read-only CroquisMap, localised to the current post language, plus a
  * PNG export of the same static card the admin generator produces.
+ *
+ * `lang` overrides the UI language — used by the admin preview, which renders a
+ * given content locale while the admin UI stays in its own language.
  */
 export function PostContentCroquis({
   obstacles,
   title,
+  lang: langOverride,
 }: {
   obstacles?: string
   title?: string
+  lang?: Lang
 }) {
   const { t, i18n } = useClientTranslation('common')
   const [downloadError, setDownloadError] = useState(false)
@@ -35,7 +40,7 @@ export function PostContentCroquis({
   const parsed: CroquisObstacle[] = obstacles
     ? (JSON.parse(obstacles) as CroquisObstacle[])
     : []
-  const lang: Lang = i18n.language === 'es' ? 'es' : 'en'
+  const lang: Lang = langOverride ?? (i18n.language === 'es' ? 'es' : 'en')
   const { downloadPng } = useCroquisPng(parsed, lang, title)
 
   if (parsed.length === 0) return null

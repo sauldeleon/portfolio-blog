@@ -1084,6 +1084,7 @@ export function PostEditor({
               <MarkdownPreview
                 content={previewContent}
                 loadingLabel={t('postEditor.previewLoading')}
+                lang={activeLocale}
               />
             )}
             {previewTab === 'post-mobile' && (
@@ -1092,6 +1093,7 @@ export function PostEditor({
                   <MarkdownPreview
                     content={previewContent}
                     loadingLabel={t('postEditor.previewLoading')}
+                    lang={activeLocale}
                   />
                 </StyledMobileContent>
               </StyledMobileFrame>
