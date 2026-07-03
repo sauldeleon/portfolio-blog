@@ -41,6 +41,8 @@ export {
   croquisBackground,
   croquisConnectors,
   croquisNodeContent,
+  croquisHeader,
+  CROQUIS_HEADER_H,
 } from './croquisCard'
 export { svgToPng } from './svgToPng'
 export { zipStore } from './zip'

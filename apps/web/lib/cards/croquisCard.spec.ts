@@ -1,7 +1,9 @@
 import {
+  CROQUIS_HEADER_H,
   croquisBackground,
   croquisCard,
   croquisConnectors,
+  croquisHeader,
   croquisNodeContent,
 } from './croquisCard'
 import type { CroquisObstacle } from './croquisData'
@@ -110,7 +112,35 @@ describe('croquisCard', () => {
 
   it('respects the requested drawing width in serpentine mode', () => {
     const obstacles = Array.from({ length: 10 }, () => ob())
-    const { width } = croquisCard(obstacles, 'en', 1200)
+    const { width } = croquisCard(obstacles, 'en', { width: 1200 })
     expect(width).toBe(1200)
+  })
+
+  it('has no title header by default', () => {
+    const base = croquisCard([ob()], 'en')
+    const titled = croquisCard([ob()], 'en', { title: 'Barranco X' })
+    expect(base.svg).not.toContain('>CROQUIS<')
+    expect(titled.height).toBe(base.height + CROQUIS_HEADER_H)
+  })
+
+  it('draws the card-style title header when a title is given', () => {
+    const { svg } = croquisCard([ob()], 'en', { title: 'Barranco X' })
+    expect(svg).toContain('CROQUIS')
+    expect(svg).toContain('Barranco X')
+    expect(svg).toContain(`translate(0, ${CROQUIS_HEADER_H})`)
+  })
+
+  it('ignores a whitespace-only title', () => {
+    const base = croquisCard([ob()], 'en')
+    const blank = croquisCard([ob()], 'en', { title: '   ' })
+    expect(blank.height).toBe(base.height)
+  })
+})
+
+describe('croquisHeader', () => {
+  it('renders the eyebrow and escaped title', () => {
+    const s = croquisHeader('A & B')
+    expect(s).toContain('CROQUIS')
+    expect(s).toContain('A &amp; B')
   })
 })

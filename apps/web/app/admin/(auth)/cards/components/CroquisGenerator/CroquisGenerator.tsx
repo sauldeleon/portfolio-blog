@@ -46,6 +46,7 @@ export function CroquisGenerator() {
   const { t } = useClientTranslation('admin')
   const [lang, setLang] = useState<Lang>('en')
   const [name, setName] = useState('')
+  const [title, setTitle] = useState('')
   const [text, setText] = useState('')
   const [url, setUrl] = useState('')
   const [loading, setLoading] = useState(false)
@@ -101,6 +102,18 @@ export function CroquisGenerator() {
 
           <StyledSection>
             <StyledSectionTitle>{t('cards.sections.files')}</StyledSectionTitle>
+            <FieldGroup>
+              <FieldLabel htmlFor="cg-title">
+                {t('cards.fields.title')}
+              </FieldLabel>
+              <Input
+                id="cg-title"
+                value={title}
+                placeholder={t('cards.placeholders.canyonName')}
+                onChange={(e) => setTitle(e.target.value)}
+                data-testid="cg-title"
+              />
+            </FieldGroup>
             <FieldGroup>
               <FieldLabel htmlFor="cg-name">
                 {t('cards.fields.fileNamePrefix')}
@@ -177,7 +190,12 @@ export function CroquisGenerator() {
 
       <StyledPanelPreview>
         {obstacles.length > 0 ? (
-          <Croquis obstacles={obstacles} lang={lang} filename={filename} />
+          <Croquis
+            obstacles={obstacles}
+            lang={lang}
+            filename={filename}
+            title={title}
+          />
         ) : (
           <StyledEmpty data-testid="cg-empty">
             {t('cards.croquis.empty')}

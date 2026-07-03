@@ -1,13 +1,12 @@
 'use client'
 
 import axios from 'axios'
-import { useCallback, useMemo, useState } from 'react'
+import { useState } from 'react'
 
 import { Button } from '@sdlgr/button'
 
-import { CroquisMap } from '@web/components/Croquis'
+import { CroquisMap, useCroquisPng } from '@web/components/Croquis'
 import { useClientTranslation } from '@web/i18n/client'
-import { croquisCard, svgToPng } from '@web/lib/cards'
 import type { CroquisObstacle, Lang } from '@web/lib/cards'
 import { axiosErrorMessage } from '@web/lib/cards/gpxImport'
 
@@ -23,6 +22,8 @@ interface CroquisProps {
   lang: Lang
   /** Base name (no extension) for the PNG download and Cloudinary upload. */
   filename?: string
+  /** Optional card-style title shown above the map and in the export. */
+  title?: string
 }
 
 /**
@@ -33,6 +34,7 @@ export function Croquis({
   obstacles,
   lang,
   filename = 'croquis',
+  title,
 }: CroquisProps) {
   const { t } = useClientTranslation('admin')
 
@@ -41,26 +43,12 @@ export function Croquis({
   const [uploadError, setUploadError] = useState<string | null>(null)
   const [uploadedUrl, setUploadedUrl] = useState<string | null>(null)
 
-  const staticSvg = useMemo(
-    () => croquisCard(obstacles, lang),
-    [obstacles, lang],
-  )
-
-  const exportPng = useCallback(
-    () => svgToPng(staticSvg.svg, staticSvg.width, staticSvg.height),
-    [staticSvg],
-  )
+  const { exportPng, downloadPng } = useCroquisPng(obstacles, lang, title)
 
   async function handleDownload() {
     setExportError(null)
     try {
-      const blob = await exportPng()
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = `${filename}.png`
-      a.click()
-      URL.revokeObjectURL(url)
+      await downloadPng(filename)
     } catch {
       setExportError(t('cards.errors.pngExport'))
     }
@@ -94,7 +82,7 @@ export function Croquis({
 
   return (
     <StyledWrapper data-testid="croquis">
-      <CroquisMap obstacles={obstacles} lang={lang} />
+      <CroquisMap obstacles={obstacles} lang={lang} title={title} />
 
       <StyledActionBar>
         <Button

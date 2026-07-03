@@ -26,5 +26,9 @@
   "embed": {
     "watchOnYouTube": "Ver en YouTube",
     "360info": "Los vídeos 360° deben verse directamente en YouTube — los reproductores integrados no admiten la visualización 360° interactiva."
+  },
+  "croquis": {
+    "downloadPng": "Descargar PNG",
+    "downloadError": "No se pudo exportar el croquis"
   }
 }

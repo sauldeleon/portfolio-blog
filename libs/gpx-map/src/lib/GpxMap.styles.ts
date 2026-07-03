@@ -45,20 +45,6 @@ export const StyledMapContainer = styled.div`
       color: #fff;
     }
   }
-
-  .gpx-waypoint-popup.leaflet-tooltip {
-    background: #111;
-    color: #eee;
-    border: none;
-    border-radius: 8px;
-    padding: 0;
-    overflow: hidden;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
-
-    &::before {
-      border-top-color: #111;
-    }
-  }
 `
 
 export const StyledDownloadBar = styled.div`
@@ -103,11 +89,10 @@ export const StyledLocateButton = styled(Button).attrs({
 export const StyledRowChevron = styled.span<{ $expanded: boolean }>`
   display: inline-flex;
   align-items: center;
-  margin-right: 0.35rem;
-  opacity: 0.45;
-  transition: transform 0.15s;
-  transform: ${({ $expanded }) =>
-    $expanded ? 'rotate(90deg)' : 'rotate(0deg)'};
+  gap: 0.2rem;
+  margin-right: 0.4rem;
+  opacity: ${({ $expanded }) => ($expanded ? 0.9 : 0.5)};
+  transition: opacity 0.15s;
   vertical-align: middle;
   flex-shrink: 0;
 `
@@ -119,6 +104,22 @@ export const StyledWaypointImageCard = styled.img`
   border-radius: 2px;
   display: block;
   margin-bottom: 0.5rem;
+`
+
+export const StyledWaypointNotes = styled.ul`
+  margin: 0 0 0.5rem;
+  padding: 0.4rem 0.6rem 0.4rem 1.4rem;
+  border-left: 2px solid rgba(245, 158, 11, 0.5);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 0 3px 3px 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  opacity: 0.85;
+  list-style: disc;
+
+  li {
+    margin: 0.1rem 0;
+  }
 `
 
 export const StyledTableWrapper = styled.div`
@@ -303,13 +304,6 @@ export const StyledWaypointsDetails = styled.details`
         padding-top: 0;
         border-top: none;
         background: rgba(245, 158, 11, 0.04);
-
-        p {
-          margin: 0 0 0.5rem;
-          opacity: 0.75;
-          font-size: 0.78rem;
-          line-height: 1.5;
-        }
       }
     }
   }

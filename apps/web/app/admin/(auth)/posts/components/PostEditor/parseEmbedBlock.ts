@@ -47,9 +47,10 @@ export interface ParsedSlideshow {
   slides: ParsedSlideshowSlide[]
 }
 
-/** A croquis block carries the editable canyon-waypoint text verbatim. */
+/** A croquis block: the editable canyon-waypoint text plus an optional title. */
 export interface ParsedCroquis {
   text: string
+  title: string
 }
 
 export type DetectedEmbed =
@@ -218,17 +219,19 @@ export function detectEmbedAtCursor(
 ): DetectedEmbed | null {
   let m: RegExpExecArray | null
 
-  // Code fence blocks first: ```type\n...\n```
+  // Code fence blocks first: ```type[ meta]\n...\n```
   // Must run before image check so that ![...](url) lines inside fences
-  // are not mistakenly detected as standalone images.
-  const fenceRe = /```([a-z0-9-]+)\n([\s\S]*?)```/g
+  // are not mistakenly detected as standalone images. The optional meta after
+  // the language carries the croquis title.
+  const fenceRe = /```([a-z0-9-]+)([^\n]*)\n([\s\S]*?)```/g
   while ((m = fenceRe.exec(content)) !== null) {
     const { index } = m
     const blockEnd = index + m[0].length
     if (pos >= index && pos <= blockEnd) {
       const { start, end } = adjustBounds(content, index, blockEnd)
       const fenceType = m[1]
-      const body = m[2].trim()
+      const meta = m[2].trim()
+      const body = m[3].trim()
 
       if (fenceType === 'gpx') {
         const { tracks, mappingsByTrack } = parseGpxBody(body)
@@ -260,7 +263,7 @@ export function detectEmbedAtCursor(
           type: 'croquis',
           blockStart: start,
           blockEnd: end,
-          parsed: { text: body },
+          parsed: { text: body, title: meta },
         }
       }
 

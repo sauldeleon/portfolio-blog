@@ -173,11 +173,17 @@ jest.mock('./GpxMap.styles', () => ({
   StyledRowChevron: ({
     children,
     'data-testid': testId,
+    'data-kind': dataKind,
   }: {
     children: React.ReactNode
     $expanded: boolean
     'data-testid'?: string
-  }) => <span data-testid={testId}>{children}</span>,
+    'data-kind'?: string
+  }) => (
+    <span data-testid={testId} data-kind={dataKind}>
+      {children}
+    </span>
+  ),
   StyledWaypointImageCard: ({
     src,
     alt,
@@ -187,6 +193,9 @@ jest.mock('./GpxMap.styles', () => ({
     alt: string
     'data-testid'?: string
   }) => <img data-testid={testId} src={src} alt={alt} />,
+  StyledWaypointNotes: ({ children }: { children: React.ReactNode }) => (
+    <ul data-testid="waypoint-notes">{children}</ul>
+  ),
   StyledWaypointsDetails: ({ children }: { children: React.ReactNode }) => (
     <details data-testid="waypoints-details">{children}</details>
   ),
@@ -773,6 +782,29 @@ describe('GpxMap', () => {
       expect(screen.queryByText('Mountain refuge')).not.toBeInTheDocument()
     })
 
+    it('renders desc lines as separate notes, nesting indented ones', async () => {
+      mockAxiosGetData(`<?xml version="1.0"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1">
+  <wpt lat="43.5" lon="-5.6"><name>Salto</name><desc>- Pasamanos montado
+
+ - Ojo en la recepción</desc></wpt>
+</gpx>`)
+      render(<GpxMap url={GPX_URL} showWaypoints />)
+      await screen.findByText('Salto')
+      const rows = screen.getAllByRole('row')
+      fireEvent.click(rows[1])
+      const items = within(screen.getByTestId('waypoint-notes')).getAllByRole(
+        'listitem',
+      )
+      expect(items).toHaveLength(2)
+      // Bullets stripped; blank line dropped.
+      expect(items[0]).toHaveTextContent('Pasamanos montado')
+      expect(items[0]).toHaveAttribute('data-level', '0')
+      // Indented sub-note keeps its text but nests one level.
+      expect(items[1]).toHaveTextContent('Ojo en la recepción')
+      expect(items[1]).toHaveAttribute('data-level', '1')
+    })
+
     it('does not expand row when waypoint has no desc and no image', async () => {
       render(<GpxMap url={GPX_URL} showWaypoints />)
       await screen.findByText('Summit')
@@ -854,7 +886,7 @@ describe('GpxMap', () => {
   })
 
   describe('waypointImages', () => {
-    it('shows expand chevron for waypoint with image', async () => {
+    it('shows a both-kind indicator for a waypoint with image and desc', async () => {
       render(
         <GpxMap
           url={GPX_URL}
@@ -863,7 +895,10 @@ describe('GpxMap', () => {
         />,
       )
       await screen.findByText('Refugio Mar')
-      expect(screen.getByTestId('expand-chevron')).toBeInTheDocument()
+      expect(screen.getByTestId('expand-chevron')).toHaveAttribute(
+        'data-kind',
+        'both',
+      )
     })
 
     it('does not show expand chevron when waypoint has no image or desc', async () => {
@@ -876,7 +911,7 @@ describe('GpxMap', () => {
       expect(screen.queryByTestId('expand-chevron')).not.toBeInTheDocument()
     })
 
-    it('does not show expand chevron for waypoint without matching image and no desc', async () => {
+    it('shows a note-kind indicator for a desc-only waypoint (no matching image)', async () => {
       render(
         <GpxMap
           url={GPX_URL}
@@ -887,6 +922,7 @@ describe('GpxMap', () => {
       await screen.findByText('Summit')
       const chevrons = screen.getAllByTestId('expand-chevron')
       expect(chevrons).toHaveLength(1)
+      expect(chevrons[0]).toHaveAttribute('data-kind', 'note')
     })
 
     it('shows image card in expanded row when waypoint has image', async () => {
@@ -986,8 +1022,8 @@ describe('GpxMap', () => {
 
     const makeWptMarker = (title: string) => ({
       options: { title, type: 'waypoint' },
-      unbindPopup: jest.fn().mockReturnThis(),
-      bindTooltip: jest.fn(),
+      unbindTooltip: jest.fn().mockReturnThis(),
+      bindPopup: jest.fn(),
     })
 
     it('unbinds popup and binds tooltip for waypoint with matching title', () => {
@@ -1009,8 +1045,8 @@ describe('GpxMap', () => {
       act(() => {
         loadedCallback()
       })
-      expect(marker.unbindPopup).toHaveBeenCalled()
-      expect(marker.bindTooltip).toHaveBeenCalledWith(
+      expect(marker.unbindTooltip).toHaveBeenCalled()
+      expect(marker.bindPopup).toHaveBeenCalledWith(
         expect.stringContaining('https://cdn.com/img.jpg'),
         expect.objectContaining({ className: 'gpx-waypoint-popup' }),
       )
@@ -1035,7 +1071,7 @@ describe('GpxMap', () => {
       act(() => {
         loadedCallback()
       })
-      expect(marker.bindTooltip).toHaveBeenCalledWith(
+      expect(marker.bindPopup).toHaveBeenCalledWith(
         expect.stringContaining('https://cdn.com/idx.jpg'),
         expect.anything(),
       )
@@ -1065,11 +1101,11 @@ describe('GpxMap', () => {
       act(() => {
         loadedCallback()
       })
-      expect(m0.bindTooltip).toHaveBeenCalledWith(
+      expect(m0.bindPopup).toHaveBeenCalledWith(
         expect.stringContaining('https://cdn.com/img0.jpg'),
         expect.anything(),
       )
-      expect(m1.bindTooltip).toHaveBeenCalledWith(
+      expect(m1.bindPopup).toHaveBeenCalledWith(
         expect.stringContaining('https://cdn.com/img1.jpg'),
         expect.anything(),
       )
@@ -1097,7 +1133,7 @@ describe('GpxMap', () => {
       act(() => {
         loadedCallback()
       })
-      expect(marker.bindTooltip).toHaveBeenCalledWith(
+      expect(marker.bindPopup).toHaveBeenCalledWith(
         expect.stringContaining('https://cdn.com/img.jpg'),
         expect.objectContaining({ className: 'gpx-waypoint-popup' }),
       )
@@ -1107,8 +1143,8 @@ describe('GpxMap', () => {
       mockAxiosGetPending()
       const marker = {
         options: { type: 'waypoint' },
-        unbindPopup: jest.fn().mockReturnThis(),
-        bindTooltip: jest.fn(),
+        unbindTooltip: jest.fn().mockReturnThis(),
+        bindPopup: jest.fn(),
       }
       mockEachLayer.mockImplementationOnce((cb: (l: unknown) => void) => {
         cb(marker)
@@ -1126,16 +1162,16 @@ describe('GpxMap', () => {
       act(() => {
         loadedCallback()
       })
-      expect(marker.unbindPopup).not.toHaveBeenCalled()
-      expect(marker.bindTooltip).not.toHaveBeenCalled()
+      expect(marker.unbindTooltip).not.toHaveBeenCalled()
+      expect(marker.bindPopup).not.toHaveBeenCalled()
     })
 
     it('skips non-waypoint layers (start/end markers)', () => {
       mockAxiosGetPending()
       const startMarker = {
         options: {},
-        unbindPopup: jest.fn(),
-        bindTooltip: jest.fn(),
+        unbindTooltip: jest.fn(),
+        bindPopup: jest.fn(),
       }
       mockEachLayer.mockImplementationOnce((cb: (l: unknown) => void) => {
         cb(startMarker)
@@ -1153,11 +1189,11 @@ describe('GpxMap', () => {
       act(() => {
         loadedCallback()
       })
-      expect(startMarker.unbindPopup).not.toHaveBeenCalled()
-      expect(startMarker.bindTooltip).not.toHaveBeenCalled()
+      expect(startMarker.unbindTooltip).not.toHaveBeenCalled()
+      expect(startMarker.bindPopup).not.toHaveBeenCalled()
     })
 
-    it('does not bind tooltip when waypoint not in waypointImages', () => {
+    it('binds a name-only styled popup when the waypoint has no image', () => {
       mockAxiosGetPending()
       const marker = makeWptMarker('Unknown')
       mockEachLayer.mockImplementationOnce((cb: (l: unknown) => void) => {
@@ -1176,16 +1212,38 @@ describe('GpxMap', () => {
       act(() => {
         loadedCallback()
       })
-      expect(marker.unbindPopup).not.toHaveBeenCalled()
-      expect(marker.bindTooltip).not.toHaveBeenCalled()
+      const [content, options] = marker.bindPopup.mock.calls[0]
+      expect(content).toContain('Unknown')
+      expect(content).not.toContain('<img')
+      expect(options).toEqual(
+        expect.objectContaining({ className: 'gpx-waypoint-popup' }),
+      )
+    })
+
+    it('binds styled name-only popups even when no waypointImages are set', () => {
+      mockAxiosGetPending()
+      const marker = makeWptMarker('Refugio Mar')
+      mockEachLayer.mockImplementationOnce((cb: (l: unknown) => void) => {
+        cb(marker)
+      })
+      render(<GpxMap url={GPX_URL} showWaypoints />)
+      const loadedCallback = mockOn.mock.calls.find(
+        (c: [string, () => void]) => c[0] === 'loaded',
+      )?.[1]
+      act(() => {
+        loadedCallback()
+      })
+      const [content] = marker.bindPopup.mock.calls[0]
+      expect(content).toContain('Refugio Mar')
+      expect(content).not.toContain('<img')
     })
 
     it('binds tooltip for waypoint with no title when index image exists', () => {
       mockAxiosGetPending()
       const marker = {
         options: { type: 'waypoint' },
-        unbindPopup: jest.fn().mockReturnThis(),
-        bindTooltip: jest.fn(),
+        unbindTooltip: jest.fn().mockReturnThis(),
+        bindPopup: jest.fn(),
       }
       mockEachLayer.mockImplementationOnce((cb: (l: unknown) => void) => {
         cb(marker)
@@ -1203,8 +1261,8 @@ describe('GpxMap', () => {
       act(() => {
         loadedCallback()
       })
-      expect(marker.unbindPopup).toHaveBeenCalled()
-      expect(marker.bindTooltip).toHaveBeenCalledWith(
+      expect(marker.unbindTooltip).toHaveBeenCalled()
+      expect(marker.bindPopup).toHaveBeenCalledWith(
         expect.stringContaining('https://cdn.com/notitle.jpg'),
         expect.objectContaining({ className: 'gpx-waypoint-popup' }),
       )
@@ -1233,7 +1291,7 @@ describe('GpxMap', () => {
       act(() => {
         loadedCallback()
       })
-      expect(marker.bindTooltip).toHaveBeenCalledWith(
+      expect(marker.bindPopup).toHaveBeenCalledWith(
         expect.stringContaining('https://cdn.com/track-img.jpg'),
         expect.anything(),
       )
@@ -1248,6 +1306,11 @@ describe('GpxMap', () => {
         />,
       )
       await screen.findByText('Summit')
+      expect(
+        screen
+          .getAllByTestId('expand-chevron')
+          .map((el) => el.getAttribute('data-kind')),
+      ).toContain('image')
       const rows = screen.getAllByRole('row')
       fireEvent.click(rows[2])
       expect(screen.getByTestId('waypoint-image-card')).toBeInTheDocument()

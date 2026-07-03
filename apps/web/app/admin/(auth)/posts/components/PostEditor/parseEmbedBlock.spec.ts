@@ -503,12 +503,25 @@ describe('detectEmbedAtCursor', () => {
       expect(result?.type).toBe('croquis')
     })
 
-    it('carries the block body text verbatim', () => {
+    it('carries the block body text verbatim with an empty title by default', () => {
       const fenceStart = croquisContent.indexOf('```croquis')
       const result = detectEmbedAtCursor(croquisContent, fenceStart + 5)
       if (result?.type !== 'croquis') throw new Error('expected croquis')
       expect(result.parsed.text).toContain('salto: Jump 2m - 42.6 0.1')
       expect(result.parsed.text).toContain('! img=https://img.com/jump.jpg')
+      expect(result.parsed.title).toBe('')
+    })
+
+    it('reads the title from the fence meta', () => {
+      const titled = [
+        '```croquis Barranco de la Peonera',
+        'salto: Jump 2m',
+        '```',
+      ].join('\n')
+      const result = detectEmbedAtCursor(titled, 5)
+      if (result?.type !== 'croquis') throw new Error('expected croquis')
+      expect(result.parsed.title).toBe('Barranco de la Peonera')
+      expect(result.parsed.text).toBe('salto: Jump 2m')
     })
 
     it('returns null when the cursor is outside the croquis block', () => {

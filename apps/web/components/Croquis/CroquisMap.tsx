@@ -6,12 +6,14 @@ import { createPortal } from 'react-dom'
 
 import {
   AMBER,
+  CROQUIS_HEADER_H,
   CROQUIS_WIDTH,
   FONT_STYLE,
   SEV_COLORS,
   STRINGS,
   croquisBackground,
   croquisConnectors,
+  croquisHeader,
   croquisNodeContent,
   layoutCroquis,
   scene,
@@ -66,6 +68,8 @@ function sevLabel(
 export interface CroquisMapProps {
   obstacles: CroquisObstacle[]
   lang: Lang
+  /** Optional card-style title shown above the map. */
+  title?: string
 }
 
 /**
@@ -73,8 +77,10 @@ export interface CroquisMapProps {
  * hover/focus popover per element (its photo when available, else a drawn
  * scene). Presentational and read-only — export/upload live in the caller.
  */
-export function CroquisMap({ obstacles, lang }: CroquisMapProps) {
+export function CroquisMap({ obstacles, lang, title }: CroquisMapProps) {
   const strings = STRINGS[lang]
+  const headerText = title?.trim() ?? ''
+  const headerH = headerText ? CROQUIS_HEADER_H : 0
   const [active, setActive] = useState<number | null>(null)
   const [pos, setPos] = useState({ left: 0, top: 0 })
   // Which image of the active obstacle's gallery is shown in the popover.
@@ -146,8 +152,8 @@ export function CroquisMap({ obstacles, lang }: CroquisMapProps) {
     [obstacles],
   )
   const bg = useMemo(
-    () => croquisBackground(layout.width, layout.height),
-    [layout],
+    () => croquisBackground(layout.width, layout.height + headerH),
+    [layout, headerH],
   )
   const connectors = useMemo(
     () => croquisConnectors(layout, strings),
@@ -290,10 +296,10 @@ export function CroquisMap({ obstacles, lang }: CroquisMapProps) {
   return (
     <>
       <StyledFrame>
-        <StyledScroll $ratio={layout.width / layout.height}>
+        <StyledScroll $ratio={layout.width / (layout.height + headerH)}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            viewBox={`0 0 ${layout.width} ${layout.height}`}
+            viewBox={`0 0 ${layout.width} ${layout.height + headerH}`}
             preserveAspectRatio="xMidYMid meet"
             data-testid="croquis-svg"
           >
@@ -301,57 +307,65 @@ export function CroquisMap({ obstacles, lang }: CroquisMapProps) {
               dangerouslySetInnerHTML={{ __html: FONT_STYLE + FLOW_STYLE }}
             />
             <g dangerouslySetInnerHTML={{ __html: bg }} />
-            <g dangerouslySetInnerHTML={{ __html: connectors }} />
-            {layout.nodes.map((node) => (
-              <StyledObstacle
-                key={node.index}
-                tabIndex={0}
-                role="button"
-                aria-label={node.obstacle.title}
-                data-croquis-obstacle=""
-                data-testid={`croquis-obstacle-${node.index}`}
-                onMouseEnter={(e) => open(node.index, e.currentTarget)}
-                onMouseLeave={scheduleClose}
-                onFocus={(e) => open(node.index, e.currentTarget)}
-                onBlur={scheduleClose}
-                onClick={(e) => open(node.index, e.currentTarget)}
-              >
-                <rect
-                  className="glow"
-                  x={node.box.x}
-                  y={node.box.y}
-                  width={node.box.w}
-                  height={node.box.h}
-                  rx={12}
-                  fill={AMBER}
-                  fillOpacity={0.1}
-                />
-                <g
-                  dangerouslySetInnerHTML={{
-                    __html: croquisNodeContent(node, strings),
-                  }}
-                />
-                <rect
-                  className="ring"
-                  x={node.box.x - 2}
-                  y={node.box.y - 2}
-                  width={node.box.w + 4}
-                  height={node.box.h + 4}
-                  rx={13}
-                  fill="none"
-                  stroke={AMBER}
-                  strokeWidth={1.5}
-                />
-                <rect
-                  className="hit"
-                  x={node.box.x}
-                  y={node.box.y}
-                  width={node.box.w}
-                  height={node.box.h}
-                  fill="transparent"
-                />
-              </StyledObstacle>
-            ))}
+            {headerText && (
+              <g
+                data-testid="croquis-title"
+                dangerouslySetInnerHTML={{ __html: croquisHeader(headerText) }}
+              />
+            )}
+            <g transform={`translate(0, ${headerH})`}>
+              <g dangerouslySetInnerHTML={{ __html: connectors }} />
+              {layout.nodes.map((node) => (
+                <StyledObstacle
+                  key={node.index}
+                  tabIndex={0}
+                  role="button"
+                  aria-label={node.obstacle.title}
+                  data-croquis-obstacle=""
+                  data-testid={`croquis-obstacle-${node.index}`}
+                  onMouseEnter={(e) => open(node.index, e.currentTarget)}
+                  onMouseLeave={scheduleClose}
+                  onFocus={(e) => open(node.index, e.currentTarget)}
+                  onBlur={scheduleClose}
+                  onClick={(e) => open(node.index, e.currentTarget)}
+                >
+                  <rect
+                    className="glow"
+                    x={node.box.x}
+                    y={node.box.y}
+                    width={node.box.w}
+                    height={node.box.h}
+                    rx={12}
+                    fill={AMBER}
+                    fillOpacity={0.1}
+                  />
+                  <g
+                    dangerouslySetInnerHTML={{
+                      __html: croquisNodeContent(node, strings),
+                    }}
+                  />
+                  <rect
+                    className="ring"
+                    x={node.box.x - 2}
+                    y={node.box.y - 2}
+                    width={node.box.w + 4}
+                    height={node.box.h + 4}
+                    rx={13}
+                    fill="none"
+                    stroke={AMBER}
+                    strokeWidth={1.5}
+                  />
+                  <rect
+                    className="hit"
+                    x={node.box.x}
+                    y={node.box.y}
+                    width={node.box.w}
+                    height={node.box.h}
+                    fill="transparent"
+                  />
+                </StyledObstacle>
+              ))}
+            </g>
           </svg>
         </StyledScroll>
       </StyledFrame>
