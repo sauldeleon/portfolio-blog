@@ -21,7 +21,7 @@ import {
   YAxis,
 } from 'recharts'
 
-import { ChevronIcon, DownloadIcon, MapPinIcon } from '@sdlgr/icons'
+import { DownloadIcon, MapPinIcon, NoteIcon, PhotoIcon } from '@sdlgr/icons'
 
 import {
   MAP_ICON_ANCHOR,
@@ -50,6 +50,7 @@ import {
   StyledTrackStrip,
   StyledTrackToggle,
   StyledWaypointImageCard,
+  StyledWaypointNotes,
   StyledWaypointsDetails,
 } from './GpxMap.styles'
 
@@ -384,7 +385,7 @@ function GpxTrackLayer({
     layer.on('loaded', () => {
       map.fitBounds(layer.getBounds())
       const imgs = waypointImagesRef.current
-      if (showWaypoints && imgs) {
+      if (showWaypoints) {
         let wptIdx = 0
         const bindToMarker = (l: L.Layer) => {
           if ((l as L.LayerGroup).eachLayer) {
@@ -397,20 +398,29 @@ function GpxTrackLayer({
           }
           if (opts.type !== 'waypoint') return
           const name = opts.title
-          const imgUrl = imgs[String(wptIdx)] ?? (name ? imgs[name] : undefined)
+          const imgUrl = imgs
+            ? (imgs[String(wptIdx)] ?? (name ? imgs[name] : undefined))
+            : undefined
           wptIdx++
-          if (imgUrl) {
-            const content =
-              `<div style="min-width:160px;max-width:200px;">` +
-              `<img src="${imgUrl}" style="width:100%;max-height:150px;object-fit:cover;display:block;" alt="${name ?? ''}" />` +
-              `<p style="margin:0;padding:6px 8px;font-size:0.75rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${name ?? ''}</p>` +
-              `</div>`
-            ;(l as L.Marker).unbindPopup().bindTooltip(content, {
-              className: 'gpx-waypoint-popup',
-              direction: 'top',
-              offset: [0, -20],
-            })
-          }
+          // Nothing worth showing → keep the default marker (no popup).
+          if (!imgUrl && !name) return
+          // Every waypoint popup uses the same styled bubble; the image is
+          // added only when one is mapped, so with/without image look alike.
+          const content =
+            `<div style="${imgUrl ? 'min-width:240px;max-width:320px;' : 'max-width:280px;'}">` +
+            (imgUrl
+              ? `<img src="${imgUrl}" style="width:100%;max-height:260px;object-fit:cover;display:block;" alt="${name ?? ''}" />`
+              : '') +
+            (name
+              ? `<p style="margin:0;padding:6px 8px;font-size:0.78rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${name}</p>`
+              : '') +
+            `</div>`
+          // A click/tap popup (not a hover tooltip). Leaflet's default autoClose
+          // keeps only one waypoint popup open at a time.
+          ;(l as L.Marker).unbindTooltip().bindPopup(content, {
+            className: 'gpx-waypoint-popup',
+            offset: [0, -18],
+          })
         }
         layer.eachLayer(bindToMarker)
       }
@@ -702,7 +712,23 @@ export function GpxMap({
                     const wptImage =
                       effectiveImages?.[String(i)] ??
                       effectiveImages?.[wpt.name]
-                    const hasDetails = !!(wptImage || wpt.desc)
+                    const hasImage = !!wptImage
+                    // A desc may hold several notes (one per line), some nested
+                    // via leading indentation; show each on its own row at its
+                    // level rather than a single run-on line.
+                    const noteLines = wpt.desc
+                      .split(/\r?\n/)
+                      .map((raw) => ({
+                        level: Math.min(raw.length - raw.trimStart().length, 4),
+                        text: raw.replace(/^\s*[-•·]\s*/, '').trim(),
+                      }))
+                      .filter((n) => n.text)
+                    const hasDesc = noteLines.length > 0
+                    const hasDetails = hasImage || hasDesc
+                    // The row indicator tells you what's inside before expanding:
+                    // a note, an image, or both.
+                    const indicatorKind =
+                      hasImage && hasDesc ? 'both' : hasImage ? 'image' : 'note'
                     const isExpanded = expandedIndex === i
                     return (
                       <Fragment key={`${wpt.name}-${i}`}>
@@ -726,8 +752,10 @@ export function GpxMap({
                               <StyledRowChevron
                                 $expanded={isExpanded}
                                 data-testid="expand-chevron"
+                                data-kind={indicatorKind}
                               >
-                                <ChevronIcon />
+                                {hasDesc && <NoteIcon />}
+                                {hasImage && <PhotoIcon />}
                               </StyledRowChevron>
                             )}
                             {wpt.name || '—'}
@@ -756,7 +784,21 @@ export function GpxMap({
                                   alt={wpt.name}
                                 />
                               )}
-                              {wpt.desc && <p>{wpt.desc}</p>}
+                              {hasDesc && (
+                                <StyledWaypointNotes>
+                                  {noteLines.map((note, j) => (
+                                    <li
+                                      key={j}
+                                      data-level={note.level}
+                                      style={{
+                                        marginLeft: `${note.level * 0.9}rem`,
+                                      }}
+                                    >
+                                      {note.text}
+                                    </li>
+                                  ))}
+                                </StyledWaypointNotes>
+                              )}
                             </td>
                           </tr>
                         )}

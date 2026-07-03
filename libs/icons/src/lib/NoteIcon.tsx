@@ -1,0 +1,48 @@
+export function NoteIcon() {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 14 14"
+      fill="none"
+      aria-hidden="true"
+    >
+      <rect
+        x="2.5"
+        y="1"
+        width="9"
+        height="12"
+        rx="1.5"
+        stroke="currentColor"
+        strokeWidth="1.2"
+      />
+      <line
+        x1="4.5"
+        y1="4.5"
+        x2="9.5"
+        y2="4.5"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinecap="round"
+      />
+      <line
+        x1="4.5"
+        y1="7"
+        x2="9.5"
+        y2="7"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinecap="round"
+      />
+      <line
+        x1="4.5"
+        y1="9.5"
+        x2="7.5"
+        y2="9.5"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}

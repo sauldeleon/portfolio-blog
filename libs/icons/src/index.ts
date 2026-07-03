@@ -1,3 +1,5 @@
 export * from './lib/ChevronIcon'
 export * from './lib/DownloadIcon'
 export * from './lib/MapPinIcon'
+export * from './lib/NoteIcon'
+export * from './lib/PhotoIcon'
