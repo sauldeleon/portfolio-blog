@@ -26,6 +26,7 @@ import type {
   Lang,
   LangStrings,
 } from '@web/lib/cards'
+import { cloudinaryTransform } from '@web/lib/cloudinary/transformUrl'
 
 import {
   StyledChip,
@@ -245,7 +246,13 @@ export function CroquisMap({
             onPointerUp={onMediaPointerUp}
           >
             {photos.length > 0 ? (
-              <img src={photos[imgIndex]} alt={obstacle.title} />
+              <img
+                src={cloudinaryTransform(
+                  photos[imgIndex],
+                  'f_auto,q_auto,w_640',
+                )}
+                alt={obstacle.title}
+              />
             ) : (
               <div dangerouslySetInnerHTML={{ __html: scene(obstacle.type) }} />
             )}
@@ -253,7 +260,13 @@ export function CroquisMap({
           {photos.length > 1 && (
             <StyledThumbs>
               {photos.map((p, i) => {
-                const pick = () => setImgIndex(i)
+                // Tapping a thumbnail moves focus off the obstacle, which
+                // schedules a close. Cancel it here (works on touch, where the
+                // blur's relatedTarget is unreliable) so the popover stays open.
+                const pick = () => {
+                  cancelClose()
+                  setImgIndex(i)
+                }
                 return (
                   <StyledThumbButton
                     key={i}
@@ -265,7 +278,13 @@ export function CroquisMap({
                     aria-label={`Image ${i + 1}`}
                     data-testid={`croquis-thumb-${i}`}
                   >
-                    <img src={p} alt="" />
+                    <img
+                      src={cloudinaryTransform(
+                        p,
+                        'f_auto,q_auto,w_96,h_72,c_fill',
+                      )}
+                      alt=""
+                    />
                   </StyledThumbButton>
                 )
               })}
@@ -416,7 +435,10 @@ export function CroquisMap({
               ×
             </StyledLightboxClose>
             <img
-              src={lightbox.photos[lightbox.index]}
+              src={cloudinaryTransform(
+                lightbox.photos[lightbox.index],
+                'f_auto,q_auto,w_1600',
+              )}
               alt=""
               data-testid="croquis-lightbox-image"
               onClick={(e) => e.stopPropagation()}

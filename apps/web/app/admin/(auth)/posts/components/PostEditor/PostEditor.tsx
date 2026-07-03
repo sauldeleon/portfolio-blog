@@ -500,7 +500,9 @@ export function PostEditor({
           .filter((tr) => tr.slug)
           .map((tr) => ({
             locale: tr.locale,
-            path: `/${tr.locale}/blog/${post.post.postNumber}/${tr.slug}`,
+            // Trailing slash matches next.config trailingSlash:true, so the
+            // link resolves directly instead of via a redirect.
+            path: `/${tr.locale}/blog/${post.post.postNumber}/${tr.slug}/`,
           }))
       : []
 
