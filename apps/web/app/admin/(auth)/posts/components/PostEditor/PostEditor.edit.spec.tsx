@@ -1116,11 +1116,11 @@ describe('PostEditor', () => {
       expect(screen.getByTestId('published-url-row-es')).toBeInTheDocument()
       expect(screen.getByTestId('published-url-link-en')).toHaveAttribute(
         'href',
-        '/en/blog/7/my-post',
+        '/en/blog/7/my-post/',
       )
       expect(screen.getByTestId('published-url-link-es')).toHaveAttribute(
         'href',
-        '/es/blog/7/mi-post',
+        '/es/blog/7/mi-post/',
       )
     })
 

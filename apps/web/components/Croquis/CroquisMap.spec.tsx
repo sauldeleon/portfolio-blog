@@ -223,6 +223,31 @@ describe('CroquisMap', () => {
     expect(popover).toHaveAttribute('data-open', 'true')
   })
 
+  it('stays open on a touch thumbnail tap where blur has no relatedTarget', () => {
+    jest.useFakeTimers()
+    renderApp(
+      <CroquisMap
+        obstacles={[ob({ photos: ['https://x/a.jpg', 'https://x/b.jpg'] })]}
+        lang="en"
+        interaction="click"
+      />,
+    )
+    fireEvent.focus(screen.getByTestId('croquis-obstacle-0'))
+    const popover = screen.getByTestId('croquis-popover')
+    expect(popover).toHaveAttribute('data-open', 'true')
+    // On touch the blur carries no relatedTarget, so the guard can't help; the
+    // thumbnail tap itself must cancel the scheduled close.
+    fireEvent.blur(screen.getByTestId('croquis-obstacle-0'))
+    fireEvent.click(screen.getByTestId('croquis-thumb-1'))
+    act(() => {
+      jest.advanceTimersByTime(300)
+    })
+    expect(popover).toHaveAttribute('data-open', 'true')
+    expect((screen.getByAltText('Jump one') as HTMLImageElement).src).toBe(
+      'https://x/b.jpg',
+    )
+  })
+
   describe('gallery swipe + fullscreen', () => {
     const twoPhotos = () =>
       ob({ photos: ['https://x/a.jpg', 'https://x/b.jpg'] })
