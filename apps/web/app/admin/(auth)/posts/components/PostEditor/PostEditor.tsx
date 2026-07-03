@@ -1274,7 +1274,6 @@ export function PostEditor({
         key={`croquis-${croquisModalKey}`}
         isOpen={isCroquisModalOpen}
         initialValues={croquisInitialValues}
-        lang={activeLocale}
         onInsert={(markdown) => {
           if (editingEmbed?.type === 'croquis') {
             replaceBlock(

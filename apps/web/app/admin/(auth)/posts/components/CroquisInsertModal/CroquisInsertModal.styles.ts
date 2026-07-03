@@ -143,12 +143,6 @@ export const StyledThumbChip = styled.span`
   gap: 0.15rem;
 `
 
-export const StyledPreviewBox = styled.div`
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-  padding: 0.5rem;
-`
-
 export const StyledButtons = styled.div`
   display: flex;
   justify-content: flex-end;
