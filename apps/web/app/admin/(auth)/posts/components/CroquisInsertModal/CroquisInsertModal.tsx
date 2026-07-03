@@ -5,14 +5,13 @@ import { RenderModalBackdropProps } from 'react-overlays/Modal'
 
 import { Select } from '@sdlgr/select'
 
-import { CroquisMap } from '@web/components/Croquis'
 import {
   isDrawableWaypoint,
   parseCanyonWaypointsText,
   serializeCanyonWaypoints,
   toCroquisObstacles,
 } from '@web/lib/cards'
-import type { CanyonWaypoint, Lang } from '@web/lib/cards'
+import type { CanyonWaypoint } from '@web/lib/cards'
 import {
   axiosErrorMessage,
   fetchCanyonWaypoints,
@@ -42,7 +41,6 @@ import {
   StyledInsertButton,
   StyledModalContent,
   StyledParseButton,
-  StyledPreviewBox,
   StyledSectionLabel,
   StyledTextarea,
   StyledThumbChip,
@@ -59,20 +57,19 @@ export interface CroquisInsertModalProps {
   onInsert: (markdown: string) => void
   onCancel: () => void
   initialValues?: ParsedCroquis | null
-  lang: Lang
 }
 
 /**
  * Builds a `croquis` block for the post: the waypoint text (typed or imported
- * from a GPX url) plus a photo picked per waypoint (shown on hover). The photo
- * rides along in each waypoint's `! … ; img=…` directive.
+ * from a GPX url) plus photos picked per waypoint. The photos ride along in each
+ * waypoint's `! … ; img=…` directive. A read-only preview shows the exact fenced
+ * block that will be inserted.
  */
 export function CroquisInsertModal({
   isOpen,
   onInsert,
   onCancel,
   initialValues,
-  lang,
 }: CroquisInsertModalProps) {
   const [text, setText] = useState(initialValues?.text ?? '')
   const [title, setTitle] = useState(initialValues?.title ?? '')
@@ -84,6 +81,11 @@ export function CroquisInsertModal({
 
   const waypoints = parseCanyonWaypointsText(text)
   const obstacles = toCroquisObstacles(waypoints)
+
+  // The exact fenced block that will be inserted; shown read-only as a preview
+  // and reused verbatim on insert so the two never drift.
+  const fenceMeta = title.trim() ? ` ${title.trim()}` : ''
+  const preview = `\`\`\`croquis${fenceMeta}\n${text.trim()}\n\`\`\``
 
   // Only waypoints actually drawn in the croquis can carry hover images.
   const drawable: IndexedWaypoint[] = waypoints
@@ -153,8 +155,7 @@ export function CroquisInsertModal({
   function handleInsert() {
     /* istanbul ignore next */
     if (obstacles.length === 0) return
-    const meta = title.trim() ? ` ${title.trim()}` : ''
-    onInsert(`\n\n\`\`\`croquis${meta}\n${text.trim()}\n\`\`\`\n\n`)
+    onInsert(`\n\n${preview}\n\n`)
     setText('')
     setTitle('')
     setUrl('')
@@ -167,6 +168,10 @@ export function CroquisInsertModal({
       <StyledCroquisModal
         show={isOpen}
         onHide={onCancel}
+        // The ImagePicker is a sibling portal, outside this modal's DOM. Keeping
+        // the focus trap on would yank focus back here on every keystroke in the
+        // picker's search field, so release it while the picker is open.
+        enforceFocus={pickingFor === null}
         renderBackdrop={
           pickingFor !== null
             ? undefined
@@ -288,9 +293,14 @@ export function CroquisInsertModal({
           )}
 
           {obstacles.length > 0 && (
-            <StyledPreviewBox data-testid="croquis-modal-preview">
-              <CroquisMap obstacles={obstacles} lang={lang} title={title} />
-            </StyledPreviewBox>
+            <>
+              <StyledSectionLabel>Preview</StyledSectionLabel>
+              <StyledTextarea
+                readOnly
+                value={preview}
+                data-testid="croquis-modal-preview"
+              />
+            </>
           )}
 
           <StyledButtons>

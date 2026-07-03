@@ -377,6 +377,10 @@ export function GpxMapModal({
       <StyledGpxMapModal
         show={isOpen}
         onHide={onCancel}
+        // The ImagePicker is a sibling portal, outside this modal's DOM. Keeping
+        // the focus trap on would yank focus back here on every keystroke in the
+        // picker's search field, so release it while the picker is open.
+        enforceFocus={isImagePickerOpenForTrack === null}
         renderBackdrop={
           isImagePickerOpenForTrack !== null
             ? undefined
@@ -523,31 +527,41 @@ export function GpxMapModal({
 
                       {trackMappings.length > 0 && (
                         <StyledMappingsList>
-                          {trackMappings.map((m, mappingIdx) => (
-                            <StyledMappingRow
-                              key={mappingIdx}
-                              data-testid={`mapping-row-${index}`}
-                            >
-                              <StyledMappingThumb
-                                src={m.imageUrl}
-                                alt={m.name}
-                                data-testid={`mapping-thumb-${index}`}
-                              />
-                              <StyledMappingName
-                                data-testid={`mapping-name-${index}`}
+                          {trackMappings.map((m, mappingIdx) => {
+                            // Images pinned by waypoint index carry no stored
+                            // name — resolve it from the fetched waypoints.
+                            const mappingName =
+                              m.fetchIdx !== undefined
+                                ? (fetched[m.fetchIdx] ?? m.name)
+                                : m.name
+                            return (
+                              <StyledMappingRow
+                                key={mappingIdx}
+                                data-testid={`mapping-row-${index}`}
                               >
-                                {m.name}
-                              </StyledMappingName>
-                              <StyledRemoveButton
-                                type="button"
-                                aria-label={`Remove image for ${m.name}`}
-                                onClick={() => removeMapping(index, mappingIdx)}
-                                data-testid={`mapping-remove-${index}`}
-                              >
-                                ×
-                              </StyledRemoveButton>
-                            </StyledMappingRow>
-                          ))}
+                                <StyledMappingThumb
+                                  src={m.imageUrl}
+                                  alt={mappingName}
+                                  data-testid={`mapping-thumb-${index}`}
+                                />
+                                <StyledMappingName
+                                  data-testid={`mapping-name-${index}`}
+                                >
+                                  {mappingName}
+                                </StyledMappingName>
+                                <StyledRemoveButton
+                                  type="button"
+                                  aria-label={`Remove image for ${mappingName}`}
+                                  onClick={() =>
+                                    removeMapping(index, mappingIdx)
+                                  }
+                                  data-testid={`mapping-remove-${index}`}
+                                >
+                                  ×
+                                </StyledRemoveButton>
+                              </StyledMappingRow>
+                            )
+                          })}
                         </StyledMappingsList>
                       )}
 

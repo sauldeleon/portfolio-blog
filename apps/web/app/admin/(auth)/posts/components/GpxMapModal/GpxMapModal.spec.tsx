@@ -1,5 +1,6 @@
 import { act, fireEvent, screen, waitFor, within } from '@testing-library/react'
 import axios from 'axios'
+import type { ReactNode } from 'react'
 
 import { renderApp } from '@sdlgr/test-utils'
 
@@ -7,6 +8,38 @@ import { GpxMapModal } from './GpxMapModal'
 
 jest.mock('axios', () => ({ get: jest.fn() }))
 const mockAxiosGet = jest.mocked(axios.get)
+
+// Capture the props the real react-overlays Modal would receive. The focus trap
+// (enforceFocus) can't be exercised through jsdom, so assert the prop contract
+// instead: it must be released while the sibling-portal ImagePicker is open.
+const mockModalProps: { enforceFocus?: boolean } = {}
+jest.mock('react-overlays', () => ({
+  Modal: ({
+    show,
+    children,
+    enforceFocus,
+    className,
+    'aria-labelledby': ariaLabelledBy,
+    onHide: _onHide,
+    renderBackdrop,
+  }: {
+    show?: boolean
+    children?: ReactNode
+    enforceFocus?: boolean
+    className?: string
+    'aria-labelledby'?: string
+    onHide?: () => void
+    renderBackdrop?: (props: Record<string, unknown>) => ReactNode
+  }) => {
+    mockModalProps.enforceFocus = enforceFocus
+    return show ? (
+      <div className={className} aria-labelledby={ariaLabelledBy}>
+        {renderBackdrop?.({})}
+        {children}
+      </div>
+    ) : null
+  },
+}))
 
 const GPX_XML = `<?xml version="1.0"?>
 <gpx xmlns="http://www.topografix.com/GPX/1/1">
@@ -722,6 +755,32 @@ describe('GpxMapModal', () => {
       expect(screen.getByTestId('image-picker-mock')).toBeInTheDocument()
     })
 
+    it('keeps the modal focus trap while the picker is closed', () => {
+      setupAxiosGet()
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      expect(mockModalProps.enforceFocus).toBe(true)
+    })
+
+    it('releases the modal focus trap while the picker is open', async () => {
+      setupAxiosGet()
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/track.gpx' },
+      })
+      act(() => {
+        jest.advanceTimersByTime(600)
+      })
+      fireEvent.click(await screen.findByTestId('pick-image-button-0'))
+      // Sibling-portal picker open → the trap must be off so its search field
+      // can hold focus and accept typing.
+      expect(mockModalProps.enforceFocus).toBe(false)
+    })
+
     it('closes image picker when close button clicked', async () => {
       setupAxiosGet()
       renderApp(
@@ -1249,6 +1308,116 @@ describe('GpxMapModal initialValues', () => {
       />,
     )
     expect(screen.getByTestId('gpx-track-url-0')).toHaveValue('')
+  })
+
+  it('resolves an index-mapped image to its waypoint name and hides it from the select', async () => {
+    jest.useFakeTimers()
+    setupAxiosGet() // Summit = index 0, Water Source = index 1
+    renderApp(
+      <GpxMapModal
+        isOpen
+        onInsert={jest.fn()}
+        onCancel={jest.fn()}
+        initialValues={{
+          tracks: [
+            {
+              url: 'https://cdn.com/route.gpx',
+              name: '',
+              color: '',
+              allowDownload: false,
+              showWaypoints: true,
+              showElevation: false,
+            },
+          ],
+          mappingsByTrack: {
+            0: [{ name: '', imageUrl: 'https://cdn.com/img.jpg', fetchIdx: 1 }],
+          },
+        }}
+      />,
+    )
+    await act(async () => {
+      jest.advanceTimersByTime(600)
+    })
+    // The numeric key resolves to the real waypoint name, not "1".
+    expect(screen.getByTestId('mapping-name-0')).toHaveTextContent(
+      'Water Source',
+    )
+    // And the already-mapped waypoint is no longer offered in the select.
+    const options = within(
+      screen.getByTestId('waypoint-select-0'),
+    ).getAllByRole('option')
+    expect(options.map((o) => o.textContent)).not.toContain('Water Source')
+    jest.useRealTimers()
+  })
+
+  it('falls back to the stored name when the mapped index is out of range', async () => {
+    jest.useFakeTimers()
+    setupAxiosGet() // only 2 waypoints (indexes 0 and 1)
+    renderApp(
+      <GpxMapModal
+        isOpen
+        onInsert={jest.fn()}
+        onCancel={jest.fn()}
+        initialValues={{
+          tracks: [
+            {
+              url: 'https://cdn.com/route.gpx',
+              name: '',
+              color: '',
+              allowDownload: false,
+              showWaypoints: true,
+              showElevation: false,
+            },
+          ],
+          mappingsByTrack: {
+            0: [
+              {
+                name: 'Old Name',
+                imageUrl: 'https://cdn.com/img.jpg',
+                fetchIdx: 5,
+              },
+            ],
+          },
+        }}
+      />,
+    )
+    await act(async () => {
+      jest.advanceTimersByTime(600)
+    })
+    expect(screen.getByTestId('mapping-name-0')).toHaveTextContent('Old Name')
+    jest.useRealTimers()
+  })
+
+  it('shows a legacy name-keyed mapping directly, without index resolution', async () => {
+    jest.useFakeTimers()
+    setupAxiosGet()
+    renderApp(
+      <GpxMapModal
+        isOpen
+        onInsert={jest.fn()}
+        onCancel={jest.fn()}
+        initialValues={{
+          tracks: [
+            {
+              url: 'https://cdn.com/route.gpx',
+              name: '',
+              color: '',
+              allowDownload: false,
+              showWaypoints: true,
+              showElevation: false,
+            },
+          ],
+          mappingsByTrack: {
+            0: [{ name: 'Summit', imageUrl: 'https://cdn.com/img.jpg' }],
+          },
+        }}
+      />,
+    )
+    await act(async () => {
+      jest.advanceTimersByTime(600)
+    })
+    expect(screen.getByTestId('mapping-name-0')).toHaveTextContent('Summit')
+    jest.useRealTimers()
   })
 
   it('uses waypoint name as key when mapping has no fetchIdx (legacy format)', () => {

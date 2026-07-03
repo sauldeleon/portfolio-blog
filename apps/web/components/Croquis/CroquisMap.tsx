@@ -4,6 +4,8 @@ import type { PointerEvent as ReactPointerEvent } from 'react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
+import { ChevronIcon } from '@sdlgr/icons'
+
 import {
   AMBER,
   CROQUIS_HEADER_H,
@@ -70,15 +72,26 @@ export interface CroquisMapProps {
   lang: Lang
   /** Optional card-style title shown above the map. */
   title?: string
+  /**
+   * How a popover opens. `hover` (default) opens on mouse hover and focus;
+   * `click` is tap/click-only (no hover), for read contexts like a post.
+   */
+  interaction?: 'hover' | 'click'
 }
 
 /**
  * The interactive croquis map: the river course drawn from obstacles, with a
- * hover/focus popover per element (its photo when available, else a drawn
+ * click/hover/focus popover per element (its photo when available, else a drawn
  * scene). Presentational and read-only — export/upload live in the caller.
  */
-export function CroquisMap({ obstacles, lang, title }: CroquisMapProps) {
+export function CroquisMap({
+  obstacles,
+  lang,
+  title,
+  interaction = 'hover',
+}: CroquisMapProps) {
   const strings = STRINGS[lang]
+  const hoverEnabled = interaction !== 'click'
   const headerText = title?.trim() ?? ''
   const headerH = headerText ? CROQUIS_HEADER_H : 0
   const [active, setActive] = useState<number | null>(null)
@@ -219,8 +232,8 @@ export function CroquisMap({ obstacles, lang, title }: CroquisMapProps) {
       data-open={obstacle !== null}
       $hasPhoto={photos.length > 0}
       style={{ left: pos.left, top: pos.top }}
-      onMouseEnter={cancelClose}
-      onMouseLeave={scheduleClose}
+      onMouseEnter={hoverEnabled ? cancelClose : undefined}
+      onMouseLeave={hoverEnabled ? scheduleClose : undefined}
     >
       {obstacle && (
         <>
@@ -323,10 +336,26 @@ export function CroquisMap({ obstacles, lang, title }: CroquisMapProps) {
                   aria-label={node.obstacle.title}
                   data-croquis-obstacle=""
                   data-testid={`croquis-obstacle-${node.index}`}
-                  onMouseEnter={(e) => open(node.index, e.currentTarget)}
-                  onMouseLeave={scheduleClose}
+                  onMouseEnter={
+                    hoverEnabled
+                      ? (e) => open(node.index, e.currentTarget)
+                      : undefined
+                  }
+                  onMouseLeave={hoverEnabled ? scheduleClose : undefined}
                   onFocus={(e) => open(node.index, e.currentTarget)}
-                  onBlur={scheduleClose}
+                  onBlur={(e) => {
+                    // Clicking a popover control (e.g. a gallery thumbnail)
+                    // blurs the obstacle; don't close when focus stays inside
+                    // the popover.
+                    if (
+                      (e.relatedTarget as Element | null)?.closest(
+                        '[data-croquis-popover]',
+                      )
+                    ) {
+                      return
+                    }
+                    scheduleClose()
+                  }}
                   onClick={(e) => open(node.index, e.currentTarget)}
                 >
                   <rect
@@ -403,7 +432,7 @@ export function CroquisMap({ obstacles, lang, title }: CroquisMapProps) {
                     lightboxStep(-1)
                   }}
                 >
-                  ‹
+                  <ChevronIcon />
                 </button>
                 <button
                   type="button"
@@ -414,7 +443,7 @@ export function CroquisMap({ obstacles, lang, title }: CroquisMapProps) {
                     lightboxStep(1)
                   }}
                 >
-                  ›
+                  <ChevronIcon />
                 </button>
               </StyledLightboxNav>
             )}

@@ -5,6 +5,7 @@ import L from 'leaflet'
 import 'leaflet-gpx'
 import 'leaflet/dist/leaflet.css'
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import {
   AttributionControl,
   CircleMarker,
@@ -40,6 +41,8 @@ import {
   StyledGpxMap,
   StyledLayerButton,
   StyledLayerSwitcher,
+  StyledLightbox,
+  StyledLightboxClose,
   StyledLocateButton,
   StyledMapContainer,
   StyledRowChevron,
@@ -342,12 +345,14 @@ function GpxTrackLayer({
   visible,
   showWaypoints,
   waypointImages,
+  onImageZoom,
 }: {
   url: string
   color: string
   visible: boolean
   showWaypoints: boolean
   waypointImages?: Record<string, string>
+  onImageZoom: (src: string) => void
 }) {
   const map = useMap()
   const layerRef = useRef<L.GPX | null>(null)
@@ -355,8 +360,34 @@ function GpxTrackLayer({
   useEffect(() => {
     waypointImagesRef.current = waypointImages
   }, [waypointImages])
+  const onImageZoomRef = useRef(onImageZoom)
+  useEffect(() => {
+    onImageZoomRef.current = onImageZoom
+  }, [onImageZoom])
+
+  // A waypoint popup's image opens a fullscreen viewer on click, like the
+  // croquis. The popup is Leaflet-rendered HTML, so wire the click on open.
+  useEffect(() => {
+    const onPopupOpen = (e: L.PopupEvent) => {
+      const img = e.popup.getElement()?.querySelector('img')
+      if (!img) return
+      img.style.cursor = 'zoom-in'
+      img.onclick = () => {
+        const src = img.getAttribute('src')
+        if (src) onImageZoomRef.current(src)
+      }
+    }
+    map.on('popupopen', onPopupOpen)
+    return () => {
+      map.off('popupopen', onPopupOpen)
+    }
+  }, [map])
 
   useEffect(() => {
+    // The GPX loads asynchronously; if this effect is torn down (unmount or dep
+    // change) before `loaded` fires, react-leaflet may have already removed the
+    // map, so fitBounds/bindPopup would run against a destroyed map. Guard it.
+    let cancelled = false
     const layer = new L.GPX(url, {
       async: true,
       polyline_options: {
@@ -383,6 +414,7 @@ function GpxTrackLayer({
     })
 
     layer.on('loaded', () => {
+      if (cancelled) return
       map.fitBounds(layer.getBounds())
       const imgs = waypointImagesRef.current
       if (showWaypoints) {
@@ -429,6 +461,7 @@ function GpxTrackLayer({
     layerRef.current = layer
 
     return () => {
+      cancelled = true
       map.removeLayer(layer)
       layerRef.current = null
     }
@@ -492,7 +525,18 @@ export function GpxMap({
   const [expandedByIndex, setExpandedByIndex] = useState<
     Record<number, number | null>
   >({})
+  // Fullscreen image opened from a waypoint popup.
+  const [zoomImage, setZoomImage] = useState<string | null>(null)
   const mapContainerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (zoomImage === null) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setZoomImage(null)
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [zoomImage])
 
   const trackUrlsKey = resolvedTracks
     .map(
@@ -569,6 +613,7 @@ export function GpxMap({
               visible={visibleTracks[i] ?? true}
               showWaypoints={track.showWaypoints ?? showWaypoints ?? false}
               waypointImages={track.waypointImages ?? waypointImages}
+              onImageZoom={setZoomImage}
             />
           ))}
           <WaypointFocuser waypoint={focusedWaypoint} />
@@ -811,6 +856,30 @@ export function GpxMap({
           </StyledWaypointsDetails>
         )
       })}
+
+      {zoomImage !== null &&
+        createPortal(
+          <StyledLightbox
+            data-testid="gpx-lightbox"
+            onClick={() => setZoomImage(null)}
+          >
+            <StyledLightboxClose
+              type="button"
+              aria-label="Close"
+              data-testid="gpx-lightbox-close"
+              onClick={() => setZoomImage(null)}
+            >
+              ×
+            </StyledLightboxClose>
+            <img
+              src={zoomImage}
+              alt=""
+              data-testid="gpx-lightbox-image"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </StyledLightbox>,
+          document.body,
+        )}
     </StyledGpxMap>
   )
 }

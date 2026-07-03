@@ -38,7 +38,10 @@ export interface ParsedGpxTrack {
 
 export interface ParsedGpx {
   tracks: ParsedGpxTrack[]
-  mappingsByTrack: Record<number, Array<{ name: string; imageUrl: string }>>
+  mappingsByTrack: Record<
+    number,
+    Array<{ name: string; imageUrl: string; fetchIdx?: number }>
+  >
 }
 
 export type ParsedSlideshowSlide = ParsedImage
@@ -178,10 +181,7 @@ export function parseGpxBody(
 ): Pick<ParsedGpx, 'tracks' | 'mappingsByTrack'> {
   const lines = body.split('\n').filter(Boolean)
   const tracks: ParsedGpxTrack[] = []
-  const mappingsByTrack: Record<
-    number,
-    Array<{ name: string; imageUrl: string }>
-  > = {}
+  const mappingsByTrack: ParsedGpx['mappingsByTrack'] = {}
 
   for (const line of lines) {
     if (line.startsWith('track:')) {
@@ -191,7 +191,16 @@ export function parseGpxBody(
       if (m) {
         const trackIdx = parseInt(m[1], 10)
         if (!mappingsByTrack[trackIdx]) mappingsByTrack[trackIdx] = []
-        mappingsByTrack[trackIdx].push({ name: m[2], imageUrl: m[3] })
+        // A numeric key is the waypoint index the image was pinned to (the
+        // format the modal writes); its display name is resolved from the
+        // fetched waypoints. A non-numeric key is a legacy name mapping.
+        const key = m[2]
+        const imageUrl = m[3]
+        mappingsByTrack[trackIdx].push(
+          /^\d+$/.test(key)
+            ? { name: '', imageUrl, fetchIdx: parseInt(key, 10) }
+            : { name: key, imageUrl },
+        )
       }
     }
   }

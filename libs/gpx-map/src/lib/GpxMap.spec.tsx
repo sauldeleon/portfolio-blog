@@ -293,6 +293,39 @@ jest.mock('./GpxMap.styles', () => ({
   StyledLayerSwitcher: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="layer-switcher">{children}</div>
   ),
+  StyledLightbox: ({
+    children,
+    onClick,
+    'data-testid': testId,
+  }: {
+    children: React.ReactNode
+    onClick: React.MouseEventHandler
+    'data-testid'?: string
+  }) => (
+    <div data-testid={testId} onClick={onClick}>
+      {children}
+    </div>
+  ),
+  StyledLightboxClose: ({
+    children,
+    onClick,
+    'aria-label': ariaLabel,
+    'data-testid': testId,
+  }: {
+    children: React.ReactNode
+    onClick: React.MouseEventHandler
+    'aria-label': string
+    'data-testid'?: string
+  }) => (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={ariaLabel}
+      data-testid={testId}
+    >
+      {children}
+    </button>
+  ),
   StyledLayerButton: ({
     children,
     onClick,
@@ -362,12 +395,16 @@ describe('GpxMap', () => {
   const mockRemoveLayer = jest.fn()
   const mockFlyTo = jest.fn()
   const mockSetMaxZoom = jest.fn()
+  const mockMapOn = jest.fn()
+  const mockMapOff = jest.fn()
 
   beforeEach(() => {
     mockFitBounds.mockReset()
     mockRemoveLayer.mockReset()
     mockFlyTo.mockReset()
     mockSetMaxZoom.mockReset()
+    mockMapOn.mockReset()
+    mockMapOff.mockReset()
     MockGPX.mockClear()
     mockOn.mockClear()
     mockAddTo.mockClear()
@@ -380,9 +417,104 @@ describe('GpxMap', () => {
       removeLayer: mockRemoveLayer,
       flyTo: mockFlyTo,
       setMaxZoom: mockSetMaxZoom,
+      on: mockMapOn,
+      off: mockMapOff,
     })
     mockAxiosGet.mockReset()
     mockAxiosGetData(GPX_XML_WITH_WAYPOINTS)
+  })
+
+  describe('waypoint image zoom', () => {
+    type PopupOpen = (e: {
+      popup: { getElement: () => HTMLElement | null }
+    }) => void
+
+    function getPopupOpenHandler(): PopupOpen {
+      mockAxiosGetPending()
+      render(<GpxMap url={GPX_URL} showWaypoints />)
+      const call = mockMapOn.mock.calls.find(
+        (c: [string, PopupOpen]) => c[0] === 'popupopen',
+      )
+      return call?.[1] as PopupOpen
+    }
+
+    function popupWithImage(src: string | null) {
+      const el = document.createElement('div')
+      const img = document.createElement('img')
+      if (src !== null) img.setAttribute('src', src)
+      el.appendChild(img)
+      return { el, img }
+    }
+
+    it('registers and tears down the popupopen listener', () => {
+      mockAxiosGetPending()
+      const { unmount } = render(<GpxMap url={GPX_URL} showWaypoints />)
+      expect(mockMapOn).toHaveBeenCalledWith('popupopen', expect.any(Function))
+      unmount()
+      expect(mockMapOff).toHaveBeenCalledWith('popupopen', expect.any(Function))
+    })
+
+    it('opens a fullscreen viewer when a popup image is clicked', () => {
+      const onPopupOpen = getPopupOpenHandler()
+      const { el, img } = popupWithImage('https://cdn.com/wp.jpg')
+      act(() => onPopupOpen({ popup: { getElement: () => el } }))
+      expect(img.style.cursor).toBe('zoom-in')
+      act(() => img.click())
+      expect(screen.getByTestId('gpx-lightbox-image')).toHaveAttribute(
+        'src',
+        'https://cdn.com/wp.jpg',
+      )
+    })
+
+    it('does not open the viewer for an image without a src', () => {
+      const onPopupOpen = getPopupOpenHandler()
+      const { el, img } = popupWithImage(null)
+      act(() => onPopupOpen({ popup: { getElement: () => el } }))
+      act(() => img.click())
+      expect(screen.queryByTestId('gpx-lightbox')).not.toBeInTheDocument()
+    })
+
+    it('closes via the close button, the backdrop and Escape', () => {
+      const onPopupOpen = getPopupOpenHandler()
+      const { el, img } = popupWithImage('https://cdn.com/wp.jpg')
+      act(() => onPopupOpen({ popup: { getElement: () => el } }))
+
+      act(() => img.click())
+      fireEvent.click(screen.getByTestId('gpx-lightbox-close'))
+      expect(screen.queryByTestId('gpx-lightbox')).not.toBeInTheDocument()
+
+      // Clicking the image itself must not close the viewer.
+      act(() => img.click())
+      fireEvent.click(screen.getByTestId('gpx-lightbox-image'))
+      expect(screen.getByTestId('gpx-lightbox')).toBeInTheDocument()
+
+      fireEvent.click(screen.getByTestId('gpx-lightbox'))
+      expect(screen.queryByTestId('gpx-lightbox')).not.toBeInTheDocument()
+
+      act(() => img.click())
+      fireEvent.keyDown(document, { key: 'Escape' })
+      expect(screen.queryByTestId('gpx-lightbox')).not.toBeInTheDocument()
+    })
+
+    it('leaves other keys alone while the viewer is open', () => {
+      const onPopupOpen = getPopupOpenHandler()
+      const { el, img } = popupWithImage('https://cdn.com/wp.jpg')
+      act(() => onPopupOpen({ popup: { getElement: () => el } }))
+      act(() => img.click())
+      fireEvent.keyDown(document, { key: 'ArrowRight' })
+      expect(screen.getByTestId('gpx-lightbox')).toBeInTheDocument()
+    })
+
+    it('ignores a popup with no image or no element', () => {
+      const onPopupOpen = getPopupOpenHandler()
+      act(() =>
+        onPopupOpen({
+          popup: { getElement: () => document.createElement('div') },
+        }),
+      )
+      act(() => onPopupOpen({ popup: { getElement: () => null } }))
+      expect(screen.queryByTestId('gpx-lightbox')).not.toBeInTheDocument()
+    })
   })
 
   it('renders gpx map wrapper', () => {
@@ -475,6 +607,20 @@ describe('GpxMap', () => {
       loadedCallback()
     })
     expect(mockFitBounds).toHaveBeenCalledWith({ _bounds: true })
+  })
+
+  it('ignores a late loaded event after the layer is torn down', () => {
+    const { unmount } = render(<GpxMap url={GPX_URL} />)
+    const loadedCallback = mockOn.mock.calls.find(
+      (c: [string, () => void]) => c[0] === 'loaded',
+    )?.[1]
+    unmount()
+    mockFitBounds.mockClear()
+    // The async GPX load resolves after teardown; it must be a no-op.
+    act(() => {
+      loadedCallback()
+    })
+    expect(mockFitBounds).not.toHaveBeenCalled()
   })
 
   it('removes layer on unmount', () => {
@@ -1845,6 +1991,8 @@ describe('GpxMap showElevation', () => {
       removeLayer: mockRemoveLayer,
       flyTo: mockFlyTo,
       setMaxZoom: mockSetMaxZoom,
+      on: jest.fn(),
+      off: jest.fn(),
     })
     mockAxiosGet.mockReset()
     mockAxiosGetData(GPX_XML_WITH_TRKPTS)

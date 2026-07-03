@@ -12,15 +12,18 @@ jest.mock('@web/components/Croquis', () => ({
     obstacles,
     lang,
     title,
+    interaction,
   }: {
     obstacles: unknown[]
     lang: string
     title?: string
+    interaction?: string
   }) => (
     <div data-testid="croquis-map-mock">
       <span data-testid="cm-count">{obstacles.length}</span>
       <span data-testid="cm-lang">{lang}</span>
       <span data-testid="cm-title">{title ?? ''}</span>
+      <span data-testid="cm-interaction">{interaction ?? ''}</span>
     </div>
   ),
   useCroquisPng: () => ({ downloadPng: mockDownloadPng }),
@@ -78,6 +81,11 @@ describe('PostContentCroquis', () => {
   it('passes the title through to the map', () => {
     renderApp(<PostContentCroquis obstacles={OB} title="Barranco X" />)
     expect(screen.getByTestId('cm-title')).toHaveTextContent('Barranco X')
+  })
+
+  it('renders the map in click-only mode', () => {
+    renderApp(<PostContentCroquis obstacles={OB} />)
+    expect(screen.getByTestId('cm-interaction')).toHaveTextContent('click')
   })
 
   it('downloads the croquis PNG with a title-derived filename', async () => {

@@ -15,10 +15,6 @@ function makeAxiosError(status: number, data: unknown): AxiosError {
   })
 }
 
-jest.mock('@web/components/Croquis', () => ({
-  CroquisMap: () => <div data-testid="croquis-map-mock" />,
-}))
-
 jest.mock('@sdlgr/select', () => ({
   Select: ({
     value,
@@ -88,7 +84,6 @@ function open(
   renderApp(
     <CroquisInsertModal
       isOpen
-      lang="en"
       onInsert={onInsert}
       onCancel={onCancel}
       {...props}
@@ -112,14 +107,34 @@ describe('CroquisInsertModal', () => {
     expect(screen.getByTestId('croquis-modal-title')).toHaveValue('Barranco X')
   })
 
-  it('offers a waypoint selector and shows the preview once drawable', () => {
+  it('offers a waypoint selector and shows the fenced preview once drawable', () => {
     open()
     fireEvent.change(screen.getByTestId('croquis-modal-text'), {
       target: { value: JUMP },
     })
     expect(screen.getByTestId('croquis-wp-select')).toBeInTheDocument()
-    expect(screen.getByTestId('croquis-modal-preview')).toBeInTheDocument()
-    expect(screen.getByTestId('croquis-map-mock')).toBeInTheDocument()
+    const preview = screen.getByTestId('croquis-modal-preview')
+    expect(preview).toHaveValue(`\`\`\`croquis\n${JUMP}\n\`\`\``)
+  })
+
+  it('reflects the title in the fenced preview', () => {
+    open()
+    fireEvent.change(screen.getByTestId('croquis-modal-text'), {
+      target: { value: JUMP },
+    })
+    fireEvent.change(screen.getByTestId('croquis-modal-title'), {
+      target: { value: 'Barranco X' },
+    })
+    expect(screen.getByTestId('croquis-modal-preview')).toHaveValue(
+      `\`\`\`croquis Barranco X\n${JUMP}\n\`\`\``,
+    )
+  })
+
+  it('hides the preview until there is a drawable obstacle', () => {
+    open()
+    expect(
+      screen.queryByTestId('croquis-modal-preview'),
+    ).not.toBeInTheDocument()
   })
 
   it('lists only drawable waypoints in the selector', () => {
