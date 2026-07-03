@@ -167,6 +167,10 @@ export function CroquisInsertModal({
       <StyledCroquisModal
         show={isOpen}
         onHide={onCancel}
+        // The ImagePicker is a sibling portal, outside this modal's DOM. Keeping
+        // the focus trap on would yank focus back here on every keystroke in the
+        // picker's search field, so release it while the picker is open.
+        enforceFocus={pickingFor === null}
         renderBackdrop={
           pickingFor !== null
             ? undefined

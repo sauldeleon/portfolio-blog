@@ -109,6 +109,19 @@ describe('parseGpxBody', () => {
     })
   })
 
+  it('reads a numeric mapping key as a waypoint index, not a name', () => {
+    const body = [
+      'track:https://cdn.com/route.gpx',
+      '0:6=https://img.com/wp7.jpg',
+    ].join('\n')
+    const { mappingsByTrack } = parseGpxBody(body)
+    expect(mappingsByTrack[0][0]).toEqual({
+      name: '',
+      fetchIdx: 6,
+      imageUrl: 'https://img.com/wp7.jpg',
+    })
+  })
+
   it('parses mappings for multiple tracks', () => {
     const body = [
       'track:https://cdn.com/a.gpx',
