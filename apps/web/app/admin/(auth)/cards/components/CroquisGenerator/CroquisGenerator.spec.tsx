@@ -42,15 +42,18 @@ jest.mock('../Croquis', () => ({
     obstacles,
     lang,
     filename,
+    title,
   }: {
     obstacles: unknown[]
     lang: string
     filename: string
+    title?: string
   }) => (
     <div data-testid="croquis-mock">
       <span data-testid="c-count">{obstacles.length}</span>
       <span data-testid="c-lang">{lang}</span>
       <span data-testid="c-filename">{filename}</span>
+      <span data-testid="c-title">{title ?? ''}</span>
     </div>
   ),
 }))
@@ -80,6 +83,19 @@ describe('CroquisGenerator', () => {
       target: { value: 'info: Nice view - 42.6 0.14' },
     })
     expect(screen.getByTestId('cg-empty')).toBeInTheDocument()
+  })
+
+  it('passes the title through to the croquis', () => {
+    renderApp(<CroquisGenerator />)
+    fireEvent.change(screen.getByTestId('cg-text'), {
+      target: { value: JUMP_TEXT },
+    })
+    fireEvent.change(screen.getByTestId('cg-title'), {
+      target: { value: 'Barranco de la Peonera' },
+    })
+    expect(screen.getByTestId('c-title')).toHaveTextContent(
+      'Barranco de la Peonera',
+    )
   })
 
   it('names the file from the prefix and language', () => {

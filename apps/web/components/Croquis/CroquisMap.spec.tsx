@@ -37,6 +37,18 @@ describe('CroquisMap', () => {
     expect(screen.getByTestId('croquis-obstacle-1')).toBeInTheDocument()
   })
 
+  it('draws a card-style title header when a title is given', () => {
+    renderApp(<CroquisMap obstacles={[ob()]} lang="en" title="Barranco X" />)
+    const header = screen.getByTestId('croquis-title')
+    expect(header).toBeInTheDocument()
+    expect(header.innerHTML).toContain('Barranco X')
+  })
+
+  it('omits the title header without a title', () => {
+    renderApp(<CroquisMap obstacles={[ob()]} lang="en" title="  " />)
+    expect(screen.queryByTestId('croquis-title')).not.toBeInTheDocument()
+  })
+
   it('opens the popover on mouse enter and closes shortly after leave', () => {
     jest.useFakeTimers()
     renderApp(<CroquisMap obstacles={[ob()]} lang="en" />)

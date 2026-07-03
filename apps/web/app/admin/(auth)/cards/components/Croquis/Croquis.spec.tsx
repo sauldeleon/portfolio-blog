@@ -40,6 +40,7 @@ jest.mock('@web/i18n/client', () => {
 })
 
 jest.mock('@web/components/Croquis', () => ({
+  ...jest.requireActual('@web/components/Croquis'),
   CroquisMap: () => <div data-testid="croquis-map-mock" />,
 }))
 

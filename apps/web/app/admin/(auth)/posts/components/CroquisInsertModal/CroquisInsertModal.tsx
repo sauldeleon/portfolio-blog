@@ -75,6 +75,7 @@ export function CroquisInsertModal({
   lang,
 }: CroquisInsertModalProps) {
   const [text, setText] = useState(initialValues?.text ?? '')
+  const [title, setTitle] = useState(initialValues?.title ?? '')
   const [url, setUrl] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -152,8 +153,10 @@ export function CroquisInsertModal({
   function handleInsert() {
     /* istanbul ignore next */
     if (obstacles.length === 0) return
-    onInsert(`\n\n\`\`\`croquis\n${text.trim()}\n\`\`\`\n\n`)
+    const meta = title.trim() ? ` ${title.trim()}` : ''
+    onInsert(`\n\n\`\`\`croquis${meta}\n${text.trim()}\n\`\`\`\n\n`)
     setText('')
+    setTitle('')
     setUrl('')
     setError(null)
     setPickingFor(null)
@@ -172,6 +175,15 @@ export function CroquisInsertModal({
         aria-labelledby="croquis-insert-modal"
       >
         <StyledModalContent data-testid="croquis-modal">
+          <StyledSectionLabel>Title (optional)</StyledSectionLabel>
+          <StyledInput
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Barranco de …"
+            data-testid="croquis-modal-title"
+          />
+
           <StyledSectionLabel>GPX url (optional)</StyledSectionLabel>
           <StyledGpxRow>
             <StyledInput
@@ -277,7 +289,7 @@ export function CroquisInsertModal({
 
           {obstacles.length > 0 && (
             <StyledPreviewBox data-testid="croquis-modal-preview">
-              <CroquisMap obstacles={obstacles} lang={lang} />
+              <CroquisMap obstacles={obstacles} lang={lang} title={title} />
             </StyledPreviewBox>
           )}
 

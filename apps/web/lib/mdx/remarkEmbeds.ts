@@ -71,6 +71,7 @@ export function remarkEmbeds() {
         const obstacles = toCroquisObstacles(
           parseCanyonWaypointsText(n.value ?? ''),
         )
+        const title = (n.meta ?? '').trim()
         return {
           type: 'mdxJsxFlowElement',
           name: 'Croquis',
@@ -80,6 +81,9 @@ export function remarkEmbeds() {
               name: 'obstacles',
               value: JSON.stringify(obstacles),
             },
+            ...(title
+              ? [{ type: 'mdxJsxAttribute', name: 'title', value: title }]
+              : []),
           ],
           children: [],
         }

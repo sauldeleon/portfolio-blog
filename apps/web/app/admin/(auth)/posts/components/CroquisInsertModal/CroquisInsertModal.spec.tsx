@@ -106,9 +106,10 @@ describe('CroquisInsertModal', () => {
     expect(screen.getByTestId('croquis-modal-text')).toBeInTheDocument()
   })
 
-  it('prefills the textarea from initial values', () => {
-    open({ initialValues: { text: JUMP } })
+  it('prefills the textarea and title from initial values', () => {
+    open({ initialValues: { text: JUMP, title: 'Barranco X' } })
     expect(screen.getByTestId('croquis-modal-text')).toHaveValue(JUMP)
+    expect(screen.getByTestId('croquis-modal-title')).toHaveValue('Barranco X')
   })
 
   it('offers a waypoint selector and shows the preview once drawable', () => {
@@ -156,8 +157,22 @@ describe('CroquisInsertModal', () => {
     fireEvent.click(screen.getByTestId('croquis-modal-insert'))
     expect(onInsert).toHaveBeenCalledTimes(1)
     const md = onInsert.mock.calls[0][0]
-    expect(md).toContain('```croquis')
+    expect(md).toContain('```croquis\n')
     expect(md).toContain(JUMP)
+  })
+
+  it('carries the title into the fence meta and the preview', () => {
+    const { onInsert } = open()
+    fireEvent.change(screen.getByTestId('croquis-modal-text'), {
+      target: { value: JUMP },
+    })
+    fireEvent.change(screen.getByTestId('croquis-modal-title'), {
+      target: { value: 'Barranco de la Peonera' },
+    })
+    fireEvent.click(screen.getByTestId('croquis-modal-insert'))
+    expect(onInsert.mock.calls[0][0]).toContain(
+      '```croquis Barranco de la Peonera\n',
+    )
   })
 
   it('selects a waypoint, picks an image, and rides it in the markdown', () => {
@@ -234,7 +249,9 @@ describe('CroquisInsertModal', () => {
   })
 
   it('removes a waypoint image', () => {
-    open({ initialValues: { text: `${JUMP}\n! img=https://cdn/x.jpg` } })
+    open({
+      initialValues: { text: `${JUMP}\n! img=https://cdn/x.jpg`, title: '' },
+    })
     expect(screen.getByTestId('croquis-wp-thumb-0-0')).toBeInTheDocument()
     fireEvent.click(screen.getByTestId('croquis-wp-remove-0-0'))
     expect(screen.queryByTestId('croquis-wp-thumb-0-0')).not.toBeInTheDocument()

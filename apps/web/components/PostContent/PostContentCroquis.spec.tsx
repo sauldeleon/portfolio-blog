@@ -1,21 +1,37 @@
 import { screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 import { renderApp } from '@sdlgr/test-utils'
 
 import { PostContentCroquis } from './PostContentCroquis'
 
+const mockDownloadPng = jest.fn<Promise<void>, [string]>()
+
 jest.mock('@web/components/Croquis', () => ({
-  CroquisMap: ({ obstacles, lang }: { obstacles: unknown[]; lang: string }) => (
+  CroquisMap: ({
+    obstacles,
+    lang,
+    title,
+  }: {
+    obstacles: unknown[]
+    lang: string
+    title?: string
+  }) => (
     <div data-testid="croquis-map-mock">
       <span data-testid="cm-count">{obstacles.length}</span>
       <span data-testid="cm-lang">{lang}</span>
+      <span data-testid="cm-title">{title ?? ''}</span>
     </div>
   ),
+  useCroquisPng: () => ({ downloadPng: mockDownloadPng }),
 }))
 
 let mockLanguage = 'en'
 jest.mock('@web/i18n/client', () => ({
-  useClientTranslation: () => ({ i18n: { language: mockLanguage } }),
+  useClientTranslation: () => ({
+    t: (key: string) => key,
+    i18n: { language: mockLanguage },
+  }),
 }))
 
 const OB = JSON.stringify([
@@ -32,6 +48,8 @@ const OB = JSON.stringify([
 describe('PostContentCroquis', () => {
   beforeEach(() => {
     mockLanguage = 'en'
+    mockDownloadPng.mockReset()
+    mockDownloadPng.mockResolvedValue(undefined)
   })
 
   it('renders nothing without obstacles', () => {
@@ -55,5 +73,31 @@ describe('PostContentCroquis', () => {
     mockLanguage = 'es'
     renderApp(<PostContentCroquis obstacles={OB} />)
     expect(screen.getByTestId('cm-lang')).toHaveTextContent('es')
+  })
+
+  it('passes the title through to the map', () => {
+    renderApp(<PostContentCroquis obstacles={OB} title="Barranco X" />)
+    expect(screen.getByTestId('cm-title')).toHaveTextContent('Barranco X')
+  })
+
+  it('downloads the croquis PNG with a title-derived filename', async () => {
+    renderApp(<PostContentCroquis obstacles={OB} title="Barranco X" />)
+    await userEvent.click(screen.getByTestId('post-croquis-download'))
+    expect(mockDownloadPng).toHaveBeenCalledWith('croquis-barranco_x-en')
+  })
+
+  it('falls back to a generic filename without a title', async () => {
+    renderApp(<PostContentCroquis obstacles={OB} />)
+    await userEvent.click(screen.getByTestId('post-croquis-download'))
+    expect(mockDownloadPng).toHaveBeenCalledWith('croquis-croquis-en')
+  })
+
+  it('shows an error when the export fails', async () => {
+    mockDownloadPng.mockRejectedValueOnce(new Error('boom'))
+    renderApp(<PostContentCroquis obstacles={OB} />)
+    await userEvent.click(screen.getByTestId('post-croquis-download'))
+    expect(
+      await screen.findByTestId('post-croquis-download-error'),
+    ).toBeInTheDocument()
   })
 })

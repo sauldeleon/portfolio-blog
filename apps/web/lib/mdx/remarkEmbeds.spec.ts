@@ -746,5 +746,25 @@ describe('remarkEmbeds', () => {
       const attr = result.attributes?.find((a) => a.name === 'obstacles')
       expect(attr?.value).toBe('[]')
     })
+
+    it('carries the fence meta through as a title attribute', () => {
+      const [result] = runPlugin([
+        {
+          type: 'code',
+          lang: 'croquis',
+          meta: 'Barranco de la Peonera',
+          value: 'salto: Jump 2m',
+        },
+      ])
+      const title = result.attributes?.find((a) => a.name === 'title')
+      expect(title?.value).toBe('Barranco de la Peonera')
+    })
+
+    it('omits the title attribute without fence meta', () => {
+      const [result] = runPlugin([
+        { type: 'code', lang: 'croquis', value: 'salto: Jump 2m' },
+      ])
+      expect(result.attributes?.find((a) => a.name === 'title')).toBeUndefined()
+    })
   })
 })

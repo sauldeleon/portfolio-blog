@@ -6,7 +6,7 @@ import {
   layoutCroquis,
 } from './croquisLayout'
 import { FONT_STYLE } from './fonts'
-import { esc } from './primitives'
+import { esc, eyebrow } from './primitives'
 import {
   AMBER,
   BG_BOT,
@@ -20,6 +20,18 @@ import {
   SEV_COLORS,
   STRINGS,
 } from './theme'
+
+/** Vertical space reserved at the top for the card-style title header. */
+export const CROQUIS_HEADER_H = 84
+const HEADER_LEFT = 40
+
+/** Card-style header: an amber "CROQUIS" eyebrow above the given title. */
+export function croquisHeader(title: string): string {
+  return (
+    eyebrow(HEADER_LEFT, 34, 'CROQUIS') +
+    `<text x="${HEADER_LEFT}" y="70" font-family="Poppins" font-weight="700" font-size="30" fill="${BONE}">${esc(title)}</text>`
+  )
+}
 
 /** Sine-wave contour lines sized to the whole croquis, for background texture. */
 export function croquisBackground(width: number, height: number): string {
@@ -114,12 +126,14 @@ export function croquisNodeContent(node: CroquisNode, S: LangStrings): string {
 export function croquisCard(
   obstacles: CroquisObstacle[],
   lang: Lang,
-  width?: number,
+  opts: { width?: number; title?: string } = {},
 ): { svg: string; width: number; height: number } {
   const S = STRINGS[lang]
-  const layout = layoutCroquis(obstacles, width)
+  const layout = layoutCroquis(obstacles, opts.width)
   const W = layout.width
-  const H = layout.height
+  const title = opts.title?.trim() ?? ''
+  const headerH = title ? CROQUIS_HEADER_H : 0
+  const H = layout.height + headerH
   const nodes = layout.nodes.map((n) => croquisNodeContent(n, S)).join('')
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
@@ -131,8 +145,11 @@ export function croquisCard(
 <rect x="8" y="8" width="${W - 16}" height="${H - 16}" rx="28" fill="url(#panel)" stroke="${PANEL_STK}" stroke-width="1.6"/>
 <g clip-path="url(#pc)">${croquisBackground(W, H)}</g>
 <rect x="8" y="80" width="6" height="80" rx="3" fill="${AMBER}"/>
+${title ? croquisHeader(title) : ''}
+<g transform="translate(0, ${headerH})">
 ${croquisConnectors(layout, S)}
 ${nodes}
+</g>
 </svg>`
 
   return { svg, width: W, height: H }
