@@ -54,7 +54,12 @@ export function PostContentCroquis({
 
   return (
     <StyledCroquisWrapper data-testid="post-croquis">
-      <CroquisMap obstacles={parsed} lang={lang} title={title} />
+      <CroquisMap
+        obstacles={parsed}
+        lang={lang}
+        title={title}
+        interaction="click"
+      />
       <StyledDownloadBar>
         <StyledDownloadButton
           type="button"

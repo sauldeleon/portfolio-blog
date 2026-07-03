@@ -134,6 +134,9 @@ export const StyledLightboxNav = styled.div`
     position: fixed;
     top: 50%;
     transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: rgba(16, 28, 38, 0.7);
     border: 1px solid #2f4a5a;
     color: ${({ theme }) => theme.colors.white};
@@ -141,9 +144,22 @@ export const StyledLightboxNav = styled.div`
     line-height: 1;
     width: 44px;
     height: 44px;
+    padding: 0;
     border-radius: 50%;
     cursor: pointer;
     opacity: 0.85;
+  }
+
+  /* The chevron SVG is geometrically centred in its viewBox, so flex-centring
+     the button places it dead-centre (unlike the ‹ › glyphs, whose ink is
+     offset within their font box). */
+  button svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  button:first-child svg {
+    transform: rotate(180deg);
   }
 
   button:hover {

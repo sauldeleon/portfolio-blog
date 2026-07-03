@@ -49,6 +49,20 @@ describe('CroquisMap', () => {
     expect(screen.queryByTestId('croquis-title')).not.toBeInTheDocument()
   })
 
+  it('ignores hover and opens only on click when interaction is "click"', () => {
+    renderApp(<CroquisMap obstacles={[ob()]} lang="en" interaction="click" />)
+    const popover = screen.getByTestId('croquis-popover')
+    fireEvent.mouseEnter(screen.getByTestId('croquis-obstacle-0'))
+    // Hover does nothing in click mode.
+    expect(popover).toHaveAttribute('data-open', 'false')
+    fireEvent.click(screen.getByTestId('croquis-obstacle-0'))
+    expect(popover).toHaveAttribute('data-open', 'true')
+    // Mouse leaving does not schedule a close either.
+    fireEvent.mouseLeave(screen.getByTestId('croquis-obstacle-0'))
+    fireEvent.mouseLeave(popover)
+    expect(popover).toHaveAttribute('data-open', 'true')
+  })
+
   it('opens the popover on mouse enter and closes shortly after leave', () => {
     jest.useFakeTimers()
     renderApp(<CroquisMap obstacles={[ob()]} lang="en" />)
@@ -184,6 +198,29 @@ describe('CroquisMap', () => {
     renderApp(<CroquisMap obstacles={[ob()]} lang="en" />)
     fireEvent.mouseEnter(screen.getByTestId('croquis-obstacle-0'))
     expect(screen.queryByRole('img')).not.toBeInTheDocument()
+  })
+
+  it('stays open when focus moves from the obstacle to a gallery thumbnail', () => {
+    jest.useFakeTimers()
+    renderApp(
+      <CroquisMap
+        obstacles={[ob({ photos: ['https://x/a.jpg', 'https://x/b.jpg'] })]}
+        lang="en"
+        interaction="click"
+      />,
+    )
+    fireEvent.focus(screen.getByTestId('croquis-obstacle-0'))
+    const popover = screen.getByTestId('croquis-popover')
+    expect(popover).toHaveAttribute('data-open', 'true')
+    // Clicking a thumbnail blurs the obstacle; focus stays inside the popover,
+    // so it must not schedule a close.
+    fireEvent.blur(screen.getByTestId('croquis-obstacle-0'), {
+      relatedTarget: screen.getByTestId('croquis-thumb-1'),
+    })
+    act(() => {
+      jest.advanceTimersByTime(300)
+    })
+    expect(popover).toHaveAttribute('data-open', 'true')
   })
 
   describe('gallery swipe + fullscreen', () => {
