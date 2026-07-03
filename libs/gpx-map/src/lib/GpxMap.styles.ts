@@ -308,3 +308,38 @@ export const StyledWaypointsDetails = styled.details`
     }
   }
 `
+
+export const StyledLightbox = styled.div`
+  position: fixed;
+  inset: 0;
+  z-index: 1300;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+
+  img {
+    max-width: 92vw;
+    max-height: 92vh;
+    object-fit: contain;
+    cursor: default;
+  }
+`
+
+export const StyledLightboxClose = styled.button`
+  position: fixed;
+  top: 1rem;
+  right: 1.25rem;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.8;
+
+  &:hover {
+    opacity: 1;
+  }
+`
