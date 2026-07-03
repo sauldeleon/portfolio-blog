@@ -372,6 +372,19 @@ export const StyledMetaGrid = styled.div`
   }
 `
 
+/** The cover image picker and its fit selector, paired on a full-width row. */
+export const StyledCoverRow = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+
+  @media (width >= 600px) {
+    grid-column: 1 / -1;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+`
+
 export const StyledFormActions = styled.div`
   margin-top: 1.5rem;
   padding-top: 1.5rem;

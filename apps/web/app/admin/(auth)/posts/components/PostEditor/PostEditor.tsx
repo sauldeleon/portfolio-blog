@@ -46,6 +46,7 @@ import {
   StyledBackLink,
   StyledCheckboxFieldLabel,
   StyledContentTextarea,
+  StyledCoverRow,
   StyledDraftPreviewCopyButton,
   StyledDraftPreviewLabel,
   StyledDraftPreviewLink,
@@ -792,14 +793,38 @@ export function PostEditor({
                 <FieldHelper>{t('postEditor.fields.tagsHelper')}</FieldHelper>
               </FieldGroup>
 
-              <CoverImageInput
-                label={t('postEditor.fields.coverImage')}
-                placeholder={t('postEditor.fields.coverImagePlaceholder')}
-                clearTitle={t('postEditor.fields.coverImageClear')}
-                value={coverImage}
-                onPick={() => setIsPickerOpen(true)}
-                onClear={() => setCoverImage('')}
-              />
+              <StyledCoverRow>
+                <CoverImageInput
+                  label={t('postEditor.fields.coverImage')}
+                  placeholder={t('postEditor.fields.coverImagePlaceholder')}
+                  clearTitle={t('postEditor.fields.coverImageClear')}
+                  value={coverImage}
+                  onPick={() => setIsPickerOpen(true)}
+                  onClear={() => setCoverImage('')}
+                />
+
+                <FieldGroup>
+                  <FieldLabel htmlFor="meta-cover-image-fit">
+                    {t('postEditor.fields.coverImageFit')}
+                  </FieldLabel>
+                  <Select
+                    id="meta-cover-image-fit"
+                    value={coverImageFit}
+                    onChange={(v) => setCoverImageFit(v as 'cover' | 'contain')}
+                    options={[
+                      {
+                        value: 'cover',
+                        label: t('postEditor.fields.coverImageFitCover'),
+                      },
+                      {
+                        value: 'contain',
+                        label: t('postEditor.fields.coverImageFitContain'),
+                      },
+                    ]}
+                    data-testid="cover-image-fit-select"
+                  />
+                </FieldGroup>
+              </StyledCoverRow>
 
               <FieldGroup>
                 <FieldLabel htmlFor="meta-series-id">
@@ -863,28 +888,6 @@ export function PostEditor({
                   onChange={setScheduledAt}
                   placeholder={t('postEditor.fields.scheduledAtPlaceholder')}
                   data-testid="scheduled-at-picker"
-                />
-              </FieldGroup>
-
-              <FieldGroup>
-                <FieldLabel htmlFor="meta-cover-image-fit">
-                  {t('postEditor.fields.coverImageFit')}
-                </FieldLabel>
-                <Select
-                  id="meta-cover-image-fit"
-                  value={coverImageFit}
-                  onChange={(v) => setCoverImageFit(v as 'cover' | 'contain')}
-                  options={[
-                    {
-                      value: 'cover',
-                      label: t('postEditor.fields.coverImageFitCover'),
-                    },
-                    {
-                      value: 'contain',
-                      label: t('postEditor.fields.coverImageFitContain'),
-                    },
-                  ]}
-                  data-testid="cover-image-fit-select"
                 />
               </FieldGroup>
 
