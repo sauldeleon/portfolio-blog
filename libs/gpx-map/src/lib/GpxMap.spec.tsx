@@ -13,7 +13,9 @@ import { useMap } from 'react-leaflet'
 import {
   GpxMap,
   GpxTrackDef,
+  buildWaypointPopupHtml,
   parseElevationFromXml,
+  parseWaypointNotes,
   parseWaypointsFromXml,
 } from './GpxMap'
 
@@ -193,6 +195,34 @@ jest.mock('./GpxMap.styles', () => ({
     alt: string
     'data-testid'?: string
   }) => <img data-testid={testId} src={src} alt={alt} />,
+  StyledWaypointGalleryThumbs: ({
+    children,
+    'data-testid': testId,
+  }: {
+    children: React.ReactNode
+    'data-testid'?: string
+  }) => <div data-testid={testId}>{children}</div>,
+  StyledWaypointGalleryThumb: ({
+    children,
+    onClick,
+    'data-testid': testId,
+    'aria-label': ariaLabel,
+  }: {
+    children: React.ReactNode
+    onClick: React.MouseEventHandler
+    $active: boolean
+    'data-testid'?: string
+    'aria-label'?: string
+  }) => (
+    <button
+      type="button"
+      onClick={onClick}
+      data-testid={testId}
+      aria-label={ariaLabel}
+    >
+      {children}
+    </button>
+  ),
   StyledWaypointNotes: ({ children }: { children: React.ReactNode }) => (
     <ul data-testid="waypoint-notes">{children}</ul>
   ),
@@ -326,6 +356,9 @@ jest.mock('./GpxMap.styles', () => ({
       {children}
     </button>
   ),
+  StyledLightboxNav: ({ children }: { children: React.ReactNode }) => (
+    <div>{children}</div>
+  ),
   StyledLayerButton: ({
     children,
     onClick,
@@ -438,12 +471,29 @@ describe('GpxMap', () => {
       return call?.[1] as PopupOpen
     }
 
-    function popupWithImage(src: string | null) {
+    function popupWithImage(src: string) {
       const el = document.createElement('div')
       const img = document.createElement('img')
-      if (src !== null) img.setAttribute('src', src)
+      img.className = 'gpx-popup-main'
+      img.setAttribute('src', src)
       el.appendChild(img)
       return { el, img }
+    }
+
+    function popupWithGallery(urls: string[]) {
+      const el = document.createElement('div')
+      const main = document.createElement('img')
+      main.className = 'gpx-popup-main'
+      main.setAttribute('src', urls[0])
+      el.appendChild(main)
+      const thumbs = urls.map((u) => {
+        const t = document.createElement('img')
+        t.className = 'gpx-popup-thumb'
+        t.setAttribute('src', u)
+        el.appendChild(t)
+        return t
+      })
+      return { el, main, thumbs }
     }
 
     it('registers and tears down the popupopen listener', () => {
@@ -458,7 +508,6 @@ describe('GpxMap', () => {
       const onPopupOpen = getPopupOpenHandler()
       const { el, img } = popupWithImage('https://cdn.com/wp.jpg')
       act(() => onPopupOpen({ popup: { getElement: () => el } }))
-      expect(img.style.cursor).toBe('zoom-in')
       act(() => img.click())
       expect(screen.getByTestId('gpx-lightbox-image')).toHaveAttribute(
         'src',
@@ -466,12 +515,56 @@ describe('GpxMap', () => {
       )
     })
 
-    it('does not open the viewer for an image without a src', () => {
+    it('swaps the main image (and its zoom) when a thumbnail is clicked', () => {
       const onPopupOpen = getPopupOpenHandler()
-      const { el, img } = popupWithImage(null)
+      const { el, main, thumbs } = popupWithGallery([
+        'https://cdn.com/a.jpg',
+        'https://cdn.com/b.jpg',
+      ])
+      act(() => onPopupOpen({ popup: { getElement: () => el } }))
+      act(() => thumbs[1].click())
+      expect(main).toHaveAttribute('src', 'https://cdn.com/b.jpg')
+      expect(thumbs[1].style.opacity).toBe('1')
+      expect(thumbs[0].style.opacity).toBe('0.55')
+      // Zooming now shows the swapped image.
+      act(() => main.click())
+      expect(screen.getByTestId('gpx-lightbox-image')).toHaveAttribute(
+        'src',
+        'https://cdn.com/b.jpg',
+      )
+    })
+
+    it('pages through the gallery in the fullscreen viewer', () => {
+      const onPopupOpen = getPopupOpenHandler()
+      const { el, main } = popupWithGallery([
+        'https://cdn.com/a.jpg',
+        'https://cdn.com/b.jpg',
+      ])
+      act(() => onPopupOpen({ popup: { getElement: () => el } }))
+      act(() => main.click())
+      const shown = () =>
+        screen.getByTestId('gpx-lightbox-image').getAttribute('src')
+      expect(shown()).toBe('https://cdn.com/a.jpg')
+      fireEvent.click(screen.getByTestId('gpx-lightbox-next'))
+      expect(shown()).toBe('https://cdn.com/b.jpg')
+      // Wraps around.
+      fireEvent.click(screen.getByTestId('gpx-lightbox-next'))
+      expect(shown()).toBe('https://cdn.com/a.jpg')
+      fireEvent.click(screen.getByTestId('gpx-lightbox-prev'))
+      expect(shown()).toBe('https://cdn.com/b.jpg')
+      // Arrow keys page too.
+      fireEvent.keyDown(document, { key: 'ArrowLeft' })
+      expect(shown()).toBe('https://cdn.com/a.jpg')
+      fireEvent.keyDown(document, { key: 'ArrowRight' })
+      expect(shown()).toBe('https://cdn.com/b.jpg')
+    })
+
+    it('shows no nav arrows for a single-image viewer', () => {
+      const onPopupOpen = getPopupOpenHandler()
+      const { el, img } = popupWithImage('https://cdn.com/only.jpg')
       act(() => onPopupOpen({ popup: { getElement: () => el } }))
       act(() => img.click())
-      expect(screen.queryByTestId('gpx-lightbox')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('gpx-lightbox-next')).not.toBeInTheDocument()
     })
 
     it('closes via the close button, the backdrop and Escape', () => {
@@ -501,7 +594,7 @@ describe('GpxMap', () => {
       const { el, img } = popupWithImage('https://cdn.com/wp.jpg')
       act(() => onPopupOpen({ popup: { getElement: () => el } }))
       act(() => img.click())
-      fireEvent.keyDown(document, { key: 'ArrowRight' })
+      fireEvent.keyDown(document, { key: 'a' })
       expect(screen.getByTestId('gpx-lightbox')).toBeInTheDocument()
     })
 
@@ -1037,7 +1130,7 @@ describe('GpxMap', () => {
         <GpxMap
           url={GPX_URL}
           showWaypoints
-          waypointImages={{ 'Refugio Mar': 'https://cdn.com/img.jpg' }}
+          waypointImages={{ 'Refugio Mar': ['https://cdn.com/img.jpg'] }}
         />,
       )
       await screen.findByText('Refugio Mar')
@@ -1062,7 +1155,7 @@ describe('GpxMap', () => {
         <GpxMap
           url={GPX_URL}
           showWaypoints
-          waypointImages={{ Other: 'https://cdn.com/img.jpg' }}
+          waypointImages={{ Other: ['https://cdn.com/img.jpg'] }}
         />,
       )
       await screen.findByText('Summit')
@@ -1076,7 +1169,7 @@ describe('GpxMap', () => {
         <GpxMap
           url={GPX_URL}
           showWaypoints
-          waypointImages={{ 'Refugio Mar': 'https://cdn.com/img.jpg' }}
+          waypointImages={{ 'Refugio Mar': ['https://cdn.com/img.jpg'] }}
         />,
       )
       await screen.findByText('Refugio Mar')
@@ -1087,12 +1180,37 @@ describe('GpxMap', () => {
       expect(img).toHaveAttribute('alt', 'Refugio Mar')
     })
 
+    it('shows a thumbnail slideshow in the table when several images are pinned', async () => {
+      render(
+        <GpxMap
+          url={GPX_URL}
+          showWaypoints
+          waypointImages={{
+            'Refugio Mar': ['https://cdn.com/a.jpg', 'https://cdn.com/b.jpg'],
+          }}
+        />,
+      )
+      await screen.findByText('Refugio Mar')
+      fireEvent.click(screen.getAllByRole('row')[1])
+      expect(screen.getByTestId('waypoint-image-card')).toHaveAttribute(
+        'src',
+        'https://cdn.com/a.jpg',
+      )
+      expect(screen.getByTestId('waypoint-gallery-thumbs')).toBeInTheDocument()
+      // Tapping the second thumbnail swaps the shown image.
+      fireEvent.click(screen.getByTestId('waypoint-gallery-thumb-1'))
+      expect(screen.getByTestId('waypoint-image-card')).toHaveAttribute(
+        'src',
+        'https://cdn.com/b.jpg',
+      )
+    })
+
     it('shows description alongside image when both present', async () => {
       render(
         <GpxMap
           url={GPX_URL}
           showWaypoints
-          waypointImages={{ 'Refugio Mar': 'https://cdn.com/img.jpg' }}
+          waypointImages={{ 'Refugio Mar': ['https://cdn.com/img.jpg'] }}
         />,
       )
       await screen.findByText('Refugio Mar')
@@ -1107,7 +1225,7 @@ describe('GpxMap', () => {
         <GpxMap
           url={GPX_URL}
           showWaypoints
-          waypointImages={{ Other: 'https://cdn.com/img.jpg' }}
+          waypointImages={{ Other: ['https://cdn.com/img.jpg'] }}
         />,
       )
       await screen.findByText('Summit')
@@ -1127,7 +1245,7 @@ describe('GpxMap', () => {
         <GpxMap
           url={GPX_URL}
           showWaypoints
-          waypointImages={{ 'Refugio Mar': 'https://cdn.com/img.jpg' }}
+          waypointImages={{ 'Refugio Mar': ['https://cdn.com/img.jpg'] }}
         />,
       )
       const loadedCallback = mockOn.mock.calls.find(
@@ -1154,7 +1272,7 @@ describe('GpxMap', () => {
       render(
         <GpxMap
           url={GPX_URL}
-          waypointImages={{ 'Refugio Mar': 'https://cdn.com/img.jpg' }}
+          waypointImages={{ 'Refugio Mar': ['https://cdn.com/img.jpg'] }}
         />,
       )
       const loadedCallback = mockOn.mock.calls.find(
@@ -1172,6 +1290,81 @@ describe('GpxMap', () => {
       bindPopup: jest.fn(),
     })
 
+    it('binds the popup with description notes (matched by name)', () => {
+      mockAxiosGetPending()
+      const marker = makeWptMarker('Refugio Mar')
+      mockEachLayer.mockImplementationOnce((cb: (l: unknown) => void) => {
+        cb(marker)
+      })
+      render(
+        <GpxMap
+          url={GPX_URL}
+          showWaypoints
+          waypointNotes={{ 'Refugio Mar': ['Note one', 'Note two'] }}
+        />,
+      )
+      const loadedCallback = mockOn.mock.calls.find(
+        (c: [string, () => void]) => c[0] === 'loaded',
+      )?.[1]
+      act(() => {
+        loadedCallback()
+      })
+      expect(marker.bindPopup).toHaveBeenCalledWith(
+        expect.stringContaining('Note one'),
+        expect.anything(),
+      )
+    })
+
+    it('binds a popup for a note-only, unnamed waypoint (matched by index)', () => {
+      mockAxiosGetPending()
+      const marker = makeWptMarker('')
+      mockEachLayer.mockImplementationOnce((cb: (l: unknown) => void) => {
+        cb(marker)
+      })
+      render(
+        <GpxMap
+          url={GPX_URL}
+          showWaypoints
+          waypointNotes={{ '0': ['Only a note'] }}
+        />,
+      )
+      const loadedCallback = mockOn.mock.calls.find(
+        (c: [string, () => void]) => c[0] === 'loaded',
+      )?.[1]
+      act(() => {
+        loadedCallback()
+      })
+      expect(marker.bindPopup).toHaveBeenCalledWith(
+        expect.stringContaining('Only a note'),
+        expect.anything(),
+      )
+    })
+
+    it('binds an unnamed waypoint image with no notes when none match its index', () => {
+      mockAxiosGetPending()
+      const marker = makeWptMarker('')
+      mockEachLayer.mockImplementationOnce((cb: (l: unknown) => void) => {
+        cb(marker)
+      })
+      render(
+        <GpxMap
+          url={GPX_URL}
+          showWaypoints
+          waypointImages={{ '0': ['https://cdn.com/img.jpg'] }}
+          waypointNotes={{ '5': ['unrelated'] }}
+        />,
+      )
+      const loadedCallback = mockOn.mock.calls.find(
+        (c: [string, () => void]) => c[0] === 'loaded',
+      )?.[1]
+      act(() => {
+        loadedCallback()
+      })
+      const content = marker.bindPopup.mock.calls[0][0]
+      expect(content).toContain('https://cdn.com/img.jpg')
+      expect(content).not.toContain('<ul')
+    })
+
     it('unbinds popup and binds tooltip for waypoint with matching title', () => {
       mockAxiosGetPending()
       const marker = makeWptMarker('Refugio Mar')
@@ -1182,7 +1375,7 @@ describe('GpxMap', () => {
         <GpxMap
           url={GPX_URL}
           showWaypoints
-          waypointImages={{ 'Refugio Mar': 'https://cdn.com/img.jpg' }}
+          waypointImages={{ 'Refugio Mar': ['https://cdn.com/img.jpg'] }}
         />,
       )
       const loadedCallback = mockOn.mock.calls.find(
@@ -1208,7 +1401,7 @@ describe('GpxMap', () => {
         <GpxMap
           url={GPX_URL}
           showWaypoints
-          waypointImages={{ '0': 'https://cdn.com/idx.jpg' }}
+          waypointImages={{ '0': ['https://cdn.com/idx.jpg'] }}
         />,
       )
       const loadedCallback = mockOn.mock.calls.find(
@@ -1236,8 +1429,8 @@ describe('GpxMap', () => {
           url={GPX_URL}
           showWaypoints
           waypointImages={{
-            '0': 'https://cdn.com/img0.jpg',
-            '1': 'https://cdn.com/img1.jpg',
+            '0': ['https://cdn.com/img0.jpg'],
+            '1': ['https://cdn.com/img1.jpg'],
           }}
         />,
       )
@@ -1270,7 +1463,7 @@ describe('GpxMap', () => {
         <GpxMap
           url={GPX_URL}
           showWaypoints
-          waypointImages={{ 'Refugio Mar': 'https://cdn.com/img.jpg' }}
+          waypointImages={{ 'Refugio Mar': ['https://cdn.com/img.jpg'] }}
         />,
       )
       const loadedCallback = mockOn.mock.calls.find(
@@ -1299,7 +1492,7 @@ describe('GpxMap', () => {
         <GpxMap
           url={GPX_URL}
           showWaypoints
-          waypointImages={{ 'Refugio Mar': 'https://cdn.com/img.jpg' }}
+          waypointImages={{ 'Refugio Mar': ['https://cdn.com/img.jpg'] }}
         />,
       )
       const loadedCallback = mockOn.mock.calls.find(
@@ -1326,7 +1519,7 @@ describe('GpxMap', () => {
         <GpxMap
           url={GPX_URL}
           showWaypoints
-          waypointImages={{ '0': 'https://cdn.com/img.jpg' }}
+          waypointImages={{ '0': ['https://cdn.com/img.jpg'] }}
         />,
       )
       const loadedCallback = mockOn.mock.calls.find(
@@ -1349,7 +1542,7 @@ describe('GpxMap', () => {
         <GpxMap
           url={GPX_URL}
           showWaypoints
-          waypointImages={{ 'Refugio Mar': 'https://cdn.com/img.jpg' }}
+          waypointImages={{ 'Refugio Mar': ['https://cdn.com/img.jpg'] }}
         />,
       )
       const loadedCallback = mockOn.mock.calls.find(
@@ -1398,7 +1591,7 @@ describe('GpxMap', () => {
         <GpxMap
           url={GPX_URL}
           showWaypoints
-          waypointImages={{ '0': 'https://cdn.com/notitle.jpg' }}
+          waypointImages={{ '0': ['https://cdn.com/notitle.jpg'] }}
         />,
       )
       const loadedCallback = mockOn.mock.calls.find(
@@ -1426,7 +1619,7 @@ describe('GpxMap', () => {
             {
               url: GPX_URL,
               showWaypoints: true,
-              waypointImages: { Summit: 'https://cdn.com/track-img.jpg' },
+              waypointImages: { Summit: ['https://cdn.com/track-img.jpg'] },
             },
           ]}
         />,
@@ -1448,7 +1641,7 @@ describe('GpxMap', () => {
         <GpxMap
           url={GPX_URL}
           showWaypoints
-          waypointImages={{ Summit: 'https://cdn.com/img.jpg' }}
+          waypointImages={{ Summit: ['https://cdn.com/img.jpg'] }}
         />,
       )
       await screen.findByText('Summit')
@@ -1471,7 +1664,7 @@ describe('GpxMap', () => {
         <GpxMap
           url={GPX_URL}
           showWaypoints
-          waypointImages={{ '1': 'https://cdn.com/idx-img.jpg' }}
+          waypointImages={{ '1': ['https://cdn.com/idx-img.jpg'] }}
         />,
       )
       await screen.findByText('Summit')
@@ -2117,5 +2310,69 @@ describe('GpxMap showElevation', () => {
     await screen.findByTestId('elevation-chart')
     fireEvent.click(screen.getByTestId('area-chart-trigger-hover-oob'))
     expect(screen.queryByTestId('elevation-cursor')).not.toBeInTheDocument()
+  })
+})
+
+describe('buildWaypointPopupHtml', () => {
+  it('builds a single-image popup without a thumbnail strip', () => {
+    const html = buildWaypointPopupHtml(['https://cdn.com/a.jpg'], 'Summit')
+    expect(html).toContain('class="gpx-popup-main"')
+    expect(html).toContain('https://cdn.com/a.jpg')
+    expect(html).toContain('Summit')
+    expect(html).not.toContain('gpx-popup-thumb')
+  })
+
+  it('adds a thumbnail per image when several are pinned', () => {
+    const html = buildWaypointPopupHtml(
+      ['https://cdn.com/a.jpg', 'https://cdn.com/b.jpg'],
+      'Summit',
+    )
+    expect((html.match(/gpx-popup-thumb/g) ?? []).length).toBe(2)
+    // First thumbnail is highlighted, the rest dimmed.
+    expect(html).toContain('opacity:1;')
+    expect(html).toContain('opacity:0.55;')
+  })
+
+  it('renders a name-only popup with no image', () => {
+    const html = buildWaypointPopupHtml([], 'Water source')
+    expect(html).not.toContain('gpx-popup-main')
+    expect(html).toContain('Water source')
+    expect(html).toContain('max-width:280px;')
+  })
+
+  it('renders an image-only popup with no name label', () => {
+    const html = buildWaypointPopupHtml(['https://cdn.com/a.jpg'], '')
+    expect(html).toContain('gpx-popup-main')
+    expect(html).not.toContain('<p')
+  })
+
+  it('renders description notes as a list', () => {
+    const html = buildWaypointPopupHtml([], 'Summit', [
+      'Watch the edge',
+      'Rappel 20m',
+    ])
+    expect(html).toContain('<ul')
+    expect(html).toContain('<li style="margin:1px 0;">Watch the edge</li>')
+    expect(html).toContain('Rappel 20m')
+  })
+
+  it('omits the notes list when there are no notes', () => {
+    expect(
+      buildWaypointPopupHtml(['https://cdn.com/a.jpg'], 'Summit'),
+    ).not.toContain('<ul')
+  })
+})
+
+describe('parseWaypointNotes', () => {
+  it('splits lines, strips bullets, and indents by leading whitespace', () => {
+    expect(parseWaypointNotes('- Top\n  - Nested\nPlain')).toEqual([
+      { level: 0, text: 'Top' },
+      { level: 2, text: 'Nested' },
+      { level: 0, text: 'Plain' },
+    ])
+  })
+
+  it('drops blank lines and returns nothing for an empty desc', () => {
+    expect(parseWaypointNotes('')).toEqual([])
   })
 })

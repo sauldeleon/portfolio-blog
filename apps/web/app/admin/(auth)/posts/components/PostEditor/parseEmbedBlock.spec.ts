@@ -101,11 +101,41 @@ describe('parseGpxBody', () => {
     expect(mappingsByTrack[0]).toHaveLength(2)
     expect(mappingsByTrack[0][0]).toEqual({
       name: 'Summit',
-      imageUrl: 'https://img.com/wp1.jpg',
+      imageUrls: ['https://img.com/wp1.jpg'],
+      notes: [],
     })
     expect(mappingsByTrack[0][1]).toEqual({
       name: 'Basecamp',
-      imageUrl: 'https://img.com/wp2.jpg',
+      imageUrls: ['https://img.com/wp2.jpg'],
+      notes: [],
+    })
+  })
+
+  it('parses several comma-separated images for one waypoint', () => {
+    const body = [
+      'track:https://cdn.com/route.gpx',
+      '0:6=https://img.com/a.jpg,https://img.com/b.jpg',
+    ].join('\n')
+    const { mappingsByTrack } = parseGpxBody(body)
+    expect(mappingsByTrack[0][0]).toEqual({
+      name: '',
+      fetchIdx: 6,
+      imageUrls: ['https://img.com/a.jpg', 'https://img.com/b.jpg'],
+      notes: [],
+    })
+  })
+
+  it('parses description notes after the images', () => {
+    const body = [
+      'track:https://cdn.com/route.gpx',
+      '0:6=https://img.com/a.jpg | Watch the edge | Rappel 20m',
+    ].join('\n')
+    const { mappingsByTrack } = parseGpxBody(body)
+    expect(mappingsByTrack[0][0]).toEqual({
+      name: '',
+      fetchIdx: 6,
+      imageUrls: ['https://img.com/a.jpg'],
+      notes: ['Watch the edge', 'Rappel 20m'],
     })
   })
 
@@ -118,7 +148,8 @@ describe('parseGpxBody', () => {
     expect(mappingsByTrack[0][0]).toEqual({
       name: '',
       fetchIdx: 6,
-      imageUrl: 'https://img.com/wp7.jpg',
+      imageUrls: ['https://img.com/wp7.jpg'],
+      notes: [],
     })
   })
 
@@ -427,7 +458,8 @@ describe('detectEmbedAtCursor', () => {
       expect(result.parsed.mappingsByTrack[0]).toHaveLength(1)
       expect(result.parsed.mappingsByTrack[0][0]).toEqual({
         name: 'Summit',
-        imageUrl: 'https://img.com/wp1.jpg',
+        imageUrls: ['https://img.com/wp1.jpg'],
+        notes: [],
       })
     })
 
@@ -516,13 +548,14 @@ describe('detectEmbedAtCursor', () => {
       expect(result?.type).toBe('croquis')
     })
 
-    it('carries the block body text verbatim with an empty title by default', () => {
+    it('carries the block body text verbatim with an empty title and download on by default', () => {
       const fenceStart = croquisContent.indexOf('```croquis')
       const result = detectEmbedAtCursor(croquisContent, fenceStart + 5)
       if (result?.type !== 'croquis') throw new Error('expected croquis')
       expect(result.parsed.text).toContain('salto: Jump 2m - 42.6 0.1')
       expect(result.parsed.text).toContain('! img=https://img.com/jump.jpg')
       expect(result.parsed.title).toBe('')
+      expect(result.parsed.showDownload).toBe(true)
     })
 
     it('reads the title from the fence meta', () => {
@@ -535,6 +568,19 @@ describe('detectEmbedAtCursor', () => {
       if (result?.type !== 'croquis') throw new Error('expected croquis')
       expect(result.parsed.title).toBe('Barranco de la Peonera')
       expect(result.parsed.text).toBe('salto: Jump 2m')
+      expect(result.parsed.showDownload).toBe(true)
+    })
+
+    it('reads the no-download flag from the fence meta', () => {
+      const flagged = [
+        '```croquis no-download Barranco X',
+        'salto: Jump 2m',
+        '```',
+      ].join('\n')
+      const result = detectEmbedAtCursor(flagged, 5)
+      if (result?.type !== 'croquis') throw new Error('expected croquis')
+      expect(result.parsed.showDownload).toBe(false)
+      expect(result.parsed.title).toBe('Barranco X')
     })
 
     it('returns null when the cursor is outside the croquis block', () => {

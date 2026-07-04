@@ -1,3 +1,5 @@
+import { parseCroquisMeta } from '@web/lib/cards'
+
 export type EmbedType =
   | 'youtube'
   | 'youtube-360'
@@ -40,7 +42,12 @@ export interface ParsedGpx {
   tracks: ParsedGpxTrack[]
   mappingsByTrack: Record<
     number,
-    Array<{ name: string; imageUrl: string; fetchIdx?: number }>
+    Array<{
+      name: string
+      imageUrls: string[]
+      notes: string[]
+      fetchIdx?: number
+    }>
   >
 }
 
@@ -50,10 +57,11 @@ export interface ParsedSlideshow {
   slides: ParsedSlideshowSlide[]
 }
 
-/** A croquis block: the editable canyon-waypoint text plus an optional title. */
+/** A croquis block: editable waypoint text, an optional title, and flags. */
 export interface ParsedCroquis {
   text: string
   title: string
+  showDownload: boolean
 }
 
 export type DetectedEmbed =
@@ -195,11 +203,18 @@ export function parseGpxBody(
         // format the modal writes); its display name is resolved from the
         // fetched waypoints. A non-numeric key is a legacy name mapping.
         const key = m[2]
-        const imageUrl = m[3]
+        // Value is `url1,url2 | note1 | note2`: comma-separated images, then
+        // optional ` | `-separated description notes.
+        const [urlsPart, ...noteParts] = m[3].split(' | ')
+        const imageUrls = urlsPart
+          .split(',')
+          .map((u) => u.trim())
+          .filter(Boolean)
+        const notes = noteParts.map((n) => n.trim()).filter(Boolean)
         mappingsByTrack[trackIdx].push(
           /^\d+$/.test(key)
-            ? { name: '', imageUrl, fetchIdx: parseInt(key, 10) }
-            : { name: key, imageUrl },
+            ? { name: '', imageUrls, notes, fetchIdx: parseInt(key, 10) }
+            : { name: key, imageUrls, notes },
         )
       }
     }
@@ -268,11 +283,12 @@ export function detectEmbedAtCursor(
       }
 
       if (fenceType === 'croquis') {
+        const { title, showDownload } = parseCroquisMeta(meta)
         return {
           type: 'croquis',
           blockStart: start,
           blockEnd: end,
-          parsed: { text: body, title: meta },
+          parsed: { text: body, title, showDownload },
         }
       }
 

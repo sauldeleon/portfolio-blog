@@ -67,6 +67,7 @@ jest.mock('@sdlgr/gpx-map', () => ({
     showWaypoints,
     allowDownload,
     waypointImages,
+    waypointNotes,
     downloadLabel,
     labels,
   }: {
@@ -74,7 +75,8 @@ jest.mock('@sdlgr/gpx-map', () => ({
     tracks?: Array<{ url: string; name?: string; color?: string }>
     showWaypoints?: boolean
     allowDownload?: boolean
-    waypointImages?: Record<string, string>
+    waypointImages?: Record<string, string[]>
+    waypointNotes?: Record<string, string[]>
     downloadLabel?: string
     labels?: Record<string, string>
   }) => (
@@ -87,6 +89,7 @@ jest.mock('@sdlgr/gpx-map', () => ({
       data-waypoint-images={
         waypointImages ? JSON.stringify(waypointImages) : ''
       }
+      data-waypoint-notes={waypointNotes ? JSON.stringify(waypointNotes) : ''}
       data-download-label={downloadLabel ?? ''}
       data-fly-to-label={labels?.flyTo ?? ''}
     />
@@ -210,6 +213,25 @@ describe('PostContentEmbed', () => {
     render(<PostContentEmbed type="gpx" url="https://example.com/track.gpx" />)
     const gpxMap = await screen.findByTestId('gpx-map')
     expect(gpxMap).toHaveAttribute('data-waypoint-images', '')
+  })
+
+  it('passes parsed waypointNotes to GpxMap when json string provided', async () => {
+    const notes = { Summit: ['Watch the edge'] }
+    render(
+      <PostContentEmbed
+        type="gpx"
+        url="https://example.com/track.gpx"
+        waypointNotes={JSON.stringify(notes)}
+      />,
+    )
+    const gpxMap = await screen.findByTestId('gpx-map')
+    expect(gpxMap).toHaveAttribute('data-waypoint-notes', JSON.stringify(notes))
+  })
+
+  it('passes undefined waypointNotes to GpxMap when prop not set', async () => {
+    render(<PostContentEmbed type="gpx" url="https://example.com/track.gpx" />)
+    const gpxMap = await screen.findByTestId('gpx-map')
+    expect(gpxMap).toHaveAttribute('data-waypoint-notes', '')
   })
 
   it('passes translated downloadLabel to GpxMap', async () => {

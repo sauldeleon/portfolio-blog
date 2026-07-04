@@ -44,6 +44,8 @@ export {
   croquisHeader,
   CROQUIS_HEADER_H,
 } from './croquisCard'
+export { parseCroquisMeta, serializeCroquisMeta } from './croquisMeta'
+export type { CroquisMeta } from './croquisMeta'
 export { svgToPng } from './svgToPng'
 export { zipStore } from './zip'
 export type { ZipFile } from './zip'

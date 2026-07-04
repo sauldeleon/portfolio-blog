@@ -34,6 +34,8 @@ import {
   StyledRemoveButton,
   StyledRemoveTrackButton,
   StyledSectionLabel,
+  StyledThumbChip,
+  StyledThumbGroup,
   StyledTrackInputsRow,
   StyledTrackList,
   StyledTrackRow,
@@ -49,7 +51,8 @@ export interface GpxMapModalProps {
 
 interface WaypointMapping {
   name: string
-  imageUrl: string
+  imageUrls: string[]
+  notes: string[]
   fetchIdx?: number
 }
 
@@ -84,35 +87,40 @@ function initTrack(): TrackInput {
   }
 }
 
-function parseWaypointNames(text: string): string[] {
+interface FetchedWaypoint {
+  name: string
+  // Description split into notes (one per line, bullet stripped) — persisted
+  // alongside the images so the rendered popup can show them.
+  notes: string[]
+}
+
+function parseWaypoints(text: string): FetchedWaypoint[] {
   const doc = new DOMParser().parseFromString(text, 'text/xml')
   return Array.from(doc.querySelectorAll('wpt'))
-    .map((wpt) => wpt.querySelector('name')?.textContent ?? '')
-    .filter(Boolean)
+    .map((wpt) => ({
+      name: wpt.querySelector('name')?.textContent ?? '',
+      notes: (wpt.querySelector('desc')?.textContent ?? '')
+        .split(/\r?\n/)
+        .map((raw) => raw.replace(/^\s*[-•·]\s*/, '').trim())
+        .filter(Boolean),
+    }))
+    .filter((w) => w.name)
 }
 
-function hasFetchedWaypointIndex(
-  mapping: WaypointMapping,
-): mapping is WaypointMapping & { fetchIdx: number } {
-  return mapping.fetchIdx !== undefined
+// Serialise a mapping to its fence value: `<idx|name>=url1,url2 | note1 | note2`
+// (notes appended only when present, keeping old single-image lines unchanged).
+function serializeMapping(m: WaypointMapping): string {
+  const key = m.fetchIdx !== undefined ? m.fetchIdx : m.name
+  const notes = m.notes.length > 0 ? ` | ${m.notes.join(' | ')}` : ''
+  return `${key}=${m.imageUrls.join(',')}${notes}`
 }
 
-function getAvailableWaypoints(
-  fetched: string[],
-  mappings: WaypointMapping[],
+// Every fetched waypoint stays selectable: a waypoint can hold several images,
+// so picking one again just appends to its existing mapping.
+function waypointOptions(
+  fetched: FetchedWaypoint[],
 ): Array<{ name: string; fetchIdx: number }> {
-  const mappedFetchIdxSet = new Set(
-    mappings.filter(hasFetchedWaypointIndex).map((m) => m.fetchIdx),
-  )
-  const initialMappingNames = new Set(
-    mappings.filter((m) => m.fetchIdx === undefined).map((m) => m.name),
-  )
-  return fetched
-    .map((name, fetchIdx) => ({ name, fetchIdx }))
-    .filter(
-      ({ name, fetchIdx }) =>
-        !mappedFetchIdxSet.has(fetchIdx) && !initialMappingNames.has(name),
-    )
+  return fetched.map((w, fetchIdx) => ({ name: w.name, fetchIdx }))
 }
 
 function buildTrackLine(track: TrackInput): string {
@@ -158,7 +166,7 @@ export function GpxMapModal({
     initialValues?.tracks.length ? initialValues.tracks : [initTrack()],
   )
   const [fetchedWaypointsByTrack, setFetchedWaypointsByTrack] = useState<
-    Record<number, string[]>
+    Record<number, FetchedWaypoint[]>
   >({})
   const [fetchLoadingByTrack, setFetchLoadingByTrack] = useState<
     Record<number, boolean>
@@ -186,10 +194,7 @@ export function GpxMapModal({
     setPendingWaypointByTrack((prev) => {
       const next: Record<number, number | undefined> = { ...prev }
       tracks.forEach((_, i) => {
-        const available = getAvailableWaypoints(
-          fetchedWaypointsByTrack[i] ?? [],
-          mappingsByTrack[i] ?? [],
-        )
+        const available = waypointOptions(fetchedWaypointsByTrack[i] ?? [])
         if (!available.some((a) => a.fetchIdx === next[i])) {
           next[i] = available[0]?.fetchIdx
         }
@@ -240,7 +245,7 @@ export function GpxMapModal({
           .then(({ data: text }) => {
             setFetchedWaypointsByTrack((prev) => ({
               ...prev,
-              [i]: parseWaypointNames(text),
+              [i]: parseWaypoints(text),
             }))
           })
           .catch(() => {
@@ -307,9 +312,7 @@ export function GpxMapModal({
     activeEntries.forEach(({ origIdx }, outputIdx) => {
       const ms = mappingsByTrack[origIdx] ?? []
       ms.forEach((m) => {
-        imageLines.push(
-          `${outputIdx}:${m.fetchIdx !== undefined ? m.fetchIdx : m.name}=${m.imageUrl}`,
-        )
+        imageLines.push(`${outputIdx}:${serializeMapping(m)}`)
       })
     })
 
@@ -333,25 +336,50 @@ export function GpxMapModal({
     const fetchIdx = pendingWaypointByTrack[trackIdx]
     /* istanbul ignore next */
     if (fetchIdx === undefined) return
+    const waypoint = fetchedWaypointsByTrack[trackIdx]?.[fetchIdx]
+    // The pending index always points at a fetched waypoint; the fallbacks are
+    // just for the type-narrowing.
     /* istanbul ignore next */
-    const waypointName = fetchedWaypointsByTrack[trackIdx]?.[fetchIdx] ?? ''
-    setMappingsByTrack((prev) => ({
-      ...prev,
-      [trackIdx]: [
-        ...(prev[trackIdx] ?? []),
-        { name: waypointName, fetchIdx, imageUrl: image.url },
-      ],
-    }))
+    const waypointName = waypoint?.name ?? ''
+    /* istanbul ignore next */
+    const waypointNotes = waypoint?.notes ?? []
+    setMappingsByTrack((prev) => {
+      const existing = prev[trackIdx] ?? []
+      // Append to the waypoint's mapping if it already has one, else create it
+      // (carrying the waypoint's parsed description notes for persistence).
+      const found = existing.some((m) => m.fetchIdx === fetchIdx)
+      const next = found
+        ? existing.map((m) =>
+            m.fetchIdx === fetchIdx
+              ? { ...m, imageUrls: [...m.imageUrls, image.url] }
+              : m,
+          )
+        : [
+            ...existing,
+            {
+              name: waypointName,
+              fetchIdx,
+              imageUrls: [image.url],
+              notes: waypointNotes,
+            },
+          ]
+      return { ...prev, [trackIdx]: next }
+    })
     setIsImagePickerOpenForTrack(null)
   }
 
-  function removeMapping(trackIdx: number, mappingIdx: number) {
+  function removeImage(trackIdx: number, mappingIdx: number, imageIdx: number) {
     setMappingsByTrack((prev) => {
       const existing = prev[trackIdx] ?? /* istanbul ignore next */ []
-      return {
-        ...prev,
-        [trackIdx]: existing.filter((_, i) => i !== mappingIdx),
-      }
+      const next = existing
+        .map((m, i) =>
+          i === mappingIdx
+            ? { ...m, imageUrls: m.imageUrls.filter((_, j) => j !== imageIdx) }
+            : m,
+        )
+        // Drop the waypoint's row once its last image is removed.
+        .filter((m) => m.imageUrls.length > 0)
+      return { ...prev, [trackIdx]: next }
     })
   }
 
@@ -364,9 +392,7 @@ export function GpxMapModal({
   tracks.forEach((_, trackIdx) => {
     const ms = mappingsByTrack[trackIdx] ?? []
     ms.forEach((m) => {
-      previewImageLines.push(
-        `${trackIdx}:${m.fetchIdx !== undefined ? m.fetchIdx : m.name}=${m.imageUrl}`,
-      )
+      previewImageLines.push(`${trackIdx}:${serializeMapping(m)}`)
     })
   })
   const previewContent = [...previewTrackLines, ...previewImageLines].join('\n')
@@ -406,7 +432,7 @@ export function GpxMapModal({
               const fetched = fetchedWaypointsByTrack[index] ?? []
               const trackMappings = mappingsByTrack[index] ?? []
               const pendingWaypoint = pendingWaypointByTrack[index]
-              const available = getAvailableWaypoints(fetched, trackMappings)
+              const available = waypointOptions(fetched)
               const showWaypointSection =
                 track.showWaypoints && (loading || error || fetched.length > 0)
               return (
@@ -532,33 +558,43 @@ export function GpxMapModal({
                             // name — resolve it from the fetched waypoints.
                             const mappingName =
                               m.fetchIdx !== undefined
-                                ? (fetched[m.fetchIdx] ?? m.name)
+                                ? (fetched[m.fetchIdx]?.name ?? m.name)
                                 : m.name
                             return (
                               <StyledMappingRow
                                 key={mappingIdx}
                                 data-testid={`mapping-row-${index}`}
                               >
-                                <StyledMappingThumb
-                                  src={m.imageUrl}
-                                  alt={mappingName}
-                                  data-testid={`mapping-thumb-${index}`}
-                                />
                                 <StyledMappingName
                                   data-testid={`mapping-name-${index}`}
                                 >
                                   {mappingName}
                                 </StyledMappingName>
-                                <StyledRemoveButton
-                                  type="button"
-                                  aria-label={`Remove image for ${mappingName}`}
-                                  onClick={() =>
-                                    removeMapping(index, mappingIdx)
-                                  }
-                                  data-testid={`mapping-remove-${index}`}
-                                >
-                                  ×
-                                </StyledRemoveButton>
+                                <StyledThumbGroup>
+                                  {m.imageUrls.map((imageUrl, imageIdx) => (
+                                    <StyledThumbChip key={imageIdx}>
+                                      <StyledMappingThumb
+                                        src={imageUrl}
+                                        alt={mappingName}
+                                        data-testid={`mapping-thumb-${index}-${imageIdx}`}
+                                      />
+                                      <StyledRemoveButton
+                                        type="button"
+                                        aria-label={`Remove image ${imageIdx + 1} for ${mappingName}`}
+                                        onClick={() =>
+                                          removeImage(
+                                            index,
+                                            mappingIdx,
+                                            imageIdx,
+                                          )
+                                        }
+                                        data-testid={`mapping-remove-${index}-${imageIdx}`}
+                                      >
+                                        ×
+                                      </StyledRemoveButton>
+                                    </StyledThumbChip>
+                                  ))}
+                                </StyledThumbGroup>
                               </StyledMappingRow>
                             )
                           })}

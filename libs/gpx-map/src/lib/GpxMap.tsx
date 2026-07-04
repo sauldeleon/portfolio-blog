@@ -22,7 +22,13 @@ import {
   YAxis,
 } from 'recharts'
 
-import { DownloadIcon, MapPinIcon, NoteIcon, PhotoIcon } from '@sdlgr/icons'
+import {
+  ChevronIcon,
+  DownloadIcon,
+  MapPinIcon,
+  NoteIcon,
+  PhotoIcon,
+} from '@sdlgr/icons'
 
 import {
   MAP_ICON_ANCHOR,
@@ -43,6 +49,7 @@ import {
   StyledLayerSwitcher,
   StyledLightbox,
   StyledLightboxClose,
+  StyledLightboxNav,
   StyledLocateButton,
   StyledMapContainer,
   StyledRowChevron,
@@ -52,6 +59,8 @@ import {
   StyledTrackDownloadButton,
   StyledTrackStrip,
   StyledTrackToggle,
+  StyledWaypointGalleryThumb,
+  StyledWaypointGalleryThumbs,
   StyledWaypointImageCard,
   StyledWaypointNotes,
   StyledWaypointsDetails,
@@ -92,6 +101,23 @@ export function parseWaypointsFromXml(text: string): Waypoint[] {
       sym: wpt.querySelector('sym')?.textContent ?? '',
     }
   })
+}
+
+/**
+ * Split a waypoint description into notes — one per line, each stripped of its
+ * leading bullet, indented by its leading-whitespace level. Shared by the table
+ * and the insert modal (which persists the parsed texts into the markdown).
+ */
+export function parseWaypointNotes(
+  desc: string,
+): Array<{ level: number; text: string }> {
+  return desc
+    .split(/\r?\n/)
+    .map((raw) => ({
+      level: Math.min(raw.length - raw.trimStart().length, 4),
+      text: raw.replace(/^\s*[-•·]\s*/, '').trim(),
+    }))
+    .filter((n) => n.text)
 }
 
 export type ElevationPoint = {
@@ -242,6 +268,85 @@ function ElevationProfile({
   )
 }
 
+/**
+ * Build the HTML for a waypoint popup: a main image (zoomable, class
+ * `gpx-popup-main`), a thumbnail strip when several images are pinned (class
+ * `gpx-popup-thumb`, wired to swap the main image on popupopen), the name, and
+ * any persisted description notes (flat list, like the croquis popover).
+ */
+export function buildWaypointPopupHtml(
+  urls: string[],
+  name: string,
+  notes: string[] = [],
+): string {
+  const hasImg = urls.length > 0
+  const main = hasImg
+    ? `<img class="gpx-popup-main" src="${urls[0]}" style="width:100%;max-height:260px;object-fit:cover;display:block;cursor:zoom-in;" alt="${name}" />`
+    : ''
+  const thumbs =
+    urls.length > 1
+      ? `<div style="display:flex;gap:4px;padding:4px;overflow-x:auto;">` +
+        urls
+          .map(
+            (u, i) =>
+              `<img class="gpx-popup-thumb" src="${u}" style="width:44px;height:34px;object-fit:cover;border-radius:2px;cursor:pointer;flex:0 0 auto;opacity:${i === 0 ? '1' : '0.55'};" alt="" />`,
+          )
+          .join('') +
+        `</div>`
+      : ''
+  const label = name
+    ? `<p style="margin:0;padding:6px 8px 2px;font-size:0.78rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${name}</p>`
+    : ''
+  const notesHtml =
+    notes.length > 0
+      ? `<ul style="margin:0;padding:2px 8px 6px 22px;list-style:disc;font-size:0.72rem;">` +
+        notes.map((n) => `<li style="margin:1px 0;">${n}</li>`).join('') +
+        `</ul>`
+      : ''
+  const width = hasImg ? 'min-width:240px;max-width:320px;' : 'max-width:280px;'
+  return `<div style="${width}">${main}${thumbs}${label}${notesHtml}</div>`
+}
+
+/**
+ * Expanded-row waypoint images: a single card for one image, or a small
+ * slideshow (main image + thumbnail strip) when several are pinned.
+ */
+function WaypointImageGallery({
+  images,
+  alt,
+}: {
+  images: string[]
+  alt: string
+}) {
+  const [index, setIndex] = useState(0)
+  const current = images[Math.min(index, images.length - 1)]
+  return (
+    <>
+      <StyledWaypointImageCard
+        data-testid="waypoint-image-card"
+        src={current}
+        alt={alt}
+      />
+      {images.length > 1 && (
+        <StyledWaypointGalleryThumbs data-testid="waypoint-gallery-thumbs">
+          {images.map((img, i) => (
+            <StyledWaypointGalleryThumb
+              key={i}
+              type="button"
+              $active={i === index}
+              onClick={() => setIndex(i)}
+              aria-label={`${alt} image ${i + 1}`}
+              data-testid={`waypoint-gallery-thumb-${i}`}
+            >
+              <img src={img} alt="" />
+            </StyledWaypointGalleryThumb>
+          ))}
+        </StyledWaypointGalleryThumbs>
+      )}
+    </>
+  )
+}
+
 export interface GpxTrackDef {
   url: string
   name?: string
@@ -249,7 +354,8 @@ export interface GpxTrackDef {
   allowDownload?: boolean
   showWaypoints?: boolean
   showElevation?: boolean
-  waypointImages?: Record<string, string>
+  waypointImages?: Record<string, string[]>
+  waypointNotes?: Record<string, string[]>
 }
 
 export interface GpxMapLabels {
@@ -265,7 +371,8 @@ export interface GpxMapProps {
   tracks?: GpxTrackDef[]
   showWaypoints?: boolean
   allowDownload?: boolean
-  waypointImages?: Record<string, string>
+  waypointImages?: Record<string, string[]>
+  waypointNotes?: Record<string, string[]>
   downloadLabel?: string
   labels?: GpxMapLabels
 }
@@ -345,14 +452,16 @@ function GpxTrackLayer({
   visible,
   showWaypoints,
   waypointImages,
+  waypointNotes,
   onImageZoom,
 }: {
   url: string
   color: string
   visible: boolean
   showWaypoints: boolean
-  waypointImages?: Record<string, string>
-  onImageZoom: (src: string) => void
+  waypointImages?: Record<string, string[]>
+  waypointNotes?: Record<string, string[]>
+  onImageZoom: (images: string[], index: number) => void
 }) {
   const map = useMap()
   const layerRef = useRef<L.GPX | null>(null)
@@ -360,6 +469,10 @@ function GpxTrackLayer({
   useEffect(() => {
     waypointImagesRef.current = waypointImages
   }, [waypointImages])
+  const waypointNotesRef = useRef(waypointNotes)
+  useEffect(() => {
+    waypointNotesRef.current = waypointNotes
+  }, [waypointNotes])
   const onImageZoomRef = useRef(onImageZoom)
   useEffect(() => {
     onImageZoomRef.current = onImageZoom
@@ -369,13 +482,26 @@ function GpxTrackLayer({
   // croquis. The popup is Leaflet-rendered HTML, so wire the click on open.
   useEffect(() => {
     const onPopupOpen = (e: L.PopupEvent) => {
-      const img = e.popup.getElement()?.querySelector('img')
-      if (!img) return
-      img.style.cursor = 'zoom-in'
-      img.onclick = () => {
-        const src = img.getAttribute('src')
-        if (src) onImageZoomRef.current(src)
+      const el = e.popup.getElement()
+      if (!el) return
+      const main = el.querySelector<HTMLImageElement>('.gpx-popup-main')
+      if (!main) return
+      // Thumbnails swap the main image (touch has no hover), like the croquis.
+      const thumbs = el.querySelectorAll<HTMLImageElement>('.gpx-popup-thumb')
+      // Click the main image to open the fullscreen viewer at the current image,
+      // with the whole gallery so you can page through it there too.
+      main.onclick = () => {
+        const images =
+          thumbs.length > 0 ? Array.from(thumbs).map((t) => t.src) : [main.src]
+        onImageZoomRef.current(images, Math.max(0, images.indexOf(main.src)))
       }
+      thumbs.forEach((thumb) => {
+        thumb.onclick = () => {
+          main.src = thumb.src
+          thumbs.forEach((t) => (t.style.opacity = '0.55'))
+          thumb.style.opacity = '1'
+        }
+      })
     }
     map.on('popupopen', onPopupOpen)
     return () => {
@@ -417,6 +543,7 @@ function GpxTrackLayer({
       if (cancelled) return
       map.fitBounds(layer.getBounds())
       const imgs = waypointImagesRef.current
+      const notesMap = waypointNotesRef.current
       if (showWaypoints) {
         let wptIdx = 0
         const bindToMarker = (l: L.Layer) => {
@@ -430,23 +557,23 @@ function GpxTrackLayer({
           }
           if (opts.type !== 'waypoint') return
           const name = opts.title
-          const imgUrl = imgs
-            ? (imgs[String(wptIdx)] ?? (name ? imgs[name] : undefined))
+          const key = String(wptIdx)
+          const urls = imgs
+            ? (imgs[key] ?? (name ? imgs[name] : undefined))
+            : undefined
+          const notes = notesMap
+            ? (notesMap[key] ?? (name ? notesMap[name] : undefined))
             : undefined
           wptIdx++
+          const imageUrls = urls ?? []
+          const noteList = notes ?? []
           // Nothing worth showing → keep the default marker (no popup).
-          if (!imgUrl && !name) return
-          // Every waypoint popup uses the same styled bubble; the image is
-          // added only when one is mapped, so with/without image look alike.
-          const content =
-            `<div style="${imgUrl ? 'min-width:240px;max-width:320px;' : 'max-width:280px;'}">` +
-            (imgUrl
-              ? `<img src="${imgUrl}" style="width:100%;max-height:260px;object-fit:cover;display:block;" alt="${name ?? ''}" />`
-              : '') +
-            (name
-              ? `<p style="margin:0;padding:6px 8px;font-size:0.78rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${name}</p>`
-              : '') +
-            `</div>`
+          if (imageUrls.length === 0 && !name && noteList.length === 0) return
+          const content = buildWaypointPopupHtml(
+            imageUrls,
+            name ?? '',
+            noteList,
+          )
           // A click/tap popup (not a hover tooltip). Leaflet's default autoClose
           // keeps only one waypoint popup open at a time.
           ;(l as L.Marker).unbindTooltip().bindPopup(content, {
@@ -487,6 +614,7 @@ export function GpxMap({
   showWaypoints,
   allowDownload,
   waypointImages,
+  waypointNotes,
   downloadLabel = 'Download GPX',
   labels,
 }: GpxMapProps) {
@@ -525,18 +653,33 @@ export function GpxMap({
   const [expandedByIndex, setExpandedByIndex] = useState<
     Record<number, number | null>
   >({})
-  // Fullscreen image opened from a waypoint popup.
-  const [zoomImage, setZoomImage] = useState<string | null>(null)
+  // Fullscreen gallery opened from a waypoint popup (its images + current one).
+  const [lightbox, setLightbox] = useState<{
+    images: string[]
+    index: number
+  } | null>(null)
   const mapContainerRef = useRef<HTMLDivElement>(null)
 
+  function lightboxStep(delta: number) {
+    setLightbox(
+      (lb) =>
+        lb && {
+          images: lb.images,
+          index: (lb.index + delta + lb.images.length) % lb.images.length,
+        },
+    )
+  }
+
   useEffect(() => {
-    if (zoomImage === null) return
+    if (lightbox === null) return
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setZoomImage(null)
+      if (e.key === 'Escape') setLightbox(null)
+      else if (e.key === 'ArrowRight') lightboxStep(1)
+      else if (e.key === 'ArrowLeft') lightboxStep(-1)
     }
     document.addEventListener('keydown', onKey)
     return () => document.removeEventListener('keydown', onKey)
-  }, [zoomImage])
+  }, [lightbox])
 
   const trackUrlsKey = resolvedTracks
     .map(
@@ -613,7 +756,8 @@ export function GpxMap({
               visible={visibleTracks[i] ?? true}
               showWaypoints={track.showWaypoints ?? showWaypoints ?? false}
               waypointImages={track.waypointImages ?? waypointImages}
-              onImageZoom={setZoomImage}
+              waypointNotes={track.waypointNotes ?? waypointNotes}
+              onImageZoom={(images, index) => setLightbox({ images, index })}
             />
           ))}
           <WaypointFocuser waypoint={focusedWaypoint} />
@@ -754,20 +898,14 @@ export function GpxMap({
                   {trackWaypoints.map((wpt, i) => {
                     const effectiveImages =
                       track.waypointImages ?? waypointImages
-                    const wptImage =
+                    const wptImages =
                       effectiveImages?.[String(i)] ??
                       effectiveImages?.[wpt.name]
-                    const hasImage = !!wptImage
+                    const hasImage = !!wptImages?.length
                     // A desc may hold several notes (one per line), some nested
                     // via leading indentation; show each on its own row at its
                     // level rather than a single run-on line.
-                    const noteLines = wpt.desc
-                      .split(/\r?\n/)
-                      .map((raw) => ({
-                        level: Math.min(raw.length - raw.trimStart().length, 4),
-                        text: raw.replace(/^\s*[-•·]\s*/, '').trim(),
-                      }))
-                      .filter((n) => n.text)
+                    const noteLines = parseWaypointNotes(wpt.desc)
                     const hasDesc = noteLines.length > 0
                     const hasDetails = hasImage || hasDesc
                     // The row indicator tells you what's inside before expanding:
@@ -822,10 +960,9 @@ export function GpxMap({
                         {hasDetails && isExpanded && (
                           <tr data-details="true">
                             <td colSpan={4}>
-                              {wptImage && (
-                                <StyledWaypointImageCard
-                                  data-testid="waypoint-image-card"
-                                  src={wptImage}
+                              {wptImages && wptImages.length > 0 && (
+                                <WaypointImageGallery
+                                  images={wptImages}
                                   alt={wpt.name}
                                 />
                               )}
@@ -857,26 +994,52 @@ export function GpxMap({
         )
       })}
 
-      {zoomImage !== null &&
+      {lightbox !== null &&
         createPortal(
           <StyledLightbox
             data-testid="gpx-lightbox"
-            onClick={() => setZoomImage(null)}
+            onClick={() => setLightbox(null)}
           >
             <StyledLightboxClose
               type="button"
               aria-label="Close"
               data-testid="gpx-lightbox-close"
-              onClick={() => setZoomImage(null)}
+              onClick={() => setLightbox(null)}
             >
               ×
             </StyledLightboxClose>
             <img
-              src={zoomImage}
+              src={lightbox.images[lightbox.index]}
               alt=""
               data-testid="gpx-lightbox-image"
               onClick={(e) => e.stopPropagation()}
             />
+            {lightbox.images.length > 1 && (
+              <StyledLightboxNav>
+                <button
+                  type="button"
+                  aria-label="Previous image"
+                  data-testid="gpx-lightbox-prev"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    lightboxStep(-1)
+                  }}
+                >
+                  <ChevronIcon />
+                </button>
+                <button
+                  type="button"
+                  aria-label="Next image"
+                  data-testid="gpx-lightbox-next"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    lightboxStep(1)
+                  }}
+                >
+                  <ChevronIcon />
+                </button>
+              </StyledLightboxNav>
+            )}
           </StyledLightbox>,
           document.body,
         )}

@@ -102,9 +102,39 @@ describe('CroquisInsertModal', () => {
   })
 
   it('prefills the textarea and title from initial values', () => {
-    open({ initialValues: { text: JUMP, title: 'Barranco X' } })
+    open({
+      initialValues: { text: JUMP, title: 'Barranco X', showDownload: true },
+    })
     expect(screen.getByTestId('croquis-modal-text')).toHaveValue(JUMP)
     expect(screen.getByTestId('croquis-modal-title')).toHaveValue('Barranco X')
+    expect(screen.getByTestId('croquis-modal-download-toggle')).toBeChecked()
+  })
+
+  it('prefills the download toggle from initial values', () => {
+    open({
+      initialValues: { text: JUMP, title: '', showDownload: false },
+    })
+    expect(
+      screen.getByTestId('croquis-modal-download-toggle'),
+    ).not.toBeChecked()
+  })
+
+  it('is checked (download shown) by default', () => {
+    open()
+    expect(screen.getByTestId('croquis-modal-download-toggle')).toBeChecked()
+  })
+
+  it('adds the no-download flag to the fence when the toggle is off', () => {
+    const { onInsert } = open()
+    fireEvent.change(screen.getByTestId('croquis-modal-text'), {
+      target: { value: JUMP },
+    })
+    fireEvent.click(screen.getByTestId('croquis-modal-download-toggle'))
+    expect(screen.getByTestId('croquis-modal-preview')).toHaveValue(
+      `\`\`\`croquis no-download\n${JUMP}\n\`\`\``,
+    )
+    fireEvent.click(screen.getByTestId('croquis-modal-insert'))
+    expect(onInsert.mock.calls[0][0]).toContain('```croquis no-download\n')
   })
 
   it('offers a waypoint selector and shows the fenced preview once drawable', () => {
@@ -265,7 +295,11 @@ describe('CroquisInsertModal', () => {
 
   it('removes a waypoint image', () => {
     open({
-      initialValues: { text: `${JUMP}\n! img=https://cdn/x.jpg`, title: '' },
+      initialValues: {
+        text: `${JUMP}\n! img=https://cdn/x.jpg`,
+        title: '',
+        showDownload: true,
+      },
     })
     expect(screen.getByTestId('croquis-wp-thumb-0-0')).toBeInTheDocument()
     fireEvent.click(screen.getByTestId('croquis-wp-remove-0-0'))

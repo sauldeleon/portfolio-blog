@@ -191,6 +191,19 @@ export const StyledMappingThumb = styled.img`
   flex-shrink: 0;
 `
 
+export const StyledThumbGroup = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  flex: 1;
+`
+
+export const StyledThumbChip = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+`
+
 export const StyledMappingName = styled.span`
   flex: 1;
   font-size: 0.78rem;
