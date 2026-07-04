@@ -35,6 +35,7 @@ import { EmbedInsertModal } from '../EmbedInsertModal'
 import { GpxMapModal } from '../GpxMapModal'
 import { ImageInsertModal } from '../ImageInsertModal'
 import { ImagePicker } from '../ImagePicker'
+import { InteractiveCardInsertModal } from '../InteractiveCardInsertModal'
 import { MarkdownPreview } from '../MarkdownPreview'
 import { SlideshowInsertModal } from '../SlideshowInsertModal'
 import { CoverImageInput } from './CoverImageInput'
@@ -89,6 +90,7 @@ import type {
   ParsedEmbed,
   ParsedGpx,
   ParsedImage,
+  ParsedInteractiveCard,
   ParsedSlideshow,
 } from './parseEmbedBlock'
 import { detectEmbedAtCursor } from './parseEmbedBlock'
@@ -293,6 +295,11 @@ export function PostEditor({
   const [croquisModalKey, setCroquisModalKey] = useState(0)
   const [croquisInitialValues, setCroquisInitialValues] =
     useState<ParsedCroquis | null>(null)
+  const [isInteractiveCardModalOpen, setIsInteractiveCardModalOpen] =
+    useState(false)
+  const [interactiveCardModalKey, setInteractiveCardModalKey] = useState(0)
+  const [interactiveCardInitialValues, setInteractiveCardInitialValues] =
+    useState<ParsedInteractiveCard | null>(null)
   const [previewTab, setPreviewTab] = useState<
     'post' | 'post-mobile' | 'hero' | 'card' | 'toc'
   >('post')
@@ -378,6 +385,15 @@ export function PostEditor({
       setCroquisInitialValues(editingEmbed.parsed as ParsedCroquis)
       setCroquisModalKey((k) => k + 1)
       setIsCroquisModalOpen(true)
+    } else if (
+      editingEmbed.type === 'canyon-summary' ||
+      editingEmbed.type === 'ferrata-summary'
+    ) {
+      setInteractiveCardInitialValues(
+        editingEmbed.parsed as ParsedInteractiveCard,
+      )
+      setInteractiveCardModalKey((k) => k + 1)
+      setIsInteractiveCardModalOpen(true)
     } else {
       setGpxInitialValues(editingEmbed.parsed as ParsedGpx)
       setGpxModalKey((k) => k + 1)
@@ -995,7 +1011,19 @@ export function PostEditor({
                 }}
                 data-testid="open-croquis-modal-button"
               >
-                Insert Croquis
+                Insert Canyon Croquis
+              </StyledImagePickerButton>
+              <StyledImagePickerButton
+                type="button"
+                onClick={() => {
+                  setEditingEmbed(null)
+                  setInteractiveCardInitialValues(null)
+                  setInteractiveCardModalKey((k) => k + 1)
+                  setIsInteractiveCardModalOpen(true)
+                }}
+                data-testid="open-interactive-card-modal-button"
+              >
+                Insert Interactive Card
               </StyledImagePickerButton>
             </StyledToolbarRow>
             <StyledTextareaWrapper>
@@ -1297,6 +1325,32 @@ export function PostEditor({
         onCancel={() => {
           setIsCroquisModalOpen(false)
           setCroquisInitialValues(null)
+        }}
+      />
+      <InteractiveCardInsertModal
+        key={`interactive-card-${interactiveCardModalKey}`}
+        isOpen={isInteractiveCardModalOpen}
+        lang={activeLocale}
+        initialValues={interactiveCardInitialValues}
+        onInsert={(markdown) => {
+          if (
+            editingEmbed?.type === 'canyon-summary' ||
+            editingEmbed?.type === 'ferrata-summary'
+          ) {
+            replaceBlock(
+              editingEmbed.blockStart,
+              editingEmbed.blockEnd,
+              markdown,
+            )
+          } else {
+            insertAtCursor(markdown)
+          }
+          setIsInteractiveCardModalOpen(false)
+          setInteractiveCardInitialValues(null)
+        }}
+        onCancel={() => {
+          setIsInteractiveCardModalOpen(false)
+          setInteractiveCardInitialValues(null)
         }}
       />
       <PublishNotifyModal

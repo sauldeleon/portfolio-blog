@@ -1,4 +1,9 @@
-import { parseCroquisMeta } from '@web/lib/cards'
+import {
+  parseCanyonSummary,
+  parseCroquisMeta,
+  parseFerrataSummary,
+} from '@web/lib/cards'
+import type { CanyoningCardData, SummaryFerrataData } from '@web/lib/cards'
 
 export type EmbedType =
   | 'youtube'
@@ -64,6 +69,21 @@ export interface ParsedCroquis {
   showDownload: boolean
 }
 
+/** A canyon summary block: the card data and the download flag. */
+export interface ParsedCanyonSummary {
+  data: CanyoningCardData
+  showDownload: boolean
+}
+
+/** A ferrata summary block: the card data and the download flag. */
+export interface ParsedFerrataSummary {
+  data: SummaryFerrataData
+  showDownload: boolean
+}
+
+/** Either interactive summary card, distinguished by `data.kind`. */
+export type ParsedInteractiveCard = ParsedCanyonSummary | ParsedFerrataSummary
+
 export type DetectedEmbed =
   | { type: 'image'; blockStart: number; blockEnd: number; parsed: ParsedImage }
   | { type: 'embed'; blockStart: number; blockEnd: number; parsed: ParsedEmbed }
@@ -79,6 +99,18 @@ export type DetectedEmbed =
       blockStart: number
       blockEnd: number
       parsed: ParsedCroquis
+    }
+  | {
+      type: 'canyon-summary'
+      blockStart: number
+      blockEnd: number
+      parsed: ParsedCanyonSummary
+    }
+  | {
+      type: 'ferrata-summary'
+      blockStart: number
+      blockEnd: number
+      parsed: ParsedFerrataSummary
     }
 
 const EMBED_TYPES: EmbedType[] = [
@@ -289,6 +321,34 @@ export function detectEmbedAtCursor(
           blockStart: start,
           blockEnd: end,
           parsed: { text: body, title, showDownload },
+        }
+      }
+
+      if (fenceType === 'canyon-summary') {
+        const { showDownload } = parseCroquisMeta(meta)
+        const data = parseCanyonSummary(body) ?? {
+          kind: 'canyoning-data',
+          lang: 'en',
+        }
+        return {
+          type: 'canyon-summary',
+          blockStart: start,
+          blockEnd: end,
+          parsed: { data, showDownload },
+        }
+      }
+
+      if (fenceType === 'ferrata-summary') {
+        const { showDownload } = parseCroquisMeta(meta)
+        const data = parseFerrataSummary(body) ?? {
+          kind: 'summary-ferrata',
+          lang: 'en',
+        }
+        return {
+          type: 'ferrata-summary',
+          blockStart: start,
+          blockEnd: end,
+          parsed: { data, showDownload },
         }
       }
 

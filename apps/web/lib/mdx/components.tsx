@@ -2,8 +2,10 @@ import { Callout } from '@sdlgr/callout'
 import { CodeBlock } from '@sdlgr/code-block'
 
 import { MdxTable } from '@web/components/PostContent/MdxTable'
+import { PostContentCanyonSummary } from '@web/components/PostContent/PostContentCanyonSummary'
 import { PostContentCroquis } from '@web/components/PostContent/PostContentCroquis'
 import { PostContentEmbed } from '@web/components/PostContent/PostContentEmbed'
+import { PostContentFerrataSummary } from '@web/components/PostContent/PostContentFerrataSummary'
 import { PostContentImage } from '@web/components/PostContent/PostContentImage'
 import { PostContentSlideshow } from '@web/components/PostContent/PostContentSlideshow'
 
@@ -20,6 +22,8 @@ export const POST_CONTENT_EMBEDS = {
   Embed: PostContentEmbed,
   Slideshow: PostContentSlideshow,
   Croquis: PostContentCroquis,
+  CanyonSummary: PostContentCanyonSummary,
+  FerrataSummary: PostContentFerrataSummary,
   img: PostContentImage,
 }
 

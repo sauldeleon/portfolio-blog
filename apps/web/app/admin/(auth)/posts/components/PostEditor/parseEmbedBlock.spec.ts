@@ -588,6 +588,86 @@ describe('detectEmbedAtCursor', () => {
     })
   })
 
+  describe('canyon-summary blocks', () => {
+    const body = JSON.stringify(
+      { kind: 'canyoning-data', lang: 'es', grade: 'v4 a3 III' },
+      null,
+      2,
+    )
+    const content = ['```canyon-summary', body, '```'].join('\n')
+
+    it('detects a canyon-summary block and parses its data', () => {
+      const result = detectEmbedAtCursor(content, 5)
+      if (result?.type !== 'canyon-summary') {
+        throw new Error('expected canyon-summary')
+      }
+      expect(result.parsed.data.grade).toBe('v4 a3 III')
+      expect(result.parsed.data.lang).toBe('es')
+      expect(result.parsed.showDownload).toBe(true)
+    })
+
+    it('reads the no-download flag from the fence meta', () => {
+      const flagged = ['```canyon-summary no-download', body, '```'].join('\n')
+      const result = detectEmbedAtCursor(flagged, 5)
+      if (result?.type !== 'canyon-summary') {
+        throw new Error('expected canyon-summary')
+      }
+      expect(result.parsed.showDownload).toBe(false)
+    })
+
+    it('falls back to default data for an invalid body', () => {
+      const bad = ['```canyon-summary', '{nope', '```'].join('\n')
+      const result = detectEmbedAtCursor(bad, 5)
+      if (result?.type !== 'canyon-summary') {
+        throw new Error('expected canyon-summary')
+      }
+      expect(result.parsed.data).toEqual({
+        kind: 'canyoning-data',
+        lang: 'en',
+      })
+    })
+  })
+
+  describe('ferrata-summary blocks', () => {
+    const body = JSON.stringify(
+      { kind: 'summary-ferrata', lang: 'es', grade: 'K3' },
+      null,
+      2,
+    )
+    const content = ['```ferrata-summary', body, '```'].join('\n')
+
+    it('detects a ferrata-summary block and parses its data', () => {
+      const result = detectEmbedAtCursor(content, 5)
+      if (result?.type !== 'ferrata-summary') {
+        throw new Error('expected ferrata-summary')
+      }
+      expect(result.parsed.data.grade).toBe('K3')
+      expect(result.parsed.data.lang).toBe('es')
+      expect(result.parsed.showDownload).toBe(true)
+    })
+
+    it('reads the no-download flag from the fence meta', () => {
+      const flagged = ['```ferrata-summary no-download', body, '```'].join('\n')
+      const result = detectEmbedAtCursor(flagged, 5)
+      if (result?.type !== 'ferrata-summary') {
+        throw new Error('expected ferrata-summary')
+      }
+      expect(result.parsed.showDownload).toBe(false)
+    })
+
+    it('falls back to default data for an invalid body', () => {
+      const bad = ['```ferrata-summary', '{nope', '```'].join('\n')
+      const result = detectEmbedAtCursor(bad, 5)
+      if (result?.type !== 'ferrata-summary') {
+        throw new Error('expected ferrata-summary')
+      }
+      expect(result.parsed.data).toEqual({
+        kind: 'summary-ferrata',
+        lang: 'en',
+      })
+    })
+  })
+
   it('returns null for plain text content', () => {
     expect(detectEmbedAtCursor('Just some plain text here.', 5)).toBeNull()
   })

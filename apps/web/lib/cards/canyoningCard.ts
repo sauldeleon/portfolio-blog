@@ -7,6 +7,7 @@ import {
   esc,
   eyebrow,
   flowRow,
+  gradeAxis,
   gradeSubLabel,
   hRule,
   tw,
@@ -21,7 +22,7 @@ import {
   PANEL_STK,
   STRINGS,
 } from './theme'
-import type { CanyoningCardData } from './types'
+import type { CanyoningCardData, CardResult, CardZone } from './types'
 
 const W = 1600
 const H = 900
@@ -45,19 +46,24 @@ function fmtTime(s: string | undefined): string | null {
   return str
 }
 
-/** Grade-pills hero: canyon badge + up to three grade tokens with sub-labels. */
+/**
+ * Grade-pills hero: canyon badge + up to three grade tokens with sub-labels.
+ * Returns the SVG plus a hit-zone for each recognised grade pill so the
+ * interactive overlay can explain the verticality/aquatic/commitment scales.
+ */
 function gradePillsHero(
   x: number,
   grade: string,
   gVert: string,
   gAqua: string,
   gCommit: string,
-): string {
+): { svg: string; zones: CardZone[] } {
   const bs = 78
   const by = 188
   const ph = 58
   const pillY = by + (bs - ph) / 2
   const parts: string[] = [badge(x, by, bs, 'canyon')]
+  const zones: CardZone[] = []
   let px = x + bs + 24
   const tokens = String(grade || '—')
     .split(' ')
@@ -74,9 +80,22 @@ function gradePillsHero(
         `<text x="${(px + pw / 2).toFixed(1)}" y="${pillY + ph + 18}" text-anchor="middle" font-family="Poppins" font-weight="500" font-size="12" letter-spacing="1.5" fill="${AMBER}">${sl}</text>`,
       )
     }
+    const axis = gradeAxis(tok)
+    if (axis) {
+      zones.push({
+        id: `grade-${axis}`,
+        kind: 'grade',
+        key: axis,
+        value: tok,
+        x: px,
+        y: pillY,
+        w: pw,
+        h: ph,
+      })
+    }
     px += pw + 12
   }
-  return parts.join('')
+  return { svg: parts.join(''), zones }
 }
 
 /** Standard metric hero (bs=78, by=188). */
@@ -122,8 +141,9 @@ function tile(
  * activity time breakdown, the tech sheet, the observed flow, and — when a GPX
  * yields an elevation series — the elevation profile (hidden otherwise).
  */
-export function canyoningCard(data: CanyoningCardData): string {
+export function buildCanyonCard(data: CanyoningCardData): CardResult {
   const S = STRINGS[data.lang]
+  const zones: CardZone[] = []
 
   // --- header ---
   const title = data.title || S.default_title
@@ -141,29 +161,34 @@ export function canyoningCard(data: CanyoningCardData): string {
 
   // --- heroes (4 columns): grade, descent, longest rappel, count ---
   const cw4 = CW / 4
+  const gradeHero = gradePillsHero(
+    CX0 + cw4 * 0,
+    data.grade ?? '—',
+    S.g_vert,
+    S.g_aqua,
+    S.g_commit,
+  )
+  zones.push(...gradeHero.zones)
   const heroSvg =
-    gradePillsHero(
-      CX0 + cw4 * 0,
-      data.grade ?? '—',
-      S.g_vert,
-      S.g_aqua,
-      S.g_commit,
-    ) +
+    gradeHero.svg +
     hero(CX0 + cw4 * 1, 'descent', data.desnivel ?? '—', S.desnivel, cw4) +
     hero(CX0 + cw4 * 2, 'rappel', data.maxRappel ?? '—', S.max_rappel, cw4) +
     hero(CX0 + cw4 * 3, 'drops', data.rappels ?? '—', S.rappels, cw4)
 
   // --- observed flow row (difficulty zone, below the grade hero) ---
-  const flowSvg = data.flowLevel
-    ? flowRow(
-        CX0,
-        290,
-        data.flowLevel,
-        data.flowRappels,
-        data.phenomena ?? [],
-        S,
-      )
-    : ''
+  let flowSvg = ''
+  if (data.flowLevel) {
+    const flow = flowRow(
+      CX0,
+      290,
+      data.flowLevel,
+      data.flowRappels,
+      data.phenomena ?? [],
+      S,
+    )
+    flowSvg = flow.svg
+    zones.push(...flow.zones)
+  }
 
   // --- activity time tiles (4 columns) ---
   type TileEntry = [Parameters<typeof badge>[3], string, string]
@@ -209,7 +234,7 @@ export function canyoningCard(data: CanyoningCardData): string {
         elevationProfile(elevation, CX0, CXR, profileY + 32, 860)
       : ''
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
 <defs>
  ${FONT_STYLE}
  <linearGradient id="panel" x1="0" y1="0" x2="0.4" y2="1"><stop offset="0" stop-color="${BG_TOP}"/><stop offset="1" stop-color="${BG_BOT}"/></linearGradient>
@@ -240,4 +265,14 @@ ${techSvg}
 ${flowSvg}
 ${profileSvg}
 </svg>`
+
+  return { svg, width: W, height: H, zones }
+}
+
+/**
+ * The static canyon summary SVG (1600×900) as a string, ready to rasterise to a
+ * PNG. Thin wrapper over {@link buildCanyonCard} that discards the zones.
+ */
+export function canyoningCard(data: CanyoningCardData): string {
+  return buildCanyonCard(data).svg
 }

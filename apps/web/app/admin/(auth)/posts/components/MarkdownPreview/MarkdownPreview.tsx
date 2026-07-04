@@ -7,8 +7,11 @@ import { useEffect, useMemo, useState } from 'react'
 
 import { CodeBlock } from '@sdlgr/code-block'
 
+import { MdxErrorBoundary } from '@web/components/MdxErrorBoundary'
 import { MdxTable } from '@web/components/PostContent/MdxTable'
+import { PostContentCanyonSummary } from '@web/components/PostContent/PostContentCanyonSummary'
 import { PostContentCroquis } from '@web/components/PostContent/PostContentCroquis'
+import { PostContentFerrataSummary } from '@web/components/PostContent/PostContentFerrataSummary'
 import type { Lang } from '@web/lib/cards'
 import { POST_CONTENT_EMBEDS } from '@web/lib/mdx/components'
 
@@ -55,12 +58,19 @@ export function MarkdownPreview({
   loadingLabel,
   lang,
 }: MarkdownPreviewProps) {
-  // The croquis localises to the previewed content locale, not the admin UI.
+  // The croquis / canyon summary localise to the previewed content locale, not
+  // the admin UI.
   const components = useMemo(
     () => ({
       ...MDX_COMPONENTS,
       Croquis: (props: { obstacles?: string; title?: string }) => (
         <PostContentCroquis {...props} lang={lang} />
+      ),
+      CanyonSummary: (props: { data?: string; noDownload?: boolean }) => (
+        <PostContentCanyonSummary {...props} lang={lang} />
+      ),
+      FerrataSummary: (props: { data?: string; noDownload?: boolean }) => (
+        <PostContentFerrataSummary {...props} lang={lang} />
       ),
     }),
     [lang],
@@ -111,7 +121,9 @@ export function MarkdownPreview({
 
   return (
     <StyledPreviewWrapper data-testid="markdown-preview">
-      <MDXRemote {...serialized} components={components} />
+      <MdxErrorBoundary>
+        <MDXRemote {...serialized} components={components} />
+      </MdxErrorBoundary>
     </StyledPreviewWrapper>
   )
 }

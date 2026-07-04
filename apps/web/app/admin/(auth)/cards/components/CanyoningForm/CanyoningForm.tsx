@@ -22,11 +22,17 @@ import {
 interface CanyoningFormProps {
   value: CanyoningCardData
   onChange: (next: CanyoningCardData) => void
+  /** Hide the language toggle (e.g. when the language is fixed by context). */
+  hideLang?: boolean
 }
 
 const LANGS: Lang[] = ['en', 'es']
 
-export function CanyoningForm({ value, onChange }: CanyoningFormProps) {
+export function CanyoningForm({
+  value,
+  onChange,
+  hideLang = false,
+}: CanyoningFormProps) {
   const { t } = useClientTranslation('admin')
   function set(patch: Partial<CanyoningCardData>) {
     onChange({ ...value, ...patch })
@@ -34,20 +40,22 @@ export function CanyoningForm({ value, onChange }: CanyoningFormProps) {
 
   return (
     <StyledForm data-testid="canyoning-form">
-      <StyledLangToggle>
-        {LANGS.map((l) => (
-          <Button
-            key={l}
-            type="button"
-            variant="label"
-            active={value.lang === l}
-            onClick={() => set({ lang: l })}
-            data-testid={`lang-${l}`}
-          >
-            {l.toUpperCase()}
-          </Button>
-        ))}
-      </StyledLangToggle>
+      {!hideLang && (
+        <StyledLangToggle>
+          {LANGS.map((l) => (
+            <Button
+              key={l}
+              type="button"
+              variant="label"
+              active={value.lang === l}
+              onClick={() => set({ lang: l })}
+              data-testid={`lang-${l}`}
+            >
+              {l.toUpperCase()}
+            </Button>
+          ))}
+        </StyledLangToggle>
+      )}
 
       <StyledSection>
         <StyledSectionTitle>{t('cards.sections.header')}</StyledSectionTitle>

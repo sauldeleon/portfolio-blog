@@ -935,4 +935,111 @@ describe('remarkEmbeds', () => {
       )
     })
   })
+
+  describe('canyon-summary blocks', () => {
+    const body = JSON.stringify({
+      kind: 'canyoning-data',
+      lang: 'es',
+      grade: 'v4 a3 III',
+    })
+
+    it('transforms a canyon-summary block into a CanyonSummary element', () => {
+      const [result] = runPlugin([
+        { type: 'code', lang: 'canyon-summary', value: body },
+      ])
+      expect(result.type).toBe('mdxJsxFlowElement')
+      expect(result.name).toBe('CanyonSummary')
+      const data = result.attributes?.find((a) => a.name === 'data')?.value
+      expect(data).toContain('"kind": "canyoning-data"')
+      expect(data).toContain('"grade": "v4 a3 III"')
+    })
+
+    it('emits an empty data attribute for an invalid body', () => {
+      const [result] = runPlugin([
+        { type: 'code', lang: 'canyon-summary', value: '{bad' },
+      ])
+      expect(result.attributes?.find((a) => a.name === 'data')?.value).toBe('')
+    })
+
+    it('emits an empty data attribute when the body is undefined', () => {
+      const [result] = runPlugin([
+        { type: 'code', lang: 'canyon-summary', value: undefined },
+      ])
+      expect(result.attributes?.find((a) => a.name === 'data')?.value).toBe('')
+    })
+
+    it('has no noDownload attribute by default', () => {
+      const [result] = runPlugin([
+        { type: 'code', lang: 'canyon-summary', value: body },
+      ])
+      expect(
+        result.attributes?.find((a) => a.name === 'noDownload'),
+      ).toBeUndefined()
+    })
+
+    it('emits a noDownload attribute when the no-download flag is set', () => {
+      const [result] = runPlugin([
+        {
+          type: 'code',
+          lang: 'canyon-summary',
+          meta: 'no-download',
+          value: body,
+        },
+      ])
+      expect(result.attributes?.find((a) => a.name === 'noDownload')).toEqual({
+        type: 'mdxJsxAttribute',
+        name: 'noDownload',
+        value: null,
+      })
+    })
+  })
+
+  describe('ferrata-summary blocks', () => {
+    const body = JSON.stringify({
+      kind: 'summary-ferrata',
+      lang: 'es',
+      grade: 'K3',
+    })
+
+    it('transforms a ferrata-summary block into a FerrataSummary element', () => {
+      const [result] = runPlugin([
+        { type: 'code', lang: 'ferrata-summary', value: body },
+      ])
+      expect(result.type).toBe('mdxJsxFlowElement')
+      expect(result.name).toBe('FerrataSummary')
+      const data = result.attributes?.find((a) => a.name === 'data')?.value
+      expect(data).toContain('"kind": "summary-ferrata"')
+      expect(data).toContain('"grade": "K3"')
+    })
+
+    it('emits an empty data attribute for an invalid body', () => {
+      const [result] = runPlugin([
+        { type: 'code', lang: 'ferrata-summary', value: '{bad' },
+      ])
+      expect(result.attributes?.find((a) => a.name === 'data')?.value).toBe('')
+    })
+
+    it('emits an empty data attribute when the body is undefined', () => {
+      const [result] = runPlugin([
+        { type: 'code', lang: 'ferrata-summary', value: undefined },
+      ])
+      expect(result.attributes?.find((a) => a.name === 'data')?.value).toBe('')
+    })
+
+    it('emits a noDownload attribute when the no-download flag is set', () => {
+      const [result] = runPlugin([
+        {
+          type: 'code',
+          lang: 'ferrata-summary',
+          meta: 'no-download',
+          value: body,
+        },
+      ])
+      expect(result.attributes?.find((a) => a.name === 'noDownload')).toEqual({
+        type: 'mdxJsxAttribute',
+        name: 'noDownload',
+        value: null,
+      })
+    })
+  })
 })

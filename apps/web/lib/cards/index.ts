@@ -1,8 +1,17 @@
-export { canyoningCard } from './canyoningCard'
-export { summaryCard } from './summaryCard'
+export { buildCanyonCard, canyoningCard } from './canyoningCard'
+export { buildSummaryCard, summaryCard } from './summaryCard'
+export type { SummaryCardData } from './summaryCard'
 export { renderCard } from './renderCard'
 export { iconPath } from './icons'
-export { badge, contours, esc, eyebrow, tw } from './primitives'
+export {
+  badge,
+  contours,
+  esc,
+  eyebrow,
+  gradeAxis,
+  gradeSubLabel,
+  tw,
+} from './primitives'
 export { parseGpx, parseTrackPoints } from './gpx'
 export type { GpxMetrics, TrackPoint } from './gpx'
 export {
@@ -46,6 +55,15 @@ export {
 } from './croquisCard'
 export { parseCroquisMeta, serializeCroquisMeta } from './croquisMeta'
 export type { CroquisMeta } from './croquisMeta'
+export { parseCanyonSummary, serializeCanyonSummary } from './canyonSummaryData'
+export {
+  parseFerrataSummary,
+  serializeFerrataSummary,
+} from './ferrataSummaryData'
+export { CANYON_SCALES } from './canyonScales'
+export type { CanyonScaleContent, ScaleLevel } from './canyonScales'
+export { FERRATA_SCALES } from './ferrataScales'
+export type { FerrataScaleContent } from './ferrataScales'
 export { svgToPng } from './svgToPng'
 export { zipStore } from './zip'
 export type { ZipFile } from './zip'
@@ -53,6 +71,7 @@ export {
   STRINGS,
   SEV_COLORS,
   AMBER,
+  FLOW_COLORS,
   FLOW_LEVEL_KEYS,
   FLOW_RAPPEL_KEYS,
   PHENOMENA_KEYS,
@@ -61,6 +80,8 @@ export { FONT_STYLE } from './fonts'
 export type { LangStrings } from './theme'
 export type {
   CardSpec,
+  CardResult,
+  CardZone,
   CanyoningCardData,
   SummaryRouteData,
   SummaryFerrataData,

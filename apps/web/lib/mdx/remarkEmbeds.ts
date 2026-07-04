@@ -1,6 +1,10 @@
 import {
+  parseCanyonSummary,
   parseCanyonWaypointsText,
   parseCroquisMeta,
+  parseFerrataSummary,
+  serializeCanyonSummary,
+  serializeFerrataSummary,
   toCroquisObstacles,
 } from '@web/lib/cards'
 
@@ -90,6 +94,47 @@ export function remarkEmbeds() {
               ? [{ type: 'mdxJsxAttribute', name: 'title', value: title }]
               : []),
             // Download button shows by default; flag its absence explicitly.
+            ...(showDownload
+              ? []
+              : [{ type: 'mdxJsxAttribute', name: 'noDownload', value: null }]),
+          ],
+          children: [],
+        }
+      }
+
+      if (n.lang === 'canyon-summary') {
+        const parsed = parseCanyonSummary(n.value ?? '')
+        // Only the download flag rides in the meta; the title lives in the data.
+        const { showDownload } = parseCroquisMeta(n.meta ?? '')
+        return {
+          type: 'mdxJsxFlowElement',
+          name: 'CanyonSummary',
+          attributes: [
+            {
+              type: 'mdxJsxAttribute',
+              name: 'data',
+              value: parsed ? serializeCanyonSummary(parsed) : '',
+            },
+            ...(showDownload
+              ? []
+              : [{ type: 'mdxJsxAttribute', name: 'noDownload', value: null }]),
+          ],
+          children: [],
+        }
+      }
+
+      if (n.lang === 'ferrata-summary') {
+        const parsed = parseFerrataSummary(n.value ?? '')
+        const { showDownload } = parseCroquisMeta(n.meta ?? '')
+        return {
+          type: 'mdxJsxFlowElement',
+          name: 'FerrataSummary',
+          attributes: [
+            {
+              type: 'mdxJsxAttribute',
+              name: 'data',
+              value: parsed ? serializeFerrataSummary(parsed) : '',
+            },
             ...(showDownload
               ? []
               : [{ type: 'mdxJsxAttribute', name: 'noDownload', value: null }]),

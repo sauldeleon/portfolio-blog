@@ -2,6 +2,34 @@ import type { Lang } from './theme'
 
 export type { Lang }
 
+/**
+ * An interactive hit-zone on a summary card. Coordinates are in the card's
+ * 1600×900 SVG user-space, so overlay rects placed at these boxes stay aligned
+ * with the drawn content under any CSS scaling.
+ */
+export interface CardZone {
+  /** Stable identifier, unique within a card (e.g. `grade-vert`, `flow`). */
+  id: string
+  /** What kind of section the zone explains. */
+  kind: 'grade' | 'flow' | 'phenomenon' | 'ferrata-grade'
+  /** The scale/axis or catalogue key (`vert`/`aqua`/`commit`, flow level, or phenomenon key). */
+  key: string
+  /** The concrete token shown in the card (e.g. `v4`), when relevant. */
+  value?: string
+  x: number
+  y: number
+  w: number
+  h: number
+}
+
+/** A summary card SVG plus the interactive zones laid over it. */
+export interface CardResult {
+  svg: string
+  width: number
+  height: number
+  zones: CardZone[]
+}
+
 export interface CanyoningCardData {
   kind: 'canyoning-data'
   lang: Lang

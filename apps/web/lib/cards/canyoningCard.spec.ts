@@ -1,4 +1,4 @@
-import { canyoningCard } from './canyoningCard'
+import { buildCanyonCard, canyoningCard } from './canyoningCard'
 import type { CanyoningCardData } from './types'
 
 const baseEs: CanyoningCardData = { kind: 'canyoning-data', lang: 'es' }
@@ -229,5 +229,44 @@ describe('canyoningCard', () => {
       expect(svg).toContain('FICHA TÉCNICA')
       expect(svg).toContain(PROFILE_LINE)
     })
+  })
+})
+
+describe('buildCanyonCard', () => {
+  it('returns a 1600×900 card and the same svg as canyoningCard', () => {
+    const card = buildCanyonCard(baseEs)
+    expect(card.width).toBe(1600)
+    expect(card.height).toBe(900)
+    expect(card.svg).toBe(canyoningCard(baseEs))
+  })
+
+  it('emits a grade zone per recognised axis', () => {
+    const { zones } = buildCanyonCard({ ...baseEs, grade: 'v4 a3 III' })
+    const grades = zones.filter((z) => z.kind === 'grade')
+    expect(grades.map((z) => z.key)).toEqual(['vert', 'aqua', 'commit'])
+    expect(grades.map((z) => z.value)).toEqual(['v4', 'a3', 'III'])
+    expect(grades[0].id).toBe('grade-vert')
+  })
+
+  it('emits no grade zones for unrecognised grade tokens', () => {
+    const { zones } = buildCanyonCard({ ...baseEs, grade: 'X2' })
+    expect(zones.filter((z) => z.kind === 'grade')).toHaveLength(0)
+  })
+
+  it('emits flow and phenomenon zones when a flow level is set', () => {
+    const { zones } = buildCanyonCard({
+      ...baseEs,
+      flowLevel: 'high',
+      phenomena: ['murky', 'siphon'],
+    })
+    expect(zones.some((z) => z.kind === 'flow')).toBe(true)
+    expect(
+      zones.filter((z) => z.kind === 'phenomenon').map((z) => z.key),
+    ).toEqual(['murky', 'siphon'])
+  })
+
+  it('emits no flow zone without a flow level', () => {
+    const { zones } = buildCanyonCard(baseEs)
+    expect(zones.some((z) => z.kind === 'flow')).toBe(false)
   })
 })
