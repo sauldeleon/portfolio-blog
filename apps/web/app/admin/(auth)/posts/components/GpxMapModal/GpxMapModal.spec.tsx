@@ -820,10 +820,81 @@ describe('GpxMapModal', () => {
       fireEvent.click(screen.getByTestId('image-picker-pick'))
       expect(screen.getByTestId('mapping-row-0')).toBeInTheDocument()
       expect(screen.getByTestId('mapping-name-0')).toHaveTextContent('Summit')
-      expect(screen.getByTestId('mapping-thumb-0')).toHaveAttribute(
+      expect(screen.getByTestId('mapping-thumb-0-0')).toHaveAttribute(
         'src',
         'https://cdn.com/img.jpg',
       )
+    })
+
+    it('appends a second image to the same waypoint', async () => {
+      setupAxiosGet()
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/track.gpx' },
+      })
+      act(() => {
+        jest.advanceTimersByTime(600)
+      })
+      expect(
+        await screen.findByTestId('pick-image-button-0'),
+      ).toBeInTheDocument()
+      // Pick twice for the same (default) waypoint → one row, two thumbs.
+      fireEvent.click(screen.getByTestId('pick-image-button-0'))
+      fireEvent.click(screen.getByTestId('image-picker-pick'))
+      fireEvent.click(screen.getByTestId('pick-image-button-0'))
+      fireEvent.click(screen.getByTestId('image-picker-pick'))
+      expect(screen.getAllByTestId('mapping-row-0')).toHaveLength(1)
+      expect(screen.getByTestId('mapping-thumb-0-0')).toBeInTheDocument()
+      expect(screen.getByTestId('mapping-thumb-0-1')).toBeInTheDocument()
+      // Removing one image keeps the row; removing the last drops it.
+      fireEvent.click(screen.getByTestId('mapping-remove-0-1'))
+      expect(screen.getByTestId('mapping-thumb-0-0')).toBeInTheDocument()
+      expect(screen.queryByTestId('mapping-thumb-0-1')).not.toBeInTheDocument()
+      fireEvent.click(screen.getByTestId('mapping-remove-0-0'))
+      expect(screen.queryByTestId('mapping-row-0')).not.toBeInTheDocument()
+    })
+
+    it('leaves other waypoint mappings intact when editing one', async () => {
+      setupAxiosGet() // Summit = idx 0, Water Source = idx 1
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/track.gpx' },
+      })
+      act(() => {
+        jest.advanceTimersByTime(600)
+      })
+      await screen.findByTestId('waypoint-select-0')
+      // Map Water Source (idx 1) first, then Summit (idx 0).
+      fireEvent.change(screen.getByTestId('waypoint-select-0'), {
+        target: { value: '1' },
+      })
+      fireEvent.click(screen.getByTestId('pick-image-button-0'))
+      fireEvent.click(screen.getByTestId('image-picker-pick'))
+      fireEvent.change(screen.getByTestId('waypoint-select-0'), {
+        target: { value: '0' },
+      })
+      fireEvent.click(screen.getByTestId('pick-image-button-0'))
+      fireEvent.click(screen.getByTestId('image-picker-pick'))
+      expect(screen.getAllByTestId('mapping-row-0')).toHaveLength(2)
+      // Add a 2nd image to Summit — the other mapping stays as-is.
+      fireEvent.click(screen.getByTestId('pick-image-button-0'))
+      fireEvent.click(screen.getByTestId('image-picker-pick'))
+      const preview = screen.getByTestId('gpx-preview').textContent ?? ''
+      expect(preview).toContain('0:1=https://cdn.com/img.jpg')
+      expect(preview).toContain(
+        '0:0=https://cdn.com/img.jpg,https://cdn.com/img.jpg',
+      )
+      // Remove one image from Summit (2nd row) — Water Source is untouched.
+      fireEvent.click(screen.getAllByTestId('mapping-remove-0-0')[1])
+      const after = screen.getByTestId('gpx-preview').textContent ?? ''
+      expect(after).toContain('0:1=https://cdn.com/img.jpg')
+      expect(after).toContain('0:0=https://cdn.com/img.jpg\n')
     })
 
     it('closes image picker after picking image', async () => {
@@ -846,7 +917,7 @@ describe('GpxMapModal', () => {
       expect(screen.queryByTestId('image-picker-mock')).not.toBeInTheDocument()
     })
 
-    it('removes mapped waypoint from dropdown after pick', async () => {
+    it('keeps a mapped waypoint in the dropdown so more images can be added', async () => {
       setupAxiosGet()
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
@@ -864,10 +935,10 @@ describe('GpxMapModal', () => {
       const options = within(
         screen.getByTestId('waypoint-select-0'),
       ).getAllByRole('option')
-      expect(options.map((o) => o.textContent)).not.toContain('Summit')
+      expect(options.map((o) => o.textContent)).toContain('Summit')
     })
 
-    it('closes dropdown when all waypoints are mapped', async () => {
+    it('keeps the dropdown available after mapping the only waypoint', async () => {
       setupAxiosGet(`<?xml version="1.0"?>
 <gpx xmlns="http://www.topografix.com/GPX/1/1">
   <wpt lat="43.5" lon="-5.6"><name>Summit</name></wpt>
@@ -887,13 +958,11 @@ describe('GpxMapModal', () => {
       ).toBeInTheDocument()
       fireEvent.click(screen.getByTestId('pick-image-button-0'))
       fireEvent.click(screen.getByTestId('image-picker-pick'))
-      expect(screen.queryByTestId('waypoint-select-0')).not.toBeInTheDocument()
-      expect(
-        screen.queryByTestId('pick-image-button-0'),
-      ).not.toBeInTheDocument()
+      expect(screen.getByTestId('waypoint-select-0')).toBeInTheDocument()
+      expect(screen.getByTestId('pick-image-button-0')).toBeInTheDocument()
     })
 
-    it('removes mapping row when remove button clicked', async () => {
+    it('removes mapping row when its only image is removed', async () => {
       setupAxiosGet()
       renderApp(
         <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
@@ -910,35 +979,8 @@ describe('GpxMapModal', () => {
       ).toBeInTheDocument()
       fireEvent.click(screen.getByTestId('pick-image-button-0'))
       fireEvent.click(screen.getByTestId('image-picker-pick'))
-      fireEvent.click(screen.getByTestId('mapping-remove-0'))
+      fireEvent.click(screen.getByTestId('mapping-remove-0-0'))
       expect(screen.queryByTestId('mapping-row-0')).not.toBeInTheDocument()
-    })
-
-    it('re-adds waypoint to dropdown after mapping removed', async () => {
-      setupAxiosGet()
-      renderApp(
-        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
-      )
-      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
-      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
-        target: { value: 'https://example.com/track.gpx' },
-      })
-      act(() => {
-        jest.advanceTimersByTime(600)
-      })
-      expect(
-        await screen.findByTestId('pick-image-button-0'),
-      ).toBeInTheDocument()
-      fireEvent.click(screen.getByTestId('pick-image-button-0'))
-      fireEvent.click(screen.getByTestId('image-picker-pick'))
-      fireEvent.click(screen.getByTestId('mapping-remove-0'))
-      await waitFor(() =>
-        expect(
-          within(screen.getByTestId('waypoint-select-0'))
-            .getAllByRole('option')
-            .map((o) => o.textContent),
-        ).toContain('Summit'),
-      )
     })
 
     it('can change pending waypoint via select', async () => {
@@ -1010,12 +1052,11 @@ describe('GpxMapModal', () => {
       // Pick image for the first Summit (fetchIdx 0 selected by default)
       fireEvent.click(screen.getByTestId('pick-image-button-0'))
       fireEvent.click(screen.getByTestId('image-picker-pick'))
-      // Second Summit (fetchIdx 1) still in dropdown
+      // Both Summit entries remain — a mapped waypoint stays selectable.
       const optsAfter = within(
         screen.getByTestId('waypoint-select-0'),
       ).getAllByRole('option')
-      expect(optsAfter).toHaveLength(1)
-      expect(optsAfter[0].textContent).toBe('Summit')
+      expect(optsAfter).toHaveLength(2)
     })
 
     it('includes waypoint image lines in insert markdown', async () => {
@@ -1059,6 +1100,32 @@ describe('GpxMapModal', () => {
       fireEvent.click(screen.getByTestId('image-picker-pick'))
       expect(screen.getByTestId('gpx-preview').textContent).toBe(
         '```gpx\ntrack:https://example.com/track.gpx ||| showWaypoints\n0:0=https://cdn.com/img.jpg\n```',
+      )
+    })
+
+    it("persists the waypoint's description notes on the image line", async () => {
+      setupAxiosGet(`<?xml version="1.0"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1">
+  <wpt lat="43.5" lon="-5.6"><name>Summit</name><desc>- Watch the edge
+- Rappel 20m</desc></wpt>
+</gpx>`)
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/track.gpx' },
+      })
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      act(() => {
+        jest.advanceTimersByTime(600)
+      })
+      expect(
+        await screen.findByTestId('pick-image-button-0'),
+      ).toBeInTheDocument()
+      fireEvent.click(screen.getByTestId('pick-image-button-0'))
+      fireEvent.click(screen.getByTestId('image-picker-pick'))
+      expect(screen.getByTestId('gpx-preview').textContent).toContain(
+        '0:0=https://cdn.com/img.jpg | Watch the edge | Rappel 20m',
       )
     })
 
@@ -1310,7 +1377,7 @@ describe('GpxMapModal initialValues', () => {
     expect(screen.getByTestId('gpx-track-url-0')).toHaveValue('')
   })
 
-  it('resolves an index-mapped image to its waypoint name and hides it from the select', async () => {
+  it('resolves an index-mapped image to its waypoint name', async () => {
     jest.useFakeTimers()
     setupAxiosGet() // Summit = index 0, Water Source = index 1
     renderApp(
@@ -1330,7 +1397,14 @@ describe('GpxMapModal initialValues', () => {
             },
           ],
           mappingsByTrack: {
-            0: [{ name: '', imageUrl: 'https://cdn.com/img.jpg', fetchIdx: 1 }],
+            0: [
+              {
+                name: '',
+                imageUrls: ['https://cdn.com/img.jpg'],
+                notes: [],
+                fetchIdx: 1,
+              },
+            ],
           },
         }}
       />,
@@ -1342,11 +1416,6 @@ describe('GpxMapModal initialValues', () => {
     expect(screen.getByTestId('mapping-name-0')).toHaveTextContent(
       'Water Source',
     )
-    // And the already-mapped waypoint is no longer offered in the select.
-    const options = within(
-      screen.getByTestId('waypoint-select-0'),
-    ).getAllByRole('option')
-    expect(options.map((o) => o.textContent)).not.toContain('Water Source')
     jest.useRealTimers()
   })
 
@@ -1373,7 +1442,8 @@ describe('GpxMapModal initialValues', () => {
             0: [
               {
                 name: 'Old Name',
-                imageUrl: 'https://cdn.com/img.jpg',
+                imageUrls: ['https://cdn.com/img.jpg'],
+                notes: [],
                 fetchIdx: 5,
               },
             ],
@@ -1408,7 +1478,13 @@ describe('GpxMapModal initialValues', () => {
             },
           ],
           mappingsByTrack: {
-            0: [{ name: 'Summit', imageUrl: 'https://cdn.com/img.jpg' }],
+            0: [
+              {
+                name: 'Summit',
+                imageUrls: ['https://cdn.com/img.jpg'],
+                notes: [],
+              },
+            ],
           },
         }}
       />,
@@ -1439,7 +1515,13 @@ describe('GpxMapModal initialValues', () => {
             },
           ],
           mappingsByTrack: {
-            0: [{ name: 'Summit', imageUrl: 'https://cdn.com/img.jpg' }],
+            0: [
+              {
+                name: 'Summit',
+                imageUrls: ['https://cdn.com/img.jpg'],
+                notes: [],
+              },
+            ],
           },
         }}
       />,

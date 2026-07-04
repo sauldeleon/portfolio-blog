@@ -267,9 +267,82 @@ describe('remarkEmbeds', () => {
       type: 'mdxJsxAttribute',
       name: 'waypointImages',
       value: JSON.stringify({
-        Summit: 'https://cdn.com/img1.jpg',
-        Water: 'https://cdn.com/img2.jpg',
+        Summit: ['https://cdn.com/img1.jpg'],
+        Water: ['https://cdn.com/img2.jpg'],
       }),
+    })
+  })
+
+  it('parses several comma-separated images for a waypoint', () => {
+    const [result] = runPlugin([
+      {
+        type: 'code',
+        lang: 'gpx',
+        value:
+          'https://example.com/track.gpx\nSummit=https://cdn.com/a.jpg,https://cdn.com/b.jpg',
+      },
+    ])
+    expect(result.attributes).toContainEqual({
+      type: 'mdxJsxAttribute',
+      name: 'waypointImages',
+      value: JSON.stringify({
+        Summit: ['https://cdn.com/a.jpg', 'https://cdn.com/b.jpg'],
+      }),
+    })
+  })
+
+  it('skips image lines with an empty url and no notes', () => {
+    const [result] = runPlugin([
+      {
+        type: 'code',
+        lang: 'gpx',
+        value: 'https://example.com/track.gpx\nSummit=',
+      },
+    ])
+    expect(result.attributes).not.toContainEqual(
+      expect.objectContaining({ name: 'waypointImages' }),
+    )
+    expect(result.attributes).not.toContainEqual(
+      expect.objectContaining({ name: 'waypointNotes' }),
+    )
+  })
+
+  it('adds a waypointNotes attribute for description notes after the images', () => {
+    const [result] = runPlugin([
+      {
+        type: 'code',
+        lang: 'gpx',
+        value:
+          'https://example.com/track.gpx\nSummit=https://cdn.com/a.jpg | Watch the edge | Rappel 20m',
+      },
+    ])
+    expect(result.attributes).toContainEqual({
+      type: 'mdxJsxAttribute',
+      name: 'waypointImages',
+      value: JSON.stringify({ Summit: ['https://cdn.com/a.jpg'] }),
+    })
+    expect(result.attributes).toContainEqual({
+      type: 'mdxJsxAttribute',
+      name: 'waypointNotes',
+      value: JSON.stringify({ Summit: ['Watch the edge', 'Rappel 20m'] }),
+    })
+  })
+
+  it('supports a notes-only waypoint line (no image)', () => {
+    const [result] = runPlugin([
+      {
+        type: 'code',
+        lang: 'gpx',
+        value: 'https://example.com/track.gpx\nSummit= | Just a note',
+      },
+    ])
+    expect(result.attributes).not.toContainEqual(
+      expect.objectContaining({ name: 'waypointImages' }),
+    )
+    expect(result.attributes).toContainEqual({
+      type: 'mdxJsxAttribute',
+      name: 'waypointNotes',
+      value: JSON.stringify({ Summit: ['Just a note'] }),
     })
   })
 
@@ -311,7 +384,7 @@ describe('remarkEmbeds', () => {
     expect(result.attributes).toContainEqual({
       type: 'mdxJsxAttribute',
       name: 'waypointImages',
-      value: JSON.stringify({ Summit: 'https://cdn.com/img.jpg' }),
+      value: JSON.stringify({ Summit: ['https://cdn.com/img.jpg'] }),
     })
   })
 
@@ -327,7 +400,7 @@ describe('remarkEmbeds', () => {
     expect(result.attributes).toContainEqual({
       type: 'mdxJsxAttribute',
       name: 'waypointImages',
-      value: JSON.stringify({ Summit: 'https://cdn.com/img.jpg?w=800' }),
+      value: JSON.stringify({ Summit: ['https://cdn.com/img.jpg?w=800'] }),
     })
   })
 
@@ -428,7 +501,7 @@ describe('remarkEmbeds', () => {
       expect(result.attributes).toContainEqual({
         type: 'mdxJsxAttribute',
         name: 'waypointImages',
-        value: JSON.stringify({ Summit: 'https://cdn.com/img.jpg' }),
+        value: JSON.stringify({ Summit: ['https://cdn.com/img.jpg'] }),
       })
     })
 
@@ -559,18 +632,84 @@ describe('remarkEmbeds', () => {
           {
             url: 'https://cdn.com/t1.gpx',
             name: 'T1',
-            waypointImages: { Summit: 'https://cdn.com/img1.jpg' },
+            waypointImages: { Summit: ['https://cdn.com/img1.jpg'] },
           },
           {
             url: 'https://cdn.com/t2.gpx',
             name: 'T2',
-            waypointImages: { Lake: 'https://cdn.com/img2.jpg' },
+            waypointImages: { Lake: ['https://cdn.com/img2.jpg'] },
           },
         ]),
       })
       expect(result.attributes).not.toContainEqual(
         expect.objectContaining({ name: 'waypointImages' }),
       )
+    })
+
+    it('parses per-track notes into track waypointNotes', () => {
+      const [result] = runPlugin([
+        {
+          type: 'code',
+          lang: 'gpx',
+          value:
+            'track:https://cdn.com/t1.gpx | T1\n0:Summit=https://cdn.com/img1.jpg | Careful here',
+        },
+      ])
+      expect(result.attributes).toContainEqual({
+        type: 'mdxJsxAttribute',
+        name: 'tracks',
+        value: JSON.stringify([
+          {
+            url: 'https://cdn.com/t1.gpx',
+            name: 'T1',
+            waypointImages: { Summit: ['https://cdn.com/img1.jpg'] },
+            waypointNotes: { Summit: ['Careful here'] },
+          },
+        ]),
+      })
+    })
+
+    it('parses a per-track notes-only line (no image)', () => {
+      const [result] = runPlugin([
+        {
+          type: 'code',
+          lang: 'gpx',
+          value: 'track:https://cdn.com/t1.gpx | T1\n0:Summit= | Only a note',
+        },
+      ])
+      expect(result.attributes).toContainEqual({
+        type: 'mdxJsxAttribute',
+        name: 'tracks',
+        value: JSON.stringify([
+          {
+            url: 'https://cdn.com/t1.gpx',
+            name: 'T1',
+            waypointNotes: { Summit: ['Only a note'] },
+          },
+        ]),
+      })
+    })
+
+    it('merges notes from several waypoints on the same track', () => {
+      const [result] = runPlugin([
+        {
+          type: 'code',
+          lang: 'gpx',
+          value:
+            'track:https://cdn.com/t1.gpx | T1\n0:Summit= | Note A\n0:Lake= | Note B',
+        },
+      ])
+      expect(result.attributes).toContainEqual({
+        type: 'mdxJsxAttribute',
+        name: 'tracks',
+        value: JSON.stringify([
+          {
+            url: 'https://cdn.com/t1.gpx',
+            name: 'T1',
+            waypointNotes: { Summit: ['Note A'], Lake: ['Note B'] },
+          },
+        ]),
+      })
     })
 
     it('keeps legacy image lines (no prefix) as global waypointImages', () => {
@@ -590,7 +729,7 @@ describe('remarkEmbeds', () => {
       expect(result.attributes).toContainEqual({
         type: 'mdxJsxAttribute',
         name: 'waypointImages',
-        value: JSON.stringify({ Summit: 'https://cdn.com/img.jpg' }),
+        value: JSON.stringify({ Summit: ['https://cdn.com/img.jpg'] }),
       })
     })
 
@@ -627,8 +766,8 @@ describe('remarkEmbeds', () => {
           {
             url: 'https://cdn.com/t1.gpx',
             waypointImages: {
-              Summit: 'https://cdn.com/img1.jpg',
-              Lake: 'https://cdn.com/img2.jpg',
+              Summit: ['https://cdn.com/img1.jpg'],
+              Lake: ['https://cdn.com/img2.jpg'],
             },
           },
         ]),
@@ -765,6 +904,142 @@ describe('remarkEmbeds', () => {
         { type: 'code', lang: 'croquis', value: 'salto: Jump 2m' },
       ])
       expect(result.attributes?.find((a) => a.name === 'title')).toBeUndefined()
+    })
+
+    it('has no noDownload attribute by default (download shown)', () => {
+      const [result] = runPlugin([
+        { type: 'code', lang: 'croquis', value: 'salto: Jump 2m' },
+      ])
+      expect(
+        result.attributes?.find((a) => a.name === 'noDownload'),
+      ).toBeUndefined()
+    })
+
+    it('emits a noDownload attribute when the no-download flag is set', () => {
+      const [result] = runPlugin([
+        {
+          type: 'code',
+          lang: 'croquis',
+          meta: 'no-download Barranco X',
+          value: 'salto: Jump 2m',
+        },
+      ])
+      expect(result.attributes?.find((a) => a.name === 'noDownload')).toEqual({
+        type: 'mdxJsxAttribute',
+        name: 'noDownload',
+        value: null,
+      })
+      // The flag is stripped from the title.
+      expect(result.attributes?.find((a) => a.name === 'title')?.value).toBe(
+        'Barranco X',
+      )
+    })
+  })
+
+  describe('canyon-summary blocks', () => {
+    const body = JSON.stringify({
+      kind: 'canyoning-data',
+      lang: 'es',
+      grade: 'v4 a3 III',
+    })
+
+    it('transforms a canyon-summary block into a CanyonSummary element', () => {
+      const [result] = runPlugin([
+        { type: 'code', lang: 'canyon-summary', value: body },
+      ])
+      expect(result.type).toBe('mdxJsxFlowElement')
+      expect(result.name).toBe('CanyonSummary')
+      const data = result.attributes?.find((a) => a.name === 'data')?.value
+      expect(data).toContain('"kind": "canyoning-data"')
+      expect(data).toContain('"grade": "v4 a3 III"')
+    })
+
+    it('emits an empty data attribute for an invalid body', () => {
+      const [result] = runPlugin([
+        { type: 'code', lang: 'canyon-summary', value: '{bad' },
+      ])
+      expect(result.attributes?.find((a) => a.name === 'data')?.value).toBe('')
+    })
+
+    it('emits an empty data attribute when the body is undefined', () => {
+      const [result] = runPlugin([
+        { type: 'code', lang: 'canyon-summary', value: undefined },
+      ])
+      expect(result.attributes?.find((a) => a.name === 'data')?.value).toBe('')
+    })
+
+    it('has no noDownload attribute by default', () => {
+      const [result] = runPlugin([
+        { type: 'code', lang: 'canyon-summary', value: body },
+      ])
+      expect(
+        result.attributes?.find((a) => a.name === 'noDownload'),
+      ).toBeUndefined()
+    })
+
+    it('emits a noDownload attribute when the no-download flag is set', () => {
+      const [result] = runPlugin([
+        {
+          type: 'code',
+          lang: 'canyon-summary',
+          meta: 'no-download',
+          value: body,
+        },
+      ])
+      expect(result.attributes?.find((a) => a.name === 'noDownload')).toEqual({
+        type: 'mdxJsxAttribute',
+        name: 'noDownload',
+        value: null,
+      })
+    })
+  })
+
+  describe('ferrata-summary blocks', () => {
+    const body = JSON.stringify({
+      kind: 'summary-ferrata',
+      lang: 'es',
+      grade: 'K3',
+    })
+
+    it('transforms a ferrata-summary block into a FerrataSummary element', () => {
+      const [result] = runPlugin([
+        { type: 'code', lang: 'ferrata-summary', value: body },
+      ])
+      expect(result.type).toBe('mdxJsxFlowElement')
+      expect(result.name).toBe('FerrataSummary')
+      const data = result.attributes?.find((a) => a.name === 'data')?.value
+      expect(data).toContain('"kind": "summary-ferrata"')
+      expect(data).toContain('"grade": "K3"')
+    })
+
+    it('emits an empty data attribute for an invalid body', () => {
+      const [result] = runPlugin([
+        { type: 'code', lang: 'ferrata-summary', value: '{bad' },
+      ])
+      expect(result.attributes?.find((a) => a.name === 'data')?.value).toBe('')
+    })
+
+    it('emits an empty data attribute when the body is undefined', () => {
+      const [result] = runPlugin([
+        { type: 'code', lang: 'ferrata-summary', value: undefined },
+      ])
+      expect(result.attributes?.find((a) => a.name === 'data')?.value).toBe('')
+    })
+
+    it('emits a noDownload attribute when the no-download flag is set', () => {
+      const [result] = runPlugin([
+        {
+          type: 'code',
+          lang: 'ferrata-summary',
+          meta: 'no-download',
+          value: body,
+        },
+      ])
+      expect(result.attributes?.find((a) => a.name === 'noDownload')).toEqual({
+        type: 'mdxJsxAttribute',
+        name: 'noDownload',
+        value: null,
+      })
     })
   })
 })

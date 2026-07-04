@@ -1,3 +1,10 @@
+import {
+  parseCanyonSummary,
+  parseCroquisMeta,
+  parseFerrataSummary,
+} from '@web/lib/cards'
+import type { CanyoningCardData, SummaryFerrataData } from '@web/lib/cards'
+
 export type EmbedType =
   | 'youtube'
   | 'youtube-360'
@@ -40,7 +47,12 @@ export interface ParsedGpx {
   tracks: ParsedGpxTrack[]
   mappingsByTrack: Record<
     number,
-    Array<{ name: string; imageUrl: string; fetchIdx?: number }>
+    Array<{
+      name: string
+      imageUrls: string[]
+      notes: string[]
+      fetchIdx?: number
+    }>
   >
 }
 
@@ -50,11 +62,27 @@ export interface ParsedSlideshow {
   slides: ParsedSlideshowSlide[]
 }
 
-/** A croquis block: the editable canyon-waypoint text plus an optional title. */
+/** A croquis block: editable waypoint text, an optional title, and flags. */
 export interface ParsedCroquis {
   text: string
   title: string
+  showDownload: boolean
 }
+
+/** A canyon summary block: the card data and the download flag. */
+export interface ParsedCanyonSummary {
+  data: CanyoningCardData
+  showDownload: boolean
+}
+
+/** A ferrata summary block: the card data and the download flag. */
+export interface ParsedFerrataSummary {
+  data: SummaryFerrataData
+  showDownload: boolean
+}
+
+/** Either interactive summary card, distinguished by `data.kind`. */
+export type ParsedInteractiveCard = ParsedCanyonSummary | ParsedFerrataSummary
 
 export type DetectedEmbed =
   | { type: 'image'; blockStart: number; blockEnd: number; parsed: ParsedImage }
@@ -71,6 +99,18 @@ export type DetectedEmbed =
       blockStart: number
       blockEnd: number
       parsed: ParsedCroquis
+    }
+  | {
+      type: 'canyon-summary'
+      blockStart: number
+      blockEnd: number
+      parsed: ParsedCanyonSummary
+    }
+  | {
+      type: 'ferrata-summary'
+      blockStart: number
+      blockEnd: number
+      parsed: ParsedFerrataSummary
     }
 
 const EMBED_TYPES: EmbedType[] = [
@@ -195,11 +235,18 @@ export function parseGpxBody(
         // format the modal writes); its display name is resolved from the
         // fetched waypoints. A non-numeric key is a legacy name mapping.
         const key = m[2]
-        const imageUrl = m[3]
+        // Value is `url1,url2 | note1 | note2`: comma-separated images, then
+        // optional ` | `-separated description notes.
+        const [urlsPart, ...noteParts] = m[3].split(' | ')
+        const imageUrls = urlsPart
+          .split(',')
+          .map((u) => u.trim())
+          .filter(Boolean)
+        const notes = noteParts.map((n) => n.trim()).filter(Boolean)
         mappingsByTrack[trackIdx].push(
           /^\d+$/.test(key)
-            ? { name: '', imageUrl, fetchIdx: parseInt(key, 10) }
-            : { name: key, imageUrl },
+            ? { name: '', imageUrls, notes, fetchIdx: parseInt(key, 10) }
+            : { name: key, imageUrls, notes },
         )
       }
     }
@@ -268,11 +315,40 @@ export function detectEmbedAtCursor(
       }
 
       if (fenceType === 'croquis') {
+        const { title, showDownload } = parseCroquisMeta(meta)
         return {
           type: 'croquis',
           blockStart: start,
           blockEnd: end,
-          parsed: { text: body, title: meta },
+          parsed: { text: body, title, showDownload },
+        }
+      }
+
+      if (fenceType === 'canyon-summary') {
+        const { showDownload } = parseCroquisMeta(meta)
+        const data = parseCanyonSummary(body) ?? {
+          kind: 'canyoning-data',
+          lang: 'en',
+        }
+        return {
+          type: 'canyon-summary',
+          blockStart: start,
+          blockEnd: end,
+          parsed: { data, showDownload },
+        }
+      }
+
+      if (fenceType === 'ferrata-summary') {
+        const { showDownload } = parseCroquisMeta(meta)
+        const data = parseFerrataSummary(body) ?? {
+          kind: 'summary-ferrata',
+          lang: 'en',
+        }
+        return {
+          type: 'ferrata-summary',
+          blockStart: start,
+          blockEnd: end,
+          parsed: { data, showDownload },
         }
       }
 

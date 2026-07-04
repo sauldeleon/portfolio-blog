@@ -9,6 +9,7 @@ import {
   type LangStrings,
   PANEL_STK,
 } from './theme'
+import type { CardZone } from './types'
 
 /** Escape XML special characters for SVG text content. */
 export function esc(s: string): string {
@@ -80,6 +81,15 @@ export function hRule(x0: number, x1: number, y: number): string {
   return `<line x1="${x0}" y1="${y}" x2="${x1}" y2="${y}" stroke="${PANEL_STK}" stroke-width="1.5"/>`
 }
 
+/** Which grading axis a token belongs to (v4 → vert, a3 → aqua, III → commit). */
+export function gradeAxis(tok: string): 'vert' | 'aqua' | 'commit' | null {
+  const c = tok[0]?.toLowerCase() ?? ''
+  if (c === 'v' && /\d/.test(tok)) return 'vert'
+  if (c === 'a' && /\d/.test(tok)) return 'aqua'
+  if (/^[IVXLCDM]+$/.test(tok)) return 'commit'
+  return null
+}
+
 /** Sub-label for a grade token (v4 → VERT, a3 → AQUA, III → COMM). */
 export function gradeSubLabel(
   tok: string,
@@ -87,10 +97,10 @@ export function gradeSubLabel(
   gAqua: string,
   gCommit: string,
 ): string {
-  const c = tok[0]?.toLowerCase() ?? ''
-  if (c === 'v' && /\d/.test(tok)) return gVert
-  if (c === 'a' && /\d/.test(tok)) return gAqua
-  if (/^[IVXLCDM]+$/.test(tok)) return gCommit
+  const axis = gradeAxis(tok)
+  if (axis === 'vert') return gVert
+  if (axis === 'aqua') return gAqua
+  if (axis === 'commit') return gCommit
   return ''
 }
 
@@ -132,6 +142,10 @@ const PHENOMENON_ICON: Record<string, IconKind> = {
  * Observed-flow row for the difficulty zone: a difficulty-coloured "level" pill
  * (droplet + level label), a set of phenomenon icon chips, and the
  * affects-rappels answer as compact text. `y` is the top of the row.
+ *
+ * Returns both the SVG and the interactive hit-zones (the level pill and each
+ * phenomenon chip) so the static card and the interactive overlay share one
+ * source of truth for their geometry.
  */
 export function flowRow(
   x: number,
@@ -140,7 +154,7 @@ export function flowRow(
   affects: string | undefined,
   phenomena: string[],
   S: LangStrings,
-): string {
+): { svg: string; zones: CardZone[] } {
   const levels: Record<string, string> = S.flow_levels
   const rappels: Record<string, string> = S.flow_rappels
   const color = FLOW_COLORS[level] ?? COLD
@@ -161,6 +175,10 @@ export function flowRow(
     `<path d="${drop}" fill="${color}"/>` +
     `<text x="${labelX.toFixed(1)}" y="${(y + 27).toFixed(1)}" font-family="Poppins" font-weight="500" font-size="22" fill="${BONE}">${esc(levelLabel)}</text>`
 
+  const zones: CardZone[] = [
+    { id: 'flow', kind: 'flow', key: level, x, y, w: pillW, h },
+  ]
+
   let cursor = x + pillW + 12
   const chipSize = 32
   const chipY = y + (h - chipSize) / 2
@@ -169,6 +187,15 @@ export function flowRow(
     const icon = PHENOMENON_ICON[p]
     if (!icon) continue
     chips.push(badge(cursor, chipY, chipSize, icon))
+    zones.push({
+      id: `phenomenon-${p}`,
+      kind: 'phenomenon',
+      key: p,
+      x: cursor,
+      y: chipY,
+      w: chipSize,
+      h: chipSize,
+    })
     cursor += chipSize + 8
   }
 
@@ -178,5 +205,5 @@ export function flowRow(
     affectsSvg = `<text x="${(cursor + 4).toFixed(1)}" y="${(y + 27).toFixed(1)}" font-family="Poppins" font-size="16" fill="${COLD}">${esc(al)}</text>`
   }
 
-  return pill + chips.join('') + affectsSvg
+  return { svg: pill + chips.join('') + affectsSvg, zones }
 }

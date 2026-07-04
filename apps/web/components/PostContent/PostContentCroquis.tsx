@@ -28,10 +28,13 @@ import {
 export function PostContentCroquis({
   obstacles,
   title,
+  noDownload,
   lang: langOverride,
 }: {
   obstacles?: string
   title?: string
+  /** When set (via the `no-download` fence flag), hides the PNG download. */
+  noDownload?: boolean
   lang?: Lang
 }) {
   const { t, i18n } = useClientTranslation('common')
@@ -65,16 +68,18 @@ export function PostContentCroquis({
         title={title}
         interaction="click"
       />
-      <StyledDownloadBar>
-        <StyledDownloadButton
-          type="button"
-          onClick={() => void handleDownload()}
-          data-testid="post-croquis-download"
-        >
-          <DownloadIcon />
-          {t('croquis.downloadPng')}
-        </StyledDownloadButton>
-      </StyledDownloadBar>
+      {!noDownload && (
+        <StyledDownloadBar>
+          <StyledDownloadButton
+            type="button"
+            onClick={() => void handleDownload()}
+            data-testid="post-croquis-download"
+          >
+            <DownloadIcon />
+            {t('croquis.downloadPng')}
+          </StyledDownloadButton>
+        </StyledDownloadBar>
+      )}
       {downloadError && (
         <StyledDownloadError data-testid="post-croquis-download-error">
           {t('croquis.downloadError')}

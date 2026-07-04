@@ -22,19 +22,25 @@ import {
 interface FerrataFormProps {
   value: SummaryFerrataData
   onChange: (next: SummaryFerrataData) => void
+  /** Hide the language toggle (e.g. when the language is fixed by context). */
+  hideLang?: boolean
 }
 
 const LANGS: Lang[] = ['en', 'es']
 
 const FERRATA_GRADE_OPTIONS: SelectOption[] = Array.from(
-  { length: 7 },
+  { length: 6 },
   (_, i) => ({
     value: `K${i + 1}`,
     label: `K${i + 1}`,
   }),
 )
 
-export function FerrataForm({ value, onChange }: FerrataFormProps) {
+export function FerrataForm({
+  value,
+  onChange,
+  hideLang = false,
+}: FerrataFormProps) {
   const { t } = useClientTranslation('admin')
   function set(patch: Partial<SummaryFerrataData>) {
     onChange({ ...value, ...patch })
@@ -42,20 +48,22 @@ export function FerrataForm({ value, onChange }: FerrataFormProps) {
 
   return (
     <StyledForm data-testid="ferrata-form">
-      <StyledLangToggle>
-        {LANGS.map((l) => (
-          <Button
-            key={l}
-            type="button"
-            variant="label"
-            active={value.lang === l}
-            onClick={() => set({ lang: l })}
-            data-testid={`lang-${l}`}
-          >
-            {l.toUpperCase()}
-          </Button>
-        ))}
-      </StyledLangToggle>
+      {!hideLang && (
+        <StyledLangToggle>
+          {LANGS.map((l) => (
+            <Button
+              key={l}
+              type="button"
+              variant="label"
+              active={value.lang === l}
+              onClick={() => set({ lang: l })}
+              data-testid={`lang-${l}`}
+            >
+              {l.toUpperCase()}
+            </Button>
+          ))}
+        </StyledLangToggle>
+      )}
 
       <StyledSection>
         <StyledSectionTitle>{t('cards.sections.header')}</StyledSectionTitle>

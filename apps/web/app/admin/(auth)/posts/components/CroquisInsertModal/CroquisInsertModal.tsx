@@ -9,6 +9,7 @@ import {
   isDrawableWaypoint,
   parseCanyonWaypointsText,
   serializeCanyonWaypoints,
+  serializeCroquisMeta,
   toCroquisObstacles,
 } from '@web/lib/cards'
 import type { CanyonWaypoint } from '@web/lib/cards'
@@ -20,6 +21,7 @@ import type { CloudinaryImage } from '@web/lib/cloudinary/images'
 
 import {
   StyledAddRow,
+  StyledCheckboxRow,
   StyledMappingName,
   StyledMappingRow,
   StyledMappingThumb,
@@ -73,6 +75,9 @@ export function CroquisInsertModal({
 }: CroquisInsertModalProps) {
   const [text, setText] = useState(initialValues?.text ?? '')
   const [title, setTitle] = useState(initialValues?.title ?? '')
+  const [showDownload, setShowDownload] = useState(
+    initialValues?.showDownload ?? true,
+  )
   const [url, setUrl] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -84,8 +89,8 @@ export function CroquisInsertModal({
 
   // The exact fenced block that will be inserted; shown read-only as a preview
   // and reused verbatim on insert so the two never drift.
-  const fenceMeta = title.trim() ? ` ${title.trim()}` : ''
-  const preview = `\`\`\`croquis${fenceMeta}\n${text.trim()}\n\`\`\``
+  const meta = serializeCroquisMeta({ title, showDownload })
+  const preview = `\`\`\`croquis${meta ? ` ${meta}` : ''}\n${text.trim()}\n\`\`\``
 
   // Only waypoints actually drawn in the croquis can carry hover images.
   const drawable: IndexedWaypoint[] = waypoints
@@ -158,6 +163,7 @@ export function CroquisInsertModal({
     onInsert(`\n\n${preview}\n\n`)
     setText('')
     setTitle('')
+    setShowDownload(true)
     setUrl('')
     setError(null)
     setPickingFor(null)
@@ -188,6 +194,18 @@ export function CroquisInsertModal({
             placeholder="Barranco de …"
             data-testid="croquis-modal-title"
           />
+
+          <StyledCheckboxRow>
+            <label>
+              <input
+                type="checkbox"
+                checked={showDownload}
+                onChange={(e) => setShowDownload(e.target.checked)}
+                data-testid="croquis-modal-download-toggle"
+              />
+              Show PNG download button
+            </label>
+          </StyledCheckboxRow>
 
           <StyledSectionLabel>GPX url (optional)</StyledSectionLabel>
           <StyledGpxRow>

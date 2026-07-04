@@ -94,6 +94,18 @@ describe('PostContentCroquis', () => {
     expect(screen.getByTestId('cm-interaction')).toHaveTextContent('click')
   })
 
+  it('shows the download button by default', () => {
+    renderApp(<PostContentCroquis obstacles={OB} />)
+    expect(screen.getByTestId('post-croquis-download')).toBeInTheDocument()
+  })
+
+  it('hides the download button when noDownload is set', () => {
+    renderApp(<PostContentCroquis obstacles={OB} noDownload />)
+    expect(
+      screen.queryByTestId('post-croquis-download'),
+    ).not.toBeInTheDocument()
+  })
+
   it('downloads the croquis PNG with a title-derived filename', async () => {
     renderApp(<PostContentCroquis obstacles={OB} title="Barranco X" />)
     await userEvent.click(screen.getByTestId('post-croquis-download'))

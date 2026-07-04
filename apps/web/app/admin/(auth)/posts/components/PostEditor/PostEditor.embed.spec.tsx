@@ -234,6 +234,41 @@ jest.mock('../CroquisInsertModal', () => ({
     ) : null,
 }))
 
+jest.mock('../InteractiveCardInsertModal', () => ({
+  InteractiveCardInsertModal: ({
+    isOpen,
+    onInsert,
+    onCancel,
+  }: {
+    isOpen: boolean
+    onInsert: (markdown: string) => void
+    onCancel: () => void
+    [key: string]: unknown
+  }) =>
+    isOpen ? (
+      <div data-testid="interactive-card-insert-modal-mock">
+        <button
+          type="button"
+          data-testid="interactive-card-modal-insert-mock"
+          onClick={() =>
+            onInsert(
+              '\n\n```canyon-summary\n{"kind":"canyoning-data","lang":"en","title":"New"}\n```\n\n',
+            )
+          }
+        >
+          Insert
+        </button>
+        <button
+          type="button"
+          data-testid="interactive-card-modal-cancel-mock"
+          onClick={onCancel}
+        >
+          Cancel
+        </button>
+      </div>
+    ) : null,
+}))
+
 jest.mock('../ImagePicker', () => ({
   ImagePicker: () => null,
 }))
@@ -570,6 +605,110 @@ describe('PostEditor embed edit-in-place', () => {
     expect(
       screen.queryByTestId('croquis-insert-modal-mock'),
     ).not.toBeInTheDocument()
+  })
+
+  it('opens the canyon summary modal from the toolbar and inserts a block', () => {
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+    fireEvent.change(screen.getByTestId('content-input'), {
+      target: { value: 'Intro' },
+    })
+    fireEvent.click(screen.getByTestId('open-interactive-card-modal-button'))
+    expect(
+      screen.getByTestId('interactive-card-insert-modal-mock'),
+    ).toBeInTheDocument()
+    fireEvent.click(screen.getByTestId('interactive-card-modal-insert-mock'))
+    expect(
+      (screen.getByTestId('content-input') as HTMLTextAreaElement).value,
+    ).toContain('```canyon-summary')
+  })
+
+  it('shows the edit button when the cursor is inside a canyon-summary block', () => {
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+    const textarea = screen.getByTestId('content-input') as HTMLTextAreaElement
+    const content =
+      'Intro\n\n```canyon-summary\n{"kind":"canyoning-data","lang":"en"}\n```\n\nOutro'
+    fireEvent.change(textarea, { target: { value: content } })
+    textarea.selectionStart = content.indexOf('```canyon-summary') + 3
+    textarea.selectionEnd = content.indexOf('```canyon-summary') + 3
+    fireEvent.click(textarea)
+    expect(screen.getByTestId('edit-embed-button')).toHaveTextContent(
+      'Edit canyon-summary',
+    )
+  })
+
+  it('opens the canyon summary modal when editing a block and replaces it', () => {
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+    const textarea = screen.getByTestId('content-input') as HTMLTextAreaElement
+    const content =
+      'Before\n\n```canyon-summary\n{"kind":"canyoning-data","lang":"en","title":"Old"}\n```\n\nAfter'
+    fireEvent.change(textarea, { target: { value: content } })
+    textarea.selectionStart = content.indexOf('```canyon-summary') + 3
+    textarea.selectionEnd = content.indexOf('```canyon-summary') + 3
+    fireEvent.click(textarea)
+    fireEvent.click(screen.getByTestId('edit-embed-button'))
+    expect(
+      screen.getByTestId('interactive-card-insert-modal-mock'),
+    ).toBeInTheDocument()
+    fireEvent.click(screen.getByTestId('interactive-card-modal-insert-mock'))
+    const newContent = (
+      screen.getByTestId('content-input') as HTMLTextAreaElement
+    ).value
+    expect(newContent).not.toContain('Old')
+    expect(newContent).toContain('Before')
+    expect(newContent).toContain('After')
+    expect(newContent).toContain('New')
+  })
+
+  it('cancel on the canyon summary modal during edit clears initialValues', () => {
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+    const textarea = screen.getByTestId('content-input') as HTMLTextAreaElement
+    const content =
+      'Intro\n\n```canyon-summary\n{"kind":"canyoning-data","lang":"en"}\n```\n\nOutro'
+    fireEvent.change(textarea, { target: { value: content } })
+    textarea.selectionStart = content.indexOf('```canyon-summary') + 3
+    textarea.selectionEnd = content.indexOf('```canyon-summary') + 3
+    fireEvent.click(textarea)
+    fireEvent.click(screen.getByTestId('edit-embed-button'))
+    fireEvent.click(screen.getByTestId('interactive-card-modal-cancel-mock'))
+    expect(
+      screen.queryByTestId('interactive-card-insert-modal-mock'),
+    ).not.toBeInTheDocument()
+  })
+
+  it('shows the edit button when the cursor is inside a ferrata-summary block', () => {
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+    const textarea = screen.getByTestId('content-input') as HTMLTextAreaElement
+    const content =
+      'Intro\n\n```ferrata-summary\n{"kind":"summary-ferrata","lang":"en"}\n```\n\nOutro'
+    fireEvent.change(textarea, { target: { value: content } })
+    textarea.selectionStart = content.indexOf('```ferrata-summary') + 3
+    textarea.selectionEnd = content.indexOf('```ferrata-summary') + 3
+    fireEvent.click(textarea)
+    expect(screen.getByTestId('edit-embed-button')).toHaveTextContent(
+      'Edit ferrata-summary',
+    )
+  })
+
+  it('opens the interactive modal when editing a ferrata-summary block and replaces it', () => {
+    renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+    const textarea = screen.getByTestId('content-input') as HTMLTextAreaElement
+    const content =
+      'Before\n\n```ferrata-summary\n{"kind":"summary-ferrata","lang":"en","title":"Old"}\n```\n\nAfter'
+    fireEvent.change(textarea, { target: { value: content } })
+    textarea.selectionStart = content.indexOf('```ferrata-summary') + 3
+    textarea.selectionEnd = content.indexOf('```ferrata-summary') + 3
+    fireEvent.click(textarea)
+    fireEvent.click(screen.getByTestId('edit-embed-button'))
+    expect(
+      screen.getByTestId('interactive-card-insert-modal-mock'),
+    ).toBeInTheDocument()
+    fireEvent.click(screen.getByTestId('interactive-card-modal-insert-mock'))
+    const newContent = (
+      screen.getByTestId('content-input') as HTMLTextAreaElement
+    ).value
+    expect(newContent).not.toContain('Old')
+    expect(newContent).toContain('Before')
+    expect(newContent).toContain('After')
   })
 
   it('shows edit button when cursor is inside a slideshow block', () => {

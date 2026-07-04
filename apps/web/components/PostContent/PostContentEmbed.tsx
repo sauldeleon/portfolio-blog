@@ -28,6 +28,7 @@ export function PostContentEmbed({
   showWaypoints,
   allowDownload,
   waypointImages,
+  waypointNotes,
 }: {
   type?: string
   url?: string
@@ -35,6 +36,7 @@ export function PostContentEmbed({
   showWaypoints?: boolean
   allowDownload?: boolean
   waypointImages?: string
+  waypointNotes?: string
 }) {
   const { t } = useClientTranslation('common')
 
@@ -43,7 +45,10 @@ export function PostContentEmbed({
       ? (JSON.parse(tracks) as GpxTrackDef[])
       : undefined
     const parsedWaypointImages = waypointImages
-      ? (JSON.parse(waypointImages) as Record<string, string>)
+      ? (JSON.parse(waypointImages) as Record<string, string[]>)
+      : undefined
+    const parsedWaypointNotes = waypointNotes
+      ? (JSON.parse(waypointNotes) as Record<string, string[]>)
       : undefined
 
     if (!parsedTracks && !url) return null
@@ -55,6 +60,7 @@ export function PostContentEmbed({
         showWaypoints={showWaypoints}
         allowDownload={allowDownload}
         waypointImages={parsedWaypointImages}
+        waypointNotes={parsedWaypointNotes}
         downloadLabel={t('gpxMap.downloadGpx')}
         labels={{
           waypoints: t('gpxMap.waypoints'),

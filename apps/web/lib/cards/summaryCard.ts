@@ -19,7 +19,12 @@ import {
   PANEL_STK,
   STRINGS,
 } from './theme'
-import type { SummaryFerrataData, SummaryRouteData } from './types'
+import type {
+  CardResult,
+  CardZone,
+  SummaryFerrataData,
+  SummaryRouteData,
+} from './types'
 
 const W = 1600
 const H = 900
@@ -104,8 +109,12 @@ function tile(
   )
 }
 
-/** Generate SVG for a summary card (route / ferrata). */
-export function summaryCard(data: SummaryCardData): string {
+/**
+ * Build a summary card (route / ferrata): the SVG plus any interactive
+ * hit-zones. Ferrata cards expose their difficulty hero as a zone so the
+ * interactive overlay can explain the K-scale; route cards have no zones.
+ */
+export function buildSummaryCard(data: SummaryCardData): CardResult {
   const S = STRINGS[data.lang]
 
   // --- header ---
@@ -124,6 +133,22 @@ export function summaryCard(data: SummaryCardData): string {
   const isRoute = data.kind === 'summary-route'
   const badgeKind: Parameters<typeof badge>[3] = isRoute ? 'summit' : 'ferrata'
   const eyebrowText = isRoute ? S.route_summary : S.ferrata_card
+
+  // The difficulty hero (ferrata only) is the single interactive zone.
+  const zones: CardZone[] = isRoute
+    ? []
+    : [
+        {
+          id: 'ferrata-grade',
+          kind: 'ferrata-grade',
+          key: 'grade',
+          value: data.grade ?? '',
+          x: CX0 - 6,
+          y: 180,
+          w: CW / 3 - 16,
+          h: 112,
+        },
+      ]
 
   // --- heroes (3 columns) ---
   const heroSvg = isRoute
@@ -169,7 +194,7 @@ export function summaryCard(data: SummaryCardData): string {
         `font-family="Poppins" font-size="18" letter-spacing="3" fill="${COLD}" opacity="0.3">` +
         `${esc(S.profile)} · GPX</text>`
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
 <defs>
  ${FONT_STYLE}
  <linearGradient id="panel" x1="0" y1="0" x2="0.4" y2="1"><stop offset="0" stop-color="${BG_TOP}"/><stop offset="1" stop-color="${BG_BOT}"/></linearGradient>
@@ -198,4 +223,14 @@ ${eyebrow(CX0, 383, S.times_header)}${dividersSvg}${tilesSvg}
 ${hRule(CX0, CXR, 562)}
 ${profilePlaceholder}
 </svg>`
+
+  return { svg, width: W, height: H, zones }
+}
+
+/**
+ * The static summary card SVG (1600×900) as a string. Thin wrapper over
+ * {@link buildSummaryCard} that discards the zones.
+ */
+export function summaryCard(data: SummaryCardData): string {
+  return buildSummaryCard(data).svg
 }

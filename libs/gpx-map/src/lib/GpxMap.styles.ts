@@ -106,6 +106,34 @@ export const StyledWaypointImageCard = styled.img`
   margin-bottom: 0.5rem;
 `
 
+export const StyledWaypointGalleryThumbs = styled.div`
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+`
+
+export const StyledWaypointGalleryThumb = styled.button<{ $active: boolean }>`
+  width: 48px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid
+    ${({ $active }) => ($active ? '#f59e0b' : 'rgba(128, 128, 128, 0.3)')};
+  border-radius: 2px;
+  overflow: hidden;
+  cursor: pointer;
+  background: none;
+  opacity: ${({ $active }) => ($active ? 1 : 0.6)};
+  flex: 0 0 auto;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+`
+
 export const StyledWaypointNotes = styled.ul`
   margin: 0 0 0.5rem;
   padding: 0.4rem 0.6rem 0.4rem 1.4rem;
@@ -341,5 +369,48 @@ export const StyledLightboxClose = styled.button`
 
   &:hover {
     opacity: 1;
+  }
+`
+
+export const StyledLightboxNav = styled.div`
+  button {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(16, 28, 38, 0.7);
+    border: 1px solid #2f4a5a;
+    color: #fff;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: 0.85;
+  }
+
+  /* The chevron SVG is centred in its viewBox; flex-centring the button places
+     it dead-centre. Prev points the other way. */
+  button svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  button:first-child svg {
+    transform: rotate(180deg);
+  }
+
+  button:hover {
+    opacity: 1;
+  }
+
+  button:first-child {
+    left: 1rem;
+  }
+
+  button:last-child {
+    right: 1rem;
   }
 `

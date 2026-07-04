@@ -1,4 +1,12 @@
-import { parseCanyonWaypointsText, toCroquisObstacles } from '@web/lib/cards'
+import {
+  parseCanyonSummary,
+  parseCanyonWaypointsText,
+  parseCroquisMeta,
+  parseFerrataSummary,
+  serializeCanyonSummary,
+  serializeFerrataSummary,
+  toCroquisObstacles,
+} from '@web/lib/cards'
 
 const EMBED_LANGS = [
   'youtube',
@@ -16,7 +24,8 @@ export interface TrackDef {
   allowDownload?: boolean
   showWaypoints?: boolean
   showElevation?: boolean
-  waypointImages?: Record<string, string>
+  waypointImages?: Record<string, string[]>
+  waypointNotes?: Record<string, string[]>
 }
 
 function parseTrackLine(line: string): TrackDef {
@@ -71,7 +80,7 @@ export function remarkEmbeds() {
         const obstacles = toCroquisObstacles(
           parseCanyonWaypointsText(n.value ?? ''),
         )
-        const title = (n.meta ?? '').trim()
+        const { title, showDownload } = parseCroquisMeta(n.meta ?? '')
         return {
           type: 'mdxJsxFlowElement',
           name: 'Croquis',
@@ -84,6 +93,51 @@ export function remarkEmbeds() {
             ...(title
               ? [{ type: 'mdxJsxAttribute', name: 'title', value: title }]
               : []),
+            // Download button shows by default; flag its absence explicitly.
+            ...(showDownload
+              ? []
+              : [{ type: 'mdxJsxAttribute', name: 'noDownload', value: null }]),
+          ],
+          children: [],
+        }
+      }
+
+      if (n.lang === 'canyon-summary') {
+        const parsed = parseCanyonSummary(n.value ?? '')
+        // Only the download flag rides in the meta; the title lives in the data.
+        const { showDownload } = parseCroquisMeta(n.meta ?? '')
+        return {
+          type: 'mdxJsxFlowElement',
+          name: 'CanyonSummary',
+          attributes: [
+            {
+              type: 'mdxJsxAttribute',
+              name: 'data',
+              value: parsed ? serializeCanyonSummary(parsed) : '',
+            },
+            ...(showDownload
+              ? []
+              : [{ type: 'mdxJsxAttribute', name: 'noDownload', value: null }]),
+          ],
+          children: [],
+        }
+      }
+
+      if (n.lang === 'ferrata-summary') {
+        const parsed = parseFerrataSummary(n.value ?? '')
+        const { showDownload } = parseCroquisMeta(n.meta ?? '')
+        return {
+          type: 'mdxJsxFlowElement',
+          name: 'FerrataSummary',
+          attributes: [
+            {
+              type: 'mdxJsxAttribute',
+              name: 'data',
+              value: parsed ? serializeFerrataSummary(parsed) : '',
+            },
+            ...(showDownload
+              ? []
+              : [{ type: 'mdxJsxAttribute', name: 'noDownload', value: null }]),
           ],
           children: [],
         }
@@ -103,26 +157,44 @@ export function remarkEmbeds() {
         (l) => !l.trim().startsWith('track:'),
       )
 
-      const perTrackImages: Record<number, Record<string, string>> = {}
-      const globalImages: Record<string, string> = {}
+      const perTrackImages: Record<number, Record<string, string[]>> = {}
+      const globalImages: Record<string, string[]> = {}
+      const perTrackNotes: Record<number, Record<string, string[]>> = {}
+      const globalNotes: Record<string, string[]> = {}
 
       otherLines.forEach((line) => {
         const eqIdx = line.indexOf('=')
         if (eqIdx <= 0) return
         const keyPart = line.slice(0, eqIdx).trim()
-        const value = line.slice(eqIdx + 1).trim()
+        // Value is `url1,url2 | note1 | note2`: comma-separated images, then
+        // optional ` | `-separated description notes.
+        const [urlsPart, ...noteParts] = line.slice(eqIdx + 1).split(' | ')
+        const images = urlsPart
+          .split(',')
+          .map((u) => u.trim())
+          .filter(Boolean)
+        const notes = noteParts.map((s) => s.trim()).filter(Boolean)
+        if (images.length === 0 && notes.length === 0) return
         const colonIdx = keyPart.indexOf(':')
         if (colonIdx > 0 && /^\d+$/.test(keyPart.slice(0, colonIdx))) {
           const idx = parseInt(keyPart.slice(0, colonIdx), 10)
           const name = keyPart.slice(colonIdx + 1)
-          if (!perTrackImages[idx]) perTrackImages[idx] = {}
-          perTrackImages[idx][name] = value
+          if (images.length > 0) {
+            if (!perTrackImages[idx]) perTrackImages[idx] = {}
+            perTrackImages[idx][name] = images
+          }
+          if (notes.length > 0) {
+            if (!perTrackNotes[idx]) perTrackNotes[idx] = {}
+            perTrackNotes[idx][name] = notes
+          }
         } else {
-          globalImages[keyPart] = value
+          if (images.length > 0) globalImages[keyPart] = images
+          if (notes.length > 0) globalNotes[keyPart] = notes
         }
       })
 
       const hasGlobalImages = Object.keys(globalImages).length > 0
+      const hasGlobalNotes = Object.keys(globalNotes).length > 0
 
       const commonAttrs = [
         ...(showWaypoints
@@ -140,6 +212,15 @@ export function remarkEmbeds() {
               },
             ]
           : []),
+        ...(hasGlobalNotes
+          ? [
+              {
+                type: 'mdxJsxAttribute',
+                name: 'waypointNotes',
+                value: JSON.stringify(globalNotes),
+              },
+            ]
+          : []),
       ]
 
       if (trackLines.length > 0) {
@@ -147,6 +228,7 @@ export function remarkEmbeds() {
         const tracks = parsedTracks.map((t, i) => ({
           ...t,
           ...(perTrackImages[i] ? { waypointImages: perTrackImages[i] } : {}),
+          ...(perTrackNotes[i] ? { waypointNotes: perTrackNotes[i] } : {}),
         }))
         return {
           type: 'mdxJsxFlowElement',

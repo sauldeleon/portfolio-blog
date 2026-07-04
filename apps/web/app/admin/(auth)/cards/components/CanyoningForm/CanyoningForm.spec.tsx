@@ -135,6 +135,13 @@ describe('CanyoningForm', () => {
     expect(screen.getByTestId('lang-en')).toBeInTheDocument()
   })
 
+  it('hides the lang toggle when hideLang is set', () => {
+    renderApp(<CanyoningForm value={base} onChange={jest.fn()} hideLang />)
+    expect(screen.queryByTestId('lang-es')).not.toBeInTheDocument()
+    expect(screen.queryByTestId('lang-en')).not.toBeInTheDocument()
+    expect(screen.getByTestId('canyoning-form')).toBeInTheDocument()
+  })
+
   it('calls onChange with lang=en when EN clicked', () => {
     const onChange = jest.fn()
     renderApp(<CanyoningForm value={base} onChange={onChange} />)

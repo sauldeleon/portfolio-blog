@@ -140,6 +140,18 @@ jest.mock('../CroquisGenerator', () => ({
   CroquisGenerator: () => <div data-testid="croquis-generator-mock" />,
 }))
 
+jest.mock('../CanyonSummaryGenerator', () => ({
+  CanyonSummaryGenerator: () => (
+    <div data-testid="canyon-summary-generator-mock" />
+  ),
+}))
+
+jest.mock('../FerrataSummaryGenerator', () => ({
+  FerrataSummaryGenerator: () => (
+    <div data-testid="ferrata-summary-generator-mock" />
+  ),
+}))
+
 describe('CardGenerator', () => {
   it('renders the title', () => {
     renderApp(<CardGenerator />)
@@ -336,6 +348,24 @@ describe('CardGenerator', () => {
     expect(screen.getByTestId('croquis-generator-mock')).toBeInTheDocument()
     fireEvent.click(screen.getByTestId('card-type-canyoning-data'))
     expect(screen.getByTestId('canyoning-form-mock')).toBeInTheDocument()
+  })
+
+  it('shows the interactive canyon generator on its tab', () => {
+    renderApp(<CardGenerator />)
+    fireEvent.click(screen.getByTestId('card-type-canyon-summary'))
+    expect(
+      screen.getByTestId('canyon-summary-generator-mock'),
+    ).toBeInTheDocument()
+    expect(screen.queryByTestId('route-form-mock')).not.toBeInTheDocument()
+  })
+
+  it('shows the interactive ferrata generator on its tab', () => {
+    renderApp(<CardGenerator />)
+    fireEvent.click(screen.getByTestId('card-type-ferrata-summary'))
+    expect(
+      screen.getByTestId('ferrata-summary-generator-mock'),
+    ).toBeInTheDocument()
+    expect(screen.queryByTestId('route-form-mock')).not.toBeInTheDocument()
   })
 
   it('returns to a spec form after leaving a waypoint tab', () => {

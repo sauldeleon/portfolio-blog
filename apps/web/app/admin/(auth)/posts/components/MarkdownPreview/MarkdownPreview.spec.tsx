@@ -53,6 +53,22 @@ jest.mock('@web/components/PostContent/PostContentCroquis', () => ({
   ),
 }))
 
+jest.mock('@web/components/PostContent/PostContentCanyonSummary', () => ({
+  PostContentCanyonSummary: ({ lang }: { lang?: string }) => (
+    <div data-testid="canyon-summary-preview">
+      <span data-testid="canyon-summary-lang">{lang}</span>
+    </div>
+  ),
+}))
+
+jest.mock('@web/components/PostContent/PostContentFerrataSummary', () => ({
+  PostContentFerrataSummary: ({ lang }: { lang?: string }) => (
+    <div data-testid="ferrata-summary-preview">
+      <span data-testid="ferrata-summary-lang">{lang}</span>
+    </div>
+  ),
+}))
+
 jest.mock('next-mdx-remote', () => ({
   MDXRemote: ({
     compiledSource,
@@ -66,6 +82,11 @@ jest.mock('next-mdx-remote', () => ({
       h1?: React.ElementType<React.HTMLAttributes<HTMLHeadingElement>>
       table?: React.ElementType<React.HTMLAttributes<HTMLTableElement>>
       Croquis?: React.ElementType<{ obstacles?: string; title?: string }>
+      CanyonSummary?: React.ElementType<{ data?: string; noDownload?: boolean }>
+      FerrataSummary?: React.ElementType<{
+        data?: string
+        noDownload?: boolean
+      }>
     }
   }) => {
     const Pre = components?.pre
@@ -74,6 +95,8 @@ jest.mock('next-mdx-remote', () => ({
     const H1 = components?.h1
     const Table = components?.table
     const Croquis = components?.Croquis
+    const CanyonSummary = components?.CanyonSummary
+    const FerrataSummary = components?.FerrataSummary
     return (
       <div data-testid="mdx-content">
         {compiledSource}
@@ -97,6 +120,8 @@ jest.mock('next-mdx-remote', () => ({
           </Table>
         )}
         {Croquis && <Croquis obstacles="[]" />}
+        {CanyonSummary && <CanyonSummary data="" />}
+        {FerrataSummary && <FerrataSummary data="" />}
       </div>
     )
   },
@@ -287,5 +312,27 @@ describe('MarkdownPreview', () => {
       await Promise.resolve()
     })
     expect(screen.getByTestId('croquis-lang')).toHaveTextContent('es')
+  })
+
+  it('localises the canyon summary preview to the previewed content locale', async () => {
+    renderApp(
+      <MarkdownPreview content="# Hello" loadingLabel="Rendering…" lang="es" />,
+    )
+    await act(async () => {
+      jest.advanceTimersByTime(500)
+      await Promise.resolve()
+    })
+    expect(screen.getByTestId('canyon-summary-lang')).toHaveTextContent('es')
+  })
+
+  it('localises the ferrata summary preview to the previewed content locale', async () => {
+    renderApp(
+      <MarkdownPreview content="# Hello" loadingLabel="Rendering…" lang="es" />,
+    )
+    await act(async () => {
+      jest.advanceTimersByTime(500)
+      await Promise.resolve()
+    })
+    expect(screen.getByTestId('ferrata-summary-lang')).toHaveTextContent('es')
   })
 })

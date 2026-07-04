@@ -4,9 +4,13 @@ import {
   contours,
   esc,
   eyebrow,
+  flowRow,
+  gradeAxis,
+  gradeSubLabel,
   hRule,
   tw,
 } from './primitives'
+import { STRINGS } from './theme'
 
 describe('esc', () => {
   it('escapes ampersand', () => {
@@ -142,5 +146,88 @@ describe('hRule', () => {
     expect(result).toContain('x1="56"')
     expect(result).toContain('x2="1544"')
     expect(result).toContain('y1="336"')
+  })
+})
+
+describe('gradeAxis', () => {
+  it('maps v tokens to vert', () => {
+    expect(gradeAxis('v4')).toBe('vert')
+  })
+
+  it('maps a tokens to aqua', () => {
+    expect(gradeAxis('a3')).toBe('aqua')
+  })
+
+  it('maps roman numerals to commit', () => {
+    expect(gradeAxis('III')).toBe('commit')
+  })
+
+  it('returns null for a v/a token without a digit', () => {
+    expect(gradeAxis('v')).toBeNull()
+  })
+
+  it('returns null for unrelated tokens', () => {
+    expect(gradeAxis('X2')).toBeNull()
+  })
+
+  it('returns null for an empty token', () => {
+    expect(gradeAxis('')).toBeNull()
+  })
+})
+
+describe('gradeSubLabel', () => {
+  it('returns the vert label for v tokens', () => {
+    expect(gradeSubLabel('v4', 'VERT', 'AQUA', 'COMM')).toBe('VERT')
+  })
+
+  it('returns the aqua label for a tokens', () => {
+    expect(gradeSubLabel('a3', 'VERT', 'AQUA', 'COMM')).toBe('AQUA')
+  })
+
+  it('returns the commit label for roman numerals', () => {
+    expect(gradeSubLabel('IV', 'VERT', 'AQUA', 'COMM')).toBe('COMM')
+  })
+
+  it('returns empty string for unrelated tokens', () => {
+    expect(gradeSubLabel('X2', 'VERT', 'AQUA', 'COMM')).toBe('')
+  })
+})
+
+describe('flowRow', () => {
+  const S = STRINGS.es
+
+  it('always emits a flow zone for the level pill', () => {
+    const { zones } = flowRow(56, 290, 'normal', undefined, [], S)
+    expect(zones).toEqual([
+      {
+        id: 'flow',
+        kind: 'flow',
+        key: 'normal',
+        x: 56,
+        y: 290,
+        w: expect.any(Number),
+        h: 40,
+      },
+    ])
+  })
+
+  it('emits a zone for each recognised phenomenon and skips unknown ones', () => {
+    const { svg, zones } = flowRow(
+      56,
+      290,
+      'high',
+      'some_water',
+      ['murky', 'zzz', 'siphon'],
+      S,
+    )
+    const phenomena = zones.filter((z) => z.kind === 'phenomenon')
+    expect(phenomena.map((z) => z.key)).toEqual(['murky', 'siphon'])
+    expect(phenomena[0].id).toBe('phenomenon-murky')
+    expect(svg).toContain('Algunos rápeles tienen agua')
+  })
+
+  it('omits the affects text when no affects value is given', () => {
+    const { svg } = flowRow(56, 290, 'low', undefined, [], S)
+    expect(svg).not.toContain('rápeles')
   })
 })
