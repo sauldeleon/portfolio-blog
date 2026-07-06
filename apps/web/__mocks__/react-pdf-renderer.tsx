@@ -18,14 +18,32 @@ export const Image = ({ src }: { src: string }) => (
 export const Link = ({
   children,
   href,
+  src,
 }: {
-  children: React.ReactNode
-  href: string
+  children?: React.ReactNode
+  href?: string
+  src?: string
 }) => (
-  <a data-testid="pdf-link" href={href}>
+  <a data-testid="pdf-link" href={href ?? src}>
     {children}
   </a>
 )
+
+// SVG primitives — used by the canyon-report croquis. Rendered as inert
+// elements so the report components mount in jsdom tests.
+export const Svg = ({ children }: { children?: React.ReactNode }) => (
+  <svg data-testid="pdf-svg">{children}</svg>
+)
+export const G = ({ children }: { children?: React.ReactNode }) => (
+  <g data-testid="pdf-g">{children}</g>
+)
+export const Path = () => <path data-testid="pdf-path" />
+export const Rect = ({ children }: { children?: React.ReactNode }) => (
+  <rect data-testid="pdf-rect">{children}</rect>
+)
+export const Line = () => <line data-testid="pdf-line" />
+export const Circle = () => <circle data-testid="pdf-circle" />
+export const Polyline = () => <polyline data-testid="pdf-polyline" />
 export const StyleSheet = {
   create: <T extends object>(styles: T): T => styles,
 }
@@ -42,7 +60,30 @@ export const Font = {
   register: () => undefined,
 }
 
-export const usePDF = () => [
-  { url: 'blob:mock-url', loading: false, blob: null, error: null },
-  jest.fn(),
-]
+interface MockPdfInstance {
+  url: string | null
+  loading: boolean
+  blob: null
+  error: null
+}
+
+const DEFAULT_PDF: MockPdfInstance = {
+  url: 'blob:mock-url',
+  loading: false,
+  blob: null,
+  error: null,
+}
+
+let mockPdf: MockPdfInstance = { ...DEFAULT_PDF }
+
+/** Test helper: override the instance the next `usePDF()` returns. */
+export const __setMockPdf = (next: Partial<MockPdfInstance>) => {
+  mockPdf = { ...DEFAULT_PDF, ...next }
+}
+
+/** Test helper: restore the default (ready) instance. */
+export const __resetMockPdf = () => {
+  mockPdf = { ...DEFAULT_PDF }
+}
+
+export const usePDF = () => [mockPdf, jest.fn()]

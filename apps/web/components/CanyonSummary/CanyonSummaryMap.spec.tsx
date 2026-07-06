@@ -42,12 +42,20 @@ describe('CanyonSummaryMap', () => {
     }
   })
 
-  it('renders no zones when there is no grade or flow', () => {
+  it('shows the click hint when there are interactive zones', () => {
+    renderApp(<CanyonSummaryMap data={data()} />)
+    expect(screen.getByTestId('card-hint')).toHaveTextContent(
+      'Tap the highlighted areas',
+    )
+  })
+
+  it('renders no zones (and no hint) when there is no grade or flow', () => {
     renderApp(
       <CanyonSummaryMap data={{ kind: 'canyoning-data', lang: 'en' }} />,
     )
     expect(screen.queryByTestId('card-zone-flow')).not.toBeInTheDocument()
     expect(screen.queryByTestId('card-zone-grade-vert')).not.toBeInTheDocument()
+    expect(screen.queryByTestId('card-hint')).not.toBeInTheDocument()
   })
 
   it('opens the verticality scale on hover', () => {

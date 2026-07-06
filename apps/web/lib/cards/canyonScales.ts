@@ -22,6 +22,8 @@ export interface CanyonScaleContent {
     phenomena: string
     affectsRappels: string
     source: string
+    /** Hint shown under the card inviting the reader to click the zones. */
+    hint: string
   }
   vert: ScaleLevel[]
   aqua: ScaleLevel[]
@@ -45,6 +47,7 @@ export const CANYON_SCALES: Record<Lang, CanyonScaleContent> = {
       phenomena: 'Fenómeno observado',
       affectsRappels: 'Afectación a los rápeles',
       source: 'Escala FFME/FSS',
+      hint: 'Toca las zonas resaltadas de la tarjeta para descubrir qué significan',
     },
     vert: [
       {
@@ -193,6 +196,7 @@ export const CANYON_SCALES: Record<Lang, CanyonScaleContent> = {
       phenomena: 'Observed phenomenon',
       affectsRappels: 'Effect on the rappels',
       source: 'FFME/FSS scale',
+      hint: 'Tap the highlighted areas of the card to discover what they mean',
     },
     vert: [
       {

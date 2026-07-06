@@ -6,11 +6,7 @@ import {
 import type { CanyoningCardData, SummaryFerrataData } from '@web/lib/cards'
 
 export type EmbedType =
-  | 'youtube'
-  | 'youtube-360'
-  | 'maps'
-  | 'openstreetmap'
-  | 'wikiloc'
+  'youtube' | 'youtube-360' | 'maps' | 'openstreetmap' | 'wikiloc'
 
 export interface ParsedImage {
   url: string
@@ -67,6 +63,9 @@ export interface ParsedCroquis {
   text: string
   title: string
   showDownload: boolean
+  showReport: boolean
+  /** Canyon-summary data used by the PDF report; null when absent. */
+  canyon: CanyoningCardData | null
 }
 
 /** A canyon summary block: the card data and the download flag. */
@@ -315,12 +314,13 @@ export function detectEmbedAtCursor(
       }
 
       if (fenceType === 'croquis') {
-        const { title, showDownload } = parseCroquisMeta(meta)
+        const { title, showDownload, showReport, canyon } =
+          parseCroquisMeta(meta)
         return {
           type: 'croquis',
           blockStart: start,
           blockEnd: end,
-          parsed: { text: body, title, showDownload },
+          parsed: { text: body, title, showDownload, showReport, canyon },
         }
       }
 

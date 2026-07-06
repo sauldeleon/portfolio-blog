@@ -152,6 +152,7 @@ export function CanyonSummaryMap({
       isWide={isWide}
       zoneLabel={zoneLabel}
       renderPopover={renderPopover}
+      hint={zones.length > 0 ? scales.ui.hint : undefined}
     />
   )
 }

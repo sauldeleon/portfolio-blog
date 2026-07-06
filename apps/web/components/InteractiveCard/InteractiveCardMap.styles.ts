@@ -1,4 +1,9 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
+
+const markerPulse = keyframes`
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 1; }
+`
 
 export const StyledFrame = styled.div`
   position: relative;
@@ -14,6 +19,29 @@ export const StyledScroll = styled.div<{ $ratio: number }>`
   position: relative;
   width: 100%;
   aspect-ratio: ${({ $ratio }) => $ratio};
+`
+
+/* "Tap the highlighted zones" hint shown under the card. The amber dot echoes
+   the highlight colour so the invitation reads clearly. */
+export const StyledHint = styled.p`
+  margin: 0.5rem 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  text-align: center;
+  color: #93a7b2;
+
+  &::before {
+    content: '';
+    flex-shrink: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: ${({ theme }) => theme.colors.orange};
+  }
 `
 
 /* The static card SVG fills the frame; overlay hit-zones sit on top of it. */
@@ -58,6 +86,27 @@ export const StyledZone = styled.g`
 
   &:focus-visible .ring {
     opacity: 1;
+  }
+
+  /* Persistent marker so readers can spot the interactive zones without
+     hovering. It lives in this overlay only — the exported PNG is rendered from
+     the separate static card SVG, so the markers never appear in the download.
+     Fades out while the zone is active so the highlight can take over. */
+  .marker {
+    fill: ${({ theme }) => theme.colors.orange};
+    animation: ${markerPulse} 1.8s ease-in-out infinite;
+    transition: opacity 0.18s;
+  }
+
+  &:hover .marker,
+  &:focus-visible .marker {
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marker {
+      animation: none;
+    }
   }
 `
 

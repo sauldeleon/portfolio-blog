@@ -915,6 +915,52 @@ describe('remarkEmbeds', () => {
       ).toBeUndefined()
     })
 
+    it('has no noReport/summary attributes by default', () => {
+      const [result] = runPlugin([
+        { type: 'code', lang: 'croquis', value: 'salto: Jump 2m' },
+      ])
+      expect(
+        result.attributes?.find((a) => a.name === 'noReport'),
+      ).toBeUndefined()
+      expect(
+        result.attributes?.find((a) => a.name === 'summary'),
+      ).toBeUndefined()
+    })
+
+    it('emits a noReport attribute when the no-report flag is set', () => {
+      const [result] = runPlugin([
+        {
+          type: 'code',
+          lang: 'croquis',
+          meta: 'no-report Barranco X',
+          value: 'salto: Jump 2m',
+        },
+      ])
+      expect(result.attributes?.find((a) => a.name === 'noReport')).toEqual({
+        type: 'mdxJsxAttribute',
+        name: 'noReport',
+        value: null,
+      })
+    })
+
+    it('emits a summary attribute carrying the decoded canyon data', () => {
+      // base64 of {"kind":"canyoning-data","lang":"es","grade":"v4"}
+      const token = Buffer.from(
+        JSON.stringify({ kind: 'canyoning-data', lang: 'es', grade: 'v4' }),
+      ).toString('base64')
+      const [result] = runPlugin([
+        {
+          type: 'code',
+          lang: 'croquis',
+          meta: `canyon:${token} Barranco X`,
+          value: 'salto: Jump 2m',
+        },
+      ])
+      const summary = result.attributes?.find((a) => a.name === 'summary')
+      expect(summary?.value).toContain('"kind": "canyoning-data"')
+      expect(summary?.value).toContain('"grade": "v4"')
+    })
+
     it('emits a noDownload attribute when the no-download flag is set', () => {
       const [result] = runPlugin([
         {

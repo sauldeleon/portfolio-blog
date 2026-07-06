@@ -9,6 +9,7 @@ export const StyledCroquisWrapper = styled.div`
 export const StyledDownloadBar = styled.div`
   display: flex;
   justify-content: flex-end;
+  gap: 0.5rem;
   padding: 0.35rem 0;
 `
 

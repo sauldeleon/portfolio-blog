@@ -17,6 +17,13 @@ describe('FerrataSummaryMap', () => {
     expect(screen.getByTestId('card-zone-ferrata-grade')).toBeInTheDocument()
   })
 
+  it('shows the click hint under the card', () => {
+    renderApp(<FerrataSummaryMap data={data()} />)
+    expect(screen.getByTestId('card-hint')).toHaveTextContent(
+      'Tap the highlighted area',
+    )
+  })
+
   it('opens the K-scale on hover with the current grade active', () => {
     renderApp(<FerrataSummaryMap data={data()} />)
     fireEvent.mouseEnter(screen.getByTestId('card-zone-ferrata-grade'))

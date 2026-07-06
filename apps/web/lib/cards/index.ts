@@ -53,7 +53,12 @@ export {
   croquisHeader,
   CROQUIS_HEADER_H,
 } from './croquisCard'
-export { parseCroquisMeta, serializeCroquisMeta } from './croquisMeta'
+export {
+  parseCroquisMeta,
+  serializeCroquisMeta,
+  encodeCanyonToken,
+  decodeCanyonToken,
+} from './croquisMeta'
 export type { CroquisMeta } from './croquisMeta'
 export { parseCanyonSummary, serializeCanyonSummary } from './canyonSummaryData'
 export {

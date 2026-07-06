@@ -3,6 +3,11 @@ import styled from 'styled-components'
 export const StyledNav = styled.nav`
   padding: 1rem 1.25rem;
   border: 1px solid rgba(251, 251, 251, 0.1);
+  /* Align with the article's reading column (shared via --reading-measure set
+     on the post page); box-sizing: border-box keeps the box edge on the same
+     centred column as the prose. */
+  max-width: var(--reading-measure);
+  margin-inline: auto;
 `
 
 export const StyledTitle = styled.p`

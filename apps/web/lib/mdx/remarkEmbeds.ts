@@ -80,7 +80,9 @@ export function remarkEmbeds() {
         const obstacles = toCroquisObstacles(
           parseCanyonWaypointsText(n.value ?? ''),
         )
-        const { title, showDownload } = parseCroquisMeta(n.meta ?? '')
+        const { title, showDownload, showReport, canyon } = parseCroquisMeta(
+          n.meta ?? '',
+        )
         return {
           type: 'mdxJsxFlowElement',
           name: 'Croquis',
@@ -93,10 +95,23 @@ export function remarkEmbeds() {
             ...(title
               ? [{ type: 'mdxJsxAttribute', name: 'title', value: title }]
               : []),
-            // Download button shows by default; flag its absence explicitly.
+            // Download/report buttons show by default; flag their absence.
             ...(showDownload
               ? []
               : [{ type: 'mdxJsxAttribute', name: 'noDownload', value: null }]),
+            ...(showReport
+              ? []
+              : [{ type: 'mdxJsxAttribute', name: 'noReport', value: null }]),
+            // Canyon-summary data for the PDF report, decoded to a JSON attr.
+            ...(canyon
+              ? [
+                  {
+                    type: 'mdxJsxAttribute',
+                    name: 'summary',
+                    value: serializeCanyonSummary(canyon),
+                  },
+                ]
+              : []),
           ],
           children: [],
         }

@@ -3,11 +3,13 @@
 exports[`PostHero matches snapshot 1`] = `
 .c0 {
   color: #FBFBFB;
-  border-bottom: 1px solid rgba(152, 223, 214, 0.2);
+  margin-bottom: 1.5rem;
 }
 
 .c2 {
   padding: 1.5rem 0;
+  max-width: var(--reading-measure);
+  margin-inline: auto;
 }
 
 .c5 {

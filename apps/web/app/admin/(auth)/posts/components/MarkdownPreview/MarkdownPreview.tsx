@@ -63,9 +63,13 @@ export function MarkdownPreview({
   const components = useMemo(
     () => ({
       ...MDX_COMPONENTS,
-      Croquis: (props: { obstacles?: string; title?: string }) => (
-        <PostContentCroquis {...props} lang={lang} />
-      ),
+      Croquis: (props: {
+        obstacles?: string
+        title?: string
+        noDownload?: boolean
+        noReport?: boolean
+        summary?: string
+      }) => <PostContentCroquis {...props} lang={lang} />,
       CanyonSummary: (props: { data?: string; noDownload?: boolean }) => (
         <PostContentCanyonSummary {...props} lang={lang} />
       ),

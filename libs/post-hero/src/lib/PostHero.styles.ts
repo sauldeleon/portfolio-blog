@@ -2,11 +2,17 @@ import styled from 'styled-components'
 
 export const StyledHeader = styled.header`
   color: ${({ theme }) => theme.colors.white};
-  border-bottom: 1px solid rgba(152, 223, 214, 0.2);
+  /* No bottom border: it used to collide with the table-of-contents' top
+     border. A margin keeps clean separation from whatever follows. */
+  margin-bottom: 1.5rem;
 `
 
 export const StyledHeroContent = styled.div`
   padding: 1.5rem 0;
+  /* Align the title and meta with the article's reading column (shared via the
+     --reading-measure custom property); the cover image stays full-bleed. */
+  max-width: var(--reading-measure);
+  margin-inline: auto;
 
   @media (width >= 768px) {
     padding: 2rem 0;
