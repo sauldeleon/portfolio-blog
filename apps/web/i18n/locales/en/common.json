@@ -29,6 +29,8 @@
   },
   "croquis": {
     "downloadPng": "Download PNG",
+    "downloadReport": "Download canyon report",
+    "generatingReport": "Generating report…",
     "downloadError": "Could not export the croquis"
   }
 }

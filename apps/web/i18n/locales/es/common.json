@@ -29,6 +29,8 @@
   },
   "croquis": {
     "downloadPng": "Descargar PNG",
+    "downloadReport": "Descargar ficha del barranco",
+    "generatingReport": "Generando ficha…",
     "downloadError": "No se pudo exportar el croquis"
   }
 }

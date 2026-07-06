@@ -102,6 +102,12 @@ export const STRINGS = {
     croquis_access: 'ACCESO',
     croquis_exit: 'SALIDA',
     default_title: 'Resumen de ruta',
+    report_title: 'Ficha de barranco',
+    report_conditions: 'Datos de la salida',
+    report_map: 'Croquis',
+    report_back: 'Volver al croquis',
+    report_disclaimer:
+      'Estos son los datos de la salida de ese día concreto. Otro día el barranco puede ir más rápido, más lento o encontrarse en otras condiciones (caudal, meteorología, equipamiento). Úsalo como referencia orientativa, nunca como garantía: valora siempre las condiciones reales in situ.',
     flow_levels: {
       dry: 'Seco / residual',
       low: 'Bajo',
@@ -196,6 +202,12 @@ export const STRINGS = {
     croquis_access: 'ACCESS',
     croquis_exit: 'EXIT',
     default_title: 'Route summary',
+    report_title: 'Canyon report',
+    report_conditions: "That day's figures",
+    report_map: 'Croquis',
+    report_back: 'Back to the croquis',
+    report_disclaimer:
+      'These are the figures from that specific outing. On another day the canyon may be faster, slower or in different conditions (flow, weather, rigging). Use it as a rough reference, never as a guarantee: always assess the real conditions on site.',
     flow_levels: {
       dry: 'Dry / residual',
       low: 'Low',

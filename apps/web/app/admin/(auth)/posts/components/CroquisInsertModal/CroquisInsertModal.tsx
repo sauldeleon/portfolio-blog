@@ -12,13 +12,14 @@ import {
   serializeCroquisMeta,
   toCroquisObstacles,
 } from '@web/lib/cards'
-import type { CanyonWaypoint } from '@web/lib/cards'
+import type { CanyonWaypoint, CanyoningCardData } from '@web/lib/cards'
 import {
   axiosErrorMessage,
   fetchCanyonWaypoints,
 } from '@web/lib/cards/gpxImport'
 import type { CloudinaryImage } from '@web/lib/cloudinary/images'
 
+import { CanyoningForm } from '../../../cards/components/CanyoningForm'
 import {
   StyledAddRow,
   StyledCheckboxRow,
@@ -78,6 +79,13 @@ export function CroquisInsertModal({
   const [showDownload, setShowDownload] = useState(
     initialValues?.showDownload ?? true,
   )
+  const [showReport, setShowReport] = useState(
+    initialValues?.showReport ?? true,
+  )
+  const [includeCanyon, setIncludeCanyon] = useState(!!initialValues?.canyon)
+  const [canyonData, setCanyonData] = useState<CanyoningCardData>(
+    initialValues?.canyon ?? { kind: 'canyoning-data', lang: 'en' },
+  )
   const [url, setUrl] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -88,8 +96,14 @@ export function CroquisInsertModal({
   const obstacles = toCroquisObstacles(waypoints)
 
   // The exact fenced block that will be inserted; shown read-only as a preview
-  // and reused verbatim on insert so the two never drift.
-  const meta = serializeCroquisMeta({ title, showDownload })
+  // and reused verbatim on insert so the two never drift. The canyon summary
+  // (for the PDF report) rides in the meta as a base64 token.
+  const meta = serializeCroquisMeta({
+    title,
+    showDownload,
+    showReport,
+    canyon: includeCanyon ? canyonData : null,
+  })
   const preview = `\`\`\`croquis${meta ? ` ${meta}` : ''}\n${text.trim()}\n\`\`\``
 
   // Only waypoints actually drawn in the croquis can carry hover images.
@@ -164,6 +178,9 @@ export function CroquisInsertModal({
     setText('')
     setTitle('')
     setShowDownload(true)
+    setShowReport(true)
+    setIncludeCanyon(false)
+    setCanyonData({ kind: 'canyoning-data', lang: 'en' })
     setUrl('')
     setError(null)
     setPickingFor(null)
@@ -206,6 +223,38 @@ export function CroquisInsertModal({
               Show PNG download button
             </label>
           </StyledCheckboxRow>
+
+          <StyledCheckboxRow>
+            <label>
+              <input
+                type="checkbox"
+                checked={showReport}
+                onChange={(e) => setShowReport(e.target.checked)}
+                data-testid="croquis-modal-report-toggle"
+              />
+              Show canyon report (PDF) button
+            </label>
+          </StyledCheckboxRow>
+
+          <StyledCheckboxRow>
+            <label>
+              <input
+                type="checkbox"
+                checked={includeCanyon}
+                onChange={(e) => setIncludeCanyon(e.target.checked)}
+                data-testid="croquis-modal-canyon-toggle"
+              />
+              Include canyon summary in the report
+            </label>
+          </StyledCheckboxRow>
+
+          {includeCanyon && (
+            <CanyoningForm
+              value={canyonData}
+              onChange={setCanyonData}
+              hideLang
+            />
+          )}
 
           <StyledSectionLabel>GPX url (optional)</StyledSectionLabel>
           <StyledGpxRow>

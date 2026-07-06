@@ -74,6 +74,31 @@ jest.mock('../ImagePicker', () => ({
     ) : null,
 }))
 
+// CanyoningForm (rendered when the canyon summary is included) reads the
+// 'admin' namespace via useClientTranslation; mock it so it resolves
+// synchronously instead of suspending on the namespace load.
+jest.mock('@web/i18n/client', () => {
+  const admin: Record<string, unknown> = jest.requireActual(
+    '@web/i18n/locales/en/admin.json',
+  )
+  return {
+    useClientTranslation: () => ({
+      t: (key: string): string => {
+        const val = key
+          .split('.')
+          .reduce<unknown>(
+            (o, k) =>
+              typeof o === 'object' && o !== null
+                ? (o as Record<string, unknown>)[k]
+                : undefined,
+            admin,
+          )
+        return typeof val === 'string' ? val : key
+      },
+    }),
+  }
+})
+
 const JUMP = 'salto: Jump 2m - 42.6092 0.1412'
 
 function open(
@@ -103,7 +128,13 @@ describe('CroquisInsertModal', () => {
 
   it('prefills the textarea and title from initial values', () => {
     open({
-      initialValues: { text: JUMP, title: 'Barranco X', showDownload: true },
+      initialValues: {
+        text: JUMP,
+        title: 'Barranco X',
+        showDownload: true,
+        showReport: true,
+        canyon: null,
+      },
     })
     expect(screen.getByTestId('croquis-modal-text')).toHaveValue(JUMP)
     expect(screen.getByTestId('croquis-modal-title')).toHaveValue('Barranco X')
@@ -112,7 +143,13 @@ describe('CroquisInsertModal', () => {
 
   it('prefills the download toggle from initial values', () => {
     open({
-      initialValues: { text: JUMP, title: '', showDownload: false },
+      initialValues: {
+        text: JUMP,
+        title: '',
+        showDownload: false,
+        showReport: true,
+        canyon: null,
+      },
     })
     expect(
       screen.getByTestId('croquis-modal-download-toggle'),
@@ -135,6 +172,71 @@ describe('CroquisInsertModal', () => {
     )
     fireEvent.click(screen.getByTestId('croquis-modal-insert'))
     expect(onInsert.mock.calls[0][0]).toContain('```croquis no-download\n')
+  })
+
+  it('shows the report toggle checked by default', () => {
+    open()
+    expect(screen.getByTestId('croquis-modal-report-toggle')).toBeChecked()
+  })
+
+  it('prefills the report toggle from initial values', () => {
+    open({
+      initialValues: {
+        text: JUMP,
+        title: '',
+        showDownload: true,
+        showReport: false,
+        canyon: null,
+      },
+    })
+    expect(screen.getByTestId('croquis-modal-report-toggle')).not.toBeChecked()
+  })
+
+  it('adds the no-report flag to the fence when the report toggle is off', () => {
+    const { onInsert } = open()
+    fireEvent.change(screen.getByTestId('croquis-modal-text'), {
+      target: { value: JUMP },
+    })
+    fireEvent.click(screen.getByTestId('croquis-modal-report-toggle'))
+    expect(screen.getByTestId('croquis-modal-preview')).toHaveValue(
+      `\`\`\`croquis no-report\n${JUMP}\n\`\`\``,
+    )
+    fireEvent.click(screen.getByTestId('croquis-modal-insert'))
+    expect(onInsert.mock.calls[0][0]).toContain('```croquis no-report\n')
+  })
+
+  it('hides the canyon form until the include toggle is on', () => {
+    open()
+    expect(screen.getByTestId('croquis-modal-canyon-toggle')).not.toBeChecked()
+    expect(screen.queryByTestId('canyoning-form')).not.toBeInTheDocument()
+    fireEvent.click(screen.getByTestId('croquis-modal-canyon-toggle'))
+    expect(screen.getByTestId('canyoning-form')).toBeInTheDocument()
+  })
+
+  it('embeds a canyon token in the fence when the summary is included', () => {
+    open()
+    fireEvent.change(screen.getByTestId('croquis-modal-text'), {
+      target: { value: JUMP },
+    })
+    fireEvent.click(screen.getByTestId('croquis-modal-canyon-toggle'))
+    const preview = screen.getByTestId(
+      'croquis-modal-preview',
+    ) as HTMLTextAreaElement
+    expect(preview.value).toContain('```croquis canyon:')
+  })
+
+  it('prefills the canyon form from initial values', () => {
+    open({
+      initialValues: {
+        text: JUMP,
+        title: '',
+        showDownload: true,
+        showReport: true,
+        canyon: { kind: 'canyoning-data', lang: 'es', grade: 'v4' },
+      },
+    })
+    expect(screen.getByTestId('croquis-modal-canyon-toggle')).toBeChecked()
+    expect(screen.getByTestId('canyoning-form')).toBeInTheDocument()
   })
 
   it('offers a waypoint selector and shows the fenced preview once drawable', () => {
@@ -299,6 +401,8 @@ describe('CroquisInsertModal', () => {
         text: `${JUMP}\n! img=https://cdn/x.jpg`,
         title: '',
         showDownload: true,
+        showReport: true,
+        canyon: null,
       },
     })
     expect(screen.getByTestId('croquis-wp-thumb-0-0')).toBeInTheDocument()

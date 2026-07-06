@@ -1,9 +1,16 @@
+import * as ReactPdf from '@react-pdf/renderer'
 import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import { renderApp } from '@sdlgr/test-utils'
 
 import { PostContentCroquis } from './PostContentCroquis'
+
+// Test hooks the mocked '@react-pdf/renderer' exposes (see __mocks__).
+const { __setMockPdf, __resetMockPdf } = ReactPdf as unknown as {
+  __setMockPdf: (next: { url?: string | null; loading?: boolean }) => void
+  __resetMockPdf: () => void
+}
 
 const mockDownloadPng = jest.fn<Promise<void>, [string]>()
 
@@ -53,6 +60,7 @@ describe('PostContentCroquis', () => {
     mockLanguage = 'en'
     mockDownloadPng.mockReset()
     mockDownloadPng.mockResolvedValue(undefined)
+    __resetMockPdf()
   })
 
   it('renders nothing without obstacles', () => {
@@ -125,5 +133,52 @@ describe('PostContentCroquis', () => {
     expect(
       await screen.findByTestId('post-croquis-download-error'),
     ).toBeInTheDocument()
+  })
+
+  it('shows the canyon report button by default', () => {
+    renderApp(<PostContentCroquis obstacles={OB} />)
+    expect(screen.getByTestId('post-croquis-report')).toBeInTheDocument()
+  })
+
+  it('hides the report button when noReport is set', () => {
+    renderApp(<PostContentCroquis obstacles={OB} noReport />)
+    expect(screen.queryByTestId('post-croquis-report')).not.toBeInTheDocument()
+  })
+
+  it('hides the whole bar when both buttons are disabled', () => {
+    renderApp(<PostContentCroquis obstacles={OB} noDownload noReport />)
+    expect(
+      screen.queryByTestId('post-croquis-download'),
+    ).not.toBeInTheDocument()
+    expect(screen.queryByTestId('post-croquis-report')).not.toBeInTheDocument()
+  })
+
+  it('accepts a canyon summary for the report', () => {
+    const summary = JSON.stringify({ kind: 'canyoning-data', lang: 'en' })
+    renderApp(<PostContentCroquis obstacles={OB} summary={summary} />)
+    expect(screen.getByTestId('post-croquis-report')).toBeInTheDocument()
+  })
+
+  it('ignores an unparseable canyon summary', () => {
+    renderApp(<PostContentCroquis obstacles={OB} summary="not-json" />)
+    expect(screen.getByTestId('post-croquis-report')).toBeInTheDocument()
+  })
+
+  it('downloads the report PDF via a generated link', async () => {
+    const clickSpy = jest
+      .spyOn(HTMLAnchorElement.prototype, 'click')
+      .mockImplementation(() => undefined)
+    renderApp(<PostContentCroquis obstacles={OB} title="Barranco X" />)
+    await userEvent.click(screen.getByTestId('post-croquis-report'))
+    expect(clickSpy).toHaveBeenCalled()
+    clickSpy.mockRestore()
+  })
+
+  it('disables the report button while the PDF is generating', () => {
+    __setMockPdf({ loading: true, url: null })
+    renderApp(<PostContentCroquis obstacles={OB} />)
+    const button = screen.getByTestId('post-croquis-report')
+    expect(button).toBeDisabled()
+    expect(button).toHaveTextContent('croquis.generatingReport')
   })
 })
