@@ -37,7 +37,7 @@ exports[`generateKeyframeStep generate keyframe step snapshot for image 2 1`] = 
 `;
 
 exports[`swapImageAnimation generate keyframe snapshot for images 1`] = `
-qt {
+Lt {
   "id": "sc-keyframes-kzvgWv",
   "inject": [Function],
   "name": "kzvgWv",

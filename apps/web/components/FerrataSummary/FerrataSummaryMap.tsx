@@ -68,6 +68,7 @@ export function FerrataSummaryMap({
       isWide={() => true}
       zoneLabel={(_zone: CardZone) => scale.ui.difficulty}
       renderPopover={renderPopover}
+      hint={scale.ui.hint}
     />
   )
 }

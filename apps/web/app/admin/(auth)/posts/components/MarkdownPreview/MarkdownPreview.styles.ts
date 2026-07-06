@@ -5,6 +5,8 @@ export const StyledPreviewWrapper = styled.div`
   line-height: 1.7;
   color: ${({ theme }) => theme.colors.white};
   opacity: 0.9;
+  /* Mirror the published post's reading layout so the preview matches. */
+  --measure: var(--reading-measure, 40rem);
 
   h1,
   h2,
@@ -14,25 +16,27 @@ export const StyledPreviewWrapper = styled.div`
     font-weight: 600;
     color: ${({ theme }) => theme.colors.green};
     line-height: 1.3;
+    max-width: var(--measure);
+    margin-inline: auto;
   }
 
   h1 {
     font-size: 1.35rem;
-    margin: 0 0 1rem;
+    margin: 0 auto 1rem;
   }
   h2 {
     font-size: 1.05rem;
-    margin: 2rem 0 0.5rem;
+    margin: 2rem auto 0.5rem;
   }
   h3 {
     font-size: 0.875rem;
-    margin: 1.5rem 0 0.4rem;
+    margin: 1.5rem auto 0.4rem;
     color: ${({ theme }) => theme.colors.white};
     opacity: 0.85;
   }
   h4 {
     font-size: 0.8rem;
-    margin: 1.25rem 0 0.4rem;
+    margin: 1.25rem auto 0.4rem;
     color: ${({ theme }) => theme.colors.white};
     opacity: 0.7;
   }
@@ -120,6 +124,16 @@ export const StyledPreviewWrapper = styled.div`
   em {
     font-style: italic;
     opacity: 0.85;
+  }
+
+  /* Top-level prose gets the reading measure + centring (direct children only,
+     so it never bleeds into paragraphs rendered inside embeds). */
+  & > p,
+  & > ul,
+  & > ol,
+  & > blockquote {
+    max-width: var(--measure);
+    margin-inline: auto;
   }
 `
 

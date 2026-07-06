@@ -4,6 +4,8 @@ exports[`ExperiencePage should render successfully in English 1`] = `
 .c3 {
   padding: 1rem 1.25rem;
   border: 1px solid rgba(251, 251, 251, 0.1);
+  max-width: var(--reading-measure);
+  margin-inline: auto;
 }
 
 .c4 {

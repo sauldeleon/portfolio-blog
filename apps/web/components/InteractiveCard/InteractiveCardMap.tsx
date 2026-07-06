@@ -10,6 +10,7 @@ import type { CardZone } from '@web/lib/cards'
 import {
   StyledCard,
   StyledFrame,
+  StyledHint,
   StyledOverlay,
   StyledPopover,
   StyledScroll,
@@ -35,6 +36,8 @@ export interface InteractiveCardMapProps {
   zoneLabel: (zone: CardZone) => string
   /** Popover content for the active zone. */
   renderPopover: (zone: CardZone) => ReactNode
+  /** Optional caption inviting the reader to click the interactive zones. */
+  hint?: string
 }
 
 /**
@@ -50,6 +53,7 @@ export function InteractiveCardMap({
   isWide,
   zoneLabel,
   renderPopover,
+  hint,
 }: InteractiveCardMapProps) {
   const hoverEnabled = interaction !== 'click'
   const [active, setActive] = useState<CardZone | null>(null)
@@ -194,11 +198,22 @@ export function InteractiveCardMap({
                   height={zone.h}
                   fill="transparent"
                 />
+                <circle
+                  className="marker"
+                  data-testid={`card-marker-${zone.id}`}
+                  cx={zone.x + zone.w - 9}
+                  cy={zone.y + 9}
+                  r={7}
+                  stroke="#0E1820"
+                  strokeWidth={2}
+                />
               </StyledZone>
             ))}
           </StyledOverlay>
         </StyledScroll>
       </StyledFrame>
+
+      {hint && <StyledHint data-testid="card-hint">{hint}</StyledHint>}
 
       {mounted && createPortal(popover, document.body)}
     </>

@@ -6,6 +6,8 @@ export interface FerrataScaleContent {
   ui: {
     difficulty: string
     source: string
+    /** Hint shown under the card inviting the reader to click the zones. */
+    hint: string
   }
   levels: ScaleLevel[]
 }
@@ -20,6 +22,7 @@ export const FERRATA_SCALES: Record<Lang, FerrataScaleContent> = {
     ui: {
       difficulty: 'Escala de dificultad',
       source: 'Escala K (Hüsler)',
+      hint: 'Toca la zona resaltada de la tarjeta para ver la escala de dificultad',
     },
     levels: [
       {
@@ -64,6 +67,7 @@ export const FERRATA_SCALES: Record<Lang, FerrataScaleContent> = {
     ui: {
       difficulty: 'Difficulty scale',
       source: 'K scale (Hüsler)',
+      hint: 'Tap the highlighted area of the card to see the difficulty scale',
     },
     levels: [
       {

@@ -11,6 +11,14 @@ export const StyledArticle = styled.article`
     font-size: 1rem;
   }
 
+  /* Fixed reading measure, shared with the hero via the --reading-measure
+     custom property on the page. A fixed rem (not ch): ch scales with each
+     element's font-size, so headings vs body would resolve to different widths
+     and misalign. Every prose block gets this max-width + auto side-margins, so
+     all text — headings included — lines up on one centred column. Media and
+     code keep the full width. */
+  --measure: var(--reading-measure, 40rem);
+
   h1,
   h2,
   h3,
@@ -19,39 +27,41 @@ export const StyledArticle = styled.article`
     font-weight: 600;
     color: ${({ theme }) => theme.colors.green};
     line-height: 1.3;
+    max-width: var(--measure);
+    margin-inline: auto;
   }
 
   h2 {
     font-size: 1.15rem;
-    margin: 2rem 0 0.75rem;
+    margin: 2rem auto 0.75rem;
 
     @media (width >= 768px) {
       font-size: 1.5rem;
-      margin: 2.5rem 0 0.75rem;
+      margin: 2.5rem auto 0.75rem;
     }
   }
 
   h3 {
     font-size: 0.95rem;
-    margin: 1.5rem 0 0.5rem;
+    margin: 1.5rem auto 0.5rem;
     color: ${({ theme }) => theme.colors.white};
     opacity: 0.9;
 
     @media (width >= 768px) {
       font-size: 1.15rem;
-      margin: 2rem 0 0.5rem;
+      margin: 2rem auto 0.5rem;
     }
   }
 
   h4 {
     font-size: 0.875rem;
-    margin: 1.25rem 0 0.4rem;
+    margin: 1.25rem auto 0.4rem;
     color: ${({ theme }) => theme.colors.white};
     opacity: 0.75;
 
     @media (width >= 768px) {
       font-size: 1rem;
-      margin: 1.5rem 0 0.4rem;
+      margin: 1.5rem auto 0.4rem;
     }
   }
 
@@ -125,6 +135,17 @@ export const StyledArticle = styled.article`
   img {
     max-width: 100%;
     height: auto;
+  }
+
+  /* Top-level prose only (direct children) gets the reading measure + centring,
+     so paragraphs/lists/quotes line up with the (descendant-centred) headings
+     without bleeding into paragraphs rendered inside embeds. */
+  & > p,
+  & > ul,
+  & > ol,
+  & > blockquote {
+    max-width: var(--measure);
+    margin-inline: auto;
   }
 `
 

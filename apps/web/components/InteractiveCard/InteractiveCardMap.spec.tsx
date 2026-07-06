@@ -42,6 +42,22 @@ describe('InteractiveCardMap', () => {
     expect(screen.getByTestId('card-zone-narrow')).toBeInTheDocument()
   })
 
+  it('renders a marker dot on each interactive zone', () => {
+    setup()
+    expect(screen.getByTestId('card-marker-wide')).toBeInTheDocument()
+    expect(screen.getByTestId('card-marker-narrow')).toBeInTheDocument()
+  })
+
+  it('renders no hint by default', () => {
+    setup()
+    expect(screen.queryByTestId('card-hint')).not.toBeInTheDocument()
+  })
+
+  it('renders the hint caption when provided', () => {
+    setup({ hint: 'Tap the zones' })
+    expect(screen.getByTestId('card-hint')).toHaveTextContent('Tap the zones')
+  })
+
   it('labels each zone', () => {
     setup()
     expect(screen.getByTestId('card-zone-wide')).toHaveAttribute(

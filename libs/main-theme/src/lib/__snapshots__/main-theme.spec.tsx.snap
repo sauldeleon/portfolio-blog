@@ -3,91 +3,91 @@
 exports[`mainTheme should work 1`] = `
 {
   "animation": {
-    "colorSwap": qt {
+    "colorSwap": Lt {
       "id": "sc-keyframes-jQopbU",
       "inject": [Function],
       "name": "jQopbU",
       "rules": "from{color:#FFDD83;}to{color:#98DFD6;}",
       Symbol(sc-keyframes): true,
     },
-    "horizontalMovement": qt {
+    "horizontalMovement": Lt {
       "id": "sc-keyframes-gkcxrO",
       "inject": [Function],
       "name": "gkcxrO",
       "rules": "0%{transform:translateX(var(--translateX-begin));}100%{transform:translateX(var(--translateX-end));}",
       Symbol(sc-keyframes): true,
     },
-    "moveToothFall": qt {
+    "moveToothFall": Lt {
       "id": "sc-keyframes-cpZUNP",
       "inject": [Function],
       "name": "cpZUNP",
       "rules": "0%{top:-30px;}100%{top:200%;}",
       Symbol(sc-keyframes): true,
     },
-    "moveToothHorizontal": qt {
+    "moveToothHorizontal": Lt {
       "id": "sc-keyframes-ivkSzl",
       "inject": [Function],
       "name": "ivkSzl",
       "rules": "0%{left:0;}100%{left:-65%;}",
       Symbol(sc-keyframes): true,
     },
-    "moveToothRotate": qt {
+    "moveToothRotate": Lt {
       "id": "sc-keyframes-beQuxy",
       "inject": [Function],
       "name": "beQuxy",
       "rules": "0%{transform:rotate(180deg);}100%{transform:rotate(900deg);}",
       Symbol(sc-keyframes): true,
     },
-    "moveToothVertical": qt {
+    "moveToothVertical": Lt {
       "id": "sc-keyframes-iPepDc",
       "inject": [Function],
       "name": "iPepDc",
       "rules": "100%{top:var(--final-tooth-top);}",
       Symbol(sc-keyframes): true,
     },
-    "particleFade": qt {
+    "particleFade": Lt {
       "id": "sc-keyframes-itzSVh",
       "inject": [Function],
       "name": "itzSVh",
       "rules": "0%{opacity:1;}50%{opacity:0.7;}100%{opacity:1;}",
       Symbol(sc-keyframes): true,
     },
-    "particleMovement": qt {
+    "particleMovement": Lt {
       "id": "sc-keyframes-iWWfjj",
       "inject": [Function],
       "name": "iWWfjj",
       "rules": "from{transform:translate(-50%,var(--begin-y));}to{transform:translate(50%,var(--end-y));}",
       Symbol(sc-keyframes): true,
     },
-    "particleScale": qt {
+    "particleScale": Lt {
       "id": "sc-keyframes-defYgy",
       "inject": [Function],
       "name": "defYgy",
       "rules": "0%{transform:scale3d(0.4,0.4,1);}50%{transform:scale3d(1,1,1);}100%{transform:scale3d(0.4,0.4,1);}",
       Symbol(sc-keyframes): true,
     },
-    "portalGlow": qt {
+    "portalGlow": Lt {
       "id": "sc-keyframes-iDgGpj",
       "inject": [Function],
       "name": "iDgGpj",
       "rules": "0%{box-shadow:inset 0px 0px 13px 1px var(--portal-glow-color);}50%{box-shadow:inset 0px 0px 20px 1px var(--portal-glow-color);}100%{box-shadow:inset 0px 0px 13px 1px var(--portal-glow-color);}",
       Symbol(sc-keyframes): true,
     },
-    "rotateMovement": qt {
+    "rotateMovement": Lt {
       "id": "sc-keyframes-dOlMFI",
       "inject": [Function],
       "name": "dOlMFI",
       "rules": "from{rotate:0deg;}to{rotate:var(--rotation);}",
       Symbol(sc-keyframes): true,
     },
-    "toothRemove": qt {
+    "toothRemove": Lt {
       "id": "sc-keyframes-jTSpTQ",
       "inject": [Function],
       "name": "jTSpTQ",
       "rules": "100%{opacity:1;}",
       Symbol(sc-keyframes): true,
     },
-    "verticalMovement": qt {
+    "verticalMovement": Lt {
       "id": "sc-keyframes-dPpvJG",
       "inject": [Function],
       "name": "dPpvJG",
