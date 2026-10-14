@@ -176,6 +176,21 @@ describe('Select', () => {
     expect(mockReactSelect).not.toHaveBeenCalled()
   })
 
+  it('passes formatCreateLabel to the creatable select', () => {
+    const formatCreateLabel = (input: string) => `Use ${input}`
+    renderSelect({ isCreatable: true, formatCreateLabel })
+    expect(mockCreatableReactSelect).toHaveBeenCalledWith(
+      expect.objectContaining({ formatCreateLabel }),
+    )
+  })
+
+  it('keeps the default create label when none is given', () => {
+    renderSelect({ isCreatable: true })
+    expect(mockCreatableReactSelect.mock.calls[0][0]).not.toHaveProperty(
+      'formatCreateLabel',
+    )
+  })
+
   it('passes isSearchable false by default', () => {
     renderSelect()
     expect(mockReactSelect).toHaveBeenCalledWith(

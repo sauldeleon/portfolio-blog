@@ -1,4 +1,5 @@
 import { buildCanyonCard, canyoningCard } from './canyoningCard'
+import { iconPath } from './icons'
 import type { CanyoningCardData } from './types'
 
 const baseEs: CanyoningCardData = { kind: 'canyoning-data', lang: 'es' }
@@ -165,7 +166,8 @@ describe('canyoningCard', () => {
     })
     expect(svg).toContain('Alto')
     expect(svg).toContain('Algunos rápeles tienen agua')
-    expect(svg).toContain('circle cx="42" cy="66"')
+    expect(svg).toContain(iconPath('ph_murky'))
+    expect(svg).toContain(iconPath('ph_siphon'))
   })
 
   it('skips unknown phenomena and falls back to raw flow values', () => {

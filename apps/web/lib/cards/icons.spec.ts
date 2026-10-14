@@ -1,4 +1,5 @@
 import { type IconKind, iconPath } from './icons'
+import { AMBER } from './theme'
 
 const ALL_KINDS: IconKind[] = [
   'refugio',
@@ -24,33 +25,42 @@ const ALL_KINDS: IconKind[] = [
   'rappel',
   'drops',
   'return',
+  'ph_backwash',
+  'ph_current',
+  'ph_murky',
+  'ph_siphon',
+  'ph_rain',
+  'ph_none',
+  'poza',
+  'slide',
+  'downclimb',
+  'arrow_left',
+  'arrow_right',
 ]
 
 describe('iconPath', () => {
-  it.each(ALL_KINDS)(
-    'returns non-empty SVG path string for kind "%s"',
-    (kind) => {
-      const result = iconPath(kind)
-      expect(typeof result).toBe('string')
-      expect(result.length).toBeGreaterThan(0)
-      expect(result).toContain('<path')
-    },
-  )
-
-  it('uses default stroke-width of 5.4', () => {
-    const result = iconPath('canyon')
-    expect(result).toContain('stroke-width="5.4"')
+  it.each(ALL_KINDS)('returns amber artwork for kind "%s"', (kind) => {
+    const result = iconPath(kind)
+    expect(result).toMatch(/^<g transform="scale\(0\.390625\)" fill="#F4B83C">/)
+    expect(result).toMatch(/<(path|circle|ellipse|rect)\b/)
+    expect(result).not.toContain('currentColor')
   })
 
-  it('accepts custom stroke-width', () => {
-    const result = iconPath('canyon', 3.0)
-    expect(result).toContain('stroke-width="3"')
+  it('uses a duotone fill for volume', () => {
+    expect(iconPath('summit')).toContain('opacity="0.2"')
+    expect(iconPath('canyon')).toContain('opacity="0.2"')
   })
 
-  it('returns info path as fallback for unknown kind', () => {
-    const fallback = iconPath('info')
-    // calling with a cast unknown value falls back
-    const unknown = iconPath('unknown' as IconKind)
-    expect(unknown).toBe(fallback)
+  it('colours stroked artwork amber', () => {
+    expect(iconPath('canyon')).toContain(`stroke="${AMBER}"`)
+  })
+
+  it('gives every kind its own artwork', () => {
+    const artwork = new Set(ALL_KINDS.map((kind) => iconPath(kind)))
+    expect(artwork.size).toBe(ALL_KINDS.length)
+  })
+
+  it('falls back to the info icon for an unknown kind', () => {
+    expect(iconPath('unknown' as IconKind)).toBe(iconPath('info'))
   })
 })

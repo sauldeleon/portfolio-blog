@@ -30,6 +30,11 @@ const ICON_CAMP =
   `<polyline points="5,14 10,5 15,14" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>` +
   `<polyline points="8.5,14 8.5,11 11.5,11 11.5,14" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`
 
+const ICON_HUT =
+  `<polyline points="4.5,10.5 10,5.5 15.5,10.5" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>` +
+  `<polyline points="6.5,9 6.5,14.5 13.5,14.5 13.5,9" stroke="white" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" fill="none"/>` +
+  `<rect x="9" y="11.5" width="2" height="3" fill="white"/>`
+
 const ICON_FOOD =
   `<line x1="10" y1="10" x2="10" y2="15" stroke="white" stroke-width="1.5" stroke-linecap="round"/>` +
   `<path d="M8,5 L8,8.5 Q10,10 10,10 Q12,10 12,8.5 L12,5" stroke="white" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" fill="none"/>` +
@@ -54,6 +59,7 @@ const MAP_ICON_WPT_WARNING = svgToDataUrl(pin('#f59e0b', ICON_WARNING)) // amber
 const MAP_ICON_WPT_SUMMIT = svgToDataUrl(pin('#8b5cf6', ICON_SUMMIT)) // purple — summit / terrain
 const MAP_ICON_WPT_WATER = svgToDataUrl(pin('#0ea5e9', ICON_WATER)) // sky    — water / swimming
 const MAP_ICON_WPT_CAMP = svgToDataUrl(pin('#10b981', ICON_CAMP)) // emerald— camping / trail
+const MAP_ICON_WPT_HUT = svgToDataUrl(pin('#8b5a2b', ICON_HUT)) // brown  — mountain hut / shelter
 const MAP_ICON_WPT_FOOD = svgToDataUrl(pin('#f97316', ICON_FOOD)) // orange — food / restaurant
 const MAP_ICON_WPT_PARKING = svgToDataUrl(pin('#64748b', ICON_PARKING)) // slate  — parking
 const MAP_ICON_WPT_MEDICAL = svgToDataUrl(pin('#dc2626', ICON_MEDICAL)) // red    — medical
@@ -111,6 +117,12 @@ export const WPT_ICON_URLS: Record<string, string> = {
   'Picnic Area': MAP_ICON_WPT_CAMP,
   'Flag, Green': MAP_ICON_WPT_CAMP,
   'Pin, Green': MAP_ICON_WPT_CAMP,
+
+  // Mountain hut / shelter (refugio)
+  Lodging: MAP_ICON_WPT_HUT,
+  Lodge: MAP_ICON_WPT_HUT,
+  Shelter: MAP_ICON_WPT_HUT,
+  Hut: MAP_ICON_WPT_HUT,
 
   // Food / restaurant
   Restaurant: MAP_ICON_WPT_FOOD,

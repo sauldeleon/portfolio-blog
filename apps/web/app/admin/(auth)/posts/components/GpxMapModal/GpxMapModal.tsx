@@ -4,10 +4,12 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { RenderModalBackdropProps } from 'react-overlays/Modal'
 
+import { parseWaypointNotes, tryParseGpxFile } from '@sdlgr/gpx-tools'
 import { Select } from '@sdlgr/select'
 
 import type { CloudinaryImage } from '@web/lib/cloudinary/images'
 
+import { TrackUrlPicker } from '../../../components/TrackUrlPicker'
 import { ImagePicker } from '../ImagePicker'
 import type { ParsedGpx } from '../PostEditor/parseEmbedBlock'
 import {
@@ -39,6 +41,7 @@ import {
   StyledTrackInputsRow,
   StyledTrackList,
   StyledTrackRow,
+  StyledTrackUrl,
   StyledWaypointImagesSection,
 } from './GpxMapModal.styles'
 
@@ -95,14 +98,10 @@ interface FetchedWaypoint {
 }
 
 function parseWaypoints(text: string): FetchedWaypoint[] {
-  const doc = new DOMParser().parseFromString(text, 'text/xml')
-  return Array.from(doc.querySelectorAll('wpt'))
-    .map((wpt) => ({
-      name: wpt.querySelector('name')?.textContent ?? '',
-      notes: (wpt.querySelector('desc')?.textContent ?? '')
-        .split(/\r?\n/)
-        .map((raw) => raw.replace(/^\s*[-•·]\s*/, '').trim())
-        .filter(Boolean),
+  return (tryParseGpxFile(text)?.waypoints ?? [])
+    .map((w) => ({
+      name: w.name,
+      notes: parseWaypointNotes(w.desc).map((note) => note.text),
     }))
     .filter((w) => w.name)
 }
@@ -438,15 +437,13 @@ export function GpxMapModal({
               return (
                 <StyledTrackRow key={index}>
                   <StyledTrackInputsRow>
-                    <StyledInput
-                      type="url"
-                      value={track.url}
-                      onChange={(e) =>
-                        updateTrack(index, { url: e.target.value })
-                      }
-                      placeholder="https://your-cdn.com/routes/track.gpx"
-                      data-testid={`gpx-track-url-${index}`}
-                    />
+                    <StyledTrackUrl>
+                      <TrackUrlPicker
+                        value={track.url}
+                        onChange={(url) => updateTrack(index, { url })}
+                        data-testid={`gpx-track-url-${index}`}
+                      />
+                    </StyledTrackUrl>
                     <StyledInput
                       type="text"
                       value={track.name}

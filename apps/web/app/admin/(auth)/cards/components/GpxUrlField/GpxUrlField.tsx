@@ -4,11 +4,12 @@ import axios, { isAxiosError } from 'axios'
 import { useState } from 'react'
 
 import { Button } from '@sdlgr/button'
-import { FieldGroup, FieldLabel, Input } from '@sdlgr/input'
+import { FieldGroup, FieldLabel } from '@sdlgr/input'
 
 import { useClientTranslation } from '@web/i18n/client'
 import type { GpxMetrics } from '@web/lib/cards'
 
+import { TrackUrlPicker } from '../../../components/TrackUrlPicker'
 import { StyledError, StyledRow } from './GpxUrlField.styles'
 
 interface GpxUrlFieldProps {
@@ -66,12 +67,11 @@ export function GpxUrlField({
         {t('cards.fields.gpxUrl')}
       </FieldLabel>
       <StyledRow>
-        <Input
+        <TrackUrlPicker
           id={`${idPrefix}-gpx`}
           value={url}
-          placeholder={t('cards.placeholders.gpxUrl')}
-          onChange={(e) => {
-            onChange(e.target.value)
+          onChange={(next) => {
+            onChange(next)
             if (error) setError(null)
           }}
           data-testid={`${idPrefix}-gpx`}

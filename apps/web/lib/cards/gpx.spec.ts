@@ -88,6 +88,23 @@ describe('parseGpx', () => {
     expect(m.elevation).toEqual([1000, 1100])
   })
 
+  it('ignores GPS elevation noise below 3 m, like the track editor', () => {
+    const eles = [1000, 1001, 1000, 1002, 1000, 1001, 1006]
+    const m = parseGpx(
+      gpx(
+        eles
+          .map(
+            (ele, i) =>
+              `<trkpt lat="42.${String(i).padStart(4, '0')}" lon="0.00"><ele>${ele}</ele></trkpt>`,
+          )
+          .join(''),
+      ),
+    )
+    // Summing every delta would give 11 m up and 5 m down.
+    expect(m.ascent).toBe('6 m')
+    expect(m.descent).toBe('0 m')
+  })
+
   it('reports zero gain and empty profile when points have no elevation', () => {
     const m = parseGpx(
       gpx(

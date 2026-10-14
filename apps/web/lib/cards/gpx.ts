@@ -1,3 +1,5 @@
+import { computeStats, haversine } from '@sdlgr/gpx-tools'
+
 /**
  * GPX parsing helpers. Regex-based so they run unchanged on the server
  * (no DOM) and stay timezone-deterministic by reading ISO time parts
@@ -57,20 +59,6 @@ const MAX_PROFILE_POINTS = 80
 const MOVING_MIN_METERS = 1
 
 const TRKPT_RE = /<trkpt\b([^>]*?)(?:\/>|>([\s\S]*?)<\/trkpt>)/g
-
-/** Great-circle distance between two points, in metres. */
-function haversine(a: TrackPoint, b: TrackPoint): number {
-  const R = 6371000
-  const toRad = (d: number) => (d * Math.PI) / 180
-  const dLat = toRad(b.lat - a.lat)
-  const dLon = toRad(b.lon - a.lon)
-  const lat1 = toRad(a.lat)
-  const lat2 = toRad(b.lat)
-  const h =
-    Math.sin(dLat / 2) ** 2 +
-    Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) ** 2
-  return 2 * R * Math.asin(Math.sqrt(h))
-}
 
 /** `dd MMM yyyy` from an ISO string, without timezone conversion. */
 function isoDate(iso: string): string {
@@ -133,19 +121,12 @@ export function parseGpx(xml: string): GpxMetrics {
   }
 
   let distance = 0
-  let ascent = 0
-  let descent = 0
   let movingMs = 0
   for (let i = 1; i < points.length; i++) {
     const prev = points[i - 1]
     const curr = points[i]
     const step = haversine(prev, curr)
     distance += step
-    if (prev.ele !== undefined && curr.ele !== undefined) {
-      const delta = curr.ele - prev.ele
-      if (delta > 0) ascent += delta
-      else descent -= delta
-    }
     if (
       prev.time !== undefined &&
       curr.time !== undefined &&
@@ -162,6 +143,17 @@ export function parseGpx(xml: string): GpxMetrics {
   const firstIso = timed.length > 0 ? timed[0].iso : undefined
   const lastIso = timed.length > 0 ? timed[timed.length - 1].iso : undefined
   const totalMs = hasTimes ? timed[timed.length - 1].time - timed[0].time : 0
+
+  // Same elevation-noise threshold as the track editor, so a card and the
+  // editor report the same D+/D− for a given file.
+  const { ascent, descent } = computeStats(
+    points.map((p) => ({
+      lat: p.lat,
+      lon: p.lon,
+      ele: p.ele ?? null,
+      time: p.time ?? null,
+    })),
+  )
 
   const eles: number[] = []
   for (const p of points) {

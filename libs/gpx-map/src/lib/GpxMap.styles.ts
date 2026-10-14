@@ -217,52 +217,6 @@ export const StyledTrackDownloadButton = styled.button`
   }
 `
 
-export const StyledLayerSwitcher = styled.div`
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  z-index: 1000;
-  display: flex;
-  border-radius: 3px;
-  overflow: hidden;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
-`
-
-export const StyledLayerButton = styled.button<{ $active: boolean }>`
-  background: ${({ $active }) =>
-    $active ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.6)'};
-  border: none;
-  border-right: 1px solid rgba(0, 0, 0, 0.12);
-  cursor: pointer;
-  padding: 0.28rem 0.6rem;
-  font-size: 0.68rem;
-  font-weight: ${({ $active }) => ($active ? '700' : '500')};
-  color: ${({ $active }) => ($active ? '#111' : '#555')};
-  line-height: 1;
-
-  &:last-child {
-    border-right: none;
-  }
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.9);
-    color: #111;
-  }
-`
-
-export const StyledElevationChart = styled.div`
-  padding: 0.5rem 0.25rem 0.25rem;
-  border-top: 1px solid rgba(251, 251, 251, 0.06);
-`
-
-export const StyledElevationLabel = styled.div`
-  font-size: 0.6rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: rgba(251, 251, 251, 0.35);
-  padding: 0 0.5rem 0.25rem;
-`
-
 export const StyledWaypointsDetails = styled.details`
   margin-top: 0.75rem;
   border: 1px solid rgba(128, 128, 128, 0.25);

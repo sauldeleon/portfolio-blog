@@ -22,6 +22,8 @@ export interface SelectProps {
   isCreatable?: boolean
   isClearable?: boolean
   maxMenuHeight?: number
+  /** Label of the "create" entry when `isCreatable` (react-select default otherwise). */
+  formatCreateLabel?: (inputValue: string) => string
   'data-testid'?: string
 }
 
@@ -41,6 +43,7 @@ export function Select({
   isCreatable = false,
   isClearable = false,
   maxMenuHeight,
+  formatCreateLabel,
   'data-testid': testId,
 }: SelectProps) {
   const uid = useId()
@@ -71,7 +74,10 @@ export function Select({
   return (
     <StyledSelectWrapper data-testid={testId}>
       {isCreatable ? (
-        <CreatableReactSelect {...commonProps} />
+        <CreatableReactSelect
+          {...commonProps}
+          {...(formatCreateLabel && { formatCreateLabel })}
+        />
       ) : (
         <ReactSelect {...commonProps} />
       )}

@@ -19,12 +19,12 @@
       "executor": "@nx/cypress:cypress",
       "options": {
         "cypressConfig": "apps/web-e2e/cypress.config.ts",
-        "devServerTarget": "web:serve:development",
+        "devServerTarget": "web:serve",
         "testingType": "e2e"
       },
       "configurations": {
         "production": {
-          "devServerTarget": "web:serve:production"
+          "devServerTarget": "web:start"
         }
       }
     },

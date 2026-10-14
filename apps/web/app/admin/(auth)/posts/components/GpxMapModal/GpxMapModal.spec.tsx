@@ -47,6 +47,24 @@ const GPX_XML = `<?xml version="1.0"?>
   <wpt lat="43.6" lon="-5.7"><name>Water Source</name></wpt>
 </gpx>`
 
+jest.mock('../../../components/TrackUrlPicker', () => ({
+  TrackUrlPicker: ({
+    value,
+    onChange,
+    'data-testid': testId,
+  }: {
+    value: string
+    onChange: (url: string) => void
+    'data-testid'?: string
+  }) => (
+    <input
+      data-testid={testId}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+    />
+  ),
+}))
+
 jest.mock('@sdlgr/select', () => ({
   Select: ({
     value,
@@ -720,6 +738,23 @@ describe('GpxMapModal', () => {
         jest.advanceTimersByTime(600)
       })
       expect(await screen.findByTestId('fetch-error-0')).toBeInTheDocument()
+    })
+
+    it('treats a file that is not GPX as having no waypoints', async () => {
+      setupAxiosGet('not a gpx file')
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/track.gpx' },
+      })
+      await act(async () => {
+        jest.advanceTimersByTime(600)
+      })
+      await waitFor(() => expect(mockAxiosGet).toHaveBeenCalled())
+      expect(screen.queryByTestId('waypoint-select-0')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('fetch-error-0')).not.toBeInTheDocument()
     })
 
     it('does not fetch before debounce delay', () => {

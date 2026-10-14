@@ -16,6 +16,7 @@ jest.mock('@web/i18n/client', () => ({
         'nav.series': 'Series',
         'nav.images': 'Images',
         'nav.cards': 'Cards',
+        'nav.tracks': 'Tracks',
         'nav.comments': 'Comments',
         'nav.users': 'Users',
         'nav.logout': 'Logout',
@@ -97,6 +98,20 @@ describe('AdminNav', () => {
     ;(usePathname as jest.Mock).mockReturnValue('/admin/cards')
     renderApp(<AdminNav />)
     expect(screen.getByRole('link', { name: 'Cards' })).toBeInTheDocument()
+  })
+
+  it('renders Tracks link', () => {
+    renderApp(<AdminNav />)
+    expect(screen.getByRole('link', { name: 'Tracks' })).toHaveAttribute(
+      'href',
+      '/admin/tracks',
+    )
+  })
+
+  it('marks Tracks link active when on tracks route', () => {
+    ;(usePathname as jest.Mock).mockReturnValue('/admin/tracks/edit')
+    renderApp(<AdminNav />)
+    expect(screen.getByRole('link', { name: 'Tracks' })).toBeInTheDocument()
   })
 
   it('renders Comments link', () => {

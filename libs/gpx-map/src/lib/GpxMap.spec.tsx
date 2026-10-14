@@ -15,7 +15,6 @@ import {
   GpxTrackDef,
   buildWaypointPopupHtml,
   parseElevationFromXml,
-  parseWaypointNotes,
   parseWaypointsFromXml,
 } from './GpxMap'
 
@@ -151,17 +150,6 @@ jest.mock('./GpxMap.styles', () => ({
   StyledGpxMap: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="gpx-map-wrapper">{children}</div>
   ),
-  StyledElevationChart: ({
-    children,
-    'data-testid': testId,
-  }: {
-    children: React.ReactNode
-    'data-testid'?: string
-  }) => <div data-testid={testId ?? 'elevation-chart'}>{children}</div>,
-  StyledElevationLabel: ({ children }: { children: React.ReactNode }) => (
-    <div data-testid="elevation-label">{children}</div>
-  ),
-
   StyledMapContainer: require('react').forwardRef(
     (
       { children }: { children: React.ReactNode },
@@ -320,9 +308,6 @@ jest.mock('./GpxMap.styles', () => ({
       {children}
     </button>
   ),
-  StyledLayerSwitcher: ({ children }: { children: React.ReactNode }) => (
-    <div data-testid="layer-switcher">{children}</div>
-  ),
   StyledLightbox: ({
     children,
     onClick,
@@ -358,28 +343,6 @@ jest.mock('./GpxMap.styles', () => ({
   ),
   StyledLightboxNav: ({ children }: { children: React.ReactNode }) => (
     <div>{children}</div>
-  ),
-  StyledLayerButton: ({
-    children,
-    onClick,
-    $active: _active,
-    'aria-pressed': ariaPressed,
-    'data-testid': testId,
-  }: {
-    children: React.ReactNode
-    onClick: React.MouseEventHandler
-    $active: boolean
-    'aria-pressed': boolean
-    'data-testid'?: string
-  }) => (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-pressed={ariaPressed}
-      data-testid={testId}
-    >
-      {children}
-    </button>
   ),
 }))
 
@@ -2049,6 +2012,10 @@ describe('parseWaypointsFromXml', () => {
     expect(parseWaypointsFromXml(GPX_XML_NO_WAYPOINTS)).toEqual([])
   })
 
+  it('returns empty array for text that is not GPX', () => {
+    expect(parseWaypointsFromXml('not xml')).toEqual([])
+  })
+
   it('handles missing name and desc', () => {
     const xml = `<gpx><wpt lat="10" lon="20"><ele>100</ele></wpt></gpx>`
     const [wpt] = parseWaypointsFromXml(xml)
@@ -2080,6 +2047,10 @@ describe('parseWaypointsFromXml', () => {
 })
 
 describe('parseElevationFromXml', () => {
+  it('returns empty array for text that is not GPX', () => {
+    expect(parseElevationFromXml('not xml')).toEqual([])
+  })
+
   it('returns empty array when no trkpt elements', () => {
     const xml = `<?xml version="1.0"?><gpx xmlns="http://www.topografix.com/GPX/1/1"></gpx>`
     expect(parseElevationFromXml(xml)).toEqual([])
@@ -2360,19 +2331,5 @@ describe('buildWaypointPopupHtml', () => {
     expect(
       buildWaypointPopupHtml(['https://cdn.com/a.jpg'], 'Summit'),
     ).not.toContain('<ul')
-  })
-})
-
-describe('parseWaypointNotes', () => {
-  it('splits lines, strips bullets, and indents by leading whitespace', () => {
-    expect(parseWaypointNotes('- Top\n  - Nested\nPlain')).toEqual([
-      { level: 0, text: 'Top' },
-      { level: 2, text: 'Nested' },
-      { level: 0, text: 'Plain' },
-    ])
-  })
-
-  it('drops blank lines and returns nothing for an empty desc', () => {
-    expect(parseWaypointNotes('')).toEqual([])
   })
 })
