@@ -1,49 +1,23 @@
-import { Modal as ModalOverlays } from 'react-overlays'
 import styled from 'styled-components'
 
 import { Button } from '@sdlgr/button'
 
-export const StyledBackdrop = styled.div`
-  position: fixed;
-  z-index: 1040;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: ${({ theme }) => theme.colors.black};
-  opacity: 0.7;
-`
+import {
+  StyledAdminBackdrop,
+  StyledAdminDialog,
+  StyledAdminModalBody,
+} from '../../../components/AdminModal/AdminModal.styles'
 
-export const StyledGpxMapModal = styled(ModalOverlays)`
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  z-index: 1040;
-  border: 1px solid ${({ theme }) => theme.colors.green};
-  box-shadow: 0 0 16px 4px rgba(152, 223, 214, 0.5);
-  border-radius: 2px;
-  background-color: ${({ theme }) => theme.colors.black};
+export const StyledBackdrop = styled(StyledAdminBackdrop)``
+
+export const StyledGpxMapModal = styled(StyledAdminDialog).attrs({
+  $maxWidth: 'min(900px, 90vw)',
+  $placement: 'top' as const,
+})`
   overflow-y: auto;
-
-  ${({ theme }) => theme.media.up.md} {
-    top: 5vh;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    height: auto;
-    max-width: min(900px, 90vw);
-    max-height: 90vh;
-  }
 `
 
-export const StyledModalContent = styled.div`
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`
+export const StyledModalContent = styled(StyledAdminModalBody)``
 
 export const StyledLabel = styled.label`
   font-size: 0.75rem;

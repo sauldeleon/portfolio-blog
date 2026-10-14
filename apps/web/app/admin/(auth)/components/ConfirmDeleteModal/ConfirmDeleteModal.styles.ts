@@ -1,53 +1,26 @@
-import { Modal as ModalOverlays } from 'react-overlays'
 import styled from 'styled-components'
 
 import { Button } from '@sdlgr/button'
 
+import {
+  StyledAdminBackdrop,
+  StyledAdminDialog,
+  StyledAdminModalBody,
+} from '../AdminModal/AdminModal.styles'
+
 export type ModalVariant = 'danger' | 'warning'
 
-export const StyledBackdrop = styled.div`
-  position: fixed;
-  z-index: 1040;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: ${({ theme }) => theme.colors.black};
-  opacity: 0.7;
-`
+export const StyledBackdrop = styled(StyledAdminBackdrop)``
 
-export const StyledModal = styled(ModalOverlays)<{ $variant: ModalVariant }>`
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  z-index: 1040;
-  border: 1px solid
-    ${({ $variant, theme }) =>
-      $variant === 'warning' ? theme.colors.green : theme.colors.orange};
-  box-shadow: 0 0 16px 4px
-    ${({ $variant }) =>
-      $variant === 'warning'
-        ? 'rgba(152, 223, 214, 0.5)'
-        : 'rgba(176, 75, 47, 0.5)'};
-  border-radius: 2px;
-  background-color: ${({ theme }) => theme.colors.black};
+export const StyledModal = styled(StyledAdminDialog).attrs<{
+  $variant: ModalVariant
+}>(({ $variant }) => ({
+  $maxWidth: '360px',
+  $placement: 'center' as const,
+  $tone: $variant === 'warning' ? ('success' as const) : ('danger' as const),
+}))``
 
-  ${({ theme }) => theme.media.up.md} {
-    top: 30%;
-    left: 50%;
-    transform: translate(-51%, -40%);
-    width: 100%;
-    height: auto;
-    max-width: 360px;
-  }
-`
-
-export const StyledModalContent = styled.div`
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
+export const StyledModalContent = styled(StyledAdminModalBody)`
   gap: 1.5rem;
 `
 
