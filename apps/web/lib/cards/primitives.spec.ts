@@ -1,3 +1,4 @@
+import { iconPath } from './icons'
 import {
   badge,
   columnDivider,
@@ -83,9 +84,8 @@ describe('badge', () => {
     expect(result).toContain('y="60"')
   })
 
-  it('falls back to info icon for unknown kind', () => {
-    const result = badge(0, 0, 80, 'info')
-    expect(result).toContain('<circle')
+  it('draws the requested icon inside the badge', () => {
+    expect(badge(0, 0, 80, 'info')).toContain(iconPath('info'))
   })
 })
 

@@ -1,5 +1,6 @@
 import { canyonWaypointCard } from './canyonWaypointCard'
 import type { CanyonWaypointCardData } from './canyonWaypointCard'
+import { iconPath } from './icons'
 
 const base: CanyonWaypointCardData = {
   lang: 'en',
@@ -48,9 +49,9 @@ describe('canyonWaypointCard', () => {
       title: 'Salto o Rapel 11m',
     })
     expect(svg).toContain('RAPPEL / JUMP')
-    // both category icons present: rappel (anchor triangle) + drops (chevrons)
-    expect(svg).toContain('M28 16 L72 16')
-    expect(svg).toContain('M28 24 L50 40 L72 24')
+    // both category icons present: rappel + drops
+    expect(svg).toContain(iconPath('rappel'))
+    expect(svg).toContain(iconPath('drops'))
     // the split divider line between the two icons
     expect(svg).toContain('x1="100"')
   })
@@ -170,13 +171,13 @@ describe('canyonWaypointCard', () => {
       title: 'Rápel izquierda 10m',
     })
     expect(svg).toContain('LEFT')
-    expect(svg).toContain('M84 50 L20 50')
+    expect(svg).toContain(iconPath('arrow_left'))
   })
 
   it('shows a right-side pill with a right arrow', () => {
     const { svg } = canyonWaypointCard({ ...base, title: 'Rápel 45m derecha' })
     expect(svg).toContain('RIGHT')
-    expect(svg).toContain('M16 50 L80 50')
+    expect(svg).toContain(iconPath('arrow_right'))
   })
 
   it('localises the side label for lang=es', () => {
@@ -205,7 +206,7 @@ describe('canyonWaypointCard', () => {
       side: 'right',
     })
     expect(svg).toContain('RIGHT')
-    expect(svg).toContain('M16 50 L80 50')
+    expect(svg).toContain(iconPath('arrow_right'))
   })
 
   it('lets an explicit severity override auto-detection', () => {
