@@ -116,6 +116,8 @@ describe('Admin tracks — GPX editor', () => {
     cy.get('[data-testid="upload-notice"]')
       .should('contain', 'Ordesa.gpx')
       .contains('a', 'Open in editor')
-      .should('have.attr', 'href', '/admin/tracks/edit?path=Ordesa.gpx')
+      .should('have.attr', 'href')
+      // next/link adds the trailing slash (trailingSlash: true).
+      .and('match', /^\/admin\/tracks\/edit\/?\?path=Ordesa\.gpx$/)
   })
 })
