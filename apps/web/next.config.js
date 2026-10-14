@@ -1,6 +1,5 @@
 //@ts-check
 
-const path = require('path')
 const { PHASE_DEVELOPMENT_SERVER } = require('next/constants')
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
@@ -189,22 +188,19 @@ const withSvgr = (config) => {
 }
 
 /**
- * `@nx/next:build` sets NX_NEXT_OUTPUT_PATH (e.g. `dist/apps/web`); production
- * builds keep landing in `<outputPath>/.next` as they did with `withNx`. The
- * dev server keeps `.next` inside the project, which Turbopack expects.
+ * Production builds keep landing in `dist/apps/web/.next`, where they went
+ * with the old `@nx/next:build` executor (deployments read them from there).
+ * The dev server keeps `.next` inside the project, which Turbopack expects.
  *
  * @param {string} phase
  */
-function distDirFor(phase) {
-  const outputPath = process.env.NX_NEXT_OUTPUT_PATH
-  if (!outputPath || phase === PHASE_DEVELOPMENT_SERVER) return '.next'
-  const workspaceRoot = path.resolve(__dirname, '../..')
-  return path.relative(
-    __dirname,
-    path.join(path.resolve(workspaceRoot, outputPath), '.next'),
-  )
-}
-
-/** @param {string} phase */
 module.exports = (phase) =>
-  withBundleAnalyzer(withSvgr({ ...nextConfig, distDir: distDirFor(phase) }))
+  withBundleAnalyzer(
+    withSvgr({
+      ...nextConfig,
+      distDir:
+        phase === PHASE_DEVELOPMENT_SERVER
+          ? '.next'
+          : '../../dist/apps/web/.next',
+    }),
+  )
