@@ -18,6 +18,7 @@ import {
   fetchCanyonWaypoints,
 } from '@web/lib/cards/gpxImport'
 
+import { TrackUrlPicker } from '../../../components/TrackUrlPicker'
 import {
   StyledError,
   StyledForm,
@@ -138,12 +139,11 @@ export function CroquisGenerator() {
                 {t('cards.fields.gpxUrl')}
               </FieldLabel>
               <StyledGpxRow>
-                <Input
+                <TrackUrlPicker
                   id="cg-gpx"
                   value={url}
-                  placeholder={t('cards.placeholders.gpxUrl')}
-                  onChange={(e) => {
-                    setUrl(e.target.value)
+                  onChange={(next) => {
+                    setUrl(next)
                     if (error) setError(null)
                   }}
                   data-testid="cg-gpx"

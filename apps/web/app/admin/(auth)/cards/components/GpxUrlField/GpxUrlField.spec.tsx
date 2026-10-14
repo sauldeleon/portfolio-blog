@@ -5,6 +5,27 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { GpxUrlField } from './GpxUrlField'
 
+jest.mock('../../../components/TrackUrlPicker', () => ({
+  TrackUrlPicker: ({
+    id,
+    value,
+    onChange,
+    'data-testid': testId,
+  }: {
+    id?: string
+    value: string
+    onChange: (url: string) => void
+    'data-testid'?: string
+  }) => (
+    <input
+      id={id}
+      data-testid={testId}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+    />
+  ),
+}))
+
 jest.mock('@web/i18n/client', () => {
   const admin: Record<string, unknown> = jest.requireActual(
     '@web/i18n/locales/en/admin.json',

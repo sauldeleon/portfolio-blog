@@ -13,14 +13,6 @@ import {
   TileLayer,
   useMap,
 } from 'react-leaflet'
-import {
-  Area,
-  AreaChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from 'recharts'
 
 import {
   MAP_ICON_ANCHOR,
@@ -31,7 +23,11 @@ import {
   TILE_PROVIDERS,
   TRANSPARENT_1PX,
   WPT_ICON_URLS,
+  elevationProfile,
+  parseWaypointNotes,
+  tryParseGpxFile,
 } from '@sdlgr/gpx-tools'
+import { ElevationChart, TileLayerSwitcher } from '@sdlgr/gpx-ui'
 import {
   ChevronIcon,
   DownloadIcon,
@@ -43,11 +39,7 @@ import {
 import {
   StyledDownloadBar,
   StyledDownloadButton,
-  StyledElevationChart,
-  StyledElevationLabel,
   StyledGpxMap,
-  StyledLayerButton,
-  StyledLayerSwitcher,
   StyledLightbox,
   StyledLightboxClose,
   StyledLightboxNav,
@@ -90,35 +82,14 @@ export interface Waypoint {
 }
 
 export function parseWaypointsFromXml(text: string): Waypoint[] {
-  const doc = new DOMParser().parseFromString(text, 'text/xml')
-  return Array.from(doc.querySelectorAll('wpt')).map((wpt) => {
-    const eleText = wpt.querySelector('ele')?.textContent
-    return {
-      name: wpt.querySelector('name')?.textContent ?? '',
-      desc: wpt.querySelector('desc')?.textContent ?? '',
-      ele: eleText ? Math.round(parseFloat(eleText)) : null,
-      lat: parseFloat(wpt.getAttribute('lat') ?? '0'),
-      lon: parseFloat(wpt.getAttribute('lon') ?? '0'),
-      sym: wpt.querySelector('sym')?.textContent ?? '',
-    }
-  })
-}
-
-/**
- * Split a waypoint description into notes — one per line, each stripped of its
- * leading bullet, indented by its leading-whitespace level. Shared by the table
- * and the insert modal (which persists the parsed texts into the markdown).
- */
-export function parseWaypointNotes(
-  desc: string,
-): Array<{ level: number; text: string }> {
-  return desc
-    .split(/\r?\n/)
-    .map((raw) => ({
-      level: Math.min(raw.length - raw.trimStart().length, 4),
-      text: raw.replace(/^\s*[-•·]\s*/, '').trim(),
-    }))
-    .filter((n) => n.text)
+  return (tryParseGpxFile(text)?.waypoints ?? []).map((w) => ({
+    name: w.name,
+    desc: w.desc,
+    ele: w.ele === null ? null : Math.round(w.ele),
+    lat: w.lat,
+    lon: w.lon,
+    sym: w.sym,
+  }))
 }
 
 export type ElevationPoint = {
@@ -128,67 +99,20 @@ export type ElevationPoint = {
   lon: number
 }
 
+/** Elevation samples (km, m) for the profile chart, at most 300 of them. */
 export function parseElevationFromXml(text: string): ElevationPoint[] {
-  const doc = new DOMParser().parseFromString(text, 'text/xml')
-  const points = Array.from(doc.querySelectorAll('trkpt'))
-  const result: ElevationPoint[] = []
-  let cumKm = 0
-  let prevLat: number | null = null
-  let prevLon: number | null = null
-
-  for (const pt of points) {
-    const lat = parseFloat(pt.getAttribute('lat') ?? '0')
-    const lon = parseFloat(pt.getAttribute('lon') ?? '0')
-    const eleText = pt.querySelector('ele')?.textContent
-    if (!eleText) continue
-    const ele = parseFloat(eleText)
-
-    if (prevLat !== null && prevLon !== null) {
-      const R = 6371
-      const dLat = ((lat - prevLat) * Math.PI) / 180
-      const dLon = ((lon - prevLon) * Math.PI) / 180
-      const a =
-        Math.sin(dLat / 2) ** 2 +
-        Math.cos((prevLat * Math.PI) / 180) *
-          Math.cos((lat * Math.PI) / 180) *
-          Math.sin(dLon / 2) ** 2
-      cumKm += R * 2 * Math.asin(Math.sqrt(a))
-    }
-    result.push({
-      distance: Math.round(cumKm * 100) / 100,
-      elevation: Math.round(ele),
-      lat,
-      lon,
-    })
-    prevLat = lat
-    prevLon = lon
-  }
-
-  // Downsample to max 300 points for performance
-  if (result.length > 300) {
-    const step = Math.ceil(result.length / 300)
-    return result.filter((_, i) => i % step === 0 || i === result.length - 1)
-  }
-  return result
+  const points = (tryParseGpxFile(text)?.tracks ?? []).flatMap((track) =>
+    track.segments.flatMap((segment) => segment.points),
+  )
+  return elevationProfile(points, 300).map((sample) => ({
+    distance: Math.round(sample.distance / 10) / 100,
+    elevation: Math.round(sample.ele),
+    lat: points[sample.index].lat,
+    lon: points[sample.index].lon,
+  }))
 }
 
-/* istanbul ignore next */
-function elevationXTickFormatter(v: number) {
-  return `${v}km`
-}
-/* istanbul ignore next */
-function elevationYTickFormatter(v: number) {
-  return `${v}m`
-}
-/* istanbul ignore next */
-function elevationTooltipFormatter(v: unknown) {
-  return [`${v}m`, 'Elevation']
-}
-/* istanbul ignore next */
-function elevationLabelFormatter(v: unknown) {
-  return `${v}km`
-}
-
+/** Profile of one track, highlighting its point under the cursor on the map. */
 function ElevationProfile({
   data,
   color,
@@ -199,73 +123,22 @@ function ElevationProfile({
   data: ElevationPoint[]
   color: string
   label?: string
-  onHoverPoint?: (lat: number, lon: number, color: string) => void
-  onHoverEnd?: () => void
+  onHoverPoint: (lat: number, lon: number, color: string) => void
+  onHoverEnd: () => void
 }) {
-  /* istanbul ignore next */
-  if (data.length === 0) return null
-  const elevations = data.map((p) => p.elevation)
-  const minEle = Math.min(...elevations)
-  const maxEle = Math.max(...elevations)
-  const pad = (maxEle - minEle) * 0.15 + 10
-  const yDomain: [number, number] = [
-    Math.floor((minEle - pad) / 10) * 10,
-    Math.ceil((maxEle + pad) / 10) * 10,
-  ]
   return (
-    <StyledElevationChart data-testid="elevation-chart">
-      {label && <StyledElevationLabel>{label}</StyledElevationLabel>}
-      <ResponsiveContainer width="100%" height={110}>
-        <AreaChart
-          data={data}
-          margin={{ top: 4, right: 8, bottom: 0, left: 0 }}
-          onMouseMove={(state) => {
-            const idx = state.activeTooltipIndex
-            if (onHoverPoint && idx != null) {
-              const pt = data[Number(idx)]
-              if (pt) onHoverPoint(pt.lat, pt.lon, color)
-            }
-          }}
-          onMouseLeave={() => onHoverEnd?.()}
-        >
-          <XAxis
-            dataKey="distance"
-            tickFormatter={elevationXTickFormatter}
-            tick={{ fontSize: 9, fill: 'rgba(251,251,251,0.4)' }}
-            tickLine={false}
-            axisLine={false}
-            interval="preserveStartEnd"
-          />
-          <YAxis
-            domain={yDomain}
-            tickFormatter={elevationYTickFormatter}
-            tick={{ fontSize: 9, fill: 'rgba(251,251,251,0.4)' }}
-            tickLine={false}
-            axisLine={false}
-            width={38}
-          />
-          <Tooltip
-            formatter={elevationTooltipFormatter}
-            labelFormatter={elevationLabelFormatter}
-            contentStyle={{
-              background: '#1a1a1a',
-              border: '1px solid rgba(251,251,251,0.1)',
-              fontSize: '0.65rem',
-            }}
-          />
-          <Area
-            type="monotone"
-            dataKey="elevation"
-            stroke={color}
-            fill={color}
-            fillOpacity={0.18}
-            strokeWidth={1.5}
-            dot={false}
-            isAnimationActive={false}
-          />
-        </AreaChart>
-      </ResponsiveContainer>
-    </StyledElevationChart>
+    <ElevationChart
+      data={data.map((p) => ({ km: p.distance, ele: p.elevation }))}
+      color={color}
+      label={label}
+      onHover={(index) => {
+        if (index === null) {
+          onHoverEnd()
+          return
+        }
+        onHoverPoint(data[index].lat, data[index].lon, color)
+      }}
+    />
   )
 }
 
@@ -762,20 +635,11 @@ export function GpxMap({
             />
           )}
         </MapContainer>
-        <StyledLayerSwitcher>
-          {TILE_PROVIDERS.map((provider, i) => (
-            <StyledLayerButton
-              key={provider.id}
-              type="button"
-              $active={i === tileProviderIndex}
-              onClick={() => setTileProviderIndex(i)}
-              aria-pressed={i === tileProviderIndex}
-              data-testid={`tile-provider-${provider.id}`}
-            >
-              {provider.label}
-            </StyledLayerButton>
-          ))}
-        </StyledLayerSwitcher>
+        <TileLayerSwitcher
+          providers={TILE_PROVIDERS}
+          activeIndex={tileProviderIndex}
+          onChange={setTileProviderIndex}
+        />
       </StyledMapContainer>
 
       {!isMultiTrack && (resolvedTracks[0]?.allowDownload ?? allowDownload) && (

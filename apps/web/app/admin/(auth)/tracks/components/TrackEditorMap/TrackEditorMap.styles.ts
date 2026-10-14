@@ -39,25 +39,6 @@ export const StyledMapWrapper = styled.div<{ $crosshair: boolean }>`
   }
 `
 
-export const StyledLayerSwitcher = styled.div`
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  z-index: 1000;
-  display: flex;
-  gap: 2px;
-`
-
-export const StyledLayerButton = styled.button<{ $active: boolean }>`
-  background: ${({ $active }) => ($active ? '#fbfbfb' : 'rgba(0, 0, 0, 0.7)')};
-  color: ${({ $active }) => ($active ? '#000' : '#fbfbfb')};
-  border: none;
-  font: inherit;
-  font-size: 0.65rem;
-  padding: 0.3rem 0.6rem;
-  cursor: pointer;
-`
-
 export const StyledHint = styled.p`
   position: absolute;
   bottom: 1rem;

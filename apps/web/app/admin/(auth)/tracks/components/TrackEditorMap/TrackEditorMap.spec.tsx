@@ -20,6 +20,7 @@ const mockInvalidateSize = jest.fn()
 const mockObserve = jest.fn()
 const mockDisconnect = jest.fn()
 let mockResizeCallback: () => void = () => undefined
+const mockContainer = document.createElement('div')
 
 let mockSize = { x: 800, y: 600 }
 const mockMapHandlers: Record<string, () => void> = {}
@@ -33,7 +34,7 @@ const mockMap = {
     delete mockMapHandlers[event]
   },
   invalidateSize: () => mockInvalidateSize(),
-  getContainer: () => 'container',
+  getContainer: () => mockContainer,
   fitBounds: (...args: unknown[]) => mockFitBounds(...args),
   panTo: (...args: unknown[]) => mockPanTo(...args),
   getBounds: () => ({
@@ -299,21 +300,34 @@ describe('TrackEditorMap', () => {
 
   it('waits for the map to have a size before fitting', () => {
     mockSize = { x: 800, y: 0 }
-    const { unmount } = renderMap()
+    renderMap()
     expect(mockFitBounds).not.toHaveBeenCalled()
-    expect(mockMapHandlers.resize).toBeDefined()
     // Still no height: keeps waiting.
     act(() => mockMapHandlers.resize())
     expect(mockFitBounds).not.toHaveBeenCalled()
     mockSize = { x: 800, y: 600 }
     act(() => mockMapHandlers.resize())
     expect(mockFitBounds).toHaveBeenCalledTimes(1)
-    expect(mockMapHandlers.resize).toBeUndefined()
-    unmount()
   })
 
-  it('stops waiting for a size on unmount', () => {
-    mockSize = { x: 0, y: 0 }
+  it('re-frames while the layout settles, until the user moves the map', () => {
+    renderMap()
+    expect(mockFitBounds).toHaveBeenCalledTimes(1)
+    act(() => mockMapHandlers.resize())
+    expect(mockFitBounds).toHaveBeenCalledTimes(2)
+    fireEvent.pointerDown(mockContainer)
+    act(() => mockMapHandlers.resize())
+    expect(mockFitBounds).toHaveBeenCalledTimes(2)
+  })
+
+  it('treats wheel zooming as user interaction', () => {
+    renderMap()
+    fireEvent.wheel(mockContainer)
+    act(() => mockMapHandlers.resize())
+    expect(mockFitBounds).toHaveBeenCalledTimes(1)
+  })
+
+  it('stops listening on unmount', () => {
     const { unmount } = renderMap()
     unmount()
     expect(mockMapHandlers.resize).toBeUndefined()
@@ -510,7 +524,7 @@ describe('TrackEditorMap', () => {
 
   it('resizes the map when its container changes size', () => {
     const { unmount } = renderMap()
-    expect(mockObserve).toHaveBeenCalledWith('container')
+    expect(mockObserve).toHaveBeenCalledWith(mockContainer)
     act(() => mockResizeCallback())
     expect(mockInvalidateSize).toHaveBeenCalled()
     unmount()

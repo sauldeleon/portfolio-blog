@@ -1,15 +1,11 @@
-import Link from 'next/link'
 import styled from 'styled-components'
 
-export const StyledMessage = styled.p<{ $error?: boolean }>`
-  font-size: 0.8rem;
+import { StyledAdminBackLink } from '../../../components/AdminForm/AdminForm.styles'
+import { StyledAdminEmpty } from '../../../components/AdminTable/AdminTable.styles'
+
+export const StyledMessage = styled(StyledAdminEmpty)<{ $error?: boolean }>`
   color: ${({ theme, $error }) =>
     $error ? theme.colors.orange : theme.colors.white};
-  padding: 3rem 0;
-  text-align: center;
-  margin: 0;
 `
 
-export const StyledBackLink = styled(Link)`
-  color: ${({ theme }) => theme.colors.green};
-`
+export const StyledBackLink = styled(StyledAdminBackLink)``

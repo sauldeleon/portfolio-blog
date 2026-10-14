@@ -2,55 +2,43 @@ import Link from 'next/link'
 import styled from 'styled-components'
 
 import { Button } from '@sdlgr/button'
-import { Input } from '@sdlgr/input'
 
-export const StyledWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  padding: 2rem 0;
-`
+import { StyledAdminError } from '../../../components/AdminForm/AdminForm.styles'
+import {
+  StyledAdminPage,
+  StyledAdminPageHeader,
+  StyledAdminPageHeading,
+} from '../../../components/AdminPage/AdminPage.styles'
+import {
+  StyledAdminButtonGroup,
+  StyledAdminEmpty,
+  StyledAdminRefreshButton,
+  StyledAdminSearchInput,
+  StyledAdminToolbar,
+} from '../../../components/AdminTable/AdminTable.styles'
 
-export const StyledHeader = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-`
+export const StyledWrapper = styled(StyledAdminPage)``
 
-export const StyledTitle = styled.h1`
-  font-size: 0.9rem;
-  font-weight: 400;
+export const StyledHeader = styled(StyledAdminPageHeader)``
+
+export const StyledTitle = styled(StyledAdminPageHeading)``
+
+export const StyledToolbar = styled(StyledAdminToolbar)``
+
+export const StyledSearchInput = styled(StyledAdminSearchInput)``
+
+export const StyledActions = styled(StyledAdminButtonGroup)``
+
+export const StyledRefreshButton = styled(StyledAdminRefreshButton)``
+
+export const StyledUploadButton = styled(Button)`
   text-transform: uppercase;
-  letter-spacing: 0.16em;
-  color: ${({ theme }) => theme.colors.white};
-  margin: 0;
+  letter-spacing: 0.1em;
 `
 
-export const StyledToolbar = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid rgba(251, 251, 251, 0.08);
-  flex-wrap: wrap;
-`
+export const StyledEmptyState = styled(StyledAdminEmpty)``
 
-export const StyledActions = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-
-  > button {
-    text-transform: uppercase;
-  }
-`
-
-export const StyledSearchInput = styled(Input)`
-  font-size: 0.75rem;
-  width: 260px;
-  padding: 0.375rem 0;
-`
+export const StyledError = styled(StyledAdminError)``
 
 export const StyledNotice = styled.p`
   margin: 0;
@@ -58,13 +46,6 @@ export const StyledNotice = styled.p`
   font-size: 0.75rem;
   color: ${({ theme }) => theme.colors.white};
   border: 1px solid ${({ theme }) => theme.colors.green};
-`
-
-export const StyledRefreshButton = styled(Button).attrs({
-  colorScheme: 'success',
-})`
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
 `
 
 export const StyledList = styled.ul`
@@ -107,21 +88,6 @@ export const StyledEditLink = styled(Link)`
   color: ${({ theme }) => theme.colors.green};
   text-transform: uppercase;
   letter-spacing: 0.08em;
-`
-
-export const StyledEmptyState = styled.p`
-  font-size: 0.8rem;
-  color: ${({ theme }) => theme.colors.white};
-  opacity: 0.4;
-  margin: 0;
-  text-align: center;
-  padding: 3rem 0;
-`
-
-export const StyledError = styled.p`
-  font-size: 0.75rem;
-  color: ${({ theme }) => theme.colors.orange};
-  margin: 0;
 `
 
 export const StyledCount = styled.p`

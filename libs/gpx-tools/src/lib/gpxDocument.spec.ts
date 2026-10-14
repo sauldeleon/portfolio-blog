@@ -3,6 +3,7 @@ import {
   parseGpxFile,
   renameGpxFile,
   serializeGpxFile,
+  tryParseGpxFile,
 } from './gpxDocument'
 
 const GPX = `<?xml version="1.0" encoding="UTF-8"?>
@@ -237,5 +238,12 @@ describe('renameGpxFile', () => {
     const renamed = renameGpxFile(file, 'b')
     expect(renamed.tracks[0].name).toBe('b')
     expect(serializeGpxFile(renamed)).not.toContain('<metadata>')
+  })
+})
+
+describe('tryParseGpxFile', () => {
+  it('returns the parsed file or null', () => {
+    expect(tryParseGpxFile('<gpx/>')?.tracks).toEqual([])
+    expect(tryParseGpxFile('<kml/>')).toBeNull()
   })
 })

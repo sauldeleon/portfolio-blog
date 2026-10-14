@@ -16,6 +16,7 @@ import {
 } from '@web/lib/cards'
 import type { Lang, Waypoint, ZipFile } from '@web/lib/cards'
 
+import { TrackUrlPicker } from '../../../components/TrackUrlPicker'
 import {
   StyledLayout,
   StyledPanelForm,
@@ -247,12 +248,11 @@ export function WaypointGenerator() {
                 {t('cards.fields.gpxUrl')}
               </FieldLabel>
               <StyledGpxRow>
-                <Input
+                <TrackUrlPicker
                   id="wp-gpx"
                   value={url}
-                  placeholder={t('cards.placeholders.gpxUrl')}
-                  onChange={(e) => {
-                    setUrl(e.target.value)
+                  onChange={(next) => {
+                    setUrl(next)
                     if (error) setError(null)
                   }}
                   data-testid="wp-gpx"

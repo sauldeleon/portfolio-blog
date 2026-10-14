@@ -59,6 +59,7 @@ Run tests for single file: `yarn nx test <app> --testFile=<path>`
 | `@sdlgr/footer`          | Footer component          |
 | `@sdlgr/gpx-map`         | GPX map for posts         |
 | `@sdlgr/gpx-tools`       | GPX parse/clean/edit      |
+| `@sdlgr/gpx-ui`          | Elevation chart, layers   |
 | `@sdlgr/header`          | Header component          |
 | `@sdlgr/link`            | Link component            |
 | `@sdlgr/modal`           | Modal component           |

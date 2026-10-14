@@ -34,6 +34,7 @@ import {
   StyledSearchInput,
   StyledTitle,
   StyledToolbar,
+  StyledUploadButton,
   StyledVersion,
   StyledWrapper,
 } from './TrackList.styles'
@@ -117,34 +118,34 @@ export function TrackList() {
     <StyledWrapper data-testid="track-list">
       <StyledHeader>
         <StyledTitle>{t('tracks.title')}</StyledTitle>
-        <StyledToolbar>
-          <StyledSearchInput
-            type="search"
-            placeholder={t('tracks.list.searchPlaceholder')}
-            value={search}
-            onChange={(e) => changeSearch(e.target.value)}
-            aria-label={t('tracks.list.searchPlaceholder')}
-          />
-          <StyledActions>
-            <Button
-              variant="contained"
-              size="sm"
-              type="button"
-              onClick={() => setIsUploadOpen(true)}
-              data-testid="tracks-upload"
-            >
-              {t('tracks.upload.open')}
-            </Button>
-            <StyledRefreshButton
-              type="button"
-              onClick={() => void refetch()}
-              data-testid="tracks-refresh"
-            >
-              {t('refresh')}
-            </StyledRefreshButton>
-          </StyledActions>
-        </StyledToolbar>
       </StyledHeader>
+      <StyledToolbar>
+        <StyledSearchInput
+          type="search"
+          placeholder={t('tracks.list.searchPlaceholder')}
+          value={search}
+          onChange={(e) => changeSearch(e.target.value)}
+          aria-label={t('tracks.list.searchPlaceholder')}
+        />
+        <StyledActions>
+          <StyledUploadButton
+            variant="contained"
+            size="sm"
+            type="button"
+            onClick={() => setIsUploadOpen(true)}
+            data-testid="tracks-upload"
+          >
+            {t('tracks.upload.open')}
+          </StyledUploadButton>
+          <StyledRefreshButton
+            type="button"
+            onClick={() => void refetch()}
+            data-testid="tracks-refresh"
+          >
+            {t('refresh')}
+          </StyledRefreshButton>
+        </StyledActions>
+      </StyledToolbar>
       {uploaded && (
         <StyledNotice data-testid="upload-notice">
           {t('tracks.upload.done', { path: uploaded.path })}{' '}

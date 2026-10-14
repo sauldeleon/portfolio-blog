@@ -1,18 +1,15 @@
 'use client'
 
-import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { RenderModalBackdropProps } from 'react-overlays/Modal'
 
+import { parseWaypointNotes, tryParseGpxFile } from '@sdlgr/gpx-tools'
 import { Select } from '@sdlgr/select'
 
 import type { CloudinaryImage } from '@web/lib/cloudinary/images'
 
-import {
-  TRACKS_QUERY_KEY,
-  fetchTrackFiles,
-} from '../../../tracks/utils/trackApi'
+import { TrackUrlPicker } from '../../../components/TrackUrlPicker'
 import { ImagePicker } from '../ImagePicker'
 import type { ParsedGpx } from '../PostEditor/parseEmbedBlock'
 import {
@@ -101,14 +98,10 @@ interface FetchedWaypoint {
 }
 
 function parseWaypoints(text: string): FetchedWaypoint[] {
-  const doc = new DOMParser().parseFromString(text, 'text/xml')
-  return Array.from(doc.querySelectorAll('wpt'))
-    .map((wpt) => ({
-      name: wpt.querySelector('name')?.textContent ?? '',
-      notes: (wpt.querySelector('desc')?.textContent ?? '')
-        .split(/\r?\n/)
-        .map((raw) => raw.replace(/^\s*[-•·]\s*/, '').trim())
-        .filter(Boolean),
+  return (tryParseGpxFile(text)?.waypoints ?? [])
+    .map((w) => ({
+      name: w.name,
+      notes: parseWaypointNotes(w.desc).map((note) => note.text),
     }))
     .filter((w) => w.name)
 }
@@ -168,16 +161,6 @@ export function GpxMapModal({
   onCancel,
   initialValues,
 }: GpxMapModalProps) {
-  // GPX files in the tracks repo, offered as quick picks for each track URL.
-  const { data: repoTracks } = useQuery({
-    queryKey: TRACKS_QUERY_KEY,
-    queryFn: fetchTrackFiles,
-    enabled: isOpen,
-  })
-  // Newest first: recordings are named after their date.
-  const repoTrackOptions = (repoTracks?.files ?? [])
-    .map((file) => ({ value: file.rawUrl, label: file.path }))
-    .sort((a, b) => b.label.localeCompare(a.label))
   const [tracks, setTracks] = useState<TrackInput[]>(
     initialValues?.tracks.length ? initialValues.tracks : [initTrack()],
   )
@@ -455,16 +438,9 @@ export function GpxMapModal({
                 <StyledTrackRow key={index}>
                   <StyledTrackInputsRow>
                     <StyledTrackUrl>
-                      <Select
+                      <TrackUrlPicker
                         value={track.url}
                         onChange={(url) => updateTrack(index, { url })}
-                        options={repoTrackOptions}
-                        isSearchable
-                        isCreatable
-                        isClearable
-                        formatCreateLabel={(input) => `Use URL: ${input}`}
-                        placeholder="Search GitHub tracks or paste a URL"
-                        maxMenuHeight={240}
                         data-testid={`gpx-track-url-${index}`}
                       />
                     </StyledTrackUrl>

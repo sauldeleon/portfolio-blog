@@ -127,6 +127,15 @@ export function parseGpxFile(text: string): GpxFile {
   return { doc, tracks, waypoints }
 }
 
+/** Like {@link parseGpxFile}, but returns null instead of throwing. */
+export function tryParseGpxFile(text: string): GpxFile | null {
+  try {
+    return parseGpxFile(text)
+  } catch {
+    return null
+  }
+}
+
 function formatCoord(value: number): string {
   return String(Number(value.toFixed(7)))
 }

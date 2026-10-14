@@ -2,7 +2,7 @@
 
 import L, { type LeafletEvent, type LeafletMouseEvent } from 'leaflet'
 import 'leaflet/dist/leaflet.css'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
   CircleMarker,
   MapContainer,
@@ -22,6 +22,7 @@ import {
   TILE_PROVIDERS,
   WPT_ICON_URLS,
 } from '@sdlgr/gpx-tools'
+import { TileLayerSwitcher } from '@sdlgr/gpx-ui'
 
 import { useClientTranslation } from '@web/i18n/client'
 
@@ -30,12 +31,7 @@ import type {
   PointSelection,
   SegmentRef,
 } from '../TrackWorkspace/TrackWorkspace'
-import {
-  StyledHint,
-  StyledLayerButton,
-  StyledLayerSwitcher,
-  StyledMapWrapper,
-} from './TrackEditorMap.styles'
+import { StyledHint, StyledMapWrapper } from './TrackEditorMap.styles'
 
 /** Above this many vertices in view, markers are hidden to keep dragging smooth. */
 export const MAX_VISIBLE_VERTICES = 2000
@@ -65,24 +61,33 @@ function toLatLng(p: LatLon): [number, number] {
   return [p.lat, p.lon]
 }
 
+/**
+ * Frames the track, and keeps re-framing it while the layout settles (the
+ * editor sizes itself after mounting) until the user pans or zooms.
+ */
 function FitBounds({ points }: { points: LatLon[] }) {
   const map = useMap()
-  const fitted = useRef(false)
   useEffect(() => {
-    if (fitted.current || points.length === 0) return
-    // Fitting a zero-sized container zooms all the way in, so wait until the
-    // layout has given the map a real size.
+    if (points.length === 0) return
+    const container = map.getContainer()
+    let userMoved = false
+    const markUserMoved = () => {
+      userMoved = true
+    }
+    // A zero-sized container would zoom all the way in.
     function fit() {
       const size = map.getSize()
-      if (size.x === 0 || size.y === 0) return
+      if (userMoved || size.x === 0 || size.y === 0) return
       map.fitBounds(L.latLngBounds(points.map(toLatLng)), { padding: [24, 24] })
-      fitted.current = true
-      map.off('resize', fit)
     }
     fit()
-    if (!fitted.current) map.on('resize', fit)
+    map.on('resize', fit)
+    container.addEventListener('pointerdown', markUserMoved)
+    container.addEventListener('wheel', markUserMoved)
     return () => {
       map.off('resize', fit)
+      container.removeEventListener('pointerdown', markUserMoved)
+      container.removeEventListener('wheel', markUserMoved)
     }
   }, [map, points])
   return null
@@ -405,20 +410,12 @@ export function TrackEditorMap({
           />
         ))}
       </MapContainer>
-      <StyledLayerSwitcher>
-        {TILE_PROVIDERS.map((p, i) => (
-          <StyledLayerButton
-            key={p.id}
-            type="button"
-            $active={i === providerIndex}
-            aria-pressed={i === providerIndex}
-            onClick={() => setProviderIndex(i)}
-            data-testid={`editor-tile-${p.id}`}
-          >
-            {p.label}
-          </StyledLayerButton>
-        ))}
-      </StyledLayerSwitcher>
+      <TileLayerSwitcher
+        providers={TILE_PROVIDERS}
+        activeIndex={providerIndex}
+        onChange={setProviderIndex}
+        testIdPrefix="editor-tile"
+      />
       {mode === 'edit' && tooManyVertices && (
         <StyledHint data-testid="zoom-hint">
           {t('tracks.edit.zoomHint', { count: visibleVertices.length })}

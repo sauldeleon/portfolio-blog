@@ -1,5 +1,9 @@
-import Link from 'next/link'
 import styled, { css } from 'styled-components'
+
+import {
+  StyledAdminBackLink,
+  StyledAdminError,
+} from '../../../components/AdminForm/AdminForm.styles'
 
 export const StyledWorkspace = styled.div<{
   $filled: boolean
@@ -47,12 +51,7 @@ export const StyledTopBar = styled.div`
   border-bottom: 1px solid rgba(251, 251, 251, 0.08);
 `
 
-export const StyledBackLink = styled(Link)`
-  font-size: 0.7rem;
-  color: ${({ theme }) => theme.colors.green};
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-`
+export const StyledBackLink = styled(StyledAdminBackLink)``
 
 export const StyledHeading = styled.h1`
   font-size: 0.9rem;
@@ -89,11 +88,7 @@ export const StyledTarget = styled.span`
   overflow-wrap: anywhere;
 `
 
-export const StyledError = styled.p`
-  font-size: 0.75rem;
-  color: ${({ theme }) => theme.colors.orange};
-  margin: 0;
-`
+export const StyledError = styled(StyledAdminError)``
 
 export const StyledSaveResult = styled.div`
   display: flex;

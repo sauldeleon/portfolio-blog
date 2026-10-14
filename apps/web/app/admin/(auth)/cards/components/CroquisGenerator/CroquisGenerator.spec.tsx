@@ -5,6 +5,27 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { CroquisGenerator } from './CroquisGenerator'
 
+jest.mock('../../../components/TrackUrlPicker', () => ({
+  TrackUrlPicker: ({
+    id,
+    value,
+    onChange,
+    'data-testid': testId,
+  }: {
+    id?: string
+    value: string
+    onChange: (url: string) => void
+    'data-testid'?: string
+  }) => (
+    <input
+      id={id}
+      data-testid={testId}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+    />
+  ),
+}))
+
 function makeAxiosError(status: number, data: unknown): AxiosError {
   return new AxiosError('error', String(status), undefined, undefined, {
     status,

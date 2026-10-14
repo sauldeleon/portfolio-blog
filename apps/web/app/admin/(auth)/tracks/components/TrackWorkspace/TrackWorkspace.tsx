@@ -2,6 +2,7 @@
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { isAxiosError } from 'axios'
+import Link from 'next/link'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTheme } from 'styled-components'
 
@@ -448,7 +449,7 @@ export function TrackWorkspace({
     >
       <StyledTopBar>
         <div>
-          <StyledBackLink href="/admin/tracks">
+          <StyledBackLink as={Link} href="/admin/tracks">
             {t('tracks.editor.back')}
           </StyledBackLink>
           <StyledHeading>{path}</StyledHeading>

@@ -1,6 +1,7 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
+import Link from 'next/link'
 import { useMemo } from 'react'
 
 import { type GpxFile, parseGpxFile } from '@sdlgr/gpx-tools'
@@ -45,7 +46,7 @@ export function TrackEditor({ path }: TrackEditorProps) {
   const file = useMemo(() => (data ? parseSafely(data.content) : null), [data])
 
   const back = (
-    <StyledBackLink href="/admin/tracks">
+    <StyledBackLink as={Link} href="/admin/tracks">
       {t('tracks.editor.back')}
     </StyledBackLink>
   )

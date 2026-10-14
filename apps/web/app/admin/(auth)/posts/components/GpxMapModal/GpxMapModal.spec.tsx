@@ -47,11 +47,22 @@ const GPX_XML = `<?xml version="1.0"?>
   <wpt lat="43.6" lon="-5.7"><name>Water Source</name></wpt>
 </gpx>`
 
-const mockFetchTrackFiles = jest.fn()
-
-jest.mock('../../../tracks/utils/trackApi', () => ({
-  ...jest.requireActual('../../../tracks/utils/trackApi'),
-  fetchTrackFiles: () => mockFetchTrackFiles(),
+jest.mock('../../../components/TrackUrlPicker', () => ({
+  TrackUrlPicker: ({
+    value,
+    onChange,
+    'data-testid': testId,
+  }: {
+    value: string
+    onChange: (url: string) => void
+    'data-testid'?: string
+  }) => (
+    <input
+      data-testid={testId}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+    />
+  ),
 }))
 
 jest.mock('@sdlgr/select', () => ({
@@ -59,42 +70,27 @@ jest.mock('@sdlgr/select', () => ({
     value,
     onChange,
     options,
-    isCreatable,
-    formatCreateLabel,
     'data-testid': testId,
   }: {
     value: string
     onChange: (v: string) => void
     options: Array<{ value: string; label: string }>
-    isCreatable?: boolean
-    formatCreateLabel?: (input: string) => string
     'data-testid'?: string
     isSearchable?: boolean
     maxMenuHeight?: number
-  }) =>
-    // Creatable selects accept free text, so model them as an input that
-    // also exposes its options.
-    isCreatable ? (
-      <input
-        data-testid={testId}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        data-options={JSON.stringify(options)}
-        data-create-label={formatCreateLabel?.('x')}
-      />
-    ) : (
-      <select
-        data-testid={testId}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-      >
-        {options.map((opt) => (
-          <option key={opt.value} value={opt.value}>
-            {opt.label}
-          </option>
-        ))}
-      </select>
-    ),
+  }) => (
+    <select
+      data-testid={testId}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+    >
+      {options.map((opt) => (
+        <option key={opt.value} value={opt.value}>
+          {opt.label}
+        </option>
+      ))}
+    </select>
+  ),
 }))
 
 jest.mock('../ImagePicker', () => ({
@@ -134,11 +130,6 @@ function setupAxiosGet(xml = GPX_XML) {
   mockAxiosGet.mockResolvedValue({ data: xml })
 }
 
-beforeEach(() => {
-  mockFetchTrackFiles.mockReset()
-  mockFetchTrackFiles.mockResolvedValue({ files: [], truncated: false })
-})
-
 describe('GpxMapModal', () => {
   beforeEach(() => {
     jest.useFakeTimers()
@@ -154,35 +145,6 @@ describe('GpxMapModal', () => {
       <GpxMapModal isOpen={false} onInsert={jest.fn()} onCancel={jest.fn()} />,
     )
     expect(screen.queryByTestId('gpx-track-url-0')).not.toBeInTheDocument()
-  })
-
-  it('offers the GitHub tracks and free URLs for each track', async () => {
-    mockFetchTrackFiles.mockResolvedValue({
-      files: [
-        { path: 'a.gpx', size: 1, rawUrl: 'https://raw/a.gpx' },
-        { path: 'b.gpx', size: 1, rawUrl: 'https://raw/b.gpx' },
-      ],
-      truncated: false,
-    })
-    renderApp(<GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />)
-    const field = screen.getByTestId('gpx-track-url-0')
-    await waitFor(() =>
-      expect(field).toHaveAttribute(
-        'data-options',
-        JSON.stringify([
-          { value: 'https://raw/b.gpx', label: 'b.gpx' },
-          { value: 'https://raw/a.gpx', label: 'a.gpx' },
-        ]),
-      ),
-    )
-    expect(field).toHaveAttribute('data-create-label', 'Use URL: x')
-  })
-
-  it('does not load GitHub tracks while closed', () => {
-    renderApp(
-      <GpxMapModal isOpen={false} onInsert={jest.fn()} onCancel={jest.fn()} />,
-    )
-    expect(mockFetchTrackFiles).not.toHaveBeenCalled()
   })
 
   it('renders modal content when open', () => {
@@ -776,6 +738,23 @@ describe('GpxMapModal', () => {
         jest.advanceTimersByTime(600)
       })
       expect(await screen.findByTestId('fetch-error-0')).toBeInTheDocument()
+    })
+
+    it('treats a file that is not GPX as having no waypoints', async () => {
+      setupAxiosGet('not a gpx file')
+      renderApp(
+        <GpxMapModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
+      )
+      fireEvent.click(screen.getByTestId('gpx-track-show-waypoints-0'))
+      fireEvent.change(screen.getByTestId('gpx-track-url-0'), {
+        target: { value: 'https://example.com/track.gpx' },
+      })
+      await act(async () => {
+        jest.advanceTimersByTime(600)
+      })
+      await waitFor(() => expect(mockAxiosGet).toHaveBeenCalled())
+      expect(screen.queryByTestId('waypoint-select-0')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('fetch-error-0')).not.toBeInTheDocument()
     })
 
     it('does not fetch before debounce delay', () => {

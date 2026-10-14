@@ -447,7 +447,6 @@
       "routeName": "Route name",
       "ferrataName": "Via Ferrata name",
       "waypointName": "Waypoint name",
-      "gpxUrl": "https://example.com/route.gpx",
       "return": "20 min · 1:20",
       "waypointsText": "salto: Jump 2m - 42.6092 0.1412\n- Bend on landing\n---\nrapel: Rappel 10m - 42.6056 0.1294\n- Access from ferrata"
     },
@@ -622,6 +621,10 @@
     "panel": {
       "hide": "Hide panel",
       "show": "Show panel"
+    },
+    "picker": {
+      "placeholder": "Search GitHub tracks or paste a URL",
+      "useUrl": "Use URL: {{url}}"
     }
   }
 }

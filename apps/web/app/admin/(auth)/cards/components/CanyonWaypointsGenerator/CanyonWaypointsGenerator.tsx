@@ -17,6 +17,7 @@ import {
 } from '@web/lib/cards'
 import type { CanyonWaypoint, Lang, ZipFile } from '@web/lib/cards'
 
+import { TrackUrlPicker } from '../../../components/TrackUrlPicker'
 import { CanyonWaypointFields } from '../CanyonWaypointFields'
 import {
   StyledLayout,
@@ -217,12 +218,11 @@ export function CanyonWaypointsGenerator() {
                 {t('cards.fields.gpxUrl')}
               </FieldLabel>
               <StyledGpxRow>
-                <Input
+                <TrackUrlPicker
                   id="cw-gpx"
                   value={url}
-                  placeholder={t('cards.placeholders.gpxUrl')}
-                  onChange={(e) => {
-                    setUrl(e.target.value)
+                  onChange={(next) => {
+                    setUrl(next)
                     if (error) setError(null)
                   }}
                   data-testid="cw-gpx"
