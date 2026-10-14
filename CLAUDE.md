@@ -57,6 +57,8 @@ Run tests for single file: `yarn nx test <app> --testFile=<path>`
 | `@sdlgr/button`          | Button component          |
 | `@sdlgr/circle-link`     | Circle link component     |
 | `@sdlgr/footer`          | Footer component          |
+| `@sdlgr/gpx-map`         | GPX map for posts         |
+| `@sdlgr/gpx-tools`       | GPX parse/clean/edit      |
 | `@sdlgr/header`          | Header component          |
 | `@sdlgr/link`            | Link component            |
 | `@sdlgr/modal`           | Modal component           |

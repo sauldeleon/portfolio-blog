@@ -6,7 +6,7 @@ import {
   MAP_ICON_WPT,
   TRANSPARENT_1PX,
   WPT_ICON_URLS,
-} from './GpxMap.icons'
+} from './mapIcons'
 
 describe('GpxMap icons', () => {
   it('MAP_ICON_START is an SVG data URL', () => {
@@ -68,6 +68,14 @@ describe('GpxMap icons', () => {
 
   it('WPT_ICON_URLS maps Campground to emerald pin', () => {
     expect(decodeURIComponent(WPT_ICON_URLS['Campground'])).toContain('#10b981')
+  })
+
+  it('WPT_ICON_URLS maps mountain huts to a brown house pin', () => {
+    for (const sym of ['Lodging', 'Lodge', 'Shelter', 'Hut']) {
+      const svg = decodeURIComponent(WPT_ICON_URLS[sym])
+      expect(svg).toContain('#8b5a2b')
+      expect(svg).toContain('<rect')
+    }
   })
 
   it('WPT_ICON_URLS maps Water Source to sky-blue pin', () => {

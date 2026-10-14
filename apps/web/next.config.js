@@ -1,6 +1,7 @@
 //@ts-check
 
-const { composePlugins, withNx } = require('@nx/next')
+const path = require('path')
+const { PHASE_DEVELOPMENT_SERVER } = require('next/constants')
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
   openAnalyzer: false,
@@ -11,10 +12,9 @@ const locales = ['en', 'es']
 const isStaticExport = process.env.EXPORT_STATIC_FILES === 'true'
 
 /**
- * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
+ * @type {import('next').NextConfig}
  **/
 const nextConfig = {
-  nx: {},
   serverExternalPackages: ['shiki', 'rehype-pretty-code', 'remark-gfm'],
   output: isStaticExport ? 'export' : undefined,
   async redirects() {
@@ -188,10 +188,23 @@ const withSvgr = (config) => {
   return config
 }
 
-const plugins = [
-  // Add more Next.js plugins to this list if needed.
-  withNx,
-  withBundleAnalyzer,
-]
+/**
+ * `@nx/next:build` sets NX_NEXT_OUTPUT_PATH (e.g. `dist/apps/web`); production
+ * builds keep landing in `<outputPath>/.next` as they did with `withNx`. The
+ * dev server keeps `.next` inside the project, which Turbopack expects.
+ *
+ * @param {string} phase
+ */
+function distDirFor(phase) {
+  const outputPath = process.env.NX_NEXT_OUTPUT_PATH
+  if (!outputPath || phase === PHASE_DEVELOPMENT_SERVER) return '.next'
+  const workspaceRoot = path.resolve(__dirname, '../..')
+  return path.relative(
+    __dirname,
+    path.join(path.resolve(workspaceRoot, outputPath), '.next'),
+  )
+}
 
-module.exports = composePlugins(...plugins, withSvgr)(nextConfig)
+/** @param {string} phase */
+module.exports = (phase) =>
+  withBundleAnalyzer(withSvgr({ ...nextConfig, distDir: distDirFor(phase) }))

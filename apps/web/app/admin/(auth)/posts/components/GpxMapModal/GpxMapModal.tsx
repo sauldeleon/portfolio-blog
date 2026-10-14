@@ -1,5 +1,6 @@
 'use client'
 
+import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { RenderModalBackdropProps } from 'react-overlays/Modal'
@@ -8,6 +9,10 @@ import { Select } from '@sdlgr/select'
 
 import type { CloudinaryImage } from '@web/lib/cloudinary/images'
 
+import {
+  TRACKS_QUERY_KEY,
+  fetchTrackFiles,
+} from '../../../tracks/utils/trackApi'
 import { ImagePicker } from '../ImagePicker'
 import type { ParsedGpx } from '../PostEditor/parseEmbedBlock'
 import {
@@ -39,6 +44,7 @@ import {
   StyledTrackInputsRow,
   StyledTrackList,
   StyledTrackRow,
+  StyledTrackUrl,
   StyledWaypointImagesSection,
 } from './GpxMapModal.styles'
 
@@ -162,6 +168,16 @@ export function GpxMapModal({
   onCancel,
   initialValues,
 }: GpxMapModalProps) {
+  // GPX files in the tracks repo, offered as quick picks for each track URL.
+  const { data: repoTracks } = useQuery({
+    queryKey: TRACKS_QUERY_KEY,
+    queryFn: fetchTrackFiles,
+    enabled: isOpen,
+  })
+  // Newest first: recordings are named after their date.
+  const repoTrackOptions = (repoTracks?.files ?? [])
+    .map((file) => ({ value: file.rawUrl, label: file.path }))
+    .sort((a, b) => b.label.localeCompare(a.label))
   const [tracks, setTracks] = useState<TrackInput[]>(
     initialValues?.tracks.length ? initialValues.tracks : [initTrack()],
   )
@@ -438,15 +454,20 @@ export function GpxMapModal({
               return (
                 <StyledTrackRow key={index}>
                   <StyledTrackInputsRow>
-                    <StyledInput
-                      type="url"
-                      value={track.url}
-                      onChange={(e) =>
-                        updateTrack(index, { url: e.target.value })
-                      }
-                      placeholder="https://your-cdn.com/routes/track.gpx"
-                      data-testid={`gpx-track-url-${index}`}
-                    />
+                    <StyledTrackUrl>
+                      <Select
+                        value={track.url}
+                        onChange={(url) => updateTrack(index, { url })}
+                        options={repoTrackOptions}
+                        isSearchable
+                        isCreatable
+                        isClearable
+                        formatCreateLabel={(input) => `Use URL: ${input}`}
+                        placeholder="Search GitHub tracks or paste a URL"
+                        maxMenuHeight={240}
+                        data-testid={`gpx-track-url-${index}`}
+                      />
+                    </StyledTrackUrl>
                     <StyledInput
                       type="text"
                       value={track.name}

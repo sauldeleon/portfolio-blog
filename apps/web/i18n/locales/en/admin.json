@@ -17,6 +17,7 @@
     "series": "Series",
     "images": "Images",
     "cards": "Cards",
+    "tracks": "Tracks",
     "comments": "Comments",
     "users": "Users",
     "logout": "Logout"
@@ -459,6 +460,168 @@
     },
     "croquis": {
       "empty": "Add jump, rappel or slide waypoints above to draw the croquis. Hover an element to see it."
+    }
+  },
+  "tracks": {
+    "title": "GPX tracks",
+    "list": {
+      "searchPlaceholder": "Search tracks…",
+      "loading": "Loading tracks…",
+      "error": "Failed to load tracks from GitHub",
+      "empty": "No tracks found.",
+      "editOriginal": "Edit original",
+      "editClean": "Edit clean",
+      "copyUrl": "Copy URL",
+      "copied": "Copied",
+      "count": "{{count}} tracks",
+      "previous": "Previous",
+      "next": "Next",
+      "truncated": "GitHub returned an incomplete list (the repo is too large); some tracks are missing."
+    },
+    "tabs": {
+      "clean": "Clean",
+      "edit": "Edit",
+      "waypoints": "Waypoints"
+    },
+    "editor": {
+      "loading": "Loading track…",
+      "back": "← All tracks",
+      "loadError": "Failed to load the track.",
+      "parseError": "This file is not a valid GPX.",
+      "summary": "{{points}} points · {{distance}} · +{{ascent}} · {{waypoints}} waypoints",
+      "undo": "Undo",
+      "redo": "Redo",
+      "stripTimes": "Strip timestamps",
+      "download": "Download",
+      "save": "Save to GitHub",
+      "saving": "Saving…",
+      "targetNew": "Saves to {{path}} (new file)",
+      "targetOverwrite": "Saves to {{path}} (overwrites it)",
+      "unsaved": "unsaved changes",
+      "saved": "Saved {{path}}",
+      "cacheNote": "raw.githubusercontent.com may serve the previous version for up to 5 minutes.",
+      "saveError": "Save failed, please try again",
+      "fullscreen": "Fullscreen",
+      "exitFullscreen": "Exit fullscreen"
+    },
+    "stats": {
+      "current": "Current",
+      "preview": "Preview",
+      "points": "Points",
+      "distance": "Distance",
+      "ascent": "Ascent",
+      "descent": "Descent",
+      "duration": "Duration"
+    },
+    "clean": {
+      "intro": "Tweak the filters and check the green preview on the map. Nothing changes until you apply; every apply can be undone.",
+      "reset": "Reset",
+      "apply": "Apply",
+      "trim": {
+        "label": "Privacy trim",
+        "help": "Removes the points near the start and the end (e.g. your home).",
+        "start": "Start radius",
+        "end": "End radius"
+      },
+      "speedSpikes": {
+        "label": "Speed spikes",
+        "help": "Drops GPS jumps that would need an impossible speed. Needs timestamps.",
+        "maxSpeedKmh": "Max speed"
+      },
+      "detourSpikes": {
+        "label": "Out-and-back spikes",
+        "help": "Drops single points far from both neighbours while the neighbours are close together.",
+        "maxDetour": "Max detour"
+      },
+      "stops": {
+        "label": "Stops",
+        "help": "Collapses the cloud of points recorded while standing still to its first and last point.",
+        "radius": "Radius",
+        "minDuration": "Min duration"
+      },
+      "minDistance": {
+        "label": "Minimum distance",
+        "help": "Drops points closer than this to the previous kept one.",
+        "distance": "Distance"
+      },
+      "smoothing": {
+        "label": "Smooth line",
+        "help": "Moving average over positions; reduces zig-zag noise. Endpoints stay put.",
+        "window": "Window"
+      },
+      "simplify": {
+        "label": "Simplify",
+        "help": "Reduces points while keeping the shape. Douglas–Peucker keeps points deviating more than the tolerance; Visvalingam–Whyatt removes the smallest triangles and looks more natural on winding paths.",
+        "tolerance": "Tolerance",
+        "douglas-peucker": "Douglas–Peucker",
+        "visvalingam": "Visvalingam–Whyatt"
+      },
+      "elevationSmoothing": {
+        "label": "Smooth elevation",
+        "help": "Moving average over elevation; lowers inflated ascent from GPS noise.",
+        "window": "Window"
+      }
+    },
+    "edit": {
+      "help": "Zoom in to see the points of the active segment (the map zooms past the tile limit when needed).\nClick a point to select it, then drag its yellow handle to move it. Shift+click another to select a range. Delete/Backspace removes the selection. Ctrl/Cmd+Z undoes.",
+      "segment": "Track {{track}} · segment {{segment}} ({{count}} pts)",
+      "insertOn": "Adding points: click the map",
+      "insertOff": "Add points",
+      "selectedPoint": "Point #{{index}}",
+      "selectedRange": "Points #{{from}}–#{{to}} ({{count}})",
+      "lat": "Lat",
+      "lon": "Lon",
+      "ele": "Elevation",
+      "time": "Time",
+      "clearSelection": "Clear",
+      "deletePoint": "Delete point",
+      "deleteRange": "Delete range",
+      "noSelection": "No point selected.",
+      "zoomHint": "{{count}} points in view — zoom in to edit them"
+    },
+    "waypoints": {
+      "help": "Click a waypoint to edit it, drag its marker to move it. Reorder with the arrows or by dragging ⋮⋮. Description lines become notes in the post map.",
+      "addOn": "Click the map to place it",
+      "addOff": "Add waypoint",
+      "empty": "No waypoints yet.",
+      "unnamed": "(unnamed)",
+      "name": "Name",
+      "desc": "Description",
+      "icon": "Icon",
+      "symPlaceholder": "Garmin symbol (sym)",
+      "delete": "Delete waypoint",
+      "defaultName": "Waypoint {{n}}",
+      "moveUp": "Move up",
+      "moveDown": "Move down",
+      "drag": "Drag to reorder"
+    },
+    "upload": {
+      "open": "Upload track",
+      "title": "Upload GPX track",
+      "dropzone": "Drop a .gpx file here, or click to choose one",
+      "dropzoneActive": "Drop the file here…",
+      "invalidFile": "This file is not a valid GPX.",
+      "summary": "{{file}} · {{tracks}} track(s) · {{points}} points · {{distance}} · {{waypoints}} waypoints",
+      "name": "Name",
+      "nameHint": "Saved as {{path}}; the track inside the file is renamed too.",
+      "invalidName": "Use a non-empty name without slashes; \"-clean\" endings are reserved for edited copies.",
+      "exists": "{{path}} already exists in the repo.",
+      "tooLarge": "The file is too large to upload (max ~4 MB). Simplify it first.",
+      "error": "Upload failed, please try again",
+      "changeFile": "Change file",
+      "cancel": "Cancel",
+      "submit": "Upload to GitHub",
+      "uploading": "Uploading…",
+      "done": "Uploaded {{path}}.",
+      "openEditor": "Open in editor"
+    },
+    "profile": {
+      "empty": "This segment has no elevation data.",
+      "ele": "Elevation"
+    },
+    "panel": {
+      "hide": "Hide panel",
+      "show": "Show panel"
     }
   }
 }

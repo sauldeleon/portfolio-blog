@@ -248,7 +248,7 @@ export const StyledTrackRow = styled.div`
 
 export const StyledTrackInputsRow = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr auto;
+  grid-template-columns: 2fr 1fr auto;
   gap: 0.5rem;
   align-items: center;
 `
@@ -363,4 +363,9 @@ export const StyledInsertButton = styled(Button).attrs({
     opacity: 0.3;
     cursor: not-allowed;
   }
+`
+
+export const StyledTrackUrl = styled.div`
+  min-width: 0;
+  font-size: 0.8rem;
 `

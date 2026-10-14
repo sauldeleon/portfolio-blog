@@ -23,6 +23,16 @@ import {
 } from 'recharts'
 
 import {
+  MAP_ICON_ANCHOR,
+  MAP_ICON_END,
+  MAP_ICON_SIZE,
+  MAP_ICON_START,
+  MAP_ICON_WPT,
+  TILE_PROVIDERS,
+  TRANSPARENT_1PX,
+  WPT_ICON_URLS,
+} from '@sdlgr/gpx-tools'
+import {
   ChevronIcon,
   DownloadIcon,
   MapPinIcon,
@@ -30,15 +40,6 @@ import {
   PhotoIcon,
 } from '@sdlgr/icons'
 
-import {
-  MAP_ICON_ANCHOR,
-  MAP_ICON_END,
-  MAP_ICON_SIZE,
-  MAP_ICON_START,
-  MAP_ICON_WPT,
-  TRANSPARENT_1PX,
-  WPT_ICON_URLS,
-} from './GpxMap.icons'
 import {
   StyledDownloadBar,
   StyledDownloadButton,
@@ -376,32 +377,6 @@ export interface GpxMapProps {
   downloadLabel?: string
   labels?: GpxMapLabels
 }
-
-const TILE_PROVIDERS = [
-  {
-    id: 'osm',
-    label: 'OSM',
-    maxZoom: 19,
-    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    attribution:
-      '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  },
-  {
-    id: 'topo',
-    label: 'Topo',
-    maxZoom: 17,
-    url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
-    attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a>',
-  },
-  {
-    id: 'satellite',
-    label: 'Satellite',
-    maxZoom: 19,
-    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-    attribution: 'Tiles &copy;',
-  },
-]
 
 const TRACK_COLORS = [
   '#e63946',

@@ -3,6 +3,9 @@ import styled from 'styled-components'
 import { StyledFormLabel } from '@sdlgr/input'
 
 export const StyledWrapper = styled.label`
+  /* Keeps the visually hidden input next to its box: otherwise focusing it
+     scrolls whichever ancestor it ends up positioned against. */
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
