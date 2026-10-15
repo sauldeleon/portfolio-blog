@@ -486,7 +486,8 @@ export function PostEditor({
       setIsCroquisModalOpen(true)
     } else if (
       editingEmbed.type === 'canyon-summary' ||
-      editingEmbed.type === 'ferrata-summary'
+      editingEmbed.type === 'ferrata-summary' ||
+      editingEmbed.type === 'route-summary'
     ) {
       setInteractiveCardInitialValues(
         editingEmbed.parsed as ParsedInteractiveCard,
@@ -1503,7 +1504,8 @@ export function PostEditor({
         onInsert={(markdown) => {
           if (
             editingEmbed?.type === 'canyon-summary' ||
-            editingEmbed?.type === 'ferrata-summary'
+            editingEmbed?.type === 'ferrata-summary' ||
+            editingEmbed?.type === 'route-summary'
           ) {
             replaceBlock(
               editingEmbed.blockStart,

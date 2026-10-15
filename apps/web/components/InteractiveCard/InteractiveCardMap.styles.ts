@@ -65,6 +65,31 @@ export const StyledOverlay = styled.svg`
   pointer-events: none;
 `
 
+export const StyledProfileLayer = styled.g`
+  .hit,
+  .peak {
+    pointer-events: auto;
+    cursor: crosshair;
+  }
+
+  .peak {
+    cursor: pointer;
+    outline: none;
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: transform 0.15s;
+  }
+
+  .peak:hover,
+  .peak:focus-visible {
+    transform: scale(1.35);
+  }
+
+  .readout {
+    pointer-events: none;
+  }
+`
+
 export const StyledZone = styled.g`
   pointer-events: auto;
   cursor: pointer;

@@ -2,8 +2,13 @@ import {
   parseCanyonSummary,
   parseCroquisMeta,
   parseFerrataSummary,
+  parseRouteSummary,
 } from '@web/lib/cards'
-import type { CanyoningCardData, SummaryFerrataData } from '@web/lib/cards'
+import type {
+  CanyoningCardData,
+  SummaryFerrataData,
+  SummaryRouteData,
+} from '@web/lib/cards'
 
 export type EmbedType =
   'youtube' | 'youtube-360' | 'maps' | 'openstreetmap' | 'wikiloc'
@@ -80,8 +85,15 @@ export interface ParsedFerrataSummary {
   showDownload: boolean
 }
 
-/** Either interactive summary card, distinguished by `data.kind`. */
-export type ParsedInteractiveCard = ParsedCanyonSummary | ParsedFerrataSummary
+/** A route summary block: the card data and the download flag. */
+export interface ParsedRouteSummary {
+  data: SummaryRouteData
+  showDownload: boolean
+}
+
+/** Any interactive summary card, distinguished by `data.kind`. */
+export type ParsedInteractiveCard =
+  ParsedCanyonSummary | ParsedFerrataSummary | ParsedRouteSummary
 
 export type DetectedEmbed =
   | { type: 'image'; blockStart: number; blockEnd: number; parsed: ParsedImage }
@@ -110,6 +122,12 @@ export type DetectedEmbed =
       blockStart: number
       blockEnd: number
       parsed: ParsedFerrataSummary
+    }
+  | {
+      type: 'route-summary'
+      blockStart: number
+      blockEnd: number
+      parsed: ParsedRouteSummary
     }
 
 const EMBED_TYPES: EmbedType[] = [
@@ -332,6 +350,20 @@ export function detectEmbedAtCursor(
         }
         return {
           type: 'canyon-summary',
+          blockStart: start,
+          blockEnd: end,
+          parsed: { data, showDownload },
+        }
+      }
+
+      if (fenceType === 'route-summary') {
+        const { showDownload } = parseCroquisMeta(meta)
+        const data = parseRouteSummary(body) ?? {
+          kind: 'summary-route',
+          lang: 'en',
+        }
+        return {
+          type: 'route-summary',
           blockStart: start,
           blockEnd: end,
           parsed: { data, showDownload },

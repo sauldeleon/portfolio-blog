@@ -104,6 +104,21 @@ describe('InteractiveCardInsertModal', () => {
     expect(preview().value).toContain('"kind": "summary-ferrata"')
   })
 
+  it('switches to the route form and a route-summary preview', () => {
+    setup()
+    fireEvent.click(screen.getByTestId('interactive-card-type-route'))
+    expect(screen.getByTestId('route-form')).toBeInTheDocument()
+    expect(preview().value).toContain('```route-summary')
+    expect(preview().value).toContain('"kind": "summary-route"')
+  })
+
+  it('inserts the route block and resets it', () => {
+    const { onInsert } = setup()
+    fireEvent.click(screen.getByTestId('interactive-card-type-route'))
+    fireEvent.click(screen.getByTestId('interactive-card-modal-insert'))
+    expect(onInsert.mock.calls[0][0]).toContain('```route-summary')
+  })
+
   it('switches back to the canyon form', () => {
     setup()
     fireEvent.click(screen.getByTestId('interactive-card-type-ferrata'))
@@ -178,5 +193,17 @@ describe('InteractiveCardInsertModal', () => {
     expect(screen.getByTestId('ferrata-form')).toBeInTheDocument()
     expect(preview().value).toContain('```ferrata-summary')
     expect(preview().value).toContain('Ferrata Editada')
+  })
+
+  it('seeds the route type from initial values', () => {
+    setup({
+      initialValues: {
+        data: { kind: 'summary-route', lang: 'en', title: 'Peña Ubiña' },
+        showDownload: true,
+      },
+    })
+    expect(screen.getByTestId('route-form')).toBeInTheDocument()
+    expect(preview().value).toContain('```route-summary')
+    expect(preview().value).toContain('Peña Ubiña')
   })
 })

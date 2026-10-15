@@ -1088,4 +1088,52 @@ describe('remarkEmbeds', () => {
       })
     })
   })
+  describe('route-summary blocks', () => {
+    const body = JSON.stringify({
+      kind: 'summary-route',
+      lang: 'es',
+      dist: '16 km',
+    })
+
+    it('transforms a route-summary block into a RouteSummary element', () => {
+      const [result] = runPlugin([
+        { type: 'code', lang: 'route-summary', value: body },
+      ])
+      expect(result.type).toBe('mdxJsxFlowElement')
+      expect(result.name).toBe('RouteSummary')
+      const data = result.attributes?.find((a) => a.name === 'data')?.value
+      expect(data).toContain('"kind": "summary-route"')
+      expect(data).toContain('"dist": "16 km"')
+    })
+
+    it('emits an empty data attribute for an invalid body', () => {
+      const [result] = runPlugin([
+        { type: 'code', lang: 'route-summary', value: '{bad' },
+      ])
+      expect(result.attributes?.find((a) => a.name === 'data')?.value).toBe('')
+    })
+
+    it('emits an empty data attribute when the body is undefined', () => {
+      const [result] = runPlugin([
+        { type: 'code', lang: 'route-summary', value: undefined },
+      ])
+      expect(result.attributes?.find((a) => a.name === 'data')?.value).toBe('')
+    })
+
+    it('emits a noDownload attribute when the no-download flag is set', () => {
+      const [result] = runPlugin([
+        {
+          type: 'code',
+          lang: 'route-summary',
+          meta: 'no-download',
+          value: body,
+        },
+      ])
+      expect(result.attributes?.find((a) => a.name === 'noDownload')).toEqual({
+        type: 'mdxJsxAttribute',
+        name: 'noDownload',
+        value: null,
+      })
+    })
+  })
 })

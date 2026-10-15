@@ -360,6 +360,7 @@
     "title": "Cards",
     "tabs": {
       "route": "Route",
+      "routeInteractive": "Route (interactive)",
       "canyonData": "Canyon",
       "canyonInteractive": "Canyon (interactive)",
       "canyonWaypoints": "Canyon (waypoints)",
@@ -433,7 +434,18 @@
       "sideRight": "Right",
       "sevEasy": "Easy",
       "sevCaution": "Caution",
-      "sevDanger": "Danger"
+      "sevDanger": "Danger",
+      "routeShape": "Route type",
+      "routeShapes": {
+        "loop": "Loop",
+        "linear": "One way"
+      },
+      "landmarks": "Summits and cols",
+      "landmarksEmpty": "Parse the GPX to find the summits and cols; they get their names from the GPX waypoints or OpenStreetMap.",
+      "landmarkPeak": "Summit",
+      "landmarkCol": "Col",
+      "landmarkName": "Name (optional)",
+      "landmarkRemove": "Remove from the card"
     },
     "flow": {
       "observed": "Observed flow",

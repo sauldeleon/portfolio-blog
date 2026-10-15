@@ -65,6 +65,8 @@ export type Lang = 'es' | 'en'
 export const STRINGS = {
   es: {
     route_summary: 'RESUMEN DE RUTA',
+    route_loop: 'CIRCULAR',
+    route_linear: 'LINEAL',
     distance: 'DISTANCIA RECORRIDA',
     ascent: 'DESNIVEL + ACUMULADO',
     times_header: 'TIEMPOS Y HORARIOS',
@@ -75,6 +77,7 @@ export const STRINGS = {
     start: 'HORA INICIO',
     end: 'HORA FINAL',
     profile: 'PERFIL DE ELEVACIÓN',
+    profile_hint: 'Pasa el ratón o el dedo por el perfil para ver la altitud',
     difficulty: 'DIFICULTAD',
     cable: 'LONGITUD',
     vertical: 'DESNIVEL VERTICAL',
@@ -165,6 +168,8 @@ export const STRINGS = {
   },
   en: {
     route_summary: 'ROUTE SUMMARY',
+    route_loop: 'LOOP',
+    route_linear: 'ONE WAY',
     distance: 'DISTANCE',
     ascent: 'TOTAL ASCENT',
     times_header: 'TIME BREAKDOWN',
@@ -175,6 +180,7 @@ export const STRINGS = {
     start: 'START TIME',
     end: 'END TIME',
     profile: 'ELEVATION PROFILE',
+    profile_hint: 'Hover or tap the profile to see the altitude',
     difficulty: 'DIFFICULTY',
     cable: 'LENGTH',
     vertical: 'VERTICAL DROP',

@@ -1,10 +1,21 @@
 import { computeStats, haversine } from '@sdlgr/gpx-tools'
 
+import { findCols, findPeaks } from './primitives'
+import type { RouteLandmark } from './types'
+
 /**
  * GPX parsing helpers. Regex-based so they run unchanged on the server
- * (no DOM) and stay timezone-deterministic by reading ISO time parts
- * directly instead of constructing local `Date`s for display values.
+ * (no DOM). GPX times are UTC; display values are shown in the routes' local
+ * time (`CARD_TIME_ZONE`), whatever the server or browser timezone is.
  */
+
+/** Where the routes are: clock times and dates on the cards use this zone. */
+export const CARD_TIME_ZONE = 'Europe/Madrid'
+
+/** Start and end within this distance (or 2% of the route) make a loop. */
+const LOOP_MAX_GAP_METERS = 200
+
+export type RouteShape = 'loop' | 'linear'
 
 export interface GpxMetrics {
   /** First fix date, formatted as `dd MMM yyyy` (matches CARD_DATE_FORMAT). */
@@ -27,6 +38,10 @@ export interface GpxMetrics {
   descent: string
   /** Downsampled elevation series used to draw the card profile. */
   elevation: number[]
+  /** Whether the track ends where it started; null without a track. */
+  shape: RouteShape | null
+  /** Summits and cols on the profile, named after nearby GPX waypoints. */
+  landmarks: RouteLandmark[]
 }
 
 export interface TrackPoint {
@@ -61,16 +76,51 @@ const MOVING_MIN_METERS = 1
 const TRKPT_RE = /<trkpt\b([^>]*?)(?:\/>|>([\s\S]*?)<\/trkpt>)/g
 
 /** `dd MMM yyyy` from an ISO string, without timezone conversion. */
-function isoDate(iso: string): string {
-  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso)
-  if (!m) return ''
-  return `${m[3]} ${MONTHS[Number(m[2]) - 1]} ${m[1]}`
+const HAS_ZONE = /(Z|[+-]\d{2}:?\d{2})$/i
+
+const LOCAL_PARTS = new Intl.DateTimeFormat('en-GB', {
+  timeZone: CARD_TIME_ZONE,
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+  hour: '2-digit',
+  minute: '2-digit',
+  hourCycle: 'h23',
+})
+
+/**
+ * Date and clock parts of a GPX time in `CARD_TIME_ZONE`. A time without a
+ * zone is already local, so it is read as written.
+ */
+function localParts(
+  iso: string,
+  ms: number,
+): { y: string; mo: string; d: string; h: string; mi: string } | null {
+  if (HAS_ZONE.test(iso.trim())) {
+    const parts = Object.fromEntries(
+      LOCAL_PARTS.formatToParts(new Date(ms)).map((p) => [p.type, p.value]),
+    )
+    return {
+      y: parts.year,
+      mo: parts.month,
+      d: parts.day,
+      h: parts.hour,
+      mi: parts.minute,
+    }
+  }
+  const m = /^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}))?/.exec(iso)
+  return m ? { y: m[1], mo: m[2], d: m[3], h: m[4], mi: m[5] } : null
 }
 
-/** `HH:MM` from an ISO string, without timezone conversion. */
-function isoClock(iso: string): string {
-  const m = /T(\d{2}):(\d{2})/.exec(iso)
-  return m ? `${m[1]}:${m[2]}` : ''
+function isoDate(iso: string, ms: number): string {
+  const p = localParts(iso, ms)
+  return p ? `${p.d} ${MONTHS[Number(p.mo) - 1]} ${p.y}` : ''
+}
+
+/** `HH:MM` of a GPX time, in `CARD_TIME_ZONE`. */
+function isoClock(iso: string, ms: number): string {
+  const p = localParts(iso, ms)
+  return p?.h ? `${p.h}:${p.mi}` : ''
 }
 
 /** `H:MM` duration from a millisecond span. */
@@ -81,11 +131,86 @@ function duration(ms: number): string {
   return `${h}:${mm}`
 }
 
-/** Evenly sample a series down to at most `max` points. */
-function downsample(values: number[], max: number): number[] {
-  if (values.length <= max) return values
-  const step = (values.length - 1) / (max - 1)
-  return Array.from({ length: max }, (_, i) => values[Math.round(i * step)])
+/** Indices that evenly sample `n` items down to at most `max`. */
+function sampleIndices(n: number, max: number): number[] {
+  if (n <= max) return Array.from({ length: n }, (_, i) => i)
+  const step = (n - 1) / (max - 1)
+  return Array.from({ length: max }, (_, i) => Math.round(i * step))
+}
+
+/** A waypoint this close to a summit or col lends it its name. */
+const WAYPOINT_NAME_RADIUS = 100
+
+const WPT_RE = /<wpt\b([^>]*?)>([\s\S]*?)<\/wpt>/g
+
+/** Named `<wpt>` of a GPX document. */
+export function parseNamedWaypoints(
+  xml: string,
+): Array<{ lat: number; lon: number; name: string }> {
+  const waypoints: Array<{ lat: number; lon: number; name: string }> = []
+  for (const match of xml.matchAll(WPT_RE)) {
+    const lat = Number(/\blat="([^"]+)"/.exec(match[1])?.[1])
+    const lon = Number(/\blon="([^"]+)"/.exec(match[1])?.[1])
+    const name = /<name>([^<]*)<\/name>/.exec(match[2])?.[1].trim()
+    if (Number.isFinite(lat) && Number.isFinite(lon) && name) {
+      waypoints.push({ lat, lon, name: decodeXml(name) })
+    }
+  }
+  return waypoints
+}
+
+function decodeXml(text: string): string {
+  return text
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&amp;/g, '&')
+}
+
+/**
+ * Summits and cols of the sampled profile. Each is moved to the real highest
+ * (or lowest) track point around its sample, so its altitude and position are
+ * exact, and named after the closest GPX waypoint, if any is near.
+ */
+function findLandmarks(
+  points: Array<TrackPoint & { ele: number }>,
+  samples: number[],
+  elevation: number[],
+  waypoints: Array<{ lat: number; lon: number; name: string }>,
+): RouteLandmark[] {
+  const found: Array<readonly [RouteLandmark['kind'], number]> = [
+    ...findPeaks(elevation, 4).map((i) => ['peak', i] as const),
+    ...findCols(elevation, 3).map((i) => ['col', i] as const),
+  ]
+  return found
+    .map(([kind, s]) => {
+      const from = samples[Math.max(0, s - 1)]
+      const to = samples[Math.min(samples.length - 1, s + 1)]
+      let best = samples[s]
+      for (let j = from; j <= to; j++) {
+        const better =
+          kind === 'peak'
+            ? points[j].ele > points[best].ele
+            : points[j].ele < points[best].ele
+        if (better) best = j
+      }
+      const { lat, lon, ele } = points[best]
+      const landmark: RouteLandmark = {
+        kind,
+        index: s,
+        ele: Math.round(ele),
+        lat,
+        lon,
+      }
+      const near = waypoints
+        .map((w) => ({ name: w.name, d: haversine(w, { lat, lon }) }))
+        .filter((w) => w.d <= WAYPOINT_NAME_RADIUS)
+        .sort((a, b) => a.d - b.d)[0]
+      if (near) landmark.name = near.name
+      return landmark
+    })
+    .sort((a, b) => a.index - b.index)
 }
 
 /** Extract `<trkpt>` rows from a GPX document. */
@@ -111,6 +236,14 @@ export function parseTrackPoints(xml: string): TrackPoint[] {
     points.push(point)
   }
   return points
+}
+
+/** Loop when the track ends close to where it started, else linear. */
+function routeShape(points: TrackPoint[], distance: number): RouteShape {
+  const gap = haversine(points[0], points[points.length - 1])
+  return gap <= Math.max(LOOP_MAX_GAP_METERS, distance * 0.02)
+    ? 'loop'
+    : 'linear'
 }
 
 /** Parse a GPX document into card metrics. Throws if it has no track. */
@@ -140,8 +273,8 @@ export function parseGpx(xml: string): GpxMetrics {
     (p): p is TrackPoint & { time: number } => p.time !== undefined,
   )
   const hasTimes = timed.length >= 2
-  const firstIso = timed.length > 0 ? timed[0].iso : undefined
-  const lastIso = timed.length > 0 ? timed[timed.length - 1].iso : undefined
+  const first = timed.length > 0 ? timed[0] : undefined
+  const last = timed.length > 0 ? timed[timed.length - 1] : undefined
   const totalMs = hasTimes ? timed[timed.length - 1].time - timed[0].time : 0
 
   // Same elevation-noise threshold as the track editor, so a card and the
@@ -155,21 +288,29 @@ export function parseGpx(xml: string): GpxMetrics {
     })),
   )
 
-  const eles: number[] = []
-  for (const p of points) {
-    if (p.ele !== undefined) eles.push(Math.round(p.ele))
-  }
+  const withEle = points.filter(
+    (p): p is TrackPoint & { ele: number } => p.ele !== undefined,
+  )
+  const samples = sampleIndices(withEle.length, MAX_PROFILE_POINTS)
+  const elevation = samples.map((i) => Math.round(withEle[i].ele))
 
   return {
-    date: firstIso ? isoDate(firstIso) : '',
-    startTime: firstIso ? isoClock(firstIso) : '',
-    endTime: lastIso ? isoClock(lastIso) : '',
+    date: first ? isoDate(first.iso as string, first.time) : '',
+    startTime: first ? isoClock(first.iso as string, first.time) : '',
+    endTime: last ? isoClock(last.iso as string, last.time) : '',
     movingTime: hasTimes ? duration(movingMs) : '',
     stoppedTime: hasTimes ? duration(Math.max(0, totalMs - movingMs)) : '',
     totalTime: hasTimes ? duration(totalMs) : '',
     distanceKm: `${(distance / 1000).toFixed(1)} km`,
     ascent: `${Math.round(ascent)} m`,
     descent: `${Math.round(descent)} m`,
-    elevation: downsample(eles, MAX_PROFILE_POINTS),
+    elevation,
+    shape: routeShape(points, distance),
+    landmarks: findLandmarks(
+      withEle,
+      samples,
+      elevation,
+      parseNamedWaypoints(xml),
+    ),
   }
 }

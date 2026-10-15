@@ -22,12 +22,28 @@ export interface CardZone {
   h: number
 }
 
+/**
+ * Where the elevation profile is drawn, in the card's 1600×900 user-space, so
+ * an overlay can point at any sample of it.
+ */
+export interface CardProfile {
+  elevation: number[]
+  /** Named summits and cols; without them the highest summits are marked. */
+  landmarks?: RouteLandmark[]
+  x0: number
+  x1: number
+  top: number
+  bottom: number
+}
+
 /** A summary card SVG plus the interactive zones laid over it. */
 export interface CardResult {
   svg: string
   width: number
   height: number
   zones: CardZone[]
+  /** The drawn elevation profile, when the card has one. */
+  profile?: CardProfile
 }
 
 export interface CanyoningCardData {
@@ -55,11 +71,26 @@ export interface CanyoningCardData {
   elevation?: number[]
 }
 
+/** A summit or col along a route, placed on its stored elevation profile. */
+export interface RouteLandmark {
+  kind: 'peak' | 'col'
+  /** Sample of `elevation` it sits on. */
+  index: number
+  /** Real altitude at the spot, in metres. */
+  ele: number
+  lat: number
+  lon: number
+  /** From a GPX waypoint or OpenStreetMap; editable in the form. */
+  name?: string
+}
+
 export interface SummaryRouteData {
   kind: 'summary-route'
   lang: Lang
   title?: string
   date?: string
+  /** Loop (ends where it starts) or one way (start and end differ). */
+  shape?: 'loop' | 'linear'
   dist?: string
   dplus?: string
   dminus?: string
@@ -71,6 +102,8 @@ export interface SummaryRouteData {
   ret?: string
   gpxUrl?: string
   elevation?: number[]
+  /** Summits and cols to point out on the interactive profile. */
+  landmarks?: RouteLandmark[]
 }
 
 export interface SummaryFerrataData {

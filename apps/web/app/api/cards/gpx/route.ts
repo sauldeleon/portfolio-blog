@@ -4,6 +4,7 @@ import { z } from 'zod'
 
 import { requireAuth } from '@web/lib/api/parseRequest'
 import { parseGpx } from '@web/lib/cards'
+import { nameLandmarksFromOsm } from '@web/lib/cards/osmLandmarks'
 import { logger } from '@web/lib/logger'
 
 const querySchema = z.object({
@@ -11,6 +12,8 @@ const querySchema = z.object({
     .string()
     .url()
     .refine((u) => /^https?:\/\//i.test(u), 'Only http(s) URLs allowed'),
+  /** Look up summit and col names on OpenStreetMap (route cards only). */
+  places: z.literal('1').optional(),
 })
 
 export async function GET(request: Request) {
@@ -18,7 +21,10 @@ export async function GET(request: Request) {
   if (!authResult.ok) return authResult.response
 
   const { searchParams } = new URL(request.url)
-  const parsed = querySchema.safeParse({ url: searchParams.get('url') })
+  const parsed = querySchema.safeParse({
+    url: searchParams.get('url'),
+    places: searchParams.get('places') ?? undefined,
+  })
   if (!parsed.success) {
     return NextResponse.json({ error: 'Invalid GPX URL' }, { status: 400 })
   }
@@ -34,13 +40,17 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'Failed to fetch GPX' }, { status: 502 })
   }
 
+  let data
   try {
-    const data = parseGpx(text)
-    return NextResponse.json({ data })
+    data = parseGpx(text)
   } catch {
     return NextResponse.json(
       { error: 'Could not parse GPX file' },
       { status: 422 },
     )
   }
+  if (parsed.data.places) {
+    data = { ...data, landmarks: await nameLandmarksFromOsm(data.landmarks) }
+  }
+  return NextResponse.json({ data })
 }

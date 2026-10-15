@@ -64,12 +64,59 @@ describe('parseGpx', () => {
     expect(m.ascent).toBe('100 m')
     expect(m.descent).toBe('50 m')
     expect(m.date).toBe('15 Jul 2025')
-    expect(m.startTime).toBe('09:00')
-    expect(m.endTime).toBe('11:00')
+    // GPX times are UTC; the card shows Spanish summer time (UTC+2).
+    expect(m.startTime).toBe('11:00')
+    expect(m.endTime).toBe('13:00')
     expect(m.totalTime).toBe('2:00')
     expect(m.movingTime).toBe('2:00')
     expect(m.stoppedTime).toBe('0:00')
     expect(m.elevation).toEqual([1000, 1100, 1050])
+    expect(m.shape).toBe('linear')
+  })
+
+  it('shows times in Spanish local time, winter and summer', () => {
+    const at = (iso: string) =>
+      parseGpx(
+        gpx(
+          `<trkpt lat="42.00" lon="0.00"><time>${iso}</time></trkpt>` +
+            `<trkpt lat="42.01" lon="0.00"><time>${iso}</time></trkpt>`,
+        ),
+      )
+    expect(at('2025-01-15T06:30:00Z').startTime).toBe('07:30')
+    expect(at('2025-07-15T05:15:00.000Z').startTime).toBe('07:15')
+    expect(at('2025-07-15T07:15:00+02:00').startTime).toBe('07:15')
+    // Late UTC times can fall on the next local day.
+    const night = at('2025-07-15T23:30:00Z')
+    expect(night.date).toBe('16 Jul 2025')
+    expect(night.startTime).toBe('01:30')
+    // Times without a zone are already local.
+    expect(at('2025-07-15T09:00:00').startTime).toBe('09:00')
+    expect(at('2025-07-15T09:00:00').date).toBe('15 Jul 2025')
+  })
+
+  it('tells loops from one-way routes', () => {
+    const track = (coords: Array<[number, number]>) =>
+      parseGpx(
+        gpx(
+          coords
+            .map(([lat, lon]) => `<trkpt lat="${lat}" lon="${lon}"></trkpt>`)
+            .join(''),
+        ),
+      ).shape
+    expect(
+      track([
+        [42, 0],
+        [42.01, 0],
+        [42.01, 0.01],
+        [42.0005, 0],
+      ]),
+    ).toBe('loop')
+    expect(
+      track([
+        [42, 0],
+        [42.02, 0],
+      ]),
+    ).toBe('linear')
   })
 
   it('leaves time fields empty when points have no time', () => {
@@ -141,6 +188,16 @@ describe('parseGpx', () => {
     expect(m.startTime).toBe('')
     expect(m.endTime).toBe('')
     expect(m.totalTime).toBe('0:00')
+
+    // A date without a clock part has no start time.
+    expect(
+      parseGpx(
+        gpx(
+          `<trkpt lat="42.00" lon="0.00"><time>2025-07-15</time></trkpt>` +
+            `<trkpt lat="42.01" lon="0.00"><time>2025-07-15</time></trkpt>`,
+        ),
+      ).startTime,
+    ).toBe('')
   })
 
   it('downsamples long elevation series to 80 points', () => {

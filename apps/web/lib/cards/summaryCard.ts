@@ -1,4 +1,5 @@
 import { FONT_STYLE } from './fonts'
+import { iconPath } from './icons'
 import {
   badge,
   columnDivider,
@@ -129,6 +130,20 @@ export function buildSummaryCard(data: SummaryCardData): CardResult {
       `<text x="${(CXR - 15).toFixed(0)}" y="82" text-anchor="end" font-family="Roboto Mono" font-size="23" fill="${BONE}">${esc(data.date)}</text>`
   }
 
+  // --- route shape chip (loop / one way), under the date ---
+  let shapeChip = ''
+  if (data.kind === 'summary-route' && data.shape) {
+    const label = data.shape === 'loop' ? S.route_loop : S.route_linear
+    const icon = 26
+    // Poppins semibold with letter-spacing runs wider than `tw` estimates.
+    const cw = icon + 12 + label.length * (17 * 0.66 + 1.5) + 28
+    const x = CXR - cw
+    shapeChip =
+      `<rect x="${x.toFixed(0)}" y="106" width="${cw.toFixed(0)}" height="42" rx="12" fill="${BADGE_BG}" stroke="${PANEL_STK}" stroke-width="1" data-shape="${data.shape}"/>` +
+      `<g transform="translate(${(x + 14).toFixed(0)},114) scale(${(icon / 100).toFixed(4)})">${iconPath(data.shape === 'loop' ? 'loop' : 'oneway')}</g>` +
+      `<text x="${(x + 14 + icon + 12).toFixed(0)}" y="134" font-family="Poppins" font-weight="600" font-size="17" letter-spacing="1.5" fill="${BONE}">${esc(label)}</text>`
+  }
+
   // --- badge + eyebrow (kind-specific) ---
   const isRoute = data.kind === 'summary-route'
   const badgeKind: Parameters<typeof badge>[3] = isRoute ? 'summit' : 'ferrata'
@@ -217,6 +232,7 @@ ${badge(56, 46, 96, badgeKind)}
 ${eyebrow(172, 69, eyebrowText)}
 ${tsvg}
 ${chip}
+${shapeChip}
 ${hRule(CX0, CXR, 336)}
 ${heroSvg}
 ${eyebrow(CX0, 383, S.times_header)}${dividersSvg}${tilesSvg}
@@ -224,7 +240,19 @@ ${hRule(CX0, CXR, 562)}
 ${profilePlaceholder}
 </svg>`
 
-  return { svg, width: W, height: H, zones }
+  const profile =
+    elevation.length >= 2
+      ? {
+          elevation,
+          x0: CX0,
+          x1: CXR,
+          top: profileY + 32,
+          bottom: 860,
+          landmarks: data.kind === 'summary-route' ? data.landmarks : undefined,
+        }
+      : undefined
+
+  return { svg, width: W, height: H, zones, profile }
 }
 
 /**

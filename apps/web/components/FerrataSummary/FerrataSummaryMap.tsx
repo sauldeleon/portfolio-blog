@@ -34,7 +34,7 @@ export function FerrataSummaryMap({
   interaction = 'hover',
 }: FerrataSummaryMapProps) {
   const scale = FERRATA_SCALES[data.lang]
-  const { svg, zones } = useMemo(() => buildSummaryCard(data), [data])
+  const { svg, zones, profile } = useMemo(() => buildSummaryCard(data), [data])
 
   function renderPopover() {
     return (
@@ -69,6 +69,8 @@ export function FerrataSummaryMap({
       zoneLabel={(_zone: CardZone) => scale.ui.difficulty}
       renderPopover={renderPopover}
       hint={scale.ui.hint}
+      profile={profile}
+      lang={data.lang}
     />
   )
 }

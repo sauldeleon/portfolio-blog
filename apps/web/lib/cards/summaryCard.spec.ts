@@ -1,4 +1,4 @@
-import { summaryCard } from './summaryCard'
+import { buildSummaryCard, summaryCard } from './summaryCard'
 import type { SummaryFerrataData, SummaryRouteData } from './types'
 
 const baseRuta: SummaryRouteData = { kind: 'summary-route', lang: 'es' }
@@ -166,6 +166,23 @@ describe('summaryCard', () => {
     })
   })
 
+  describe('route type chip', () => {
+    it('marks loops and one-way routes, localised', () => {
+      const loop = summaryCard({ ...baseRuta, lang: 'es', shape: 'loop' })
+      expect(loop).toContain('data-shape="loop"')
+      expect(loop).toContain('CIRCULAR')
+      const linear = summaryCard({ ...baseRuta, lang: 'en', shape: 'linear' })
+      expect(linear).toContain('data-shape="linear"')
+      expect(linear).toContain('ONE WAY')
+    })
+
+    it('has no chip without a route type', () => {
+      expect(summaryCard({ ...baseRuta, shape: undefined })).not.toContain(
+        'data-shape',
+      )
+    })
+  })
+
   describe('elevation profile', () => {
     // The profile line/area use markers no other element shares: a polyline
     // at stroke-opacity 0.75 and a filled polygon at fill-opacity 0.08.
@@ -186,6 +203,32 @@ describe('summaryCard', () => {
       const svg = summaryCard({ ...baseRuta, elevation: [1000] })
       expect(svg).toContain('· GPX')
       expect(svg).not.toContain(PROFILE_LINE)
+    })
+
+    it('exposes where the profile is drawn', () => {
+      expect(
+        buildSummaryCard({ ...baseRuta, elevation: [1000, 1200] }).profile,
+      ).toEqual({
+        elevation: [1000, 1200],
+        x0: expect.any(Number),
+        x1: expect.any(Number),
+        top: 634,
+        bottom: 860,
+      })
+      expect(buildSummaryCard({ ...baseRuta, elevation: [1] }).profile).toBe(
+        undefined,
+      )
+      const landmarks = [
+        { kind: 'peak' as const, index: 1, ele: 1200, lat: 1, lon: 2 },
+      ]
+      expect(
+        buildSummaryCard({ ...baseRuta, elevation: [1000, 1200], landmarks })
+          .profile?.landmarks,
+      ).toBe(landmarks)
+      expect(
+        buildSummaryCard({ ...baseFerrata, elevation: [1000, 1200] }).profile
+          ?.landmarks,
+      ).toBeUndefined()
     })
 
     it('handles a flat elevation series without dividing by zero', () => {

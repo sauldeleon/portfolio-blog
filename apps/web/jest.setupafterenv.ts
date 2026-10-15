@@ -1,7 +1,11 @@
 beforeAll(() => {
-  let cont = 0
+  // Deterministic but evenly spread (Park–Miller). Tiny, ever-growing values
+  // sent source-map's randomised quicksort into its worst case, overflowing
+  // the stack whenever a large file showed up in an error trace.
+  let seed = 1
   jest.spyOn(global.Math, 'random').mockImplementation(() => {
-    return ++cont / 10e15
+    seed = (seed * 16807) % 2147483647
+    return (seed - 1) / 2147483646
   })
 
   global.IntersectionObserver = jest.fn((callback) => ({

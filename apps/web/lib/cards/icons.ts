@@ -10,6 +10,8 @@ export type IconKind =
   | 'alert'
   | 'glacier'
   | 'route'
+  | 'loop'
+  | 'oneway'
   | 'climb'
   | 'descent'
   | 'hiker'
@@ -61,6 +63,8 @@ const PHOSPHOR: Partial<Record<IconKind, string>> = {
   // path
   route: `<path d="M224,200a24,24,0,1,1-24-24A24,24,0,0,1,224,200Z" opacity="0.2"/><path d="M200,168a32.06,32.06,0,0,0-31,24H72a32,32,0,0,1,0-64h96a40,40,0,0,0,0-80H72a8,8,0,0,0,0,16h96a24,24,0,0,1,0,48H72a48,48,0,0,0,0,96h97a32,32,0,1,0,31-40Zm0,48a16,16,0,1,1,16-16A16,16,0,0,1,200,216Z"/>`,
   // trend-up
+  loop: `<circle cx="128" cy="128" r="80" opacity="0.2"/><path d="M208 128 A80 80 0 1 1 184 71" fill="none" stroke="${AMBER}" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/><path d="M180 36 L186 74 L148 80" fill="none" stroke="${AMBER}" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/><circle cx="208" cy="128" r="14" fill="${AMBER}"/>`,
+  oneway: `<circle cx="56" cy="196" r="28" opacity="0.2"/><circle cx="56" cy="196" r="24" fill="none" stroke="${AMBER}" stroke-width="16"/><path d="M78 182 C150 168 104 84 196 64" fill="none" stroke="${AMBER}" stroke-width="16" stroke-linecap="round"/><path d="M160 44 L204 62 L180 104" fill="none" stroke="${AMBER}" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>`,
   climb: `<path d="M232,56v64L168,56Z" opacity="0.2"/><path d="M232,48H168a8,8,0,0,0-5.66,13.66L188.69,88,136,140.69l-34.34-34.35a8,8,0,0,0-11.32,0l-72,72a8,8,0,0,0,11.32,11.32L96,123.31l34.34,34.35a8,8,0,0,0,11.32,0L200,99.31l26.34,26.35A8,8,0,0,0,240,120V56A8,8,0,0,0,232,48Zm-8,52.69L187.31,64H224Z"/>`,
   // trend-down
   descent: `<path d="M232,128v64H168Z" opacity="0.2"/><path d="M235.06,120.61a8,8,0,0,0-8.72,1.73L200,148.69,141.66,90.34a8,8,0,0,0-11.32,0L96,124.69,29.66,58.34A8,8,0,0,0,18.34,69.66l72,72a8,8,0,0,0,11.32,0L136,107.31,188.69,160l-26.35,26.34A8,8,0,0,0,168,200h64a8,8,0,0,0,8-8V128A8,8,0,0,0,235.06,120.61ZM224,184H187.31L224,147.31Z"/>`,

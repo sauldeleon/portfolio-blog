@@ -12,6 +12,7 @@ import { MdxTable } from '@web/components/PostContent/MdxTable'
 import { PostContentCanyonSummary } from '@web/components/PostContent/PostContentCanyonSummary'
 import { PostContentCroquis } from '@web/components/PostContent/PostContentCroquis'
 import { PostContentFerrataSummary } from '@web/components/PostContent/PostContentFerrataSummary'
+import { PostContentRouteSummary } from '@web/components/PostContent/PostContentRouteSummary'
 import type { Lang } from '@web/lib/cards'
 import { POST_CONTENT_EMBEDS } from '@web/lib/mdx/components'
 
@@ -75,6 +76,10 @@ export function MarkdownPreview({
       ),
       FerrataSummary: (props: { data?: string; noDownload?: boolean }) => (
         <PostContentFerrataSummary {...props} lang={lang} />
+      ),
+
+      RouteSummary: (props: { data?: string; noDownload?: boolean }) => (
+        <PostContentRouteSummary {...props} lang={lang} />
       ),
     }),
     [lang],

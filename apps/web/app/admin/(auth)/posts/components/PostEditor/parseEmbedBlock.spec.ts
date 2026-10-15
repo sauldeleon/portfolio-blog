@@ -667,6 +667,45 @@ describe('detectEmbedAtCursor', () => {
       })
     })
   })
+  describe('route-summary blocks', () => {
+    const body = JSON.stringify(
+      { kind: 'summary-route', lang: 'es', dist: '16 km' },
+      null,
+      2,
+    )
+    const content = ['```route-summary', body, '```'].join('\n')
+
+    it('detects a route-summary block and parses its data', () => {
+      const result = detectEmbedAtCursor(content, 5)
+      if (result?.type !== 'route-summary') {
+        throw new Error('expected route-summary')
+      }
+      expect(result.parsed.data.dist).toBe('16 km')
+      expect(result.parsed.data.lang).toBe('es')
+      expect(result.parsed.showDownload).toBe(true)
+    })
+
+    it('reads the no-download flag from the fence meta', () => {
+      const flagged = ['```route-summary no-download', body, '```'].join('\n')
+      const result = detectEmbedAtCursor(flagged, 5)
+      if (result?.type !== 'route-summary') {
+        throw new Error('expected route-summary')
+      }
+      expect(result.parsed.showDownload).toBe(false)
+    })
+
+    it('falls back to default data for an invalid body', () => {
+      const bad = ['```route-summary', '{nope', '```'].join('\n')
+      const result = detectEmbedAtCursor(bad, 5)
+      if (result?.type !== 'route-summary') {
+        throw new Error('expected route-summary')
+      }
+      expect(result.parsed.data).toEqual({
+        kind: 'summary-route',
+        lang: 'en',
+      })
+    })
+  })
 
   it('returns null for plain text content', () => {
     expect(detectEmbedAtCursor('Just some plain text here.', 5)).toBeNull()

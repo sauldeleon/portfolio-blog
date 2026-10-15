@@ -26,7 +26,7 @@ The content is MDX (Markdown plus JSX) and must keep working exactly as before:
 - Images, alone or inside a \`\`\`slideshow block, look like ![caption=Text&alt=Text&expand=true&photo-iso=400](url): translate only the caption= and alt= values and keep every other key, value and the URL unchanged. Never add "&" or "]" inside a translated value.
 - \`\`\`gpx blocks: in lines like "track:URL | Label | #color | flags" translate only the label; copy every other line unchanged, including waypoint lines like "1:Name=URL".
 - \`\`\`croquis Title blocks: translate the title after "croquis" and the label of each point, e.g. "info: Parking cercano - 42.605163 -0.12429" becomes "info: Nearby parking - 42.605163 -0.12429". Keep the point type before ":" (info, cruce, rappel, ferrata…), the coordinates, the "---" separators and the "! img=" lines unchanged.
-- \`\`\`canyon-summary and \`\`\`ferrata-summary blocks are JSON: change only "lang" to the target language code ("en" or "es") and copy everything else unchanged.
+- \`\`\`canyon-summary, \`\`\`ferrata-summary and \`\`\`route-summary blocks are JSON: change only "lang" to the target language code ("en" or "es") and copy everything else unchanged.
 - \`\`\`youtube, \`\`\`youtube-360, \`\`\`maps, \`\`\`openstreetmap, \`\`\`wikiloc and any other fenced block: copy unchanged.
 - Translate the text inside <Callout> and other components, but not their props.
 

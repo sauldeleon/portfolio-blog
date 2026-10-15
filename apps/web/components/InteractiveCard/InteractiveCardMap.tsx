@@ -5,8 +5,9 @@ import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import { AMBER } from '@web/lib/cards'
-import type { CardZone } from '@web/lib/cards'
+import type { CardProfile, CardZone, Lang } from '@web/lib/cards'
 
+import { ElevationLayer } from './ElevationLayer'
 import {
   StyledCard,
   StyledFrame,
@@ -16,6 +17,10 @@ import {
   StyledScroll,
   StyledZone,
 } from './InteractiveCardMap.styles'
+
+const notWide = () => false
+const noLabel = () => ''
+const noPopover = () => null
 
 const W = 1600
 const H = 900
@@ -31,13 +36,17 @@ export interface InteractiveCardMapProps {
    */
   interaction?: 'hover' | 'click'
   /** Whether the given zone's popover uses the wider layout. */
-  isWide: (zone: CardZone) => boolean
+  isWide?: (zone: CardZone) => boolean
   /** Accessible label for a zone's hit target. */
-  zoneLabel: (zone: CardZone) => string
+  zoneLabel?: (zone: CardZone) => string
   /** Popover content for the active zone. */
-  renderPopover: (zone: CardZone) => ReactNode
+  renderPopover?: (zone: CardZone) => ReactNode
   /** Optional caption inviting the reader to click the interactive zones. */
   hint?: string
+  /** The card's elevation profile, to read altitudes off it. */
+  profile?: CardProfile
+  /** Language of the altitude read-out. */
+  lang?: Lang
 }
 
 /**
@@ -50,10 +59,13 @@ export function InteractiveCardMap({
   svg,
   zones,
   interaction = 'hover',
-  isWide,
-  zoneLabel,
-  renderPopover,
+  // Only cards with zones need these; a profile-only card leaves them out.
+  isWide = notWide,
+  zoneLabel = noLabel,
+  renderPopover = noPopover,
   hint,
+  profile,
+  lang = 'en',
 }: InteractiveCardMapProps) {
   const hoverEnabled = interaction !== 'click'
   const [active, setActive] = useState<CardZone | null>(null)
@@ -144,6 +156,7 @@ export function InteractiveCardMap({
             preserveAspectRatio="xMidYMid meet"
             data-testid="card-overlay"
           >
+            {profile && <ElevationLayer profile={profile} lang={lang} />}
             {zones.map((zone) => (
               <StyledZone
                 key={zone.id}

@@ -122,6 +122,27 @@ describe('GpxUrlField', () => {
     })
   })
 
+  it('asks for place names when told to', async () => {
+    const getSpy = jest
+      .spyOn(axios, 'get')
+      .mockResolvedValue({ data: { data: metrics } })
+    renderApp(
+      <GpxUrlField
+        value={URL}
+        onChange={jest.fn()}
+        onParsed={jest.fn()}
+        idPrefix="rt"
+        withPlaceNames
+      />,
+    )
+    fireEvent.click(screen.getByTestId('rt-gpx-parse'))
+    await waitFor(() =>
+      expect(getSpy).toHaveBeenCalledWith('/api/cards/gpx', {
+        params: { url: URL, places: '1' },
+      }),
+    )
+  })
+
   it('shows the server error message on a failed response', async () => {
     jest
       .spyOn(axios, 'get')
