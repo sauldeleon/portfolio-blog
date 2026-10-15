@@ -21,6 +21,7 @@ import {
   MAP_ICON_SIZE,
   TILE_PROVIDERS,
   WPT_ICON_URLS,
+  nearestPointIndex,
 } from '@sdlgr/gpx-tools'
 import { TileLayerSwitcher } from '@sdlgr/gpx-ui'
 
@@ -31,7 +32,11 @@ import type {
   PointSelection,
   SegmentRef,
 } from '../TrackWorkspace/TrackWorkspace'
-import { StyledHint, StyledMapWrapper } from './TrackEditorMap.styles'
+import {
+  StyledHint,
+  StyledMapWrapper,
+  StyledVertexToggle,
+} from './TrackEditorMap.styles'
 
 /** Above this many vertices in view, markers are hidden to keep dragging smooth. */
 export const MAX_VISIBLE_VERTICES = 2000
@@ -48,6 +53,13 @@ const COLORS = {
   inactive: '#3a86ff',
   preview: '#06d6a0',
   selection: '#ffdd83',
+}
+
+const SELECTED_VERTEX = {
+  color: '#000',
+  weight: 2,
+  fillColor: COLORS.selection,
+  fillOpacity: 1,
 }
 
 interface Viewport {
@@ -171,6 +183,9 @@ export interface TrackEditorMapProps {
   mode: EditorTab
   activeSegment: SegmentRef
   selection: PointSelection | null
+  /** Draws every point of the active segment; otherwise only the selection. */
+  showVertices: boolean
+  onToggleVertices: () => void
   /** Map clicks are captured (inserting a point or a waypoint). */
   clickMode: boolean
   selectedWaypointId: string | null
@@ -180,7 +195,8 @@ export interface TrackEditorMapProps {
   focusPoint?: LatLon | null
   onVertexClick: (index: number, extend: boolean) => void
   onVertexMove: (index: number, to: LatLon) => void
-  onMapClick: (at: LatLon) => void
+  /** `onTrack` when the click landed on a track line. */
+  onMapClick: (at: LatLon, onTrack?: boolean) => void
   onWaypointClick: (id: string) => void
   onWaypointMove: (id: string, to: LatLon) => void
 }
@@ -193,6 +209,8 @@ export function TrackEditorMap({
   mode,
   activeSegment,
   selection,
+  showVertices,
+  onToggleVertices,
   clickMode,
   selectedWaypointId,
   hoverPoint = null,
@@ -247,8 +265,11 @@ export function TrackEditorMap({
   const waypointIcon = (sym: string) =>
     waypointIcons.get(WPT_ICON_URLS[sym] ?? WPT_ICON_URLS['']) as L.Icon
 
+  // Points pick the section to edit or clean; waypoints don't need them.
+  const canSelect = mode !== 'waypoints'
+
   const visibleVertices = useMemo(() => {
-    if (mode !== 'edit' || !viewport) return []
+    if (!canSelect || !showVertices || !viewport) return []
     const indices: number[] = []
     activePoints.forEach((p, i) => {
       if (
@@ -261,7 +282,7 @@ export function TrackEditorMap({
       }
     })
     return indices
-  }, [mode, viewport, activePoints])
+  }, [canSelect, showVertices, viewport, activePoints])
   const tooManyVertices = visibleVertices.length > MAX_VISIBLE_VERTICES
 
   const lo = selection ? Math.min(selection.from, selection.to) : -1
@@ -335,12 +356,64 @@ export function TrackEditorMap({
             />
           )),
         )}
-        {mode === 'edit' && hi > lo && (
+        {canSelect && hi > lo && (
           <Polyline
             positions={activePoints.slice(lo, hi + 1).map(toLatLng)}
             pathOptions={{ color: COLORS.selection, weight: 7, opacity: 0.7 }}
           />
         )}
+        {canSelect && !clickMode && (
+          // Invisible wide line over the active segment: clicking it picks the
+          // nearest point (shift extends the selection) without showing them.
+          <Polyline
+            positions={activePoints.map(toLatLng)}
+            pathOptions={{ color: COLORS.active, weight: 16, opacity: 0 }}
+            bubblingMouseEvents={false}
+            eventHandlers={{
+              click: (e: LeafletMouseEvent) =>
+                onVertexClick(
+                  nearestPointIndex(activePoints, {
+                    lat: e.latlng.lat,
+                    lon: e.latlng.lng,
+                  }),
+                  e.originalEvent.shiftKey,
+                ),
+            }}
+            data-testid="track-hit"
+          />
+        )}
+        {mode === 'waypoints' &&
+          clickMode &&
+          // Wide invisible lines: a click on the track adds a waypoint on it.
+          tracks.flatMap((tr, ti) =>
+            tr.segments.map((s, si) => (
+              <Polyline
+                key={`waypoint-hit-${ti}-${si}`}
+                positions={s.points.map(toLatLng)}
+                pathOptions={{ color: COLORS.active, weight: 16, opacity: 0 }}
+                bubblingMouseEvents={false}
+                eventHandlers={{
+                  click: (e: LeafletMouseEvent) =>
+                    onMapClick({ lat: e.latlng.lat, lon: e.latlng.lng }, true),
+                }}
+                data-testid="waypoint-hit"
+              />
+            )),
+          )}
+        {canSelect &&
+          !showVertices &&
+          [...new Set([lo, hi])]
+            .filter((i) => activePoints[i])
+            .map((i) => (
+              <CircleMarker
+                key={`selected-${i}`}
+                center={toLatLng(activePoints[i])}
+                radius={5}
+                interactive={false}
+                pathOptions={SELECTED_VERTEX}
+                data-testid="selected-vertex"
+              />
+            ))}
         {!tooManyVertices &&
           visibleVertices.map((i) => {
             const selected = i >= lo && i <= hi
@@ -350,12 +423,16 @@ export function TrackEditorMap({
                 center={toLatLng(activePoints[i])}
                 radius={selected ? 5 : 4}
                 bubblingMouseEvents={false}
-                pathOptions={{
-                  color: selected ? '#000' : COLORS.active,
-                  weight: 2,
-                  fillColor: selected ? COLORS.selection : '#fff',
-                  fillOpacity: 1,
-                }}
+                pathOptions={
+                  selected
+                    ? SELECTED_VERTEX
+                    : {
+                        color: COLORS.active,
+                        weight: 2,
+                        fillColor: '#fff',
+                        fillOpacity: 1,
+                      }
+                }
                 eventHandlers={{
                   click: (e: LeafletMouseEvent) =>
                     onVertexClick(i, e.originalEvent.shiftKey),
@@ -416,7 +493,19 @@ export function TrackEditorMap({
         onChange={setProviderIndex}
         testIdPrefix="editor-tile"
       />
-      {mode === 'edit' && tooManyVertices && (
+      {canSelect && (
+        <StyledVertexToggle
+          type="button"
+          $active={showVertices}
+          aria-pressed={showVertices}
+          onClick={onToggleVertices}
+          title={t('tracks.map.pointsShortcut')}
+          data-testid="toggle-vertices"
+        >
+          {t(showVertices ? 'tracks.map.hidePoints' : 'tracks.map.showPoints')}
+        </StyledVertexToggle>
+      )}
+      {tooManyVertices && (
         <StyledHint data-testid="zoom-hint">
           {t('tracks.edit.zoomHint', { count: visibleVertices.length })}
         </StyledHint>

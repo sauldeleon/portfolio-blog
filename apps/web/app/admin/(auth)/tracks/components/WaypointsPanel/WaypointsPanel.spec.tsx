@@ -114,6 +114,36 @@ describe('WaypointsPanel', () => {
     expect(onChange).toHaveBeenCalledWith('w1', { sym: 'Binoculars' })
   })
 
+  it('focuses the name of a just-added waypoint', () => {
+    renderPanel({ selectedId: 'w2', focusNameId: 'w2' })
+    const name = screen.getByTestId('waypoint-name') as HTMLInputElement
+    expect(name).toHaveFocus()
+  })
+
+  it('skips the focus when the new waypoint is not open', () => {
+    renderPanel({ selectedId: null, focusNameId: 'w2' })
+    expect(screen.queryByTestId('waypoint-name')).not.toBeInTheDocument()
+  })
+
+  it('confirms the name with Enter', () => {
+    const { onChange } = renderPanel({ selectedId: 'w1' })
+    const name = screen.getByTestId('waypoint-name')
+    name.focus()
+    fireEvent.change(name, { target: { value: 'Collado' } })
+    fireEvent.keyDown(name, { key: 'a' })
+    expect(onChange).not.toHaveBeenCalled()
+    fireEvent.keyDown(name, { key: 'Enter' })
+    expect(onChange).toHaveBeenCalledWith('w1', { name: 'Collado' })
+  })
+
+  it('pins a waypoint to the track', () => {
+    const { onChange } = renderPanel({ selectedId: 'w1' })
+    const snap = screen.getByLabelText('tracks.waypoints.snap')
+    expect(snap).not.toBeChecked()
+    fireEvent.click(snap)
+    expect(onChange).toHaveBeenCalledWith('w1', { snap: true })
+  })
+
   it('picks an icon', () => {
     const { onChange } = renderPanel({ selectedId: 'w1' })
     expect(screen.getByTestId('symbol-Summit')).toHaveAttribute(

@@ -3,6 +3,7 @@ import {
   DEFAULT_CLEAN_OPTIONS,
   cleanGpx,
   cleanPoints,
+  cleanSection,
 } from './clean'
 import { pt } from './points.mock'
 import type { GpxFile } from './types'
@@ -81,5 +82,68 @@ describe('cleanGpx', () => {
     expect(result.tracks[0].name).toBe('a')
     expect(result.tracks[0].segments[1].points).toHaveLength(2)
     expect(result.doc).toBe(file.doc)
+  })
+})
+
+describe('cleanSection', () => {
+  const line = Array.from({ length: 11 }, (_, i) => pt(i * 10, 0, { ele: i }))
+  const simplifyOnly: CleanOptions = {
+    ...ALL_OFF,
+    simplify: { enabled: true, algorithm: 'douglas-peucker', tolerance: 5 },
+  }
+
+  it('cleans only the section and keeps its ends', () => {
+    const result = cleanSection(line, { from: 7, to: 2 }, simplifyOnly)
+    expect(result.points).toEqual([...line.slice(0, 3), ...line.slice(7)])
+    expect(result.points[2]).toBe(line[2])
+    expect(result.points[3]).toBe(line[7])
+    expect(result.range).toEqual({ from: 2, to: 3 })
+  })
+
+  it('clamps the range to the track', () => {
+    const result = cleanSection(line, { from: -5, to: 99 }, simplifyOnly)
+    expect(result.points).toEqual([line[0], line[10]])
+    expect(result.range).toEqual({ from: 0, to: 1 })
+  })
+
+  it('leaves sections without interior points untouched', () => {
+    const result = cleanSection(line, { from: 3, to: 4 }, simplifyOnly)
+    expect(result.points).toEqual(line)
+    expect(result.points).not.toBe(line)
+    expect(result.range).toEqual({ from: 3, to: 4 })
+  })
+
+  it('never trims a section', () => {
+    const result = cleanSection(
+      line,
+      { from: 0, to: 10 },
+      { ...ALL_OFF, trim: { enabled: true, start: 50, end: 50 } },
+    )
+    expect(result.points).toEqual(line)
+  })
+
+  it('pins the ends even when a filter drops or rebuilds them', () => {
+    const timed = [
+      pt(0, 0, { time: 0 }),
+      pt(10, 0, { time: 10_000 }),
+      pt(20, 0, { time: 20_000 }),
+      pt(5000, 0, { time: 21_000 }),
+    ]
+    const dropped = cleanSection(
+      timed,
+      { from: 0, to: 3 },
+      { ...ALL_OFF, speedSpikes: { enabled: true, maxSpeedKmh: 30 } },
+    )
+    expect(dropped.points).toEqual(timed)
+    expect(dropped.points[3]).toBe(timed[3])
+
+    const smoothed = cleanSection(
+      line,
+      { from: 0, to: 4 },
+      { ...ALL_OFF, smoothing: { enabled: true, window: 3 } },
+    )
+    expect(smoothed.points[0]).toBe(line[0])
+    expect(smoothed.points[4]).toBe(line[4])
+    expect(smoothed.points).toHaveLength(line.length)
   })
 })

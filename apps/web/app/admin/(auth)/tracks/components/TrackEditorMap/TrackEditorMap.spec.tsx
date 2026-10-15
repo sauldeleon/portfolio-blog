@@ -156,16 +156,32 @@ jest.mock('react-leaflet', () => ({
   Polyline: ({
     positions,
     pathOptions,
+    eventHandlers,
+    'data-testid': testId = 'polyline',
   }: {
     positions: unknown[]
     pathOptions: { color: string; opacity?: number }
+    eventHandlers?: { click: (e: unknown) => void }
+    'data-testid'?: string
   }) => (
     <div
-      data-testid="polyline"
+      data-testid={testId}
       data-color={pathOptions.color}
       data-opacity={pathOptions.opacity}
       data-count={positions.length}
-    />
+    >
+      {eventHandlers && (
+        <button
+          data-testid={`${testId}-click`}
+          onClick={(e) =>
+            eventHandlers.click({
+              latlng: { lat: 42.00031, lng: 0 },
+              originalEvent: { shiftKey: e.shiftKey },
+            })
+          }
+        />
+      )}
+    </div>
   ),
   Marker: ({
     position,
@@ -256,6 +272,7 @@ function renderMap(props: Partial<TrackEditorMapProps> = {}) {
     onMapClick: jest.fn(),
     onWaypointClick: jest.fn(),
     onWaypointMove: jest.fn(),
+    onToggleVertices: jest.fn(),
   }
   const all: TrackEditorMapProps = {
     original: trackOf(5),
@@ -265,6 +282,7 @@ function renderMap(props: Partial<TrackEditorMapProps> = {}) {
     mode: 'clean',
     activeSegment: { track: 0, segment: 0 },
     selection: null,
+    showVertices: true,
     clickMode: false,
     selectedWaypointId: null,
     ...callbacks,
@@ -401,6 +419,91 @@ describe('TrackEditorMap', () => {
       shiftKey: true,
     })
     expect(onVertexClick).toHaveBeenCalledWith(2, true)
+  })
+
+  it('hides the points until asked, but keeps the selection visible', () => {
+    const { onToggleVertices } = renderMap({
+      mode: 'edit',
+      showVertices: false,
+      selection: { from: 3, to: 1 },
+    })
+    expect(screen.queryAllByTestId('vertex')).toHaveLength(0)
+    expect(
+      screen.getAllByTestId('selected-vertex').map((v) => v.dataset.center),
+    ).toEqual(['[42.0001,0]', '[42.0003,0]'])
+    expect(screen.getByTestId('toggle-vertices')).toHaveAttribute(
+      'aria-pressed',
+      'false',
+    )
+    expect(screen.getByTestId('toggle-vertices')).toHaveTextContent(
+      'tracks.map.showPoints',
+    )
+    fireEvent.click(screen.getByTestId('toggle-vertices'))
+    expect(onToggleVertices).toHaveBeenCalled()
+  })
+
+  it('marks a single selected point once, and nothing without selection', () => {
+    const { unmount } = renderMap({
+      mode: 'clean',
+      showVertices: false,
+      selection: { from: 2, to: 2 },
+    })
+    expect(screen.getAllByTestId('selected-vertex')).toHaveLength(1)
+    unmount()
+    renderMap({ mode: 'clean', showVertices: false })
+    expect(screen.queryAllByTestId('selected-vertex')).toHaveLength(0)
+  })
+
+  it('labels the toggle while the points are shown', () => {
+    renderMap({ mode: 'edit' })
+    expect(screen.getByTestId('toggle-vertices')).toHaveTextContent(
+      'tracks.map.hidePoints',
+    )
+    expect(screen.queryAllByTestId('selected-vertex')).toHaveLength(0)
+  })
+
+  it('selects the nearest point when clicking the track', () => {
+    const { onVertexClick } = renderMap({ mode: 'clean', showVertices: false })
+    fireEvent.click(screen.getByTestId('track-hit-click'))
+    expect(onVertexClick).toHaveBeenCalledWith(3, false)
+    fireEvent.click(screen.getByTestId('track-hit-click'), { shiftKey: true })
+    expect(onVertexClick).toHaveBeenLastCalledWith(3, true)
+  })
+
+  it('adds waypoints on the track when clicking it in add mode', () => {
+    const { onMapClick } = renderMap({ mode: 'waypoints', clickMode: true })
+    fireEvent.click(screen.getByTestId('waypoint-hit-click'))
+    expect(onMapClick).toHaveBeenCalledWith({ lat: 42.00031, lon: 0 }, true)
+  })
+
+  it('has no waypoint hit lines outside add mode', () => {
+    renderMap({ mode: 'waypoints' })
+    expect(screen.queryByTestId('waypoint-hit')).not.toBeInTheDocument()
+  })
+
+  it('leaves the track click to inserting in click mode', () => {
+    renderMap({ mode: 'edit', clickMode: true })
+    expect(screen.queryByTestId('track-hit')).not.toBeInTheDocument()
+  })
+
+  it('lets the clean tab pick a section, but not the waypoints tab', () => {
+    const { unmount } = renderMap({
+      mode: 'clean',
+      selection: { from: 1, to: 3 },
+    })
+    expect(screen.getAllByTestId('vertex')).toHaveLength(5)
+    expect(
+      screen.getAllByTestId('polyline').map((l) => l.dataset.color),
+    ).toContain('#ffdd83')
+    unmount()
+
+    renderMap({ mode: 'waypoints', selection: { from: 1, to: 3 } })
+    expect(screen.queryAllByTestId('vertex')).toHaveLength(0)
+    expect(screen.queryByTestId('track-hit')).not.toBeInTheDocument()
+    expect(screen.queryByTestId('toggle-vertices')).not.toBeInTheDocument()
+    expect(
+      screen.getAllByTestId('polyline').map((l) => l.dataset.color),
+    ).not.toContain('#ffdd83')
   })
 
   it('adds a drag handle to a single selected point', () => {

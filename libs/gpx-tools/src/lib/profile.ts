@@ -36,3 +36,12 @@ export function elevationProfile(
   const step = Math.ceil(samples.length / maxSamples)
   return samples.filter((_, i) => i % step === 0 || i === samples.length - 1)
 }
+
+/** Index of the point whose distance from the start is closest to `metres`. */
+export function indexAtDistance(distances: number[], metres: number): number {
+  let best = 0
+  distances.forEach((d, i) => {
+    if (Math.abs(d - metres) < Math.abs(distances[best] - metres)) best = i
+  })
+  return best
+}

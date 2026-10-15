@@ -43,11 +43,16 @@ jest.mock('../TrackEditorMap', () => ({
       data-points={mockCountPoints(props.tracks)}
       data-preview={props.preview ? mockCountPoints(props.preview) : 'none'}
       data-selection={JSON.stringify(props.selection)}
+      data-show-vertices={String(props.showVertices)}
       data-waypoints={props.waypoints.map((w) => w.name).join(',')}
+      data-waypoint-coords={JSON.stringify(
+        props.waypoints.map((w) => [w.lat, w.lon, w.ele]),
+      )}
       data-selected-waypoint={props.selectedWaypointId ?? ''}
       data-hover={JSON.stringify(props.hoverPoint)}
       data-focus={JSON.stringify(props.focusPoint)}
     >
+      <button data-testid="toggle-vertices" onClick={props.onToggleVertices} />
       <button
         data-testid="vertex-1"
         onClick={() => props.onVertexClick(1, false)}
@@ -63,6 +68,10 @@ jest.mock('../TrackEditorMap', () => ({
       <button
         data-testid="map-click"
         onClick={() => props.onMapClick({ lat: 42.00005, lon: 0.00001 })}
+      />
+      <button
+        data-testid="map-click-track"
+        onClick={() => props.onMapClick({ lat: 42.00005, lon: 0.00001 }, true)}
       />
       <button
         data-testid="waypoint-click"
@@ -117,11 +126,35 @@ jest.mock('../CleanPanel', () => ({
     onReset: () => void
     currentStats: TrackStats
     previewStats: TrackStats | null
+    scope: string
+    onScopeChange: (scope: 'track' | 'section') => void
+    section: unknown
+    onSectionChange: (section: { from: number; to: number }) => void
+    sectionStats: { current: TrackStats; preview: TrackStats } | null
   }) => (
     <div
       data-testid="clean-panel"
       data-tolerance={props.options.simplify.tolerance}
+      data-scope={props.scope}
+      data-section={JSON.stringify(props.section)}
+      data-section-stats={
+        props.sectionStats
+          ? `${props.sectionStats.current.points}>${props.sectionStats.preview.points}`
+          : 'none'
+      }
     >
+      <button
+        data-testid="clean-scope-track"
+        onClick={() => props.onScopeChange('track')}
+      />
+      <button
+        data-testid="clean-scope-section"
+        onClick={() => props.onScopeChange('section')}
+      />
+      <button
+        data-testid="clean-section-km"
+        onClick={() => props.onSectionChange({ from: 0, to: 4 })}
+      />
       <button
         data-testid="clean-off"
         onClick={() =>
@@ -173,8 +206,17 @@ jest.mock('../WaypointsPanel', () => ({
     onDelete: (id: string) => void
     onMove: (from: number, to: number) => void
     onToggleAddMode: () => void
+    focusNameId: string | null
   }) => (
-    <div data-testid="waypoints-panel" data-selected={props.selectedId ?? ''}>
+    <div
+      data-testid="waypoints-panel"
+      data-selected={props.selectedId ?? ''}
+      data-focus-name={props.focusNameId ?? ''}
+    >
+      <button
+        data-testid="wpt-snap"
+        onClick={() => props.onChange(props.waypoints[0].id, { snap: true })}
+      />
       <button data-testid="wpt-add" onClick={props.onToggleAddMode} />
       <button
         data-testid="wpt-rename"
@@ -285,6 +327,47 @@ describe('TrackWorkspace', () => {
     )
   })
 
+  it('cleans only the selected section and keeps it selected', () => {
+    renderWorkspace()
+    const panel = () => screen.getByTestId('clean-panel')
+    expect(panel()).toHaveAttribute('data-section', 'null')
+    expect(panel()).toHaveAttribute('data-section-stats', 'none')
+    // A single point is not a section.
+    fireEvent.click(screen.getByTestId('vertex-1'))
+    expect(panel()).toHaveAttribute('data-section', 'null')
+    expect(map()).toHaveAttribute('data-preview', '6')
+
+    fireEvent.click(screen.getByTestId('clean-scope-track'))
+    fireEvent.click(screen.getByTestId('vertex-3-shift'))
+    // Picking a section switches back to cleaning it.
+    expect(panel()).toHaveAttribute('data-scope', 'section')
+    expect(panel()).toHaveAttribute('data-section', '{"from":1,"to":3}')
+    expect(screen.getByTestId('profile')).toHaveAttribute(
+      'data-selection',
+      '{"from":1,"to":3}',
+    )
+    // Points 1–3 lie on a line: only #2 goes, everything else stays.
+    expect(map()).toHaveAttribute('data-preview', '8')
+    expect(panel()).toHaveAttribute('data-section-stats', '3>2')
+
+    fireEvent.click(screen.getByTestId('clean-scope-track'))
+    expect(map()).toHaveAttribute('data-preview', '6')
+    expect(panel()).toHaveAttribute('data-section-stats', 'none')
+    fireEvent.click(screen.getByTestId('clean-scope-section'))
+
+    fireEvent.click(screen.getByTestId('clean-apply'))
+    expect(map()).toHaveAttribute('data-points', '8')
+    expect(map()).toHaveAttribute('data-selection', '{"from":1,"to":2}')
+    fireEvent.click(screen.getByTestId('undo'))
+    expect(map()).toHaveAttribute('data-points', '9')
+
+    // The km fields pick a section too.
+    fireEvent.click(screen.getByTestId('clean-scope-track'))
+    fireEvent.click(screen.getByTestId('clean-section-km'))
+    expect(panel()).toHaveAttribute('data-scope', 'section')
+    expect(panel()).toHaveAttribute('data-section', '{"from":0,"to":4}')
+  })
+
   it('selects, moves and deletes points', () => {
     renderWorkspace()
     fireEvent.click(screen.getByTestId('tab-edit'))
@@ -364,6 +447,26 @@ describe('TrackWorkspace', () => {
     expect(map()).toHaveAttribute('data-points', '8')
   })
 
+  it('shows the points on request', () => {
+    renderWorkspace()
+    expect(map()).toHaveAttribute('data-show-vertices', 'false')
+    fireEvent.click(screen.getByTestId('toggle-vertices'))
+    expect(map()).toHaveAttribute('data-show-vertices', 'true')
+    key({ key: 'p' })
+    expect(map()).toHaveAttribute('data-show-vertices', 'false')
+    key({ key: 'P' })
+    expect(map()).toHaveAttribute('data-show-vertices', 'true')
+    key({ key: 'Escape' })
+    expect(map()).toHaveAttribute('data-show-vertices', 'false')
+    // Ctrl/Cmd+P stays the browser's.
+    key({ key: 'p', ctrlKey: true })
+    key({ key: 'p', metaKey: true })
+    expect(map()).toHaveAttribute('data-show-vertices', 'false')
+    fireEvent.click(screen.getByTestId('tab-waypoints'))
+    key({ key: 'p' })
+    expect(map()).toHaveAttribute('data-show-vertices', 'false')
+  })
+
   it('ignores shortcuts in content-editable elements', () => {
     renderWorkspace()
     const editable = document.createElement('div')
@@ -388,8 +491,12 @@ describe('TrackWorkspace', () => {
       'data-waypoints',
       'Fuente,tracks.waypoints.defaultName {"n":2}',
     )
-    expect(map()).toHaveAttribute('data-click-mode', 'false')
-    expect(screen.getByTestId('waypoints-panel').dataset.selected).not.toBe('')
+    // Add mode stays on, and the new waypoint's name gets the focus.
+    expect(map()).toHaveAttribute('data-click-mode', 'true')
+    const panel = screen.getByTestId('waypoints-panel')
+    expect(panel.dataset.selected).not.toBe('')
+    expect(panel.dataset.focusName).toBe(panel.dataset.selected)
+    fireEvent.click(screen.getByTestId('wpt-add'))
 
     fireEvent.click(screen.getByTestId('wpt-deselect'))
     fireEvent.click(screen.getByTestId('waypoint-click'))
@@ -406,6 +513,59 @@ describe('TrackWorkspace', () => {
       'data-selected',
       '',
     )
+  })
+
+  it('pins waypoints to the track', () => {
+    renderWorkspace()
+    fireEvent.click(screen.getByTestId('tab-waypoints'))
+    fireEvent.click(screen.getByTestId('wpt-add'))
+    fireEvent.click(screen.getByTestId('map-click-track'))
+    const coords = () =>
+      JSON.parse(map().dataset.waypointCoords as string) as number[][]
+    expect(coords()[1][0]).toBeCloseTo(42.00005, 6)
+    expect(coords()[1][1]).toBeCloseTo(0, 8)
+    expect(coords()[1][2]).toBeCloseTo(1000.5, 4)
+    // A free waypoint can be pinned later; pinned ones stay on the track.
+    expect(coords()[0]).toEqual([42.0002, 0, 1005])
+    fireEvent.click(screen.getByTestId('waypoint-move'))
+    expect(coords()[0]).toEqual([5, 6, 1005])
+    fireEvent.click(screen.getByTestId('wpt-snap'))
+    const pinned = coords()[0]
+    expect(pinned[1]).toBeCloseTo(0, 8)
+    expect(pinned[0]).not.toBe(5)
+    fireEvent.click(screen.getByTestId('waypoint-move'))
+    expect(coords()[0]).toEqual(pinned)
+  })
+
+  it('keeps a pinned waypoint in place without a track', () => {
+    renderWorkspace([], 'a.gpx', '<gpx><wpt lat="1" lon="1"/></gpx>')
+    fireEvent.click(screen.getByTestId('tab-waypoints'))
+    fireEvent.click(screen.getByTestId('wpt-snap'))
+    expect(map()).toHaveAttribute('data-waypoint-coords', '[[1,1,null]]')
+  })
+
+  it('keeps the elevation of a waypoint pinned to a track without one', () => {
+    renderWorkspace(
+      [],
+      'a.gpx',
+      '<gpx><wpt lat="1" lon="1"><ele>5</ele></wpt><trk><trkseg><trkpt lat="2" lon="1"/></trkseg></trk></gpx>',
+    )
+    fireEvent.click(screen.getByTestId('tab-waypoints'))
+    fireEvent.click(screen.getByTestId('wpt-snap'))
+    expect(map()).toHaveAttribute('data-waypoint-coords', '[[2,1,5]]')
+  })
+
+  it('starts adding waypoints with W from any tab', () => {
+    renderWorkspace()
+    key({ key: 'w', altKey: true })
+    expect(map()).toHaveAttribute('data-mode', 'clean')
+    key({ key: 'w' })
+    expect(map()).toHaveAttribute('data-mode', 'waypoints')
+    expect(map()).toHaveAttribute('data-click-mode', 'true')
+    key({ key: 'W' })
+    expect(map()).toHaveAttribute('data-click-mode', 'false')
+    key({ key: 'w' })
+    expect(map()).toHaveAttribute('data-click-mode', 'true')
   })
 
   it('saves to GitHub, then offers the raw URL', async () => {
@@ -541,6 +701,15 @@ describe('TrackWorkspace', () => {
     fireEvent.click(screen.getByTestId('profile-select'))
     expect(map()).toHaveAttribute('data-focus', '{"lat":42.0003,"lon":0}')
     expect(map()).toHaveAttribute('data-selection', 'null')
+    expect(screen.getByTestId('profile')).toHaveAttribute(
+      'data-selection',
+      'null',
+    )
+
+    // The waypoints tab hides the selection from the profile.
+    fireEvent.click(screen.getByTestId('vertex-1'))
+    fireEvent.click(screen.getByTestId('vertex-3-shift'))
+    fireEvent.click(screen.getByTestId('tab-waypoints'))
     expect(screen.getByTestId('profile')).toHaveAttribute(
       'data-selection',
       'null',

@@ -47,6 +47,12 @@ export const StyledStatsTable = styled.table`
   }
 `
 
+export const StyledScope = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+`
+
 export const StyledFilter = styled.div`
   display: flex;
   flex-direction: column;

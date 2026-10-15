@@ -1,8 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { Button } from '@sdlgr/button'
+import { Checkbox } from '@sdlgr/checkbox'
 import { type GpxWaypoint, WPT_ICON_URLS } from '@sdlgr/gpx-tools'
 import { ChevronIcon } from '@sdlgr/icons'
 import { Input, Textarea } from '@sdlgr/input'
@@ -55,6 +56,8 @@ export interface WaypointsPanelProps {
   onMove: (from: number, to: number) => void
   addMode: boolean
   onToggleAddMode: () => void
+  /** A just-added waypoint: its name is focused, ready to type over. */
+  focusNameId?: string | null
 }
 
 export function WaypointsPanel({
@@ -66,8 +69,21 @@ export function WaypointsPanel({
   onMove,
   addMode,
   onToggleAddMode,
+  focusNameId = null,
 }: WaypointsPanelProps) {
   const { t } = useClientTranslation('admin')
+  const panelRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!focusNameId) return
+    const input = panelRef.current?.querySelector<HTMLInputElement>(
+      `[data-testid="waypoint-item-${focusNameId}"] [data-testid="waypoint-name"]`,
+    )
+    if (!input) return
+    input.scrollIntoView?.({ block: 'nearest' })
+    input.focus()
+    input.select()
+  }, [focusNameId])
   const [dragFrom, setDragFrom] = useState<number | null>(null)
   const [dragOver, setDragOver] = useState<number | null>(null)
 
@@ -87,7 +103,7 @@ export function WaypointsPanel({
   }
 
   return (
-    <StyledPanel data-testid="waypoints-panel">
+    <StyledPanel ref={panelRef} data-testid="waypoints-panel">
       <StyledHelp>{t('tracks.waypoints.help')}</StyledHelp>
       <Button
         variant="label"
@@ -183,9 +199,19 @@ export function WaypointsPanel({
                       key={`name-${w.name}`}
                       defaultValue={w.name}
                       onBlur={(e) => commit(w, 'name', e.target.value)}
+                      onKeyDown={(e) => {
+                        // Enter confirms, ready for the next map click.
+                        if (e.key === 'Enter') e.currentTarget.blur()
+                      }}
                       data-testid="waypoint-name"
                     />
                   </StyledField>
+                  <Checkbox
+                    id={`waypoint-snap-${w.id}`}
+                    label={t('tracks.waypoints.snap')}
+                    checked={Boolean(w.snap)}
+                    onChange={(snap) => onChange(w.id, { snap })}
+                  />
                   <StyledField>
                     <span>{t('tracks.waypoints.desc')}</span>
                     <Textarea

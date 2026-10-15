@@ -1,6 +1,10 @@
 import { fireEvent, screen } from '@testing-library/react'
 
-import { DEFAULT_CLEAN_OPTIONS, type TrackStats } from '@sdlgr/gpx-tools'
+import {
+  DEFAULT_CLEAN_OPTIONS,
+  type GpxPoint,
+  type TrackStats,
+} from '@sdlgr/gpx-tools'
 import { renderApp } from '@sdlgr/test-utils'
 
 import { CleanPanel } from './CleanPanel'
@@ -19,17 +23,31 @@ const stats: TrackStats = {
   duration: 3600,
 }
 
+// One point every ~1 km heading north.
+const points: GpxPoint[] = Array.from({ length: 5 }, (_, i) => ({
+  lat: 42 + i * 0.008993,
+  lon: 0,
+  ele: null,
+  time: null,
+}))
+
 function renderPanel(props: Partial<Parameters<typeof CleanPanel>[0]> = {}) {
   const callbacks = {
     onChange: jest.fn(),
     onApply: jest.fn(),
     onReset: jest.fn(),
+    onScopeChange: jest.fn(),
+    onSectionChange: jest.fn(),
   }
   renderApp(
     <CleanPanel
       options={DEFAULT_CLEAN_OPTIONS}
       currentStats={stats}
       previewStats={{ ...stats, points: 40 }}
+      scope="section"
+      section={null}
+      points={points}
+      sectionStats={null}
       {...callbacks}
       {...props}
     />,
@@ -112,5 +130,132 @@ describe('CleanPanel', () => {
     fireEvent.click(screen.getByText('tracks.clean.reset'))
     expect(onApply).toHaveBeenCalled()
     expect(onReset).toHaveBeenCalled()
+  })
+
+  describe('scope', () => {
+    const sectionStats = {
+      current: { ...stats, points: 30 },
+      preview: { ...stats, points: 12 },
+    }
+
+    it('cleans the whole track until a section is selected', () => {
+      renderPanel()
+      expect(screen.getByTestId('scope-track')).toHaveAttribute(
+        'aria-pressed',
+        'true',
+      )
+      expect(screen.getByTestId('scope-section')).toBeDisabled()
+      expect(screen.getByTestId('scope-section')).toHaveTextContent(
+        'tracks.clean.scope.section',
+      )
+      expect(screen.getByTestId('section-from')).toHaveValue(0)
+      expect(screen.getByTestId('section-to')).toHaveValue(4)
+      expect(screen.getByTestId('stats-scope')).toBeEmptyDOMElement()
+      expect(screen.queryByTestId('preview-total')).not.toBeInTheDocument()
+    })
+
+    it('shows the section figures and the whole track total', () => {
+      renderPanel({ section: { from: 1, to: 3 }, sectionStats })
+      expect(screen.getByTestId('scope-section')).toHaveAttribute(
+        'aria-pressed',
+        'true',
+      )
+      expect(screen.getByTestId('scope-section')).toHaveTextContent(
+        'tracks.clean.scope.sectionRange',
+      )
+      expect(screen.getByTestId('stats-scope')).toHaveTextContent(
+        'tracks.clean.scope.section',
+      )
+      expect(screen.getByTestId('preview-points')).toHaveTextContent('12')
+      expect(screen.getByTestId('preview-total')).toHaveTextContent(
+        'tracks.clean.scope.totalValue',
+      )
+      expect(screen.getByTestId('section-from')).toHaveValue(1)
+      expect(screen.getByTestId('section-to')).toHaveValue(3)
+    })
+
+    it('hides the total without a preview', () => {
+      renderPanel({
+        section: { from: 1, to: 3 },
+        sectionStats,
+        previewStats: null,
+      })
+      expect(screen.queryByTestId('preview-total')).not.toBeInTheDocument()
+    })
+
+    it('switches the scope', () => {
+      const { onScopeChange } = renderPanel({
+        section: { from: 1, to: 3 },
+        sectionStats,
+      })
+      fireEvent.click(screen.getByTestId('scope-track'))
+      expect(onScopeChange).toHaveBeenCalledWith('track')
+    })
+
+    it('locks the privacy trim while cleaning a section', () => {
+      renderPanel({
+        section: { from: 1, to: 3 },
+        options: {
+          ...DEFAULT_CLEAN_OPTIONS,
+          trim: { ...DEFAULT_CLEAN_OPTIONS.trim, enabled: true },
+        },
+      })
+      expect(screen.getByLabelText('tracks.clean.trim.label')).toBeDisabled()
+      expect(screen.getByLabelText('tracks.clean.trim.label')).not.toBeChecked()
+      expect(screen.getByTestId('field-trim-start')).toBeDisabled()
+      expect(screen.getByTestId('filter-trim')).toHaveTextContent(
+        'tracks.clean.trim.sectionHelp',
+      )
+    })
+
+    it('keeps the privacy trim on the whole track', () => {
+      renderPanel({ section: { from: 1, to: 3 }, scope: 'track' })
+      expect(screen.getByTestId('scope-track')).toHaveAttribute(
+        'aria-pressed',
+        'true',
+      )
+      expect(screen.getByLabelText('tracks.clean.trim.label')).toBeEnabled()
+    })
+
+    it('picks a section from km', () => {
+      const { onSectionChange } = renderPanel({ section: { from: 1, to: 3 } })
+      const from = screen.getByTestId('section-from')
+      from.focus()
+      fireEvent.change(from, { target: { value: '0.2' } })
+      fireEvent.keyDown(from, { key: 'Tab' })
+      fireEvent.keyDown(from, { key: 'Enter' })
+      expect(onSectionChange).toHaveBeenLastCalledWith({ from: 0, to: 3 })
+      const to = screen.getByTestId('section-to')
+      fireEvent.change(to, { target: { value: '3.9' } })
+      fireEvent.blur(to)
+      expect(onSectionChange).toHaveBeenLastCalledWith({ from: 1, to: 4 })
+    })
+
+    it('starts a section from km without a selection', () => {
+      const { onSectionChange } = renderPanel()
+      const from = screen.getByTestId('section-from')
+      fireEvent.change(from, { target: { value: '2' } })
+      fireEvent.blur(from)
+      expect(onSectionChange).toHaveBeenCalledWith({ from: 2, to: 4 })
+    })
+
+    it('restores invalid or empty ranges', () => {
+      const { onSectionChange } = renderPanel({ section: { from: 1, to: 3 } })
+      const from = screen.getByTestId('section-from')
+      fireEvent.change(from, { target: { value: '' } })
+      fireEvent.blur(from)
+      expect(from).toHaveValue(1)
+      const to = screen.getByTestId('section-to')
+      fireEvent.change(to, { target: { value: '1.1' } })
+      fireEvent.blur(to)
+      expect(to).toHaveValue(3)
+      expect(onSectionChange).not.toHaveBeenCalled()
+    })
+
+    it('disables the km fields on tracks without distance', () => {
+      renderPanel({ points: [] })
+      expect(screen.getByTestId('section-from')).toBeDisabled()
+      expect(screen.getByTestId('section-from')).toHaveValue(0)
+    })
   })
 })

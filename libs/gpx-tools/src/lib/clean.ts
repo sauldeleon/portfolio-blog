@@ -80,3 +80,50 @@ export function cleanGpx(file: GpxFile, options: CleanOptions): GpxFile {
     })),
   }
 }
+
+export interface PointRange {
+  from: number
+  to: number
+}
+
+export interface SectionCleanResult {
+  points: GpxPoint[]
+  /** Where the cleaned section sits in the returned points. */
+  range: PointRange
+}
+
+function samePoint(a: GpxPoint, b: GpxPoint): boolean {
+  return a.lat === b.lat && a.lon === b.lon && a.time === b.time
+}
+
+/**
+ * Cleans only the points between `range.from` and `range.to` (inclusive, in
+ * either order). Both ends of the section stay put so it still joins the rest
+ * of the track, and the privacy trim never runs on a section.
+ */
+export function cleanSection(
+  points: GpxPoint[],
+  range: PointRange,
+  options: CleanOptions,
+): SectionCleanResult {
+  const lo = Math.max(0, Math.min(range.from, range.to))
+  const hi = Math.min(points.length - 1, Math.max(range.from, range.to))
+  if (hi - lo < 2) return { points: [...points], range: { from: lo, to: hi } }
+  const section = points.slice(lo, hi + 1)
+  const first = section[0]
+  const last = section[section.length - 1]
+  const cleaned = cleanPoints(section, {
+    ...options,
+    trim: { ...options.trim, enabled: false },
+  })
+  const interior = cleaned.filter(
+    (p, i) =>
+      !(i === 0 && samePoint(p, first)) &&
+      !(i === cleaned.length - 1 && samePoint(p, last)),
+  )
+  const middle = [first, ...interior, last]
+  return {
+    points: [...points.slice(0, lo), ...middle, ...points.slice(hi + 1)],
+    range: { from: lo, to: lo + middle.length - 1 },
+  }
+}
