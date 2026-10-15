@@ -78,6 +78,7 @@ jest.mock('../GpxUrlField', () => {
     descent: '820 m',
     elevation: [1, 2, 3],
     shape: 'loop' as 'loop' | 'linear' | null,
+    placesUnavailable: true as boolean | undefined,
   }
   const EMPTY = {
     date: '',
@@ -175,5 +176,18 @@ describe('RouteForm route type and language', () => {
     expect(onChange).toHaveBeenLastCalledWith(
       expect.objectContaining({ landmarks: [] }),
     )
+  })
+
+  it('warns when OpenStreetMap did not answer on the last parse', () => {
+    renderApp(<RouteForm value={defaultValue} onChange={jest.fn()} />)
+    expect(
+      screen.queryByTestId('rt-landmarks-osm-down'),
+    ).not.toBeInTheDocument()
+    fireEvent.click(screen.getByTestId('gpx-full'))
+    expect(screen.getByTestId('rt-landmarks-osm-down')).toBeInTheDocument()
+    fireEvent.click(screen.getByTestId('gpx-empty'))
+    expect(
+      screen.queryByTestId('rt-landmarks-osm-down'),
+    ).not.toBeInTheDocument()
   })
 })

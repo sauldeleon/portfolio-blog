@@ -98,15 +98,18 @@ describe('GET /api/cards/gpx', () => {
   it('names summits and cols from OpenStreetMap on request', async () => {
     mockAxiosGet.mockResolvedValue({ data: '<gpx/>' })
     mockParseGpx.mockReturnValue({ ...metrics, landmarks: [{ kind: 'peak' }] })
-    mockNameLandmarks.mockResolvedValue([{ kind: 'peak', name: 'Pico' }])
+    mockNameLandmarks.mockResolvedValue({
+      landmarks: [{ kind: 'peak', name: 'Pico' }],
+      unavailable: true,
+    })
     const res = await GET(
       new Request(
         `http://localhost/api/cards/gpx?url=${encodeURIComponent('https://example.com/a.gpx')}&places=1`,
       ),
     )
     expect(mockNameLandmarks).toHaveBeenCalledWith([{ kind: 'peak' }])
-    expect((await res.json()).data.landmarks).toEqual([
-      { kind: 'peak', name: 'Pico' },
-    ])
+    const { data } = await res.json()
+    expect(data.landmarks).toEqual([{ kind: 'peak', name: 'Pico' }])
+    expect(data.placesUnavailable).toBe(true)
   })
 })

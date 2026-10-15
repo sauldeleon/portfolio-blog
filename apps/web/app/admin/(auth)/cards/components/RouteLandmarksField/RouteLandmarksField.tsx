@@ -17,6 +17,8 @@ import {
 interface RouteLandmarksFieldProps {
   value: RouteLandmark[] | undefined
   onChange: (next: RouteLandmark[]) => void
+  /** OpenStreetMap did not answer on the last parse: some names are missing. */
+  placesUnavailable?: boolean
 }
 
 /**
@@ -27,6 +29,7 @@ interface RouteLandmarksFieldProps {
 export function RouteLandmarksField({
   value = [],
   onChange,
+  placesUnavailable,
 }: RouteLandmarksFieldProps) {
   const { t } = useClientTranslation('admin')
 
@@ -39,6 +42,11 @@ export function RouteLandmarksField({
   return (
     <FieldGroup>
       <FieldLabel>{t('cards.fields.landmarks')}</FieldLabel>
+      {placesUnavailable && (
+        <StyledEmpty role="status" data-testid="rt-landmarks-osm-down">
+          {t('cards.fields.landmarksOsmDown')}
+        </StyledEmpty>
+      )}
       {value.length === 0 ? (
         <StyledEmpty>{t('cards.fields.landmarksEmpty')}</StyledEmpty>
       ) : (

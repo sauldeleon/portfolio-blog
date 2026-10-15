@@ -759,4 +759,34 @@ describe('PostEditor tools', () => {
       )
     })
   })
+
+  describe('Slug', () => {
+    it('regenerates the slug from the title', () => {
+      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
+      const button = screen.getByTestId('slug-regenerate')
+      // Nothing to regenerate from, then already in sync with the title.
+      expect(button).toBeDisabled()
+      fireEvent.change(screen.getByTestId('title-input'), {
+        target: { value: 'Peña Ubiña' },
+      })
+      expect(button).toBeDisabled()
+      fireEvent.change(screen.getByTestId('slug-input'), {
+        target: { value: 'hand-made' },
+      })
+      // A hand-made slug no longer follows the title…
+      fireEvent.change(screen.getByTestId('title-input'), {
+        target: { value: 'Peña Ubiña desde Tuíza' },
+      })
+      expect(screen.getByTestId('slug-input')).toHaveValue('hand-made')
+      fireEvent.click(button)
+      expect(screen.getByTestId('slug-input')).toHaveValue(
+        'peña-ubiña-desde-tuíza',
+      )
+      // …until it is regenerated: then it follows again.
+      fireEvent.change(screen.getByTestId('title-input'), {
+        target: { value: 'Otra' },
+      })
+      expect(screen.getByTestId('slug-input')).toHaveValue('otra')
+    })
+  })
 })

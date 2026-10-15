@@ -38,11 +38,15 @@ function ok(elements: unknown) {
 describe('nameLandmarksFromOsm', () => {
   it('names each landmark after the closest feature of its kind', async () => {
     const fetchImpl = jest.fn().mockResolvedValue(ok(ELEMENTS))
-    const named = await nameLandmarksFromOsm([PEAK, COL], fetchImpl)
-    expect(named.map((l) => l.name)).toEqual(['Peña Ubiña', 'Puerto'])
-    const [url, init] = fetchImpl.mock.calls[0]
-    expect(url).toBe(OVERPASS_URLS[0])
-    expect(decodeURIComponent(init.body)).toContain(
+    const result = await nameLandmarksFromOsm([PEAK, COL], fetchImpl)
+    expect(result.unavailable).toBe(false)
+    expect(result.landmarks.map((l) => l.name)).toEqual([
+      'Peña Ubiña',
+      'Puerto',
+    ])
+    // Every server is asked at once.
+    expect(fetchImpl.mock.calls.map(([url]) => url)).toEqual(OVERPASS_URLS)
+    expect(decodeURIComponent(fetchImpl.mock.calls[0][1].body)).toContain(
       'node(around:150,43,-5.9)["natural"~"^(peak|volcano|saddle)$"]["name"]',
     )
   })
@@ -50,7 +54,10 @@ describe('nameLandmarksFromOsm', () => {
   it('keeps existing names and skips the request when all are named', async () => {
     const fetchImpl = jest.fn()
     const named = [{ ...PEAK, name: 'Mine' }]
-    expect(await nameLandmarksFromOsm(named, fetchImpl)).toBe(named)
+    expect(await nameLandmarksFromOsm(named, fetchImpl)).toEqual({
+      landmarks: named,
+      unavailable: false,
+    })
     expect(fetchImpl).not.toHaveBeenCalled()
 
     fetchImpl.mockResolvedValue(ok(ELEMENTS))
@@ -58,36 +65,47 @@ describe('nameLandmarksFromOsm', () => {
       [{ ...PEAK, name: 'Mine' }, COL],
       fetchImpl,
     )
-    expect(mixed.map((l) => l.name)).toEqual(['Mine', 'Puerto'])
+    expect(mixed.landmarks.map((l) => l.name)).toEqual(['Mine', 'Puerto'])
   })
 
   it('leaves landmarks unnamed when nothing is close enough', async () => {
     const far = { ...COL, lat: 43.5 }
     const fetchImpl = jest.fn().mockResolvedValue(ok(ELEMENTS))
-    expect(await nameLandmarksFromOsm([far], fetchImpl)).toEqual([far])
+    expect((await nameLandmarksFromOsm([far], fetchImpl)).landmarks).toEqual([
+      far,
+    ])
   })
 
-  it('falls back to the mirror when the main server fails', async () => {
+  it('takes the first server that answers', async () => {
     const fetchImpl = jest
       .fn()
-      .mockResolvedValueOnce({ ok: false } as Response)
+      .mockResolvedValueOnce({ ok: false, status: 502 } as Response)
+      .mockRejectedValueOnce(new Error('timeout'))
       .mockResolvedValueOnce(ok(ELEMENTS))
-    const named = await nameLandmarksFromOsm([PEAK], fetchImpl)
-    expect(named[0].name).toBe('Peña Ubiña')
-    expect(fetchImpl.mock.calls[1][0]).toBe(OVERPASS_URLS[1])
+      .mockResolvedValueOnce(ok([]))
+    const result = await nameLandmarksFromOsm([PEAK], fetchImpl)
+    expect(result).toEqual({
+      landmarks: [{ ...PEAK, name: 'Peña Ubiña' }],
+      unavailable: false,
+    })
   })
 
-  it('gives up quietly when every server fails', async () => {
+  it('says so when no server answers', async () => {
     const fetchImpl = jest
       .fn()
       .mockRejectedValueOnce(new Error('timeout'))
+      .mockResolvedValueOnce({ ok: false, status: 500 } as Response)
       .mockResolvedValueOnce({
         ok: true,
         json: async () => {
           throw new Error('not json')
         },
       } as unknown as Response)
-    expect(await nameLandmarksFromOsm([PEAK], fetchImpl)).toEqual([PEAK])
+      .mockResolvedValueOnce({ ok: false, status: 429 } as Response)
+    expect(await nameLandmarksFromOsm([PEAK], fetchImpl)).toEqual({
+      landmarks: [PEAK],
+      unavailable: true,
+    })
   })
 
   it('copes with a reply without elements', async () => {
@@ -95,15 +113,17 @@ describe('nameLandmarksFromOsm', () => {
       ok: true,
       json: async () => ({}),
     } as Response)
-    expect(await nameLandmarksFromOsm([PEAK], fetchImpl)).toEqual([PEAK])
+    expect((await nameLandmarksFromOsm([PEAK], fetchImpl)).landmarks).toEqual([
+      PEAK,
+    ])
   })
 
   it('uses the global fetch by default', async () => {
     const original = global.fetch
     global.fetch = jest.fn().mockResolvedValue(ok(ELEMENTS))
     try {
-      const named = await nameLandmarksFromOsm([PEAK])
-      expect(named[0].name).toBe('Peña Ubiña')
+      const { landmarks } = await nameLandmarksFromOsm([PEAK])
+      expect(landmarks[0].name).toBe('Peña Ubiña')
     } finally {
       global.fetch = original
     }

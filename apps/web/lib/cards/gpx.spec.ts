@@ -164,6 +164,22 @@ describe('parseGpx', () => {
     expect(m.elevation).toEqual([])
   })
 
+  it('counts a long, slow step of a cleaned track as stopped', () => {
+    const m = parseGpx(
+      gpx(
+        `<trkpt lat="42.0000" lon="0.00"><time>2025-07-15T09:00:00Z</time></trkpt>` +
+          // 111 m in 10 minutes: a stop whose points were cleaned away.
+          `<trkpt lat="42.0010" lon="0.00"><time>2025-07-15T09:10:00Z</time></trkpt>` +
+          // 111 m in 1 minute: walking.
+          `<trkpt lat="42.0020" lon="0.00"><time>2025-07-15T09:11:00Z</time></trkpt>` +
+          // Same timestamp twice: no time, no speed.
+          `<trkpt lat="42.0030" lon="0.00"><time>2025-07-15T09:11:00Z</time></trkpt>`,
+      ),
+    )
+    expect(m.movingTime).toBe('0:01')
+    expect(m.stoppedTime).toBe('0:10')
+  })
+
   it('counts stopped time when there is no movement between fixes', () => {
     const m = parseGpx(
       gpx(

@@ -42,6 +42,8 @@ export interface GpxMetrics {
   shape: RouteShape | null
   /** Summits and cols on the profile, named after nearby GPX waypoints. */
   landmarks: RouteLandmark[]
+  /** Set by the API when OpenStreetMap could not be asked for names. */
+  placesUnavailable?: boolean
 }
 
 export interface TrackPoint {
@@ -70,8 +72,12 @@ const MONTHS = [
 ]
 
 const MAX_PROFILE_POINTS = 80
-/** Minimum horizontal step (m) between samples to count as "moving". */
-const MOVING_MIN_METERS = 1
+/**
+ * Slowest pace (m/s, about 0.7 km/h) that still counts as moving. A speed,
+ * not a distance: cleaned tracks drop the points of a stop, so one long
+ * step can hide minutes spent standing still.
+ */
+const MOVING_MIN_SPEED = 0.2
 
 const TRKPT_RE = /<trkpt\b([^>]*?)(?:\/>|>([\s\S]*?)<\/trkpt>)/g
 
@@ -260,12 +266,9 @@ export function parseGpx(xml: string): GpxMetrics {
     const curr = points[i]
     const step = haversine(prev, curr)
     distance += step
-    if (
-      prev.time !== undefined &&
-      curr.time !== undefined &&
-      step >= MOVING_MIN_METERS
-    ) {
-      movingMs += curr.time - prev.time
+    if (prev.time !== undefined && curr.time !== undefined) {
+      const ms = curr.time - prev.time
+      if (ms > 0 && step / (ms / 1000) >= MOVING_MIN_SPEED) movingMs += ms
     }
   }
 

@@ -54,4 +54,17 @@ describe('RouteLandmarksField', () => {
     fireEvent.click(screen.getByTestId('rt-landmark-remove-0'))
     expect(onChange).toHaveBeenCalledWith([LANDMARKS[1]])
   })
+
+  it('warns when OpenStreetMap did not answer', () => {
+    renderApp(
+      <RouteLandmarksField
+        value={LANDMARKS}
+        onChange={jest.fn()}
+        placesUnavailable
+      />,
+    )
+    expect(screen.getByTestId('rt-landmarks-osm-down')).toHaveTextContent(
+      'cards.fields.landmarksOsmDown',
+    )
+  })
 })

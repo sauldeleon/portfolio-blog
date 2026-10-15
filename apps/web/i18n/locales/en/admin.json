@@ -91,6 +91,8 @@
       "titlePlaceholder": "Post title",
       "slug": "Slug",
       "slugHelper": "Auto-generated from title. Only lowercase letters, numbers and hyphens.",
+      "slugRegenerate": "↻ From title",
+      "slugRegenerateHint": "Rebuild the slug from the title (changing it changes the post URL)",
       "excerpt": "Excerpt",
       "excerptPlaceholder": "Brief description…",
       "content": "Content",
@@ -445,7 +447,8 @@
       "landmarkPeak": "Summit",
       "landmarkCol": "Col",
       "landmarkName": "Name (optional)",
-      "landmarkRemove": "Remove from the card"
+      "landmarkRemove": "Remove from the card",
+      "landmarksOsmDown": "OpenStreetMap didn't answer, so names not in the GPX waypoints are missing. Press Parse again later, or type them."
     },
     "flow": {
       "observed": "Observed flow",

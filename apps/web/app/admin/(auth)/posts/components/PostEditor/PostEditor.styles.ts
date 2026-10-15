@@ -580,3 +580,18 @@ export const StyledPublishedUrlCopyButton = styled(Button).attrs({
     opacity: 1;
   }
 `
+
+export const StyledSlugRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  > :first-child {
+    flex: 1;
+  }
+
+  > button {
+    align-self: auto;
+    white-space: nowrap;
+  }
+`

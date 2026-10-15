@@ -1,5 +1,7 @@
 'use client'
 
+import { useState } from 'react'
+
 import { Button } from '@sdlgr/button'
 import { FieldGroup, FieldLabel, Input } from '@sdlgr/input'
 
@@ -31,6 +33,7 @@ const SHAPES = ['loop', 'linear'] as const
 
 export function RouteForm({ value, onChange, hideLang }: RouteFormProps) {
   const { t } = useClientTranslation('admin')
+  const [placesUnavailable, setPlacesUnavailable] = useState(false)
   function set(patch: Partial<SummaryRouteData>) {
     onChange({ ...value, ...patch })
   }
@@ -140,7 +143,8 @@ export function RouteForm({ value, onChange, hideLang }: RouteFormProps) {
         <GpxUrlField
           value={value.gpxUrl}
           onChange={(gpxUrl) => set({ gpxUrl })}
-          onParsed={(m) =>
+          onParsed={(m) => {
+            setPlacesUnavailable(Boolean(m.placesUnavailable))
             set({
               date: m.date || value.date,
               dist: m.distanceKm,
@@ -155,13 +159,14 @@ export function RouteForm({ value, onChange, hideLang }: RouteFormProps) {
               shape: m.shape ?? value.shape,
               landmarks: m.landmarks,
             })
-          }
+          }}
           idPrefix="rt"
           withPlaceNames
         />
         <RouteLandmarksField
           value={value.landmarks}
           onChange={(landmarks) => set({ landmarks })}
+          placesUnavailable={placesUnavailable}
         />
       </StyledSection>
 

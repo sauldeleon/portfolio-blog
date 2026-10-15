@@ -86,6 +86,7 @@ import {
   StyledPublishedUrlCopyButton,
   StyledPublishedUrlLink,
   StyledSaveButton,
+  StyledSlugRow,
   StyledStatusBadge,
   StyledTextareaWrapper,
   StyledTitleRow,
@@ -510,6 +511,14 @@ export function PostEditor({
     setLocales((prev) => ({ ...prev, [locale]: { ...prev[locale], ...patch } }))
   }
 
+  // Back in sync with the title: it follows later title edits again.
+  function regenerateSlug() {
+    updateLocale(activeLocale, {
+      slug: slugify(currentLocale.title),
+      slugEdited: false,
+    })
+  }
+
   function handleTitleChange(value: string) {
     const patch: Partial<LocaleState> = { title: value }
     if (!currentLocale.slugEdited) {
@@ -892,14 +901,28 @@ export function PostEditor({
             <FieldLabel htmlFor={`slug-${activeLocale}`} required>
               {t('postEditor.fields.slug')}
             </FieldLabel>
-            <Input
-              id={`slug-${activeLocale}`}
-              type="text"
-              value={currentLocale.slug}
-              onChange={(e) => handleSlugChange(e.target.value)}
-              placeholder={t('postEditor.fields.slugHelper')}
-              data-testid="slug-input"
-            />
+            <StyledSlugRow>
+              <Input
+                id={`slug-${activeLocale}`}
+                type="text"
+                value={currentLocale.slug}
+                onChange={(e) => handleSlugChange(e.target.value)}
+                placeholder={t('postEditor.fields.slugHelper')}
+                data-testid="slug-input"
+              />
+              <StyledImagePickerButton
+                type="button"
+                onClick={regenerateSlug}
+                disabled={
+                  !currentLocale.title.trim() ||
+                  currentLocale.slug === slugify(currentLocale.title)
+                }
+                title={t('postEditor.fields.slugRegenerateHint')}
+                data-testid="slug-regenerate"
+              >
+                {t('postEditor.fields.slugRegenerate')}
+              </StyledImagePickerButton>
+            </StyledSlugRow>
             <FieldHelper>{t('postEditor.fields.slugHelper')}</FieldHelper>
           </FieldGroup>
 

@@ -50,7 +50,10 @@ export async function GET(request: Request) {
     )
   }
   if (parsed.data.places) {
-    data = { ...data, landmarks: await nameLandmarksFromOsm(data.landmarks) }
+    const { landmarks, unavailable } = await nameLandmarksFromOsm(
+      data.landmarks,
+    )
+    data = { ...data, landmarks, placesUnavailable: unavailable }
   }
   return NextResponse.json({ data })
 }
