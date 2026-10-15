@@ -1,11 +1,16 @@
 'use client'
 
+import { useMemo } from 'react'
+
 import { Button } from '@sdlgr/button'
 import { Checkbox } from '@sdlgr/checkbox'
-import type {
-  CleanOptions,
-  SimplifyAlgorithm,
-  TrackStats,
+import {
+  type CleanOptions,
+  type GpxPoint,
+  type SimplifyAlgorithm,
+  type TrackStats,
+  cumulativeDistances,
+  indexAtDistance,
 } from '@sdlgr/gpx-tools'
 
 import { useClientTranslation } from '@web/i18n/client'
@@ -15,6 +20,10 @@ import {
   formatDuration,
   formatElevation,
 } from '../../utils/format'
+import type {
+  CleanScope,
+  PointSelection,
+} from '../TrackWorkspace/TrackWorkspace'
 import {
   StyledAlgorithms,
   StyledButtons,
@@ -24,6 +33,7 @@ import {
   StyledHelp,
   StyledNumberInput,
   StyledPanel,
+  StyledScope,
   StyledStatsTable,
 } from './CleanPanel.styles'
 
@@ -140,6 +150,10 @@ const STAT_ROWS = [
 
 const ALGORITHMS: SimplifyAlgorithm[] = ['douglas-peucker', 'visvalingam']
 
+const SCOPES: CleanScope[] = ['track', 'section']
+
+const formatKm = (metres: number) => (metres / 1000).toFixed(2)
+
 export interface CleanPanelProps {
   options: CleanOptions
   onChange: (options: CleanOptions) => void
@@ -147,6 +161,15 @@ export interface CleanPanelProps {
   onReset: () => void
   currentStats: TrackStats
   previewStats: TrackStats | null
+  scope: CleanScope
+  onScopeChange: (scope: CleanScope) => void
+  /** Selected range of the active segment (from < to), if any. */
+  section: PointSelection | null
+  /** Points of the active segment, to turn km into point indices. */
+  points: GpxPoint[]
+  onSectionChange: (section: PointSelection) => void
+  /** Figures of the section alone while cleaning a section. */
+  sectionStats: { current: TrackStats; preview: TrackStats } | null
 }
 
 export function CleanPanel({
@@ -156,8 +179,40 @@ export function CleanPanel({
   onReset,
   currentStats,
   previewStats,
+  scope,
+  onScopeChange,
+  section,
+  points,
+  onSectionChange,
+  sectionStats,
 }: CleanPanelProps) {
   const { t } = useClientTranslation('admin')
+  const distances = useMemo(() => cumulativeDistances(points), [points])
+  const lastIndex = Math.max(0, points.length - 1)
+  const isSection = scope === 'section' && section !== null
+  const fromIndex = section?.from ?? 0
+  const toIndex = section?.to ?? lastIndex
+  const statsCurrent = sectionStats?.current ?? currentStats
+  const statsPreview = sectionStats ? sectionStats.preview : previewStats
+
+  function commitKm(bound: 'from' | 'to', input: HTMLInputElement) {
+    const current = bound === 'from' ? fromIndex : toIndex
+    const other = bound === 'from' ? toIndex : fromIndex
+    const km = parseFloat(input.value)
+    const index = Number.isNaN(km)
+      ? other
+      : indexAtDistance(distances, km * 1000)
+    // Empty input or a zero-length section: put the old value back.
+    if (index === other) {
+      input.value = formatKm(distances[current])
+      return
+    }
+    onSectionChange(
+      bound === 'from'
+        ? { from: index, to: other }
+        : { from: other, to: index },
+    )
+  }
 
   function update(key: FilterKey, patch: Record<string, unknown>) {
     onChange({ ...options, [key]: { ...options[key], ...patch } })
@@ -169,7 +224,9 @@ export function CleanPanel({
       <StyledStatsTable>
         <thead>
           <tr>
-            <th />
+            <th data-testid="stats-scope">
+              {sectionStats ? t('tracks.clean.scope.section') : ''}
+            </th>
             <th>{t('tracks.stats.current')}</th>
             <th>{t('tracks.stats.preview')}</th>
           </tr>
@@ -178,14 +235,79 @@ export function CleanPanel({
           {STAT_ROWS.map((row) => (
             <tr key={row.key}>
               <th scope="row">{t(`tracks.stats.${row.key}`)}</th>
-              <td>{row.format(currentStats)}</td>
+              <td>{row.format(statsCurrent)}</td>
               <td data-testid={`preview-${row.key}`}>
-                {previewStats ? row.format(previewStats) : '—'}
+                {statsPreview ? row.format(statsPreview) : '—'}
               </td>
             </tr>
           ))}
         </tbody>
+        {sectionStats && previewStats && (
+          <tfoot>
+            <tr>
+              <th scope="row">{t('tracks.clean.scope.total')}</th>
+              <td colSpan={2} data-testid="preview-total">
+                {t('tracks.clean.scope.totalValue', {
+                  points: previewStats.points,
+                  distance: formatDistance(previewStats.distance),
+                  ascent: formatElevation(previewStats.ascent),
+                })}
+              </td>
+            </tr>
+          </tfoot>
+        )}
       </StyledStatsTable>
+
+      <StyledScope data-testid="clean-scope">
+        <StyledAlgorithms
+          role="group"
+          aria-label={t('tracks.clean.scope.label')}
+        >
+          {SCOPES.map((key) => (
+            <Button
+              variant="label"
+              key={key}
+              type="button"
+              active={key === 'section' ? isSection : !isSection}
+              aria-pressed={key === 'section' ? isSection : !isSection}
+              disabled={key === 'section' && !section}
+              onClick={() => onScopeChange(key)}
+              data-testid={`scope-${key}`}
+            >
+              {key === 'section' && section
+                ? t('tracks.clean.scope.sectionRange', {
+                    from: section.from + 1,
+                    to: section.to + 1,
+                  })
+                : t(`tracks.clean.scope.${key}`)}
+            </Button>
+          ))}
+        </StyledAlgorithms>
+        <StyledHelp>{t('tracks.clean.scope.help')}</StyledHelp>
+        <StyledFields>
+          {(['from', 'to'] as const).map((bound) => (
+            <StyledFieldLabel key={bound}>
+              <span>{t(`tracks.clean.scope.${bound}`)} (km)</span>
+              <StyledNumberInput
+                // Remounts with the new value whenever the section changes.
+                key={`${bound}-${fromIndex}-${toIndex}-${distances.length}`}
+                type="number"
+                min={0}
+                step={0.1}
+                defaultValue={formatKm(
+                  distances[bound === 'from' ? fromIndex : toIndex] ?? 0,
+                )}
+                disabled={points.length < 2}
+                onBlur={(e) => commitKm(bound, e.currentTarget)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') e.currentTarget.blur()
+                }}
+                data-testid={`section-${bound}`}
+              />
+            </StyledFieldLabel>
+          ))}
+        </StyledFields>
+      </StyledScope>
 
       {FILTERS.map(({ key, fields }) => {
         const values = options[key] as unknown as Record<string, number> & {
@@ -193,15 +315,24 @@ export function CleanPanel({
         }
         const isVisvalingam =
           key === 'simplify' && options.simplify.algorithm === 'visvalingam'
+        // The section ends stay put, so trimming them makes no sense.
+        const isLocked = key === 'trim' && isSection
         return (
           <StyledFilter key={key} data-testid={`filter-${key}`}>
             <Checkbox
               id={`clean-${key}`}
               label={t(`tracks.clean.${key}.label`)}
-              checked={values.enabled}
+              checked={values.enabled && !isLocked}
+              disabled={isLocked}
               onChange={(enabled) => update(key, { enabled })}
             />
-            <StyledHelp>{t(`tracks.clean.${key}.help`)}</StyledHelp>
+            <StyledHelp>
+              {t(
+                isLocked
+                  ? 'tracks.clean.trim.sectionHelp'
+                  : `tracks.clean.${key}.help`,
+              )}
+            </StyledHelp>
             {key === 'simplify' && (
               <StyledAlgorithms>
                 {ALGORITHMS.map((algorithm) => (
@@ -231,7 +362,7 @@ export function CleanPanel({
                     min={0}
                     step={field.step}
                     value={values[field.name]}
-                    disabled={!values.enabled}
+                    disabled={!values.enabled || isLocked}
                     onChange={(e) => {
                       const value = parseFloat(e.target.value)
                       if (!Number.isNaN(value) && value >= 0) {

@@ -9,16 +9,19 @@ import {
   serializeCanyonSummary,
   serializeCroquisMeta,
   serializeFerrataSummary,
+  serializeRouteSummary,
 } from '@web/lib/cards'
 import type {
   CanyoningCardData,
   Lang,
   SummaryFerrataData,
+  SummaryRouteData,
 } from '@web/lib/cards'
 
 import { CanyoningForm } from '../../../cards/components/CanyoningForm'
 import { StyledLangToggle } from '../../../cards/components/CanyoningForm/CanyoningForm.styles'
 import { FerrataForm } from '../../../cards/components/FerrataForm'
+import { RouteForm } from '../../../cards/components/RouteForm'
 import {
   StyledBackdrop,
   StyledButtons,
@@ -32,7 +35,13 @@ import {
 import { StyledCheckboxRow } from '../GpxMapModal/GpxMapModal.styles'
 import type { ParsedInteractiveCard } from '../PostEditor/parseEmbedBlock'
 
-type CardType = 'canyon' | 'ferrata'
+type CardType = 'canyon' | 'ferrata' | 'route'
+
+const FENCES: Record<CardType, string> = {
+  canyon: 'canyon-summary',
+  ferrata: 'ferrata-summary',
+  route: 'route-summary',
+}
 
 export interface InteractiveCardInsertModalProps {
   isOpen: boolean
@@ -45,7 +54,7 @@ export interface InteractiveCardInsertModalProps {
 
 /**
  * Builds an interactive summary card block for the post. The author picks the
- * card type (canyon or via ferrata), which swaps in the matching form; the card
+ * card type (canyon, via ferrata or route), which swaps in the matching form; the card
  * language comes from the post's current editing locale, not the modal. A
  * read-only preview shows the exact fenced block that will be inserted.
  */
@@ -56,8 +65,13 @@ export function InteractiveCardInsertModal({
   lang,
   initialValues,
 }: InteractiveCardInsertModalProps) {
+  const initialKind = initialValues?.data.kind
   const initialType: CardType =
-    initialValues?.data.kind === 'summary-ferrata' ? 'ferrata' : 'canyon'
+    initialKind === 'summary-ferrata'
+      ? 'ferrata'
+      : initialKind === 'summary-route'
+        ? 'route'
+        : 'canyon'
   const [type, setType] = useState<CardType>(initialType)
   const [canyonData, setCanyonData] = useState<CanyoningCardData>(
     initialValues?.data.kind === 'canyoning-data'
@@ -69,6 +83,11 @@ export function InteractiveCardInsertModal({
       ? { ...initialValues.data, lang }
       : { kind: 'summary-ferrata', lang },
   )
+  const [routeData, setRouteData] = useState<SummaryRouteData>(
+    initialValues?.data.kind === 'summary-route'
+      ? { ...initialValues.data, lang }
+      : { kind: 'summary-route', lang },
+  )
   const [showDownload, setShowDownload] = useState(
     initialValues?.showDownload ?? true,
   )
@@ -76,17 +95,20 @@ export function InteractiveCardInsertModal({
   // The exact fenced block that will be inserted; only the download flag rides
   // in the meta, the rest lives in the JSON body.
   const meta = serializeCroquisMeta({ title: '', showDownload })
-  const fence = type === 'canyon' ? 'canyon-summary' : 'ferrata-summary'
+  const fence = FENCES[type]
   const body =
     type === 'canyon'
       ? serializeCanyonSummary(canyonData)
-      : serializeFerrataSummary(ferrataData)
+      : type === 'ferrata'
+        ? serializeFerrataSummary(ferrataData)
+        : serializeRouteSummary(routeData)
   const preview = `\`\`\`${fence}${meta ? ` ${meta}` : ''}\n${body}\n\`\`\``
 
   function handleInsert() {
     onInsert(`\n\n${preview}\n\n`)
     setCanyonData({ kind: 'canyoning-data', lang })
     setFerrataData({ kind: 'summary-ferrata', lang })
+    setRouteData({ kind: 'summary-route', lang })
     setShowDownload(true)
   }
 
@@ -120,12 +142,25 @@ export function InteractiveCardInsertModal({
           >
             Via Ferrata
           </Button>
+          <Button
+            type="button"
+            variant="label"
+            active={type === 'route'}
+            onClick={() => setType('route')}
+            data-testid="interactive-card-type-route"
+          >
+            Route
+          </Button>
         </StyledLangToggle>
 
-        {type === 'canyon' ? (
+        {type === 'canyon' && (
           <CanyoningForm value={canyonData} onChange={setCanyonData} hideLang />
-        ) : (
+        )}
+        {type === 'ferrata' && (
           <FerrataForm value={ferrataData} onChange={setFerrataData} hideLang />
+        )}
+        {type === 'route' && (
+          <RouteForm value={routeData} onChange={setRouteData} hideLang />
         )}
 
         <StyledCheckboxRow>

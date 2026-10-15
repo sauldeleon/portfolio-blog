@@ -75,6 +75,14 @@ describe('renderMDX', () => {
     expect(components.img).toBe(PostContentImage)
   })
 
+  it('uses PostContentLink as a in mdxComponents', () => {
+    const {
+      PostContentLink,
+    } = require('@web/components/PostContent/PostContentLink')
+    const { mdxComponents } = require('./components')
+    expect(mdxComponents.a).toBe(PostContentLink)
+  })
+
   it('uses PostContentEmbed as Embed in mdxComponents', () => {
     const {
       PostContentEmbed,

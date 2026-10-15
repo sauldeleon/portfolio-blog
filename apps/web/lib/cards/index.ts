@@ -8,11 +8,14 @@ export {
   contours,
   esc,
   eyebrow,
+  findCols,
+  findPeaks,
   gradeAxis,
   gradeSubLabel,
+  profilePoint,
   tw,
 } from './primitives'
-export { parseGpx, parseTrackPoints } from './gpx'
+export { parseGpx, parseNamedWaypoints, parseTrackPoints } from './gpx'
 export type { GpxMetrics, TrackPoint } from './gpx'
 export {
   parseWaypoints,
@@ -65,6 +68,7 @@ export {
   parseFerrataSummary,
   serializeFerrataSummary,
 } from './ferrataSummaryData'
+export { parseRouteSummary, serializeRouteSummary } from './routeSummaryData'
 export { CANYON_SCALES } from './canyonScales'
 export type { CanyonScaleContent, ScaleLevel } from './canyonScales'
 export { FERRATA_SCALES } from './ferrataScales'
@@ -85,7 +89,9 @@ export { FONT_STYLE } from './fonts'
 export type { LangStrings } from './theme'
 export type {
   CardSpec,
+  CardProfile,
   CardResult,
+  RouteLandmark,
   CardZone,
   CanyoningCardData,
   SummaryRouteData,

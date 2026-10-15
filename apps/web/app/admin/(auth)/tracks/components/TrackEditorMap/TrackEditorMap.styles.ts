@@ -52,3 +52,26 @@ export const StyledHint = styled.p`
   font-size: 0.7rem;
   pointer-events: none;
 `
+
+export const StyledVertexToggle = styled.button<{ $active: boolean }>`
+  position: absolute;
+  bottom: 1.5rem;
+  left: 0.5rem;
+  z-index: 1000;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+  padding: 0.28rem 0.6rem;
+  font-size: 0.68rem;
+  line-height: 1;
+  cursor: pointer;
+  font-weight: ${({ $active }) => ($active ? 700 : 500)};
+  color: ${({ $active }) => ($active ? '#111' : '#555')};
+  background: ${({ $active }) =>
+    $active ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.6)'};
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.9);
+    color: #111;
+  }
+`

@@ -18,6 +18,7 @@ import {
   type LatLon,
   cleanGpx,
   cleanPathFor,
+  cleanSection,
   computeStats,
   createWaypointId,
   deletePoints,
@@ -26,6 +27,7 @@ import {
   moveItem,
   movePoint,
   serializeGpxFile,
+  snapToTrack,
   sumStats,
 } from '@sdlgr/gpx-tools'
 
@@ -63,6 +65,9 @@ import {
 
 export type EditorTab = 'clean' | 'edit' | 'waypoints'
 
+/** Whether the clean filters run on the whole track or the selected section. */
+export type CleanScope = 'track' | 'section'
+
 export interface SegmentRef {
   track: number
   segment: number
@@ -86,6 +91,41 @@ function statsOf(tracks: GpxTrack[]) {
       track.segments.map((segment) => computeStats(segment.points)),
     ),
   )
+}
+
+function replaceSegmentPoints(
+  tracks: GpxTrack[],
+  ref: SegmentRef,
+  update: (points: GpxPoint[]) => GpxPoint[],
+): GpxTrack[] {
+  return tracks.map((track, ti) =>
+    ti !== ref.track
+      ? track
+      : {
+          ...track,
+          segments: track.segments.map((segment, si) =>
+            si !== ref.segment ? segment : { points: update(segment.points) },
+          ),
+        },
+  )
+}
+
+function segmentsOf(tracks: GpxTrack[]): GpxPoint[][] {
+  return tracks.flatMap((track) => track.segments.map((s) => s.points))
+}
+
+/** Moves a snapped waypoint onto the closest point of the track. */
+function placeWaypoint(waypoint: GpxWaypoint, tracks: GpxTrack[]): GpxWaypoint {
+  if (!waypoint.snap) return waypoint
+  const snapped = snapToTrack(segmentsOf(tracks), waypoint)
+  return snapped
+    ? {
+        ...waypoint,
+        lat: snapped.lat,
+        lon: snapped.lon,
+        ele: snapped.ele ?? waypoint.ele,
+      }
+    : waypoint
 }
 
 function isTyping(target: EventTarget | null): boolean {
@@ -131,34 +171,80 @@ export function TrackWorkspace({
     segment: 0,
   })
   const [selection, setSelection] = useState<PointSelection | null>(null)
+  const [cleanScope, setCleanScope] = useState<CleanScope>('section')
   const [insertMode, setInsertMode] = useState(false)
+  const [showVertices, setShowVertices] = useState(false)
   const [addWaypointMode, setAddWaypointMode] = useState(false)
   const [selectedWaypointId, setSelectedWaypointId] = useState<string | null>(
     null,
   )
+  /** Last waypoint added, whose name gets the focus. */
+  const [newWaypointId, setNewWaypointId] = useState<string | null>(null)
   const [stripTimes, setStripTimes] = useState(false)
   const [copied, setCopied] = useState(false)
   const [hoverIndex, setHoverIndex] = useState<number | null>(null)
   const [focusPoint, setFocusPoint] = useState<LatLon | null>(null)
 
-  const activePoints =
-    doc.tracks[activeSegment.track]?.segments[activeSegment.segment]?.points ??
-    []
+  const activePoints = useMemo(
+    () =>
+      doc.tracks[activeSegment.track]?.segments[activeSegment.segment]
+        ?.points ?? [],
+    [doc.tracks, activeSegment],
+  )
   const allPoints = useMemo(
     () => doc.tracks.flatMap((tr) => tr.segments.flatMap((s) => s.points)),
     [doc.tracks],
   )
-  const preview = useMemo(
+  const section = useMemo<PointSelection | null>(
     () =>
-      tab === 'clean'
-        ? cleanGpx({ ...file, ...doc }, cleanOptions).tracks
+      selection && selection.from !== selection.to
+        ? {
+            from: Math.min(selection.from, selection.to),
+            to: Math.max(selection.from, selection.to),
+          }
         : null,
-    [tab, file, doc, cleanOptions],
+    [selection],
   )
+  const isSectionScope = cleanScope === 'section' && section !== null
+  const sectionClean = useMemo(
+    () =>
+      tab === 'clean' && isSectionScope && section
+        ? cleanSection(activePoints, section, cleanOptions)
+        : null,
+    [tab, isSectionScope, activePoints, section, cleanOptions],
+  )
+  const preview = useMemo(() => {
+    if (tab !== 'clean') return null
+    if (sectionClean) {
+      return replaceSegmentPoints(
+        doc.tracks,
+        activeSegment,
+        () => sectionClean.points,
+      )
+    }
+    return cleanGpx({ ...file, ...doc }, cleanOptions).tracks
+  }, [tab, sectionClean, file, doc, activeSegment, cleanOptions])
   const currentStats = useMemo(() => statsOf(doc.tracks), [doc.tracks])
   const previewStats = useMemo(
     () => (preview ? statsOf(preview) : null),
     [preview],
+  )
+  const sectionStats = useMemo(
+    () =>
+      sectionClean && section
+        ? {
+            current: computeStats(
+              activePoints.slice(section.from, section.to + 1),
+            ),
+            preview: computeStats(
+              sectionClean.points.slice(
+                sectionClean.range.from,
+                sectionClean.range.to + 1,
+              ),
+            ),
+          }
+        : null,
+    [sectionClean, section, activePoints],
   )
   const isDirty = doc !== savedDoc
   const targetPath = cleanPathFor(path)
@@ -181,18 +267,7 @@ export function TrackWorkspace({
     (update: (points: GpxPoint[]) => GpxPoint[]) => {
       history.set((current) => ({
         ...current,
-        tracks: current.tracks.map((track, ti) =>
-          ti !== activeSegment.track
-            ? track
-            : {
-                ...track,
-                segments: track.segments.map((segment, si) =>
-                  si !== activeSegment.segment
-                    ? segment
-                    : { points: update(segment.points) },
-                ),
-              },
-        ),
+        tracks: replaceSegmentPoints(current.tracks, activeSegment, update),
       }))
     },
     [history, activeSegment],
@@ -222,8 +297,18 @@ export function TrackWorkspace({
         (e.key === 'Delete' || e.key === 'Backspace')
       ) {
         deleteSelection()
+      } else if (e.metaKey || e.ctrlKey || e.altKey) {
+        // Leave other shortcuts (print, etc.) to the browser.
+      } else if (tab !== 'waypoints' && key === 'p') {
+        setShowVertices((v) => !v)
+      } else if (key === 'w') {
+        // From any tab: jump to the waypoints and start adding.
+        setTab('waypoints')
+        setInsertMode(false)
+        setAddWaypointMode((v) => tab !== 'waypoints' || !v)
       } else if (e.key === 'Escape') {
         setSelection(null)
+        setShowVertices(false)
         setInsertMode(false)
         setAddWaypointMode(false)
       }
@@ -248,6 +333,12 @@ export function TrackWorkspace({
   }
 
   function applyClean() {
+    if (sectionClean) {
+      // Keep the cleaned section selected so it can be cleaned again.
+      updateActivePoints(() => sectionClean.points)
+      setSelection(sectionClean.range)
+      return
+    }
     history.set((current) => ({
       ...current,
       tracks: cleanGpx({ ...file, ...current }, cleanOptions).tracks,
@@ -255,12 +346,17 @@ export function TrackWorkspace({
     setSelection(null)
   }
 
+  function changeSection(next: PointSelection) {
+    setSelection(next)
+    setCleanScope('section')
+  }
+
   function handleVertexClick(index: number, extend: boolean) {
-    setSelection((prev) =>
-      extend && prev
-        ? { from: prev.from, to: index }
-        : { from: index, to: index },
-    )
+    if (extend && selection) {
+      changeSection({ from: selection.from, to: index })
+    } else {
+      setSelection({ from: index, to: index })
+    }
   }
 
   function handleVertexMove(index: number, to: LatLon) {
@@ -282,7 +378,7 @@ export function TrackWorkspace({
     history.set((current) => ({
       ...current,
       waypoints: current.waypoints.map((w) =>
-        w.id === id ? { ...w, ...patch } : w,
+        w.id === id ? placeWaypoint({ ...w, ...patch }, current.tracks) : w,
       ),
     }))
   }
@@ -302,28 +398,34 @@ export function TrackWorkspace({
     }))
   }
 
-  function handleMapClick(at: LatLon) {
+  function handleMapClick(at: LatLon, onTrack = false) {
     if (tab === 'edit' && insertMode) {
       updateActivePoints((points) => insertPoint(points, at))
       setSelection(null)
     } else if (tab === 'waypoints' && addWaypointMode) {
-      const waypoint: GpxWaypoint = {
-        id: createWaypointId(),
-        lat: at.lat,
-        lon: at.lon,
-        ele: elevationAt(allPoints, at),
-        name: t('tracks.waypoints.defaultName', {
-          n: doc.waypoints.length + 1,
-        }),
-        desc: '',
-        sym: 'Information',
-      }
+      // Clicking on the track pins the waypoint to it.
+      const waypoint = placeWaypoint(
+        {
+          id: createWaypointId(),
+          lat: at.lat,
+          lon: at.lon,
+          ele: elevationAt(allPoints, at),
+          name: t('tracks.waypoints.defaultName', {
+            n: doc.waypoints.length + 1,
+          }),
+          desc: '',
+          sym: 'Information',
+          snap: onTrack,
+        },
+        doc.tracks,
+      )
       history.set((current) => ({
         ...current,
         waypoints: [...current.waypoints, waypoint],
       }))
+      // Add mode stays on, so the next click adds the next one.
       setSelectedWaypointId(waypoint.id)
-      setAddWaypointMode(false)
+      setNewWaypointId(waypoint.id)
     }
   }
 
@@ -392,6 +494,12 @@ export function TrackWorkspace({
           onReset={() => setCleanOptions(DEFAULT_CLEAN_OPTIONS)}
           currentStats={currentStats}
           previewStats={previewStats}
+          scope={cleanScope}
+          onScopeChange={setCleanScope}
+          section={section}
+          points={activePoints}
+          onSectionChange={changeSection}
+          sectionStats={sectionStats}
         />
       )}
       {tab === 'edit' && (
@@ -416,6 +524,7 @@ export function TrackWorkspace({
           onDelete={deleteWaypoint}
           onMove={moveWaypoint}
           addMode={addWaypointMode}
+          focusNameId={newWaypointId}
           onToggleAddMode={() => setAddWaypointMode((v) => !v)}
         />
       )}
@@ -565,6 +674,8 @@ export function TrackWorkspace({
             mode={tab}
             activeSegment={activeSegment}
             selection={selection}
+            showVertices={showVertices}
+            onToggleVertices={() => setShowVertices((v) => !v)}
             clickMode={
               (tab === 'edit' && insertMode) ||
               (tab === 'waypoints' && addWaypointMode)
@@ -586,7 +697,7 @@ export function TrackWorkspace({
         </StyledMapStage>
         <ElevationProfile
           points={activePoints}
-          selection={tab === 'edit' ? selection : null}
+          selection={tab === 'waypoints' ? null : selection}
           onHover={setHoverIndex}
           onSelect={handleProfileSelect}
         />

@@ -76,6 +76,8 @@ export const StyledAdminDialog = styled(ModalOverlays)<{
   ${frame}
   ${noFocusRing}
   z-index: 1040;
+  /* Tall editors scroll inside the dialog instead of spilling out of it. */
+  overflow-y: auto;
 
   ${({ theme }) => theme.media.up.md} {
     left: 50%;

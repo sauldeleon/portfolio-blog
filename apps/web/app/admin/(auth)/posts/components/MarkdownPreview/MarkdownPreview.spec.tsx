@@ -69,6 +69,14 @@ jest.mock('@web/components/PostContent/PostContentFerrataSummary', () => ({
   ),
 }))
 
+jest.mock('@web/components/PostContent/PostContentRouteSummary', () => ({
+  PostContentRouteSummary: ({ lang }: { lang?: string }) => (
+    <div data-testid="route-summary-preview">
+      <span data-testid="route-summary-lang">{lang}</span>
+    </div>
+  ),
+}))
+
 jest.mock('next-mdx-remote', () => ({
   MDXRemote: ({
     compiledSource,
@@ -87,6 +95,10 @@ jest.mock('next-mdx-remote', () => ({
         data?: string
         noDownload?: boolean
       }>
+      RouteSummary?: React.ElementType<{
+        data?: string
+        noDownload?: boolean
+      }>
     }
   }) => {
     const Pre = components?.pre
@@ -97,6 +109,7 @@ jest.mock('next-mdx-remote', () => ({
     const Croquis = components?.Croquis
     const CanyonSummary = components?.CanyonSummary
     const FerrataSummary = components?.FerrataSummary
+    const RouteSummary = components?.RouteSummary
     return (
       <div data-testid="mdx-content">
         {compiledSource}
@@ -122,6 +135,7 @@ jest.mock('next-mdx-remote', () => ({
         {Croquis && <Croquis obstacles="[]" />}
         {CanyonSummary && <CanyonSummary data="" />}
         {FerrataSummary && <FerrataSummary data="" />}
+        {RouteSummary && <RouteSummary data="" />}
       </div>
     )
   },
@@ -334,5 +348,6 @@ describe('MarkdownPreview', () => {
       await Promise.resolve()
     })
     expect(screen.getByTestId('ferrata-summary-lang')).toHaveTextContent('es')
+    expect(screen.getByTestId('route-summary-lang')).toHaveTextContent('es')
   })
 })

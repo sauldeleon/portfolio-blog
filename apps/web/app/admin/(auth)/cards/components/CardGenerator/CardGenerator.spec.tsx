@@ -146,6 +146,12 @@ jest.mock('../CanyonSummaryGenerator', () => ({
   ),
 }))
 
+jest.mock('../RouteSummaryGenerator', () => ({
+  RouteSummaryGenerator: () => (
+    <div data-testid="route-summary-generator-mock" />
+  ),
+}))
+
 jest.mock('../FerrataSummaryGenerator', () => ({
   FerrataSummaryGenerator: () => (
     <div data-testid="ferrata-summary-generator-mock" />
@@ -364,6 +370,15 @@ describe('CardGenerator', () => {
     fireEvent.click(screen.getByTestId('card-type-ferrata-summary'))
     expect(
       screen.getByTestId('ferrata-summary-generator-mock'),
+    ).toBeInTheDocument()
+    expect(screen.queryByTestId('route-form-mock')).not.toBeInTheDocument()
+  })
+
+  it('shows the interactive route generator on its tab', () => {
+    renderApp(<CardGenerator />)
+    fireEvent.click(screen.getByTestId('card-type-route-summary'))
+    expect(
+      screen.getByTestId('route-summary-generator-mock'),
     ).toBeInTheDocument()
     expect(screen.queryByTestId('route-form-mock')).not.toBeInTheDocument()
   })

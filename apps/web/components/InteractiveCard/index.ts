@@ -1,6 +1,7 @@
 export { InteractiveCardMap } from './InteractiveCardMap'
 export type { InteractiveCardMapProps } from './InteractiveCardMap'
 export { useCardPng } from './useCardPng'
+export { ElevationLayer, formatAltitude } from './ElevationLayer'
 export {
   StyledAffects,
   StyledPhenomenon,

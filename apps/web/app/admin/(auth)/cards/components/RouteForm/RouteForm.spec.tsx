@@ -77,6 +77,7 @@ jest.mock('../GpxUrlField', () => {
     ascent: '800 m',
     descent: '820 m',
     elevation: [1, 2, 3],
+    shape: 'loop' as 'loop' | 'linear' | null,
   }
   const EMPTY = {
     date: '',
@@ -89,6 +90,7 @@ jest.mock('../GpxUrlField', () => {
     ascent: '',
     descent: '',
     elevation: [],
+    shape: null,
   }
   return {
     GpxUrlField: ({
@@ -291,6 +293,7 @@ describe('RouteForm', () => {
         det: '0:30',
         tot: '2:30',
         elevation: [1, 2, 3],
+        shape: 'loop',
       }),
     )
   })
@@ -305,6 +308,7 @@ describe('RouteForm', () => {
       mov: 'om',
       det: 'od',
       tot: 'ot',
+      shape: 'linear' as const,
     }
     renderApp(<RouteForm value={value} onChange={onChange} />)
     fireEvent.click(screen.getByTestId('gpx-empty'))
@@ -320,6 +324,7 @@ describe('RouteForm', () => {
         dplus: '',
         dminus: '',
         elevation: [],
+        shape: 'linear',
       }),
     )
   })

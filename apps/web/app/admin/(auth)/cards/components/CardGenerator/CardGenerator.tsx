@@ -21,6 +21,7 @@ import { CroquisGenerator } from '../CroquisGenerator'
 import { FerrataForm } from '../FerrataForm'
 import { FerrataSummaryGenerator } from '../FerrataSummaryGenerator'
 import { RouteForm } from '../RouteForm'
+import { RouteSummaryGenerator } from '../RouteSummaryGenerator'
 import { WaypointForm } from '../WaypointForm'
 import { WaypointGenerator } from '../WaypointGenerator'
 import {
@@ -41,9 +42,11 @@ type Tab =
   | 'croquis'
   | 'canyon-summary'
   | 'ferrata-summary'
+  | 'route-summary'
 
 const TABS: Array<{ kind: Tab; labelKey: string }> = [
   { kind: 'summary-route', labelKey: 'cards.tabs.route' },
+  { kind: 'route-summary', labelKey: 'cards.tabs.routeInteractive' },
   { kind: 'canyoning-data', labelKey: 'cards.tabs.canyonData' },
   { kind: 'canyon-summary', labelKey: 'cards.tabs.canyonInteractive' },
   { kind: 'canyon-waypoints', labelKey: 'cards.tabs.canyonWaypoints' },
@@ -61,6 +64,7 @@ const NON_SPEC_TABS: Tab[] = [
   'croquis',
   'canyon-summary',
   'ferrata-summary',
+  'route-summary',
 ]
 
 const DEFAULT_CANYONING: CanyoningCardData = {
@@ -157,6 +161,8 @@ export function CardGenerator() {
         <CanyonSummaryGenerator />
       ) : activeKind === 'ferrata-summary' ? (
         <FerrataSummaryGenerator />
+      ) : activeKind === 'route-summary' ? (
+        <RouteSummaryGenerator />
       ) : (
         <StyledLayout>
           <StyledPanelForm>

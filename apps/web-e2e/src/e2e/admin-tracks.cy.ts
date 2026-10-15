@@ -85,6 +85,25 @@ describe('Admin tracks — GPX editor', () => {
     cy.get('[data-testid="save-result"]').should('contain', 'e2e-clean.gpx')
   })
 
+  it('cleans only a section picked by km', () => {
+    cy.visit('/admin/tracks/edit?path=e2e.gpx')
+    cy.wait('@file')
+    cy.get('[data-testid="track-workspace"]', { timeout: 20000 }).should(
+      'be.visible',
+    )
+    cy.get('[data-testid="scope-section"]').should('be.disabled')
+    cy.get('[data-testid="section-to"]').clear()
+    cy.get('[data-testid="section-to"]').type('0.04{enter}')
+    cy.get('[data-testid="scope-section"]')
+      .should('have.attr', 'aria-pressed', 'true')
+      .and('contain', '#1–#4')
+    cy.get('[data-testid="preview-total"]').should('exist')
+    cy.get('[data-testid="apply-clean"]').click()
+    // Points #2 and #3 lie on the line from #1 to #4; the far end is untouched.
+    cy.get('[data-testid="track-summary"]').should('contain', '3 points')
+    cy.get('[data-testid="scope-section"]').should('contain', '#1–#2')
+  })
+
   it('uploads a new track under a custom name', () => {
     cy.visit('/admin/tracks')
     cy.wait('@list')

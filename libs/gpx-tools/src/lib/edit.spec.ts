@@ -6,6 +6,7 @@ import {
   movePoint,
   nearestPointIndex,
   nearestSegment,
+  snapToTrack,
 } from './edit'
 import { pt } from './points.mock'
 
@@ -95,5 +96,25 @@ describe('moveItem', () => {
     expect(moveItem(items, 1, 1)).toBe(items)
     expect(moveItem(items, 0, -1)).toBe(items)
     expect(moveItem(items, 1, 2)).toBe(items)
+  })
+})
+
+describe('snapToTrack', () => {
+  it('projects onto the closest segment, interpolating the elevation', () => {
+    const near = [pt(0, 0, { ele: 100 }), pt(100, 0, { ele: 200 })]
+    const far = [pt(0, 500), pt(100, 500)]
+    const snapped = snapToTrack([far, near, far], pt(25, 10))
+    expect(snapped?.lat).toBeCloseTo(pt(25).lat, 8)
+    expect(snapped?.lon).toBeCloseTo(0, 8)
+    expect(snapped?.ele).toBeCloseTo(125)
+  })
+
+  it('handles single points and empty tracks', () => {
+    expect(snapToTrack([[], [pt(5, 5, { ele: 7 })]], pt(0))).toEqual({
+      lat: pt(5, 5).lat,
+      lon: pt(5, 5).lon,
+      ele: 7,
+    })
+    expect(snapToTrack([[]], pt(0))).toBeNull()
   })
 })

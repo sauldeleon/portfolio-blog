@@ -14,6 +14,10 @@ jest.mock('@web/lib/auth/config', () => ({ auth: () => mockAuth() }))
 jest.mock('@web/lib/cards', () => ({
   parseGpx: (...args: unknown[]) => mockParseGpx(...args),
 }))
+const mockNameLandmarks = jest.fn()
+jest.mock('@web/lib/cards/osmLandmarks', () => ({
+  nameLandmarksFromOsm: (...args: unknown[]) => mockNameLandmarks(...args),
+}))
 jest.mock('@web/lib/logger', () => ({
   logger: {
     error: (...args: unknown[]) => mockLoggerError(...args),
@@ -88,5 +92,24 @@ describe('GET /api/cards/gpx', () => {
     expect(res.status).toBe(200)
     const body = await res.json()
     expect(body.data).toEqual(metrics)
+    expect(mockNameLandmarks).not.toHaveBeenCalled()
+  })
+
+  it('names summits and cols from OpenStreetMap on request', async () => {
+    mockAxiosGet.mockResolvedValue({ data: '<gpx/>' })
+    mockParseGpx.mockReturnValue({ ...metrics, landmarks: [{ kind: 'peak' }] })
+    mockNameLandmarks.mockResolvedValue({
+      landmarks: [{ kind: 'peak', name: 'Pico' }],
+      unavailable: true,
+    })
+    const res = await GET(
+      new Request(
+        `http://localhost/api/cards/gpx?url=${encodeURIComponent('https://example.com/a.gpx')}&places=1`,
+      ),
+    )
+    expect(mockNameLandmarks).toHaveBeenCalledWith([{ kind: 'peak' }])
+    const { data } = await res.json()
+    expect(data.landmarks).toEqual([{ kind: 'peak', name: 'Pico' }])
+    expect(data.placesUnavailable).toBe(true)
   })
 })

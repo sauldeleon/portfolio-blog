@@ -5,10 +5,13 @@ import {
   contours,
   esc,
   eyebrow,
+  findCols,
+  findPeaks,
   flowRow,
   gradeAxis,
   gradeSubLabel,
   hRule,
+  profilePoint,
   tw,
 } from './primitives'
 import { STRINGS } from './theme'
@@ -229,5 +232,65 @@ describe('flowRow', () => {
   it('omits the affects text when no affects value is given', () => {
     const { svg } = flowRow(56, 290, 'low', undefined, [], S)
     expect(svg).not.toContain('rápeles')
+  })
+})
+
+describe('profilePoint', () => {
+  const profile = {
+    elevation: [100, 200, 150],
+    x0: 0,
+    x1: 100,
+    top: 0,
+    bottom: 50,
+  }
+
+  it('maps samples onto the drawn area', () => {
+    expect(profilePoint(profile, 0)).toEqual({ x: 0, y: 50 })
+    expect(profilePoint(profile, 1)).toEqual({ x: 50, y: 0 })
+    expect(profilePoint(profile, 2)).toEqual({ x: 100, y: 25 })
+  })
+
+  it('copes with a flat profile', () => {
+    expect(profilePoint({ ...profile, elevation: [100, 100] }, 1)).toEqual({
+      x: 100,
+      y: 50,
+    })
+  })
+})
+
+describe('findPeaks', () => {
+  it('returns the prominent summits, highest first', () => {
+    //            0    1    2    3    4    5     6    7    8
+    const ele = [900, 1400, 1100, 1300, 1290, 1310, 1000, 1200, 1100]
+    // #3 (1300) barely rises over the dip before #5: only #1, #5 and #7 count.
+    expect(findPeaks(ele)).toEqual([1, 5, 7])
+    expect(findPeaks(ele, 1)).toEqual([1])
+  })
+
+  it('counts summits at the ends and keeps the highest point', () => {
+    expect(findPeaks([1500, 1000, 1010])).toEqual([0])
+    expect(findPeaks([1000, 1100, 1300])).toEqual([2])
+    // A gentle hill with no prominent summit still marks its top.
+    expect(findPeaks([1000, 1005, 1002], 3, 50)).toEqual([1])
+  })
+
+  it('ignores profiles without enough samples', () => {
+    expect(findPeaks([1000])).toEqual([])
+  })
+})
+
+describe('findCols', () => {
+  it('returns the low points between rises, deepest first', () => {
+    //            0     1     2     3     4     5     6     7
+    const ele = [1000, 1400, 1250, 1300, 1290, 1500, 1100, 1600]
+    // #4 sits only 10 m under #3; #2 and #6 are real cols.
+    expect(findCols(ele)).toEqual([6, 2])
+    expect(findCols(ele, 1)).toEqual([6])
+  })
+
+  it('ignores the ends and profiles without dips', () => {
+    expect(findCols([900, 1200, 1300])).toEqual([])
+    expect(findCols([1200, 1000, 1300])).toEqual([1])
+    expect(findCols([1000])).toEqual([])
   })
 })

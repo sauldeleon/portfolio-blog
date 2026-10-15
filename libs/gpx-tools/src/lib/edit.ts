@@ -101,3 +101,37 @@ export function moveItem<T>(items: T[], from: number, to: number): T[] {
   result.splice(to, 0, item)
   return result
 }
+
+/**
+ * Closest position on any of `segments` to `target`, with its elevation
+ * interpolated from the neighbouring points. Null when there is no track.
+ */
+export function snapToTrack(
+  segments: GpxPoint[][],
+  target: LatLon,
+): (LatLon & { ele: number | null }) | null {
+  let best: (LatLon & { ele: number | null }) | null = null
+  let bestDistance = Infinity
+  for (const points of segments) {
+    let candidate: LatLon & { ele: number | null }
+    if (points.length === 1) {
+      candidate = { lat: points[0].lat, lon: points[0].lon, ele: points[0].ele }
+    } else {
+      const segment = nearestSegment(points, target)
+      if (!segment) continue
+      const a = points[segment.index]
+      const b = points[segment.index + 1]
+      candidate = {
+        lat: a.lat + (b.lat - a.lat) * segment.t,
+        lon: a.lon + (b.lon - a.lon) * segment.t,
+        ele: lerp(a.ele, b.ele, segment.t),
+      }
+    }
+    const distance = haversine(candidate, target)
+    if (distance < bestDistance) {
+      bestDistance = distance
+      best = candidate
+    }
+  }
+  return best
+}

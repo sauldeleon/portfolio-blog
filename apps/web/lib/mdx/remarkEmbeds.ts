@@ -3,8 +3,10 @@ import {
   parseCanyonWaypointsText,
   parseCroquisMeta,
   parseFerrataSummary,
+  parseRouteSummary,
   serializeCanyonSummary,
   serializeFerrataSummary,
+  serializeRouteSummary,
   toCroquisObstacles,
 } from '@web/lib/cards'
 
@@ -149,6 +151,26 @@ export function remarkEmbeds() {
               type: 'mdxJsxAttribute',
               name: 'data',
               value: parsed ? serializeFerrataSummary(parsed) : '',
+            },
+            ...(showDownload
+              ? []
+              : [{ type: 'mdxJsxAttribute', name: 'noDownload', value: null }]),
+          ],
+          children: [],
+        }
+      }
+
+      if (n.lang === 'route-summary') {
+        const parsed = parseRouteSummary(n.value ?? '')
+        const { showDownload } = parseCroquisMeta(n.meta ?? '')
+        return {
+          type: 'mdxJsxFlowElement',
+          name: 'RouteSummary',
+          attributes: [
+            {
+              type: 'mdxJsxAttribute',
+              name: 'data',
+              value: parsed ? serializeRouteSummary(parsed) : '',
             },
             ...(showDownload
               ? []

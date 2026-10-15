@@ -17,6 +17,8 @@ export interface GpxWaypoint extends LatLon {
   name: string
   desc: string
   sym: string
+  /** Editor-only: keeps the waypoint on the track when moved. Not saved. */
+  snap?: boolean
   /** Original `<wpt>` element, kept so serialising preserves its extensions. */
   source?: Element
 }

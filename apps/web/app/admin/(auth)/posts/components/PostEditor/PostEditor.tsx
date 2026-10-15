@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import axios, { isAxiosError } from 'axios'
 import { useRouter } from 'next/navigation'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -29,6 +29,7 @@ import { CategoryIconRenderer } from '@web/utils/categoryIcons'
 import { computeReadingTime } from '@web/utils/computeReadingTime'
 import { slugify } from '@web/utils/slugify'
 
+import { ConfirmDeleteModal } from '../../../components/ConfirmDeleteModal'
 import { PublishNotifyModal } from '../../../components/PublishNotifyModal'
 import { CroquisInsertModal } from '../CroquisInsertModal'
 import { EmbedInsertModal } from '../EmbedInsertModal'
@@ -36,7 +37,15 @@ import { GpxMapModal } from '../GpxMapModal'
 import { ImageInsertModal } from '../ImageInsertModal'
 import { ImagePicker } from '../ImagePicker'
 import { InteractiveCardInsertModal } from '../InteractiveCardInsertModal'
+import { LinkInsertModal } from '../LinkInsertModal'
 import { MarkdownPreview } from '../MarkdownPreview'
+import {
+  type FormatAction,
+  MARKDOWN_GUIDE,
+  MarkdownToolbar,
+  applyFormat,
+  shortcutFor,
+} from '../MarkdownToolbar'
 import { SlideshowInsertModal } from '../SlideshowInsertModal'
 import { CoverImageInput } from './CoverImageInput'
 import { PostCardPreview } from './PostCardPreview'
@@ -62,6 +71,7 @@ import {
   StyledImagePickerButton,
   StyledLocaleTab,
   StyledLocaleTabs,
+  StyledMarkdownHint,
   StyledMetaGrid,
   StyledMetadataSection,
   StyledMobileContent,
@@ -76,11 +86,16 @@ import {
   StyledPublishedUrlCopyButton,
   StyledPublishedUrlLink,
   StyledSaveButton,
+  StyledSlugRow,
   StyledStatusBadge,
   StyledTextareaWrapper,
   StyledTitleRow,
   StyledTocPreview,
   StyledToolbarRow,
+  StyledTranslate,
+  StyledTranslateButton,
+  StyledTranslateError,
+  StyledTranslateRetry,
   StyledUpdatePreviewButton,
   StyledWrapper,
 } from './PostEditor.styles'
@@ -94,6 +109,7 @@ import type {
   ParsedSlideshow,
 } from './parseEmbedBlock'
 import { detectEmbedAtCursor } from './parseEmbedBlock'
+import { usePostTranslation } from './usePostTranslation'
 
 type Locale = 'en' | 'es'
 
@@ -204,6 +220,8 @@ export function PostEditor({
   const initialStatus = post?.post.status ?? 'draft'
   const [status, setStatus] = useState<PostStatus>(initialStatus)
   const [activeLocale, setActiveLocale] = useState<Locale>('en')
+  const translation = usePostTranslation()
+  const [isOverwriteConfirmOpen, setIsOverwriteConfirmOpen] = useState(false)
   const [locales, setLocales] = useState<Record<Locale, LocaleState>>({
     en: translationToState(findTranslation(post?.translations ?? [], 'en')),
     es: translationToState(findTranslation(post?.translations ?? [], 'es')),
@@ -274,6 +292,9 @@ export function PostEditor({
   >(null)
   const [isImageInsertModalOpen, setIsImageInsertModalOpen] = useState(false)
   const [isEmbedInsertModalOpen, setIsEmbedInsertModalOpen] = useState(false)
+  const [isLinkModalOpen, setIsLinkModalOpen] = useState(false)
+  const [linkModalKey, setLinkModalKey] = useState(0)
+  const [linkInitialText, setLinkInitialText] = useState('')
   const [isGpxModalOpen, setIsGpxModalOpen] = useState(false)
   const [imageModalKey, setImageModalKey] = useState(0)
   const [embedModalKey, setEmbedModalKey] = useState(0)
@@ -306,6 +327,18 @@ export function PostEditor({
   const [autoRender, setAutoRender] = useState(true)
   const [previewContent, setPreviewContent] = useState(currentLocale.content)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+  /** Selection to restore once a toolbar change reaches the textarea. */
+  const pendingSelectionRef = useRef<[number, number] | null>(null)
+
+  useLayoutEffect(() => {
+    const selection = pendingSelectionRef.current
+    if (!selection) return
+    pendingSelectionRef.current = null
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const el = textareaRef.current!
+    el.focus()
+    el.setSelectionRange(...selection)
+  }, [currentLocale.content])
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -343,6 +376,73 @@ export function PostEditor({
       markdown +
       currentLocale.content.slice(end)
     updateLocale(activeLocale, { content: newContent })
+  }
+
+  // Translates the open language into the other one, showing the result.
+  function startTranslation() {
+    const source = activeLocale
+    const target: Locale = source === 'en' ? 'es' : 'en'
+    const { title, excerpt, content } = locales[source]
+    setActiveLocale(target)
+    void translation.translate(
+      source,
+      target,
+      { title, excerpt, content },
+      (fields) => {
+        const patch: Partial<LocaleState> = { ...fields }
+        if (fields.title !== undefined && !locales[target].slugEdited) {
+          patch.slug = slugify(fields.title)
+        }
+        updateLocale(target, patch)
+      },
+    )
+  }
+
+  function translateActiveLocale() {
+    if (translation.isTranslating) {
+      translation.cancel()
+      return
+    }
+    const target = locales[activeLocale === 'en' ? 'es' : 'en']
+    if (target.title || target.excerpt || target.content) {
+      setIsOverwriteConfirmOpen(true)
+      return
+    }
+    startTranslation()
+  }
+
+  function openLinkModal() {
+    // The selected text becomes the link text and is replaced.
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const el = textareaRef.current!
+    setEditingEmbed(null)
+    setLinkInitialText(
+      currentLocale.content.slice(el.selectionStart, el.selectionEnd),
+    )
+    setLinkModalKey((k) => k + 1)
+    setIsLinkModalOpen(true)
+  }
+
+  function handleFormat(action: FormatAction) {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const el = textareaRef.current!
+    const result = applyFormat(
+      action,
+      currentLocale.content,
+      el.selectionStart,
+      el.selectionEnd,
+    )
+    pendingSelectionRef.current = [result.selectionStart, result.selectionEnd]
+    updateLocale(activeLocale, { content: result.content })
+    setEditingEmbed(null)
+  }
+
+  function handleTextareaKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+    const shortcut = shortcutFor(e)
+    if (!shortcut) return
+    e.preventDefault()
+    if (shortcut === 'link') openLinkModal()
+    else handleFormat(shortcut)
   }
 
   function handleTextareaClick() {
@@ -387,7 +487,8 @@ export function PostEditor({
       setIsCroquisModalOpen(true)
     } else if (
       editingEmbed.type === 'canyon-summary' ||
-      editingEmbed.type === 'ferrata-summary'
+      editingEmbed.type === 'ferrata-summary' ||
+      editingEmbed.type === 'route-summary'
     ) {
       setInteractiveCardInitialValues(
         editingEmbed.parsed as ParsedInteractiveCard,
@@ -408,6 +509,14 @@ export function PostEditor({
 
   function updateLocale(locale: Locale, patch: Partial<LocaleState>) {
     setLocales((prev) => ({ ...prev, [locale]: { ...prev[locale], ...patch } }))
+  }
+
+  // Back in sync with the title: it follows later title edits again.
+  function regenerateSlug() {
+    updateLocale(activeLocale, {
+      slug: slugify(currentLocale.title),
+      slugEdited: false,
+    })
   }
 
   function handleTitleChange(value: string) {
@@ -729,6 +838,47 @@ export function PostEditor({
             {t(`postEditor.tabs.${locale}`)}
           </StyledLocaleTab>
         ))}
+        <StyledTranslate>
+          {translation.status?.available === false ? (
+            <StyledTranslateError role="alert" data-testid="translate-error">
+              {translation.status.message}{' '}
+              <StyledTranslateRetry
+                type="button"
+                onClick={() => void translation.recheck()}
+                data-testid="translate-retry"
+              >
+                {t('postEditor.translate.retry')}
+              </StyledTranslateRetry>
+            </StyledTranslateError>
+          ) : (
+            translation.error && (
+              <StyledTranslateError role="alert" data-testid="translate-error">
+                {translation.error}
+              </StyledTranslateError>
+            )
+          )}
+          <StyledTranslateButton
+            type="button"
+            onClick={translateActiveLocale}
+            disabled={
+              !translation.isTranslating &&
+              (!translation.status?.available ||
+                !locales[activeLocale].content.trim())
+            }
+            title={
+              translation.status === null
+                ? t('postEditor.translate.checking')
+                : undefined
+            }
+            data-testid="translate-button"
+          >
+            {translation.isTranslating
+              ? t('postEditor.translate.cancel')
+              : t(
+                  `postEditor.translate.to.${activeLocale === 'en' ? 'es' : 'en'}`,
+                )}
+          </StyledTranslateButton>
+        </StyledTranslate>
       </StyledLocaleTabs>
 
       <StyledEditorLayout>
@@ -751,14 +901,28 @@ export function PostEditor({
             <FieldLabel htmlFor={`slug-${activeLocale}`} required>
               {t('postEditor.fields.slug')}
             </FieldLabel>
-            <Input
-              id={`slug-${activeLocale}`}
-              type="text"
-              value={currentLocale.slug}
-              onChange={(e) => handleSlugChange(e.target.value)}
-              placeholder={t('postEditor.fields.slugHelper')}
-              data-testid="slug-input"
-            />
+            <StyledSlugRow>
+              <Input
+                id={`slug-${activeLocale}`}
+                type="text"
+                value={currentLocale.slug}
+                onChange={(e) => handleSlugChange(e.target.value)}
+                placeholder={t('postEditor.fields.slugHelper')}
+                data-testid="slug-input"
+              />
+              <StyledImagePickerButton
+                type="button"
+                onClick={regenerateSlug}
+                disabled={
+                  !currentLocale.title.trim() ||
+                  currentLocale.slug === slugify(currentLocale.title)
+                }
+                title={t('postEditor.fields.slugRegenerateHint')}
+                data-testid="slug-regenerate"
+              >
+                {t('postEditor.fields.slugRegenerate')}
+              </StyledImagePickerButton>
+            </StyledSlugRow>
             <FieldHelper>{t('postEditor.fields.slugHelper')}</FieldHelper>
           </FieldGroup>
 
@@ -1026,6 +1190,7 @@ export function PostEditor({
                 Insert Interactive Card
               </StyledImagePickerButton>
             </StyledToolbarRow>
+            <MarkdownToolbar onFormat={handleFormat} onLink={openLinkModal} />
             <StyledTextareaWrapper>
               <StyledContentTextarea
                 id={`content-${activeLocale}`}
@@ -1035,6 +1200,8 @@ export function PostEditor({
                   setEditingEmbed(null)
                 }}
                 onClick={handleTextareaClick}
+                onKeyDown={handleTextareaKeyDown}
+                readOnly={translation.isTranslating}
                 placeholder={t('postEditor.fields.contentPlaceholder')}
                 data-testid="content-input"
                 ref={textareaRef}
@@ -1049,6 +1216,10 @@ export function PostEditor({
                 </StyledEditEmbedButton>
               )}
             </StyledTextareaWrapper>
+            <StyledMarkdownHint data-testid="markdown-guide">
+              <summary>Markdown guide</summary>
+              <pre>{MARKDOWN_GUIDE}</pre>
+            </StyledMarkdownHint>
           </FieldGroup>
         </StyledEditorPane>
 
@@ -1256,6 +1427,27 @@ export function PostEditor({
           setEmbedInitialValues(null)
         }}
       />
+      <ConfirmDeleteModal
+        isOpen={isOverwriteConfirmOpen}
+        variant="warning"
+        width="min(460px, 90vw)"
+        message={t('postEditor.translate.confirmOverwrite')}
+        onConfirm={() => {
+          setIsOverwriteConfirmOpen(false)
+          startTranslation()
+        }}
+        onCancel={() => setIsOverwriteConfirmOpen(false)}
+      />
+      <LinkInsertModal
+        key={`link-${linkModalKey}`}
+        isOpen={isLinkModalOpen}
+        initialText={linkInitialText}
+        onInsert={(markdown) => {
+          insertAtCursor(markdown)
+          setIsLinkModalOpen(false)
+        }}
+        onCancel={() => setIsLinkModalOpen(false)}
+      />
       <GpxMapModal
         key={`gpx-${gpxModalKey}`}
         isOpen={isGpxModalOpen}
@@ -1335,7 +1527,8 @@ export function PostEditor({
         onInsert={(markdown) => {
           if (
             editingEmbed?.type === 'canyon-summary' ||
-            editingEmbed?.type === 'ferrata-summary'
+            editingEmbed?.type === 'ferrata-summary' ||
+            editingEmbed?.type === 'route-summary'
           ) {
             replaceBlock(
               editingEmbed.blockStart,

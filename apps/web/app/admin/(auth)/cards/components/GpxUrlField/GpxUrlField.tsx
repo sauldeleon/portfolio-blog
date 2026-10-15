@@ -19,6 +19,8 @@ interface GpxUrlFieldProps {
   onParsed: (metrics: GpxMetrics) => void
   /** Prefix for input ids / test ids (e.g. "rt", "ft", "sb"). */
   idPrefix: string
+  /** Also name summits and cols from OpenStreetMap (slower). */
+  withPlaceNames?: boolean
 }
 
 /**
@@ -31,6 +33,7 @@ export function GpxUrlField({
   onChange,
   onParsed,
   idPrefix,
+  withPlaceNames,
 }: GpxUrlFieldProps) {
   const { t } = useClientTranslation('admin')
   const [loading, setLoading] = useState(false)
@@ -43,7 +46,7 @@ export function GpxUrlField({
     setError(null)
     try {
       const res = await axios.get<{ data?: GpxMetrics }>('/api/cards/gpx', {
-        params: { url },
+        params: withPlaceNames ? { url, places: '1' } : { url },
       })
       if (!res.data.data) {
         setError(t('cards.errors.gpxParse'))

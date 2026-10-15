@@ -9,7 +9,7 @@ import {
   type LangStrings,
   PANEL_STK,
 } from './theme'
-import type { CardZone } from './types'
+import type { CardProfile, CardZone } from './types'
 
 /** Escape XML special characters for SVG text content. */
 export function esc(s: string): string {
@@ -104,6 +104,78 @@ export function gradeSubLabel(
   return ''
 }
 
+/** Position of sample `i` of the profile, in the card's user-space. */
+export function profilePoint(
+  profile: CardProfile,
+  i: number,
+): { x: number; y: number } {
+  const { elevation: ele, x0, x1, top, bottom } = profile
+  const min = Math.min(...ele)
+  const span = Math.max(...ele) - min || 1
+  return {
+    x: x0 + ((x1 - x0) * i) / (ele.length - 1),
+    y: bottom - ((ele[i] - min) / span) * (bottom - top),
+  }
+}
+
+/**
+ * Indices of the summits of a profile: local maxima standing out at least
+ * `minProminence` metres (or 8% of the total span, if larger) over the lowest
+ * point between them and any higher ground. Highest first, at most `max`.
+ */
+export function findPeaks(
+  ele: number[],
+  max = 3,
+  minProminence = 20,
+): number[] {
+  if (ele.length < 2) return []
+  const top = Math.max(...ele)
+  const threshold = Math.max(minProminence, (top - Math.min(...ele)) * 0.08)
+  const peaks: number[] = []
+  ele.forEach((e, i) => {
+    if (i > 0 && ele[i - 1] >= e) return
+    if (i < ele.length - 1 && ele[i + 1] > e) return
+    // Walk each way until higher ground (or the end), keeping the lowest
+    // point; a side with no samples at all (a summit at the end) is ignored.
+    let leftMin = i === 0 ? -Infinity : e
+    for (let k = i - 1; k >= 0 && ele[k] <= e; k--)
+      leftMin = Math.min(leftMin, ele[k])
+    let rightMin = i === ele.length - 1 ? -Infinity : e
+    for (let k = i + 1; k < ele.length && ele[k] <= e; k++)
+      rightMin = Math.min(rightMin, ele[k])
+    if (e - Math.max(leftMin, rightMin) >= threshold || e === top) peaks.push(i)
+  })
+  return peaks.sort((a, b) => ele[b] - ele[a]).slice(0, max)
+}
+
+/**
+ * Indices of the cols: low points with higher ground on both sides, sitting
+ * at least `minProminence` metres (or 8% of the span) below the lower of the
+ * two rises around them. Deepest first, at most `max`.
+ */
+export function findCols(ele: number[], max = 3, minProminence = 20): number[] {
+  const span = Math.max(...ele) - Math.min(...ele)
+  const threshold = Math.max(minProminence, span * 0.08)
+  const cols: Array<[index: number, depth: number]> = []
+  for (let i = 1; i < ele.length - 1; i++) {
+    const e = ele[i]
+    if (ele[i - 1] <= e || ele[i + 1] < e) continue
+    // Walk each way until lower ground (or the end), keeping the highest point.
+    let leftMax = e
+    let k = i - 1
+    for (; k >= 0 && ele[k] >= e; k--) leftMax = Math.max(leftMax, ele[k])
+    let rightMax = e
+    for (k = i + 1; k < ele.length && ele[k] >= e; k++)
+      rightMax = Math.max(rightMax, ele[k])
+    const depth = Math.min(leftMax, rightMax) - e
+    if (depth >= threshold) cols.push([i, depth])
+  }
+  return cols
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, max)
+    .map(([i]) => i)
+}
+
 /** Filled elevation polyline spanning [x0,x1] × [top,bottom]. */
 export function elevationProfile(
   ele: number[],
@@ -112,13 +184,9 @@ export function elevationProfile(
   top: number,
   bottom: number,
 ): string {
-  const min = Math.min(...ele)
-  const max = Math.max(...ele)
-  const span = max - min || 1
-  const n = ele.length
-  const pts = ele.map((e, i) => {
-    const x = x0 + ((x1 - x0) * i) / (n - 1)
-    const y = bottom - ((e - min) / span) * (bottom - top)
+  const profile = { elevation: ele, x0, x1, top, bottom }
+  const pts = ele.map((_, i) => {
+    const { x, y } = profilePoint(profile, i)
     return `${x.toFixed(1)},${y.toFixed(1)}`
   })
   const area = `${x0.toFixed(1)},${bottom.toFixed(1)} ${pts.join(' ')} ${x1.toFixed(1)},${bottom.toFixed(1)}`

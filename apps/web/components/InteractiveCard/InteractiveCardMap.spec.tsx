@@ -42,6 +42,39 @@ describe('InteractiveCardMap', () => {
     expect(screen.getByTestId('card-zone-narrow')).toBeInTheDocument()
   })
 
+  it('works without popover callbacks', () => {
+    renderApp(<InteractiveCardMap svg="<g></g>" zones={ZONES} />)
+    const zone = screen.getByTestId('card-zone-wide')
+    expect(zone).toHaveAttribute('aria-label', '')
+    fireEvent.click(zone)
+    const pop = screen.getByTestId('card-popover')
+    expect(pop).toHaveAttribute('data-open', 'true')
+    expect(pop).toBeEmptyDOMElement()
+  })
+
+  it('reads altitudes off the profile when given one', () => {
+    setup({
+      zones: [],
+      profile: { elevation: [1000, 1200], x0: 0, x1: 100, top: 0, bottom: 50 },
+      lang: 'es',
+    })
+    expect(screen.getByTestId('card-peak-1')).toHaveAttribute(
+      'aria-label',
+      '1200 m',
+    )
+  })
+
+  it('defaults the read-out to English', () => {
+    setup({
+      zones: [],
+      profile: { elevation: [1000, 2200], x0: 0, x1: 100, top: 0, bottom: 50 },
+    })
+    expect(screen.getByTestId('card-peak-1')).toHaveAttribute(
+      'aria-label',
+      '2,200 m',
+    )
+  })
+
   it('renders a marker dot on each interactive zone', () => {
     setup()
     expect(screen.getByTestId('card-marker-wide')).toBeInTheDocument()

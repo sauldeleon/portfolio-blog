@@ -1,5 +1,7 @@
 'use client'
 
+import { useState } from 'react'
+
 import { Button } from '@sdlgr/button'
 import { FieldGroup, FieldLabel, Input } from '@sdlgr/input'
 
@@ -8,6 +10,7 @@ import type { Lang, SummaryRouteData } from '@web/lib/cards'
 
 import { CardDateField } from '../CardDateField'
 import { GpxUrlField } from '../GpxUrlField'
+import { RouteLandmarksField } from '../RouteLandmarksField'
 import {
   StyledFieldRow,
   StyledForm,
@@ -20,32 +23,39 @@ import {
 interface RouteFormProps {
   value: SummaryRouteData
   onChange: (next: SummaryRouteData) => void
+  /** Hides the language toggle when the language is set elsewhere (a post). */
+  hideLang?: boolean
 }
 
 const LANGS: Lang[] = ['en', 'es']
 
-export function RouteForm({ value, onChange }: RouteFormProps) {
+const SHAPES = ['loop', 'linear'] as const
+
+export function RouteForm({ value, onChange, hideLang }: RouteFormProps) {
   const { t } = useClientTranslation('admin')
+  const [placesUnavailable, setPlacesUnavailable] = useState(false)
   function set(patch: Partial<SummaryRouteData>) {
     onChange({ ...value, ...patch })
   }
 
   return (
     <StyledForm data-testid="route-form">
-      <StyledLangToggle>
-        {LANGS.map((l) => (
-          <Button
-            key={l}
-            type="button"
-            variant="label"
-            active={value.lang === l}
-            onClick={() => set({ lang: l })}
-            data-testid={`lang-${l}`}
-          >
-            {l.toUpperCase()}
-          </Button>
-        ))}
-      </StyledLangToggle>
+      {!hideLang && (
+        <StyledLangToggle>
+          {LANGS.map((l) => (
+            <Button
+              key={l}
+              type="button"
+              variant="label"
+              active={value.lang === l}
+              onClick={() => set({ lang: l })}
+              data-testid={`lang-${l}`}
+            >
+              {l.toUpperCase()}
+            </Button>
+          ))}
+        </StyledLangToggle>
+      )}
 
       <StyledSection>
         <StyledSectionTitle>{t('cards.sections.header')}</StyledSectionTitle>
@@ -105,6 +115,27 @@ export function RouteForm({ value, onChange }: RouteFormProps) {
             />
           </FieldGroup>
         </StyledFieldRow>
+        <FieldGroup>
+          <FieldLabel>{t('cards.fields.routeShape')}</FieldLabel>
+          <StyledLangToggle>
+            {SHAPES.map((shape) => (
+              <Button
+                key={shape}
+                type="button"
+                variant="label"
+                active={value.shape === shape}
+                aria-pressed={value.shape === shape}
+                // A second click clears it: the card then shows no chip.
+                onClick={() =>
+                  set({ shape: value.shape === shape ? undefined : shape })
+                }
+                data-testid={`rt-shape-${shape}`}
+              >
+                {t(`cards.fields.routeShapes.${shape}`)}
+              </Button>
+            ))}
+          </StyledLangToggle>
+        </FieldGroup>
       </StyledSection>
 
       <StyledSection>
@@ -112,7 +143,8 @@ export function RouteForm({ value, onChange }: RouteFormProps) {
         <GpxUrlField
           value={value.gpxUrl}
           onChange={(gpxUrl) => set({ gpxUrl })}
-          onParsed={(m) =>
+          onParsed={(m) => {
+            setPlacesUnavailable(Boolean(m.placesUnavailable))
             set({
               date: m.date || value.date,
               dist: m.distanceKm,
@@ -124,9 +156,17 @@ export function RouteForm({ value, onChange }: RouteFormProps) {
               det: m.stoppedTime || value.det,
               tot: m.totalTime || value.tot,
               elevation: m.elevation,
+              shape: m.shape ?? value.shape,
+              landmarks: m.landmarks,
             })
-          }
+          }}
           idPrefix="rt"
+          withPlaceNames
+        />
+        <RouteLandmarksField
+          value={value.landmarks}
+          onChange={(landmarks) => set({ landmarks })}
+          placesUnavailable={placesUnavailable}
         />
       </StyledSection>
 

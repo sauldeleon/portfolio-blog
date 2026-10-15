@@ -91,6 +91,8 @@
       "titlePlaceholder": "Post title",
       "slug": "Slug",
       "slugHelper": "Auto-generated from title. Only lowercase letters, numbers and hyphens.",
+      "slugRegenerate": "↻ From title",
+      "slugRegenerateHint": "Rebuild the slug from the title (changing it changes the post URL)",
       "excerpt": "Excerpt",
       "excerptPlaceholder": "Brief description…",
       "content": "Content",
@@ -154,7 +156,17 @@
     "publishedUrlLabel": "Live ({{locale}}):",
     "publishedUrlCopy": "Copy",
     "publishedUrlCopied": "Copied!",
-    "error": "Something went wrong, please try again"
+    "error": "Something went wrong, please try again",
+    "translate": {
+      "to": {
+        "en": "✨ Translate to English",
+        "es": "✨ Translate to Spanish"
+      },
+      "cancel": "Cancel translation",
+      "confirmOverwrite": "The other language already has text. Replace it with the translation?",
+      "retry": "Retry",
+      "checking": "Checking that Claude is available…"
+    }
   },
   "images": {
     "title": "Images",
@@ -350,6 +362,7 @@
     "title": "Cards",
     "tabs": {
       "route": "Route",
+      "routeInteractive": "Route (interactive)",
       "canyonData": "Canyon",
       "canyonInteractive": "Canyon (interactive)",
       "canyonWaypoints": "Canyon (waypoints)",
@@ -423,7 +436,19 @@
       "sideRight": "Right",
       "sevEasy": "Easy",
       "sevCaution": "Caution",
-      "sevDanger": "Danger"
+      "sevDanger": "Danger",
+      "routeShape": "Route type",
+      "routeShapes": {
+        "loop": "Loop",
+        "linear": "One way"
+      },
+      "landmarks": "Summits and cols",
+      "landmarksEmpty": "Parse the GPX to find the summits and cols; they get their names from the GPX waypoints or OpenStreetMap.",
+      "landmarkPeak": "Summit",
+      "landmarkCol": "Col",
+      "landmarkName": "Name (optional)",
+      "landmarkRemove": "Remove from the card",
+      "landmarksOsmDown": "OpenStreetMap didn't answer, so names not in the GPX waypoints are missing. Press Parse again later, or type them."
     },
     "flow": {
       "observed": "Observed flow",
@@ -516,11 +541,23 @@
       "intro": "Tweak the filters and check the green preview on the map. Nothing changes until you apply; every apply can be undone.",
       "reset": "Reset",
       "apply": "Apply",
+      "scope": {
+        "label": "Apply to",
+        "track": "Whole track",
+        "section": "Selected section",
+        "sectionRange": "Section (points #{{from}}–#{{to}})",
+        "help": "Click the track and shift+click further along to pick a section, or type the range in km.",
+        "from": "From",
+        "to": "To",
+        "total": "Whole track",
+        "totalValue": "{{points}} pts · {{distance}} · +{{ascent}}"
+      },
       "trim": {
         "label": "Privacy trim",
         "help": "Removes the points near the start and the end (e.g. your home).",
         "start": "Start radius",
-        "end": "End radius"
+        "end": "End radius",
+        "sectionHelp": "Off while cleaning a section: its ends stay put so it still joins the rest of the track."
       },
       "speedSpikes": {
         "label": "Speed spikes",
@@ -562,7 +599,7 @@
       }
     },
     "edit": {
-      "help": "Zoom in to see the points of the active segment (the map zooms past the tile limit when needed).\nClick a point to select it, then drag its yellow handle to move it. Shift+click another to select a range. Delete/Backspace removes the selection. Ctrl/Cmd+Z undoes.",
+      "help": "Click the track to select its nearest point, then drag the yellow handle to move it. Shift+click further along to select a range. \"Show points\" (or P) draws every point; zoom in to see them (the map zooms past the tile limit when needed).\nDelete/Backspace removes the selection. Ctrl/Cmd+Z undoes.",
       "segment": "Track {{track}} · segment {{segment}} ({{count}} pts)",
       "insertOn": "Adding points: click the map",
       "insertOff": "Add points",
@@ -576,12 +613,12 @@
       "deletePoint": "Delete point",
       "deleteRange": "Delete range",
       "noSelection": "No point selected.",
-      "zoomHint": "{{count}} points in view — zoom in to edit them"
+      "zoomHint": "{{count}} points in view — zoom in to see and select them"
     },
     "waypoints": {
-      "help": "Click a waypoint to edit it, drag its marker to move it. Reorder with the arrows or by dragging ⋮⋮. Description lines become notes in the post map.",
-      "addOn": "Click the map to place it",
-      "addOff": "Add waypoint",
+      "help": "Click a waypoint to edit it, drag its marker to move it. Reorder with the arrows or by dragging ⋮⋮. Description lines become notes in the post map.\nAdding (W) stays on: click the map, type the name, press Enter, click again. Clicking on the track pins the waypoint to it. Esc stops.",
+      "addOn": "Adding — click the map (Esc to stop)",
+      "addOff": "Add waypoints",
       "empty": "No waypoints yet.",
       "unnamed": "(unnamed)",
       "name": "Name",
@@ -592,7 +629,8 @@
       "defaultName": "Waypoint {{n}}",
       "moveUp": "Move up",
       "moveDown": "Move down",
-      "drag": "Drag to reorder"
+      "drag": "Drag to reorder",
+      "snap": "Snap to track"
     },
     "upload": {
       "open": "Upload track",
@@ -625,6 +663,11 @@
     "picker": {
       "placeholder": "Search GitHub tracks or paste a URL",
       "useUrl": "Use URL: {{url}}"
+    },
+    "map": {
+      "showPoints": "Show points",
+      "hidePoints": "Hide points",
+      "pointsShortcut": "Shortcut: P"
     }
   }
 }

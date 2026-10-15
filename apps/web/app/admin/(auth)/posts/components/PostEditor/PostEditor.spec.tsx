@@ -134,6 +134,45 @@ jest.mock('../EmbedInsertModal', () => ({
     ) : null,
 }))
 
+const mockTranslation = {
+  status: { available: true } as
+    | { available: true }
+    | { available: false; reason: string; message: string }
+    | null,
+  recheck: jest.fn(),
+  translate: jest.fn(),
+  cancel: jest.fn(),
+  isTranslating: false,
+  error: null as string | null,
+}
+
+jest.mock('./usePostTranslation', () => ({
+  usePostTranslation: () => mockTranslation,
+}))
+
+jest.mock('../LinkInsertModal', () => ({
+  LinkInsertModal: ({
+    isOpen,
+    initialText,
+    onInsert,
+    onCancel,
+  }: {
+    isOpen: boolean
+    initialText: string
+    onInsert: (markdown: string) => void
+    onCancel: () => void
+  }) =>
+    isOpen ? (
+      <div data-testid="link-insert-modal-mock" data-initial-text={initialText}>
+        <button
+          data-testid="link-modal-insert-mock"
+          onClick={() => onInsert(`[${initialText || 'x'}](https://a.b)`)}
+        />
+        <button data-testid="link-modal-cancel-mock" onClick={onCancel} />
+      </div>
+    ) : null,
+}))
+
 jest.mock('../SlideshowInsertModal', () => ({
   SlideshowInsertModal: ({
     isOpen,

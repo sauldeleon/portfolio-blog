@@ -14,8 +14,9 @@ export const StyledBackdrop = styled(StyledAdminBackdrop)``
 
 export const StyledModal = styled(StyledAdminDialog).attrs<{
   $variant: ModalVariant
-}>(({ $variant }) => ({
-  $maxWidth: '360px',
+  $width?: string
+}>(({ $variant, $width = '360px' }) => ({
+  $maxWidth: $width,
   $placement: 'center' as const,
   $tone: $variant === 'warning' ? ('success' as const) : ('danger' as const),
 }))``

@@ -1,6 +1,5 @@
 // `renderCard` is a pure SVG renderer, not a Testing Library render helper, so
 // naming its result `svg` is correct here.
-
 /* eslint-disable testing-library/render-result-naming-convention */
 import { renderCard } from './renderCard'
 import type { CardSpec } from './types'
