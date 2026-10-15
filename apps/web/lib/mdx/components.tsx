@@ -7,6 +7,7 @@ import { PostContentCroquis } from '@web/components/PostContent/PostContentCroqu
 import { PostContentEmbed } from '@web/components/PostContent/PostContentEmbed'
 import { PostContentFerrataSummary } from '@web/components/PostContent/PostContentFerrataSummary'
 import { PostContentImage } from '@web/components/PostContent/PostContentImage'
+import { PostContentLink } from '@web/components/PostContent/PostContentLink'
 import { PostContentSlideshow } from '@web/components/PostContent/PostContentSlideshow'
 
 export interface MdxComponentLabels {
@@ -25,6 +26,7 @@ export const POST_CONTENT_EMBEDS = {
   CanyonSummary: PostContentCanyonSummary,
   FerrataSummary: PostContentFerrataSummary,
   img: PostContentImage,
+  a: PostContentLink,
 }
 
 export function createMdxComponents(labels: MdxComponentLabels) {
