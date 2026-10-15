@@ -10,6 +10,17 @@ import { PostEditor } from './PostEditor'
 const mockPush = jest.fn()
 const mockRefresh = jest.fn()
 
+jest.mock('./usePostTranslation', () => ({
+  usePostTranslation: () => ({
+    status: { available: true },
+    recheck: jest.fn(),
+    translate: jest.fn(),
+    cancel: jest.fn(),
+    isTranslating: false,
+    error: null,
+  }),
+}))
+
 jest.mock('@web/i18n/client', () => ({
   useClientTranslation: jest.fn().mockReturnValue({
     t: (key: string) => {

@@ -41,6 +41,7 @@
     "hash:password": "ts-node --skip-project scripts/hash-password.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "0.134.0",
     "@fingerprintjs/botd": "2.0.0",
     "@hookform/resolvers": "5.4.0",
     "@marsidev/react-turnstile": "1.5.3",

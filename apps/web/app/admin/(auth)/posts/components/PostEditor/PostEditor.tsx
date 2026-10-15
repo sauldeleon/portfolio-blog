@@ -29,6 +29,7 @@ import { CategoryIconRenderer } from '@web/utils/categoryIcons'
 import { computeReadingTime } from '@web/utils/computeReadingTime'
 import { slugify } from '@web/utils/slugify'
 
+import { ConfirmDeleteModal } from '../../../components/ConfirmDeleteModal'
 import { PublishNotifyModal } from '../../../components/PublishNotifyModal'
 import { CroquisInsertModal } from '../CroquisInsertModal'
 import { EmbedInsertModal } from '../EmbedInsertModal'
@@ -90,6 +91,10 @@ import {
   StyledTitleRow,
   StyledTocPreview,
   StyledToolbarRow,
+  StyledTranslate,
+  StyledTranslateButton,
+  StyledTranslateError,
+  StyledTranslateRetry,
   StyledUpdatePreviewButton,
   StyledWrapper,
 } from './PostEditor.styles'
@@ -103,6 +108,7 @@ import type {
   ParsedSlideshow,
 } from './parseEmbedBlock'
 import { detectEmbedAtCursor } from './parseEmbedBlock'
+import { usePostTranslation } from './usePostTranslation'
 
 type Locale = 'en' | 'es'
 
@@ -213,6 +219,8 @@ export function PostEditor({
   const initialStatus = post?.post.status ?? 'draft'
   const [status, setStatus] = useState<PostStatus>(initialStatus)
   const [activeLocale, setActiveLocale] = useState<Locale>('en')
+  const translation = usePostTranslation()
+  const [isOverwriteConfirmOpen, setIsOverwriteConfirmOpen] = useState(false)
   const [locales, setLocales] = useState<Record<Locale, LocaleState>>({
     en: translationToState(findTranslation(post?.translations ?? [], 'en')),
     es: translationToState(findTranslation(post?.translations ?? [], 'es')),
@@ -367,6 +375,39 @@ export function PostEditor({
       markdown +
       currentLocale.content.slice(end)
     updateLocale(activeLocale, { content: newContent })
+  }
+
+  // Translates the open language into the other one, showing the result.
+  function startTranslation() {
+    const source = activeLocale
+    const target: Locale = source === 'en' ? 'es' : 'en'
+    const { title, excerpt, content } = locales[source]
+    setActiveLocale(target)
+    void translation.translate(
+      source,
+      target,
+      { title, excerpt, content },
+      (fields) => {
+        const patch: Partial<LocaleState> = { ...fields }
+        if (fields.title !== undefined && !locales[target].slugEdited) {
+          patch.slug = slugify(fields.title)
+        }
+        updateLocale(target, patch)
+      },
+    )
+  }
+
+  function translateActiveLocale() {
+    if (translation.isTranslating) {
+      translation.cancel()
+      return
+    }
+    const target = locales[activeLocale === 'en' ? 'es' : 'en']
+    if (target.title || target.excerpt || target.content) {
+      setIsOverwriteConfirmOpen(true)
+      return
+    }
+    startTranslation()
   }
 
   function openLinkModal() {
@@ -787,6 +828,47 @@ export function PostEditor({
             {t(`postEditor.tabs.${locale}`)}
           </StyledLocaleTab>
         ))}
+        <StyledTranslate>
+          {translation.status?.available === false ? (
+            <StyledTranslateError role="alert" data-testid="translate-error">
+              {translation.status.message}{' '}
+              <StyledTranslateRetry
+                type="button"
+                onClick={() => void translation.recheck()}
+                data-testid="translate-retry"
+              >
+                {t('postEditor.translate.retry')}
+              </StyledTranslateRetry>
+            </StyledTranslateError>
+          ) : (
+            translation.error && (
+              <StyledTranslateError role="alert" data-testid="translate-error">
+                {translation.error}
+              </StyledTranslateError>
+            )
+          )}
+          <StyledTranslateButton
+            type="button"
+            onClick={translateActiveLocale}
+            disabled={
+              !translation.isTranslating &&
+              (!translation.status?.available ||
+                !locales[activeLocale].content.trim())
+            }
+            title={
+              translation.status === null
+                ? t('postEditor.translate.checking')
+                : undefined
+            }
+            data-testid="translate-button"
+          >
+            {translation.isTranslating
+              ? t('postEditor.translate.cancel')
+              : t(
+                  `postEditor.translate.to.${activeLocale === 'en' ? 'es' : 'en'}`,
+                )}
+          </StyledTranslateButton>
+        </StyledTranslate>
       </StyledLocaleTabs>
 
       <StyledEditorLayout>
@@ -1095,6 +1177,7 @@ export function PostEditor({
                 }}
                 onClick={handleTextareaClick}
                 onKeyDown={handleTextareaKeyDown}
+                readOnly={translation.isTranslating}
                 placeholder={t('postEditor.fields.contentPlaceholder')}
                 data-testid="content-input"
                 ref={textareaRef}
@@ -1319,6 +1402,17 @@ export function PostEditor({
           setIsEmbedInsertModalOpen(false)
           setEmbedInitialValues(null)
         }}
+      />
+      <ConfirmDeleteModal
+        isOpen={isOverwriteConfirmOpen}
+        variant="warning"
+        width="min(460px, 90vw)"
+        message={t('postEditor.translate.confirmOverwrite')}
+        onConfirm={() => {
+          setIsOverwriteConfirmOpen(false)
+          startTranslation()
+        }}
+        onCancel={() => setIsOverwriteConfirmOpen(false)}
       />
       <LinkInsertModal
         key={`link-${linkModalKey}`}

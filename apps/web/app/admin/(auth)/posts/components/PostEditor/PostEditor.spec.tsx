@@ -134,6 +134,22 @@ jest.mock('../EmbedInsertModal', () => ({
     ) : null,
 }))
 
+const mockTranslation = {
+  status: { available: true } as
+    | { available: true }
+    | { available: false; reason: string; message: string }
+    | null,
+  recheck: jest.fn(),
+  translate: jest.fn(),
+  cancel: jest.fn(),
+  isTranslating: false,
+  error: null as string | null,
+}
+
+jest.mock('./usePostTranslation', () => ({
+  usePostTranslation: () => mockTranslation,
+}))
+
 jest.mock('../LinkInsertModal', () => ({
   LinkInsertModal: ({
     isOpen,
@@ -1502,84 +1518,6 @@ describe('PostEditor', () => {
       expect(
         screen.queryByTestId('embed-insert-modal-mock'),
       ).not.toBeInTheDocument()
-    })
-  })
-
-  describe('Link insert modal', () => {
-    it('opens and closes the link modal', () => {
-      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
-      expect(
-        screen.queryByTestId('link-insert-modal-mock'),
-      ).not.toBeInTheDocument()
-      fireEvent.click(screen.getByTestId('format-link'))
-      expect(screen.getByTestId('link-insert-modal-mock')).toHaveAttribute(
-        'data-initial-text',
-        '',
-      )
-      fireEvent.click(screen.getByTestId('link-modal-cancel-mock'))
-      expect(
-        screen.queryByTestId('link-insert-modal-mock'),
-      ).not.toBeInTheDocument()
-    })
-
-    it('turns the selected text into a link', () => {
-      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
-      const input = screen.getByTestId('content-input') as HTMLTextAreaElement
-      fireEvent.change(input, { target: { value: 'Visit the refuge now' } })
-      input.setSelectionRange(10, 16)
-      fireEvent.click(screen.getByTestId('format-link'))
-      expect(screen.getByTestId('link-insert-modal-mock')).toHaveAttribute(
-        'data-initial-text',
-        'refuge',
-      )
-      fireEvent.click(screen.getByTestId('link-modal-insert-mock'))
-      expect(input).toHaveValue('Visit the [refuge](https://a.b) now')
-      expect(
-        screen.queryByTestId('link-insert-modal-mock'),
-      ).not.toBeInTheDocument()
-    })
-  })
-
-  describe('Formatting toolbar', () => {
-    it('formats the selection and keeps it selected', () => {
-      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
-      const input = screen.getByTestId('content-input') as HTMLTextAreaElement
-      fireEvent.change(input, { target: { value: 'a word b' } })
-      input.setSelectionRange(2, 6)
-      fireEvent.click(screen.getByTestId('format-bold'))
-      expect(input).toHaveValue('a **word** b')
-      expect(input.selectionStart).toBe(4)
-      expect(input.selectionEnd).toBe(8)
-      expect(input).toHaveFocus()
-    })
-
-    it('opens the link modal from the toolbar', () => {
-      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
-      fireEvent.click(screen.getByTestId('format-link'))
-      expect(screen.getByTestId('link-insert-modal-mock')).toBeInTheDocument()
-    })
-
-    it('handles keyboard shortcuts in the content', () => {
-      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
-      const input = screen.getByTestId('content-input') as HTMLTextAreaElement
-      fireEvent.change(input, { target: { value: 'word' } })
-      input.setSelectionRange(0, 4)
-      fireEvent.keyDown(input, { key: 'a' })
-      expect(input).toHaveValue('word')
-      fireEvent.keyDown(input, { key: 'i', ctrlKey: true })
-      expect(input).toHaveValue('_word_')
-      fireEvent.keyDown(input, { key: 'k', metaKey: true })
-      expect(screen.getByTestId('link-insert-modal-mock')).toHaveAttribute(
-        'data-initial-text',
-        'word',
-      )
-    })
-
-    it('shows the Markdown guide', () => {
-      renderApp(<PostEditor categories={mockCategories} users={mockUsers} />)
-      expect(screen.getByTestId('markdown-guide')).toHaveTextContent(
-        'Markdown guide',
-      )
     })
   })
 

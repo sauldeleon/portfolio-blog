@@ -154,7 +154,17 @@
     "publishedUrlLabel": "Live ({{locale}}):",
     "publishedUrlCopy": "Copy",
     "publishedUrlCopied": "Copied!",
-    "error": "Something went wrong, please try again"
+    "error": "Something went wrong, please try again",
+    "translate": {
+      "to": {
+        "en": "✨ Translate to English",
+        "es": "✨ Translate to Spanish"
+      },
+      "cancel": "Cancel translation",
+      "confirmOverwrite": "The other language already has text. Replace it with the translation?",
+      "retry": "Retry",
+      "checking": "Checking that Claude is available…"
+    }
   },
   "images": {
     "title": "Images",

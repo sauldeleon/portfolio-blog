@@ -21,6 +21,8 @@ export interface ConfirmDeleteModalProps {
   onConfirm: () => void
   onCancel: () => void
   variant?: ModalVariant
+  /** Max width of the dialog; defaults to a compact 360px. */
+  width?: string
 }
 
 export function ConfirmDeleteModal({
@@ -29,6 +31,7 @@ export function ConfirmDeleteModal({
   onConfirm,
   onCancel,
   variant = 'danger',
+  width,
 }: ConfirmDeleteModalProps) {
   const { t } = useClientTranslation('admin')
 
@@ -37,6 +40,7 @@ export function ConfirmDeleteModal({
       show={isOpen}
       onHide={onCancel}
       $variant={variant}
+      $width={width}
       renderBackdrop={(props: RenderModalBackdropProps) => (
         <StyledBackdrop {...props} />
       )}

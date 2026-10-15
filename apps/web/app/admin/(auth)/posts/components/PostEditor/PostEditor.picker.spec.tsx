@@ -5,6 +5,17 @@ import { renderApp } from '@sdlgr/test-utils'
 import type { PostEditorProps } from './PostEditor'
 import { PostEditor } from './PostEditor'
 
+jest.mock('./usePostTranslation', () => ({
+  usePostTranslation: () => ({
+    status: { available: true },
+    recheck: jest.fn(),
+    translate: jest.fn(),
+    cancel: jest.fn(),
+    isTranslating: false,
+    error: null,
+  }),
+}))
+
 jest.mock('@web/i18n/client', () => ({
   useClientTranslation: jest.fn().mockReturnValue({
     t: (key: string) => {

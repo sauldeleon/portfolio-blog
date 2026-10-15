@@ -107,4 +107,18 @@ describe('ConfirmDeleteModal', () => {
     expect(screen.getByText('Archive this?')).toBeInTheDocument()
     expect(screen.getByTestId('confirm-delete-confirm')).toBeInTheDocument()
   })
+
+  it('accepts a wider dialog', () => {
+    renderApp(
+      <ConfirmDeleteModal
+        isOpen
+        message="Replace it?"
+        onConfirm={jest.fn()}
+        onCancel={jest.fn()}
+        variant="warning"
+        width="460px"
+      />,
+    )
+    expect(screen.getByText('Replace it?')).toBeInTheDocument()
+  })
 })

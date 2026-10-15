@@ -123,6 +123,49 @@ export const StyledLocaleTabs = styled.div`
   margin-bottom: 1.5rem;
 `
 
+export const StyledTranslate = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-left: auto;
+`
+
+export const StyledTranslateError = styled.span`
+  font-size: 0.65rem;
+  color: ${({ theme }) => theme.colors.orange};
+`
+
+export const StyledTranslateRetry = styled.button`
+  background: none;
+  border: none;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+`
+
+export const StyledTranslateButton = styled(Button).attrs({
+  variant: 'ghost',
+  size: 'xs',
+})`
+  font-family: inherit;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: ${({ theme }) => theme.colors.green};
+  border-color: rgba(152, 223, 214, 0.4);
+
+  &:hover:not(:disabled) {
+    border-color: ${({ theme }) => theme.colors.green};
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+`
+
 export const StyledLocaleTab = styled(Button).attrs({
   variant: 'ghost',
 })<{ $active: boolean }>`
