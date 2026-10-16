@@ -1,6 +1,11 @@
+import { cleanupE2eData, trackCreated } from '../support/cleanup'
 import { loginViaUi } from '../support/login'
 
 describe('Admin posts — series order auto-assignment', () => {
+  // Runs whether the tests passed or failed.
+  after(() => {
+    cleanupE2eData()
+  })
   let commitHash: string
 
   before(() => {
@@ -20,6 +25,9 @@ describe('Admin posts — series order auto-assignment', () => {
     const seriesId = `e2e-series-${uid}`
     const firstTitle = `e2e series post 1 ${uid}`
     const secondTitle = `e2e series post 2 ${uid}`
+    trackCreated('posts', firstTitle)
+    trackCreated('posts', secondTitle)
+    trackCreated('series', seriesId)
 
     // --- Create first post ---
     cy.get('[data-testid="new-post-button"]').click()

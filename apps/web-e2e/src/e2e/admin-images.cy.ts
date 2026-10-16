@@ -1,3 +1,5 @@
+import { cleanupE2eData, trackCreated } from '../support/cleanup'
+import { clickUntilVisible } from '../support/clickUntilVisible'
 import { loginViaUi } from '../support/login'
 
 // 1×1 transparent PNG — minimal valid image accepted by the upload API
@@ -5,6 +7,10 @@ const MINIMAL_PNG_B64 =
   'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=='
 
 describe('Admin images — upload, verify in picker, delete', () => {
+  // Runs whether the tests passed or failed.
+  after(() => {
+    cleanupE2eData()
+  })
   let imageName: string
   let commitHash: string
 
@@ -20,20 +26,19 @@ describe('Admin images — upload, verify in picker, delete', () => {
     const ts = Date.now()
     imageName = `e2e-cypress-${commitHash}-${ts}`
     const renamedImageName = `e2e-cypress-${commitHash}-${ts + 10000}`
+    trackCreated('images', imageName)
+    trackCreated('images', renamedImageName)
 
     // 1. Go to image manager
     cy.visit('/admin/images')
     cy.get('[data-testid="image-manager"]').should('be.visible')
 
-    // 2. Open upload modal
-    // Wait for React hydration (same pattern as open-image-picker-button):
-    // image-manager is visible from SSR before hydrateRoot() attaches handlers.
-    cy.get('[data-testid="upload-button"]').click()
-    cy.get('[data-testid="upload-button"]').then(($el) => {
-      $el[0].click()
-    })
-    // react-overlays resolves its portal container via useEffect (one extra render cycle)
-    cy.get('[data-testid="dropzone"]', { timeout: 10000 }).should('be.visible')
+    // 2. Open upload modal (image-manager is visible from SSR before React
+    // attaches handlers, so keep clicking until the dropzone shows up).
+    clickUntilVisible(
+      '[data-testid="upload-button"]',
+      '[data-testid="dropzone"]',
+    )
 
     // 3. Drop the image file
     cy.get('[data-testid="dropzone-input"]').selectFile(
@@ -84,12 +89,13 @@ describe('Admin images — upload, verify in picker, delete', () => {
     })
 
     // 7. Open image insert modal, then the image picker from within it.
-    // Step 7a: open ImageInsertModal via the toolbar button.
-    // Native click — React event delegation on freshly loaded pages.
+    // Step 7a: open ImageInsertModal via the toolbar button. A click can still
+    // be lost if React replaces the node while recovering from a hydration
+    // mismatch, so retry until the modal is open.
     cy.get('[data-testid="open-image-picker-button"]').scrollIntoView()
-    cy.get('[data-testid="open-image-picker-button"]').click()
-    cy.get('[data-testid="pick-image-button"]', { timeout: 10000 }).should(
-      'be.visible',
+    clickUntilVisible(
+      '[data-testid="open-image-picker-button"]',
+      '[data-testid="pick-image-button"]',
     )
 
     // Step 7b: open the image picker sidebar from inside the insert modal.

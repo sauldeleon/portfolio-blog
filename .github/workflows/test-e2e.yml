@@ -40,3 +40,11 @@ jobs:
           wait-on: 'https://${{ steps.vercel_preview_url.outputs.preview_url }}'
           config: baseUrl=https://${{ steps.vercel_preview_url.outputs.preview_url }}
           env: E2E_PASSWORD=${{ secrets.E2E_PASSWORD }}
+      - name: Upload Cypress screenshots
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: cypress-screenshots
+          path: apps/web-e2e/screenshots
+          if-no-files-found: ignore
+          retention-days: 7

@@ -1,6 +1,11 @@
+import { cleanupE2eData, trackCreated } from '../support/cleanup'
 import { loginViaUi } from '../support/login'
 
 describe('Admin posts — publish lifecycle', () => {
+  // Runs whether the tests passed or failed.
+  after(() => {
+    cleanupE2eData()
+  })
   let commitHash: string
 
   before(() => {
@@ -19,6 +24,8 @@ describe('Admin posts — publish lifecycle', () => {
     const uid = `${commitHash}-${Date.now()}`
     const enTitle = `e2e publish ${uid}`
     const esTitle = `e2e publicar ${uid}`
+    trackCreated('posts', enTitle)
+    trackCreated('posts', esTitle)
 
     cy.get('[data-testid="new-post-button"]').click()
     cy.url({ timeout: 10000 }).should('include', '/admin/posts/new')
@@ -118,6 +125,10 @@ describe('Admin posts — publish lifecycle', () => {
 })
 
 describe('Admin posts — create, archive, and hard delete', () => {
+  // Runs whether the tests passed or failed.
+  after(() => {
+    cleanupE2eData()
+  })
   let commitHash: string
 
   before(() => {
@@ -136,6 +147,8 @@ describe('Admin posts — create, archive, and hard delete', () => {
     const uid = `${commitHash}-${Date.now()}`
     const enTitle = `e2e post ${uid}`
     const esTitle = `e2e post es ${uid}`
+    trackCreated('posts', enTitle)
+    trackCreated('posts', esTitle)
 
     cy.get('[data-testid="new-post-button"]').click()
     cy.url({ timeout: 10000 }).should('include', '/admin/posts/new')
