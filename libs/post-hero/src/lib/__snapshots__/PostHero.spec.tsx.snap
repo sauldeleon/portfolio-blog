@@ -1,18 +1,45 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`PostHero > matches snapshot 1`] = `
+.c2 {
+  position: absolute;
+  display: block;
+  overflow: hidden;
+  inset: 0;
+}
+
+:where(.c2 > img[data-blur-up]) {
+  position: relative;
+  z-index: 1;
+  transition: opacity 0.6s ease-out;
+}
+
+:where(.c2 > img[data-blur-up]:not([data-loaded])) {
+  opacity: 0;
+}
+
+.c3 {
+  display: block;
+  width: 100%;
+  height: 100%;
+  filter: blur(12px);
+  transform: scale(1.1);
+  position: absolute;
+  inset: 0;
+}
+
 .c0 {
   color: #FBFBFB;
   margin-bottom: 1.5rem;
 }
 
-.c2 {
+.c4 {
   padding: 1.5rem 0;
   max-width: var(--reading-measure);
   margin-inline: auto;
 }
 
-.c5 {
+.c7 {
   font-size: 1.5rem;
   line-height: 1.25;
   margin: 0.5rem 0 0;
@@ -26,7 +53,7 @@ exports[`PostHero > matches snapshot 1`] = `
   background-color: rgba(0, 0, 0, 0.3);
 }
 
-.c4 {
+.c6 {
   display: flex;
   align-items: center;
   gap: 0.4rem;
@@ -40,13 +67,13 @@ exports[`PostHero > matches snapshot 1`] = `
   opacity: 0.75;
 }
 
-.c4 svg {
+.c6 svg {
   width: 0.75rem;
   height: 0.75rem;
   flex-shrink: 0;
 }
 
-.c3 {
+.c5 {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -54,7 +81,7 @@ exports[`PostHero > matches snapshot 1`] = `
   margin: 0 0 1rem;
 }
 
-.c6 {
+.c8 {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -63,7 +90,7 @@ exports[`PostHero > matches snapshot 1`] = `
   margin-top: 0.75rem;
 }
 
-.c7 {
+.c9 {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
@@ -73,25 +100,25 @@ exports[`PostHero > matches snapshot 1`] = `
   opacity: 0.7;
 }
 
-.c8 {
+.c10 {
   opacity: 0.35;
   user-select: none;
 }
 
 @media (width >= 768px) {
-  .c2 {
+  .c4 {
     padding: 2rem 0;
   }
 }
 
 @media (width >= 768px) {
-  .c5 {
+  .c7 {
     font-size: 2rem;
   }
 }
 
 @media (width >= 1024px) {
-  .c5 {
+  .c7 {
     font-size: 2.5rem;
   }
 }
@@ -110,19 +137,33 @@ exports[`PostHero > matches snapshot 1`] = `
       <div
         class="c1"
       >
-        <img
-          alt="My Post Title"
-          src="blog/cover-image"
-        />
+        <span
+          class="c2"
+          data-testid="blur-up"
+        >
+          <img
+            alt=""
+            aria-hidden="true"
+            class="c3"
+            data-testid="blur-placeholder"
+            src="https://res.cloudinary.com/test/image/upload/w_32/blog/cover-image"
+            style="object-fit: cover;"
+          />
+          <img
+            alt="My Post Title"
+            src="blog/cover-image"
+            style="position: absolute; inset: 0px; width: 100%; height: 100%; object-fit: cover;"
+          />
+        </span>
       </div>
       <div
-        class="c2"
+        class="c4"
       >
         <div
-          class="c3"
+          class="c5"
         >
           <div
-            class="c4"
+            class="c6"
             data-testid="category-badge"
           >
             <svg
@@ -132,22 +173,22 @@ exports[`PostHero > matches snapshot 1`] = `
           </div>
         </div>
         <h1
-          class="c5"
+          class="c7"
         >
           My Post Title
         </h1>
         <div
-          class="c6"
+          class="c8"
         >
           <div
-            class="c7"
+            class="c9"
           >
             <span>
               John Doe
             </span>
             <span
               aria-hidden="true"
-              class="c8"
+              class="c10"
             >
               |
             </span>
@@ -158,7 +199,7 @@ exports[`PostHero > matches snapshot 1`] = `
             </time>
             <span
               aria-hidden="true"
-              class="c8"
+              class="c10"
             >
               |
             </span>

@@ -14,6 +14,7 @@ import {
   useMap,
 } from 'react-leaflet'
 
+import { BlurUp, blurPlaceholderUrl, isOnContainedImage } from '@sdlgr/blur-up'
 import {
   MAP_ICON_ANCHOR,
   MAP_ICON_END,
@@ -42,6 +43,7 @@ import {
   StyledGpxMap,
   StyledLightbox,
   StyledLightboxClose,
+  StyledLightboxFrame,
   StyledLightboxNav,
   StyledLocateButton,
   StyledMapContainer,
@@ -154,9 +156,15 @@ export function buildWaypointPopupHtml(
   notes: string[] = [],
 ): string {
   const hasImg = urls.length > 0
-  const main = hasImg
-    ? `<img class="gpx-popup-main" src="${urls[0]}" style="width:100%;max-height:260px;object-fit:cover;display:block;cursor:zoom-in;" alt="${name}" />`
+  const mainImg = hasImg
+    ? `<img class="gpx-popup-main" data-blur-up src="${urls[0]}" style="width:100%;max-height:260px;object-fit:cover;display:block;cursor:zoom-in;" alt="${name}" />`
     : ''
+  // A blurred copy shows (and sizes the box) until the image loads; see the
+  // .gpx-popup-media rules in GpxMap.styles and BlurUpScript.
+  const placeholder = hasImg ? blurPlaceholderUrl(urls[0]) : undefined
+  const main = placeholder
+    ? `<span class="gpx-popup-media"><img class="gpx-popup-blur" src="${placeholder}" alt="" aria-hidden="true" />${mainImg}</span>`
+    : mainImg
   const thumbs =
     urls.length > 1
       ? `<div style="display:flex;gap:4px;padding:4px;overflow-x:auto;">` +
@@ -196,11 +204,21 @@ function WaypointImageGallery({
   const current = images[Math.min(index, images.length - 1)]
   return (
     <>
-      <StyledWaypointImageCard
-        data-testid="waypoint-image-card"
-        src={current}
-        alt={alt}
-      />
+      <BlurUp
+        key={current}
+        placeholder={blurPlaceholderUrl(current)}
+        objectFit="contain"
+        imageStyle={{ maxHeight: '300px' }}
+      >
+        {(image) => (
+          <StyledWaypointImageCard
+            data-testid="waypoint-image-card"
+            src={current}
+            alt={alt}
+            {...image}
+          />
+        )}
+      </BlurUp>
       {images.length > 1 && (
         <StyledWaypointGalleryThumbs data-testid="waypoint-gallery-thumbs">
           {images.map((img, i) => (
@@ -343,6 +361,12 @@ function GpxTrackLayer({
       }
       thumbs.forEach((thumb) => {
         thumb.onclick = () => {
+          if (main.src === thumb.src) return
+          // Show the new image's blurred copy and fade it in again.
+          const blur = el.querySelector<HTMLImageElement>('.gpx-popup-blur')
+          const placeholder = blurPlaceholderUrl(thumb.src)
+          if (blur && placeholder) blur.src = placeholder
+          main.removeAttribute('data-loaded')
           main.src = thumb.src
           thumbs.forEach((t) => (t.style.opacity = '0.55'))
           thumb.style.opacity = '1'
@@ -835,12 +859,36 @@ export function GpxMap({
             >
               ×
             </StyledLightboxClose>
-            <img
-              src={lightbox.images[lightbox.index]}
-              alt=""
-              data-testid="gpx-lightbox-image"
-              onClick={(e) => e.stopPropagation()}
-            />
+            <StyledLightboxFrame>
+              <BlurUp
+                key={lightbox.images[lightbox.index]}
+                fill
+                objectFit="contain"
+                placeholder={blurPlaceholderUrl(
+                  lightbox.images[lightbox.index],
+                )}
+              >
+                {(image) => (
+                  <img
+                    src={lightbox.images[lightbox.index]}
+                    alt=""
+                    data-testid="gpx-lightbox-image"
+                    // Clicks on the picture keep it open; beside it, close.
+                    onClick={(e) => {
+                      if (
+                        isOnContainedImage(
+                          e.currentTarget,
+                          e.clientX,
+                          e.clientY,
+                        )
+                      )
+                        e.stopPropagation()
+                    }}
+                    {...image}
+                  />
+                )}
+              </BlurUp>
+            </StyledLightboxFrame>
             {lightbox.images.length > 1 && (
               <StyledLightboxNav>
                 <button

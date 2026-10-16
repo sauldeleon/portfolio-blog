@@ -322,6 +322,9 @@ vi.mock('./GpxMap.styles', async () => ({
       {children}
     </div>
   ),
+  StyledLightboxFrame: ({ children }: { children: React.ReactNode }) => (
+    <span>{children}</span>
+  ),
   StyledLightboxClose: ({
     children,
     onClick,
@@ -551,6 +554,48 @@ describe('GpxMap', () => {
       act(() => img.click())
       fireEvent.keyDown(document, { key: 'Escape' })
       expect(screen.queryByTestId('gpx-lightbox')).not.toBeInTheDocument()
+    })
+
+    it('closes on a click beside the picture of a loaded image', () => {
+      const onPopupOpen = getPopupOpenHandler()
+      const { el, img } = popupWithImage('https://cdn.com/wp.jpg')
+      act(() => onPopupOpen({ popup: { getElement: () => el } }))
+      act(() => img.click())
+      const viewer = screen.getByTestId(
+        'gpx-lightbox-image',
+      ) as HTMLImageElement
+      // A 100x100 picture contained in a 300x100 box: bands at the sides.
+      Object.defineProperty(viewer, 'naturalWidth', { value: 100 })
+      Object.defineProperty(viewer, 'naturalHeight', { value: 100 })
+      viewer.getBoundingClientRect = () =>
+        ({ left: 0, top: 0, width: 300, height: 100 }) as DOMRect
+      fireEvent.click(viewer, { clientX: 150, clientY: 50 })
+      expect(screen.getByTestId('gpx-lightbox')).toBeInTheDocument()
+      fireEvent.click(viewer, { clientX: 20, clientY: 50 })
+      expect(screen.queryByTestId('gpx-lightbox')).not.toBeInTheDocument()
+    })
+
+    it('fades a swapped Cloudinary image in again with its own blurred copy', () => {
+      const onPopupOpen = getPopupOpenHandler()
+      const urls = [
+        'https://res.cloudinary.com/x/image/upload/v1/a.jpg',
+        'https://res.cloudinary.com/x/image/upload/v1/b.jpg',
+      ]
+      const { el, main, thumbs } = popupWithGallery(urls)
+      const blur = document.createElement('img')
+      blur.className = 'gpx-popup-blur'
+      el.prepend(blur)
+      main.setAttribute('data-loaded', '')
+      act(() => onPopupOpen({ popup: { getElement: () => el } }))
+
+      // The image already shown: nothing to do.
+      act(() => thumbs[0].click())
+      expect(main).toHaveAttribute('data-loaded')
+
+      act(() => thumbs[1].click())
+      expect(main).not.toHaveAttribute('data-loaded')
+      expect(blur.getAttribute('src')).toContain('e_blur:1000')
+      expect(blur.getAttribute('src')).toContain('b.jpg')
     })
 
     it('leaves other keys alone while the viewer is open', () => {
@@ -2273,6 +2318,17 @@ describe('GpxMap showElevation', () => {
 })
 
 describe('buildWaypointPopupHtml', () => {
+  it('adds a blurred copy behind a Cloudinary image', () => {
+    const html = buildWaypointPopupHtml(
+      ['https://res.cloudinary.com/x/image/upload/v1/a.jpg'],
+      'Summit',
+    )
+    expect(html).toContain('class="gpx-popup-media"')
+    expect(html).toContain('class="gpx-popup-blur"')
+    expect(html).toContain('e_blur:1000')
+    expect(html).toContain('data-blur-up')
+  })
+
   it('builds a single-image popup without a thumbnail strip', () => {
     const html = buildWaypointPopupHtml(['https://cdn.com/a.jpg'], 'Summit')
     expect(html).toContain('class="gpx-popup-main"')

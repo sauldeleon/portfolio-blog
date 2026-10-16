@@ -1,8 +1,8 @@
 'use client'
 
-import Image from 'next/image'
 import { useState } from 'react'
 
+import { BlurUpImage } from '@web/components/BlurUpImage'
 import { useClientTranslation } from '@web/i18n/client'
 import type { CloudinaryImage } from '@web/lib/cloudinary/images'
 
@@ -56,12 +56,15 @@ export function ImageCard({ image, onDelete, onEdit }: ImageCardProps) {
 
   return (
     <StyledCard data-testid="image-card">
-      <StyledImageWrapper>
-        <Image
+      <StyledImageWrapper
+        style={{ aspectRatio: `${image.width} / ${image.height}` }}
+      >
+        <BlurUpImage
           src={image.url}
           alt=""
-          width={image.width}
-          height={image.height}
+          fill
+          sizes="(max-width: 720px) 50vw, 240px"
+          objectFit="cover"
           data-testid="image-thumbnail"
         />
       </StyledImageWrapper>

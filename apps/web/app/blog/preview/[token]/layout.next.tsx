@@ -1,5 +1,6 @@
 import { ReactNode } from 'react'
 
+import { BlurUpScript } from '@sdlgr/blur-up'
 import { LanguageContextProvider } from '@sdlgr/i18n-tools'
 import { robotoMonoClassName } from '@sdlgr/main-theme'
 
@@ -11,6 +12,9 @@ import '../../../globals.css'
 export default function PreviewLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={robotoMonoClassName}>
+      <head>
+        <BlurUpScript />
+      </head>
       <body>
         <StyledComponentsRegistry>
           <LanguageContextProvider value={{ language: 'en' }}>

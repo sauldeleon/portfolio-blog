@@ -1,7 +1,9 @@
 'use client'
 
-import { CldImage } from 'next-cloudinary'
+import { CldImage, getCldImageUrl } from 'next-cloudinary'
 import { type ReactNode } from 'react'
+
+import { BLUR_PLACEHOLDER_OPTIONS, BlurUp } from '@sdlgr/blur-up'
 
 import {
   StyledBadgeRow,
@@ -61,15 +63,26 @@ export function PostHero({
     <StyledHeader>
       {coverImagePublicId && (
         <StyledCoverWrapper $fit={coverImageFit ?? 'cover'}>
-          <CldImage
-            src={coverImagePublicId}
-            alt={title}
+          <BlurUp
             fill
-            // The cover is the page's largest image (its LCP element).
-            preload
-            sizes="(max-width: 1440px) 100vw, 1440px"
-            style={{ objectFit: coverImageFit ?? 'cover' }}
-          />
+            objectFit={coverImageFit ?? 'cover'}
+            placeholder={getCldImageUrl({
+              src: coverImagePublicId,
+              ...BLUR_PLACEHOLDER_OPTIONS,
+            })}
+          >
+            {(image) => (
+              <CldImage
+                src={coverImagePublicId}
+                alt={title}
+                fill
+                // The cover is the page's largest image (its LCP element).
+                preload
+                sizes="(max-width: 1440px) 100vw, 1440px"
+                {...image}
+              />
+            )}
+          </BlurUp>
         </StyledCoverWrapper>
       )}
       <StyledHeroContent>

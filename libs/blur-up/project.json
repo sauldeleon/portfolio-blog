@@ -1,0 +1,25 @@
+{
+  "name": "blur-up",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/blur-up/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "changelogHeader": "# Changelog Blur-up library \n",
+        "baseBranch": "main",
+        "commitMessageFormat": "chore({projectName}): release: v{version}",
+        "push": false
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/blur-up/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  }
+}
