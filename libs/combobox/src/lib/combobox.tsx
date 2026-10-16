@@ -52,7 +52,7 @@ export function Combobox({
           const trimmed = inputValue.trim()
           if (!trimmed) return false
           const exists = opts.some(
-            (opt) => opt.label.toLowerCase() === trimmed.toLowerCase(),
+            (opt) => opt.label?.toLowerCase() === trimmed.toLowerCase(),
           )
           if (exists) return false
           return isValidNewOption ? isValidNewOption(trimmed) : true

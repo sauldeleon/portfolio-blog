@@ -44,7 +44,7 @@ type Tab =
   | 'ferrata-summary'
   | 'route-summary'
 
-const TABS: Array<{ kind: Tab; labelKey: string }> = [
+const TABS = [
   { kind: 'summary-route', labelKey: 'cards.tabs.route' },
   { kind: 'route-summary', labelKey: 'cards.tabs.routeInteractive' },
   { kind: 'canyoning-data', labelKey: 'cards.tabs.canyonData' },
@@ -55,7 +55,7 @@ const TABS: Array<{ kind: Tab; labelKey: string }> = [
   { kind: 'ferrata-summary', labelKey: 'cards.tabs.ferrataInteractive' },
   { kind: 'waypoints', labelKey: 'cards.tabs.waypointsGpx' },
   { kind: 'waypoint-single', labelKey: 'cards.tabs.waypointSingle' },
-]
+] as const satisfies ReadonlyArray<{ kind: Tab; labelKey: string }>
 
 const NON_SPEC_TABS: Tab[] = [
   'waypoints',

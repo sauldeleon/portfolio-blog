@@ -1,9 +1,8 @@
+import type { Session } from 'next-auth'
 import { NextResponse } from 'next/server'
 import { type ZodSchema } from 'zod'
 
 import { auth } from '@web/lib/auth/config'
-
-type Session = NonNullable<Awaited<ReturnType<typeof auth>>>
 
 type AuthOk = { ok: true; session: Session }
 type Err = { ok: false; response: NextResponse }

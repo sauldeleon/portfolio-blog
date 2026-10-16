@@ -62,8 +62,8 @@ export async function GET(request: Request) {
       locale: lng,
       page,
       limit,
-      category,
-      tag,
+      categories: category ? [category] : undefined,
+      tags: tag ? [tag] : undefined,
       q,
     })
 

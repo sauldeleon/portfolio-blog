@@ -1,4 +1,5 @@
 import { G, Link, Path, Rect, Svg, Text, View } from '@react-pdf/renderer'
+import type { ComponentType, ReactNode } from 'react'
 
 import {
   CROQUIS_HEADER_H,
@@ -7,6 +8,17 @@ import {
   layoutCroquis,
 } from '@web/lib/cards'
 import type { CroquisNode, CroquisObstacle, Lang } from '@web/lib/cards'
+
+// react-pdf renders SVG text with the fontSize attribute, but its typings leave
+// fontSize out of SVGTextProps. Same component, typed for what this file uses.
+const SvgText = Text as unknown as ComponentType<{
+  x: number
+  y: number
+  fill: string
+  fontSize: number
+  textAnchor?: 'start' | 'middle' | 'end'
+  children?: ReactNode
+}>
 
 /** Croquis palette (mirrors lib/cards/theme.ts; inlined so the PDF renderer is self-contained). */
 const C = {
@@ -163,12 +175,12 @@ export function CroquisPdf({
         {headerH > 0 && (
           <>
             <Rect x={8} y={80} width={6} height={80} rx={3} fill={C.amber} />
-            <Text x={40} y={44} fill={C.amber} fontSize={16}>
+            <SvgText x={40} y={44} fill={C.amber} fontSize={16}>
               CROQUIS
-            </Text>
-            <Text x={40} y={72} fill={C.bone} fontSize={26}>
+            </SvgText>
+            <SvgText x={40} y={72} fill={C.bone} fontSize={26}>
               {title}
-            </Text>
+            </SvgText>
           </>
         )}
         <G transform={`translate(0 ${headerH})`}>
@@ -192,16 +204,16 @@ export function CroquisPdf({
                 d={`M${node.x} ${node.yTop - 28} a5 5 0 1 0 0.1 0 Z`}
                 fill={SEV_COLORS[node.obstacle.severity]}
               />
-              <Text
+              <SvgText
                 x={node.x + 11}
                 y={node.yTop - 23}
                 fill={C.bone}
                 fontSize={13}
               >
                 {nodeLabel(node, lang)}
-              </Text>
+              </SvgText>
               {metaLabel(node, lang) && (
-                <Text
+                <SvgText
                   x={(node.x + node.endX) / 2}
                   y={node.yBot + 28}
                   fill={C.cold}
@@ -209,28 +221,28 @@ export function CroquisPdf({
                   textAnchor="middle"
                 >
                   {metaLabel(node, lang)}
-                </Text>
+                </SvgText>
               )}
             </G>
           ))}
           {layout.nodes.length > 0 && (
             <>
-              <Text
+              <SvgText
                 x={layout.access.x - 64}
                 y={layout.access.y - 24}
                 fill={C.cold}
                 fontSize={11}
               >
                 {s.croquis_access}
-              </Text>
-              <Text
+              </SvgText>
+              <SvgText
                 x={layout.exit.x + 6}
                 y={layout.exit.y + 4}
                 fill={C.cold}
                 fontSize={11}
               >
                 {s.croquis_exit}
-              </Text>
+              </SvgText>
             </>
           )}
         </G>

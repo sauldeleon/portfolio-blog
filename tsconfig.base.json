@@ -53,7 +53,11 @@
       "@sdlgr/checkbox": ["./libs/checkbox/src/index.ts"],
       "@sdlgr/date-picker": ["./libs/date-picker/src/index.ts"],
       "@web/*": ["./apps/web/*"]
-    }
+    },
+    "strict": false,
+    "noUncheckedSideEffectImports": false,
+    "types": ["*"],
+    "esModuleInterop": false
   },
   "files": [
     "./node_modules/@nx/react/typings/image.d.ts",

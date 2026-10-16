@@ -2,6 +2,14 @@ import { render, screen } from '@testing-library/react'
 
 import { Callout } from '@sdlgr/callout'
 
+import { MdxTable } from '@web/components/PostContent/MdxTable'
+import { PostContentEmbed } from '@web/components/PostContent/PostContentEmbed'
+import { PostContentImage } from '@web/components/PostContent/PostContentImage'
+import { PostContentLink } from '@web/components/PostContent/PostContentLink'
+
+import { createMdxComponents, mdxComponents } from './components'
+import { renderMDX } from './renderMDX'
+
 vi.mock('next-mdx-remote/rsc', () => ({
   MDXRemote: ({ source }: { source: string }) => (
     <div data-testid="mdx-content">{source}</div>
@@ -47,7 +55,6 @@ vi.mock('@sdlgr/code-block', () => ({
 
 describe('renderMDX', () => {
   it('renders the source string', async () => {
-    const { renderMDX } = await import('./renderMDX')
     render(renderMDX('Hello MDX world'))
     expect(screen.getByTestId('mdx-content')).toHaveTextContent(
       'Hello MDX world',
@@ -55,7 +62,6 @@ describe('renderMDX', () => {
   })
 
   it('uses Callout in mdxComponents', async () => {
-    const { createMdxComponents } = await import('./components')
     const components = createMdxComponents({
       copyLabel: 'Copy',
       copiedLabel: 'Copied!',
@@ -64,9 +70,6 @@ describe('renderMDX', () => {
   })
 
   it('uses PostContentImage as img in mdxComponents', async () => {
-    const { PostContentImage } =
-      await import('@web/components/PostContent/PostContentImage')
-    const { createMdxComponents } = await import('./components')
     const components = createMdxComponents({
       copyLabel: 'Copy',
       copiedLabel: 'Copied!',
@@ -75,16 +78,10 @@ describe('renderMDX', () => {
   })
 
   it('uses PostContentLink as a in mdxComponents', async () => {
-    const { PostContentLink } =
-      await import('@web/components/PostContent/PostContentLink')
-    const { mdxComponents } = await import('./components')
     expect(mdxComponents.a).toBe(PostContentLink)
   })
 
   it('uses PostContentEmbed as Embed in mdxComponents', async () => {
-    const { PostContentEmbed } =
-      await import('@web/components/PostContent/PostContentEmbed')
-    const { createMdxComponents } = await import('./components')
     const components = createMdxComponents({
       copyLabel: 'Copy',
       copiedLabel: 'Copied!',
@@ -93,7 +90,6 @@ describe('renderMDX', () => {
   })
 
   it('pre component renders CodeBlock with labels', async () => {
-    const { createMdxComponents } = await import('./components')
     const components = createMdxComponents({
       copyLabel: 'Copy',
       copiedLabel: 'Copied!',
@@ -103,13 +99,11 @@ describe('renderMDX', () => {
   })
 
   it('uses default labels when no labels provided', async () => {
-    const { renderMDX } = await import('./renderMDX')
     render(renderMDX('Hello MDX world'))
     expect(screen.getByTestId('mdx-content')).toBeInTheDocument()
   })
 
   it('uses provided labels when passed', async () => {
-    const { renderMDX } = await import('./renderMDX')
     render(
       renderMDX('Hello MDX world', {
         copyLabel: 'Copiar',
@@ -120,17 +114,12 @@ describe('renderMDX', () => {
   })
 
   it('exports mdxComponents with default labels', async () => {
-    const { PostContentImage } =
-      await import('@web/components/PostContent/PostContentImage')
-    const { mdxComponents } = await import('./components')
     expect(mdxComponents.Callout).toBe(Callout)
     expect(mdxComponents.img).toBe(PostContentImage)
     expect(mdxComponents.pre).toBeDefined()
   })
 
   it('has table component in mdxComponents', async () => {
-    const { MdxTable } = await import('@web/components/PostContent/MdxTable')
-    const { createMdxComponents } = await import('./components')
     const components = createMdxComponents({
       copyLabel: 'Copy',
       copiedLabel: 'Copied!',
@@ -141,7 +130,6 @@ describe('renderMDX', () => {
   })
 
   it('h1 component renders as h2', async () => {
-    const { createMdxComponents } = await import('./components')
     const components = createMdxComponents({
       copyLabel: 'Copy',
       copiedLabel: 'Copied!',

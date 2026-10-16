@@ -242,10 +242,18 @@ describe('GET /api/posts', () => {
       locale: 'es',
       page: 2,
       limit: 5,
-      category: 'engineering',
-      tag: 'react',
+      categories: ['engineering'],
+      tags: ['react'],
       q: 'hello',
     })
+  })
+
+  it('passes no category or tag filter when none is requested', async () => {
+    mockGetPublishedPostsPaginated.mockResolvedValue({ data: [], total: 0 })
+    await GET(new Request('http://localhost/api/posts?lng=en'))
+    expect(mockGetPublishedPostsPaginated).toHaveBeenCalledWith(
+      expect.objectContaining({ categories: undefined, tags: undefined }),
+    )
   })
 
   it('computes totalPages correctly', async () => {

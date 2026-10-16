@@ -19,6 +19,8 @@ describe('ContactPage', () => {
     })
     const { baseElement } = renderApp(<ContactPage />)
     await screen.findByText('Software Engineer')
+    // The contact links render after the bot check settles.
+    await screen.findByLabelText('My electronic mail address')
     expect(baseElement).toMatchSnapshot()
   })
 
