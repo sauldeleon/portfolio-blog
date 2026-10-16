@@ -18,6 +18,7 @@ vi.mock('next/cache', () => ({
 }))
 
 vi.mock('@web/lib/db/queries/posts', () => ({
+  getPublishedPosts: vi.fn(),
   getPublishedPostsPaginated: mockGetPublishedPostsPaginated,
   getLatestPublishedPost: mockGetLatestPublishedPost,
   getPostPublishedDates: mockGetPostPublishedDates,

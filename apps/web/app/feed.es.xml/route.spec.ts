@@ -4,8 +4,8 @@
 const mockGetPublishedPosts = vi.fn()
 const mockGenerateRSS = vi.fn()
 
-vi.mock('@web/lib/db/queries/posts', () => ({
-  getPublishedPosts: mockGetPublishedPosts,
+vi.mock('@web/lib/db/queries/publicCache', () => ({
+  getCachedPublishedPosts: mockGetPublishedPosts,
 }))
 
 vi.mock('@web/lib/rss/generateRSS', () => ({

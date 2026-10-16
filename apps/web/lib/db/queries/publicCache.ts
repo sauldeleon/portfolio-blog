@@ -8,6 +8,7 @@ import {
   type PaginatedPostsParams,
   getLatestPublishedPost,
   getPostPublishedDates,
+  getPublishedPosts,
   getPublishedPostsPaginated,
 } from './posts'
 import { getPostCountPerTag } from './tags'
@@ -56,6 +57,11 @@ function cachedPublicQuery<Args extends unknown[], Result>(
 export const getCachedLatestPublishedPost = cachedPublicQuery(
   'latest-published-post',
   getLatestPublishedPost,
+)
+
+export const getCachedPublishedPosts = cachedPublicQuery(
+  'published-posts',
+  getPublishedPosts,
 )
 
 export const getCachedCategoryByLocaleSlug = cachedPublicQuery(

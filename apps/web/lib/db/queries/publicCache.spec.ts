@@ -9,6 +9,7 @@ import {
   getCachedLatestPublishedPost,
   getCachedPostCountPerTag,
   getCachedPostPublishedDates,
+  getCachedPublishedPosts,
   getCachedPublishedPostsPage,
   reviveDates,
 } from './publicCache'
@@ -16,6 +17,7 @@ import {
 const { mockQueries } = vi.hoisted(() => ({
   mockQueries: {
     getLatestPublishedPost: vi.fn(),
+    getPublishedPosts: vi.fn(),
     getCategoryByLocaleSlug: vi.fn(),
     getCategories: vi.fn(),
     getPostCountPerTag: vi.fn(),
@@ -35,6 +37,7 @@ vi.mock('next/cache', () => ({
 
 vi.mock('./posts', () => ({
   getLatestPublishedPost: mockQueries.getLatestPublishedPost,
+  getPublishedPosts: mockQueries.getPublishedPosts,
   getPostPublishedDates: mockQueries.getPostPublishedDates,
   getPublishedPostsPaginated: mockQueries.getPublishedPostsPaginated,
 }))
@@ -52,7 +55,7 @@ const cacheCalls = [...vi.mocked(unstable_cache).mock.calls]
 
 describe('publicCache', () => {
   it('caches every query under the posts tag with a one-day backstop', () => {
-    expect(cacheCalls).toHaveLength(6)
+    expect(cacheCalls).toHaveLength(7)
     for (const [, keyParts, options] of cacheCalls) {
       expect(keyParts?.[0]).toBe('public-query')
       expect(options).toEqual({ tags: ['posts'], revalidate: 86400 })
@@ -82,11 +85,13 @@ describe('publicCache', () => {
     mockQueries.getCategories.mockResolvedValue([])
     mockQueries.getPostCountPerTag.mockResolvedValue([])
     mockQueries.getPostPublishedDates.mockResolvedValue([])
+    mockQueries.getPublishedPosts.mockResolvedValue([])
 
     await getCachedCategoryByLocaleSlug('montana', 'es')
     await getCachedCategories('es', 'hero', { tags: ['a'] })
     await getCachedPostCountPerTag('hero', { categories: ['c'] })
     await getCachedPostPublishedDates('en', 'hero')
+    await getCachedPublishedPosts('es', { limit: 20 })
 
     expect(mockQueries.getCategoryByLocaleSlug).toHaveBeenCalledWith(
       'montana',
