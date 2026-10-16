@@ -49,7 +49,6 @@ export function ImagePicker({
   const { t } = useClientTranslation('admin')
   const inputId = useId()
   const [images, setImages] = useState<CloudinaryImage[]>([])
-  const [nextCursor, setNextCursor] = useState<string | undefined>(undefined)
   const [search, setSearch] = useState('')
   const [loading, setLoading] = useState(false)
   const [loadingMore, setLoadingMore] = useState(false)
@@ -57,14 +56,14 @@ export function ImagePicker({
   const [uploading, setUploading] = useState(false)
   const [uploadError, setUploadError] = useState<string | null>(null)
   const sentinelRef = useRef<HTMLDivElement>(null)
+  // The pagination cursor only drives loading more, never rendering, so it
+  // lives in a ref set as soon as a page arrives. (Mirroring a state value in
+  // an effect lagged one paint behind, so an intersection right after the
+  // first page could see no cursor and skip loading more.)
   const nextCursorRef = useRef<string | undefined>(undefined)
   const loadingMoreRef = useRef(false)
   const searchTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const searchRef = useRef(search)
-
-  useEffect(() => {
-    nextCursorRef.current = nextCursor
-  }, [nextCursor])
 
   useEffect(() => {
     loadingMoreRef.current = loadingMore
@@ -82,7 +81,7 @@ export function ImagePicker({
         nextCursor?: string
       }>(`/api/images/?search=${encodeURIComponent(term)}`)
       setImages(data.images)
-      setNextCursor(data.nextCursor)
+      nextCursorRef.current = data.nextCursor
     } catch {
       // leave images empty on error
     } finally {
@@ -103,7 +102,7 @@ export function ImagePicker({
         const freshUploads = prev.filter((img) => !serverIds.has(img.publicId))
         return [...freshUploads, ...data.images]
       })
-      setNextCursor(data.nextCursor)
+      nextCursorRef.current = data.nextCursor
     } catch {
       // leave images empty on error
     } finally {
@@ -147,7 +146,7 @@ export function ImagePicker({
           ...data.images.filter((img) => !existingIds.has(img.publicId)),
         ]
       })
-      setNextCursor(data.nextCursor)
+      nextCursorRef.current = data.nextCursor
     } catch {
       // leave current images on error
     } finally {
@@ -197,7 +196,7 @@ export function ImagePicker({
             uploaded,
             ...data.images.filter((img) => img.publicId !== uploaded.publicId),
           ])
-          setNextCursor(data.nextCursor)
+          nextCursorRef.current = data.nextCursor
         })
         .catch(() => undefined)
     } catch {
