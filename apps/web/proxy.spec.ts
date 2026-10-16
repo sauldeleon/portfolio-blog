@@ -223,6 +223,16 @@ describe('handleMiddleware', () => {
       expect(mockRatelimitLimit).not.toHaveBeenCalled()
     })
   })
+
+  describe('matcher config', () => {
+    it('skips router prefetches of admin pages so they cannot refresh the session cookie', async () => {
+      const { config } = await import('./proxy')
+      expect(config.matcher).toContainEqual({
+        source: '/admin/:path*',
+        missing: [{ type: 'header', key: 'next-router-prefetch' }],
+      })
+    })
+  })
 })
 
 export {}

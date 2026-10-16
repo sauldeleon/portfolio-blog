@@ -54,7 +54,14 @@ export default auth(handleMiddleware)
 
 export const config = {
   matcher: [
-    '/admin/:path*',
+    {
+      source: '/admin/:path*',
+      // Auth.js re-issues the session cookie on every request it handles. A
+      // router prefetch still in flight when the user logs out would answer with
+      // a fresh session cookie and log them back in. Prefetches skip the proxy;
+      // the (auth) layout still guards every admin page via requireAdminSession.
+      missing: [{ type: 'header', key: 'next-router-prefetch' }],
+    },
     '/api/posts/:path*',
     '/api/categories/:path*',
     '/api/upload',
