@@ -43,19 +43,21 @@ function request(method: string, url: string, body?: Cypress.RequestBody) {
 function ensureSession() {
   return request('GET', '/api/series/').then((res) => {
     if (res.status !== 401) return
-    return request('GET', '/api/auth/csrf/').then(({ body }) =>
-      cy.request({
-        method: 'POST',
-        url: '/api/auth/callback/credentials/',
-        form: true,
-        failOnStatusCode: false,
-        log: false,
-        body: {
-          csrfToken: body.csrfToken,
-          email: E2E_EMAIL,
-          password: Cypress.env('E2E_PASSWORD'),
-        },
-      }),
+    return cy.env(['E2E_PASSWORD']).then(({ E2E_PASSWORD }) =>
+      request('GET', '/api/auth/csrf/').then(({ body }) =>
+        cy.request({
+          method: 'POST',
+          url: '/api/auth/callback/credentials/',
+          form: true,
+          failOnStatusCode: false,
+          log: false,
+          body: {
+            csrfToken: body.csrfToken,
+            email: E2E_EMAIL,
+            password: E2E_PASSWORD,
+          },
+        }),
+      ),
     )
   })
 }

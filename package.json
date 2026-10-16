@@ -138,7 +138,7 @@
     "@vitest/coverage-istanbul": "4.1.11",
     "babel-plugin-styled-components": "2.3.0",
     "circular-dependency-plugin": "5.2.2",
-    "cypress": "15.21.1",
+    "cypress": "16.1.1",
     "eslint": "9.39.5",
     "eslint-config-next": "16.3.8",
     "eslint-config-prettier": "10.1.8",
