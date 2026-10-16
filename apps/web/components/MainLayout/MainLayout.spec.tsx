@@ -22,4 +22,11 @@ describe('MainLayout', () => {
     await screen.findByText('test')
     expect(baseElement).toMatchSnapshot()
   })
+
+  it('flags the document as hydrated once mounted', async () => {
+    delete document.documentElement.dataset.hydrated
+    renderApp(<MainLayout>test</MainLayout>)
+    await screen.findByText('test')
+    expect(document.documentElement.dataset.hydrated).toBe('true')
+  })
 })
