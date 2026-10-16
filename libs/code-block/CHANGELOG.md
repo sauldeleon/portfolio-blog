@@ -1,5 +1,7 @@
 # Changelog Code Block library
 
+## [0.1.1](https://github.com/sauldeleon/portfolio-blog/compare/code-block-0.1.0...code-block-0.1.1) (2026-10-16)
+
 ## 0.1.0 (2026-10-16)
 
 ### Features
