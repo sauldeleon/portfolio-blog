@@ -111,6 +111,18 @@ describe('PostComments', () => {
     })
   })
 
+  it('renders server-provided comments without fetching them', () => {
+    renderApp(
+      <PostComments
+        {...baseProps}
+        initialComments={[mockComment as never, mockReply as never]}
+      />,
+    )
+    expect(screen.getByText('Great post!')).toBeInTheDocument()
+    expect(screen.getByText('Agreed!')).toBeInTheDocument()
+    expect(mockAxiosGet).not.toHaveBeenCalled()
+  })
+
   it('renders nested replies under parent comment', async () => {
     mockAxiosGet.mockResolvedValue({
       data: { comments: [mockComment, mockReply] },

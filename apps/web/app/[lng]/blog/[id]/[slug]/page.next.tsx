@@ -16,6 +16,7 @@ import { SeriesIndicator } from '@web/components/SeriesIndicator/SeriesIndicator
 import { SubscribeModal } from '@web/components/SubscribeModal'
 import { getServerTranslation } from '@web/i18n/server'
 import { getCategoryTranslations } from '@web/lib/db/queries/categories'
+import { getApprovedCommentsByPost } from '@web/lib/db/queries/comments'
 import { getPostByNumber, getPublishedPosts } from '@web/lib/db/queries/posts'
 import { Locale } from '@web/lib/db/schema'
 import { logger } from '@web/lib/logger'
@@ -164,9 +165,15 @@ export default async function BlogPostPage({ params }: RouteProps) {
     ? format(new Date(post.publishedAt), 'PP', { locale })
     : null
 
-  const [toc, categoryName] = await Promise.all([
+  const [toc, categoryName, initialComments] = await Promise.all([
     Promise.resolve(extractToc(post.content)),
     getCategoryName(post.category, lng as Locale),
+    // Server-rendered so the list ships in the page; on failure the client
+    // component fetches it instead.
+    getApprovedCommentsByPost(post.id).catch((err: unknown) => {
+      logger.error(err, 'BlogPostPage: failed to load comments')
+      return undefined
+    }),
   ])
   const postUrl = `${getSiteUrl()}/${lng}/blog/${post.postNumber}/${post.slug}`
   const altLangPath = `/${altLng}/blog/${postNumber}/${postAlt?.slug ?? post.slug}`
@@ -236,6 +243,7 @@ export default async function BlogPostPage({ params }: RouteProps) {
         postSlug={post.slug}
         lng={lng}
         commentsEnabled={post.commentsEnabled}
+        initialComments={initialComments}
       />
     </StyledPage>
   )

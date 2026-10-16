@@ -37,6 +37,14 @@ vi.mock('@web/lib/db/queries/posts', () => ({
   getPublishedPosts: mockGetPublishedPosts,
 }))
 
+const { mockGetApprovedCommentsByPost } = vi.hoisted(() => ({
+  mockGetApprovedCommentsByPost: vi.fn(),
+}))
+
+vi.mock('@web/lib/db/queries/comments', () => ({
+  getApprovedCommentsByPost: mockGetApprovedCommentsByPost,
+}))
+
 vi.mock('@web/lib/db/queries/categories', () => ({
   getCategoryTranslations: mockGetCategoryTranslations,
 }))
@@ -155,6 +163,7 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
     vi.clearAllMocks()
     mockPostHero.mockReturnValue(<div data-testid="post-hero" />)
     mockPostComments.mockReturnValue(<div data-testid="post-comments" />)
+    mockGetApprovedCommentsByPost.mockResolvedValue([])
     mockGetServerTranslation.mockResolvedValue({ t: (key: string) => key })
     mockGetCategoryTranslations.mockResolvedValue([
       {
@@ -275,6 +284,35 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
     render(ui)
     expect(mockPostComments).toHaveBeenCalledWith(
       expect.objectContaining({ commentsEnabled: false }),
+      undefined,
+    )
+  })
+
+  it('passes the server-rendered comments to PostComments', async () => {
+    const comments = [{ id: 'c1', username: 'ana', body: 'Nice' }]
+    mockGetPostByNumber.mockResolvedValue(publishedPost)
+    mockGetApprovedCommentsByPost.mockResolvedValue(comments)
+    const ui = await BlogPostPage({
+      params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
+    })
+    render(ui)
+    expect(mockGetApprovedCommentsByPost).toHaveBeenCalledWith(publishedPost.id)
+    expect(mockPostComments).toHaveBeenCalledWith(
+      expect.objectContaining({ initialComments: comments }),
+      undefined,
+    )
+  })
+
+  it('leaves comments to the client when loading them fails', async () => {
+    mockGetPostByNumber.mockResolvedValue(publishedPost)
+    mockGetApprovedCommentsByPost.mockRejectedValue(new Error('db down'))
+    const ui = await BlogPostPage({
+      params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
+    })
+    render(ui)
+    expect(mockLoggerError).toHaveBeenCalled()
+    expect(mockPostComments).toHaveBeenCalledWith(
+      expect.objectContaining({ initialComments: undefined }),
       undefined,
     )
   })

@@ -33,6 +33,11 @@ export interface PostCommentsProps {
   postSlug: string
   lng: string
   commentsEnabled?: boolean
+  /**
+   * Approved comments rendered on the server. When given, the list ships in
+   * the page HTML and is not fetched again on the client.
+   */
+  initialComments?: CommentRecord[]
 }
 
 type ReplyRecord = CommentRecord & { parentUsername: string }
@@ -84,15 +89,19 @@ export function PostComments({
   postSlug,
   lng,
   commentsEnabled = true,
+  initialComments,
 }: PostCommentsProps) {
   const { t } = useClientTranslation('blogPage')
-  const [comments, setComments] = useState<CommentRecord[]>([])
+  const [comments, setComments] = useState<CommentRecord[]>(
+    initialComments ?? [],
+  )
   const [error, setError] = useState(false)
   const [replyToId, setReplyToId] = useState<string | null>(null)
   const [replyToUsername, setReplyToUsername] = useState<string | null>(null)
   const [highlightedId, setHighlightedId] = useState<string | null>(null)
 
   useEffect(() => {
+    if (initialComments) return
     void axios
       .get<{ comments: CommentRecord[] }>(`/api/posts/${postId}/comments/`)
       .then(({ data }) => {
@@ -101,7 +110,7 @@ export function PostComments({
       .catch(() => {
         setError(true)
       })
-  }, [postId])
+  }, [initialComments, postId])
 
   const grouped = groupComments(comments)
 
