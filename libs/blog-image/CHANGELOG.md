@@ -2,6 +2,8 @@
 
 ## [0.1.1](https://github.com/sauldeleon/portfolio-blog/compare/blog-image-0.1.0...blog-image-0.1.1) (2026-10-16)
 
+## [0.1.1](https://github.com/sauldeleon/portfolio-blog/compare/blog-image-0.1.0...blog-image-0.1.1) (2026-10-16)
+
 ## 0.1.0 (2026-10-16)
 
 ### Features
