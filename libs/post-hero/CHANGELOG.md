@@ -1,5 +1,11 @@
 # Changelog Post Hero library
 
+## [0.1.1](https://github.com/sauldeleon/portfolio-blog/compare/post-hero-0.1.0...post-hero-0.1.1) (2026-10-16)
+
+### Performance Improvements
+
+- **web:** preload the cover image of posts and the latest-post hero ([a3d8ce6](https://github.com/sauldeleon/portfolio-blog/commit/a3d8ce687cd4e8f2d9f09cf95697b8147ae11c1a))
+
 ## 0.1.0 (2026-10-16)
 
 ### Features
