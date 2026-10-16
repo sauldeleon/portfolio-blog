@@ -6219,7 +6219,6 @@ __metadata:
     "@react-email/components": 1.0.12
     "@react-pdf/renderer": 4.9.0
     "@svgr/webpack": ^8.1.0
-    "@swc/plugin-styled-components": 12.19.0
     "@tanstack/react-query": 5.104.0
     "@tanstack/react-query-devtools": 5.104.0
     "@testing-library/cypress": 10.1.3
@@ -6741,13 +6740,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/counter@npm:^0.1.3":
-  version: 0.1.3
-  resolution: "@swc/counter@npm:0.1.3"
-  checksum: df8f9cfba9904d3d60f511664c70d23bb323b3a0803ec9890f60133954173047ba9bdeabce28cd70ba89ccd3fd6c71c7b0bd58be85f611e1ffbe5d5c18616598
-  languageName: node
-  linkType: hard
-
 "@swc/helpers@npm:0.5.23, @swc/helpers@npm:^0.5.0":
   version: 0.5.23
   resolution: "@swc/helpers@npm:0.5.23"
@@ -6763,15 +6755,6 @@ __metadata:
   dependencies:
     tslib: ^2.8.0
   checksum: 637e6ee47dd5b853e3ae96dfd9ed9a7440e474ef104e829969aad724423928db99c1ecc57116557fba433f184caaef3d75f998f6199dddfaa21a9b2ce3d2c680
-  languageName: node
-  linkType: hard
-
-"@swc/plugin-styled-components@npm:12.19.0":
-  version: 12.19.0
-  resolution: "@swc/plugin-styled-components@npm:12.19.0"
-  dependencies:
-    "@swc/counter": ^0.1.3
-  checksum: 8767dca2d1772e9788089de316dce10ebd800b694fcdab8db9b0c2bc7f61c345de8b25700fdfdd9f45581b6084c26f063f861eb3fc26ce29ca943bed1b24db13
   languageName: node
   linkType: hard
 
