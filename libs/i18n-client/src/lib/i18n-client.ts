@@ -51,12 +51,14 @@ export function initialize({ resourcesToBackend, ...rest }: InitializeProps) {
  * renders at the same time. Changing its language while rendering one page
  * leaked into the others (an English post rendered with Spanish UI strings).
  * On the server, each language gets its own clone sharing the loaded resources.
+ * Calling initialize() again (dev reloads, several bundles) gives the singleton
+ * a new resource store, so a clone of the old one would only return keys.
  */
 const serverInstances = new Map<string, I18n>()
 
 function serverInstanceFor(base: I18n, lng: string): I18n {
   let instance = serverInstances.get(lng)
-  if (!instance) {
+  if (!instance || instance.store !== base.store) {
     instance = base.cloneInstance({ lng })
     instance.changeLanguage(lng)
     serverInstances.set(lng, instance)
