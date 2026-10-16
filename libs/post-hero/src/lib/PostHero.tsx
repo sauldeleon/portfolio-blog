@@ -65,6 +65,8 @@ export function PostHero({
             src={coverImagePublicId}
             alt={title}
             fill
+            // The cover is the page's largest image (its LCP element).
+            preload
             sizes="(max-width: 1440px) 100vw, 1440px"
             style={{ objectFit: coverImageFit ?? 'cover' }}
           />
