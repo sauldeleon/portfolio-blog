@@ -249,6 +249,19 @@ describe('PUT /api/posts/[id]', () => {
     expect(response.status).toBe(400)
   })
 
+  it('returns 400 for a slug the blog could not serve', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    const response = await PUT(
+      makePutRequest({
+        translations: {
+          en: { title: 'T', slug: 'x'.repeat(201), excerpt: 'E', content: 'C' },
+        },
+      }),
+      makeParams('id'),
+    )
+    expect(response.status).toBe(400)
+  })
+
   it('returns 422 when category does not exist', async () => {
     mockAuth.mockResolvedValue({ user: { name: 'admin' } })
     mockGetCategoryBySlug.mockResolvedValue(null)

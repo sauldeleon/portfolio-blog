@@ -1,9 +1,7 @@
 import { languages } from '@web/i18n/languages'
+import { isPostSlug } from '@web/utils/slugify'
 
 const POST_NUMBER = /^[0-9]{1,9}$/
-/** Matches what slugify() produces: letters and digits joined by hyphens. */
-const SLUG = /^[\p{L}\p{N}]+(?:-[\p{L}\p{N}]+)*$/u
-const MAX_SLUG_LENGTH = 200
 
 /**
  * Whether a `/[lng]/blog/...` URL has a shape the blog can serve.
@@ -31,5 +29,5 @@ export function isServeableBlogPath(pathname: string): boolean {
   if (postNumber === undefined) return true
   if (!POST_NUMBER.test(postNumber)) return false
   if (slug === undefined) return true
-  return slug.length <= MAX_SLUG_LENGTH && SLUG.test(slug)
+  return isPostSlug(slug)
 }

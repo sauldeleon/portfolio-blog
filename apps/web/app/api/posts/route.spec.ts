@@ -310,6 +310,18 @@ describe('POST /api/posts', () => {
     expect(response.status).toBe(400)
   })
 
+  it('returns 400 for a slug the blog could not serve', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    const response = await POST(
+      makeRequest({
+        category: 'engineering',
+        authorId: 'admin',
+        translations: { en: { ...validTranslations.en, slug: 'Not a/slug' } },
+      }),
+    )
+    expect(response.status).toBe(400)
+  })
+
   it('returns 422 when category does not exist', async () => {
     mockAuth.mockResolvedValue({ user: { name: 'admin' } })
     mockGetCategoryBySlug.mockResolvedValue(null)

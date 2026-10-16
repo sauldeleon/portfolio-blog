@@ -22,6 +22,7 @@ import {
 import { notifyPostPublished } from '@web/lib/email/notifyPostPublished'
 import { logger } from '@web/lib/logger'
 import { computeReadingTime } from '@web/utils/computeReadingTime'
+import { MAX_POST_SLUG_LENGTH, POST_SLUG_PATTERN } from '@web/utils/slugify'
 
 const CACHE_HEADERS = {
   'Cache-Control': 's-maxage=60, stale-while-revalidate=3600',
@@ -68,7 +69,13 @@ export async function GET(
 
 const translationUpdateSchema = z.object({
   title: z.string().min(1),
-  slug: z.string().min(1),
+  slug: z
+    .string()
+    .max(MAX_POST_SLUG_LENGTH)
+    .regex(
+      POST_SLUG_PATTERN,
+      'Slug may only contain letters, digits and single hyphens',
+    ),
   excerpt: z.string().min(1),
   content: z.string().min(1),
 })
