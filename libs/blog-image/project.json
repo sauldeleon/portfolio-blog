@@ -20,13 +20,6 @@
       "options": {
         "lintFilePatterns": ["libs/blog-image/**/*.{ts,tsx,js,jsx}"]
       }
-    },
-    "test": {
-      "executor": "@nx/vitest:test",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "options": {
-        "configFile": "libs/blog-image/vite.config.mts"
-      }
     }
   }
 }

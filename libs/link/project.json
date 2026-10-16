@@ -20,13 +20,6 @@
       "options": {
         "lintFilePatterns": ["libs/link/**/*.{ts,tsx,js,jsx}"]
       }
-    },
-    "test": {
-      "executor": "@nx/vitest:test",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "options": {
-        "configFile": "libs/link/vite.config.mts"
-      }
     }
   }
 }
