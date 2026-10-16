@@ -89,6 +89,11 @@ const nextConfig = {
     // For other options, see https://styled-components.com/docs/tooling#babel-plugin
     styledComponents: true,
   },
+  typescript: {
+    // tsconfig.json only holds project references (no files), which the tsc
+    // CLI used for the build type-check rejects. Check the app project itself.
+    tsconfigPath: 'tsconfig.app.json',
+  },
   pageExtensions: ['next.tsx', 'next.ts', 'next.jsx', 'next.js', 'ts'],
   trailingSlash: true,
   images: {

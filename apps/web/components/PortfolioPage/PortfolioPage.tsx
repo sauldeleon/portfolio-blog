@@ -82,16 +82,19 @@ export async function PortfolioPage({ lng }: PortfolioPageProps) {
   })
 
   const areasRaw = t('items.profile.skillAreas.areas', { returnObjects: true })
-  const areas: { icon: string; title: string; skills: string[] }[] =
-    Array.isArray(areasRaw) ? areasRaw : []
+  type SkillArea = { icon: string; title: string; skills: string[] }
+  const areas = Array.isArray(areasRaw) ? (areasRaw as SkillArea[]) : []
 
   const otherItemsRaw = t('items.other.otherAreas', { returnObjects: true })
-  const otherItems: {
+  type OtherItem = {
     name: string
     beginYear?: string
     endYear?: string
     highlights: string[]
-  }[] = Array.isArray(otherItemsRaw) ? otherItemsRaw : []
+  }
+  const otherItems = Array.isArray(otherItemsRaw)
+    ? (otherItemsRaw as OtherItem[])
+    : []
 
   const experienceItems = getExperienceItems()
   const sortedExperience = [...experienceItems].sort(

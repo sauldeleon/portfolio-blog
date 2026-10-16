@@ -37,7 +37,7 @@ function encodeName(name: string): Uint8Array {
 }
 
 /** Pack files into an uncompressed ZIP archive and return its bytes. */
-export function zipStore(files: ZipFile[]): Uint8Array {
+export function zipStore(files: ZipFile[]): Uint8Array<ArrayBuffer> {
   const parts: Uint8Array[] = []
   const central: Uint8Array[] = []
   let offset = 0
