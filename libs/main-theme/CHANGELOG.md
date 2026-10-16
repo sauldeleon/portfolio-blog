@@ -1,5 +1,11 @@
 # Changelog Main Theme
 
+## [0.6.0](https://github.com/sauldeleon/portfolio-blog/compare/main-theme-0.5.2...main-theme-0.6.0) (2026-10-16)
+
+### Features
+
+- improve cards, comments, maps, and test setup ([#134](https://github.com/sauldeleon/portfolio-blog/issues/134)) ([d23293f](https://github.com/sauldeleon/portfolio-blog/commit/d23293fe9a2cf39143bc5141b2b9eb3734e14b08))
+
 ## [0.5.2](https://github.com/sauldeleon/portfolio-blog/compare/main-theme-0.5.1...main-theme-0.5.2) (2026-06-09)
 
 ## [0.5.1](https://github.com/sauldeleon/portfolio-blog/compare/main-theme-0.5.0...main-theme-0.5.1) (2026-05-11)
