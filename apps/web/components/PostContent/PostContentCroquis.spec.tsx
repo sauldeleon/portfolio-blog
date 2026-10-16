@@ -1,18 +1,23 @@
-import * as ReactPdf from '@react-pdf/renderer'
 import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import { renderApp } from '@sdlgr/test-utils'
 
+import { waypointSlug } from '@web/lib/cards'
+
 import { PostContentCroquis } from './PostContentCroquis'
 
-// Test hooks the mocked '@react-pdf/renderer' exposes (see __mocks__).
-const { __setMockPdf, __resetMockPdf } = ReactPdf as unknown as {
-  __setMockPdf: (next: { url?: string | null; loading?: boolean }) => void
-  __resetMockPdf: () => void
-}
-
 const mockDownloadPng = vi.fn<(filename: string) => Promise<void>>()
+
+vi.mock('./CroquisReportButton', () => ({
+  CroquisReportButton: (props: { summary: unknown; fileBase: string }) => (
+    <div
+      data-testid="croquis-report-mock"
+      data-summary={JSON.stringify(props.summary)}
+      data-file-base={props.fileBase}
+    />
+  ),
+}))
 
 vi.mock('@web/components/Croquis', () => ({
   CroquisMap: ({
@@ -60,7 +65,6 @@ describe('PostContentCroquis', () => {
     mockLanguage = 'en'
     mockDownloadPng.mockReset()
     mockDownloadPng.mockResolvedValue(undefined)
-    __resetMockPdf()
   })
 
   it('renders nothing without obstacles', () => {
@@ -135,14 +139,16 @@ describe('PostContentCroquis', () => {
     ).toBeInTheDocument()
   })
 
-  it('shows the canyon report button by default', () => {
-    renderApp(<PostContentCroquis obstacles={OB} />)
-    expect(screen.getByTestId('post-croquis-report')).toBeInTheDocument()
+  it('loads the canyon report button by default', async () => {
+    renderApp(<PostContentCroquis obstacles={OB} title="Barranco X" />)
+    const report = await screen.findByTestId('croquis-report-mock')
+    expect(report).toHaveAttribute('data-file-base', waypointSlug('Barranco X'))
   })
 
   it('hides the report button when noReport is set', () => {
     renderApp(<PostContentCroquis obstacles={OB} noReport />)
     expect(screen.queryByTestId('post-croquis-report')).not.toBeInTheDocument()
+    expect(screen.queryByTestId('croquis-report-mock')).not.toBeInTheDocument()
   })
 
   it('hides the whole bar when both buttons are disabled', () => {
@@ -150,35 +156,19 @@ describe('PostContentCroquis', () => {
     expect(
       screen.queryByTestId('post-croquis-download'),
     ).not.toBeInTheDocument()
-    expect(screen.queryByTestId('post-croquis-report')).not.toBeInTheDocument()
+    expect(screen.queryByTestId('croquis-report-mock')).not.toBeInTheDocument()
   })
 
-  it('accepts a canyon summary for the report', () => {
+  it('passes the parsed canyon summary to the report', async () => {
     const summary = JSON.stringify({ kind: 'canyoning-data', lang: 'en' })
     renderApp(<PostContentCroquis obstacles={OB} summary={summary} />)
-    expect(screen.getByTestId('post-croquis-report')).toBeInTheDocument()
+    const report = await screen.findByTestId('croquis-report-mock')
+    expect(report.getAttribute('data-summary')).not.toBe('null')
   })
 
-  it('ignores an unparseable canyon summary', () => {
+  it('passes no summary to the report when it is unparseable', async () => {
     renderApp(<PostContentCroquis obstacles={OB} summary="not-json" />)
-    expect(screen.getByTestId('post-croquis-report')).toBeInTheDocument()
-  })
-
-  it('downloads the report PDF via a generated link', async () => {
-    const clickSpy = vi
-      .spyOn(HTMLAnchorElement.prototype, 'click')
-      .mockImplementation(() => undefined)
-    renderApp(<PostContentCroquis obstacles={OB} title="Barranco X" />)
-    await userEvent.click(screen.getByTestId('post-croquis-report'))
-    expect(clickSpy).toHaveBeenCalled()
-    clickSpy.mockRestore()
-  })
-
-  it('disables the report button while the PDF is generating', () => {
-    __setMockPdf({ loading: true, url: null })
-    renderApp(<PostContentCroquis obstacles={OB} />)
-    const button = screen.getByTestId('post-croquis-report')
-    expect(button).toBeDisabled()
-    expect(button).toHaveTextContent('croquis.generatingReport')
+    const report = await screen.findByTestId('croquis-report-mock')
+    expect(report).toHaveAttribute('data-summary', 'null')
   })
 })

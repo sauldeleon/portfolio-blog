@@ -1,22 +1,29 @@
 'use client'
 
-import { usePDF } from '@react-pdf/renderer'
-import { useEffect, useMemo, useState } from 'react'
+import dynamic from 'next/dynamic'
+import { useMemo, useState } from 'react'
 
 import { DownloadIcon } from '@sdlgr/icons'
 
-import { CanyonReportDocument } from '@web/components/CanyonReport/CanyonReportDocument'
 import { CroquisMap, useCroquisPng } from '@web/components/Croquis'
 import { useClientTranslation } from '@web/i18n/client'
 import { parseCanyonSummary, waypointSlug } from '@web/lib/cards'
 import type { CanyoningCardData, CroquisObstacle, Lang } from '@web/lib/cards'
 
+import { CroquisReportButtonPlaceholder } from './CroquisReportButtonPlaceholder'
 import {
   StyledCroquisWrapper,
   StyledDownloadBar,
   StyledDownloadButton,
   StyledDownloadError,
 } from './PostContentCroquis.styles'
+
+// react-pdf is over a megabyte: load the PDF report only where a croquis is
+// rendered, and only in the browser, instead of in every post's bundle.
+const CroquisReportButton = dynamic(
+  () => import('./CroquisReportButton').then((m) => m.CroquisReportButton),
+  { ssr: false, loading: () => <CroquisReportButtonPlaceholder /> },
+)
 
 /**
  * Renders an interactive canyon croquis embedded in post content. `obstacles`
@@ -61,21 +68,6 @@ export function PostContentCroquis({
   )
   const { downloadPng } = useCroquisPng(parsed, lang, title)
 
-  const reportDoc = (
-    <CanyonReportDocument
-      title={title ?? ''}
-      lang={lang}
-      obstacles={parsed}
-      summary={summaryData}
-    />
-  )
-  const [report, updateReport] = usePDF({ document: reportDoc })
-  // usePDF only builds on mount; rebuild when the content language flips.
-  useEffect(() => {
-    updateReport(reportDoc)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lang])
-
   if (parsed.length === 0) return null
 
   const base = title?.trim() ? waypointSlug(title) : 'croquis'
@@ -89,17 +81,6 @@ export function PostContentCroquis({
       setDownloadError(true)
     }
   }
-
-  function handleDownloadReport() {
-    const link = document.createElement('a')
-    link.href = report.url ?? /* istanbul ignore next */ ''
-    link.download = `canyon-report-${base}-${lang}.pdf`
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-  }
-
-  const reportGenerating = !!report.loading
 
   return (
     <StyledCroquisWrapper data-testid="post-croquis">
@@ -122,17 +103,13 @@ export function PostContentCroquis({
             </StyledDownloadButton>
           )}
           {!noReport && (
-            <StyledDownloadButton
-              type="button"
-              onClick={handleDownloadReport}
-              disabled={!report.url || reportGenerating}
-              data-testid="post-croquis-report"
-            >
-              <DownloadIcon />
-              {reportGenerating
-                ? t('croquis.generatingReport')
-                : t('croquis.downloadReport')}
-            </StyledDownloadButton>
+            <CroquisReportButton
+              title={title}
+              lang={lang}
+              obstacles={parsed}
+              summary={summaryData}
+              fileBase={base}
+            />
           )}
         </StyledDownloadBar>
       )}
