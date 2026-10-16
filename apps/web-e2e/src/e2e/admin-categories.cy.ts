@@ -1,5 +1,5 @@
 import { cleanupE2eData, trackCreated } from '../support/cleanup'
-import { loginViaUi } from '../support/login'
+import { loginViaUi, waitForHydration } from '../support/login'
 
 describe('Admin categories — create and delete', () => {
   // Runs whether the tests passed or failed.
@@ -17,6 +17,7 @@ describe('Admin categories — create and delete', () => {
   beforeEach(() => {
     loginViaUi()
     cy.url({ timeout: 20000 }).should('include', '/admin/posts')
+    waitForHydration()
     cy.get('[data-testid="admin-nav"]').should('be.visible')
   })
 

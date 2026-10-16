@@ -1,4 +1,4 @@
-import { loginViaUi } from '../support/login'
+import { loginViaUi, waitForHydration } from '../support/login'
 
 const GPX = `<?xml version="1.0" encoding="UTF-8"?>
 <gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="e2e">
@@ -46,6 +46,7 @@ describe('Admin tracks — GPX editor', () => {
     }).as('upload')
     loginViaUi()
     cy.url({ timeout: 20000 }).should('include', '/admin/posts')
+    waitForHydration()
     cy.get('[data-testid="admin-nav"]').should('be.visible')
   })
 

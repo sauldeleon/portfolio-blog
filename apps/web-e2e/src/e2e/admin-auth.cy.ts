@@ -1,4 +1,4 @@
-import { loginViaUi } from '../support/login'
+import { loginViaUi, waitForHydration } from '../support/login'
 
 describe('Admin auth — unauthenticated access', () => {
   it('redirects /admin/posts to login when not authenticated', () => {
@@ -37,6 +37,7 @@ describe('Admin auth — login', () => {
   it('redirects to /admin/posts after successful login', () => {
     loginViaUi()
     cy.url({ timeout: 20000 }).should('include', '/admin/posts')
+    waitForHydration()
     cy.get('[data-testid="admin-nav"]').should('be.visible')
   })
 })
@@ -45,6 +46,7 @@ describe('Admin auth — editor role restrictions', () => {
   beforeEach(() => {
     loginViaUi()
     cy.url({ timeout: 20000 }).should('include', '/admin/posts')
+    waitForHydration()
   })
 
   it('redirects /admin/users to /admin/posts for editor role', () => {
@@ -58,6 +60,7 @@ describe('Admin auth — logout', () => {
   beforeEach(() => {
     loginViaUi()
     cy.url({ timeout: 20000 }).should('include', '/admin/posts')
+    waitForHydration()
     cy.get('[data-testid="admin-nav"]').should('be.visible')
   })
 

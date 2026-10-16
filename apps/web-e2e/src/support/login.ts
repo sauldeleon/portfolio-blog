@@ -14,3 +14,11 @@ export function loginViaUi(email = E2E_EMAIL, password?: string) {
   }
   cy.get('[data-testid="login-form"]').submit()
 }
+
+/**
+ * Logging in reloads the page on /admin/posts, which is server-rendered:
+ * wait for React to hydrate it before clicking anything.
+ */
+export function waitForHydration() {
+  cy.get('html[data-hydrated="true"]', { timeout: 20000, log: false })
+}

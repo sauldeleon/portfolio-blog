@@ -1,6 +1,6 @@
 import { cleanupE2eData, trackCreated } from '../support/cleanup'
 import { clickUntilVisible } from '../support/clickUntilVisible'
-import { loginViaUi } from '../support/login'
+import { loginViaUi, waitForHydration } from '../support/login'
 
 // 1×1 transparent PNG — minimal valid image accepted by the upload API
 const MINIMAL_PNG_B64 =
@@ -20,6 +20,7 @@ describe('Admin images — upload, verify in picker, delete', () => {
     })
     loginViaUi()
     cy.url({ timeout: 20000 }).should('include', '/admin/posts')
+    waitForHydration()
   })
 
   it('uploads an image, verifies it in the post editor image picker, then deletes it', () => {

@@ -1,5 +1,5 @@
 import { cleanupE2eData, trackCreated } from '../support/cleanup'
-import { loginViaUi } from '../support/login'
+import { loginViaUi, waitForHydration } from '../support/login'
 
 describe('Admin posts — publish dialog (never publishes)', () => {
   // Runs whether the tests passed or failed.
@@ -17,6 +17,7 @@ describe('Admin posts — publish dialog (never publishes)', () => {
   beforeEach(() => {
     loginViaUi()
     cy.url({ timeout: 20000 }).should('match', /\/admin\/posts\/?$/)
+    waitForHydration()
     cy.get('[data-testid="admin-nav"]').should('be.visible')
   })
 
@@ -78,6 +79,7 @@ describe('Admin posts — create, archive, and hard delete', () => {
   beforeEach(() => {
     loginViaUi()
     cy.url({ timeout: 20000 }).should('match', /\/admin\/posts\/?$/)
+    waitForHydration()
     cy.get('[data-testid="admin-nav"]').should('be.visible')
   })
 
