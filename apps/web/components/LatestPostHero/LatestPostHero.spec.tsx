@@ -7,6 +7,8 @@ vi.mock('next-cloudinary', () => ({
   CldImage: ({ alt, style }: { alt: string; style?: React.CSSProperties }) => (
     <img data-testid="cover-image" alt={alt} style={style} />
   ),
+  getCldImageUrl: ({ src, width }: { src: string; width: number }) =>
+    `https://res.cloudinary.com/test/image/upload/w_${width}/${src}`,
 }))
 
 vi.mock('@web/utils/categoryIcons', () => ({

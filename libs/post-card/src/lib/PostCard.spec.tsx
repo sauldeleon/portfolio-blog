@@ -73,6 +73,16 @@ describe('PostCard', () => {
     expect(screen.getByAltText('Test Post Title')).toBeInTheDocument()
   })
 
+  it('shows a tiny blurred copy behind the cover while it loads', () => {
+    renderWithTheme(
+      <PostCard {...defaultProps} coverImagePublicId="blog/cover" />,
+    )
+    expect(screen.getByTestId('blur-placeholder')).toHaveAttribute(
+      'src',
+      'https://res.cloudinary.com/test/image/upload/w_32/blog/cover',
+    )
+  })
+
   it('renders placeholder when no cover image', () => {
     renderWithTheme(<PostCard {...defaultProps} />)
     expect(screen.queryByRole('img')).toBeNull()

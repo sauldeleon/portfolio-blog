@@ -44,19 +44,22 @@ export const StyledCardOverlay = styled(Link)`
 `
 
 export const StyledCover = styled.div<{ $fit?: 'cover' | 'contain' }>`
+  position: relative;
   aspect-ratio: 16 / 9;
   overflow: hidden;
   background-color: #0d0d0d;
 
-  img {
+  img:not([aria-hidden]) {
     width: 100%;
     height: 100%;
     object-fit: ${({ $fit }) => $fit ?? 'cover'};
-    transition: transform 0.4s ease;
+    transition:
+      transform 0.4s ease,
+      opacity 0.6s ease-out;
     display: block;
   }
 
-  ${StyledCard}:hover & img {
+  ${StyledCard}:hover & img:not([aria-hidden]) {
     transform: scale(1.05);
   }
 `

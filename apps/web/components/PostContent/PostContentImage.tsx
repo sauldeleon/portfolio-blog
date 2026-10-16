@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
 
+import { BlurUpImage } from '@web/components/BlurUpImage'
 import { useClientTranslation } from '@web/i18n/client'
 
 import {
@@ -64,11 +65,9 @@ export function PostContentImage({ src, alt }: { src?: string; alt?: string }) {
         {caption && captionPos === 'top' && (
           <StyledCaption>{caption}</StyledCaption>
         )}
-        <Image
+        <BlurUpImage
           src={src}
           alt={cleanAlt}
-          width={0}
-          height={0}
           sizes={sizes}
           style={{ width: '100%', height: 'auto', maxWidth: '1440px' }}
         />

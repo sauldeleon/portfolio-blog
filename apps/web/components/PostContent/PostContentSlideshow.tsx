@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
+import { BlurUpImage } from '@web/components/BlurUpImage'
 import { useClientTranslation } from '@web/i18n/client'
 
 import {
@@ -137,12 +138,12 @@ export function PostContentSlideshow({
               key={`enter-${currentIndex}`}
               $direction={direction}
             >
-              <Image
+              <BlurUpImage
                 src={current.src}
                 alt={cleanAlt}
                 fill
                 sizes="(max-width: 1440px) 100vw, 1440px"
-                style={{ objectFit: 'contain' }}
+                objectFit="contain"
               />
             </StyledSlideshowSlide>
           </StyledSlideshowImageWrapper>

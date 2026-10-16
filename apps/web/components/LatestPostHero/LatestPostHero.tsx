@@ -2,7 +2,9 @@
 
 import { format } from 'date-fns'
 import { type Locale as DateLocale, enUS, es } from 'date-fns/locale'
-import { CldImage } from 'next-cloudinary'
+import { CldImage, getCldImageUrl } from 'next-cloudinary'
+
+import { BLUR_PLACEHOLDER_OPTIONS, BlurUp } from '@sdlgr/blur-up'
 
 import type { PostWithContent } from '@web/lib/db/queries/posts'
 import { type Locale } from '@web/lib/db/schema'
@@ -38,20 +40,32 @@ export function LatestPostHero({
 }: LatestPostHeroProps) {
   const dateLocale = dateLocales[lng] ?? enUS
   const url = `/${lng}/blog/${post.postNumber}/${post.slug}`
+  const { coverImage } = post
 
   return (
     <StyledWrapper data-testid="latest-post-hero">
-      {post.coverImage && (
+      {coverImage && (
         <StyledCoverWrapper>
-          <CldImage
-            src={post.coverImage}
-            alt={post.title}
+          <BlurUp
             fill
-            // The cover is the page's largest image (its LCP element).
-            preload
-            sizes="(max-width: 1440px) 100vw, 1440px"
-            style={{ objectFit: post.coverImageFit ?? 'cover' }}
-          />
+            objectFit={post.coverImageFit ?? 'cover'}
+            placeholder={getCldImageUrl({
+              src: coverImage,
+              ...BLUR_PLACEHOLDER_OPTIONS,
+            })}
+          >
+            {(image) => (
+              <CldImage
+                src={coverImage}
+                alt={post.title}
+                fill
+                // The cover is the page's largest image (its LCP element).
+                preload
+                sizes="(max-width: 1440px) 100vw, 1440px"
+                {...image}
+              />
+            )}
+          </BlurUp>
         </StyledCoverWrapper>
       )}
       <StyledContent>

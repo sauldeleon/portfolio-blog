@@ -1,6 +1,8 @@
 'use client'
 
-import { CldImage } from 'next-cloudinary'
+import { CldImage, getCldImageUrl } from 'next-cloudinary'
+
+import { BLUR_PLACEHOLDER_OPTIONS, BlurUp } from '@sdlgr/blur-up'
 
 import {
   StyledBody,
@@ -68,12 +70,24 @@ export function PostCard({
       <StyledCardOverlay href={href} aria-hidden="true" tabIndex={-1} />
       <StyledCover $fit={coverImageFit}>
         {coverImagePublicId ? (
-          <CldImage
-            src={coverImagePublicId}
-            alt={title}
-            width={400}
-            height={225}
-          />
+          <BlurUp
+            fill
+            objectFit={coverImageFit ?? 'cover'}
+            placeholder={getCldImageUrl({
+              src: coverImagePublicId,
+              ...BLUR_PLACEHOLDER_OPTIONS,
+            })}
+          >
+            {(image) => (
+              <CldImage
+                src={coverImagePublicId}
+                alt={title}
+                width={400}
+                height={225}
+                {...image}
+              />
+            )}
+          </BlurUp>
         ) : (
           <StyledPlaceholder aria-hidden="true" />
         )}
