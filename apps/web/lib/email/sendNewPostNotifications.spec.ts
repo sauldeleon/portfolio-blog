@@ -7,7 +7,7 @@ const mockGetActiveSubscribers = vi.fn()
 const mockGetSiteUrl = vi.fn(() => 'https://example.com')
 const mockGetServerTranslation = vi.fn()
 const mockLoggerError = vi.fn()
-const mockNewPostEmail = vi.fn(() => null)
+const mockNewPostEmail = vi.fn<(...args: unknown[]) => null>(() => null)
 const mockGetSeriesTranslationsById = vi.fn()
 const mockGetCategoryTranslations = vi.fn()
 

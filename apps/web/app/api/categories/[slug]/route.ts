@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
 import { parseAuthRequest, requireAuth } from '@web/lib/api/parseRequest'
+import { revalidatePublicContent } from '@web/lib/cache/revalidatePublicContent'
 import {
   deleteCategory,
   getCategoryBySlug,
@@ -50,6 +51,7 @@ export async function PUT(
     })
 
     logger.info({ slug, locale }, 'PUT /api/categories/[slug]: updated')
+    revalidatePublicContent()
     return NextResponse.json(translation)
   } catch (err) {
     logger.error(err, 'Failed to update category')
@@ -83,6 +85,7 @@ export async function DELETE(
 
     await deleteCategory(slug)
     logger.info({ slug }, 'DELETE /api/categories/[slug]: deleted')
+    revalidatePublicContent()
     return new NextResponse(null, { status: 204 })
   } catch (err) {
     logger.error(err, 'Failed to delete category')

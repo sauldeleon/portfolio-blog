@@ -1,7 +1,7 @@
 'use client'
 
 import { useParams, usePathname, useRouter } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 
 import { useDefaultLanguage } from '@sdlgr/i18n-tools'
 
@@ -15,27 +15,29 @@ interface LanguageGuardProps {
 }
 
 export function LanguageGuard({ children }: LanguageGuardProps) {
-  const [isReady, setIsReady] = useState(false)
   const pathname = usePathname()
   const params = useParams()
   const language = params.lng
   const router = useRouter()
   const defaultLanguage = useDefaultLanguage({ languages, fallbackLng })
 
-  useEffect(() => {
-    const isAllowedLanguage = languages.some((loc) => language === loc)
-    const isLanguagePathParam = language && language?.length === 2
+  const isLanguagePathParam =
+    typeof language === 'string' && language.length === 2
+  const isAllowedLanguage = languages.some((loc) => language === loc)
+  // Decided during render (server included) so prerendered pages ship their
+  // content instead of an empty body waiting for a client effect.
+  const isValidLanguage = isLanguagePathParam && isAllowedLanguage
 
+  useEffect(() => {
+    if (isValidLanguage) return
     if (!isLanguagePathParam) {
       router.push(`/${defaultLanguage}${pathname}`)
-    } else if (isLanguagePathParam && !isAllowedLanguage) {
-      const differencePath = removeFirstPart(pathname)
-      router.push(`/${defaultLanguage}${differencePath}`)
     } else {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setIsReady(true)
+      router.push(`/${defaultLanguage}${removeFirstPart(pathname)}`)
     }
-  }, [defaultLanguage, language, pathname, router])
+  }, [defaultLanguage, isLanguagePathParam, isValidLanguage, pathname, router])
 
-  return isReady ? <StyledGuardWrapper>{children}</StyledGuardWrapper> : null
+  return isValidLanguage ? (
+    <StyledGuardWrapper>{children}</StyledGuardWrapper>
+  ) : null
 }

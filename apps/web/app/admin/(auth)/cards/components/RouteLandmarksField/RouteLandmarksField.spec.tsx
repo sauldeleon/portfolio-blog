@@ -45,7 +45,7 @@ describe('RouteLandmarksField', () => {
     fireEvent.change(screen.getByTestId('rt-landmark-name-0'), {
       target: { value: '' },
     })
-    expect(onChange.mock.lastCall[0][0].name).toBeUndefined()
+    expect(onChange.mock.lastCall?.[0][0].name).toBeUndefined()
   })
 
   it('removes one from the card', () => {

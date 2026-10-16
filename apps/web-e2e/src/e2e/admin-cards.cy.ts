@@ -1,10 +1,11 @@
-import { loginViaUi } from '../support/login'
+import { loginViaUi, waitForHydration } from '../support/login'
 
 describe('Admin cards — canyon waypoints generator', () => {
   beforeEach(() => {
     cy.viewport(1440, 900)
     loginViaUi()
     cy.url({ timeout: 20000 }).should('include', '/admin/posts')
+    waitForHydration()
     cy.get('[data-testid="admin-nav"]').should('be.visible')
   })
 
@@ -23,7 +24,7 @@ describe('Admin cards — canyon waypoints generator', () => {
   }
 
   it('renders a preview from the canyon waypoints tab', () => {
-    cy.visit('/admin/cards')
+    cy.visitHydrated('/admin/cards')
     cy.get('[data-testid="card-generator"]', { timeout: 15000 }).should(
       'be.visible',
     )

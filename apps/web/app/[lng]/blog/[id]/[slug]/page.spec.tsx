@@ -1,5 +1,7 @@
 import { render, screen } from '@testing-library/react'
 
+import type { Locale } from '@web/lib/db/schema'
+
 import BlogPostPage, {
   generateMetadata,
   generateStaticParams,
@@ -35,6 +37,14 @@ vi.mock('next/navigation', () => ({
 vi.mock('@web/lib/db/queries/posts', () => ({
   getPostByNumber: mockGetPostByNumber,
   getPublishedPosts: mockGetPublishedPosts,
+}))
+
+const { mockGetApprovedCommentsByPost } = vi.hoisted(() => ({
+  mockGetApprovedCommentsByPost: vi.fn(),
+}))
+
+vi.mock('@web/lib/db/queries/comments', () => ({
+  getApprovedCommentsByPost: mockGetApprovedCommentsByPost,
 }))
 
 vi.mock('@web/lib/db/queries/categories', () => ({
@@ -155,6 +165,7 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
     vi.clearAllMocks()
     mockPostHero.mockReturnValue(<div data-testid="post-hero" />)
     mockPostComments.mockReturnValue(<div data-testid="post-comments" />)
+    mockGetApprovedCommentsByPost.mockResolvedValue([])
     mockGetServerTranslation.mockResolvedValue({ t: (key: string) => key })
     mockGetCategoryTranslations.mockResolvedValue([
       {
@@ -279,6 +290,35 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
     )
   })
 
+  it('passes the server-rendered comments to PostComments', async () => {
+    const comments = [{ id: 'c1', username: 'ana', body: 'Nice' }]
+    mockGetPostByNumber.mockResolvedValue(publishedPost)
+    mockGetApprovedCommentsByPost.mockResolvedValue(comments)
+    const ui = await BlogPostPage({
+      params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
+    })
+    render(ui)
+    expect(mockGetApprovedCommentsByPost).toHaveBeenCalledWith(publishedPost.id)
+    expect(mockPostComments).toHaveBeenCalledWith(
+      expect.objectContaining({ initialComments: comments }),
+      undefined,
+    )
+  })
+
+  it('leaves comments to the client when loading them fails', async () => {
+    mockGetPostByNumber.mockResolvedValue(publishedPost)
+    mockGetApprovedCommentsByPost.mockRejectedValue(new Error('db down'))
+    const ui = await BlogPostPage({
+      params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
+    })
+    render(ui)
+    expect(mockLoggerError).toHaveBeenCalled()
+    expect(mockPostComments).toHaveBeenCalledWith(
+      expect.objectContaining({ initialComments: undefined }),
+      undefined,
+    )
+  })
+
   it('renders JSON-LD script tag', async () => {
     mockGetPostByNumber.mockResolvedValue(publishedPost)
     const ui = await BlogPostPage({
@@ -325,7 +365,9 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
 
   it('renders TOC when entries exist', async () => {
     const { extractToc } = await import('@web/lib/mdx/remarkHeadings')
-    extractToc.mockReturnValue([{ depth: 2, text: 'Intro', id: 'intro' }])
+    vi.mocked(extractToc).mockReturnValue([
+      { depth: 2, text: 'Intro', id: 'intro' },
+    ])
     mockGetPostByNumber.mockResolvedValue(publishedPost)
     const ui = await BlogPostPage({
       params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
@@ -336,7 +378,7 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
 
   it('does not render TOC when no entries', async () => {
     const { extractToc } = await import('@web/lib/mdx/remarkHeadings')
-    extractToc.mockReturnValue([])
+    vi.mocked(extractToc).mockReturnValue([])
     mockGetPostByNumber.mockResolvedValue(publishedPost)
     const ui = await BlogPostPage({
       params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
@@ -360,7 +402,11 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
   it('falls back to enUS locale for unknown language', async () => {
     mockGetPostByNumber.mockResolvedValue(publishedPost)
     const ui = await BlogPostPage({
-      params: Promise.resolve({ lng: 'fr', id: '1', slug: 'my-test-post' }),
+      params: Promise.resolve({
+        lng: 'fr' as unknown as Locale,
+        id: '1',
+        slug: 'my-test-post',
+      }),
     })
     render(ui)
     expect(screen.getByTestId('post-hero')).toBeInTheDocument()
@@ -431,7 +477,7 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
       const meta = await generateMetadata({
         params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
       })
-      expect(meta.alternates.languages['es-ES']).toContain('mi-post-de-prueba')
+      expect(meta.alternates?.languages['es-ES']).toContain('mi-post-de-prueba')
     })
 
     it('falls back to own slug when alt post not found', async () => {
@@ -441,7 +487,7 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
       const meta = await generateMetadata({
         params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
       })
-      expect(meta.alternates.languages['es-ES']).toContain('my-test-post')
+      expect(meta.alternates?.languages['es-ES']).toContain('my-test-post')
     })
 
     it('generates correct alternates for es locale', async () => {
@@ -459,9 +505,9 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
       const meta = await generateMetadata({
         params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
       })
-      expect(meta.openGraph.images[0].url).toContain('/og?')
-      expect(meta.openGraph.images[0].url).toContain('title=My+Test+Post')
-      expect(meta.openGraph.images[0]).toMatchObject({
+      expect(meta.openGraph?.images[0].url).toContain('/og?')
+      expect(meta.openGraph?.images[0].url).toContain('title=My+Test+Post')
+      expect(meta.openGraph?.images[0]).toMatchObject({
         width: 1200,
         height: 630,
       })
@@ -475,7 +521,7 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
       const meta = await generateMetadata({
         params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
       })
-      expect(meta.openGraph.images[0].url).toContain('cover=')
+      expect(meta.openGraph?.images[0].url).toContain('cover=')
     })
 
     it('includes twitter card metadata', async () => {
@@ -483,11 +529,11 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
       const meta = await generateMetadata({
         params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
       })
-      expect(meta.twitter.card).toBe('summary_large_image')
-      expect(meta.twitter.title).toBe('My Test Post')
-      expect(meta.twitter.description).toBe('A great post about testing')
-      expect(meta.twitter.images[0].url).toContain('/og?')
-      expect(meta.twitter.images[0]).toMatchObject({
+      expect(meta.twitter?.card).toBe('summary_large_image')
+      expect(meta.twitter?.title).toBe('My Test Post')
+      expect(meta.twitter?.description).toBe('A great post about testing')
+      expect(meta.twitter?.images[0].url).toContain('/og?')
+      expect(meta.twitter?.images[0]).toMatchObject({
         width: 1200,
         height: 630,
         alt: 'My Test Post',
@@ -500,8 +546,8 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
       const meta = await generateMetadata({
         params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
       })
-      expect(meta.openGraph.type).toBe('article')
-      expect(meta.openGraph.url).toBe(
+      expect(meta.openGraph?.type).toBe('article')
+      expect(meta.openGraph?.url).toBe(
         'https://example.com/en/blog/1/my-test-post',
       )
       delete process.env.BASE_URL
@@ -512,7 +558,7 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
       const meta = await generateMetadata({
         params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
       })
-      expect(meta.openGraph.alternateLocale).toEqual(['es_ES'])
+      expect(meta.openGraph?.alternateLocale).toEqual(['es_ES'])
     })
 
     it('includes article metadata in openGraph', async () => {
@@ -520,11 +566,11 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
       const meta = await generateMetadata({
         params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
       })
-      expect(meta.openGraph.publishedTime).toBe('2024-01-01T00:00:00.000Z')
-      expect(meta.openGraph.modifiedTime).toBe('2024-06-15T00:00:00.000Z')
-      expect(meta.openGraph.authors).toEqual(['Jane Doe'])
-      expect(meta.openGraph.section).toBe('Technology')
-      expect(meta.openGraph.tags).toEqual(['next.js', 'react'])
+      expect(meta.openGraph?.publishedTime).toBe('2024-01-01T00:00:00.000Z')
+      expect(meta.openGraph?.modifiedTime).toBe('2024-06-15T00:00:00.000Z')
+      expect(meta.openGraph?.authors).toEqual(['Jane Doe'])
+      expect(meta.openGraph?.section).toBe('Technology')
+      expect(meta.openGraph?.tags).toEqual(['next.js', 'react'])
     })
 
     it('omits publishedTime when publishedAt is null', async () => {
@@ -535,7 +581,7 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
       const meta = await generateMetadata({
         params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
       })
-      expect(meta.openGraph.publishedTime).toBeUndefined()
+      expect(meta.openGraph?.publishedTime).toBeUndefined()
     })
 
     it('does not include cover in OG URL when post has no coverImage', async () => {
@@ -546,7 +592,7 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
       const meta = await generateMetadata({
         params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
       })
-      expect(meta.openGraph.images[0].url).not.toContain('cover=')
+      expect(meta.openGraph?.images[0].url).not.toContain('cover=')
     })
 
     it('does not include category in OG URL when post has empty category', async () => {
@@ -557,7 +603,7 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
       const meta = await generateMetadata({
         params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
       })
-      expect(meta.openGraph.images[0].url).not.toContain('category=')
+      expect(meta.openGraph?.images[0].url).not.toContain('category=')
     })
 
     it('uses translated category name in OG URL', async () => {
@@ -565,7 +611,7 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
       const meta = await generateMetadata({
         params: Promise.resolve({ lng: 'es', id: '1', slug: 'my-test-post' }),
       })
-      expect(meta.openGraph.images[0].url).toContain('category=Tecnolog')
+      expect(meta.openGraph?.images[0].url).toContain('category=Tecnolog')
     })
 
     it('uses BASE_URL for OG image URL', async () => {
@@ -574,7 +620,7 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
       const meta = await generateMetadata({
         params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
       })
-      expect(meta.openGraph.images[0].url).toContain(
+      expect(meta.openGraph?.images[0].url).toContain(
         'https://production.example.com/og?',
       )
       delete process.env.BASE_URL
@@ -587,7 +633,7 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
       const meta = await generateMetadata({
         params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
       })
-      expect(meta.openGraph.images[0].url).toContain(
+      expect(meta.openGraph?.images[0].url).toContain(
         'https://my-app-abc123.vercel.app/og?',
       )
       delete process.env.VERCEL_URL

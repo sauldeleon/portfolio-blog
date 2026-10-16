@@ -1,4 +1,4 @@
-import { Roboto_Mono } from 'next/font/google'
+import localFont from 'next/font/local'
 import * as React from 'react'
 import { css, keyframes } from 'styled-components'
 import { Keyframes, RuleSet } from 'styled-components/dist/types'
@@ -28,10 +28,13 @@ const colors: MainTheme['colors'] = {
   orange: '#B04B2F',
 }
 
-const robotoMono = Roboto_Mono({
-  subsets: ['latin'],
+// Self-hosted (variable Roboto Mono, latin subset, from @fontsource-variable,
+// OFL licensed) so builds do not depend on downloading it from Google Fonts.
+const robotoMono = localFont({
+  src: './fonts/roboto-mono-latin-wght-normal.woff2',
+  weight: '100 700',
+  style: 'normal',
   display: 'swap',
-  weight: ['100', '300', '400', '500'],
   fallback: ['monospace'],
   variable: '--font-roboto-mono',
 })

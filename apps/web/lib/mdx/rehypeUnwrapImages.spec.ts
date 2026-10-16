@@ -1,4 +1,5 @@
 import type { Element, Root, Text } from 'hast'
+import { unified } from 'unified'
 
 import { rehypeUnwrapImages } from './rehypeUnwrapImages'
 
@@ -34,7 +35,7 @@ describe('rehypeUnwrapImages', () => {
   let transform: (tree: Root) => void
 
   beforeEach(() => {
-    transform = rehypeUnwrapImages() as (tree: Root) => void
+    transform = rehypeUnwrapImages.call(unified()) as (tree: Root) => void
   })
 
   it('unwraps <p> containing only <img>', () => {

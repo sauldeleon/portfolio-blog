@@ -139,6 +139,13 @@ describe('getPublishedPosts', () => {
     const result = await getPublishedPosts('es')
     expect(result).toEqual([])
   })
+
+  it('limits the query in SQL when a limit is given', async () => {
+    const chain = makeChain([mockPublicPost])
+    mockDb.select.mockReturnValue(chain)
+    await getPublishedPosts('en', { limit: 20 })
+    expect(chain.limit).toHaveBeenCalledWith(20)
+  })
 })
 
 describe('getPostById', () => {
@@ -370,7 +377,12 @@ describe('createPost', () => {
     )
 
     const result = await createPost(
-      { category: 'engineering', tags: [], author: 'admin', status: 'draft' },
+      {
+        category: 'engineering',
+        tags: [],
+        authorId: 'user-1',
+        status: 'draft',
+      },
       { en: { title: 'Test', slug: 'test', excerpt: 'Ex', content: '# Hi' } },
     )
     expect(mockDb.transaction).toHaveBeenCalled()

@@ -4,8 +4,8 @@
 const mockGetPublishedPosts = vi.fn()
 const mockGenerateRSS = vi.fn()
 
-vi.mock('@web/lib/db/queries/posts', () => ({
-  getPublishedPosts: mockGetPublishedPosts,
+vi.mock('@web/lib/db/queries/publicCache', () => ({
+  getCachedPublishedPosts: mockGetPublishedPosts,
 }))
 
 vi.mock('@web/lib/rss/generateRSS', () => ({
@@ -27,24 +27,13 @@ describe('GET /feed.es.xml', () => {
     )
   })
 
-  it('calls getPublishedPosts with es locale', async () => {
+  it('requests the latest 20 es posts in SQL', async () => {
     const { GET } = await import('./route')
     await GET()
-    expect(mockGetPublishedPosts).toHaveBeenCalledWith('es')
+    expect(mockGetPublishedPosts).toHaveBeenCalledWith('es', { limit: 20 })
   })
 
-  it('passes first 20 posts to generateRSS with es locale', async () => {
-    const posts = Array.from({ length: 25 }, (_, i) => ({
-      id: String(i),
-      slug: `post-${i}`,
-    }))
-    mockGetPublishedPosts.mockResolvedValue(posts)
-    const { GET } = await import('./route')
-    await GET()
-    expect(mockGenerateRSS).toHaveBeenCalledWith(posts.slice(0, 20), 'es')
-  })
-
-  it('passes all posts when fewer than 20', async () => {
+  it('passes the posts to generateRSS', async () => {
     const posts = [{ id: '1', slug: 'post-1' }]
     mockGetPublishedPosts.mockResolvedValue(posts)
     const { GET } = await import('./route')

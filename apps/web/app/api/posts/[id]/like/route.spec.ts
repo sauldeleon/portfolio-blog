@@ -126,8 +126,9 @@ describe('POST /api/posts/[id]/like', () => {
         warn: vi.fn(),
       },
     }))
-    const { POST: POST2 } =
-      (await import('./route')) as typeof import('./route')
+    const { POST: POST2 } = (await import('./route')) as unknown as {
+      POST: typeof POST
+    }
     const res = await POST2(makeRequest(), makeParams())
     expect(res.status).toBe(200)
   })

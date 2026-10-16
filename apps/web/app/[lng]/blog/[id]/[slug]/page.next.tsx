@@ -1,6 +1,7 @@
 import { format } from 'date-fns'
 import { Locale as DateLocale, enUS, es } from 'date-fns/locale'
 import { notFound, redirect } from 'next/navigation'
+import { cache } from 'react'
 
 import { PostHero } from '@sdlgr/post-hero'
 import { TableOfContents } from '@sdlgr/table-of-contents'
@@ -15,6 +16,7 @@ import { SeriesIndicator } from '@web/components/SeriesIndicator/SeriesIndicator
 import { SubscribeModal } from '@web/components/SubscribeModal'
 import { getServerTranslation } from '@web/i18n/server'
 import { getCategoryTranslations } from '@web/lib/db/queries/categories'
+import { getApprovedCommentsByPost } from '@web/lib/db/queries/comments'
 import { getPostByNumber, getPublishedPosts } from '@web/lib/db/queries/posts'
 import { Locale } from '@web/lib/db/schema'
 import { logger } from '@web/lib/logger'
@@ -32,6 +34,11 @@ import { getSiteUrl } from '@web/utils/url/generateUrl'
 
 import { StyledPage } from './page.next.styles'
 
+// generateMetadata and the page run in the same render: share their reads
+// instead of querying the same post and category translations twice.
+const getPost = cache(getPostByNumber)
+const getCategoryNames = cache(getCategoryTranslations)
+
 export const revalidate = 3600
 
 const dateLocales: Record<Locale, DateLocale> = { en: enUS, es }
@@ -40,7 +47,7 @@ async function getCategoryName(
   categorySlug: string,
   lng: Locale,
 ): Promise<string> {
-  const translations = await getCategoryTranslations(categorySlug)
+  const translations = await getCategoryNames(categorySlug)
   return (
     translations.find((t) => t.locale === lng)?.name ??
     translations.find((t) => t.locale === 'en')?.name ??
@@ -81,8 +88,8 @@ export async function generateMetadata({ params }: RouteProps) {
   if (isNaN(postNumber)) return {}
 
   const [post, postAlt] = await Promise.all([
-    getPostByNumber(postNumber, lng as Locale),
-    getPostByNumber(postNumber, (lng === 'en' ? 'es' : 'en') as Locale),
+    getPost(postNumber, lng as Locale),
+    getPost(postNumber, (lng === 'en' ? 'es' : 'en') as Locale),
   ])
 
   if (!post || post.status !== 'published') return {}
@@ -146,8 +153,8 @@ export default async function BlogPostPage({ params }: RouteProps) {
   if (isNaN(postNumber)) return notFound()
   const altLng: Locale = lng === 'en' ? 'es' : 'en'
   const [post, postAlt] = await Promise.all([
-    getPostByNumber(postNumber, lng as Locale),
-    getPostByNumber(postNumber, altLng),
+    getPost(postNumber, lng as Locale),
+    getPost(postNumber, altLng),
   ])
   if (!post || post.status !== 'published') return notFound()
   if (post.slug !== slug)
@@ -158,9 +165,15 @@ export default async function BlogPostPage({ params }: RouteProps) {
     ? format(new Date(post.publishedAt), 'PP', { locale })
     : null
 
-  const [toc, categoryName] = await Promise.all([
+  const [toc, categoryName, initialComments] = await Promise.all([
     Promise.resolve(extractToc(post.content)),
     getCategoryName(post.category, lng as Locale),
+    // Server-rendered so the list ships in the page; on failure the client
+    // component fetches it instead.
+    getApprovedCommentsByPost(post.id).catch((err: unknown) => {
+      logger.error(err, 'BlogPostPage: failed to load comments')
+      return undefined
+    }),
   ])
   const postUrl = `${getSiteUrl()}/${lng}/blog/${post.postNumber}/${post.slug}`
   const altLangPath = `/${altLng}/blog/${postNumber}/${postAlt?.slug ?? post.slug}`
@@ -230,6 +243,7 @@ export default async function BlogPostPage({ params }: RouteProps) {
         postSlug={post.slug}
         lng={lng}
         commentsEnabled={post.commentsEnabled}
+        initialComments={initialComments}
       />
     </StyledPage>
   )

@@ -85,7 +85,7 @@ vi.mock('../CardPreview', async () => {
       },
       ref: import('react').Ref<CardHandle | null>,
     ) {
-      react.useImperativeHandle(
+      react.useImperativeHandle<CardHandle | null, CardHandle | null>(
         ref,
         () => (disableUpload ? null : { upload: () => mockUpload(filename) }),
         [disableUpload, filename],
@@ -379,7 +379,7 @@ describe('CanyonWaypointsGenerator', () => {
 
   it('packs every card into a single zip when download-all is clicked', async () => {
     const origCreate = document.createElement.bind(document)
-    let lastAnchor: HTMLAnchorElement | null = null
+    let lastAnchor = null as HTMLAnchorElement | null
     vi.spyOn(document, 'createElement').mockImplementation((tag: string) => {
       const el = origCreate(tag)
       if (tag === 'a') lastAnchor = el as HTMLAnchorElement

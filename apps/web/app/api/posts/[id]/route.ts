@@ -1,8 +1,8 @@
-import { revalidatePath, revalidateTag } from 'next/cache'
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
 import { parseAuthRequest, requireAuth } from '@web/lib/api/parseRequest'
+import { revalidatePublicContent } from '@web/lib/cache/revalidatePublicContent'
 import { getCategoryBySlug } from '@web/lib/db/queries/categories'
 import {
   getPostById,
@@ -22,6 +22,7 @@ import {
 import { notifyPostPublished } from '@web/lib/email/notifyPostPublished'
 import { logger } from '@web/lib/logger'
 import { computeReadingTime } from '@web/utils/computeReadingTime'
+import { MAX_POST_SLUG_LENGTH, POST_SLUG_PATTERN } from '@web/utils/slugify'
 
 const CACHE_HEADERS = {
   'Cache-Control': 's-maxage=60, stale-while-revalidate=3600',
@@ -68,7 +69,13 @@ export async function GET(
 
 const translationUpdateSchema = z.object({
   title: z.string().min(1),
-  slug: z.string().min(1),
+  slug: z
+    .string()
+    .max(MAX_POST_SLUG_LENGTH)
+    .regex(
+      POST_SLUG_PATTERN,
+      'Slug may only contain letters, digits and single hyphens',
+    ),
   excerpt: z.string().min(1),
   content: z.string().min(1),
 })
@@ -231,12 +238,7 @@ export async function PUT(
     }
 
     logger.info({ id, status: data.status }, 'PUT /api/posts/[id]: updated')
-    const updatedTranslations = await getPostTranslations(id)
-    for (const t of updatedTranslations) {
-      revalidatePath(`/${t.locale}/blog/${post.postNumber}/${t.slug}`)
-    }
-    revalidateTag('posts', 'default')
-    revalidateTag(`post-${id}`, 'default')
+    revalidatePublicContent()
     return NextResponse.json(post)
   } catch (err) {
     logger.error(err, 'Failed to update post')
@@ -271,8 +273,7 @@ export async function DELETE(
       }
       await hardDeletePost(id)
       logger.info({ id }, 'DELETE /api/posts/[id]: hard deleted')
-      revalidateTag('posts', 'default')
-      revalidateTag(`post-${id}`, 'default')
+      revalidatePublicContent()
       return new NextResponse(null, { status: 204 })
     }
 
@@ -285,8 +286,7 @@ export async function DELETE(
 
     await softDeletePost(id)
     logger.info({ id }, 'DELETE /api/posts/[id]: soft deleted')
-    revalidateTag('posts', 'default')
-    revalidateTag(`post-${id}`, 'default')
+    revalidatePublicContent()
     return new NextResponse(null, { status: 204 })
   } catch (err) {
     logger.error(err, 'Failed to delete post')

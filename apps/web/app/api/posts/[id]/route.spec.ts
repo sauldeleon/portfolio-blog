@@ -249,6 +249,19 @@ describe('PUT /api/posts/[id]', () => {
     expect(response.status).toBe(400)
   })
 
+  it('returns 400 for a slug the blog could not serve', async () => {
+    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
+    const response = await PUT(
+      makePutRequest({
+        translations: {
+          en: { title: 'T', slug: 'x'.repeat(201), excerpt: 'E', content: 'C' },
+        },
+      }),
+      makeParams('id'),
+    )
+    expect(response.status).toBe(400)
+  })
+
   it('returns 422 when category does not exist', async () => {
     mockAuth.mockResolvedValue({ user: { name: 'admin' } })
     mockGetCategoryBySlug.mockResolvedValue(null)
@@ -427,31 +440,19 @@ describe('PUT /api/posts/[id]', () => {
     )
     expect(response.status).toBe(200)
     expect(mockUpdatePost).toHaveBeenCalled()
-    expect(mockRevalidateTag).toHaveBeenCalledWith('posts', 'default')
-    expect(mockRevalidateTag).toHaveBeenCalledWith(
-      'post-01JWTEST000000000000000000',
-      'default',
-    )
+    expect(mockRevalidateTag).toHaveBeenCalledWith('posts', { expire: 0 })
   })
 
-  it('calls revalidatePath for each translation after update', async () => {
+  it('expires every public post page pattern after update', async () => {
     mockAuth.mockResolvedValue({ user: { name: 'admin' } })
     mockUpdatePost.mockResolvedValue({ ...mockPost, postNumber: 42 })
-    mockGetPostTranslations.mockResolvedValue([
-      { locale: 'en', slug: 'my-post' },
-      { locale: 'es', slug: 'mi-post' },
-    ])
     await PUT(makePutRequest({ tags: ['react'] }), makeParams('id'))
-    expect(mockRevalidatePath).toHaveBeenCalledWith('/en/blog/42/my-post')
-    expect(mockRevalidatePath).toHaveBeenCalledWith('/es/blog/42/mi-post')
-  })
-
-  it('does not call revalidatePath when post has no translations', async () => {
-    mockAuth.mockResolvedValue({ user: { name: 'admin' } })
-    mockUpdatePost.mockResolvedValue(mockPost)
-    mockGetPostTranslations.mockResolvedValue([])
-    await PUT(makePutRequest({ tags: ['react'] }), makeParams('id'))
-    expect(mockRevalidatePath).not.toHaveBeenCalled()
+    expect(mockRevalidatePath).toHaveBeenCalledWith(
+      '/[lng]/blog/[id]/[slug]',
+      'page',
+    )
+    expect(mockRevalidatePath).toHaveBeenCalledWith('/[lng]/blog', 'page')
+    expect(mockRevalidatePath).toHaveBeenCalledWith('/sitemap.xml')
   })
 
   it('upserts translations when provided', async () => {
@@ -715,11 +716,7 @@ describe('DELETE /api/posts/[id]', () => {
     expect(mockSoftDeletePost).toHaveBeenCalledWith(
       '01JWTEST000000000000000000',
     )
-    expect(mockRevalidateTag).toHaveBeenCalledWith('posts', 'default')
-    expect(mockRevalidateTag).toHaveBeenCalledWith(
-      'post-01JWTEST000000000000000000',
-      'default',
-    )
+    expect(mockRevalidateTag).toHaveBeenCalledWith('posts', { expire: 0 })
   })
 
   it('hard-deletes archived post and returns 204', async () => {
@@ -737,11 +734,7 @@ describe('DELETE /api/posts/[id]', () => {
       '01JWTEST000000000000000000',
     )
     expect(mockSoftDeletePost).not.toHaveBeenCalled()
-    expect(mockRevalidateTag).toHaveBeenCalledWith('posts', 'default')
-    expect(mockRevalidateTag).toHaveBeenCalledWith(
-      'post-01JWTEST000000000000000000',
-      'default',
-    )
+    expect(mockRevalidateTag).toHaveBeenCalledWith('posts', { expire: 0 })
   })
 
   it('returns 422 when hard-deleting a non-archived post', async () => {

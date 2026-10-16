@@ -71,8 +71,10 @@ describe('sendConfirmationEmail', () => {
       translations,
     })
 
-    const templateArg = (await import('./templates/ConfirmSubscription'))
-      .ConfirmSubscriptionEmail.mock.calls[0][0]
+    const templateArg = vi.mocked(
+      (await import('./templates/ConfirmSubscription'))
+        .ConfirmSubscriptionEmail,
+    ).mock.calls[0][0]
     expect(templateArg.confirmUrl).toBe(
       'https://example.com/es/subscribe/confirmed?token=mytoken',
     )
@@ -89,8 +91,10 @@ describe('sendConfirmationEmail', () => {
       locale: 'en',
       translations,
     })
-    const templateArg = (await import('./templates/ConfirmSubscription'))
-      .ConfirmSubscriptionEmail.mock.calls[0][0]
+    const templateArg = vi.mocked(
+      (await import('./templates/ConfirmSubscription'))
+        .ConfirmSubscriptionEmail,
+    ).mock.calls[0][0]
     expect(templateArg.blogImageUrl).toBe('https://example.com/og/blog.jpg')
   })
 
@@ -103,8 +107,10 @@ describe('sendConfirmationEmail', () => {
       locale: 'en',
       translations,
     })
-    const templateArg = (await import('./templates/ConfirmSubscription'))
-      .ConfirmSubscriptionEmail.mock.calls[0][0]
+    const templateArg = vi.mocked(
+      (await import('./templates/ConfirmSubscription'))
+        .ConfirmSubscriptionEmail,
+    ).mock.calls[0][0]
     expect(templateArg.blogImageUrl).toBeUndefined()
   })
 

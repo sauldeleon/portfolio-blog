@@ -11,7 +11,7 @@ const obstacles: CroquisObstacle[] = [
     meters: 10,
     side: 'left',
     severity: 'danger',
-    notes: [{ text: 'Be careful', sub: '' }],
+    notes: [{ text: 'Be careful', sub: false }],
     photos: ['https://res.cloudinary.com/x/image/upload/v1/a.jpg'],
   },
   {
@@ -29,7 +29,7 @@ const obstacles: CroquisObstacle[] = [
     meters: 3,
     side: null,
     severity: 'easy',
-    notes: [{ text: 'Fun one', sub: '' }],
+    notes: [{ text: 'Fun one', sub: false }],
     photos: ['https://res.cloudinary.com/x/image/upload/v1/c.jpg'],
   },
   {

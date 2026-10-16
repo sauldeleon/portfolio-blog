@@ -17,7 +17,7 @@ Use `yarn` for all commands.
 | Format    | `yarn format:write` |
 | Dep graph | `yarn dep-graph`    |
 
-Run tests for single file: `yarn nx test <app> --testFile=<path>`
+Run tests for single file: `yarn nx test <app> -- <path>`
 
 ## Workflow
 

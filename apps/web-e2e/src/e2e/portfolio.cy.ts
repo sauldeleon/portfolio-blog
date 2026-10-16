@@ -1,7 +1,7 @@
 import { getTitle } from '../support/common.po'
 
 describe('Portfolio page - SEO', () => {
-  beforeEach(() => cy.visit('/portfolio/'))
+  beforeEach(() => cy.visitHydrated('/portfolio/'))
 
   it('should have BreadcrumbList JSON-LD', () => {
     cy.get('script[type="application/ld+json"]').then((scripts) => {
@@ -19,7 +19,7 @@ describe('Portfolio page - SEO', () => {
 
 describe('Portfolio page', () => {
   beforeEach(() => {
-    cy.visit('/portfolio/')
+    cy.visitHydrated('/portfolio/')
   })
 
   it('should redirect to the portfolio page with language', () => {
@@ -42,19 +42,19 @@ describe('Portfolio page', () => {
 
 describe('Portfolio page - Download CV button', () => {
   it('should render the download button with English label', () => {
-    cy.visit('/en/portfolio/')
+    cy.visitHydrated('/en/portfolio/')
     cy.get('[aria-label="Download a copy of the CV"]').should('exist')
   })
 
   it('should be disabled initially and become enabled once PDF is ready', () => {
-    cy.visit('/en/portfolio/')
+    cy.visitHydrated('/en/portfolio/')
     cy.get('[aria-label="Download a copy of the CV"]', {
       timeout: 15000,
     }).should('not.be.disabled')
   })
 
   it('should trigger download with English filename on click', () => {
-    cy.visit('/en/portfolio/')
+    cy.visitHydrated('/en/portfolio/')
     cy.get('[aria-label="Download a copy of the CV"]', {
       timeout: 15000,
     }).should('not.be.disabled')
@@ -82,12 +82,12 @@ describe('Portfolio page - Download CV button', () => {
   })
 
   it('should render the download button with Spanish label', () => {
-    cy.visit('/es/portfolio/')
+    cy.visitHydrated('/es/portfolio/')
     cy.get('[aria-label="Descargar una copia del CV"]').should('exist')
   })
 
   it('should trigger download with Spanish filename on click', () => {
-    cy.visit('/es/portfolio/')
+    cy.visitHydrated('/es/portfolio/')
     cy.get('[aria-label="Descargar una copia del CV"]', {
       timeout: 15000,
     }).should('not.be.disabled')

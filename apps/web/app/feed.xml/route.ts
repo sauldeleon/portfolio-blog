@@ -1,11 +1,13 @@
-import { getPublishedPosts } from '@web/lib/db/queries/posts'
+import { getCachedPublishedPosts } from '@web/lib/db/queries/publicCache'
 import { generateRSS } from '@web/lib/rss/generateRSS'
 
+// Rendered on request (prerendering would need the database at build time),
+// but from the cached query that revalidatePublicContent() expires whenever
+// posts change, so the database is only hit after a change.
 export const dynamic = 'force-dynamic'
 
 export async function GET() {
-  const allPosts = await getPublishedPosts('en')
-  const posts = allPosts.slice(0, 20)
+  const posts = await getCachedPublishedPosts('en', { limit: 20 })
   const rss = generateRSS(posts, 'en')
   return new Response(rss, {
     headers: { 'Content-Type': 'application/rss+xml; charset=utf-8' },

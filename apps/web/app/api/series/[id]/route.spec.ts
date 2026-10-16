@@ -10,6 +10,10 @@ const mockDbDelete = vi.fn()
 const mockLoggerError = vi.fn()
 
 vi.mock('@web/lib/auth/config', () => ({ auth: () => mockAuth() }))
+const mockRevalidatePublicContent = vi.fn()
+vi.mock('@web/lib/cache/revalidatePublicContent', () => ({
+  revalidatePublicContent: () => mockRevalidatePublicContent(),
+}))
 vi.mock('@web/lib/db/queries/series', () => ({
   upsertSeriesTranslation: (...args: unknown[]) =>
     mockUpsertSeriesTranslation(...args),
@@ -112,6 +116,7 @@ describe('PUT /api/series/[id]', () => {
       makeParams('my-series'),
     )
     expect(res.status).toBe(200)
+    expect(mockRevalidatePublicContent).toHaveBeenCalled()
     expect(mockUpsertSeriesTranslation).toHaveBeenCalledWith(
       'my-series',
       'en',
@@ -159,6 +164,7 @@ describe('DELETE /api/series/[id]', () => {
     mockDbDelete.mockReturnValue(deleteChain)
     const res = await DELETE(deleteReq, makeParams('my-series'))
     expect(res.status).toBe(200)
+    expect(mockRevalidatePublicContent).toHaveBeenCalled()
     expect(mockDbDelete).toHaveBeenCalledTimes(2)
     const json = await res.json()
     expect(json).toEqual({ id: 'my-series' })

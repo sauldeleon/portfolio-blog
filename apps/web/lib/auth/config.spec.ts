@@ -135,9 +135,7 @@ describe('authorizeCredentials', () => {
 
 describe('authConfig.callbacks', () => {
   // Import authConfig after mocks are set up
-  let callbacks: Awaited<
-    ReturnType<typeof import('./config')>
-  >['authConfig']['callbacks']
+  let callbacks: (typeof import('./config'))['authConfig']['callbacks']
 
   beforeEach(async () => {
     const mod = await import('./config')

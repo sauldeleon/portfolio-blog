@@ -1,6 +1,6 @@
 import { cleanupE2eData, trackCreated } from '../support/cleanup'
 import { clickUntilVisible } from '../support/clickUntilVisible'
-import { loginViaUi } from '../support/login'
+import { loginViaUi, waitForHydration } from '../support/login'
 
 // 1×1 transparent PNG — minimal valid image accepted by the upload API
 const MINIMAL_PNG_B64 =
@@ -20,6 +20,7 @@ describe('Admin images — upload, verify in picker, delete', () => {
     })
     loginViaUi()
     cy.url({ timeout: 20000 }).should('include', '/admin/posts')
+    waitForHydration()
   })
 
   it('uploads an image, verifies it in the post editor image picker, then deletes it', () => {
@@ -30,7 +31,7 @@ describe('Admin images — upload, verify in picker, delete', () => {
     trackCreated('images', renamedImageName)
 
     // 1. Go to image manager
-    cy.visit('/admin/images')
+    cy.visitHydrated('/admin/images')
     cy.get('[data-testid="image-manager"]').should('be.visible')
 
     // 2. Open upload modal (image-manager is visible from SSR before React
@@ -75,7 +76,7 @@ describe('Admin images — upload, verify in picker, delete', () => {
     }).should('be.visible')
 
     // 6. Navigate to new post editor.
-    cy.visit('/admin/posts/new')
+    cy.visitHydrated('/admin/posts/new')
     cy.get('[data-testid="post-editor"]').should('be.visible')
     // This page is fully SSR'd with no client-side fetch on mount, so post-editor
     // is visible in the DOM before React hydrateRoot() finishes attaching handlers.
@@ -129,7 +130,7 @@ describe('Admin images — upload, verify in picker, delete', () => {
     )
 
     // 9. Go back to image manager without creating a post
-    cy.visit('/admin/images')
+    cy.visitHydrated('/admin/images')
     cy.get('[data-testid="image-manager"]').should('be.visible')
     cy.get('[data-testid="image-grid"]', { timeout: 20000 }).should(
       'be.visible',

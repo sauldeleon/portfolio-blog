@@ -20,6 +20,8 @@ const mockPost: PublicPost = {
   createdAt: new Date('2024-01-01T00:00:00Z'),
   updatedAt: new Date('2024-01-15T12:00:00Z'),
   author: 'Saúl de León',
+  likes: 0,
+  commentsEnabled: true,
 }
 
 describe('generateRSS', () => {

@@ -298,7 +298,6 @@ function GpxTrackLayer({
   url,
   color,
   visible,
-  showWaypoints,
   waypointImages,
   waypointNotes,
   onImageZoom,
@@ -306,7 +305,6 @@ function GpxTrackLayer({
   url: string
   color: string
   visible: boolean
-  showWaypoints: boolean
   waypointImages?: Record<string, string[]>
   waypointNotes?: Record<string, string[]>
   onImageZoom: (images: string[], index: number) => void
@@ -380,11 +378,8 @@ function GpxTrackLayer({
         endIcon: MAP_ICON_END,
         wptIcons: WPT_ICON_URLS,
       },
-      gpx_options: {
-        parseElements: showWaypoints
-          ? ['track', 'route', 'waypoint']
-          : ['track', 'route'],
-      },
+      // Waypoints always show on the map; showWaypoints only adds the table.
+      gpx_options: { parseElements: ['track', 'route', 'waypoint'] },
     })
 
     layer.on('loaded', () => {
@@ -392,45 +387,39 @@ function GpxTrackLayer({
       map.fitBounds(layer.getBounds())
       const imgs = waypointImagesRef.current
       const notesMap = waypointNotesRef.current
-      if (showWaypoints) {
-        let wptIdx = 0
-        const bindToMarker = (l: L.Layer) => {
-          if ((l as L.LayerGroup).eachLayer) {
-            ;(l as L.LayerGroup).eachLayer(bindToMarker)
-            return
-          }
-          const opts = (l as L.Marker).options as L.MarkerOptions & {
-            title?: string
-            type?: string
-          }
-          if (opts.type !== 'waypoint') return
-          const name = opts.title
-          const key = String(wptIdx)
-          const urls = imgs
-            ? (imgs[key] ?? (name ? imgs[name] : undefined))
-            : undefined
-          const notes = notesMap
-            ? (notesMap[key] ?? (name ? notesMap[name] : undefined))
-            : undefined
-          wptIdx++
-          const imageUrls = urls ?? []
-          const noteList = notes ?? []
-          // Nothing worth showing → keep the default marker (no popup).
-          if (imageUrls.length === 0 && !name && noteList.length === 0) return
-          const content = buildWaypointPopupHtml(
-            imageUrls,
-            name ?? '',
-            noteList,
-          )
-          // A click/tap popup (not a hover tooltip). Leaflet's default autoClose
-          // keeps only one waypoint popup open at a time.
-          ;(l as L.Marker).unbindTooltip().bindPopup(content, {
-            className: 'gpx-waypoint-popup',
-            offset: [0, -18],
-          })
+      let wptIdx = 0
+      const bindToMarker = (l: L.Layer) => {
+        if ((l as L.LayerGroup).eachLayer) {
+          ;(l as L.LayerGroup).eachLayer(bindToMarker)
+          return
         }
-        layer.eachLayer(bindToMarker)
+        const opts = (l as L.Marker).options as L.MarkerOptions & {
+          title?: string
+          type?: string
+        }
+        if (opts.type !== 'waypoint') return
+        const name = opts.title
+        const key = String(wptIdx)
+        const urls = imgs
+          ? (imgs[key] ?? (name ? imgs[name] : undefined))
+          : undefined
+        const notes = notesMap
+          ? (notesMap[key] ?? (name ? notesMap[name] : undefined))
+          : undefined
+        wptIdx++
+        const imageUrls = urls ?? []
+        const noteList = notes ?? []
+        // Nothing worth showing → keep the default marker (no popup).
+        if (imageUrls.length === 0 && !name && noteList.length === 0) return
+        const content = buildWaypointPopupHtml(imageUrls, name ?? '', noteList)
+        // A click/tap popup (not a hover tooltip). Leaflet's default autoClose
+        // keeps only one waypoint popup open at a time.
+        ;(l as L.Marker).unbindTooltip().bindPopup(content, {
+          className: 'gpx-waypoint-popup',
+          offset: [0, -18],
+        })
       }
+      layer.eachLayer(bindToMarker)
     })
 
     layerRef.current = layer
@@ -440,7 +429,7 @@ function GpxTrackLayer({
       map.removeLayer(layer)
       layerRef.current = null
     }
-  }, [url, color, map, showWaypoints])
+  }, [url, color, map])
 
   useEffect(() => {
     const layer = layerRef.current
@@ -602,7 +591,6 @@ export function GpxMap({
               url={track.url}
               color={resolveTrackColor(track, i)}
               visible={visibleTracks[i] ?? true}
-              showWaypoints={track.showWaypoints ?? showWaypoints ?? false}
               waypointImages={track.waypointImages ?? waypointImages}
               waypointNotes={track.waypointNotes ?? waypointNotes}
               onImageZoom={(images, index) => setLightbox({ images, index })}

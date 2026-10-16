@@ -8,19 +8,16 @@ import { PostCard } from '@sdlgr/post-card'
 import { LatestPostHero } from '@web/components/LatestPostHero'
 import { SubscribeModal } from '@web/components/SubscribeModal'
 import { getServerTranslation } from '@web/i18n/server'
+import { type PublishedDateGroup } from '@web/lib/db/queries/posts'
 import {
-  getCategories,
-  getCategoryByLocaleSlug,
-} from '@web/lib/db/queries/categories'
-import {
-  type PublishedDateGroup,
-  getLatestPublishedPost,
-  getPostPublishedDates,
-  getPublishedPostsPaginated,
-} from '@web/lib/db/queries/posts'
-import { getPostCountPerTag } from '@web/lib/db/queries/tags'
+  getCachedCategories,
+  getCachedCategoryByLocaleSlug,
+  getCachedLatestPublishedPost,
+  getCachedPostCountPerTag,
+  getCachedPostPublishedDates,
+  getCachedPublishedPostsPage,
+} from '@web/lib/db/queries/publicCache'
 import { Locale } from '@web/lib/db/schema'
-import { computeReadingTime } from '@web/utils/computeReadingTime'
 
 import {
   StyledEmpty,
@@ -94,15 +91,17 @@ export async function BlogPage({
   const activeYear = year ? parseInt(year, 10) || null : null
   const activeMonth = month ? parseInt(month, 10) || null : null
 
-  const latestPost = await getLatestPublishedPost(lng)
+  // Independent lookups first, in parallel; everything else needs heroId.
+  const [latestPost, canonicalCategories] = await Promise.all([
+    getCachedLatestPublishedPost(lng),
+    Promise.all(
+      activeCategories.map(async (slug) => {
+        const resolved = await getCachedCategoryByLocaleSlug(slug, lng)
+        return resolved?.canonicalSlug ?? slug
+      }),
+    ),
+  ])
   const heroId = latestPost?.id
-
-  const canonicalCategories = await Promise.all(
-    activeCategories.map(async (slug) => {
-      const resolved = await getCategoryByLocaleSlug(slug, lng)
-      return resolved?.canonicalSlug ?? slug
-    }),
-  )
 
   const hasDateCrossFilters = !!(
     activeTags.length || canonicalCategories.length
@@ -110,24 +109,24 @@ export async function BlogPage({
 
   const [categoriesData, tagsData, allDates, filteredDatesResult, gridResult] =
     await Promise.all([
-      getCategories(lng, heroId, {
+      getCachedCategories(lng, heroId, {
         tags: activeTags,
         year: activeYear ?? undefined,
         month: activeMonth ?? undefined,
       }),
-      getPostCountPerTag(heroId, {
+      getCachedPostCountPerTag(heroId, {
         categories: canonicalCategories,
         year: activeYear ?? undefined,
         month: activeMonth ?? undefined,
       }),
-      getPostPublishedDates(lng, heroId),
+      getCachedPostPublishedDates(lng, heroId),
       hasDateCrossFilters
-        ? getPostPublishedDates(lng, heroId, {
+        ? getCachedPostPublishedDates(lng, heroId, {
             categories: canonicalCategories,
             tags: activeTags,
           })
         : Promise.resolve(null),
-      getPublishedPostsPaginated({
+      getCachedPublishedPostsPage({
         locale: lng,
         page: currentPage,
         limit: POSTS_PER_PAGE,
@@ -208,7 +207,7 @@ export async function BlogPage({
               coverImageFit={post.coverImageFit ?? undefined}
               category={post.category}
               tags={post.tags}
-              readingTime={computeReadingTime(post.content)}
+              readingTime={post.readingTime}
               publishedAt={
                 post.publishedAt
                   ? format(new Date(post.publishedAt), 'PP', { locale })

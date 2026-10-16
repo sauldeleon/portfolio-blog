@@ -1,4 +1,4 @@
-import { slugify } from './slugify'
+import { isPostSlug, slugify } from './slugify'
 
 describe('slugify', () => {
   it('lowercases input', () => {
@@ -51,5 +51,21 @@ describe('slugify', () => {
 
   it('strips accented vowels', () => {
     expect(slugify('Góriz')).toBe('goriz')
+  })
+})
+
+describe('isPostSlug', () => {
+  it('accepts what slugify produces', () => {
+    expect(isPostSlug(slugify('Del Valle de Pineta a Tucarroya'))).toBe(true)
+    expect(isPostSlug('ruta-2026')).toBe(true)
+  })
+
+  it('rejects anything else', () => {
+    expect(isPostSlug('')).toBe(false)
+    expect(isPostSlug('Has spaces')).toBe(false)
+    expect(isPostSlug('double--hyphen')).toBe(false)
+    expect(isPostSlug('-leading')).toBe(false)
+    expect(isPostSlug('a/b')).toBe(false)
+    expect(isPostSlug('a'.repeat(201))).toBe(false)
   })
 })

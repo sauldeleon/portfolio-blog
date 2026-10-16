@@ -71,7 +71,7 @@ describe('GET /api/cards/canyon-waypoints', () => {
     mockParse.mockReturnValue(waypoints)
     const res = await GET(request('https://example.com/a.gpx'))
     expect(res.status).toBe(200)
-    const body = await res.json()
+    const body = (await res.json()) as { data: unknown }
     expect(body.data).toEqual(waypoints)
   })
 })

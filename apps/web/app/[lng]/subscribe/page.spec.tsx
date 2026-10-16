@@ -27,7 +27,9 @@ function makeParams(lng: Locale) {
 describe('[lng]/subscribe — page', () => {
   beforeEach(async () => {
     const { getServerTranslation } = await import('@web/i18n/server')
-    getServerTranslation.mockResolvedValue({ t: (key: string) => key })
+    vi.mocked(getServerTranslation).mockResolvedValue({
+      t: (key: string) => key,
+    } as unknown as Awaited<ReturnType<typeof getServerTranslation>>)
   })
 
   it('renders SubscribePage with correct lng', async () => {
@@ -43,7 +45,9 @@ describe('[lng]/subscribe — page', () => {
 describe('[lng]/subscribe — metadata', () => {
   beforeEach(async () => {
     const { getServerTranslation } = await import('@web/i18n/server')
-    getServerTranslation.mockResolvedValue({ t: (key: string) => key })
+    vi.mocked(getServerTranslation).mockResolvedValue({
+      t: (key: string) => key,
+    } as unknown as Awaited<ReturnType<typeof getServerTranslation>>)
   })
 
   it('returns title and description', async () => {

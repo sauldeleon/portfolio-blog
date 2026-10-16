@@ -1,6 +1,7 @@
 /**
  * @vitest-environment node
  */
+import { NextRequest } from 'next/server'
 import type { Mock } from 'vitest'
 
 const mockOgImageTemplate = vi.fn()
@@ -53,7 +54,7 @@ describe('GET /og', () => {
 
   it('calls ImageResponse with 1200x630 dimensions', async () => {
     const { GET } = await import('./route')
-    await GET(new Request('http://localhost/og?title=Test'))
+    await GET(new NextRequest('http://localhost/og?title=Test'))
     expect(mockImageResponse).toHaveBeenCalledWith(
       expect.anything(),
       expect.objectContaining({ width: 1200, height: 630 }),
@@ -62,14 +63,14 @@ describe('GET /og', () => {
 
   it('uses default title when no title param provided', async () => {
     const { GET } = await import('./route')
-    await GET(new Request('http://localhost/og'))
+    await GET(new NextRequest('http://localhost/og'))
     const element = mockImageResponse.mock.calls[0][0]
     expect(element.props.title).toBe('Saúl de León')
   })
 
   it('passes title from query params', async () => {
     const { GET } = await import('./route')
-    await GET(new Request('http://localhost/og?title=My+Post+Title'))
+    await GET(new NextRequest('http://localhost/og?title=My+Post+Title'))
     const element = mockImageResponse.mock.calls[0][0]
     expect(element.props.title).toBe('My Post Title')
   })
@@ -78,7 +79,7 @@ describe('GET /og', () => {
     const { GET } = await import('./route')
     const { getCldImageUrl } = await import('next-cloudinary')
     await GET(
-      new Request('http://localhost/og?title=Test&cover=blog%2Fcover.jpg'),
+      new NextRequest('http://localhost/og?title=Test&cover=blog%2Fcover.jpg'),
     )
     expect(getCldImageUrl).toHaveBeenCalledWith(
       expect.objectContaining({ src: 'blog/cover.jpg' }),
@@ -98,7 +99,7 @@ describe('GET /og', () => {
     })
     const { GET } = await import('./route')
     await GET(
-      new Request('http://localhost/og?title=Test&cover=blog%2Fcover.jpg'),
+      new NextRequest('http://localhost/og?title=Test&cover=blog%2Fcover.jpg'),
     )
     const element = mockImageResponse.mock.calls[0][0]
     expect(element.props.cover).toMatch(/^data:image\/jpeg;base64,/)
@@ -109,7 +110,7 @@ describe('GET /og', () => {
     mockAxiosGet.mockRejectedValue(err)
     const { GET } = await import('./route')
     await GET(
-      new Request('http://localhost/og?title=Test&cover=blog%2Fcover.jpg'),
+      new NextRequest('http://localhost/og?title=Test&cover=blog%2Fcover.jpg'),
     )
     const element = mockImageResponse.mock.calls[0][0]
     expect(element.props.cover).toBeNull()
@@ -121,7 +122,7 @@ describe('GET /og', () => {
 
   it('passes null cover when not provided', async () => {
     const { GET } = await import('./route')
-    await GET(new Request('http://localhost/og?title=Test'))
+    await GET(new NextRequest('http://localhost/og?title=Test'))
     const element = mockImageResponse.mock.calls[0][0]
     expect(element.props.cover).toBeNull()
   })
@@ -129,7 +130,7 @@ describe('GET /og', () => {
   it('passes category param when provided', async () => {
     const { GET } = await import('./route')
     await GET(
-      new Request('http://localhost/og?title=Test&category=Engineering'),
+      new NextRequest('http://localhost/og?title=Test&category=Engineering'),
     )
     const element = mockImageResponse.mock.calls[0][0]
     expect(element.props.category).toBe('Engineering')
@@ -137,14 +138,16 @@ describe('GET /og', () => {
 
   it('passes null category when not provided', async () => {
     const { GET } = await import('./route')
-    await GET(new Request('http://localhost/og?title=Test'))
+    await GET(new NextRequest('http://localhost/og?title=Test'))
     const element = mockImageResponse.mock.calls[0][0]
     expect(element.props.category).toBeNull()
   })
 
   it('returns the ImageResponse result', async () => {
     const { GET } = await import('./route')
-    const response = await GET(new Request('http://localhost/og?title=Test'))
+    const response = await GET(
+      new NextRequest('http://localhost/og?title=Test'),
+    )
     expect(response).toBeDefined()
   })
 })

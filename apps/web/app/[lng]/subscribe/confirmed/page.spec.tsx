@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react'
 
+import type { SubscriptionRecord } from '@web/lib/db/queries/subscriptions'
 import { Locale } from '@web/lib/db/schema'
 
 import Page, { generateMetadata } from './page.next'
@@ -41,17 +42,19 @@ describe('[lng]/subscribe/confirmed — page', () => {
   beforeEach(async () => {
     vi.clearAllMocks()
     const { getServerTranslation } = await import('@web/i18n/server')
-    getServerTranslation.mockResolvedValue({ t: (key: string) => key })
+    vi.mocked(getServerTranslation).mockResolvedValue({
+      t: (key: string) => key,
+    } as unknown as Awaited<ReturnType<typeof getServerTranslation>>)
   })
 
   it('shows confirmed title on success', async () => {
     const { confirmSubscription } =
       await import('@web/lib/db/queries/subscriptions')
-    confirmSubscription.mockResolvedValue({
+    vi.mocked(confirmSubscription).mockResolvedValue({
       id: '1',
       status: 'active',
       token: 'tok',
-    })
+    } as SubscriptionRecord)
     const ui = await Page(makeParams('en', 'valid-token'))
     render(ui)
     expect(screen.getByText('confirmed.title')).toBeInTheDocument()
@@ -61,7 +64,7 @@ describe('[lng]/subscribe/confirmed — page', () => {
   it('shows error when token not found', async () => {
     const { confirmSubscription } =
       await import('@web/lib/db/queries/subscriptions')
-    confirmSubscription.mockResolvedValue(null)
+    vi.mocked(confirmSubscription).mockResolvedValue(null)
     const ui = await Page(makeParams('en', 'bad-token'))
     render(ui)
     expect(screen.getByText('confirmed.error')).toBeInTheDocument()
@@ -80,7 +83,10 @@ describe('[lng]/subscribe/confirmed — page', () => {
   it('renders back to blog link', async () => {
     const { confirmSubscription } =
       await import('@web/lib/db/queries/subscriptions')
-    confirmSubscription.mockResolvedValue({ id: '1', status: 'active' })
+    vi.mocked(confirmSubscription).mockResolvedValue({
+      id: '1',
+      status: 'active',
+    } as SubscriptionRecord)
     const ui = await Page(makeParams('en', 'tok'))
     render(ui)
     expect(screen.getByText('backToBlog')).toBeInTheDocument()
@@ -89,11 +95,11 @@ describe('[lng]/subscribe/confirmed — page', () => {
   it('renders subscribe image on success', async () => {
     const { confirmSubscription } =
       await import('@web/lib/db/queries/subscriptions')
-    confirmSubscription.mockResolvedValue({
+    vi.mocked(confirmSubscription).mockResolvedValue({
       id: '1',
       status: 'active',
       token: 'tok',
-    })
+    } as SubscriptionRecord)
     const ui = await Page(makeParams('en', 'valid-token'))
     render(ui)
     expect(screen.getByAltText('confirmed.imageAlt')).toBeInTheDocument()
@@ -102,7 +108,7 @@ describe('[lng]/subscribe/confirmed — page', () => {
   it('does not render subscribe image on error', async () => {
     const { confirmSubscription } =
       await import('@web/lib/db/queries/subscriptions')
-    confirmSubscription.mockResolvedValue(null)
+    vi.mocked(confirmSubscription).mockResolvedValue(null)
     const ui = await Page(makeParams('en', 'bad-token'))
     render(ui)
     expect(screen.queryByAltText('confirmed.imageAlt')).not.toBeInTheDocument()
@@ -112,7 +118,9 @@ describe('[lng]/subscribe/confirmed — page', () => {
 describe('[lng]/subscribe/confirmed — metadata', () => {
   beforeEach(async () => {
     const { getServerTranslation } = await import('@web/i18n/server')
-    getServerTranslation.mockResolvedValue({ t: (key: string) => key })
+    vi.mocked(getServerTranslation).mockResolvedValue({
+      t: (key: string) => key,
+    } as unknown as Awaited<ReturnType<typeof getServerTranslation>>)
   })
 
   it('returns confirmed.title as page title', async () => {

@@ -1,3 +1,4 @@
+import { fallbackLng, languages } from './languages'
 import admin from './locales/en/admin.json'
 import blogPage from './locales/en/blogPage.json'
 import common from './locales/en/common.json'
@@ -10,8 +11,7 @@ import notFound from './locales/en/notFound.json'
 import portfolioPage from './locales/en/portfolioPage.json'
 import subscribe from './locales/en/subscribe.json'
 
-export const fallbackLng = 'en'
-export const languages = [fallbackLng, 'es']
+export { fallbackLng, languages }
 export const defaultNS = 'common'
 
 export const resources = {

@@ -7,6 +7,11 @@ const mockDeleteComment = vi.fn()
 const mockRequireAuth = vi.fn()
 const mockLoggerError = vi.fn()
 
+const mockRevalidatePublicContent = vi.fn()
+vi.mock('@web/lib/cache/revalidatePublicContent', () => ({
+  revalidatePublicContent: () => mockRevalidatePublicContent(),
+}))
+
 vi.mock('@web/lib/db/queries/comments', () => ({
   getCommentById: (...args: unknown[]) => mockGetCommentById(...args),
   updateCommentStatus: (...args: unknown[]) => mockUpdateCommentStatus(...args),
@@ -81,7 +86,8 @@ describe('PATCH /api/comments/[id]', () => {
   it('updates comment status and returns comment', async () => {
     const res = await PATCH(makePatchRequest(), makeCtx())
     expect(res.status).toBe(200)
-    const json = await res.json()
+    expect(mockRevalidatePublicContent).toHaveBeenCalled()
+    const json = (await res.json()) as { comment: { status: string } }
     expect(json.comment.status).toBe('approved')
   })
 
@@ -129,7 +135,8 @@ describe('DELETE /api/comments/[id]', () => {
   it('deletes comment and returns ok', async () => {
     const res = await DELETE(makeDeleteRequest(), makeCtx())
     expect(res.status).toBe(200)
-    const json = await res.json()
+    expect(mockRevalidatePublicContent).toHaveBeenCalled()
+    const json = (await res.json()) as { ok: boolean }
     expect(json.ok).toBe(true)
   })
 

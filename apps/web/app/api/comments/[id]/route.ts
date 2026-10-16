@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 
 import { requireAuth } from '@web/lib/api/parseRequest'
+import { revalidatePublicContent } from '@web/lib/cache/revalidatePublicContent'
 import {
   deleteComment,
   getCommentById,
@@ -43,6 +44,7 @@ export async function PATCH(
     if (!comment) {
       return NextResponse.json({ error: 'Comment not found' }, { status: 404 })
     }
+    revalidatePublicContent()
     return NextResponse.json({ comment })
   } catch (err) {
     logger.error(err, 'PATCH /api/comments/[id] failed')
@@ -68,6 +70,7 @@ export async function DELETE(
       return NextResponse.json({ error: 'Comment not found' }, { status: 404 })
     }
     await deleteComment(id)
+    revalidatePublicContent()
     return NextResponse.json({ ok: true })
   } catch (err) {
     logger.error(err, 'DELETE /api/comments/[id] failed')

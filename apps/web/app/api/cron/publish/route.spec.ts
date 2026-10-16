@@ -17,6 +17,7 @@ vi.mock('@web/lib/email/notifyPostPublished', () => ({
 
 vi.mock('next/cache', () => ({
   revalidateTag: mockRevalidateTag,
+  revalidatePath: vi.fn(),
 }))
 
 vi.mock('@web/lib/logger', () => ({
@@ -102,13 +103,12 @@ describe('GET /api/cron/publish', () => {
     expect(body).toEqual({ published: 2 })
   })
 
-  it('calls revalidateTag when posts are published', async () => {
+  it('expires the public post pages when posts are published', async () => {
     mockGetScheduledPostsToPublish.mockResolvedValue([
       { id: 'post-1', scheduledAt: new Date('2024-01-10T08:00:00Z') },
     ])
     await GET(makeRequest('Bearer test-secret-xyz'))
-    expect(mockRevalidateTag).toHaveBeenCalledWith('posts', 'default')
-    expect(mockRevalidateTag).toHaveBeenCalledWith('post-post-1', 'default')
+    expect(mockRevalidateTag).toHaveBeenCalledWith('posts', { expire: 0 })
   })
 
   it('does not call revalidateTag when no posts are published', async () => {

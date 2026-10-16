@@ -142,7 +142,7 @@ describe('PATCH /api/users/[id]', () => {
       makeParams('user-2'),
     )
     expect(res.status).toBe(200)
-    const json = await res.json()
+    const json = (await res.json()) as { role: string }
     expect(json.role).toBe('admin')
   })
 

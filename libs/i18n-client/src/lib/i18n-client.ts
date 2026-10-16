@@ -1,5 +1,10 @@
 /* istanbul ignore file */
-import i18next, { BackendModule, FlatNamespace, KeyPrefix } from 'i18next'
+import i18next, {
+  BackendModule,
+  FlatNamespace,
+  type i18n as I18n,
+  KeyPrefix,
+} from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import { useContext, useEffect, useState } from 'react'
 import {
@@ -41,6 +46,26 @@ export function initialize({ resourcesToBackend, ...rest }: InitializeProps) {
     })
 }
 
+/**
+ * The i18next instance is a module singleton, shared by every page the server
+ * renders at the same time. Changing its language while rendering one page
+ * leaked into the others (an English post rendered with Spanish UI strings).
+ * On the server, each language gets its own clone sharing the loaded resources.
+ * Calling initialize() again (dev reloads, several bundles) gives the singleton
+ * a new resource store, so a clone of the old one would only return keys.
+ */
+const serverInstances = new Map<string, I18n>()
+
+function serverInstanceFor(base: I18n, lng: string): I18n {
+  let instance = serverInstances.get(lng)
+  if (!instance || instance.store !== base.store) {
+    instance = base.cloneInstance({ lng })
+    instance.changeLanguage(lng)
+    serverInstances.set(lng, instance)
+  }
+  return instance
+}
+
 export function useClientTranslation<
   Ns extends FlatNamespace,
   KPrefix extends KeyPrefix<FallbackNs<Ns>> = undefined,
@@ -54,8 +79,14 @@ export function useClientTranslation<
   const runsOnServerSide = typeof window === 'undefined'
   const ret = useTranslationOrg(ns, options)
   const { i18n } = ret
-  if (runsOnServerSide && lng && i18n.resolvedLanguage !== lng) {
-    i18n.changeLanguage(lng)
+  if (runsOnServerSide && lng) {
+    const instance = serverInstanceFor(i18n, lng)
+    const t = instance.getFixedT(lng, ns as never, options?.keyPrefix as never)
+    return Object.assign([t, instance, ret.ready], {
+      t,
+      i18n: instance,
+      ready: ret.ready,
+    }) as unknown as UseTranslationResponse<FallbackNs<Ns>, KPrefix>
   } else {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [activeLng, setActiveLng] = useState(i18n.resolvedLanguage)

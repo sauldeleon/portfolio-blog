@@ -1,7 +1,7 @@
 import { checkLocalStorageValue, getTitle } from '../support/common.po'
 
 describe('Home page - SEO', () => {
-  beforeEach(() => cy.visit('/'))
+  beforeEach(() => cy.visitHydrated('/'))
 
   it('should have preconnect link for Google Analytics', () => {
     cy.get(
@@ -14,7 +14,7 @@ describe('Home page - SEO', () => {
 })
 
 describe('Home page', () => {
-  beforeEach(() => cy.visit('/'))
+  beforeEach(() => cy.visitHydrated('/'))
 
   it('should display my name', () => {
     getTitle({ timeout: 6000 }).contains('Saúl de León Guerrero')
@@ -31,7 +31,7 @@ describe('Home page', () => {
     })
     cy.location('pathname').should('eq', '/es/')
 
-    cy.visit('/')
+    cy.visitHydrated('/')
     cy.location('pathname').should('eq', '/es/')
     checkLocalStorageValue('webLng', 'es')
     cy.get('footer').within(() => {

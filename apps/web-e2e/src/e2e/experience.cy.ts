@@ -1,7 +1,7 @@
 import { getTitle } from '../support/common.po'
 
 describe('Experience page - SEO', () => {
-  beforeEach(() => cy.visit('/experience/'))
+  beforeEach(() => cy.visitHydrated('/experience/'))
 
   it('should have BreadcrumbList JSON-LD', () => {
     cy.get('script[type="application/ld+json"]').then((scripts) => {
@@ -19,7 +19,7 @@ describe('Experience page - SEO', () => {
 
 describe('Experience page', () => {
   beforeEach(() => {
-    cy.visit('/experience/')
+    cy.visitHydrated('/experience/')
   })
 
   it('should redirect to the experience page with language', () => {

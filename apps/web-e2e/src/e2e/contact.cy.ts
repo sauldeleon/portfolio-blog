@@ -1,7 +1,7 @@
 import { getTitle } from '../support/common.po'
 
 describe('Contact page - SEO', () => {
-  beforeEach(() => cy.visit('/contact/'))
+  beforeEach(() => cy.visitHydrated('/contact/'))
 
   it('should have BreadcrumbList JSON-LD', () => {
     cy.get('script[type="application/ld+json"]').then((scripts) => {
@@ -31,7 +31,7 @@ describe('Contact page - SEO', () => {
 
 describe('Contact page', () => {
   beforeEach(() => {
-    cy.visit('/contact/')
+    cy.visitHydrated('/contact/')
   })
 
   it('should redirect to the contact page with language', () => {

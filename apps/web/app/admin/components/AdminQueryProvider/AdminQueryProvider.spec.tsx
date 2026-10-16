@@ -43,7 +43,7 @@ describe('AdminQueryProvider', () => {
       headers: {},
       config: {} as never,
     })
-    await axios.interceptors.response.handlers.at(-1)!.rejected!(error).catch(
+    await axios.interceptors.response.handlers!.at(-1)!.rejected!(error).catch(
       () => undefined,
     )
     await waitFor(() => expect(mockPush).toHaveBeenCalledWith('/admin/login'))
@@ -62,7 +62,7 @@ describe('AdminQueryProvider', () => {
       headers: {},
       config: {} as never,
     })
-    await axios.interceptors.response.handlers.at(-1)!.rejected!(error).catch(
+    await axios.interceptors.response.handlers!.at(-1)!.rejected!(error).catch(
       () => undefined,
     )
     expect(mockPush).not.toHaveBeenCalled()
@@ -74,7 +74,7 @@ describe('AdminQueryProvider', () => {
         <div />
       </AdminQueryProvider>,
     )
-    await axios.interceptors.response.handlers.at(-1)!.rejected!(
+    await axios.interceptors.response.handlers!.at(-1)!.rejected!(
       new Error('Network error'),
     ).catch(() => undefined)
     expect(mockPush).not.toHaveBeenCalled()
@@ -87,7 +87,7 @@ describe('AdminQueryProvider', () => {
       </AdminQueryProvider>,
     )
     const response = { data: { ok: true }, status: 200 }
-    const result = await axios.interceptors.response.handlers.at(-1)!
+    const result = await axios.interceptors.response.handlers!.at(-1)!
       .fulfilled!(response as never)
     expect(result).toBe(response)
   })

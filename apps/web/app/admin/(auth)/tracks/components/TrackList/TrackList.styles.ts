@@ -48,40 +48,68 @@ export const StyledNotice = styled.p`
   border: 1px solid ${({ theme }) => theme.colors.green};
 `
 
+/*
+ * One grid shared by every row (rows use subgrid), so the name, the original
+ * and the clean versions line up in columns whatever their content:
+ * name | original: link, size, copy | clean: link, size, copy
+ */
 export const StyledList = styled.ul`
   list-style: none;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) repeat(2, auto auto auto);
+  column-gap: 0.75rem;
+
+  @media (max-width: 720px) {
+    display: flex;
+    flex-direction: column;
+  }
 `
 
 export const StyledRow = styled.li`
+  grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto auto;
+  grid-template-columns: subgrid;
   align-items: center;
-  gap: 1.5rem;
   padding: 0.75rem 0;
   border-bottom: 1px solid rgba(251, 251, 251, 0.06);
   font-size: 0.8rem;
   color: ${({ theme }) => theme.colors.white};
 
   @media (max-width: 720px) {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     gap: 0.5rem;
   }
 `
 
 export const StyledName = styled.span`
   overflow-wrap: anywhere;
+  padding-right: 0.75rem;
 `
 
-export const StyledVersion = styled.span`
-  display: inline-flex;
+export const StyledVersion = styled.span<{ $slot: 'original' | 'clean' }>`
+  grid-column: ${({ $slot }) => ($slot === 'original' ? '2' : '5')} / span 3;
+  display: grid;
+  grid-template-columns: subgrid;
   align-items: center;
-  gap: 0.75rem;
   font-size: 0.7rem;
   opacity: 0.85;
+
+  > span {
+    justify-self: end;
+    font-variant-numeric: tabular-nums;
+  }
+
+  ${({ $slot }) => $slot === 'clean' && 'padding-left: 1.5rem;'}
+
+  @media (max-width: 720px) {
+    display: inline-flex;
+    gap: 0.75rem;
+    padding-left: 0;
+  }
 `
 
 export const StyledEditLink = styled(Link)`

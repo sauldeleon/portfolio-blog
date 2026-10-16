@@ -1,4 +1,4 @@
-import { loginViaUi } from '../support/login'
+import { loginViaUi, waitForHydration } from '../support/login'
 
 const GPX = `<?xml version="1.0" encoding="UTF-8"?>
 <gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="e2e">
@@ -46,11 +46,12 @@ describe('Admin tracks — GPX editor', () => {
     }).as('upload')
     loginViaUi()
     cy.url({ timeout: 20000 }).should('include', '/admin/posts')
+    waitForHydration()
     cy.get('[data-testid="admin-nav"]').should('be.visible')
   })
 
   it('cleans a track, adds a waypoint and saves the -clean copy', () => {
-    cy.visit('/admin/tracks')
+    cy.visitHydrated('/admin/tracks')
     cy.wait('@list')
     cy.get('[data-testid="track-row-e2e"]', { timeout: 15000 })
       .contains('a', 'Edit original')
@@ -86,7 +87,7 @@ describe('Admin tracks — GPX editor', () => {
   })
 
   it('cleans only a section picked by km', () => {
-    cy.visit('/admin/tracks/edit?path=e2e.gpx')
+    cy.visitHydrated('/admin/tracks/edit?path=e2e.gpx')
     cy.wait('@file')
     cy.get('[data-testid="track-workspace"]', { timeout: 20000 }).should(
       'be.visible',
@@ -105,7 +106,7 @@ describe('Admin tracks — GPX editor', () => {
   })
 
   it('uploads a new track under a custom name', () => {
-    cy.visit('/admin/tracks')
+    cy.visitHydrated('/admin/tracks')
     cy.wait('@list')
     cy.get('[data-testid="tracks-upload"]', { timeout: 15000 }).click()
     cy.get('[data-testid="upload-input"]').selectFile(

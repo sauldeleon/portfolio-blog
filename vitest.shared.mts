@@ -32,9 +32,9 @@ export function createVitestConfig(
     resolve: {
       tsconfigPaths: true,
       alias: {
-        'next/font/google': path.join(
+        'next/font/local': path.join(
           workspaceRoot,
-          'tools/vitest/next-font-google.mock.ts',
+          'tools/vitest/next-font-local.mock.ts',
         ),
       },
     },

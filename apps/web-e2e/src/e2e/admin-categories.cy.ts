@@ -1,5 +1,5 @@
 import { cleanupE2eData, trackCreated } from '../support/cleanup'
-import { loginViaUi } from '../support/login'
+import { loginViaUi, waitForHydration } from '../support/login'
 
 describe('Admin categories — create and delete', () => {
   // Runs whether the tests passed or failed.
@@ -17,6 +17,7 @@ describe('Admin categories — create and delete', () => {
   beforeEach(() => {
     loginViaUi()
     cy.url({ timeout: 20000 }).should('include', '/admin/posts')
+    waitForHydration()
     cy.get('[data-testid="admin-nav"]').should('be.visible')
   })
 
@@ -24,7 +25,7 @@ describe('Admin categories — create and delete', () => {
     const name = `e2e-cat-${commitHash}-${Date.now()}`
     trackCreated('categories', name)
 
-    cy.visit('/admin/categories/new')
+    cy.visitHydrated('/admin/categories/new')
     cy.url({ timeout: 10000 }).should('include', '/admin/categories/new')
 
     cy.get('[data-testid="name-input"]').type(name)

@@ -41,18 +41,20 @@ import {
 
 function TrackVersion({
   file,
+  slot,
   label,
   copied,
   onCopy,
 }: {
   file: TrackFile
+  slot: 'original' | 'clean'
   label: string
   copied: boolean
   onCopy: (file: TrackFile) => void
 }) {
   const { t } = useClientTranslation('admin')
   return (
-    <StyledVersion>
+    <StyledVersion $slot={slot}>
       <StyledEditLink href={editTrackHref(file.path)}>{label}</StyledEditLink>
       <span>{formatSize(file.size)}</span>
       <Button
@@ -176,6 +178,7 @@ export function TrackList() {
             {group.original && (
               <TrackVersion
                 file={group.original}
+                slot="original"
                 label={t('tracks.list.editOriginal')}
                 copied={copiedPath === group.original.path}
                 onCopy={copyUrl}
@@ -184,6 +187,7 @@ export function TrackList() {
             {group.clean && (
               <TrackVersion
                 file={group.clean}
+                slot="clean"
                 label={t('tracks.list.editClean')}
                 copied={copiedPath === group.clean.path}
                 onCopy={copyUrl}

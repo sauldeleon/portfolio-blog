@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react'
 
+import type { SubscriptionRecord } from '@web/lib/db/queries/subscriptions'
 import { Locale } from '@web/lib/db/schema'
 
 import Page, { generateMetadata } from './page.next'
@@ -41,13 +42,18 @@ describe('[lng]/subscribe/unsubscribed — page', () => {
   beforeEach(async () => {
     vi.clearAllMocks()
     const { getServerTranslation } = await import('@web/i18n/server')
-    getServerTranslation.mockResolvedValue({ t: (key: string) => key })
+    vi.mocked(getServerTranslation).mockResolvedValue({
+      t: (key: string) => key,
+    } as unknown as Awaited<ReturnType<typeof getServerTranslation>>)
   })
 
   it('shows unsubscribed title on success', async () => {
     const { unsubscribeByToken } =
       await import('@web/lib/db/queries/subscriptions')
-    unsubscribeByToken.mockResolvedValue({ id: '1', status: 'unsubscribed' })
+    vi.mocked(unsubscribeByToken).mockResolvedValue({
+      id: '1',
+      status: 'unsubscribed',
+    } as SubscriptionRecord)
     const ui = await Page(makeParams('en', 'valid-token'))
     render(ui)
     expect(screen.getByText('unsubscribed.title')).toBeInTheDocument()
@@ -57,7 +63,7 @@ describe('[lng]/subscribe/unsubscribed — page', () => {
   it('shows error when token not found', async () => {
     const { unsubscribeByToken } =
       await import('@web/lib/db/queries/subscriptions')
-    unsubscribeByToken.mockResolvedValue(null)
+    vi.mocked(unsubscribeByToken).mockResolvedValue(null)
     const ui = await Page(makeParams('en', 'bad-token'))
     render(ui)
     expect(screen.getByText('unsubscribed.error')).toBeInTheDocument()
@@ -76,7 +82,10 @@ describe('[lng]/subscribe/unsubscribed — page', () => {
   it('renders back to blog link', async () => {
     const { unsubscribeByToken } =
       await import('@web/lib/db/queries/subscriptions')
-    unsubscribeByToken.mockResolvedValue({ id: '1', status: 'unsubscribed' })
+    vi.mocked(unsubscribeByToken).mockResolvedValue({
+      id: '1',
+      status: 'unsubscribed',
+    } as SubscriptionRecord)
     const ui = await Page(makeParams('en', 'tok'))
     render(ui)
     expect(screen.getByText('backToBlog')).toBeInTheDocument()
@@ -85,7 +94,10 @@ describe('[lng]/subscribe/unsubscribed — page', () => {
   it('renders unsubscribe image on success', async () => {
     const { unsubscribeByToken } =
       await import('@web/lib/db/queries/subscriptions')
-    unsubscribeByToken.mockResolvedValue({ id: '1', status: 'unsubscribed' })
+    vi.mocked(unsubscribeByToken).mockResolvedValue({
+      id: '1',
+      status: 'unsubscribed',
+    } as SubscriptionRecord)
     const ui = await Page(makeParams('en', 'valid-token'))
     render(ui)
     expect(screen.getByAltText('unsubscribed.imageAlt')).toBeInTheDocument()
@@ -94,7 +106,7 @@ describe('[lng]/subscribe/unsubscribed — page', () => {
   it('does not render unsubscribe image on error', async () => {
     const { unsubscribeByToken } =
       await import('@web/lib/db/queries/subscriptions')
-    unsubscribeByToken.mockResolvedValue(null)
+    vi.mocked(unsubscribeByToken).mockResolvedValue(null)
     const ui = await Page(makeParams('en', 'bad-token'))
     render(ui)
     expect(
@@ -106,7 +118,9 @@ describe('[lng]/subscribe/unsubscribed — page', () => {
 describe('[lng]/subscribe/unsubscribed — metadata', () => {
   beforeEach(async () => {
     const { getServerTranslation } = await import('@web/i18n/server')
-    getServerTranslation.mockResolvedValue({ t: (key: string) => key })
+    vi.mocked(getServerTranslation).mockResolvedValue({
+      t: (key: string) => key,
+    } as unknown as Awaited<ReturnType<typeof getServerTranslation>>)
   })
 
   it('returns unsubscribed.title as page title', async () => {

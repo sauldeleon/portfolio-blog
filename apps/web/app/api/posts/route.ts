@@ -1,8 +1,8 @@
-import { revalidateTag } from 'next/cache'
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
 import { parseAuthRequest, requireAuth } from '@web/lib/api/parseRequest'
+import { revalidatePublicContent } from '@web/lib/cache/revalidatePublicContent'
 import { getCategoryBySlug } from '@web/lib/db/queries/categories'
 import {
   createPost,
@@ -17,6 +17,7 @@ import {
 } from '@web/lib/db/queries/series'
 import { logger } from '@web/lib/logger'
 import { computeReadingTime } from '@web/utils/computeReadingTime'
+import { MAX_POST_SLUG_LENGTH, POST_SLUG_PATTERN } from '@web/utils/slugify'
 
 const CACHE_HEADERS = {
   'Cache-Control': 's-maxage=60, stale-while-revalidate=3600',
@@ -96,7 +97,13 @@ export async function GET(request: Request) {
 
 const translationSchema = z.object({
   title: z.string().min(1),
-  slug: z.string().min(1),
+  slug: z
+    .string()
+    .max(MAX_POST_SLUG_LENGTH)
+    .regex(
+      POST_SLUG_PATTERN,
+      'Slug may only contain letters, digits and single hyphens',
+    ),
   excerpt: z.string().min(1),
   content: z.string().min(1),
 })
@@ -214,7 +221,7 @@ export async function POST(request: Request) {
       { id: post.id, category: data.category },
       'POST /api/posts: created',
     )
-    revalidateTag('posts', 'default')
+    revalidatePublicContent()
     return NextResponse.json(post, { status: 201 })
   } catch (err) {
     logger.error(err, 'Failed to create post')

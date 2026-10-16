@@ -17,6 +17,7 @@ jobs:
       - name: Run tests
         run: |
           yarn
+          yarn typecheck:specs
           yarn test:all --coverage
       - name: Upload coverage
         uses: codecov/codecov-action@v6

@@ -92,6 +92,7 @@ vi.mock('../GpxUrlField', () => {
     descent: '',
     elevation: [],
     shape: null,
+    placesUnavailable: undefined,
   }
   return {
     GpxUrlField: ({

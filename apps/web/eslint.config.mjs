@@ -1,6 +1,5 @@
 import nx from '@nx/eslint-plugin'
 import coreWebVitals from 'eslint-config-next/core-web-vitals'
-import globals from 'globals'
 
 import baseConfig from '../../eslint.config.mjs'
 
@@ -32,7 +31,6 @@ export default [
   ...baseConfig,
   ...nx.configs['flat/react-typescript'],
   ...nextConfigs,
-  { languageOptions: { globals: { ...globals.jest } } },
   {
     rules: {
       '@next/next/no-html-link-for-pages': 'off',

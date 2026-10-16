@@ -150,7 +150,7 @@ describe('POST /api/subscribe', () => {
     })
     const res = await POST(makeRequest(validBody))
     expect(res.status).toBe(200)
-    const json = await res.json()
+    const json = (await res.json()) as { alreadySubscribed: boolean }
     expect(json.alreadySubscribed).toBe(true)
   })
 

@@ -1,9 +1,12 @@
 import { fireEvent, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import type { TFunction } from 'i18next'
 import { useIsScrolling } from 'react-use-is-scrolling'
 import type { Mock } from 'vitest'
 
 import { renderApp } from '@sdlgr/test-utils'
+
+import type { getServerTranslation } from '@web/i18n/server'
 
 import { PortfolioPage } from './PortfolioPage'
 
@@ -132,7 +135,9 @@ describe('PortfolioPage', () => {
     vi.spyOn(
       await import('@web/i18n/server'),
       'getServerTranslation',
-    ).mockResolvedValue({ t: () => 'not-an-array' })
+    ).mockResolvedValue({
+      t: (() => 'not-an-array') as unknown as TFunction,
+    } as Awaited<ReturnType<typeof getServerTranslation>>)
     const { baseElement } = renderApp(await PortfolioPage({ lng: 'en' }))
     expect(baseElement).toBeTruthy()
     vi.restoreAllMocks()
