@@ -23,6 +23,7 @@
     "**/*.spec.jsx",
     "**/*.test.jsx",
     "**/*.d.ts",
-    "./types"
+    "./types",
+    "../../libs/*/src/**/*.d.ts"
   ]
 }

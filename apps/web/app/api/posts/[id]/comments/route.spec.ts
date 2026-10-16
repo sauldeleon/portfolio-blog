@@ -111,7 +111,7 @@ describe('GET /api/posts/[id]/comments', () => {
   it('returns approved comments', async () => {
     const res = await GET(makeGetRequest(), makeCtx())
     expect(res.status).toBe(200)
-    const json = await res.json()
+    const json = (await res.json()) as { comments: unknown[] }
     expect(json.comments).toHaveLength(1)
     expect(mockGetApprovedCommentsByPost).toHaveBeenCalledWith(POST_ID)
   })
@@ -128,7 +128,7 @@ describe('POST /api/posts/[id]/comments', () => {
   it('creates comment and returns 201', async () => {
     const res = await POST(makePostRequest(), makeCtx())
     expect(res.status).toBe(201)
-    const json = await res.json()
+    const json = (await res.json()) as { comment: unknown }
     expect(json.comment).toEqual(
       expect.objectContaining({ username: 'tester' }),
     )

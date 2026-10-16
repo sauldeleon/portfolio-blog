@@ -377,7 +377,12 @@ describe('createPost', () => {
     )
 
     const result = await createPost(
-      { category: 'engineering', tags: [], author: 'admin', status: 'draft' },
+      {
+        category: 'engineering',
+        tags: [],
+        authorId: 'user-1',
+        status: 'draft',
+      },
       { en: { title: 'Test', slug: 'test', excerpt: 'Ex', content: '# Hi' } },
     )
     expect(mockDb.transaction).toHaveBeenCalled()

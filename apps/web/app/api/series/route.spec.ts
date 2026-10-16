@@ -66,7 +66,7 @@ describe('GET /api/series', () => {
     mockGetSeriesForAdmin.mockResolvedValue(data)
     const res = await GET()
     expect(res.status).toBe(200)
-    const json = await res.json()
+    const json = (await res.json()) as { data: unknown }
     expect(json.data).toEqual(data)
   })
 
@@ -129,7 +129,7 @@ describe('POST /api/series', () => {
     const res = await POST(makeRequest({ id: 'my-series' }))
     expect(res.status).toBe(201)
     expect(mockRevalidatePublicContent).toHaveBeenCalled()
-    const json = await res.json()
+    const json = (await res.json()) as { id: string }
     expect(json.id).toBe('my-series')
   })
 

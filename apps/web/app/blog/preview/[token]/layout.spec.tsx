@@ -28,7 +28,9 @@ vi.mock(
 
 vi.mock('../../../globals.css', () => ({}))
 
-function bodyChildren(layout: ReactElement): ReactNode {
+function bodyChildren(
+  layout: ReactElement<{ children: ReactNode }>,
+): ReactNode {
   const { children: htmlChildren } = layout.props
   const body = Children.only(htmlChildren) as ReactElement<{
     children: ReactNode

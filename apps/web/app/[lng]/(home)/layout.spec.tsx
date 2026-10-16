@@ -1,6 +1,9 @@
 import { screen } from '@testing-library/react'
+import type { TFunction } from 'i18next'
 
 import { renderApp } from '@sdlgr/test-utils'
+
+import type { getServerTranslation } from '@web/i18n/server'
 
 import HomeLayout from './layout.next'
 
@@ -21,7 +24,9 @@ describe('/[lng]/(home) - HomeLayout', () => {
     vi.spyOn(
       await import('@web/i18n/server'),
       'getServerTranslation',
-    ).mockResolvedValue({ t: () => 'not-an-array' })
+    ).mockResolvedValue({
+      t: (() => 'not-an-array') as unknown as TFunction,
+    } as Awaited<ReturnType<typeof getServerTranslation>>)
 
     const { baseElement } = renderApp(
       await HomeLayout({

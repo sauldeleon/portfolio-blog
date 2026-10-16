@@ -93,7 +93,7 @@ describe('GET /api/cards/gpx', () => {
     mockParseGpx.mockReturnValue(metrics)
     const res = await GET(request('https://example.com/a.gpx'))
     expect(res.status).toBe(200)
-    const body = await res.json()
+    const body = (await res.json()) as { data: unknown }
     expect(body.data).toEqual(metrics)
     expect(mockNameLandmarks).not.toHaveBeenCalled()
   })
@@ -111,7 +111,9 @@ describe('GET /api/cards/gpx', () => {
       ),
     )
     expect(mockNameLandmarks).toHaveBeenCalledWith([{ kind: 'peak' }])
-    const { data } = await res.json()
+    const { data } = (await res.json()) as {
+      data: { landmarks: unknown; placesUnavailable: unknown }
+    }
     expect(data.landmarks).toEqual([{ kind: 'peak', name: 'Pico' }])
     expect(data.placesUnavailable).toBe(true)
   })

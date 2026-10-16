@@ -66,7 +66,7 @@ describe('GET /api/users', () => {
     mockListUsers.mockResolvedValue([mockUser])
     const res = await GET()
     expect(res.status).toBe(200)
-    const json = await res.json()
+    const json = (await res.json()) as { data: { email: string }[] }
     expect(json.data).toHaveLength(1)
     expect(json.data[0].email).toBe('admin@example.com')
   })
@@ -151,7 +151,7 @@ describe('POST /api/users', () => {
       }),
     )
     expect(res.status).toBe(201)
-    const json = await res.json()
+    const json = (await res.json()) as { email: string }
     expect(json.email).toBe('admin@example.com')
   })
 

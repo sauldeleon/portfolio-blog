@@ -52,7 +52,7 @@ describe('GET /api/comments', () => {
   it('returns comments list', async () => {
     const res = await GET(makeRequest())
     expect(res.status).toBe(200)
-    const json = await res.json()
+    const json = (await res.json()) as { comments: unknown[] }
     expect(json.comments).toHaveLength(1)
   })
 

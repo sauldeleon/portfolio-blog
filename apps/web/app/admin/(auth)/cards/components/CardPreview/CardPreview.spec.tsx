@@ -42,7 +42,11 @@ vi.mock('@web/i18n/client', async () => {
 const SAMPLE_SVG =
   '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50"><rect width="100" height="50" fill="red"/></svg>'
 
-const mockGetContext = vi.fn(() => ({
+type MockContext = {
+  scale: ReturnType<typeof vi.fn>
+  drawImage: ReturnType<typeof vi.fn>
+}
+const mockGetContext = vi.fn((): MockContext | null => ({
   scale: vi.fn(),
   drawImage: vi.fn(),
 }))

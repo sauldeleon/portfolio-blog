@@ -95,6 +95,7 @@ const makePost = (overrides: Partial<AdminPost> = {}): AdminPost => ({
   updatedAt: new Date('2024-01-01'),
   deletedAt: null,
   previewToken: 'tok',
+  commentsEnabled: false,
   titleEn: 'Test Post',
   slugEn: 'test-post',
   titleEs: 'Post de prueba',

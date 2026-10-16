@@ -31,7 +31,9 @@ function makeParams(lng: Locale) {
 describe('[lng]/blog — page', () => {
   beforeEach(async () => {
     const { getServerTranslation } = await import('@web/i18n/server')
-    getServerTranslation.mockResolvedValue({ t: (key: string) => key })
+    vi.mocked(getServerTranslation).mockResolvedValue({
+      t: (key: string) => key,
+    } as unknown as Awaited<ReturnType<typeof getServerTranslation>>)
   })
 
   it('renders BlogPage', async () => {
@@ -69,7 +71,9 @@ describe('[lng]/blog — page', () => {
 describe('[lng]/blog — metadata', () => {
   beforeEach(async () => {
     const { getServerTranslation } = await import('@web/i18n/server')
-    getServerTranslation.mockResolvedValue({ t: (key: string) => key })
+    vi.mocked(getServerTranslation).mockResolvedValue({
+      t: (key: string) => key,
+    } as unknown as Awaited<ReturnType<typeof getServerTranslation>>)
   })
 
   it('returns correct metadata for English', async () => {

@@ -56,6 +56,8 @@ const mockPost = {
   seriesId: null,
   seriesOrder: null,
   seriesTitle: null,
+  likes: 0,
+  commentsEnabled: true,
   status: 'published' as const,
 }
 

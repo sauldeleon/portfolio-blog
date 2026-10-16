@@ -11,6 +11,7 @@ vi.mock('next-cloudinary', () => ({
 
 const mockPost: PublicPost = {
   id: '01ABC',
+  postNumber: 1,
   slug: 'test-post',
   title: 'Test Post Title',
   excerpt: 'A great post excerpt',
@@ -26,6 +27,8 @@ const mockPost: PublicPost = {
   createdAt: new Date('2024-01-01T00:00:00Z'),
   updatedAt: new Date('2024-01-20T12:00:00Z'),
   author: 'Saúl de León',
+  likes: 0,
+  commentsEnabled: true,
 }
 
 const testUrl = 'https://www.sawl.dev/en/blog/01ABC/test-post'

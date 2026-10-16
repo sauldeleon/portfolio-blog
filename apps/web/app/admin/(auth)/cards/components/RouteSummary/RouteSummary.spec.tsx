@@ -60,7 +60,11 @@ const SuccessImage = class {
   }
 } as unknown as typeof Image
 
-const mockGetContext = vi.fn(() => ({
+type MockContext = {
+  scale: ReturnType<typeof vi.fn>
+  drawImage: ReturnType<typeof vi.fn>
+}
+const mockGetContext = vi.fn((): MockContext | null => ({
   scale: vi.fn(),
   drawImage: vi.fn(),
 }))

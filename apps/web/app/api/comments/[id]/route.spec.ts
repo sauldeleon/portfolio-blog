@@ -87,7 +87,7 @@ describe('PATCH /api/comments/[id]', () => {
     const res = await PATCH(makePatchRequest(), makeCtx())
     expect(res.status).toBe(200)
     expect(mockRevalidatePublicContent).toHaveBeenCalled()
-    const json = await res.json()
+    const json = (await res.json()) as { comment: { status: string } }
     expect(json.comment.status).toBe('approved')
   })
 
@@ -136,7 +136,7 @@ describe('DELETE /api/comments/[id]', () => {
     const res = await DELETE(makeDeleteRequest(), makeCtx())
     expect(res.status).toBe(200)
     expect(mockRevalidatePublicContent).toHaveBeenCalled()
-    const json = await res.json()
+    const json = (await res.json()) as { ok: boolean }
     expect(json.ok).toBe(true)
   })
 
