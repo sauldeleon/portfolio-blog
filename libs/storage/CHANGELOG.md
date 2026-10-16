@@ -1,5 +1,7 @@
 # Changelog storage library
 
+## [0.2.1](https://github.com/sauldeleon/portfolio-blog/compare/storage-0.2.0...storage-0.2.1) (2026-10-16)
+
 ## [0.2.0](https://github.com/sauldeleon/portfolio-blog/compare/storage-0.1.4...storage-0.2.0) (2026-10-16)
 
 ### Features
