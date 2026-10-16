@@ -11,7 +11,8 @@
     "moduleResolution": "node",
     "ignoreDeprecations": "6.0",
     "strict": true,
-    "types": ["cypress", "node", "@testing-library/cypress"]
+    "types": ["cypress", "node", "@testing-library/cypress"],
+    "noUncheckedSideEffectImports": false
   },
   "include": ["src/**/*.ts", "src/**/*.js", "cypress.config.ts"]
 }
