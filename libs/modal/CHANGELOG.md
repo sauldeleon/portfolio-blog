@@ -1,5 +1,7 @@
 # Changelog Modal library
 
+## [0.1.1](https://github.com/sauldeleon/portfolio-blog/compare/modal-0.1.0...modal-0.1.1) (2026-10-16)
+
 ## 0.1.0 (2026-10-16)
 
 ### Features
