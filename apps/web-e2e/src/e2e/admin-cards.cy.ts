@@ -23,7 +23,7 @@ describe('Admin cards — canyon waypoints generator', () => {
   }
 
   it('renders a preview from the canyon waypoints tab', () => {
-    cy.visit('/admin/cards')
+    cy.visitHydrated('/admin/cards')
     cy.get('[data-testid="card-generator"]', { timeout: 15000 }).should(
       'be.visible',
     )

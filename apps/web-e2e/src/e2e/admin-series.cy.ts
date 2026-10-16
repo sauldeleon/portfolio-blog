@@ -31,7 +31,7 @@ describe('Admin series — create, edit, and delete', () => {
     trackCreated('series', seriesId)
 
     // --- Create new series ---
-    cy.visit('/admin/series/new')
+    cy.visitHydrated('/admin/series/new')
     cy.url({ timeout: 10000 }).should('include', '/admin/series/new')
 
     cy.get('[data-testid="en-title-input"]').type(enTitle)

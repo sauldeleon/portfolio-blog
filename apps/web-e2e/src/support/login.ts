@@ -1,7 +1,7 @@
 const E2E_EMAIL = 'e2e@e2e.com'
 
 export function loginViaUi(email = E2E_EMAIL, password?: string) {
-  cy.visit('/admin/login')
+  cy.visitHydrated('/admin/login')
   cy.get('#email').type(email)
   const typePassword = (value: string) =>
     cy.get('#password').type(value, { log: false })

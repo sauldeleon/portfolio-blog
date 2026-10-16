@@ -2,27 +2,27 @@ import { loginViaUi } from '../support/login'
 
 describe('Admin auth — unauthenticated access', () => {
   it('redirects /admin/posts to login when not authenticated', () => {
-    cy.visit('/admin/posts/')
+    cy.visitHydrated('/admin/posts/')
     cy.url().should('include', '/admin/login')
   })
 
   it('redirects /admin/categories to login when not authenticated', () => {
-    cy.visit('/admin/categories/')
+    cy.visitHydrated('/admin/categories/')
     cy.url().should('include', '/admin/login')
   })
 
   it('redirects /admin/series to login when not authenticated', () => {
-    cy.visit('/admin/series/')
+    cy.visitHydrated('/admin/series/')
     cy.url().should('include', '/admin/login')
   })
 
   it('redirects /admin/images to login when not authenticated', () => {
-    cy.visit('/admin/images/')
+    cy.visitHydrated('/admin/images/')
     cy.url().should('include', '/admin/login')
   })
 
   it('allows visiting /admin/login without auth', () => {
-    cy.visit('/admin/login/')
+    cy.visitHydrated('/admin/login/')
     cy.get('[data-testid="login-form"]').should('be.visible')
   })
 })
@@ -48,7 +48,7 @@ describe('Admin auth — editor role restrictions', () => {
   })
 
   it('redirects /admin/users to /admin/posts for editor role', () => {
-    cy.visit('/admin/users/')
+    cy.visitHydrated('/admin/users/')
     cy.url({ timeout: 15000 }).should('include', '/admin/posts')
     cy.url().should('not.include', '/admin/users')
   })
@@ -73,7 +73,7 @@ describe('Admin auth — logout', () => {
     cy.clearAllCookies()
     cy.clearLocalStorage()
 
-    cy.visit('/admin/posts/')
+    cy.visitHydrated('/admin/posts/')
     cy.url({ timeout: 15000 }).should('include', '/admin/login')
     cy.get('[data-testid="login-form"]').should('be.visible')
   })
@@ -84,7 +84,7 @@ describe('Admin auth — logout', () => {
     cy.clearAllCookies()
     cy.clearLocalStorage()
 
-    cy.visit('/admin/categories')
+    cy.visitHydrated('/admin/categories')
     cy.url({ timeout: 15000 }).should('include', '/admin/login')
     cy.get('[data-testid="login-form"]').should('be.visible')
   })
@@ -95,7 +95,7 @@ describe('Admin auth — logout', () => {
     cy.clearAllCookies()
     cy.clearLocalStorage()
 
-    cy.visit('/admin/series')
+    cy.visitHydrated('/admin/series')
     cy.url({ timeout: 15000 }).should('include', '/admin/login')
     cy.get('[data-testid="login-form"]').should('be.visible')
   })
@@ -106,7 +106,7 @@ describe('Admin auth — logout', () => {
     cy.clearAllCookies()
     cy.clearLocalStorage()
 
-    cy.visit('/admin/images')
+    cy.visitHydrated('/admin/images')
     cy.url({ timeout: 15000 }).should('include', '/admin/login')
     cy.get('[data-testid="login-form"]').should('be.visible')
   })

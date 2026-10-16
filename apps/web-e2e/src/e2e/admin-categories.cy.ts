@@ -24,7 +24,7 @@ describe('Admin categories — create and delete', () => {
     const name = `e2e-cat-${commitHash}-${Date.now()}`
     trackCreated('categories', name)
 
-    cy.visit('/admin/categories/new')
+    cy.visitHydrated('/admin/categories/new')
     cy.url({ timeout: 10000 }).should('include', '/admin/categories/new')
 
     cy.get('[data-testid="name-input"]').type(name)

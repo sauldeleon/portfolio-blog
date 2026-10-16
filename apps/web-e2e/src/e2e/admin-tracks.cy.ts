@@ -50,7 +50,7 @@ describe('Admin tracks — GPX editor', () => {
   })
 
   it('cleans a track, adds a waypoint and saves the -clean copy', () => {
-    cy.visit('/admin/tracks')
+    cy.visitHydrated('/admin/tracks')
     cy.wait('@list')
     cy.get('[data-testid="track-row-e2e"]', { timeout: 15000 })
       .contains('a', 'Edit original')
@@ -86,7 +86,7 @@ describe('Admin tracks — GPX editor', () => {
   })
 
   it('cleans only a section picked by km', () => {
-    cy.visit('/admin/tracks/edit?path=e2e.gpx')
+    cy.visitHydrated('/admin/tracks/edit?path=e2e.gpx')
     cy.wait('@file')
     cy.get('[data-testid="track-workspace"]', { timeout: 20000 }).should(
       'be.visible',
@@ -105,7 +105,7 @@ describe('Admin tracks — GPX editor', () => {
   })
 
   it('uploads a new track under a custom name', () => {
-    cy.visit('/admin/tracks')
+    cy.visitHydrated('/admin/tracks')
     cy.wait('@list')
     cy.get('[data-testid="tracks-upload"]', { timeout: 15000 }).click()
     cy.get('[data-testid="upload-input"]').selectFile(
