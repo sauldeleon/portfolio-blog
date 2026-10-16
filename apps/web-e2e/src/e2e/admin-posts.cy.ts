@@ -1,7 +1,7 @@
 import { cleanupE2eData, trackCreated } from '../support/cleanup'
 import { loginViaUi } from '../support/login'
 
-describe('Admin posts — publish lifecycle', () => {
+describe('Admin posts — publish dialog (never publishes)', () => {
   // Runs whether the tests passed or failed.
   after(() => {
     cleanupE2eData()
@@ -20,10 +20,12 @@ describe('Admin posts — publish lifecycle', () => {
     cy.get('[data-testid="admin-nav"]').should('be.visible')
   })
 
-  it('publishes a post, verifies the blog page, then unpublishes, archives, and hard deletes', () => {
+  // E2E tests run against the real database and must never publish: this
+  // only checks the publish dialog and cancels it.
+  it('offers the publish options and keeps the post a draft when cancelled', () => {
     const uid = `${commitHash}-${Date.now()}`
-    const enTitle = `e2e publish ${uid}`
-    const esTitle = `e2e publicar ${uid}`
+    const enTitle = `e2e publish dialog ${uid}`
+    const esTitle = `e2e dialogo publicar ${uid}`
     trackCreated('posts', enTitle)
     trackCreated('posts', esTitle)
 
@@ -34,93 +36,29 @@ describe('Admin posts — publish lifecycle', () => {
     cy.get('[data-testid="title-input"]').type(enTitle)
     cy.get('[data-testid="category-select"]').find('.select__control').click()
     cy.contains('.select__option', /other/i).click()
-    cy.get('[data-testid="excerpt-input"]').type('e2e publish test')
-    cy.get('[data-testid="content-input"]').type('e2e publish test content')
+    cy.get('[data-testid="excerpt-input"]').type('e2e publish dialog test')
+    cy.get('[data-testid="content-input"]').type('e2e publish dialog content')
 
     cy.get('[data-testid="save-button"]').should('not.be.disabled').click()
     cy.url({ timeout: 20000 }).should('not.include', '/new')
-    cy.url().as('postEditorUrl')
 
     // Fill ES
     cy.get('[data-testid="locale-tab-es"]').click()
     cy.get('[data-testid="title-input"]').type(esTitle)
-    cy.get('[data-testid="excerpt-input"]').type('e2e test publicar')
-    cy.get('[data-testid="content-input"]').type('e2e test contenido publicar')
+    cy.get('[data-testid="excerpt-input"]').type('e2e test dialogo publicar')
+    cy.get('[data-testid="content-input"]').type('e2e test contenido dialogo')
 
     cy.get('[data-testid="save-button"]').should('not.be.disabled').click()
 
-    // Publish from editor — choose "Publish Only" to skip email notifications
-    cy.intercept('PUT', /\/api\/posts\//).as('publishReq')
+    // Open the publish dialog, check its options, then cancel.
     cy.get('[data-testid="publish-button"]').should('not.be.disabled').click()
-    cy.get('[data-testid="publish-notify-publish-only"]')
-      .should('be.visible')
-      .click()
-    cy.wait('@publishReq').its('response.statusCode').should('eq', 200)
-    cy.get('[data-testid="status-badge"]', { timeout: 10000 }).should(
-      'contain.text',
-      'Published',
-    )
-
-    // Capture EN blog post URL
-    cy.get('[data-testid="locale-tab-en"]').click()
-    cy.get('[data-testid="preview-tab-card"]').click()
-    cy.contains('a', 'Read more')
-      .should('have.attr', 'href')
-      .and('not.eq', '#')
-      .as('enPostUrl')
-
-    // Verify the published blog post is accessible
-    cy.get<string>('@enPostUrl').then((enUrl) => {
-      cy.visit(enUrl)
-      cy.get('h1').should('contain.text', `e2e publish ${uid}`)
-    })
-
-    // Back to admin posts table
-    cy.visit('/admin/posts/')
-    cy.contains('[data-testid="post-row"]', enTitle, { timeout: 10000 }).should(
+    cy.get('[data-testid="publish-notify-publish-only"]').should('be.visible')
+    cy.get('[data-testid="publish-notify-publish-and-notify"]').should(
       'be.visible',
     )
-
-    // Navigate directly to editor via captured URL and unpublish
-    cy.get<string>('@postEditorUrl').then((editorUrl) => {
-      cy.visit(editorUrl)
-    })
-    cy.url({ timeout: 10000 }).should('match', /\/admin\/posts\/[^/]+\/?$/)
-    cy.intercept('PUT', /\/api\/posts\//).as('unpublishReq')
-    cy.get('[data-testid="unpublish-button"]').should('not.be.disabled').click()
-    cy.wait('@unpublishReq').its('response.statusCode').should('eq', 200)
-    cy.get('[data-testid="status-badge"]', { timeout: 10000 }).should(
-      'contain.text',
-      'Draft',
-    )
-
-    // Back to table and archive the now-draft post
-    cy.intercept('GET', /\/api\/posts/).as('postsRefresh')
-    cy.get('[data-testid="back-link"]').click()
-    cy.url({ timeout: 10000 }).should('include', '/admin/posts')
-    cy.get('[data-testid="refresh-button"]').click()
-    cy.wait('@postsRefresh')
-    cy.contains('[data-testid="post-row"]', enTitle, { timeout: 10000 }).should(
-      'be.visible',
-    )
-    cy.contains('[data-testid="post-row"]', enTitle)
-      .find('[data-testid="archive-button"]')
-      .click()
-    cy.get('[data-testid="confirm-delete-confirm"]').click()
-    cy.contains('[data-testid="post-row"]', enTitle).should('not.exist')
-
-    // Switch to archived tab
-    cy.get('[data-testid="filter-archived"]').click()
-    cy.contains('[data-testid="post-row"]', enTitle, { timeout: 10000 }).should(
-      'be.visible',
-    )
-
-    // Hard delete
-    cy.contains('[data-testid="post-row"]', enTitle)
-      .find('[data-testid="hard-delete-button"]')
-      .click()
-    cy.get('[data-testid="confirm-delete-confirm"]').click()
-    cy.contains('[data-testid="post-row"]', enTitle).should('not.exist')
+    cy.get('[data-testid="publish-notify-cancel"]').click()
+    cy.get('[data-testid="publish-notify-publish-only"]').should('not.exist')
+    cy.get('[data-testid="status-badge"]').should('contain.text', 'Draft')
   })
 })
 
