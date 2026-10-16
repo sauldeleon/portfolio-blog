@@ -1,5 +1,25 @@
 # Changelog web app
 
+## [0.11.1](https://github.com/sauldeleon/portfolio-blog/compare/web-0.11.0...web-0.11.1) (2026-10-16)
+
+### Bug Fixes
+
+- **admin:** set the image picker's pagination cursor as soon as a page arrives ([e2168bc](https://github.com/sauldeleon/portfolio-blog/commit/e2168bc45f996269f98b30cd921315e56a5b5ec4))
+- **api:** reject post slugs the blog could not serve ([438dfc1](https://github.com/sauldeleon/portfolio-blog/commit/438dfc1c6bdf8d0822d0be5b0f55e7418cd0471d))
+- **web:** build feeds without a database again ([e9eeac6](https://github.com/sauldeleon/portfolio-blog/commit/e9eeac62c3305b0e17e09daa4e4f6909f5ea0105))
+
+### Performance Improvements
+
+- **web:** load react-pdf only where a croquis report is shown ([77421fd](https://github.com/sauldeleon/portfolio-blog/commit/77421fdb4b61938c6fa0b05b76383e37ca3e3e54))
+- **web:** make post changes reach the public pages, sitemap and feeds ([354c225](https://github.com/sauldeleon/portfolio-blog/commit/354c225e88762ce11a4af1cbf5cbf23b91a5e479))
+- **web:** preload the cover image of posts and the latest-post hero ([a3d8ce6](https://github.com/sauldeleon/portfolio-blog/commit/a3d8ce687cd4e8f2d9f09cf95697b8147ae11c1a))
+- **web:** redirect / to the visitor's language on the server ([f17a0a0](https://github.com/sauldeleon/portfolio-blog/commit/f17a0a003b75a37fb77ce919078ad0c72a9c7f8b))
+- **web:** render page content on the server instead of after hydration ([4b46496](https://github.com/sauldeleon/portfolio-blog/commit/4b464961c000f8ce08f9d784bdb966c9cbea7a91))
+- **web:** serve the blog list from cached queries ([0c5529c](https://github.com/sauldeleon/portfolio-blog/commit/0c5529cef8ddec3cc2c1c07e319623c8c8101fcd))
+- **web:** server-render approved comments on post pages ([5fa9c96](https://github.com/sauldeleon/portfolio-blog/commit/5fa9c964e698b5207204ac6fd1c5083fa9a10b07))
+- **web:** share the post page's reads between metadata and render ([cf2e2cd](https://github.com/sauldeleon/portfolio-blog/commit/cf2e2cd89d8f18a4a0462e2b22f6cee3a4c5e66d))
+- **web:** stop impossible blog URLs from creating ISR cache entries ([a56b5b0](https://github.com/sauldeleon/portfolio-blog/commit/a56b5b0f3b81f1ac57160827e3ff27f0be48e874))
+
 ## [0.11.0](https://github.com/sauldeleon/portfolio-blog/compare/web-0.10.0...web-0.11.0) (2026-10-16)
 
 ### Features

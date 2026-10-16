@@ -1,5 +1,11 @@
 # Changelog Gpx Map library
 
+## [0.1.1](https://github.com/sauldeleon/portfolio-blog/compare/gpx-map-0.1.0...gpx-map-0.1.1) (2026-10-16)
+
+### Bug Fixes
+
+- **gpx-map:** show waypoints on the map when the waypoints table is hidden ([81986ea](https://github.com/sauldeleon/portfolio-blog/commit/81986ea50413f079a54fb666cd6108142f6ffd6f))
+
 ## 0.1.0 (2026-10-16)
 
 ### Features

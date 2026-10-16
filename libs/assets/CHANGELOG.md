@@ -1,5 +1,7 @@
 # Changelog Assets library
 
+## [0.8.1](https://github.com/sauldeleon/portfolio-blog/compare/assets-0.8.0...assets-0.8.1) (2026-10-16)
+
 ## [0.8.0](https://github.com/sauldeleon/portfolio-blog/compare/assets-0.7.0...assets-0.8.0) (2026-10-16)
 
 ### Features

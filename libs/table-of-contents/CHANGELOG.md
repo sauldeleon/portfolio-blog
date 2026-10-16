@@ -1,5 +1,7 @@
 # Changelog Table Of Contents library
 
+## [0.1.1](https://github.com/sauldeleon/portfolio-blog/compare/table-of-contents-0.1.0...table-of-contents-0.1.1) (2026-10-16)
+
 ## 0.1.0 (2026-10-16)
 
 ### Features

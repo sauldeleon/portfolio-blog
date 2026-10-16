@@ -1,5 +1,12 @@
 # Changelog i18n client util
 
+## [0.3.1](https://github.com/sauldeleon/portfolio-blog/compare/i18n-client-0.3.0...i18n-client-0.3.1) (2026-10-16)
+
+### Bug Fixes
+
+- **i18n:** rebuild server clones when i18next is initialised again ([3cc3e04](https://github.com/sauldeleon/portfolio-blog/commit/3cc3e04442a055fc31912fb1d4369e527f91a98d))
+- **i18n:** stop server renders sharing one i18next language ([c2e40c3](https://github.com/sauldeleon/portfolio-blog/commit/c2e40c37007bf218350eb44c8699d43b71e0f00a))
+
 ## [0.3.0](https://github.com/sauldeleon/portfolio-blog/compare/i18n-client-0.2.4...i18n-client-0.3.0) (2026-10-16)
 
 ### Features

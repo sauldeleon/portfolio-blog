@@ -1,5 +1,11 @@
 # Changelog i18n server util
 
+## [0.2.1](https://github.com/sauldeleon/portfolio-blog/compare/i18n-server-0.2.0...i18n-server-0.2.1) (2026-10-16)
+
+### Performance Improvements
+
+- **i18n:** reuse server i18next instances across renders ([7a11c65](https://github.com/sauldeleon/portfolio-blog/commit/7a11c658bf442484f0930da8d9b73cd2075b66b3))
+
 ## [0.2.0](https://github.com/sauldeleon/portfolio-blog/compare/i18n-server-0.1.4...i18n-server-0.2.0) (2026-10-16)
 
 ### Features

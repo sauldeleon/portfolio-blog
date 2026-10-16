@@ -1,5 +1,7 @@
 # Changelog Typography component
 
+## [0.4.1](https://github.com/sauldeleon/portfolio-blog/compare/typography-0.4.0...typography-0.4.1) (2026-10-16)
+
 ## [0.4.0](https://github.com/sauldeleon/portfolio-blog/compare/typography-0.3.2...typography-0.4.0) (2026-10-16)
 
 ### Features

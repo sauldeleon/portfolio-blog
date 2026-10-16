@@ -1,5 +1,11 @@
 # Changelog Main Theme
 
+## [0.6.1](https://github.com/sauldeleon/portfolio-blog/compare/main-theme-0.6.0...main-theme-0.6.1) (2026-10-16)
+
+### Performance Improvements
+
+- **web:** self-host Roboto Mono instead of loading it from Google Fonts ([10be10f](https://github.com/sauldeleon/portfolio-blog/commit/10be10f1215d3cb459d16e2a81f91f4a01880c2c))
+
 ## [0.6.0](https://github.com/sauldeleon/portfolio-blog/compare/main-theme-0.5.2...main-theme-0.6.0) (2026-10-16)
 
 ### Features
