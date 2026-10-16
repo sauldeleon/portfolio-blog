@@ -5,41 +5,44 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { PostStickyBar } from './PostStickyBar'
 
-const mockPush = jest.fn()
-jest.mock('next/navigation', () => ({
+const mockPush = vi.fn()
+vi.mock('next/navigation', () => ({
   useRouter: () => ({ push: mockPush }),
 }))
 
-const mockSet = jest.fn()
-jest.mock('@sdlgr/storage', () => ({
-  ...jest.requireActual('@sdlgr/storage'),
-  useStorage: jest.fn().mockImplementation(() => [jest.fn(), mockSet]),
+const mockSet = vi.fn()
+vi.mock('@sdlgr/storage', async () => ({
+  ...(await vi.importActual<typeof import('@sdlgr/storage')>('@sdlgr/storage')),
+  useStorage: vi.fn().mockImplementation(function () {
+    return [vi.fn(), mockSet]
+  }),
 }))
 
-jest.mock('@sdlgr/post-hero', () => ({
+vi.mock('@sdlgr/post-hero', () => ({
   ShareButtons: ({ url, title }: { url: string; title: string }) => (
     <div data-testid="share-buttons" data-url={url} data-title={title} />
   ),
 }))
 
-const mockLanguageIcon = jest.fn()
-const mockScrollTopIcon = jest.fn()
-jest.mock('@sdlgr/assets', () => ({
+const mockLanguageIcon = vi.fn()
+const mockScrollTopIcon = vi.fn()
+vi.mock('@sdlgr/assets', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('@sdlgr/assets')>()),
   LanguageIcon: (...args: unknown[]) => mockLanguageIcon(...args),
   ScrollTop: (...args: unknown[]) => mockScrollTopIcon(...args),
 }))
 
 let observerCallback: IntersectionObserverCallback
-const mockObserve = jest.fn()
-const mockDisconnect = jest.fn()
+const mockObserve = vi.fn()
+const mockDisconnect = vi.fn()
 
 beforeAll(() => {
-  global.IntersectionObserver = jest.fn((cb) => {
+  global.IntersectionObserver = vi.fn(function (cb) {
     observerCallback = cb
     return {
       observe: mockObserve,
       disconnect: mockDisconnect,
-      unobserve: jest.fn(),
+      unobserve: vi.fn(),
     }
   }) as unknown as typeof IntersectionObserver
 })
@@ -56,7 +59,7 @@ const defaultProps = {
 
 describe('PostStickyBar', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     mockLanguageIcon.mockReturnValue(null)
     mockScrollTopIcon.mockReturnValue(null)
   })
@@ -198,7 +201,7 @@ describe('PostStickyBar', () => {
   })
 
   it('scroll top button click calls window.scrollTo', async () => {
-    const mockScrollTo = jest.fn()
+    const mockScrollTo = vi.fn()
     window.scrollTo = mockScrollTo
     renderApp(<PostStickyBar {...defaultProps} />)
     act(() => {

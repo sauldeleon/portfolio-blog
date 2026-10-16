@@ -4,10 +4,10 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { RouteSummaryGenerator } from './RouteSummaryGenerator'
 
-jest.mock('@web/i18n/client', () => {
-  const admin: Record<string, unknown> = jest.requireActual(
-    '@web/i18n/locales/en/admin.json',
-  )
+vi.mock('@web/i18n/client', async () => {
+  const admin: Record<string, unknown> = await vi.importActual<
+    typeof import('@web/i18n/locales/en/admin.json')
+  >('@web/i18n/locales/en/admin.json')
   return {
     useClientTranslation: () => ({
       t: (key: string): string => {
@@ -26,7 +26,7 @@ jest.mock('@web/i18n/client', () => {
   }
 })
 
-jest.mock('../RouteSummary', () => ({
+vi.mock('../RouteSummary', () => ({
   RouteSummary: ({
     data,
     filename,

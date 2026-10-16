@@ -15,7 +15,7 @@ function makeAxiosError(status: number, data: unknown): AxiosError {
   })
 }
 
-jest.mock('@sdlgr/select', () => ({
+vi.mock('@sdlgr/select', () => ({
   Select: ({
     value,
     onChange,
@@ -44,7 +44,7 @@ jest.mock('@sdlgr/select', () => ({
   ),
 }))
 
-jest.mock('../ImagePicker', () => ({
+vi.mock('../ImagePicker', () => ({
   ImagePicker: ({
     open,
     onClose,
@@ -77,10 +77,10 @@ jest.mock('../ImagePicker', () => ({
 // CanyoningForm (rendered when the canyon summary is included) reads the
 // 'admin' namespace via useClientTranslation; mock it so it resolves
 // synchronously instead of suspending on the namespace load.
-jest.mock('@web/i18n/client', () => {
-  const admin: Record<string, unknown> = jest.requireActual(
-    '@web/i18n/locales/en/admin.json',
-  )
+vi.mock('@web/i18n/client', async () => {
+  const admin: Record<string, unknown> = await vi.importActual<
+    typeof import('@web/i18n/locales/en/admin.json')
+  >('@web/i18n/locales/en/admin.json')
   return {
     useClientTranslation: () => ({
       t: (key: string): string => {
@@ -104,8 +104,8 @@ const JUMP = 'salto: Jump 2m - 42.6092 0.1412'
 function open(
   props: Partial<React.ComponentProps<typeof CroquisInsertModal>> = {},
 ) {
-  const onInsert = jest.fn()
-  const onCancel = jest.fn()
+  const onInsert = vi.fn()
+  const onCancel = vi.fn()
   renderApp(
     <CroquisInsertModal
       isOpen
@@ -117,7 +117,7 @@ function open(
   return { onInsert, onCancel }
 }
 
-afterEach(() => jest.restoreAllMocks())
+afterEach(() => vi.restoreAllMocks())
 
 describe('CroquisInsertModal', () => {
   it('renders the modal content when open', () => {
@@ -424,7 +424,7 @@ describe('CroquisInsertModal', () => {
     }
 
     it('fills the textarea from parsed waypoints', async () => {
-      jest.spyOn(axios, 'get').mockResolvedValue({
+      vi.spyOn(axios, 'get').mockResolvedValue({
         data: { data: [{ categories: ['salto'], title: 'Jump', notes: [] }] },
       })
       open()
@@ -438,7 +438,7 @@ describe('CroquisInsertModal', () => {
     })
 
     it('errors when the response has no waypoints', async () => {
-      jest.spyOn(axios, 'get').mockResolvedValue({ data: { data: [] } })
+      vi.spyOn(axios, 'get').mockResolvedValue({ data: { data: [] } })
       open()
       enterUrl()
       fireEvent.click(screen.getByTestId('croquis-modal-parse'))
@@ -448,9 +448,9 @@ describe('CroquisInsertModal', () => {
     })
 
     it('shows the server error message', async () => {
-      jest
-        .spyOn(axios, 'get')
-        .mockRejectedValue(makeAxiosError(400, { error: 'Bad GPX' }))
+      vi.spyOn(axios, 'get').mockRejectedValue(
+        makeAxiosError(400, { error: 'Bad GPX' }),
+      )
       open()
       enterUrl()
       fireEvent.click(screen.getByTestId('croquis-modal-parse'))
@@ -460,7 +460,7 @@ describe('CroquisInsertModal', () => {
     })
 
     it('falls back to a generic error when the axios error has no message', async () => {
-      jest.spyOn(axios, 'get').mockRejectedValue(makeAxiosError(500, {}))
+      vi.spyOn(axios, 'get').mockRejectedValue(makeAxiosError(500, {}))
       open()
       enterUrl()
       fireEvent.click(screen.getByTestId('croquis-modal-parse'))
@@ -470,7 +470,7 @@ describe('CroquisInsertModal', () => {
     })
 
     it('falls back to a generic error for non-axios failures', async () => {
-      jest.spyOn(axios, 'get').mockRejectedValue(new Error('boom'))
+      vi.spyOn(axios, 'get').mockRejectedValue(new Error('boom'))
       open()
       enterUrl()
       fireEvent.click(screen.getByTestId('croquis-modal-parse'))
@@ -481,7 +481,7 @@ describe('CroquisInsertModal', () => {
 
     it('shows a parsing label and clears a prior error on url change', async () => {
       let resolve!: (v: unknown) => void
-      jest.spyOn(axios, 'get').mockReturnValue(
+      vi.spyOn(axios, 'get').mockReturnValue(
         new Promise((r) => {
           resolve = r
         }),

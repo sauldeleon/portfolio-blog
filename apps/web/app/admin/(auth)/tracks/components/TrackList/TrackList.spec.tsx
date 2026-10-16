@@ -4,14 +4,16 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { TRACKS_PER_PAGE, TrackList } from './TrackList'
 
-const mockFetchTrackFiles = jest.fn()
+const mockFetchTrackFiles = vi.fn()
 
-jest.mock('@web/i18n/client', () => ({
+vi.mock('@web/i18n/client', () => ({
   useClientTranslation: () => ({ t: (key: string) => key }),
 }))
 
-jest.mock('../../utils/trackApi', () => ({
-  ...jest.requireActual('../../utils/trackApi'),
+vi.mock('../../utils/trackApi', async () => ({
+  ...(await vi.importActual<typeof import('../../utils/trackApi')>(
+    '../../utils/trackApi',
+  )),
   fetchTrackFiles: () => mockFetchTrackFiles(),
 }))
 
@@ -23,16 +25,16 @@ const file = (path: string) => ({
   rawUrl: `https://raw/${path}`,
 })
 
-const mockReplace = jest.fn()
+const mockReplace = vi.fn()
 let mockSearchParams = new URLSearchParams()
 
-jest.mock('next/navigation', () => ({
+vi.mock('next/navigation', () => ({
   useRouter: () => ({ replace: mockReplace }),
   usePathname: () => '/admin/tracks',
   useSearchParams: () => mockSearchParams,
 }))
 
-jest.mock('@sdlgr/pagination', () => ({
+vi.mock('@sdlgr/pagination', () => ({
   Pagination: ({
     total,
     page,
@@ -51,7 +53,7 @@ jest.mock('@sdlgr/pagination', () => ({
   ),
 }))
 
-jest.mock('../TrackUploadModal', () => ({
+vi.mock('../TrackUploadModal', () => ({
   TrackUploadModal: ({
     isOpen,
     onClose,
@@ -74,10 +76,10 @@ jest.mock('../TrackUploadModal', () => ({
     ) : null,
 }))
 
-const mockWriteText = jest.fn()
+const mockWriteText = vi.fn()
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
   mockSearchParams = new URLSearchParams()
   mockWriteText.mockResolvedValue(undefined)
   Object.assign(navigator, { clipboard: { writeText: mockWriteText } })

@@ -5,7 +5,7 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { EditPanel, type EditPanelProps } from './EditPanel'
 
-jest.mock('@web/i18n/client', () => ({
+vi.mock('@web/i18n/client', () => ({
   useClientTranslation: () => ({
     t: (key: string, options?: Record<string, unknown>) =>
       options ? `${key} ${JSON.stringify(options)}` : key,
@@ -27,10 +27,10 @@ const oneSegment: GpxTrack[] = [{ name: 'T', segments: [{ points }] }]
 
 function renderPanel(props: Partial<EditPanelProps> = {}) {
   const callbacks = {
-    onActiveSegmentChange: jest.fn(),
-    onDeleteSelection: jest.fn(),
-    onClearSelection: jest.fn(),
-    onToggleInsertMode: jest.fn(),
+    onActiveSegmentChange: vi.fn(),
+    onDeleteSelection: vi.fn(),
+    onClearSelection: vi.fn(),
+    onToggleInsertMode: vi.fn(),
   }
   renderApp(
     <EditPanel

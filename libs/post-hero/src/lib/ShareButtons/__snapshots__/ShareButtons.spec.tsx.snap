@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ShareButtons matches snapshot 1`] = `
+exports[`ShareButtons > matches snapshot 1`] = `
 .c1 {
   clip: rect(0 0 0 0);
   clip-path: inset(50%);

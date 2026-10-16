@@ -1,12 +1,13 @@
 import pino from 'pino'
+import type { MockedFunction } from 'vitest'
 
 import { createLogger, logger } from './logger'
 
-jest.mock('pino', () =>
-  jest.fn().mockReturnValue({ level: 'info', info: jest.fn() }),
-)
+vi.mock('pino', () => ({
+  default: vi.fn().mockReturnValue({ level: 'info', info: vi.fn() }),
+}))
 
-const mockPino = pino as jest.MockedFunction<typeof pino>
+const mockPino = pino as MockedFunction<typeof pino>
 
 describe('createLogger', () => {
   const originalNodeEnv = process.env.NODE_ENV

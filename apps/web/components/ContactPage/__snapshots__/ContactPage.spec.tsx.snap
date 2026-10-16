@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ContactPage should render successfully 1`] = `
+exports[`ContactPage > should render successfully 1`] = `
 .c9 {
   clip: rect(0 0 0 0);
   clip-path: inset(50%);

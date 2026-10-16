@@ -2,49 +2,49 @@ import { render, screen } from '@testing-library/react'
 
 import { Locale } from '@web/lib/db/schema'
 
-const mockGetPublishedPostsPaginated = jest.fn()
-const mockGetLatestPublishedPost = jest.fn()
-const mockGetPostPublishedDates = jest.fn()
-const mockGetCategories = jest.fn()
-const mockGetCategoryByLocaleSlug = jest.fn()
-const mockGetPostCountPerTag = jest.fn()
-const mockGetServerTranslation = jest.fn()
+const mockGetPublishedPostsPaginated = vi.fn()
+const mockGetLatestPublishedPost = vi.fn()
+const mockGetPostPublishedDates = vi.fn()
+const mockGetCategories = vi.fn()
+const mockGetCategoryByLocaleSlug = vi.fn()
+const mockGetPostCountPerTag = vi.fn()
+const mockGetServerTranslation = vi.fn()
 
-jest.mock('@web/lib/db/queries/posts', () => ({
+vi.mock('@web/lib/db/queries/posts', () => ({
   getPublishedPostsPaginated: mockGetPublishedPostsPaginated,
   getLatestPublishedPost: mockGetLatestPublishedPost,
   getPostPublishedDates: mockGetPostPublishedDates,
 }))
-jest.mock('@web/lib/db/queries/categories', () => ({
+vi.mock('@web/lib/db/queries/categories', () => ({
   getCategories: mockGetCategories,
   getCategoryByLocaleSlug: mockGetCategoryByLocaleSlug,
 }))
-jest.mock('@web/lib/db/queries/tags', () => ({
+vi.mock('@web/lib/db/queries/tags', () => ({
   getPostCountPerTag: mockGetPostCountPerTag,
 }))
-jest.mock('@web/i18n/server', () => ({
+vi.mock('@web/i18n/server', () => ({
   getServerTranslation: mockGetServerTranslation,
 }))
-jest.mock('@sdlgr/post-card', () => ({
+vi.mock('@sdlgr/post-card', () => ({
   PostCard: ({ title }: { title: string }) => (
     <article data-testid="post-card">{title}</article>
   ),
 }))
-jest.mock('@sdlgr/blog-filters', () => ({
+vi.mock('@sdlgr/blog-filters', () => ({
   BlogFilters: () => <div data-testid="blog-filters" />,
 }))
-jest.mock('@sdlgr/pagination', () => ({
+vi.mock('@sdlgr/pagination', () => ({
   Pagination: () => <div data-testid="pagination" />,
 }))
-jest.mock('@web/components/LatestPostHero', () => ({
+vi.mock('@web/components/LatestPostHero', () => ({
   LatestPostHero: () => <div data-testid="latest-post-hero" />,
 }))
-jest.mock('@web/components/SubscribeModal', () => ({
+vi.mock('@web/components/SubscribeModal', () => ({
   SubscribeModal: () => <div data-testid="subscribe-modal" />,
 }))
 
 const { BlogPage, mergeDateCounts } =
-  require('./BlogPage') as typeof import('./BlogPage')
+  (await import('./BlogPage')) as typeof import('./BlogPage')
 
 const mockPost = {
   id: '01JWTEST000000000000000000',

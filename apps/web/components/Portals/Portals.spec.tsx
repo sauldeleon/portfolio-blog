@@ -4,7 +4,7 @@ import { renderWithTheme } from '@sdlgr/test-utils'
 
 import { Portals } from './Portals'
 
-jest.mock('./components/Particles/Particles', () => ({
+vi.mock('./components/Particles/Particles', () => ({
   Particles: () => <div>ParticlesMock</div>,
 }))
 

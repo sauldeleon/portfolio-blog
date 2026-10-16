@@ -1,17 +1,18 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react'
 import axios, { AxiosError } from 'axios'
+import type { MockInstance } from 'vitest'
 
 import { renderApp } from '@sdlgr/test-utils'
 
 import { PostLikeButton } from './PostLikeButton'
 
-const mockT = jest.fn((key: string) => key)
+const mockT = vi.fn((key: string) => key)
 
-jest.mock('@web/i18n/client', () => ({
+vi.mock('@web/i18n/client', () => ({
   useClientTranslation: () => ({ t: mockT }),
 }))
 
-let mockAxiosPost: jest.SpyInstance
+let mockAxiosPost: MockInstance
 
 function makeAxiosError(status: number): AxiosError {
   return new AxiosError('error', String(status), undefined, undefined, {
@@ -27,13 +28,13 @@ const STORAGE_KEY = 'liked_posts'
 
 beforeEach(() => {
   localStorage.clear()
-  mockAxiosPost = jest
+  mockAxiosPost = vi
     .spyOn(axios, 'post')
     .mockResolvedValue({ data: { likes: 10 } })
 })
 
 afterEach(() => {
-  jest.restoreAllMocks()
+  vi.restoreAllMocks()
 })
 
 describe('PostLikeButton', () => {

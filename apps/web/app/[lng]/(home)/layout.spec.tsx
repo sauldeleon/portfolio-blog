@@ -18,9 +18,10 @@ describe('/[lng]/(home) - HomeLayout', () => {
   })
 
   it('should render with non-array summary', async () => {
-    jest
-      .spyOn(require('@web/i18n/server'), 'getServerTranslation')
-      .mockResolvedValue({ t: () => 'not-an-array' })
+    vi.spyOn(
+      await import('@web/i18n/server'),
+      'getServerTranslation',
+    ).mockResolvedValue({ t: () => 'not-an-array' })
 
     const { baseElement } = renderApp(
       await HomeLayout({
@@ -29,6 +30,6 @@ describe('/[lng]/(home) - HomeLayout', () => {
       }),
     )
     expect(baseElement).toBeTruthy()
-    jest.restoreAllMocks()
+    vi.restoreAllMocks()
   })
 })

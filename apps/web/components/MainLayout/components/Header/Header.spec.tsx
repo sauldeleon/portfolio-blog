@@ -1,14 +1,17 @@
 import { screen } from '@testing-library/react'
 import { usePathname } from 'next/navigation'
+import type { Mock } from 'vitest'
 
 import { renderApp } from '@sdlgr/test-utils'
 
 import { Header } from './Header'
 
-jest.mock('next/navigation', () => ({
-  ...jest.requireActual('next/navigation'),
-  useSelectedLayoutSegments: jest.fn(() => ['(home)', 'contact']),
-  usePathname: jest.fn(() => '/en/contact'),
+vi.mock('next/navigation', async () => ({
+  ...(await vi.importActual<typeof import('next/navigation')>(
+    'next/navigation',
+  )),
+  useSelectedLayoutSegments: vi.fn(() => ['(home)', 'contact']),
+  usePathname: vi.fn(() => '/en/contact'),
 }))
 
 describe('Header', () => {
@@ -21,7 +24,7 @@ describe('Header', () => {
   })
 
   it('should render logo without link on homepage', async () => {
-    ;(usePathname as jest.Mock).mockReturnValue('/en/')
+    ;(usePathname as Mock).mockReturnValue('/en/')
     const { baseElement } = renderApp(<Header />)
     await screen.findByRole('navigation')
     expect(

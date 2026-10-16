@@ -1,11 +1,12 @@
 import { load } from '@fingerprintjs/botd'
 import { renderHook, waitFor } from '@testing-library/react'
+import type { Mock } from 'vitest'
 
 import { useIsBot } from './use-is-bot'
 
-jest.mock('@fingerprintjs/botd', () => ({
-  load: jest.fn().mockResolvedValue({
-    detect: jest.fn().mockResolvedValue(false),
+vi.mock('@fingerprintjs/botd', () => ({
+  load: vi.fn().mockResolvedValue({
+    detect: vi.fn().mockResolvedValue(false),
   }),
 }))
 
@@ -29,13 +30,13 @@ describe('UseIsBot', () => {
   })
 
   it('should execute callback when detection is over', async () => {
-    const mockFn = jest.fn()
+    const mockFn = vi.fn()
     renderHook(() => useIsBot({ afterDetection: mockFn }))
     await waitFor(() => expect(mockFn).toHaveBeenCalledTimes(1))
   })
 
   it('should set isLoading to false when botd load rejects', async () => {
-    ;(load as jest.Mock).mockRejectedValueOnce(new Error('fail'))
+    ;(load as Mock).mockRejectedValueOnce(new Error('fail'))
     const { result } = renderHook(() => useIsBot())
     await waitFor(() =>
       expect(result.current).toEqual({ isBot: true, isLoading: false }),

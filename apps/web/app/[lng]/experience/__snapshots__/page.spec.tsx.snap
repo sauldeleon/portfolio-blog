@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`[lng]/experience route -  page should render successfully 1`] = `
+exports[`[lng]/experience route -  page > should render successfully 1`] = `
 .c3 {
   padding: 1rem 1.25rem;
   border: 1px solid rgba(251, 251, 251, 0.1);

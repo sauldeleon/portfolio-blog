@@ -1,4 +1,5 @@
 import { act, fireEvent, screen } from '@testing-library/react'
+import type { Mock } from 'vitest'
 
 import { renderApp } from '@sdlgr/test-utils'
 
@@ -6,7 +7,7 @@ import type { CloudinaryImage } from '@web/lib/cloudinary/images'
 
 import { ImageInsertModal, buildImageMarkdown } from './ImageInsertModal'
 
-jest.mock('@sdlgr/select', () => ({
+vi.mock('@sdlgr/select', () => ({
   Select: ({
     value,
     onChange,
@@ -43,7 +44,7 @@ const mockPickedImage: CloudinaryImage = {
   bytes: 1000,
 }
 
-function pickImage(onRequestImagePick: jest.Mock) {
+function pickImage(onRequestImagePick: Mock) {
   const [cb] = onRequestImagePick.mock.calls[0] as [
     (img: CloudinaryImage) => void,
   ]
@@ -55,10 +56,10 @@ describe('ImageInsertModal', () => {
     renderApp(
       <ImageInsertModal
         isOpen={false}
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
       />,
     )
     expect(screen.queryByTestId('pick-image-button')).not.toBeInTheDocument()
@@ -68,10 +69,10 @@ describe('ImageInsertModal', () => {
     renderApp(
       <ImageInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
       />,
     )
     expect(screen.getByTestId('pick-image-button')).toBeInTheDocument()
@@ -94,10 +95,10 @@ describe('ImageInsertModal', () => {
     renderApp(
       <ImageInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
       />,
     )
     expect(screen.getByText('No image selected')).toBeInTheDocument()
@@ -110,22 +111,22 @@ describe('ImageInsertModal', () => {
     renderApp(
       <ImageInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
       />,
     )
     expect(screen.getByTestId('image-modal-insert')).toBeDisabled()
   })
 
   it('calls onRequestImagePick with a callback when pick button clicked', () => {
-    const onRequestImagePick = jest.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <ImageInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -135,12 +136,12 @@ describe('ImageInsertModal', () => {
   })
 
   it('shows image thumb and enables insert after picking image', () => {
-    const onRequestImagePick = jest.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <ImageInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -159,22 +160,22 @@ describe('ImageInsertModal', () => {
     renderApp(
       <ImageInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={true}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
       />,
     )
     expect(screen.getByTestId('pick-image-button')).toBeInTheDocument()
   })
 
   it('shows preview after image selected', () => {
-    const onRequestImagePick = jest.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <ImageInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -190,24 +191,24 @@ describe('ImageInsertModal', () => {
     renderApp(
       <ImageInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
       />,
     )
     expect(screen.queryByTestId('image-preview')).not.toBeInTheDocument()
   })
 
   it('calls onCancel when cancel button clicked', () => {
-    const onCancel = jest.fn()
+    const onCancel = vi.fn()
     renderApp(
       <ImageInsertModal
         isOpen
-        onInsert={jest.fn()}
+        onInsert={vi.fn()}
         onCancel={onCancel}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
       />,
     )
     fireEvent.click(screen.getByTestId('image-modal-cancel'))
@@ -215,13 +216,13 @@ describe('ImageInsertModal', () => {
   })
 
   it('inserts basic markdown on insert', () => {
-    const onInsert = jest.fn()
-    const onRequestImagePick = jest.fn()
+    const onInsert = vi.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <ImageInsertModal
         isOpen
         onInsert={onInsert}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -235,13 +236,13 @@ describe('ImageInsertModal', () => {
   })
 
   it('includes alt text in markdown', () => {
-    const onInsert = jest.fn()
-    const onRequestImagePick = jest.fn()
+    const onInsert = vi.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <ImageInsertModal
         isOpen
         onInsert={onInsert}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -258,13 +259,13 @@ describe('ImageInsertModal', () => {
   })
 
   it('includes caption in markdown', () => {
-    const onInsert = jest.fn()
-    const onRequestImagePick = jest.fn()
+    const onInsert = vi.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <ImageInsertModal
         isOpen
         onInsert={onInsert}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -284,10 +285,10 @@ describe('ImageInsertModal', () => {
     renderApp(
       <ImageInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
       />,
     )
     expect(screen.getByTestId('caption-pos-checkbox')).toBeInTheDocument()
@@ -295,13 +296,13 @@ describe('ImageInsertModal', () => {
   })
 
   it('includes caption-pos=top when checkbox checked', () => {
-    const onInsert = jest.fn()
-    const onRequestImagePick = jest.fn()
+    const onInsert = vi.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <ImageInsertModal
         isOpen
         onInsert={onInsert}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -319,13 +320,13 @@ describe('ImageInsertModal', () => {
   })
 
   it('unchecking caption-pos reverts to bottom', () => {
-    const onInsert = jest.fn()
-    const onRequestImagePick = jest.fn()
+    const onInsert = vi.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <ImageInsertModal
         isOpen
         onInsert={onInsert}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -344,13 +345,13 @@ describe('ImageInsertModal', () => {
   })
 
   it('includes size=small when small selected', () => {
-    const onInsert = jest.fn()
-    const onRequestImagePick = jest.fn()
+    const onInsert = vi.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <ImageInsertModal
         isOpen
         onInsert={onInsert}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -365,13 +366,13 @@ describe('ImageInsertModal', () => {
   })
 
   it('includes size=medium when medium selected', () => {
-    const onInsert = jest.fn()
-    const onRequestImagePick = jest.fn()
+    const onInsert = vi.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <ImageInsertModal
         isOpen
         onInsert={onInsert}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -386,13 +387,13 @@ describe('ImageInsertModal', () => {
   })
 
   it('does not include size when full (default)', () => {
-    const onInsert = jest.fn()
-    const onRequestImagePick = jest.fn()
+    const onInsert = vi.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <ImageInsertModal
         isOpen
         onInsert={onInsert}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -407,13 +408,13 @@ describe('ImageInsertModal', () => {
   })
 
   it('includes align=left when left selected', () => {
-    const onInsert = jest.fn()
-    const onRequestImagePick = jest.fn()
+    const onInsert = vi.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <ImageInsertModal
         isOpen
         onInsert={onInsert}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -428,13 +429,13 @@ describe('ImageInsertModal', () => {
   })
 
   it('includes align=right when right selected', () => {
-    const onInsert = jest.fn()
-    const onRequestImagePick = jest.fn()
+    const onInsert = vi.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <ImageInsertModal
         isOpen
         onInsert={onInsert}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -449,13 +450,13 @@ describe('ImageInsertModal', () => {
   })
 
   it('does not include align when none (default)', () => {
-    const onInsert = jest.fn()
-    const onRequestImagePick = jest.fn()
+    const onInsert = vi.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <ImageInsertModal
         isOpen
         onInsert={onInsert}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -470,13 +471,13 @@ describe('ImageInsertModal', () => {
   })
 
   it('includes expand=true when expand checked', () => {
-    const onInsert = jest.fn()
-    const onRequestImagePick = jest.fn()
+    const onInsert = vi.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <ImageInsertModal
         isOpen
         onInsert={onInsert}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -491,13 +492,13 @@ describe('ImageInsertModal', () => {
   })
 
   it('combines all params in correct order', () => {
-    const onInsert = jest.fn()
-    const onRequestImagePick = jest.fn()
+    const onInsert = vi.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <ImageInsertModal
         isOpen
         onInsert={onInsert}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -523,10 +524,10 @@ describe('ImageInsertModal', () => {
     renderApp(
       <ImageInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
       />,
     )
     expect(screen.getByTestId('photo-meta-checkbox')).toBeInTheDocument()
@@ -537,10 +538,10 @@ describe('ImageInsertModal', () => {
     renderApp(
       <ImageInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
       />,
     )
     expect(screen.queryByTestId('photo-iso-input')).not.toBeInTheDocument()
@@ -558,10 +559,10 @@ describe('ImageInsertModal', () => {
     renderApp(
       <ImageInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
       />,
     )
     fireEvent.click(screen.getByTestId('photo-meta-checkbox'))
@@ -575,13 +576,13 @@ describe('ImageInsertModal', () => {
   })
 
   it('includes photo-iso param when set', () => {
-    const onInsert = jest.fn()
-    const onRequestImagePick = jest.fn()
+    const onInsert = vi.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <ImageInsertModal
         isOpen
         onInsert={onInsert}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -599,13 +600,13 @@ describe('ImageInsertModal', () => {
   })
 
   it('includes photo-aperture param when set', () => {
-    const onInsert = jest.fn()
-    const onRequestImagePick = jest.fn()
+    const onInsert = vi.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <ImageInsertModal
         isOpen
         onInsert={onInsert}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -623,13 +624,13 @@ describe('ImageInsertModal', () => {
   })
 
   it('includes photo-exposure param when set', () => {
-    const onInsert = jest.fn()
-    const onRequestImagePick = jest.fn()
+    const onInsert = vi.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <ImageInsertModal
         isOpen
         onInsert={onInsert}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -647,13 +648,13 @@ describe('ImageInsertModal', () => {
   })
 
   it('does not include photo meta params when checkbox unchecked', () => {
-    const onInsert = jest.fn()
-    const onRequestImagePick = jest.fn()
+    const onInsert = vi.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <ImageInsertModal
         isOpen
         onInsert={onInsert}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -666,13 +667,13 @@ describe('ImageInsertModal', () => {
   })
 
   it('includes all photo meta params combined', () => {
-    const onInsert = jest.fn()
-    const onRequestImagePick = jest.fn()
+    const onInsert = vi.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <ImageInsertModal
         isOpen
         onInsert={onInsert}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -696,13 +697,13 @@ describe('ImageInsertModal', () => {
   })
 
   it('includes photo-focal-length param when set', () => {
-    const onInsert = jest.fn()
-    const onRequestImagePick = jest.fn()
+    const onInsert = vi.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <ImageInsertModal
         isOpen
         onInsert={onInsert}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -720,13 +721,13 @@ describe('ImageInsertModal', () => {
   })
 
   it('includes photo-panoramic-count param when set', () => {
-    const onInsert = jest.fn()
-    const onRequestImagePick = jest.fn()
+    const onInsert = vi.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <ImageInsertModal
         isOpen
         onInsert={onInsert}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -744,13 +745,13 @@ describe('ImageInsertModal', () => {
   })
 
   it('resets photo meta state after insert', () => {
-    const onInsert = jest.fn()
-    const onRequestImagePick = jest.fn()
+    const onInsert = vi.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <ImageInsertModal
         isOpen
         onInsert={onInsert}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -779,13 +780,13 @@ describe('ImageInsertModal', () => {
   })
 
   it('resets state after insert', () => {
-    const onInsert = jest.fn()
-    const onRequestImagePick = jest.fn()
+    const onInsert = vi.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <ImageInsertModal
         isOpen
         onInsert={onInsert}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -804,14 +805,14 @@ describe('ImageInsertModal', () => {
 
 describe('ImageInsertModal initialValues', () => {
   it('pre-fills image url and shows thumb when initialValues provided', () => {
-    const onInsert = jest.fn()
+    const onInsert = vi.fn()
     renderApp(
       <ImageInsertModal
         isOpen
         onInsert={onInsert}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
         initialValues={{
           url: 'https://cdn.com/existing.jpg',
           altText: 'Existing alt',
@@ -841,10 +842,10 @@ describe('ImageInsertModal initialValues', () => {
     renderApp(
       <ImageInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
         initialValues={{
           url: 'https://cdn.com/photo.jpg',
           altText: '',
@@ -875,10 +876,10 @@ describe('ImageInsertModal initialValues', () => {
     renderApp(
       <ImageInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
         initialValues={{
           url: 'https://cdn.com/photo.jpg',
           altText: '',
@@ -899,10 +900,10 @@ describe('ImageInsertModal initialValues', () => {
     renderApp(
       <ImageInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
         initialValues={{
           url: 'https://cdn.com/photo.jpg',
           altText: '',
@@ -923,10 +924,10 @@ describe('ImageInsertModal initialValues', () => {
     renderApp(
       <ImageInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
         initialValues={null}
       />,
     )
@@ -938,10 +939,10 @@ describe('ImageInsertModal initialValues', () => {
     renderApp(
       <ImageInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
         initialValues={{
           url: 'https://cdn.com/existing.jpg',
           altText: '',

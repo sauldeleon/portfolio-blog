@@ -6,7 +6,7 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { ImagePicker } from './ImagePicker'
 
-jest.mock('next/image', () => ({
+vi.mock('next/image', () => ({
   __esModule: true,
   default: ({
     src,
@@ -19,8 +19,8 @@ jest.mock('next/image', () => ({
   }) => <img src={src} alt={alt} {...props} />,
 }))
 
-jest.mock('@web/i18n/client', () => ({
-  useClientTranslation: jest.fn().mockReturnValue({
+vi.mock('@web/i18n/client', () => ({
+  useClientTranslation: vi.fn().mockReturnValue({
     t: (key: string) => {
       const translations: Record<string, string> = {
         'images.picker.title': 'Insert Image',
@@ -82,20 +82,20 @@ const mockImageBytes = (bytes: number) => [
   },
 ]
 
-const mockOnClose = jest.fn()
-const mockOnPick = jest.fn()
+const mockOnClose = vi.fn()
+const mockOnPick = vi.fn()
 
 let observerCallback: IntersectionObserverCallback
-const mockObserve = jest.fn()
-const mockDisconnect = jest.fn()
+const mockObserve = vi.fn()
+const mockDisconnect = vi.fn()
 
 beforeAll(() => {
-  global.IntersectionObserver = jest.fn((cb) => {
+  global.IntersectionObserver = vi.fn(function (cb) {
     observerCallback = cb
     return {
       observe: mockObserve,
       disconnect: mockDisconnect,
-      unobserve: jest.fn(),
+      unobserve: vi.fn(),
     }
   }) as unknown as typeof IntersectionObserver
 })
@@ -114,8 +114,8 @@ async function changeUploadInput(input: HTMLInputElement) {
 
 describe('ImagePicker', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
-    jest.spyOn(axios, 'get').mockResolvedValue({
+    vi.clearAllMocks()
+    vi.spyOn(axios, 'get').mockResolvedValue({
       data: { images: mockImages, nextCursor: undefined },
     })
   })
@@ -141,7 +141,7 @@ describe('ImagePicker', () => {
   })
 
   it('shows loading state while fetching', () => {
-    jest.spyOn(axios, 'get').mockReturnValue(new Promise(jest.fn()))
+    vi.spyOn(axios, 'get').mockReturnValue(new Promise(vi.fn()))
     renderApp(
       <ImagePicker open={true} onClose={mockOnClose} onPick={mockOnPick} />,
     )
@@ -149,8 +149,7 @@ describe('ImagePicker', () => {
   })
 
   it('shows empty state when API search returns no results', async () => {
-    jest
-      .spyOn(axios, 'get')
+    vi.spyOn(axios, 'get')
       .mockResolvedValueOnce({
         data: { images: mockImages, nextCursor: undefined },
       })
@@ -163,20 +162,19 @@ describe('ImagePicker', () => {
       expect(screen.getAllByTestId('image-picker-item')).toHaveLength(2),
     )
 
-    jest.useFakeTimers()
+    vi.useFakeTimers()
     fireEvent.change(screen.getByTestId('image-picker-search'), {
       target: { value: 'zzznomatch' },
     })
-    act(() => jest.advanceTimersByTime(300))
-    jest.useRealTimers()
+    act(() => vi.advanceTimersByTime(300))
+    vi.useRealTimers()
 
     expect(await screen.findByTestId('picker-empty')).toBeInTheDocument()
     expect(axios.get).toHaveBeenCalledWith('/api/images/?search=zzznomatch')
   })
 
   it('calls API with search term after debounce', async () => {
-    jest
-      .spyOn(axios, 'get')
+    vi.spyOn(axios, 'get')
       .mockResolvedValueOnce({
         data: { images: mockImages, nextCursor: undefined },
       })
@@ -191,13 +189,13 @@ describe('ImagePicker', () => {
       expect(screen.getAllByTestId('image-picker-item')).toHaveLength(2),
     )
 
-    jest.useFakeTimers()
+    vi.useFakeTimers()
     fireEvent.change(screen.getByTestId('image-picker-search'), {
       target: { value: 'mountain' },
     })
     expect(axios.get).toHaveBeenCalledTimes(1)
-    act(() => jest.advanceTimersByTime(300))
-    jest.useRealTimers()
+    act(() => vi.advanceTimersByTime(300))
+    vi.useRealTimers()
 
     await waitFor(() =>
       expect(screen.getAllByTestId('image-picker-item')).toHaveLength(1),
@@ -206,8 +204,7 @@ describe('ImagePicker', () => {
   })
 
   it('clears previous debounce timer when user types again before it fires', async () => {
-    jest
-      .spyOn(axios, 'get')
+    vi.spyOn(axios, 'get')
       .mockResolvedValueOnce({
         data: { images: mockImages, nextCursor: undefined },
       })
@@ -222,15 +219,15 @@ describe('ImagePicker', () => {
       expect(screen.getAllByTestId('image-picker-item')).toHaveLength(2),
     )
 
-    jest.useFakeTimers()
+    vi.useFakeTimers()
     fireEvent.change(screen.getByTestId('image-picker-search'), {
       target: { value: 'mo' },
     })
     fireEvent.change(screen.getByTestId('image-picker-search'), {
       target: { value: 'mountain' },
     })
-    act(() => jest.advanceTimersByTime(300))
-    jest.useRealTimers()
+    act(() => vi.advanceTimersByTime(300))
+    vi.useRealTimers()
 
     await waitFor(() =>
       expect(screen.getAllByTestId('image-picker-item')).toHaveLength(1),
@@ -240,8 +237,7 @@ describe('ImagePicker', () => {
   })
 
   it('clears pending debounce timer when picker reopens', async () => {
-    jest
-      .spyOn(axios, 'get')
+    vi.spyOn(axios, 'get')
       .mockResolvedValueOnce({
         data: { images: mockImages, nextCursor: undefined },
       })
@@ -267,12 +263,12 @@ describe('ImagePicker', () => {
       expect(screen.getAllByTestId('image-picker-item')).toHaveLength(2),
     )
 
-    jest.useFakeTimers()
+    vi.useFakeTimers()
     fireEvent.change(screen.getByTestId('image-picker-search'), {
       target: { value: 'mountain' },
     })
     fireEvent.click(screen.getByTestId('toggle-picker2'))
-    jest.useRealTimers()
+    vi.useRealTimers()
 
     fireEvent.click(screen.getByTestId('toggle-picker2'))
 
@@ -283,8 +279,7 @@ describe('ImagePicker', () => {
   })
 
   it('calls fetchImages when search is cleared', async () => {
-    jest
-      .spyOn(axios, 'get')
+    vi.spyOn(axios, 'get')
       .mockResolvedValueOnce({
         data: { images: mockImages, nextCursor: undefined },
       })
@@ -302,23 +297,23 @@ describe('ImagePicker', () => {
       expect(screen.getAllByTestId('image-picker-item')).toHaveLength(2),
     )
 
-    jest.useFakeTimers()
+    vi.useFakeTimers()
     fireEvent.change(screen.getByTestId('image-picker-search'), {
       target: { value: 'mountain' },
     })
-    act(() => jest.advanceTimersByTime(300))
-    jest.useRealTimers()
+    act(() => vi.advanceTimersByTime(300))
+    vi.useRealTimers()
 
     await waitFor(() =>
       expect(screen.getAllByTestId('image-picker-item')).toHaveLength(1),
     )
 
-    jest.useFakeTimers()
+    vi.useFakeTimers()
     fireEvent.change(screen.getByTestId('image-picker-search'), {
       target: { value: '' },
     })
-    act(() => jest.advanceTimersByTime(300))
-    jest.useRealTimers()
+    act(() => vi.advanceTimersByTime(300))
+    vi.useRealTimers()
 
     await waitFor(() =>
       expect(screen.getAllByTestId('image-picker-item')).toHaveLength(2),
@@ -349,9 +344,9 @@ describe('ImagePicker', () => {
   })
 
   it('shows empty state when fetch returns no images', async () => {
-    jest
-      .spyOn(axios, 'get')
-      .mockResolvedValue({ data: { images: [], nextCursor: undefined } })
+    vi.spyOn(axios, 'get').mockResolvedValue({
+      data: { images: [], nextCursor: undefined },
+    })
     renderApp(
       <ImagePicker open={true} onClose={mockOnClose} onPick={mockOnPick} />,
     )
@@ -359,7 +354,7 @@ describe('ImagePicker', () => {
   })
 
   it('shows empty state when fetch fails', async () => {
-    jest.spyOn(axios, 'get').mockRejectedValue(new Error('Network error'))
+    vi.spyOn(axios, 'get').mockRejectedValue(new Error('Network error'))
     renderApp(
       <ImagePicker open={true} onClose={mockOnClose} onPick={mockOnPick} />,
     )
@@ -400,7 +395,7 @@ describe('ImagePicker', () => {
   })
 
   it('formats bytes as KB when between 1024 and 1MB', async () => {
-    jest.spyOn(axios, 'get').mockResolvedValue({
+    vi.spyOn(axios, 'get').mockResolvedValue({
       data: { images: mockImageBytes(12345), nextCursor: undefined },
     })
     renderApp(
@@ -411,7 +406,7 @@ describe('ImagePicker', () => {
   })
 
   it('formats bytes as B when under 1024', async () => {
-    jest.spyOn(axios, 'get').mockResolvedValue({
+    vi.spyOn(axios, 'get').mockResolvedValue({
       data: { images: mockImageBytes(512), nextCursor: undefined },
     })
     renderApp(
@@ -422,7 +417,7 @@ describe('ImagePicker', () => {
   })
 
   it('formats bytes as MB when over 1MB', async () => {
-    jest.spyOn(axios, 'get').mockResolvedValue({
+    vi.spyOn(axios, 'get').mockResolvedValue({
       data: { images: mockImageBytes(2097152), nextCursor: undefined },
     })
     renderApp(
@@ -443,8 +438,7 @@ describe('ImagePicker', () => {
   })
 
   it('loads more images when sentinel intersects and nextCursor exists', async () => {
-    jest
-      .spyOn(axios, 'get')
+    vi.spyOn(axios, 'get')
       .mockResolvedValueOnce({
         data: { images: mockImages, nextCursor: 'cursor-abc' },
       })
@@ -478,7 +472,7 @@ describe('ImagePicker', () => {
   })
 
   it('does not load more when nextCursor is undefined', async () => {
-    jest.spyOn(axios, 'get').mockResolvedValueOnce({
+    vi.spyOn(axios, 'get').mockResolvedValueOnce({
       data: { images: mockImages, nextCursor: undefined },
     })
 
@@ -501,7 +495,7 @@ describe('ImagePicker', () => {
   })
 
   it('does not load more when sentinel is not intersecting', async () => {
-    jest.spyOn(axios, 'get').mockResolvedValueOnce({
+    vi.spyOn(axios, 'get').mockResolvedValueOnce({
       data: { images: mockImages, nextCursor: 'cursor-xyz' },
     })
 
@@ -531,8 +525,7 @@ describe('ImagePicker', () => {
       resolveSecond = resolve
     })
 
-    jest
-      .spyOn(axios, 'get')
+    vi.spyOn(axios, 'get')
       .mockResolvedValueOnce({
         data: { images: mockImages, nextCursor: 'cursor-abc' },
       })
@@ -567,8 +560,7 @@ describe('ImagePicker', () => {
   })
 
   it('appends new images to existing images after load more', async () => {
-    jest
-      .spyOn(axios, 'get')
+    vi.spyOn(axios, 'get')
       .mockResolvedValueOnce({
         data: { images: mockImages, nextCursor: 'cursor-abc' },
       })
@@ -601,8 +593,7 @@ describe('ImagePicker', () => {
   })
 
   it('does not add duplicate images when load more returns already-loaded items', async () => {
-    jest
-      .spyOn(axios, 'get')
+    vi.spyOn(axios, 'get')
       .mockResolvedValueOnce({
         data: { images: mockImages, nextCursor: 'cursor-abc' },
       })
@@ -633,8 +624,7 @@ describe('ImagePicker', () => {
   })
 
   it('resets image list when picker is reopened to avoid stale duplicates', async () => {
-    jest
-      .spyOn(axios, 'get')
+    vi.spyOn(axios, 'get')
       .mockResolvedValueOnce({
         data: { images: mockImages, nextCursor: 'cursor-abc' },
       })
@@ -684,7 +674,7 @@ describe('ImagePicker', () => {
   })
 
   it('deduplicates images with the same publicId in the display list', async () => {
-    jest.spyOn(axios, 'get').mockResolvedValue({
+    vi.spyOn(axios, 'get').mockResolvedValue({
       data: {
         images: [mockImages[0], mockImages[1], mockImages[0]],
         nextCursor: undefined,
@@ -712,8 +702,7 @@ describe('ImagePicker', () => {
   })
 
   it('silently ignores load more errors', async () => {
-    jest
-      .spyOn(axios, 'get')
+    vi.spyOn(axios, 'get')
       .mockResolvedValueOnce({
         data: { images: mockImages, nextCursor: 'cursor-abc' },
       })
@@ -797,9 +786,9 @@ describe('ImagePicker', () => {
       const uploadPromise = new Promise((resolve) => {
         resolveUpload = resolve
       })
-      jest
-        .spyOn(axios, 'post')
-        .mockReturnValue(uploadPromise as ReturnType<typeof axios.post>)
+      vi.spyOn(axios, 'post').mockReturnValue(
+        uploadPromise as ReturnType<typeof axios.post>,
+      )
 
       renderApp(
         <ImagePicker open={true} onClose={mockOnClose} onPick={mockOnPick} />,
@@ -832,9 +821,8 @@ describe('ImagePicker', () => {
       const getPromise = new Promise((resolve) => {
         resolveGet = resolve
       })
-      jest.spyOn(axios, 'post').mockResolvedValue({ data: uploadedImage })
-      jest
-        .spyOn(axios, 'get')
+      vi.spyOn(axios, 'post').mockResolvedValue({ data: uploadedImage })
+      vi.spyOn(axios, 'get')
         .mockResolvedValueOnce({
           data: { images: mockImages, nextCursor: undefined },
         })
@@ -866,9 +854,8 @@ describe('ImagePicker', () => {
     it('pins uploaded image at top when server refresh includes it', async () => {
       // Server returns uploaded image mid-list (alphabetical sort); it should stay at top
       const serverListWithUploadedMid = [...mockImages, uploadedImage]
-      jest.spyOn(axios, 'post').mockResolvedValue({ data: uploadedImage })
-      jest
-        .spyOn(axios, 'get')
+      vi.spyOn(axios, 'post').mockResolvedValue({ data: uploadedImage })
+      vi.spyOn(axios, 'get')
         .mockResolvedValueOnce({
           data: { images: mockImages, nextCursor: undefined },
         })
@@ -895,9 +882,8 @@ describe('ImagePicker', () => {
     })
 
     it('keeps uploaded image at top when server has not indexed it yet', async () => {
-      jest.spyOn(axios, 'post').mockResolvedValue({ data: uploadedImage })
-      jest
-        .spyOn(axios, 'get')
+      vi.spyOn(axios, 'post').mockResolvedValue({ data: uploadedImage })
+      vi.spyOn(axios, 'get')
         .mockResolvedValueOnce({
           data: { images: mockImages, nextCursor: undefined },
         })
@@ -930,9 +916,8 @@ describe('ImagePicker', () => {
       const initialGetPromise = new Promise((resolve) => {
         resolveInitialGet = resolve
       })
-      jest.spyOn(axios, 'post').mockResolvedValue({ data: uploadedImage })
-      jest
-        .spyOn(axios, 'get')
+      vi.spyOn(axios, 'post').mockResolvedValue({ data: uploadedImage })
+      vi.spyOn(axios, 'get')
         .mockReturnValueOnce(initialGetPromise as ReturnType<typeof axios.get>)
         .mockResolvedValueOnce({
           data: { images: mockImages, nextCursor: undefined },
@@ -963,9 +948,8 @@ describe('ImagePicker', () => {
     })
 
     it('keeps uploaded image when background refresh fails', async () => {
-      jest.spyOn(axios, 'post').mockResolvedValue({ data: uploadedImage })
-      jest
-        .spyOn(axios, 'get')
+      vi.spyOn(axios, 'post').mockResolvedValue({ data: uploadedImage })
+      vi.spyOn(axios, 'get')
         .mockResolvedValueOnce({
           data: { images: mockImages, nextCursor: undefined },
         })
@@ -990,7 +974,7 @@ describe('ImagePicker', () => {
     })
 
     it('shows upload error on failure', async () => {
-      jest.spyOn(axios, 'post').mockRejectedValue(new Error('Upload failed'))
+      vi.spyOn(axios, 'post').mockRejectedValue(new Error('Upload failed'))
 
       renderApp(
         <ImagePicker open={true} onClose={mockOnClose} onPick={mockOnPick} />,
@@ -1008,8 +992,7 @@ describe('ImagePicker', () => {
     })
 
     it('clears upload error on subsequent upload attempt', async () => {
-      jest
-        .spyOn(axios, 'post')
+      vi.spyOn(axios, 'post')
         .mockRejectedValueOnce(new Error('fail'))
         .mockResolvedValueOnce({ data: uploadedImage })
 
@@ -1032,7 +1015,7 @@ describe('ImagePicker', () => {
 
     it('sends filename without extension as name in FormData', async () => {
       let capturedFormData: FormData | undefined
-      jest.spyOn(axios, 'post').mockImplementation((_, data) => {
+      vi.spyOn(axios, 'post').mockImplementation(function (_, data) {
         capturedFormData = data as FormData
         return Promise.resolve({ data: uploadedImage })
       })
@@ -1051,7 +1034,7 @@ describe('ImagePicker', () => {
     })
 
     it('does not upload when drop has no file', async () => {
-      const postSpy = jest.spyOn(axios, 'post')
+      const postSpy = vi.spyOn(axios, 'post')
 
       renderApp(
         <ImagePicker open={true} onClose={mockOnClose} onPick={mockOnPick} />,
@@ -1066,7 +1049,7 @@ describe('ImagePicker', () => {
     })
 
     it('prepends uploaded image via file input', async () => {
-      jest.spyOn(axios, 'post').mockResolvedValue({ data: uploadedImage })
+      vi.spyOn(axios, 'post').mockResolvedValue({ data: uploadedImage })
 
       renderApp(
         <ImagePicker open={true} onClose={mockOnClose} onPick={mockOnPick} />,
@@ -1092,7 +1075,7 @@ describe('ImagePicker', () => {
     })
 
     it('does not upload when file input has no file', async () => {
-      const postSpy = jest.spyOn(axios, 'post')
+      const postSpy = vi.spyOn(axios, 'post')
 
       renderApp(
         <ImagePicker open={true} onClose={mockOnClose} onPick={mockOnPick} />,
@@ -1133,8 +1116,7 @@ describe('ImagePicker', () => {
       resolveSecond = resolve
     })
 
-    jest
-      .spyOn(axios, 'get')
+    vi.spyOn(axios, 'get')
       .mockResolvedValueOnce({
         data: { images: mockImages, nextCursor: 'cursor-abc' },
       })

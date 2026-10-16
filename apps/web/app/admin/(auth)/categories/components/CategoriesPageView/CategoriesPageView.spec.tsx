@@ -6,18 +6,18 @@ import type { CategoryForAdmin } from '@web/lib/db/queries/categories'
 
 import { CategoriesPageView } from './CategoriesPageView'
 
-jest.mock('@web/i18n/client', () => ({
-  useClientTranslation: jest.fn().mockReturnValue({
+vi.mock('@web/i18n/client', () => ({
+  useClientTranslation: vi.fn().mockReturnValue({
     t: (key: string) => key,
   }),
 }))
 
-jest.mock('next/navigation', () => ({
-  useRouter: jest.fn().mockReturnValue({ refresh: jest.fn() }),
+vi.mock('next/navigation', () => ({
+  useRouter: vi.fn().mockReturnValue({ refresh: vi.fn() }),
 }))
 
-jest.mock('next/link', () => {
-  const React = require('react')
+vi.mock('next/link', async () => {
+  const React = await import('react')
   const MockLink = React.forwardRef(
     (
       { href, children, ...props }: { href: string; children: React.ReactNode },

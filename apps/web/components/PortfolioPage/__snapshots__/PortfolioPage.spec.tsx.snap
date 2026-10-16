@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`PortfolioPage should render successfully 1`] = `
+exports[`PortfolioPage > should render successfully 1`] = `
 .c107 {
   display: flex;
   align-items: center;

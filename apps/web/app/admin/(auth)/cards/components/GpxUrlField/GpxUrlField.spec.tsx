@@ -5,7 +5,7 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { GpxUrlField } from './GpxUrlField'
 
-jest.mock('../../../components/TrackUrlPicker', () => ({
+vi.mock('../../../components/TrackUrlPicker', () => ({
   TrackUrlPicker: ({
     id,
     value,
@@ -26,10 +26,10 @@ jest.mock('../../../components/TrackUrlPicker', () => ({
   ),
 }))
 
-jest.mock('@web/i18n/client', () => {
-  const admin: Record<string, unknown> = jest.requireActual(
-    '@web/i18n/locales/en/admin.json',
-  )
+vi.mock('@web/i18n/client', async () => {
+  const admin: Record<string, unknown> = await vi.importActual<
+    typeof import('@web/i18n/locales/en/admin.json')
+  >('@web/i18n/locales/en/admin.json')
   return {
     useClientTranslation: () => ({
       t: (key: string): string => {
@@ -74,22 +74,22 @@ const metrics = {
 const URL = 'https://example.com/track.gpx'
 
 afterEach(() => {
-  jest.restoreAllMocks()
+  vi.restoreAllMocks()
 })
 
 describe('GpxUrlField', () => {
   it('renders the url input and parse button', () => {
     renderApp(
-      <GpxUrlField onChange={jest.fn()} onParsed={jest.fn()} idPrefix="rt" />,
+      <GpxUrlField onChange={vi.fn()} onParsed={vi.fn()} idPrefix="rt" />,
     )
     expect(screen.getByTestId('rt-gpx')).toBeInTheDocument()
     expect(screen.getByTestId('rt-gpx-parse')).toBeInTheDocument()
   })
 
   it('calls onChange when the url changes', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(
-      <GpxUrlField onChange={onChange} onParsed={jest.fn()} idPrefix="rt" />,
+      <GpxUrlField onChange={onChange} onParsed={vi.fn()} idPrefix="rt" />,
     )
     fireEvent.change(screen.getByTestId('rt-gpx'), { target: { value: URL } })
     expect(onChange).toHaveBeenCalledWith(URL)
@@ -97,20 +97,20 @@ describe('GpxUrlField', () => {
 
   it('disables the parse button when the url is empty', () => {
     renderApp(
-      <GpxUrlField onChange={jest.fn()} onParsed={jest.fn()} idPrefix="rt" />,
+      <GpxUrlField onChange={vi.fn()} onParsed={vi.fn()} idPrefix="rt" />,
     )
     expect(screen.getByTestId('rt-gpx-parse')).toBeDisabled()
   })
 
   it('parses and calls onParsed on success', async () => {
-    const getSpy = jest
+    const getSpy = vi
       .spyOn(axios, 'get')
       .mockResolvedValue({ data: { data: metrics } })
-    const onParsed = jest.fn()
+    const onParsed = vi.fn()
     renderApp(
       <GpxUrlField
         value={URL}
-        onChange={jest.fn()}
+        onChange={vi.fn()}
         onParsed={onParsed}
         idPrefix="rt"
       />,
@@ -123,14 +123,14 @@ describe('GpxUrlField', () => {
   })
 
   it('asks for place names when told to', async () => {
-    const getSpy = jest
+    const getSpy = vi
       .spyOn(axios, 'get')
       .mockResolvedValue({ data: { data: metrics } })
     renderApp(
       <GpxUrlField
         value={URL}
-        onChange={jest.fn()}
-        onParsed={jest.fn()}
+        onChange={vi.fn()}
+        onParsed={vi.fn()}
         idPrefix="rt"
         withPlaceNames
       />,
@@ -144,14 +144,14 @@ describe('GpxUrlField', () => {
   })
 
   it('shows the server error message on a failed response', async () => {
-    jest
-      .spyOn(axios, 'get')
-      .mockRejectedValue(makeAxiosError(502, { error: 'Failed to fetch GPX' }))
+    vi.spyOn(axios, 'get').mockRejectedValue(
+      makeAxiosError(502, { error: 'Failed to fetch GPX' }),
+    )
     renderApp(
       <GpxUrlField
         value={URL}
-        onChange={jest.fn()}
-        onParsed={jest.fn()}
+        onChange={vi.fn()}
+        onParsed={vi.fn()}
         idPrefix="rt"
       />,
     )
@@ -162,12 +162,12 @@ describe('GpxUrlField', () => {
   })
 
   it('shows a fallback error when the axios error has no message', async () => {
-    jest.spyOn(axios, 'get').mockRejectedValue(makeAxiosError(500, {}))
+    vi.spyOn(axios, 'get').mockRejectedValue(makeAxiosError(500, {}))
     renderApp(
       <GpxUrlField
         value={URL}
-        onChange={jest.fn()}
-        onParsed={jest.fn()}
+        onChange={vi.fn()}
+        onParsed={vi.fn()}
         idPrefix="rt"
       />,
     )
@@ -178,12 +178,12 @@ describe('GpxUrlField', () => {
   })
 
   it('shows a fallback error when the response has no data', async () => {
-    jest.spyOn(axios, 'get').mockResolvedValue({ data: {} })
+    vi.spyOn(axios, 'get').mockResolvedValue({ data: {} })
     renderApp(
       <GpxUrlField
         value={URL}
-        onChange={jest.fn()}
-        onParsed={jest.fn()}
+        onChange={vi.fn()}
+        onParsed={vi.fn()}
         idPrefix="rt"
       />,
     )
@@ -194,12 +194,12 @@ describe('GpxUrlField', () => {
   })
 
   it('shows a fallback error on a non-axios error', async () => {
-    jest.spyOn(axios, 'get').mockRejectedValue(new Error('boom'))
+    vi.spyOn(axios, 'get').mockRejectedValue(new Error('boom'))
     renderApp(
       <GpxUrlField
         value={URL}
-        onChange={jest.fn()}
-        onParsed={jest.fn()}
+        onChange={vi.fn()}
+        onParsed={vi.fn()}
         idPrefix="rt"
       />,
     )
@@ -209,7 +209,7 @@ describe('GpxUrlField', () => {
 
   it('shows a loading label while parsing', async () => {
     let resolve!: (v: unknown) => void
-    jest.spyOn(axios, 'get').mockReturnValue(
+    vi.spyOn(axios, 'get').mockReturnValue(
       new Promise((r) => {
         resolve = r
       }),
@@ -217,8 +217,8 @@ describe('GpxUrlField', () => {
     renderApp(
       <GpxUrlField
         value={URL}
-        onChange={jest.fn()}
-        onParsed={jest.fn()}
+        onChange={vi.fn()}
+        onParsed={vi.fn()}
         idPrefix="rt"
       />,
     )
@@ -230,12 +230,12 @@ describe('GpxUrlField', () => {
   })
 
   it('clears the error when the url is edited', async () => {
-    jest.spyOn(axios, 'get').mockRejectedValue(new Error('boom'))
+    vi.spyOn(axios, 'get').mockRejectedValue(new Error('boom'))
     renderApp(
       <GpxUrlField
         value={URL}
-        onChange={jest.fn()}
-        onParsed={jest.fn()}
+        onChange={vi.fn()}
+        onParsed={vi.fn()}
         idPrefix="rt"
       />,
     )

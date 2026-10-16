@@ -3,14 +3,14 @@ import { render, screen } from '@testing-library/react'
 import { CategoryForm } from '../components/CategoryForm'
 import NewCategoryPage from './page.next'
 
-const mockRequireAdminSession = jest.fn()
+const mockRequireAdminSession = vi.fn()
 
-jest.mock('@web/lib/auth/requireAdminSession', () => ({
+vi.mock('@web/lib/auth/requireAdminSession', () => ({
   requireAdminSession: (...args: unknown[]) => mockRequireAdminSession(...args),
 }))
 
-jest.mock('@web/i18n/server', () => ({
-  getServerTranslation: jest.fn().mockResolvedValue({
+vi.mock('@web/i18n/server', () => ({
+  getServerTranslation: vi.fn().mockResolvedValue({
     t: (key: string) => {
       const strings: Record<string, string> = {
         'categories.new.title': 'New Category',
@@ -21,10 +21,10 @@ jest.mock('@web/i18n/server', () => ({
   }),
 }))
 
-jest.mock('../components/CategoryForm', () => {
-  const React = require('react')
+vi.mock('../components/CategoryForm', async () => {
+  const React = await import('react')
   return {
-    CategoryForm: jest
+    CategoryForm: vi
       .fn()
       .mockReturnValue(
         React.createElement('div', { 'data-testid': 'category-form' }),
@@ -34,7 +34,7 @@ jest.mock('../components/CategoryForm', () => {
 
 describe('NewCategoryPage', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     mockRequireAdminSession.mockResolvedValue({ user: { name: 'admin' } })
   })
 

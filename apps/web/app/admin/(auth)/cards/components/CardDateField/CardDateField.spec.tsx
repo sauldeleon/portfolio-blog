@@ -4,7 +4,7 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { CardDateField } from './CardDateField'
 
-jest.mock('react-day-picker', () => ({
+vi.mock('react-day-picker', () => ({
   DayPicker: ({ onSelect }: { onSelect: (d: Date | undefined) => void }) => (
     <button
       type="button"
@@ -18,38 +18,38 @@ jest.mock('react-day-picker', () => ({
 
 describe('CardDateField', () => {
   it('renders the picker with default testid', () => {
-    renderApp(<CardDateField onChange={jest.fn()} />)
+    renderApp(<CardDateField onChange={vi.fn()} />)
     expect(screen.getByTestId('card-date')).toBeInTheDocument()
   })
 
   it('uses a custom testid', () => {
-    renderApp(<CardDateField onChange={jest.fn()} data-testid="rt-date" />)
+    renderApp(<CardDateField onChange={vi.fn()} data-testid="rt-date" />)
     expect(screen.getByTestId('rt-date')).toBeInTheDocument()
   })
 
   it('shows placeholder when no value', () => {
-    renderApp(<CardDateField onChange={jest.fn()} />)
+    renderApp(<CardDateField onChange={vi.fn()} />)
     expect(screen.getByTestId('card-date-trigger')).toHaveTextContent(
       'Select date',
     )
   })
 
   it('shows placeholder when value is an unparseable string', () => {
-    renderApp(<CardDateField value="not-a-date" onChange={jest.fn()} />)
+    renderApp(<CardDateField value="not-a-date" onChange={vi.fn()} />)
     expect(screen.getByTestId('card-date-trigger')).toHaveTextContent(
       'Select date',
     )
   })
 
   it('displays a parsed value', () => {
-    renderApp(<CardDateField value="15 Jul 2025" onChange={jest.fn()} />)
+    renderApp(<CardDateField value="15 Jul 2025" onChange={vi.fn()} />)
     expect(screen.getByTestId('card-date-trigger')).toHaveTextContent(
       '15 Jul 2025',
     )
   })
 
   it('emits a formatted string when a day is selected', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<CardDateField value="15 Jul 2025" onChange={onChange} />)
     fireEvent.click(screen.getByTestId('card-date-trigger'))
     fireEvent.click(screen.getByTestId('mock-day'))
@@ -59,7 +59,7 @@ describe('CardDateField', () => {
   })
 
   it('emits an empty string when the value is cleared', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<CardDateField value="15 Jul 2025" onChange={onChange} />)
     fireEvent.click(screen.getByTestId('card-date-trigger'))
     fireEvent.click(screen.getByTestId('card-date-clear'))

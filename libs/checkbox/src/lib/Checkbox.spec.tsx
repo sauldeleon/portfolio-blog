@@ -11,36 +11,36 @@ describe('Checkbox', () => {
         id="cb"
         label="Use default"
         checked={false}
-        onChange={jest.fn()}
+        onChange={vi.fn()}
       />,
     )
     expect(screen.getByText('Use default')).toBeInTheDocument()
   })
 
   it('renders without label', () => {
-    renderWithTheme(<Checkbox id="cb" checked={false} onChange={jest.fn()} />)
+    renderWithTheme(<Checkbox id="cb" checked={false} onChange={vi.fn()} />)
     expect(screen.getByRole('checkbox')).toBeInTheDocument()
   })
 
   it('native input is checked when checked=true', () => {
-    renderWithTheme(<Checkbox id="cb" checked={true} onChange={jest.fn()} />)
+    renderWithTheme(<Checkbox id="cb" checked={true} onChange={vi.fn()} />)
     expect(screen.getByRole('checkbox')).toBeChecked()
   })
 
   it('native input is unchecked when checked=false', () => {
-    renderWithTheme(<Checkbox id="cb" checked={false} onChange={jest.fn()} />)
+    renderWithTheme(<Checkbox id="cb" checked={false} onChange={vi.fn()} />)
     expect(screen.getByRole('checkbox')).not.toBeChecked()
   })
 
   it('calls onChange with true when clicking unchecked', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderWithTheme(<Checkbox id="cb" checked={false} onChange={onChange} />)
     fireEvent.click(screen.getByRole('checkbox'))
     expect(onChange).toHaveBeenCalledWith(true)
   })
 
   it('calls onChange with false when clicking checked', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderWithTheme(<Checkbox id="cb" checked={true} onChange={onChange} />)
     fireEvent.click(screen.getByRole('checkbox'))
     expect(onChange).toHaveBeenCalledWith(false)
@@ -48,13 +48,13 @@ describe('Checkbox', () => {
 
   it('is disabled when disabled prop passed', () => {
     renderWithTheme(
-      <Checkbox id="cb" checked={false} onChange={jest.fn()} disabled />,
+      <Checkbox id="cb" checked={false} onChange={vi.fn()} disabled />,
     )
     expect(screen.getByRole('checkbox')).toBeDisabled()
   })
 
   it('does not call onChange when disabled', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderWithTheme(
       <Checkbox id="cb" checked={false} onChange={onChange} disabled />,
     )
@@ -68,7 +68,7 @@ describe('Checkbox', () => {
         id="my-checkbox"
         label="Test"
         checked={false}
-        onChange={jest.fn()}
+        onChange={vi.fn()}
       />,
     )
     expect(screen.getByRole('checkbox')).toHaveAttribute('id', 'my-checkbox')
@@ -80,7 +80,7 @@ describe('Checkbox', () => {
       <Checkbox
         id="cb"
         checked={false}
-        onChange={jest.fn()}
+        onChange={vi.fn()}
         data-testid="my-cb"
       />,
     )

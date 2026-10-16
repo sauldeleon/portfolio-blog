@@ -3,15 +3,15 @@ import { render, screen } from '@testing-library/react'
 import { UserForm } from '../components/UserForm'
 import NewUserPage from './page.next'
 
-const mockRequireAdminRoleSession = jest.fn()
+const mockRequireAdminRoleSession = vi.fn()
 
-jest.mock('@web/lib/auth/requireAdminRoleSession', () => ({
+vi.mock('@web/lib/auth/requireAdminRoleSession', () => ({
   requireAdminRoleSession: (...args: unknown[]) =>
     mockRequireAdminRoleSession(...args),
 }))
 
-jest.mock('@web/i18n/server', () => ({
-  getServerTranslation: jest.fn().mockResolvedValue({
+vi.mock('@web/i18n/server', () => ({
+  getServerTranslation: vi.fn().mockResolvedValue({
     t: (key: string) => {
       const map: Record<string, string> = {
         'users.form.createTitle': 'Create User',
@@ -22,10 +22,10 @@ jest.mock('@web/i18n/server', () => ({
   }),
 }))
 
-jest.mock('../components/UserForm', () => {
-  const React = require('react')
+vi.mock('../components/UserForm', async () => {
+  const React = await import('react')
   return {
-    UserForm: jest
+    UserForm: vi
       .fn()
       .mockReturnValue(
         React.createElement('div', { 'data-testid': 'user-form' }),
@@ -35,7 +35,7 @@ jest.mock('../components/UserForm', () => {
 
 describe('NewUserPage', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     mockRequireAdminRoleSession.mockResolvedValue(undefined)
   })
 

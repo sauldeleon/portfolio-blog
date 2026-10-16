@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SubscribePage renders with SubscribeForm 1`] = `
+exports[`SubscribePage > renders with SubscribeForm 1`] = `
 .c0 {
   width: 100%;
   max-width: 720px;

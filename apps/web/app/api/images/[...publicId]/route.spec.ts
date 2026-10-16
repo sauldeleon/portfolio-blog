@@ -1,24 +1,24 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
-const mockAuth = jest.fn()
-const mockDestroyImage = jest.fn()
-const mockLoggerError = jest.fn()
+const mockAuth = vi.fn()
+const mockDestroyImage = vi.fn()
+const mockLoggerError = vi.fn()
 
-jest.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
-jest.mock('@web/lib/cloudinary/images', () => ({
+vi.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
+vi.mock('@web/lib/cloudinary/images', () => ({
   destroyImage: mockDestroyImage,
 }))
-jest.mock('@web/lib/logger', () => ({
+vi.mock('@web/lib/logger', () => ({
   logger: {
     error: mockLoggerError,
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
   },
 }))
 
-const { DELETE } = require('./route') as {
+const { DELETE } = (await import('./route')) as {
   DELETE: (
     req: Request,
     ctx: { params: Promise<{ publicId: string[] }> },
@@ -31,7 +31,7 @@ function makeCtx(segments: string[]) {
 
 describe('DELETE /api/images/[...publicId]', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   it('returns 401 when not authenticated', async () => {

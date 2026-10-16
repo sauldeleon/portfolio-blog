@@ -1,32 +1,32 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
-const mockAuth = jest.fn()
-const mockGetCategories = jest.fn()
-const mockGetCategoriesForAdmin = jest.fn()
-const mockGetCategoryBySlug = jest.fn()
-const mockCreateCategory = jest.fn()
-const mockCreateCategoryTranslation = jest.fn()
-const mockLoggerError = jest.fn()
+const mockAuth = vi.fn()
+const mockGetCategories = vi.fn()
+const mockGetCategoriesForAdmin = vi.fn()
+const mockGetCategoryBySlug = vi.fn()
+const mockCreateCategory = vi.fn()
+const mockCreateCategoryTranslation = vi.fn()
+const mockLoggerError = vi.fn()
 
-jest.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
-jest.mock('@web/lib/db/queries/categories', () => ({
+vi.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
+vi.mock('@web/lib/db/queries/categories', () => ({
   getCategories: mockGetCategories,
   getCategoriesForAdmin: mockGetCategoriesForAdmin,
   getCategoryBySlug: mockGetCategoryBySlug,
   createCategory: mockCreateCategory,
   createCategoryTranslation: mockCreateCategoryTranslation,
 }))
-jest.mock('@web/lib/logger', () => ({
+vi.mock('@web/lib/logger', () => ({
   logger: {
     error: mockLoggerError,
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
   },
 }))
 
-const { GET, POST } = require('./route') as {
+const { GET, POST } = (await import('./route')) as {
   GET: (req: Request) => Promise<Response>
   POST: (req: Request) => Promise<Response>
 }
@@ -70,7 +70,7 @@ function makeValidBody(overrides?: object) {
 
 describe('GET /api/categories', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   it('returns categories with cache headers', async () => {
@@ -144,7 +144,7 @@ describe('GET /api/categories', () => {
 
 describe('POST /api/categories', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   it('returns 401 when not authenticated', async () => {

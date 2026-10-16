@@ -4,7 +4,7 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { SubscribePage } from './SubscribePage'
 
-jest.mock('@web/components/SubscribeForm', () => ({
+vi.mock('@web/components/SubscribeForm', () => ({
   SubscribeForm: ({ lng }: { lng: string }) => (
     <div data-testid="subscribe-form" data-lng={lng} />
   ),

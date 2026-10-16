@@ -1,5 +1,6 @@
 import { act, fireEvent, render, screen } from '@testing-library/react'
 import type { ReactNode } from 'react'
+import type { Mock } from 'vitest'
 
 import type { GpxPoint, GpxTrack, GpxWaypoint } from '@sdlgr/gpx-tools'
 import { RenderProviders } from '@sdlgr/test-utils'
@@ -11,14 +12,14 @@ import {
   type TrackEditorMapProps,
 } from './TrackEditorMap'
 
-const mockFitBounds = jest.fn()
-const mockPanTo = jest.fn()
+const mockFitBounds = vi.fn()
+const mockPanTo = vi.fn()
 let mockBounds = { south: -90, west: -180, north: 90, east: 180 }
 let mockHandlers: Record<string, (e?: unknown) => void> = {}
 
-const mockInvalidateSize = jest.fn()
-const mockObserve = jest.fn()
-const mockDisconnect = jest.fn()
+const mockInvalidateSize = vi.fn()
+const mockObserve = vi.fn()
+const mockDisconnect = vi.fn()
 let mockResizeCallback: () => void = () => undefined
 const mockContainer = document.createElement('div')
 
@@ -45,19 +46,23 @@ const mockMap = {
   }),
 }
 
-jest.mock('leaflet/dist/leaflet.css', () => ({}))
+vi.mock('leaflet/dist/leaflet.css', () => ({}))
 
-jest.mock('leaflet', () => ({
+vi.mock('leaflet', () => ({
   __esModule: true,
   default: {
     divIcon: (options: { className: string }) => ({ ...options }),
-    icon: jest.fn((options: { iconUrl: string }) => ({ ...options })),
+    icon: vi.fn(function (options: { iconUrl: string }) {
+      return { ...options }
+    }),
     latLngBounds: (points: unknown[]) => ({ points }),
   },
 }))
 
-jest.mock('@sdlgr/gpx-tools', () => ({
-  ...jest.requireActual('@sdlgr/gpx-tools'),
+vi.mock('@sdlgr/gpx-tools', async () => ({
+  ...(await vi.importActual<typeof import('@sdlgr/gpx-tools')>(
+    '@sdlgr/gpx-tools',
+  )),
   MAP_ICON_ANCHOR: [10, 26],
   MAP_ICON_SIZE: [20, 26],
   TILE_PROVIDERS: [
@@ -79,7 +84,7 @@ jest.mock('@sdlgr/gpx-tools', () => ({
   WPT_ICON_URLS: { '': 'default-icon', Summit: 'summit-icon' },
 }))
 
-jest.mock('@web/i18n/client', () => ({
+vi.mock('@web/i18n/client', () => ({
   useClientTranslation: () => ({
     t: (key: string, options?: Record<string, unknown>) =>
       options ? `${key} ${JSON.stringify(options)}` : key,
@@ -98,7 +103,7 @@ interface MockMarkerProps {
   }
 }
 
-jest.mock('react-leaflet', () => ({
+vi.mock('react-leaflet', () => ({
   CircleMarker: ({
     center,
     pathOptions,
@@ -267,12 +272,12 @@ const waypoints: GpxWaypoint[] = [
 
 function renderMap(props: Partial<TrackEditorMapProps> = {}) {
   const callbacks = {
-    onVertexClick: jest.fn(),
-    onVertexMove: jest.fn(),
-    onMapClick: jest.fn(),
-    onWaypointClick: jest.fn(),
-    onWaypointMove: jest.fn(),
-    onToggleVertices: jest.fn(),
+    onVertexClick: vi.fn(),
+    onVertexMove: vi.fn(),
+    onMapClick: vi.fn(),
+    onWaypointClick: vi.fn(),
+    onWaypointMove: vi.fn(),
+    onToggleVertices: vi.fn(),
   }
   const all: TrackEditorMapProps = {
     original: trackOf(5),
@@ -295,10 +300,10 @@ function renderMap(props: Partial<TrackEditorMapProps> = {}) {
 }
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
   mockSize = { x: 800, y: 600 }
   Object.keys(mockMapHandlers).forEach((k) => delete mockMapHandlers[k])
-  window.ResizeObserver = jest.fn((callback: () => void) => {
+  window.ResizeObserver = vi.fn(function (callback: () => void) {
     mockResizeCallback = callback
     return { observe: mockObserve, disconnect: mockDisconnect }
   }) as unknown as typeof ResizeObserver
@@ -572,8 +577,8 @@ describe('TrackEditorMap', () => {
     )
   })
 
-  it('renders waypoint markers with their icons', () => {
-    const L = jest.requireMock('leaflet').default
+  it('renders waypoint markers with their icons', async () => {
+    const L = (await import('leaflet')).default as unknown as { icon: Mock }
     renderMap({ waypoints })
     const markers = screen.getAllByTestId('marker')
     expect(markers.map((m) => m.dataset.icon)).toEqual([

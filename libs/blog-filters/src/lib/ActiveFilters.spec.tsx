@@ -1,11 +1,12 @@
 import { fireEvent, screen } from '@testing-library/react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import type { Mock } from 'vitest'
 
 import { renderWithTheme } from '@sdlgr/test-utils'
 
 import { ActiveFilters } from './ActiveFilters'
 
-const mockReplace = jest.fn()
+const mockReplace = vi.fn()
 
 const MONTH_NAMES = [
   'Jan',
@@ -52,9 +53,9 @@ const defaultProps = {
 
 describe('ActiveFilters', () => {
   beforeEach(() => {
-    ;(useRouter as jest.Mock).mockReturnValue({ replace: mockReplace })
-    ;(usePathname as jest.Mock).mockReturnValue('/en/blog')
-    ;(useSearchParams as jest.Mock).mockReturnValue(new URLSearchParams())
+    ;(useRouter as Mock).mockReturnValue({ replace: mockReplace })
+    ;(usePathname as Mock).mockReturnValue('/en/blog')
+    ;(useSearchParams as Mock).mockReturnValue(new URLSearchParams())
     mockReplace.mockClear()
   })
 
@@ -142,7 +143,7 @@ describe('ActiveFilters', () => {
   })
 
   it('removing a category updates URL keeping others', () => {
-    ;(useSearchParams as jest.Mock).mockReturnValue(
+    ;(useSearchParams as Mock).mockReturnValue(
       new URLSearchParams('categories=engineering%2Clife'),
     )
     renderWithTheme(
@@ -158,7 +159,7 @@ describe('ActiveFilters', () => {
   })
 
   it('removing the only category deletes the param', () => {
-    ;(useSearchParams as jest.Mock).mockReturnValue(
+    ;(useSearchParams as Mock).mockReturnValue(
       new URLSearchParams('categories=engineering'),
     )
     renderWithTheme(
@@ -169,7 +170,7 @@ describe('ActiveFilters', () => {
   })
 
   it('removing a tag updates URL keeping others', () => {
-    ;(useSearchParams as jest.Mock).mockReturnValue(
+    ;(useSearchParams as Mock).mockReturnValue(
       new URLSearchParams('tags=react%2Ctypescript'),
     )
     renderWithTheme(
@@ -182,7 +183,7 @@ describe('ActiveFilters', () => {
   })
 
   it('removing the only tag deletes the param', () => {
-    ;(useSearchParams as jest.Mock).mockReturnValue(
+    ;(useSearchParams as Mock).mockReturnValue(
       new URLSearchParams('tags=react'),
     )
     renderWithTheme(<ActiveFilters {...defaultProps} activeTags={['react']} />)
@@ -191,7 +192,7 @@ describe('ActiveFilters', () => {
   })
 
   it('clicking date chip clears year and month', () => {
-    ;(useSearchParams as jest.Mock).mockReturnValue(
+    ;(useSearchParams as Mock).mockReturnValue(
       new URLSearchParams('year=2024&month=3'),
     )
     renderWithTheme(
@@ -202,7 +203,7 @@ describe('ActiveFilters', () => {
   })
 
   it('clear all removes categories, tags, year, month but not q', () => {
-    ;(useSearchParams as jest.Mock).mockReturnValue(
+    ;(useSearchParams as Mock).mockReturnValue(
       new URLSearchParams(
         'categories=engineering&tags=react&year=2024&month=3&q=hello',
       ),
@@ -223,7 +224,7 @@ describe('ActiveFilters', () => {
   })
 
   it('clear all also removes page param', () => {
-    ;(useSearchParams as jest.Mock).mockReturnValue(
+    ;(useSearchParams as Mock).mockReturnValue(
       new URLSearchParams('categories=engineering&page=2'),
     )
     renderWithTheme(
@@ -234,7 +235,7 @@ describe('ActiveFilters', () => {
   })
 
   it('removing category also clears page param', () => {
-    ;(useSearchParams as jest.Mock).mockReturnValue(
+    ;(useSearchParams as Mock).mockReturnValue(
       new URLSearchParams('categories=engineering&page=3'),
     )
     renderWithTheme(
@@ -245,7 +246,7 @@ describe('ActiveFilters', () => {
   })
 
   it('removing tag also clears page param', () => {
-    ;(useSearchParams as jest.Mock).mockReturnValue(
+    ;(useSearchParams as Mock).mockReturnValue(
       new URLSearchParams('tags=react&page=2'),
     )
     renderWithTheme(<ActiveFilters {...defaultProps} activeTags={['react']} />)
@@ -254,7 +255,7 @@ describe('ActiveFilters', () => {
   })
 
   it('removing date also clears page param', () => {
-    ;(useSearchParams as jest.Mock).mockReturnValue(
+    ;(useSearchParams as Mock).mockReturnValue(
       new URLSearchParams('year=2024&page=2'),
     )
     renderWithTheme(<ActiveFilters {...defaultProps} activeYear={2024} />)

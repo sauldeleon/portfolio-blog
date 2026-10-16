@@ -4,24 +4,24 @@ import type { ReactElement, ReactNode } from 'react'
 
 import AdminLayout from './layout.next'
 
-jest.mock('./components/AdminQueryProvider', () => ({
+vi.mock('./components/AdminQueryProvider', () => ({
   AdminQueryProvider: ({ children }: { children: React.ReactNode }) => children,
 }))
 
-jest.mock('i18next', () => ({
-  dir: jest.fn().mockReturnValue('ltr'),
+vi.mock('i18next', () => ({
+  dir: vi.fn().mockReturnValue('ltr'),
 }))
 
-jest.mock('@sdlgr/main-theme', () => ({
+vi.mock('@sdlgr/main-theme', () => ({
   robotoMonoClassName: 'roboto-mono',
 }))
 
-jest.mock('@sdlgr/i18n-tools', () => ({
+vi.mock('@sdlgr/i18n-tools', () => ({
   LanguageContextProvider: ({ children }: { children: React.ReactNode }) =>
     children,
 }))
 
-jest.mock(
+vi.mock(
   '@web/components/StyledComponentsRegistry/StyledComponentsRegistry',
   () => ({
     __esModule: true,
@@ -29,8 +29,8 @@ jest.mock(
   }),
 )
 
-jest.mock('@web/components/MainLayout/MainLayout', () => {
-  const React = require('react')
+vi.mock('@web/components/MainLayout/MainLayout', async () => {
+  const React = await import('react')
   return {
     MainLayout: ({ children }: { children: React.ReactNode }) =>
       React.createElement('div', { 'data-testid': 'main-layout' }, children),

@@ -1,3 +1,3 @@
-export const useRouter = jest.fn()
-export const usePathname = jest.fn()
-export const useSearchParams = jest.fn()
+export const useRouter = vi.fn()
+export const usePathname = vi.fn()
+export const useSearchParams = vi.fn()

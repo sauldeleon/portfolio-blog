@@ -2,8 +2,8 @@ import type { PublicPost } from '@web/lib/db/queries/posts'
 
 import { generateArticleJsonLd } from './generateArticleJsonLd'
 
-jest.mock('next-cloudinary', () => ({
-  getCldImageUrl: jest.fn(
+vi.mock('next-cloudinary', () => ({
+  getCldImageUrl: vi.fn(
     ({ src }: { src: string }) =>
       `https://res.cloudinary.com/test/image/upload/${src}`,
   ),

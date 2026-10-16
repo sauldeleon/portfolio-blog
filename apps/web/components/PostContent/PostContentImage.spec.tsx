@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react'
 
 import { PostContentImage } from './PostContentImage'
 
-jest.mock('@web/i18n/client', () => ({
+vi.mock('@web/i18n/client', () => ({
   useClientTranslation: () => ({
     t: (key: string) => {
       const map: Record<string, string> = {
@@ -17,14 +17,14 @@ jest.mock('@web/i18n/client', () => ({
   }),
 }))
 
-jest.mock('next/image', () => ({
+vi.mock('next/image', () => ({
   __esModule: true,
   default: ({ src, alt }: { src: string; alt: string }) => (
     <img src={src} alt={alt} />
   ),
 }))
 
-jest.mock('./PostContent.styles', () => ({
+vi.mock('./PostContent.styles', () => ({
   StyledImageWrapper: ({
     children,
     onClick,

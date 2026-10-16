@@ -1,19 +1,19 @@
 import { requireAdminRoleSession } from './requireAdminRoleSession'
 
-const mockRequireAdminSession = jest.fn()
-const mockRedirect = jest.fn()
+const mockRequireAdminSession = vi.fn()
+const mockRedirect = vi.fn()
 
-jest.mock('./requireAdminSession', () => ({
+vi.mock('./requireAdminSession', () => ({
   requireAdminSession: (...args: unknown[]) => mockRequireAdminSession(...args),
 }))
 
-jest.mock('next/navigation', () => ({
+vi.mock('next/navigation', () => ({
   redirect: (...args: unknown[]) => mockRedirect(...args),
 }))
 
 describe('requireAdminRoleSession', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   it('returns session when user has admin role', async () => {

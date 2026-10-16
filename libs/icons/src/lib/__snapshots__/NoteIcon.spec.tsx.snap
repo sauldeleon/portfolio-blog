@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`NoteIcon renders 1`] = `
+exports[`NoteIcon > renders 1`] = `
 <DocumentFragment>
   <svg
     aria-hidden="true"

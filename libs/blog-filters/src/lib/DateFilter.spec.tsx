@@ -1,12 +1,13 @@
 import { fireEvent, screen } from '@testing-library/react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import type { Mock } from 'vitest'
 
 import { renderWithTheme } from '@sdlgr/test-utils'
 
 import { DateFilter } from './DateFilter'
 
-const mockReplace = jest.fn()
-const mockOnToggle = jest.fn()
+const mockReplace = vi.fn()
+const mockOnToggle = vi.fn()
 
 const MONTH_NAMES = [
   'Jan',
@@ -45,9 +46,9 @@ const dates = [
 
 describe('DateFilter', () => {
   beforeEach(() => {
-    ;(useRouter as jest.Mock).mockReturnValue({ replace: mockReplace })
-    ;(usePathname as jest.Mock).mockReturnValue('/en/blog')
-    ;(useSearchParams as jest.Mock).mockReturnValue(new URLSearchParams())
+    ;(useRouter as Mock).mockReturnValue({ replace: mockReplace })
+    ;(usePathname as Mock).mockReturnValue('/en/blog')
+    ;(useSearchParams as Mock).mockReturnValue(new URLSearchParams())
     mockOnToggle.mockClear()
     mockReplace.mockClear()
   })
@@ -222,7 +223,7 @@ describe('DateFilter', () => {
   })
 
   it('clicking an active year clears year and month params', () => {
-    ;(useSearchParams as jest.Mock).mockReturnValue(
+    ;(useSearchParams as Mock).mockReturnValue(
       new URLSearchParams('year=2024&month=3'),
     )
     renderWithTheme(
@@ -240,7 +241,7 @@ describe('DateFilter', () => {
   })
 
   it('clicking a different year sets new year and clears month', () => {
-    ;(useSearchParams as jest.Mock).mockReturnValue(
+    ;(useSearchParams as Mock).mockReturnValue(
       new URLSearchParams('year=2023&month=11'),
     )
     renderWithTheme(
@@ -305,9 +306,7 @@ describe('DateFilter', () => {
   })
 
   it('clicking a month sets the month param', () => {
-    ;(useSearchParams as jest.Mock).mockReturnValue(
-      new URLSearchParams('year=2024'),
-    )
+    ;(useSearchParams as Mock).mockReturnValue(new URLSearchParams('year=2024'))
     renderWithTheme(
       <DateFilter
         dates={dates}
@@ -325,7 +324,7 @@ describe('DateFilter', () => {
   })
 
   it('clicking an active month clears the month param', () => {
-    ;(useSearchParams as jest.Mock).mockReturnValue(
+    ;(useSearchParams as Mock).mockReturnValue(
       new URLSearchParams('year=2024&month=3'),
     )
     renderWithTheme(
@@ -360,9 +359,7 @@ describe('DateFilter', () => {
   })
 
   it('clears page param on year selection', () => {
-    ;(useSearchParams as jest.Mock).mockReturnValue(
-      new URLSearchParams('page=2'),
-    )
+    ;(useSearchParams as Mock).mockReturnValue(new URLSearchParams('page=2'))
     renderWithTheme(
       <DateFilter
         dates={dates}
@@ -380,7 +377,7 @@ describe('DateFilter', () => {
   })
 
   it('clears page param on month selection', () => {
-    ;(useSearchParams as jest.Mock).mockReturnValue(
+    ;(useSearchParams as Mock).mockReturnValue(
       new URLSearchParams('year=2024&page=2'),
     )
     renderWithTheme(

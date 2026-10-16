@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Footer should render successfully 1`] = `
+exports[`Footer > should render successfully 1`] = `
 .c10 {
   display: flex;
   align-items: center;

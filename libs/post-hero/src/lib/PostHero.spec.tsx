@@ -4,7 +4,7 @@ import { renderWithTheme } from '@sdlgr/test-utils'
 
 import { PostHero } from './PostHero'
 
-jest.mock('./ShareButtons', () => ({
+vi.mock('./ShareButtons', () => ({
   ShareButtons: ({ url }: { url: string }) => (
     <div data-testid="share-buttons" data-url={url} />
   ),

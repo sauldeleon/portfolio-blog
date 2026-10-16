@@ -41,7 +41,7 @@ public/             # Static assets
 
 ## Testing
 
-- Setup: `jest.setupafterenv.ts` (root)
+- Runner: Vitest — config `vite.config.mts`, setup `vitest.setup.ts` (plus root `vitest.setup.ts`)
 - Test wrapper: `@sdlgr/test-utils`
 - Coverage: 100% required (statements, branches, functions, lines)
 

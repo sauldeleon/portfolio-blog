@@ -1,45 +1,46 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
-const mockRender = jest.fn()
-const mockBatchSend = jest.fn()
-const mockGetActiveSubscribers = jest.fn()
-const mockGetSiteUrl = jest.fn(() => 'https://example.com')
-const mockGetServerTranslation = jest.fn()
-const mockLoggerError = jest.fn()
-const mockNewPostEmail = jest.fn(() => null)
-const mockGetSeriesTranslationsById = jest.fn()
-const mockGetCategoryTranslations = jest.fn()
+const mockRender = vi.fn()
+const mockBatchSend = vi.fn()
+const mockGetActiveSubscribers = vi.fn()
+const mockGetSiteUrl = vi.fn(() => 'https://example.com')
+const mockGetServerTranslation = vi.fn()
+const mockLoggerError = vi.fn()
+const mockNewPostEmail = vi.fn(() => null)
+const mockGetSeriesTranslationsById = vi.fn()
+const mockGetCategoryTranslations = vi.fn()
 
-jest.mock('@react-email/components', () => ({ render: mockRender }))
-jest.mock('@web/utils/url/generateUrl', () => ({ getSiteUrl: mockGetSiteUrl }))
-jest.mock('./resend', () => ({
+vi.mock('@react-email/components', () => ({ render: mockRender }))
+vi.mock('@web/utils/url/generateUrl', () => ({ getSiteUrl: mockGetSiteUrl }))
+vi.mock('./resend', () => ({
   resend: { batch: { send: mockBatchSend } },
 }))
-jest.mock('./templates/NewPostEmail', () => ({
+vi.mock('./templates/NewPostEmail', () => ({
   NewPostEmail: (...args: unknown[]) => mockNewPostEmail(...args),
 }))
-jest.mock('@web/lib/db/queries/subscriptions', () => ({
+vi.mock('@web/lib/db/queries/subscriptions', () => ({
   getActiveSubscribers: mockGetActiveSubscribers,
 }))
-jest.mock('@web/lib/db/queries/series', () => ({
+vi.mock('@web/lib/db/queries/series', () => ({
   getSeriesTranslationsById: mockGetSeriesTranslationsById,
 }))
-jest.mock('@web/lib/db/queries/categories', () => ({
+vi.mock('@web/lib/db/queries/categories', () => ({
   getCategoryTranslations: mockGetCategoryTranslations,
 }))
-jest.mock('@web/i18n/server', () => ({
+vi.mock('@web/i18n/server', () => ({
   getServerTranslation: mockGetServerTranslation,
 }))
-jest.mock('@web/lib/logger', () => ({
+vi.mock('@web/lib/logger', () => ({
   logger: { error: mockLoggerError },
 }))
 
-const { sendNewPostNotifications } = require('./sendNewPostNotifications') as {
-  sendNewPostNotifications: (
-    p: import('./sendNewPostNotifications').SendNewPostNotificationsParams,
-  ) => Promise<void>
-}
+const { sendNewPostNotifications } =
+  (await import('./sendNewPostNotifications')) as {
+    sendNewPostNotifications: (
+      p: import('./sendNewPostNotifications').SendNewPostNotificationsParams,
+    ) => Promise<void>
+  }
 
 const mockSubscriber = {
   id: 'sub-1',
@@ -63,7 +64,7 @@ function mockT(key: string, opts?: Record<string, string>) {
 }
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
   mockRender.mockResolvedValue('<html>post email</html>')
   mockBatchSend.mockResolvedValue({ data: [{ id: 'email-id' }], error: null })
   mockGetActiveSubscribers.mockResolvedValue([mockSubscriber])
@@ -364,31 +365,31 @@ describe('sendNewPostNotifications', () => {
   it('uses onboarding@resend.dev as from address when RESEND_FROM_EMAIL is not set', async () => {
     const originalFrom = process.env.RESEND_FROM_EMAIL
     delete process.env.RESEND_FROM_EMAIL
-    jest.resetModules()
-    jest.mock('./resend', () => ({
+    vi.resetModules()
+    vi.doMock('./resend', () => ({
       resend: { batch: { send: mockBatchSend } },
     }))
-    jest.mock('@react-email/components', () => ({ render: mockRender }))
-    jest.mock('@web/utils/url/generateUrl', () => ({
+    vi.doMock('@react-email/components', () => ({ render: mockRender }))
+    vi.doMock('@web/utils/url/generateUrl', () => ({
       getSiteUrl: mockGetSiteUrl,
     }))
-    jest.mock('./templates/NewPostEmail', () => ({
+    vi.doMock('./templates/NewPostEmail', () => ({
       NewPostEmail: (...args: unknown[]) => mockNewPostEmail(...args),
     }))
-    jest.mock('@web/lib/db/queries/subscriptions', () => ({
+    vi.doMock('@web/lib/db/queries/subscriptions', () => ({
       getActiveSubscribers: mockGetActiveSubscribers,
     }))
-    jest.mock('@web/lib/db/queries/series', () => ({
+    vi.doMock('@web/lib/db/queries/series', () => ({
       getSeriesTranslationsById: mockGetSeriesTranslationsById,
     }))
-    jest.mock('@web/i18n/server', () => ({
+    vi.doMock('@web/i18n/server', () => ({
       getServerTranslation: mockGetServerTranslation,
     }))
-    jest.mock('@web/lib/logger', () => ({
+    vi.doMock('@web/lib/logger', () => ({
       logger: { error: mockLoggerError },
     }))
     const { sendNewPostNotifications: send } =
-      require('./sendNewPostNotifications') as typeof import('./sendNewPostNotifications')
+      (await import('./sendNewPostNotifications')) as typeof import('./sendNewPostNotifications')
     await send({ postId: 'p1', postNumber: 1, translations: mockTranslations })
     expect(mockBatchSend).toHaveBeenCalledWith([
       expect.objectContaining({ from: 'onboarding@resend.dev' }),
@@ -397,31 +398,33 @@ describe('sendNewPostNotifications', () => {
   })
 
   it('returns early when resend is null', async () => {
-    jest.resetModules()
-    jest.mock('./resend', () => ({ resend: null }))
+    vi.resetModules()
+    vi.doMock('./resend', () => ({ resend: null }))
 
-    jest.mock('@react-email/components', () => ({ render: mockRender }))
-    jest.mock('@web/utils/url/generateUrl', () => ({
+    vi.doMock('@react-email/components', () => ({ render: mockRender }))
+    vi.doMock('@web/utils/url/generateUrl', () => ({
       getSiteUrl: mockGetSiteUrl,
     }))
-    jest.mock('./templates/NewPostEmail', () => ({
+    vi.doMock('./templates/NewPostEmail', () => ({
       NewPostEmail: (...args: unknown[]) => mockNewPostEmail(...args),
     }))
-    jest.mock('@web/lib/db/queries/subscriptions', () => ({
+    vi.doMock('@web/lib/db/queries/subscriptions', () => ({
       getActiveSubscribers: mockGetActiveSubscribers,
     }))
-    jest.mock('@web/lib/db/queries/series', () => ({
+    vi.doMock('@web/lib/db/queries/series', () => ({
       getSeriesTranslationsById: mockGetSeriesTranslationsById,
     }))
-    jest.mock('@web/i18n/server', () => ({
+    vi.doMock('@web/i18n/server', () => ({
       getServerTranslation: mockGetServerTranslation,
     }))
-    jest.mock('@web/lib/logger', () => ({
+    vi.doMock('@web/lib/logger', () => ({
       logger: { error: mockLoggerError },
     }))
     const { sendNewPostNotifications: send } =
-      require('./sendNewPostNotifications') as typeof import('./sendNewPostNotifications')
+      (await import('./sendNewPostNotifications')) as typeof import('./sendNewPostNotifications')
     await send({ postId: 'p1', postNumber: 1, translations: mockTranslations })
     expect(mockGetActiveSubscribers).not.toHaveBeenCalled()
   })
 })
+
+export {}

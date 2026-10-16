@@ -4,22 +4,24 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { TrackUrlPicker } from './TrackUrlPicker'
 
-const mockFetchTrackFiles = jest.fn()
-const mockSelect = jest.fn()
+const mockFetchTrackFiles = vi.fn()
+const mockSelect = vi.fn()
 
-jest.mock('@web/i18n/client', () => ({
+vi.mock('@web/i18n/client', () => ({
   useClientTranslation: () => ({
     t: (key: string, options?: Record<string, unknown>) =>
       options ? `${key} ${JSON.stringify(options)}` : key,
   }),
 }))
 
-jest.mock('../../tracks/utils/trackApi', () => ({
-  ...jest.requireActual('../../tracks/utils/trackApi'),
+vi.mock('../../tracks/utils/trackApi', async () => ({
+  ...(await vi.importActual<typeof import('../../tracks/utils/trackApi')>(
+    '../../tracks/utils/trackApi',
+  )),
   fetchTrackFiles: () => mockFetchTrackFiles(),
 }))
 
-jest.mock('@sdlgr/select', () => ({
+vi.mock('@sdlgr/select', () => ({
   Select: (props: { 'data-testid'?: string }) => {
     mockSelect(props)
     return <div data-testid={props['data-testid']} />
@@ -42,7 +44,7 @@ const lastProps = () =>
   mockSelect.mock.calls[mockSelect.mock.calls.length - 1][0] as SelectProps
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
   mockFetchTrackFiles.mockResolvedValue({
     files: [
       { path: '2026-01-01 a.gpx', size: 1, rawUrl: 'https://raw/a.gpx' },
@@ -54,7 +56,7 @@ beforeEach(() => {
 
 describe('TrackUrlPicker', () => {
   it('offers the repo tracks newest first and accepts any URL', async () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(
       <TrackUrlPicker
         value="https://raw/b.gpx"
@@ -89,7 +91,7 @@ describe('TrackUrlPicker', () => {
   it('works without repo tracks and with a custom placeholder', () => {
     mockFetchTrackFiles.mockReturnValue(new Promise(() => undefined))
     renderApp(
-      <TrackUrlPicker value="" onChange={jest.fn()} placeholder="Pick one" />,
+      <TrackUrlPicker value="" onChange={vi.fn()} placeholder="Pick one" />,
     )
     expect(lastProps().options).toEqual([])
     expect(lastProps().placeholder).toBe('Pick one')

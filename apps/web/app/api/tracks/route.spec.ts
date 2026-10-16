@@ -1,29 +1,31 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
 import { GET, POST } from './route'
 
-const mockAuth = jest.fn()
-const mockList = jest.fn()
-const mockWrite = jest.fn()
-const mockLoggerError = jest.fn()
+const mockAuth = vi.fn()
+const mockList = vi.fn()
+const mockWrite = vi.fn()
+const mockLoggerError = vi.fn()
 
-jest.mock('@web/lib/auth/config', () => ({ auth: () => mockAuth() }))
-jest.mock('@web/lib/github/tracks', () => ({
-  ...jest.requireActual('@web/lib/github/tracks'),
+vi.mock('@web/lib/auth/config', () => ({ auth: () => mockAuth() }))
+vi.mock('@web/lib/github/tracks', async () => ({
+  ...(await vi.importActual<typeof import('@web/lib/github/tracks')>(
+    '@web/lib/github/tracks',
+  )),
   listTrackFiles: () => mockList(),
   writeTrackFile: (...args: unknown[]) => mockWrite(...args),
 }))
-jest.mock('@web/lib/logger', () => ({
+vi.mock('@web/lib/logger', () => ({
   logger: {
     error: (...args: unknown[]) => mockLoggerError(...args),
-    info: jest.fn(),
+    info: vi.fn(),
   },
 }))
 
-const { MissingGithubTokenError, TrackExistsError } = jest.requireActual(
-  '@web/lib/github/tracks',
-)
+const { MissingGithubTokenError, TrackExistsError } = await vi.importActual<
+  typeof import('@web/lib/github/tracks')
+>('@web/lib/github/tracks')
 
 function postRequest(body: unknown) {
   return new Request('http://localhost/api/tracks', {
@@ -33,7 +35,7 @@ function postRequest(body: unknown) {
 }
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
   mockAuth.mockResolvedValue({ user: { name: 'admin' } })
 })
 

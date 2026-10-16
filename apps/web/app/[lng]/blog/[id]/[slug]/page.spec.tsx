@@ -1,97 +1,111 @@
 import { render, screen } from '@testing-library/react'
 
-const mockNotFound = jest.fn()
-const mockRedirect = jest.fn()
+import BlogPostPage, {
+  generateMetadata,
+  generateStaticParams,
+} from './page.next'
 
-jest.mock('next/navigation', () => ({
+const {
+  mockNotFound,
+  mockRedirect,
+  mockGetPostByNumber,
+  mockGetPublishedPosts,
+  mockGetCategoryTranslations,
+  mockGetServerTranslation,
+  mockLoggerError,
+  mockPostHero,
+  mockPostComments,
+} = vi.hoisted(() => ({
+  mockNotFound: vi.fn(),
+  mockRedirect: vi.fn(),
+  mockGetPostByNumber: vi.fn(),
+  mockGetPublishedPosts: vi.fn(),
+  mockGetCategoryTranslations: vi.fn(),
+  mockGetServerTranslation: vi.fn(),
+  mockLoggerError: vi.fn(),
+  mockPostHero: vi.fn(),
+  mockPostComments: vi.fn(),
+}))
+
+vi.mock('next/navigation', () => ({
   notFound: mockNotFound,
   redirect: mockRedirect,
 }))
 
-const mockGetPostByNumber = jest.fn()
-const mockGetPublishedPosts = jest.fn()
-
-jest.mock('@web/lib/db/queries/posts', () => ({
+vi.mock('@web/lib/db/queries/posts', () => ({
   getPostByNumber: mockGetPostByNumber,
   getPublishedPosts: mockGetPublishedPosts,
 }))
 
-const mockGetCategoryTranslations = jest.fn()
-
-jest.mock('@web/lib/db/queries/categories', () => ({
+vi.mock('@web/lib/db/queries/categories', () => ({
   getCategoryTranslations: mockGetCategoryTranslations,
 }))
 
-const mockGetServerTranslation = jest.fn()
-jest.mock('@web/i18n/server', () => ({
+vi.mock('@web/i18n/server', () => ({
   getServerTranslation: mockGetServerTranslation,
 }))
 
-const mockLoggerError = jest.fn()
-jest.mock('@web/lib/logger', () => ({ logger: { error: mockLoggerError } }))
+vi.mock('@web/lib/logger', () => ({ logger: { error: mockLoggerError } }))
 
-const mockPostHero = jest.fn()
-
-jest.mock('@sdlgr/post-hero', () => ({
+vi.mock('@sdlgr/post-hero', () => ({
   PostHero: (...args: unknown[]) => mockPostHero(...args),
 }))
 
-jest.mock('@sdlgr/table-of-contents', () => ({
+vi.mock('@sdlgr/table-of-contents', () => ({
   TableOfContents: ({ label }: { label: string }) => (
     <nav data-testid="toc">{label}</nav>
   ),
 }))
 
-jest.mock('@web/lib/mdx/renderMDX', () => ({
-  renderMDX: jest.fn().mockReturnValue(null),
+vi.mock('@web/lib/mdx/renderMDX', () => ({
+  renderMDX: vi.fn().mockReturnValue(null),
 }))
 
-jest.mock('@web/lib/mdx/remarkHeadings', () => ({
-  extractToc: jest.fn().mockReturnValue([]),
+vi.mock('@web/lib/mdx/remarkHeadings', () => ({
+  extractToc: vi.fn().mockReturnValue([]),
 }))
 
-jest.mock('@web/components/RelatedPosts/RelatedPosts', () => ({
+vi.mock('@web/components/RelatedPosts/RelatedPosts', () => ({
   RelatedPosts: () => <div data-testid="related-posts" />,
 }))
 
-const mockPostComments = jest.fn()
-jest.mock('@web/components/PostComments', () => ({
+vi.mock('@web/components/PostComments', () => ({
   PostComments: (...args: unknown[]) => mockPostComments(...args),
 }))
 
-jest.mock('@web/components/SeriesIndicator/SeriesIndicator', () => ({
+vi.mock('@web/components/SeriesIndicator/SeriesIndicator', () => ({
   SeriesIndicator: () => <div data-testid="series-indicator" />,
 }))
 
-jest.mock('@web/components/SubscribeModal', () => ({
+vi.mock('@web/components/SubscribeModal', () => ({
   SubscribeModal: () => <div data-testid="subscribe-modal" />,
 }))
 
-jest.mock('@web/utils/metadata/inLanguage', () => ({
-  buildAlternates: jest
+vi.mock('@web/utils/metadata/inLanguage', () => ({
+  buildAlternates: vi
     .fn()
     .mockReturnValue({ canonical: 'https://test', languages: {} }),
-  ogLocale: jest.fn().mockReturnValue('en_US'),
-  ogLocaleAlternate: jest.fn().mockReturnValue(['es_ES']),
+  ogLocale: vi.fn().mockReturnValue('en_US'),
+  ogLocaleAlternate: vi.fn().mockReturnValue(['es_ES']),
 }))
 
-jest.mock('@web/lib/seo/generateArticleJsonLd', () => ({
-  generateArticleJsonLd: jest.fn().mockReturnValue({
+vi.mock('@web/lib/seo/generateArticleJsonLd', () => ({
+  generateArticleJsonLd: vi.fn().mockReturnValue({
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: 'Test',
   }),
 }))
 
-jest.mock('@web/components/JsonLd/JsonLd', () => ({
+vi.mock('@web/components/JsonLd/JsonLd', () => ({
   JsonLd: () => <script data-testid="json-ld" type="application/ld+json" />,
 }))
 
-jest.mock('date-fns', () => ({
-  format: jest.fn().mockReturnValue('Jan 1, 2024'),
+vi.mock('date-fns', () => ({
+  format: vi.fn().mockReturnValue('Jan 1, 2024'),
 }))
 
-jest.mock('./page.next.styles', () => ({
+vi.mock('./page.next.styles', () => ({
   StyledPage: ({ children }: { children: React.ReactNode }) => (
     <main data-testid="styled-page">{children}</main>
   ),
@@ -100,17 +114,17 @@ jest.mock('./page.next.styles', () => ({
   ),
 }))
 
-jest.mock('@web/components/PostContent/PostContent', () => ({
+vi.mock('@web/components/PostContent/PostContent', () => ({
   PostContent: ({ children }: { children: React.ReactNode }) => (
     <article data-testid="styled-article">{children}</article>
   ),
 }))
 
-jest.mock('@web/components/PostLikeButton', () => ({
+vi.mock('@web/components/PostLikeButton', () => ({
   PostLikeButton: () => <div data-testid="post-like-button" />,
 }))
 
-jest.mock('@web/components/PostStickyBar', () => ({
+vi.mock('@web/components/PostStickyBar', () => ({
   PostStickyBar: () => <div data-testid="post-sticky-bar" />,
 }))
 
@@ -138,7 +152,7 @@ const publishedPost = {
 
 describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     mockPostHero.mockReturnValue(<div data-testid="post-hero" />)
     mockPostComments.mockReturnValue(<div data-testid="post-comments" />)
     mockGetServerTranslation.mockResolvedValue({ t: (key: string) => key })
@@ -161,7 +175,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
   })
 
   it('calls notFound when id is not a number', async () => {
-    const { default: BlogPostPage } = require('./page.next')
     await BlogPostPage({
       params: Promise.resolve({ lng: 'en', id: 'not-a-number', slug: 'x' }),
     })
@@ -171,7 +184,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
 
   it('calls notFound when post is null', async () => {
     mockGetPostByNumber.mockResolvedValue(null)
-    const { default: BlogPostPage } = require('./page.next')
     await BlogPostPage({
       params: Promise.resolve({ lng: 'en', id: '1', slug: 'unknown' }),
     })
@@ -180,7 +192,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
 
   it('calls notFound when post status is draft', async () => {
     mockGetPostByNumber.mockResolvedValue({ ...publishedPost, status: 'draft' })
-    const { default: BlogPostPage } = require('./page.next')
     await BlogPostPage({
       params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
     })
@@ -189,7 +200,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
 
   it('calls redirect when slug does not match', async () => {
     mockGetPostByNumber.mockResolvedValue(publishedPost)
-    const { default: BlogPostPage } = require('./page.next')
     await BlogPostPage({
       params: Promise.resolve({ lng: 'en', id: '1', slug: 'wrong-slug' }),
     })
@@ -198,7 +208,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
 
   it('renders PostHero with correct props when valid', async () => {
     mockGetPostByNumber.mockResolvedValue(publishedPost)
-    const { default: BlogPostPage } = require('./page.next')
     const ui = await BlogPostPage({
       params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
     })
@@ -210,7 +219,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
     mockGetPostByNumber
       .mockResolvedValueOnce(publishedPost)
       .mockResolvedValueOnce(null)
-    const { default: BlogPostPage } = require('./page.next')
     const ui = await BlogPostPage({
       params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
     })
@@ -221,7 +229,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
   it('passes url and share labels to PostHero', async () => {
     process.env.BASE_URL = 'https://example.com'
     mockGetPostByNumber.mockResolvedValue(publishedPost)
-    const { default: BlogPostPage } = require('./page.next')
     const ui = await BlogPostPage({
       params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
     })
@@ -241,7 +248,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
 
   it('renders RelatedPosts section', async () => {
     mockGetPostByNumber.mockResolvedValue(publishedPost)
-    const { default: BlogPostPage } = require('./page.next')
     const ui = await BlogPostPage({
       params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
     })
@@ -251,7 +257,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
 
   it('renders PostComments section', async () => {
     mockGetPostByNumber.mockResolvedValue(publishedPost)
-    const { default: BlogPostPage } = require('./page.next')
     const ui = await BlogPostPage({
       params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
     })
@@ -264,7 +269,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
       ...publishedPost,
       commentsEnabled: false,
     })
-    const { default: BlogPostPage } = require('./page.next')
     const ui = await BlogPostPage({
       params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
     })
@@ -277,7 +281,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
 
   it('renders JSON-LD script tag', async () => {
     mockGetPostByNumber.mockResolvedValue(publishedPost)
-    const { default: BlogPostPage } = require('./page.next')
     const ui = await BlogPostPage({
       params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
     })
@@ -291,7 +294,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
       seriesId: 'my-series',
       seriesOrder: null,
     })
-    const { default: BlogPostPage } = require('./page.next')
     const ui = await BlogPostPage({
       params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
     })
@@ -305,7 +307,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
       seriesId: 'my-series',
       seriesOrder: 1,
     })
-    const { default: BlogPostPage } = require('./page.next')
     const ui = await BlogPostPage({
       params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
     })
@@ -315,7 +316,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
 
   it('does not render SeriesIndicator when post has no seriesId', async () => {
     mockGetPostByNumber.mockResolvedValue({ ...publishedPost, seriesId: null })
-    const { default: BlogPostPage } = require('./page.next')
     const ui = await BlogPostPage({
       params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
     })
@@ -324,10 +324,9 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
   })
 
   it('renders TOC when entries exist', async () => {
-    const { extractToc } = require('@web/lib/mdx/remarkHeadings')
+    const { extractToc } = await import('@web/lib/mdx/remarkHeadings')
     extractToc.mockReturnValue([{ depth: 2, text: 'Intro', id: 'intro' }])
     mockGetPostByNumber.mockResolvedValue(publishedPost)
-    const { default: BlogPostPage } = require('./page.next')
     const ui = await BlogPostPage({
       params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
     })
@@ -336,10 +335,9 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
   })
 
   it('does not render TOC when no entries', async () => {
-    const { extractToc } = require('@web/lib/mdx/remarkHeadings')
+    const { extractToc } = await import('@web/lib/mdx/remarkHeadings')
     extractToc.mockReturnValue([])
     mockGetPostByNumber.mockResolvedValue(publishedPost)
-    const { default: BlogPostPage } = require('./page.next')
     const ui = await BlogPostPage({
       params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
     })
@@ -352,7 +350,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
       ...publishedPost,
       publishedAt: null,
     })
-    const { default: BlogPostPage } = require('./page.next')
     const ui = await BlogPostPage({
       params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
     })
@@ -362,7 +359,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
 
   it('falls back to enUS locale for unknown language', async () => {
     mockGetPostByNumber.mockResolvedValue(publishedPost)
-    const { default: BlogPostPage } = require('./page.next')
     const ui = await BlogPostPage({
       params: Promise.resolve({ lng: 'fr', id: '1', slug: 'my-test-post' }),
     })
@@ -374,7 +370,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
     mockGetPublishedPosts.mockResolvedValue([
       { id: '01JXYZ', postNumber: 5, slug: 'test-post' },
     ])
-    const { generateStaticParams } = require('./page.next')
     const params = await generateStaticParams()
     expect(params).toEqual([
       { lng: 'en', id: '5', slug: 'test-post' },
@@ -385,7 +380,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
   it('generateStaticParams returns empty array and logs error when DB fails', async () => {
     const err = new Error('no db')
     mockGetPublishedPosts.mockRejectedValue(err)
-    const { generateStaticParams } = require('./page.next')
     const params = await generateStaticParams()
     expect(params).toEqual([])
     expect(mockLoggerError).toHaveBeenCalledWith(
@@ -396,7 +390,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
 
   describe('generateMetadata', () => {
     it('returns empty object when id is not a number', async () => {
-      const { generateMetadata } = require('./page.next')
       const meta = await generateMetadata({
         params: Promise.resolve({ lng: 'en', id: 'not-a-number', slug: 'x' }),
       })
@@ -405,7 +398,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
 
     it('returns empty object when post not found', async () => {
       mockGetPostByNumber.mockResolvedValue(null)
-      const { generateMetadata } = require('./page.next')
       const meta = await generateMetadata({
         params: Promise.resolve({ lng: 'en', id: '1', slug: 'x' }),
       })
@@ -417,7 +409,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
         ...publishedPost,
         status: 'draft',
       })
-      const { generateMetadata } = require('./page.next')
       const meta = await generateMetadata({
         params: Promise.resolve({ lng: 'en', id: '1', slug: 'x' }),
       })
@@ -426,7 +417,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
 
     it('returns title and description for published post', async () => {
       mockGetPostByNumber.mockResolvedValue(publishedPost)
-      const { generateMetadata } = require('./page.next')
       const meta = await generateMetadata({
         params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
       })
@@ -438,7 +428,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
       mockGetPostByNumber
         .mockResolvedValueOnce(publishedPost)
         .mockResolvedValueOnce({ ...publishedPost, slug: 'mi-post-de-prueba' })
-      const { generateMetadata } = require('./page.next')
       const meta = await generateMetadata({
         params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
       })
@@ -449,7 +438,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
       mockGetPostByNumber
         .mockResolvedValueOnce(publishedPost)
         .mockResolvedValueOnce(null)
-      const { generateMetadata } = require('./page.next')
       const meta = await generateMetadata({
         params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
       })
@@ -460,7 +448,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
       mockGetPostByNumber
         .mockResolvedValueOnce({ ...publishedPost, slug: 'mi-post' })
         .mockResolvedValueOnce(publishedPost)
-      const { generateMetadata } = require('./page.next')
       const meta = await generateMetadata({
         params: Promise.resolve({ lng: 'es', id: '1', slug: 'mi-post' }),
       })
@@ -469,7 +456,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
 
     it('includes OG image URL with title in openGraph', async () => {
       mockGetPostByNumber.mockResolvedValue(publishedPost)
-      const { generateMetadata } = require('./page.next')
       const meta = await generateMetadata({
         params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
       })
@@ -486,7 +472,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
         ...publishedPost,
         coverImage: 'blog/my-cover.jpg',
       })
-      const { generateMetadata } = require('./page.next')
       const meta = await generateMetadata({
         params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
       })
@@ -495,7 +480,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
 
     it('includes twitter card metadata', async () => {
       mockGetPostByNumber.mockResolvedValue(publishedPost)
-      const { generateMetadata } = require('./page.next')
       const meta = await generateMetadata({
         params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
       })
@@ -513,7 +497,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
     it('includes article og type and url', async () => {
       process.env.BASE_URL = 'https://example.com'
       mockGetPostByNumber.mockResolvedValue(publishedPost)
-      const { generateMetadata } = require('./page.next')
       const meta = await generateMetadata({
         params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
       })
@@ -526,7 +509,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
 
     it('includes alternateLocale in openGraph', async () => {
       mockGetPostByNumber.mockResolvedValue(publishedPost)
-      const { generateMetadata } = require('./page.next')
       const meta = await generateMetadata({
         params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
       })
@@ -535,7 +517,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
 
     it('includes article metadata in openGraph', async () => {
       mockGetPostByNumber.mockResolvedValue(publishedPost)
-      const { generateMetadata } = require('./page.next')
       const meta = await generateMetadata({
         params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
       })
@@ -551,7 +532,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
         ...publishedPost,
         publishedAt: null,
       })
-      const { generateMetadata } = require('./page.next')
       const meta = await generateMetadata({
         params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
       })
@@ -563,7 +543,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
         ...publishedPost,
         coverImage: null,
       })
-      const { generateMetadata } = require('./page.next')
       const meta = await generateMetadata({
         params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
       })
@@ -575,7 +554,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
         ...publishedPost,
         category: '',
       })
-      const { generateMetadata } = require('./page.next')
       const meta = await generateMetadata({
         params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
       })
@@ -584,7 +562,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
 
     it('uses translated category name in OG URL', async () => {
       mockGetPostByNumber.mockResolvedValue(publishedPost)
-      const { generateMetadata } = require('./page.next')
       const meta = await generateMetadata({
         params: Promise.resolve({ lng: 'es', id: '1', slug: 'my-test-post' }),
       })
@@ -594,7 +571,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
     it('uses BASE_URL for OG image URL', async () => {
       process.env.BASE_URL = 'https://production.example.com'
       mockGetPostByNumber.mockResolvedValue(publishedPost)
-      const { generateMetadata } = require('./page.next')
       const meta = await generateMetadata({
         params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
       })
@@ -608,7 +584,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
       delete process.env.BASE_URL
       process.env.VERCEL_URL = 'my-app-abc123.vercel.app'
       mockGetPostByNumber.mockResolvedValue(publishedPost)
-      const { generateMetadata } = require('./page.next')
       const meta = await generateMetadata({
         params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
       })
@@ -621,7 +596,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
 
   it('passes translated category name to PostHero', async () => {
     mockGetPostByNumber.mockResolvedValue(publishedPost)
-    const { default: BlogPostPage } = require('./page.next')
     const ui = await BlogPostPage({
       params: Promise.resolve({ lng: 'es', id: '1', slug: 'my-test-post' }),
     })
@@ -644,7 +618,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
       },
     ])
     mockGetPostByNumber.mockResolvedValue(publishedPost)
-    const { default: BlogPostPage } = require('./page.next')
     const ui = await BlogPostPage({
       params: Promise.resolve({ lng: 'es', id: '1', slug: 'my-test-post' }),
     })
@@ -659,7 +632,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
   it('falls back to category slug when no translations exist', async () => {
     mockGetCategoryTranslations.mockResolvedValue([])
     mockGetPostByNumber.mockResolvedValue(publishedPost)
-    const { default: BlogPostPage } = require('./page.next')
     const ui = await BlogPostPage({
       params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
     })
@@ -677,7 +649,6 @@ describe('[lng]/blog/[id]/[slug] - BlogPostPage', () => {
     delete process.env.BASE_URL
     delete process.env.VERCEL_URL
     mockGetPostByNumber.mockResolvedValue(publishedPost)
-    const { default: BlogPostPage } = require('./page.next')
     const ui = await BlogPostPage({
       params: Promise.resolve({ lng: 'en', id: '1', slug: 'my-test-post' }),
     })

@@ -11,11 +11,11 @@ import {
 
 type ChartState = { activeTooltipIndex?: number | string | null }
 
-jest.mock('@web/i18n/client', () => ({
+vi.mock('@web/i18n/client', () => ({
   useClientTranslation: () => ({ t: (key: string) => key }),
 }))
 
-jest.mock('recharts', () => ({
+vi.mock('recharts', () => ({
   ResponsiveContainer: ({ children }: { children: ReactNode }) => (
     <div>{children}</div>
   ),
@@ -70,7 +70,7 @@ const points: GpxPoint[] = [
 ]
 
 function renderProfile(props: Partial<ElevationProfileProps> = {}) {
-  const callbacks = { onHover: jest.fn(), onSelect: jest.fn() }
+  const callbacks = { onHover: vi.fn(), onSelect: vi.fn() }
   renderApp(
     <ElevationProfile
       points={points}

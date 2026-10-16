@@ -1,29 +1,32 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
 import axios from 'axios'
 
 import { GET } from './route'
 
-const mockAuth = jest.fn()
-const mockParse = jest.fn()
-const mockLoggerError = jest.fn()
+const mockAuth = vi.fn()
+const mockParse = vi.fn()
+const mockLoggerError = vi.fn()
 
-jest.mock('axios', () => ({ get: jest.fn() }))
-jest.mock('@web/lib/auth/config', () => ({ auth: () => mockAuth() }))
-jest.mock('@web/lib/cards', () => ({
+vi.mock('axios', () => {
+  const mod = { get: vi.fn() }
+  return { ...mod, default: mod }
+})
+vi.mock('@web/lib/auth/config', () => ({ auth: () => mockAuth() }))
+vi.mock('@web/lib/cards', () => ({
   parseCanyonWaypointsGpx: (...args: unknown[]) => mockParse(...args),
 }))
-jest.mock('@web/lib/logger', () => ({
+vi.mock('@web/lib/logger', () => ({
   logger: {
     error: (...args: unknown[]) => mockLoggerError(...args),
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
   },
 }))
 
-const mockAxiosGet = jest.mocked(axios.get)
+const mockAxiosGet = vi.mocked(axios.get)
 
 function request(url: string | null): Request {
   const qs = url === null ? '' : `?url=${encodeURIComponent(url)}`
@@ -35,7 +38,7 @@ const waypoints = [
 ]
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
   mockAuth.mockResolvedValue({ user: { name: 'admin' } })
 })
 

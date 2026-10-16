@@ -3,14 +3,14 @@ import { render, screen } from '@testing-library/react'
 import { SeriesForm } from '../components/SeriesForm'
 import NewSeriesPage from './page.next'
 
-const mockRequireAdminSession = jest.fn()
+const mockRequireAdminSession = vi.fn()
 
-jest.mock('@web/lib/auth/requireAdminSession', () => ({
+vi.mock('@web/lib/auth/requireAdminSession', () => ({
   requireAdminSession: (...args: unknown[]) => mockRequireAdminSession(...args),
 }))
 
-jest.mock('@web/i18n/server', () => ({
-  getServerTranslation: jest.fn().mockResolvedValue({
+vi.mock('@web/i18n/server', () => ({
+  getServerTranslation: vi.fn().mockResolvedValue({
     t: (key: string) => {
       const strings: Record<string, string> = {
         'series.form.createTitle': 'New series',
@@ -21,10 +21,10 @@ jest.mock('@web/i18n/server', () => ({
   }),
 }))
 
-jest.mock('../components/SeriesForm', () => {
-  const React = require('react')
+vi.mock('../components/SeriesForm', async () => {
+  const React = await import('react')
   return {
-    SeriesForm: jest
+    SeriesForm: vi
       .fn()
       .mockReturnValue(
         React.createElement('div', { 'data-testid': 'series-form' }),
@@ -34,7 +34,7 @@ jest.mock('../components/SeriesForm', () => {
 
 describe('NewSeriesPage', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     mockRequireAdminSession.mockResolvedValue({ user: { name: 'admin' } })
   })
 

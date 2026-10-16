@@ -2,6 +2,7 @@ import type { Element, Root } from 'hast'
 import remarkParse from 'remark-parse'
 import remarkRehype from 'remark-rehype'
 import { unified } from 'unified'
+import { visit } from 'unist-util-visit'
 
 import { rehypeHeadingIds } from './rehypeHeadingIds'
 
@@ -18,7 +19,6 @@ function getHeadingIds(
   tree: ReturnType<typeof processMarkdown>,
 ): Record<string, string | undefined> {
   const ids: Record<string, string | undefined> = {}
-  const { visit } = require('unist-util-visit')
   visit(
     tree,
     'element',

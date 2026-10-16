@@ -5,7 +5,7 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { WaypointGenerator } from './WaypointGenerator'
 
-jest.mock('../../../components/TrackUrlPicker', () => ({
+vi.mock('../../../components/TrackUrlPicker', () => ({
   TrackUrlPicker: ({
     id,
     value,
@@ -26,10 +26,10 @@ jest.mock('../../../components/TrackUrlPicker', () => ({
   ),
 }))
 
-jest.mock('@web/i18n/client', () => {
-  const admin: Record<string, unknown> = jest.requireActual(
-    '@web/i18n/locales/en/admin.json',
-  )
+vi.mock('@web/i18n/client', async () => {
+  const admin: Record<string, unknown> = await vi.importActual<
+    typeof import('@web/i18n/locales/en/admin.json')
+  >('@web/i18n/locales/en/admin.json')
   return {
     useClientTranslation: () => ({
       t: (key: string): string => {
@@ -48,7 +48,7 @@ jest.mock('@web/i18n/client', () => {
   }
 })
 
-jest.mock('@sdlgr/select', () => ({
+vi.mock('@sdlgr/select', () => ({
   Select: ({
     value,
     onChange,
@@ -78,17 +78,17 @@ jest.mock('@sdlgr/select', () => ({
 
 type CardHandle = { upload: () => Promise<void> }
 
-const mockUpload = jest.fn((_filename?: string) => Promise.resolve())
-const mockSvgToPng = jest.fn((..._args: unknown[]) =>
+const mockUpload = vi.fn((_filename?: string) => Promise.resolve())
+const mockSvgToPng = vi.fn((..._args: unknown[]) =>
   Promise.resolve({
     arrayBuffer: () => Promise.resolve(new Uint8Array([1, 2, 3]).buffer),
   } as unknown as Blob),
 )
-const mockZipStore = jest.fn((..._args: unknown[]) => new Uint8Array([4, 5, 6]))
+const mockZipStore = vi.fn((..._args: unknown[]) => new Uint8Array([4, 5, 6]))
 
-jest.mock('@web/lib/cards', () => {
+vi.mock('@web/lib/cards', async () => {
   const actual =
-    jest.requireActual<typeof import('@web/lib/cards')>('@web/lib/cards')
+    await vi.importActual<typeof import('@web/lib/cards')>('@web/lib/cards')
   // Reference the mocks lazily so they exist by the time these are invoked.
   return {
     ...actual,
@@ -97,8 +97,8 @@ jest.mock('@web/lib/cards', () => {
   }
 })
 
-jest.mock('../CardPreview', () => {
-  const react = jest.requireActual<typeof import('react')>('react')
+vi.mock('../CardPreview', async () => {
+  const react = await vi.importActual<typeof import('react')>('react')
   return {
     CardPreview: react.forwardRef(function CardPreview(
       {
@@ -155,7 +155,7 @@ const fileFor = (lang: string, slug: string, gpx = 'route') =>
   `waypoint-${gpx}-1234-${lang}-${slug}`
 
 beforeEach(() => {
-  jest.spyOn(Date, 'now').mockReturnValue(1234)
+  vi.spyOn(Date, 'now').mockReturnValue(1234)
   mockUpload.mockReset()
   mockUpload.mockResolvedValue(undefined)
   mockSvgToPng.mockReset()
@@ -164,15 +164,15 @@ beforeEach(() => {
   } as unknown as Blob)
   mockZipStore.mockReset()
   mockZipStore.mockReturnValue(new Uint8Array([4, 5, 6]))
-  global.URL.createObjectURL = jest.fn(() => 'blob:zip')
-  global.URL.revokeObjectURL = jest.fn()
-  jest
-    .spyOn(HTMLAnchorElement.prototype, 'click')
-    .mockImplementation(() => undefined)
+  global.URL.createObjectURL = vi.fn(() => 'blob:zip')
+  global.URL.revokeObjectURL = vi.fn()
+  vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(
+    () => undefined,
+  )
 })
 
 afterEach(() => {
-  jest.restoreAllMocks()
+  vi.restoreAllMocks()
 })
 
 describe('WaypointGenerator', () => {
@@ -183,7 +183,7 @@ describe('WaypointGenerator', () => {
   })
 
   it('generates a card per waypoint on success', async () => {
-    const getSpy = jest
+    const getSpy = vi
       .spyOn(axios, 'get')
       .mockResolvedValue({ data: { data: waypoints } })
     renderApp(<WaypointGenerator />)
@@ -199,7 +199,7 @@ describe('WaypointGenerator', () => {
   })
 
   it('overrides the filename prefix with the name field', async () => {
-    jest.spyOn(axios, 'get').mockResolvedValue({ data: { data: waypoints } })
+    vi.spyOn(axios, 'get').mockResolvedValue({ data: { data: waypoints } })
     renderApp(<WaypointGenerator />)
     fireEvent.change(screen.getByTestId('wp-gpx'), { target: { value: URL } })
     fireEvent.click(screen.getByTestId('wp-generate'))
@@ -213,7 +213,7 @@ describe('WaypointGenerator', () => {
   })
 
   it('re-renders filenames in Spanish when the language toggles', async () => {
-    jest.spyOn(axios, 'get').mockResolvedValue({ data: { data: waypoints } })
+    vi.spyOn(axios, 'get').mockResolvedValue({ data: { data: waypoints } })
     renderApp(<WaypointGenerator />)
     fireEvent.change(screen.getByTestId('wp-gpx'), { target: { value: URL } })
     fireEvent.click(screen.getByTestId('wp-generate'))
@@ -223,9 +223,9 @@ describe('WaypointGenerator', () => {
   })
 
   it('shows the server error on a failed response', async () => {
-    jest
-      .spyOn(axios, 'get')
-      .mockRejectedValue(makeAxiosError(400, { error: 'Invalid GPX URL' }))
+    vi.spyOn(axios, 'get').mockRejectedValue(
+      makeAxiosError(400, { error: 'Invalid GPX URL' }),
+    )
     renderApp(<WaypointGenerator />)
     fireEvent.change(screen.getByTestId('wp-gpx'), { target: { value: URL } })
     fireEvent.click(screen.getByTestId('wp-generate'))
@@ -235,7 +235,7 @@ describe('WaypointGenerator', () => {
   })
 
   it('shows a fallback error when the axios error has no message', async () => {
-    jest.spyOn(axios, 'get').mockRejectedValue(makeAxiosError(500, {}))
+    vi.spyOn(axios, 'get').mockRejectedValue(makeAxiosError(500, {}))
     renderApp(<WaypointGenerator />)
     fireEvent.change(screen.getByTestId('wp-gpx'), { target: { value: URL } })
     fireEvent.click(screen.getByTestId('wp-generate'))
@@ -245,7 +245,7 @@ describe('WaypointGenerator', () => {
   })
 
   it('shows a fallback error when the response has no data', async () => {
-    jest.spyOn(axios, 'get').mockResolvedValue({ data: {} })
+    vi.spyOn(axios, 'get').mockResolvedValue({ data: {} })
     renderApp(<WaypointGenerator />)
     fireEvent.change(screen.getByTestId('wp-gpx'), { target: { value: URL } })
     fireEvent.click(screen.getByTestId('wp-generate'))
@@ -255,7 +255,7 @@ describe('WaypointGenerator', () => {
   })
 
   it('reports when there are no waypoints with elevation', async () => {
-    jest.spyOn(axios, 'get').mockResolvedValue({ data: { data: [] } })
+    vi.spyOn(axios, 'get').mockResolvedValue({ data: { data: [] } })
     renderApp(<WaypointGenerator />)
     fireEvent.change(screen.getByTestId('wp-gpx'), { target: { value: URL } })
     fireEvent.click(screen.getByTestId('wp-generate'))
@@ -266,7 +266,7 @@ describe('WaypointGenerator', () => {
   })
 
   it('shows a fallback error on a non-axios error', async () => {
-    jest.spyOn(axios, 'get').mockRejectedValue(new Error('boom'))
+    vi.spyOn(axios, 'get').mockRejectedValue(new Error('boom'))
     renderApp(<WaypointGenerator />)
     fireEvent.change(screen.getByTestId('wp-gpx'), { target: { value: URL } })
     fireEvent.click(screen.getByTestId('wp-generate'))
@@ -275,7 +275,7 @@ describe('WaypointGenerator', () => {
 
   it('shows a loading label while generating', async () => {
     let resolve!: (v: unknown) => void
-    jest.spyOn(axios, 'get').mockReturnValue(
+    vi.spyOn(axios, 'get').mockReturnValue(
       new Promise((r) => {
         resolve = r
       }),
@@ -290,7 +290,7 @@ describe('WaypointGenerator', () => {
   })
 
   async function generate() {
-    jest.spyOn(axios, 'get').mockResolvedValue({ data: { data: waypoints } })
+    vi.spyOn(axios, 'get').mockResolvedValue({ data: { data: waypoints } })
     renderApp(<WaypointGenerator />)
     fireEvent.change(screen.getByTestId('wp-gpx'), { target: { value: URL } })
     fireEvent.click(screen.getByTestId('wp-generate'))
@@ -321,7 +321,7 @@ describe('WaypointGenerator', () => {
     await generate()
     const origCreate = document.createElement.bind(document)
     let lastAnchor: HTMLAnchorElement | null = null
-    jest.spyOn(document, 'createElement').mockImplementation((tag: string) => {
+    vi.spyOn(document, 'createElement').mockImplementation((tag: string) => {
       const el = origCreate(tag)
       if (tag === 'a') lastAnchor = el as HTMLAnchorElement
       return el
@@ -341,7 +341,7 @@ describe('WaypointGenerator', () => {
   })
 
   it('still uploads each named card individually for upload-all', async () => {
-    jest.spyOn(axios, 'get').mockResolvedValue({
+    vi.spyOn(axios, 'get').mockResolvedValue({
       data: {
         data: [
           {
@@ -399,7 +399,7 @@ describe('WaypointGenerator', () => {
   })
 
   it('names the file/upload from the GPX url, timestamp and lang', async () => {
-    jest.spyOn(axios, 'get').mockResolvedValue({ data: { data: waypoints } })
+    vi.spyOn(axios, 'get').mockResolvedValue({ data: { data: waypoints } })
     renderApp(<WaypointGenerator />)
     fireEvent.change(screen.getByTestId('wp-gpx'), {
       target: { value: 'https://ex.com/routes/ordesa.gpx?token=1' },
@@ -411,7 +411,7 @@ describe('WaypointGenerator', () => {
   })
 
   it('decodes percent-encoded characters in the GPX file name', async () => {
-    jest.spyOn(axios, 'get').mockResolvedValue({ data: { data: waypoints } })
+    vi.spyOn(axios, 'get').mockResolvedValue({ data: { data: waypoints } })
     renderApp(<WaypointGenerator />)
     fireEvent.change(screen.getByTestId('wp-gpx'), {
       target: {
@@ -427,7 +427,7 @@ describe('WaypointGenerator', () => {
   })
 
   it('falls back to the raw name when the file name is malformed', async () => {
-    jest.spyOn(axios, 'get').mockResolvedValue({ data: { data: waypoints } })
+    vi.spyOn(axios, 'get').mockResolvedValue({ data: { data: waypoints } })
     renderApp(<WaypointGenerator />)
     fireEvent.change(screen.getByTestId('wp-gpx'), {
       target: { value: 'https://ex.com/foo%zz.gpx' },
@@ -497,7 +497,7 @@ describe('WaypointGenerator', () => {
   })
 
   it('clears the error when the url is edited', async () => {
-    jest.spyOn(axios, 'get').mockRejectedValue(new Error('boom'))
+    vi.spyOn(axios, 'get').mockRejectedValue(new Error('boom'))
     renderApp(<WaypointGenerator />)
     fireEvent.change(screen.getByTestId('wp-gpx'), { target: { value: URL } })
     fireEvent.click(screen.getByTestId('wp-generate'))

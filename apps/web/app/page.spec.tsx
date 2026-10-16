@@ -2,9 +2,11 @@ import { renderWithTheme } from '@sdlgr/test-utils'
 
 import RootPage from './page.next'
 
-const mockPush = jest.fn()
-jest.mock('next/navigation', () => ({
-  ...jest.requireActual('next/navigation'),
+const mockPush = vi.fn()
+vi.mock('next/navigation', async () => ({
+  ...(await vi.importActual<typeof import('next/navigation')>(
+    'next/navigation',
+  )),
   useRouter: () => ({
     push: mockPush,
   }),
@@ -12,7 +14,7 @@ jest.mock('next/navigation', () => ({
 
 describe('RootPage', () => {
   beforeEach(() => {
-    jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
+    vi.spyOn(console, 'error').mockImplementation(() => vi.fn())
   })
 
   it('should redirect to fallback language', async () => {

@@ -4,8 +4,8 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { ProgressBar } from './ProgressBar'
 
-jest.mock('react', () => ({
-  ...jest.requireActual('react'),
+vi.mock('react', async () => ({
+  ...(await vi.importActual<typeof import('react')>('react')),
   Suspense: ({ children }: { children: React.ReactNode }) => children,
 }))
 

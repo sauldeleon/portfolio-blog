@@ -1,5 +1,5 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
 import axios, { AxiosError, AxiosHeaders } from 'axios'
 
@@ -13,19 +13,20 @@ import {
   writeTrackFile,
 } from './tracks'
 
-jest.mock('axios', () => {
-  const actual = jest.requireActual('axios')
-  return {
-    get: jest.fn(),
-    put: jest.fn(),
+vi.mock('axios', async () => {
+  const actual = await vi.importActual<typeof import('axios')>('axios')
+  const mod = {
+    get: vi.fn(),
+    put: vi.fn(),
     isAxiosError: actual.isAxiosError,
     AxiosError: actual.AxiosError,
     AxiosHeaders: actual.AxiosHeaders,
   }
+  return { ...mod, default: mod }
 })
 
-const mockGet = jest.mocked(axios.get)
-const mockPut = jest.mocked(axios.put)
+const mockGet = vi.mocked(axios.get)
+const mockPut = vi.mocked(axios.put)
 
 function notFound() {
   return new AxiosError('Not Found', '404', undefined, undefined, {
@@ -40,7 +41,7 @@ function notFound() {
 const ENV = process.env
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
   process.env = { ...ENV }
   delete process.env.GITHUB_TRACKS_REPO
   delete process.env.GITHUB_TRACKS_BRANCH

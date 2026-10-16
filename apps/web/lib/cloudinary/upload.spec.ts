@@ -1,17 +1,17 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
-const mockConfig = jest.fn()
-const mockUpload = jest.fn()
+const mockConfig = vi.fn()
+const mockUpload = vi.fn()
 
-jest.mock('cloudinary', () => ({
+vi.mock('cloudinary', () => ({
   v2: {
     config: mockConfig,
     uploader: { upload: mockUpload },
   },
 }))
 
-const { uploadImage } = require('./upload') as {
+const { uploadImage } = (await import('./upload')) as {
   uploadImage: (
     buffer: Buffer,
     mimeType: string,
@@ -32,7 +32,7 @@ const mockCloudinaryResult = {
 
 describe('uploadImage', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME = 'test-cloud'
     process.env.CLOUDINARY_API_KEY = 'test-key'
     process.env.CLOUDINARY_API_SECRET = 'test-secret'

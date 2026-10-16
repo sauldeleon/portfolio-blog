@@ -1,16 +1,16 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
-const mockGetPostCountPerTag = jest.fn()
+const mockGetPostCountPerTag = vi.fn()
 
-jest.mock('@web/lib/db/queries/tags', () => ({
+vi.mock('@web/lib/db/queries/tags', () => ({
   getPostCountPerTag: mockGetPostCountPerTag,
 }))
 
-const { GET } = require('./route') as { GET: () => Promise<Response> }
+const { GET } = (await import('./route')) as { GET: () => Promise<Response> }
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
 })
 
 describe('GET /api/tags', () => {

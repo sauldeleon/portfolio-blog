@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Header should render logo without link on homepage 1`] = `
+exports[`Header > should render logo without link on homepage 1`] = `
 .c7 {
   font-family: var(--font-roboto-mono);
   font-weight: 400;
@@ -586,7 +586,7 @@ exports[`Header should render logo without link on homepage 1`] = `
 </body>
 `;
 
-exports[`Header should render successfully 1`] = `
+exports[`Header > should render successfully 1`] = `
 .c8 {
   font-family: var(--font-roboto-mono);
   font-weight: 400;

@@ -4,7 +4,7 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { DateTimePicker } from './DateTimePicker'
 
-jest.mock('react-day-picker', () => ({
+vi.mock('react-day-picker', () => ({
   DayPicker: ({
     onSelect,
     selected,
@@ -111,7 +111,7 @@ describe('DateTimePicker', () => {
 
   describe('day selection', () => {
     it('calls onChange with date at midnight', () => {
-      const onChange = jest.fn()
+      const onChange = vi.fn()
       renderApp(<DateTimePicker value={null} onChange={onChange} />)
       fireEvent.click(screen.getByTestId('datetime-picker-trigger'))
       fireEvent.click(screen.getByTestId('mock-select-day'))
@@ -132,7 +132,7 @@ describe('DateTimePicker', () => {
     })
 
     it('calls onChange(null) when day cleared via calendar', () => {
-      const onChange = jest.fn()
+      const onChange = vi.fn()
       renderApp(
         <DateTimePicker
           value={new Date('2024-06-15T10:00:00.000Z')}
@@ -154,7 +154,7 @@ describe('DateTimePicker', () => {
 
   describe('clear button', () => {
     it('calls onChange(null) and closes popover', () => {
-      const onChange = jest.fn()
+      const onChange = vi.fn()
       renderApp(
         <DateTimePicker
           value={new Date('2024-06-15T10:00:00.000Z')}
@@ -170,7 +170,7 @@ describe('DateTimePicker', () => {
     })
 
     it('closes popover even when value is null', () => {
-      renderApp(<DateTimePicker value={null} onChange={jest.fn()} />)
+      renderApp(<DateTimePicker value={null} onChange={vi.fn()} />)
       fireEvent.click(screen.getByTestId('datetime-picker-trigger'))
       fireEvent.click(screen.getByTestId('datetime-picker-clear'))
       expect(

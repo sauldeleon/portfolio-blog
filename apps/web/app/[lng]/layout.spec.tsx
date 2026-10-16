@@ -9,17 +9,19 @@ import RootLayout, {
   viewport,
 } from './layout.next'
 
-jest.mock('next/navigation', () => ({
-  ...jest.requireActual('next/navigation'),
-  usePathname: jest.fn().mockImplementation(() => '/en'),
-  useParams: jest.fn().mockImplementation(() => ({ lng: 'en' })),
+vi.mock('next/navigation', async () => ({
+  ...(await vi.importActual<typeof import('next/navigation')>(
+    'next/navigation',
+  )),
+  usePathname: vi.fn().mockImplementation(() => '/en'),
+  useParams: vi.fn().mockImplementation(() => ({ lng: 'en' })),
   useSelectedLayoutSegments: () => ['(home)'],
   useRouter: () => ({
-    push: jest.fn(),
+    push: vi.fn(),
   }),
 }))
 
-jest.mock(
+vi.mock(
   '@web/components/MainLayout/components/ProgressBar/ProgressBar',
   () => ({
     ProgressBar: () => 'ProgressBar',
@@ -28,7 +30,7 @@ jest.mock(
 
 describe('[lng] route - layout', () => {
   beforeEach(() => {
-    jest.spyOn(console, 'error').mockImplementation((err, attr1) => {
+    vi.spyOn(console, 'error').mockImplementation((err, attr1) => {
       if (
         typeof err === 'string' &&
         err.includes('validateDOMNesting') &&
@@ -49,7 +51,7 @@ describe('[lng] route - layout', () => {
       )
     })
 
-    expect(screen.getByText('test')).toBeInTheDocument()
+    expect(await screen.findByText('test')).toBeInTheDocument()
     expect(document.documentElement).toHaveAttribute('lang', 'en')
     expect(
       // eslint-disable-next-line testing-library/no-node-access
@@ -88,7 +90,7 @@ describe('[lng] route - layout', () => {
       )
     })
 
-    expect(screen.getByText('test')).toBeInTheDocument()
+    expect(await screen.findByText('test')).toBeInTheDocument()
     expect(document.documentElement).toHaveAttribute('lang', 'es')
   })
 })

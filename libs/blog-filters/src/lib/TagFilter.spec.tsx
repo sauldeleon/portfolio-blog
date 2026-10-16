@@ -1,14 +1,15 @@
 import { fireEvent, screen } from '@testing-library/react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { ThemeProvider } from 'styled-components'
+import type { Mock } from 'vitest'
 
 import { mainTheme } from '@sdlgr/main-theme'
 import { renderWithTheme } from '@sdlgr/test-utils'
 
 import { TagFilter } from './TagFilter'
 
-const mockReplace = jest.fn()
-const mockOnToggle = jest.fn()
+const mockReplace = vi.fn()
+const mockOnToggle = vi.fn()
 
 const tags = [
   { tag: 'react', count: 10 },
@@ -17,9 +18,9 @@ const tags = [
 
 describe('TagFilter', () => {
   beforeEach(() => {
-    ;(useRouter as jest.Mock).mockReturnValue({ replace: mockReplace })
-    ;(usePathname as jest.Mock).mockReturnValue('/en/blog')
-    ;(useSearchParams as jest.Mock).mockReturnValue(new URLSearchParams())
+    ;(useRouter as Mock).mockReturnValue({ replace: mockReplace })
+    ;(usePathname as Mock).mockReturnValue('/en/blog')
+    ;(useSearchParams as Mock).mockReturnValue(new URLSearchParams())
     mockOnToggle.mockClear()
     mockReplace.mockClear()
   })
@@ -194,7 +195,7 @@ describe('TagFilter', () => {
   })
 
   it('clicking apply with no pending tags removes tags param', () => {
-    ;(useSearchParams as jest.Mock).mockReturnValue(
+    ;(useSearchParams as Mock).mockReturnValue(
       new URLSearchParams('tags=react'),
     )
     renderWithTheme(
@@ -231,9 +232,7 @@ describe('TagFilter', () => {
   })
 
   it('clears page param on apply', () => {
-    ;(useSearchParams as jest.Mock).mockReturnValue(
-      new URLSearchParams('page=2'),
-    )
+    ;(useSearchParams as Mock).mockReturnValue(new URLSearchParams('page=2'))
     renderWithTheme(
       <TagFilter
         tags={tags}

@@ -1,7 +1,8 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
 import bcrypt from 'bcryptjs'
+import type { Mock } from 'vitest'
 
 import { auth } from '@web/lib/auth/config'
 import {
@@ -14,25 +15,25 @@ import {
 
 import { DELETE, PATCH } from './route'
 
-jest.mock('@web/lib/auth/config', () => ({ auth: jest.fn() }))
-jest.mock('@web/lib/db/queries/users')
-jest.mock('bcryptjs')
-jest.mock('@web/lib/logger', () => ({
+vi.mock('@web/lib/auth/config', () => ({ auth: vi.fn() }))
+vi.mock('@web/lib/db/queries/users')
+vi.mock('bcryptjs')
+vi.mock('@web/lib/logger', () => ({
   logger: {
-    error: jest.fn(),
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
+    error: vi.fn(),
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
   },
 }))
 
-const mockAuth = auth as jest.Mock
-const mockGetUserById = getUserById as jest.Mock
-const mockGetUserByEmail = getUserByEmail as jest.Mock
-const mockUpdateUser = updateUser as jest.Mock
-const mockDeleteUser = deleteUser as jest.Mock
-const mockCountAdmins = countAdmins as jest.Mock
-const mockBcryptHash = bcrypt.hash as jest.Mock
+const mockAuth = auth as Mock
+const mockGetUserById = getUserById as Mock
+const mockGetUserByEmail = getUserByEmail as Mock
+const mockUpdateUser = updateUser as Mock
+const mockDeleteUser = deleteUser as Mock
+const mockCountAdmins = countAdmins as Mock
+const mockBcryptHash = bcrypt.hash as Mock
 
 const adminSession = { user: { id: 'a', name: 'admin', role: 'admin' } }
 const editorSession = { user: { id: 'b', name: 'editor', role: 'editor' } }
@@ -69,7 +70,7 @@ function makeParams(id: string) {
 }
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
 })
 
 describe('PATCH /api/users/[id]', () => {

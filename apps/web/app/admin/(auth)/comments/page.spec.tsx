@@ -5,19 +5,19 @@ import type { CommentRecord } from '@web/lib/db/queries/comments'
 import { CommentsPageView } from './components/CommentsPageView'
 import AdminCommentsPage from './page.next'
 
-const mockGetCommentsAdmin = jest.fn()
-const mockRequireAdminSession = jest.fn()
+const mockGetCommentsAdmin = vi.fn()
+const mockRequireAdminSession = vi.fn()
 
-jest.mock('@web/lib/auth/requireAdminSession', () => ({
+vi.mock('@web/lib/auth/requireAdminSession', () => ({
   requireAdminSession: (...args: unknown[]) => mockRequireAdminSession(...args),
 }))
 
-jest.mock('@web/lib/db/queries/comments', () => ({
+vi.mock('@web/lib/db/queries/comments', () => ({
   getCommentsAdmin: (...args: unknown[]) => mockGetCommentsAdmin(...args),
 }))
 
-jest.mock('@web/i18n/server', () => ({
-  getServerTranslation: jest.fn().mockResolvedValue({
+vi.mock('@web/i18n/server', () => ({
+  getServerTranslation: vi.fn().mockResolvedValue({
     t: (key: string) => {
       const strings: Record<string, string> = {
         'comments.title': 'Comments',
@@ -27,10 +27,10 @@ jest.mock('@web/i18n/server', () => ({
   }),
 }))
 
-jest.mock('./components/CommentsPageView', () => {
-  const React = require('react')
+vi.mock('./components/CommentsPageView', async () => {
+  const React = await import('react')
   return {
-    CommentsPageView: jest
+    CommentsPageView: vi
       .fn()
       .mockReturnValue(
         React.createElement('div', { 'data-testid': 'comments-page-view' }),
@@ -52,7 +52,7 @@ const mockComments: CommentRecord[] = [
 
 describe('AdminCommentsPage', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     mockRequireAdminSession.mockResolvedValue({ user: { name: 'admin' } })
     mockGetCommentsAdmin.mockResolvedValue(mockComments)
   })

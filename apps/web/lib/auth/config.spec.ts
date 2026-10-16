@@ -1,33 +1,34 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
 import bcrypt from 'bcryptjs'
+import type { Mock } from 'vitest'
 
 import { getUserByEmail } from '@web/lib/db/queries/users'
 
 import { authorizeCredentials, resolveAuthSecret } from './config'
 
-jest.mock('next-auth', () => ({
+vi.mock('next-auth', () => ({
   __esModule: true,
   default: () => ({
-    handlers: { GET: jest.fn(), POST: jest.fn() },
-    auth: jest.fn(),
-    signIn: jest.fn(),
-    signOut: jest.fn(),
+    handlers: { GET: vi.fn(), POST: vi.fn() },
+    auth: vi.fn(),
+    signIn: vi.fn(),
+    signOut: vi.fn(),
   }),
 }))
 
-jest.mock('next-auth/providers/credentials', () => ({
+vi.mock('next-auth/providers/credentials', () => ({
   __esModule: true,
-  default: jest.fn((opts: unknown) => opts),
+  default: vi.fn((opts: unknown) => opts),
 }))
 
-jest.mock('bcryptjs')
-jest.mock('@web/lib/db/queries/users')
+vi.mock('bcryptjs')
+vi.mock('@web/lib/db/queries/users')
 
-const mockCompare = bcrypt.compare as jest.Mock
+const mockCompare = bcrypt.compare as Mock
 
-const mockGetUserByEmail = getUserByEmail as jest.Mock
+const mockGetUserByEmail = getUserByEmail as Mock
 
 describe('authorizeCredentials', () => {
   const originalEnv = process.env
@@ -38,7 +39,7 @@ describe('authorizeCredentials', () => {
       ADMIN_USERNAME: 'admin',
       ADMIN_PASSWORD_HASH: 'JDJiJDEwJHRlc3RoYXNo', // base64('$2b$10$testhash')
     }
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     mockGetUserByEmail.mockResolvedValue(null)
   })
 

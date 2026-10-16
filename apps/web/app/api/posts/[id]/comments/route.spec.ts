@@ -1,45 +1,47 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
-const mockGetApprovedCommentsByPost = jest.fn()
-const mockCreateComment = jest.fn()
-const mockGetPostMeta = jest.fn()
-const mockNotifyNewComment = jest.fn()
-const mockVerifyTurnstile = jest.fn()
-const mockRatelimitHolder: { value: { limit: jest.Mock } | null } = {
-  value: { limit: jest.fn() },
-}
-const mockLoggerError = jest.fn()
+import type { Mock } from 'vitest'
 
-jest.mock('@web/lib/db/queries/comments', () => ({
+const mockGetApprovedCommentsByPost = vi.fn()
+const mockCreateComment = vi.fn()
+const mockGetPostMeta = vi.fn()
+const mockNotifyNewComment = vi.fn()
+const mockVerifyTurnstile = vi.fn()
+const mockRatelimitHolder: { value: { limit: Mock } | null } = {
+  value: { limit: vi.fn() },
+}
+const mockLoggerError = vi.fn()
+
+vi.mock('@web/lib/db/queries/comments', () => ({
   getApprovedCommentsByPost: (...args: unknown[]) =>
     mockGetApprovedCommentsByPost(...args),
   createComment: (...args: unknown[]) => mockCreateComment(...args),
 }))
-jest.mock('@web/lib/db/queries/posts', () => ({
+vi.mock('@web/lib/db/queries/posts', () => ({
   getPostMeta: (...args: unknown[]) => mockGetPostMeta(...args),
 }))
-jest.mock('@web/lib/email/notifyNewComment', () => ({
+vi.mock('@web/lib/email/notifyNewComment', () => ({
   notifyNewComment: (...args: unknown[]) => mockNotifyNewComment(...args),
 }))
-jest.mock('@web/lib/turnstile/verify', () => ({
+vi.mock('@web/lib/turnstile/verify', () => ({
   verifyTurnstile: (...args: unknown[]) => mockVerifyTurnstile(...args),
 }))
-jest.mock('@web/lib/ratelimit', () => ({
+vi.mock('@web/lib/ratelimit', () => ({
   get ratelimit() {
     return mockRatelimitHolder.value
   },
 }))
-jest.mock('@web/lib/logger', () => ({
+vi.mock('@web/lib/logger', () => ({
   logger: {
     error: mockLoggerError,
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
   },
 }))
 
-const { GET, POST } = require('./route') as {
+const { GET, POST } = (await import('./route')) as unknown as {
   GET: (
     req: Request,
     ctx: { params: Promise<{ id: string }> },
@@ -92,8 +94,8 @@ const mockComment = {
 }
 
 beforeEach(() => {
-  jest.clearAllMocks()
-  mockRatelimitHolder.value = { limit: jest.fn() }
+  vi.clearAllMocks()
+  mockRatelimitHolder.value = { limit: vi.fn() }
   mockRatelimitHolder.value.limit.mockResolvedValue({ success: true })
   mockGetPostMeta.mockResolvedValue({
     status: 'published',

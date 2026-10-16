@@ -4,7 +4,7 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { InteractiveCardInsertModal } from './InteractiveCardInsertModal'
 
-jest.mock('@sdlgr/select', () => ({
+vi.mock('@sdlgr/select', () => ({
   Select: ({
     value,
     onChange,
@@ -31,10 +31,10 @@ jest.mock('@sdlgr/select', () => ({
   ),
 }))
 
-jest.mock('@web/i18n/client', () => {
-  const admin: Record<string, unknown> = jest.requireActual(
-    '@web/i18n/locales/en/admin.json',
-  )
+vi.mock('@web/i18n/client', async () => {
+  const admin: Record<string, unknown> = await vi.importActual<
+    typeof import('@web/i18n/locales/en/admin.json')
+  >('@web/i18n/locales/en/admin.json')
   return {
     useClientTranslation: () => ({
       t: (key: string): string => {
@@ -54,8 +54,8 @@ jest.mock('@web/i18n/client', () => {
 })
 
 function setup(overrides: Record<string, unknown> = {}) {
-  const onInsert = jest.fn()
-  const onCancel = jest.fn()
+  const onInsert = vi.fn()
+  const onCancel = vi.fn()
   renderApp(
     <InteractiveCardInsertModal
       isOpen
@@ -80,8 +80,8 @@ describe('InteractiveCardInsertModal', () => {
       <InteractiveCardInsertModal
         isOpen={false}
         lang="en"
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
       />,
     )
     expect(

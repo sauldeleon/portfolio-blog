@@ -4,18 +4,18 @@ import { Locale } from '@web/lib/db/schema'
 
 import Page, { generateMetadata } from './page.next'
 
-jest.mock('@web/components/SubscribePage/SubscribePage', () => ({
+vi.mock('@web/components/SubscribePage/SubscribePage', () => ({
   SubscribePage: ({ lng }: { lng: string }) => (
     <div data-testid="subscribe-page" data-lng={lng} />
   ),
 }))
 
-jest.mock('@web/i18n/server', () => ({
-  getServerTranslation: jest.fn(),
+vi.mock('@web/i18n/server', () => ({
+  getServerTranslation: vi.fn(),
 }))
 
-jest.mock('@web/utils/metadata/inLanguage', () => ({
-  buildAlternates: jest.fn(() => ({
+vi.mock('@web/utils/metadata/inLanguage', () => ({
+  buildAlternates: vi.fn(() => ({
     canonical: 'https://test.com/en/subscribe/',
   })),
 }))
@@ -25,8 +25,8 @@ function makeParams(lng: Locale) {
 }
 
 describe('[lng]/subscribe — page', () => {
-  beforeEach(() => {
-    const { getServerTranslation } = require('@web/i18n/server')
+  beforeEach(async () => {
+    const { getServerTranslation } = await import('@web/i18n/server')
     getServerTranslation.mockResolvedValue({ t: (key: string) => key })
   })
 
@@ -41,8 +41,8 @@ describe('[lng]/subscribe — page', () => {
 })
 
 describe('[lng]/subscribe — metadata', () => {
-  beforeEach(() => {
-    const { getServerTranslation } = require('@web/i18n/server')
+  beforeEach(async () => {
+    const { getServerTranslation } = await import('@web/i18n/server')
     getServerTranslation.mockResolvedValue({ t: (key: string) => key })
   })
 

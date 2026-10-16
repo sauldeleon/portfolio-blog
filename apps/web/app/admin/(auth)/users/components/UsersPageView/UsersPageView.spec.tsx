@@ -6,7 +6,7 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { UsersPageView } from './UsersPageView'
 
-jest.mock('@sdlgr/select', () => ({
+vi.mock('@sdlgr/select', () => ({
   Select: ({
     value,
     onChange,
@@ -36,15 +36,15 @@ jest.mock('@sdlgr/select', () => ({
   },
 }))
 
-const mockRouterRefresh = jest.fn()
-const mockRouterPush = jest.fn()
+const mockRouterRefresh = vi.fn()
+const mockRouterPush = vi.fn()
 
-jest.mock('next/navigation', () => ({
+vi.mock('next/navigation', () => ({
   useRouter: () => ({ refresh: mockRouterRefresh, push: mockRouterPush }),
 }))
 
-jest.mock('@web/i18n/client', () => ({
-  useClientTranslation: jest.fn().mockReturnValue({
+vi.mock('@web/i18n/client', () => ({
+  useClientTranslation: vi.fn().mockReturnValue({
     t: (key: string) => {
       const map: Record<string, string> = {
         refresh: 'Refresh',
@@ -103,7 +103,7 @@ function makeAxiosError(status: number, data: unknown): AxiosError {
 }
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
 })
 
 describe('UsersPageView', () => {
@@ -227,7 +227,7 @@ describe('UsersPageView', () => {
   })
 
   it('deletes user on confirm', async () => {
-    jest.spyOn(axios, 'delete').mockResolvedValue({ data: {} })
+    vi.spyOn(axios, 'delete').mockResolvedValue({ data: {} })
     renderApp(<UsersPageView users={[adminUser]} title="Users" />)
     await userEvent.click(screen.getByTestId('delete-user-1'))
     await userEvent.click(screen.getByTestId('delete-confirm-user-1'))
@@ -237,12 +237,10 @@ describe('UsersPageView', () => {
   })
 
   it('shows alert when delete fails', async () => {
-    jest
-      .spyOn(axios, 'delete')
-      .mockRejectedValue(
-        makeAxiosError(422, { error: 'Cannot delete last admin' }),
-      )
-    const alertMock = jest.spyOn(window, 'alert').mockImplementation(jest.fn())
+    vi.spyOn(axios, 'delete').mockRejectedValue(
+      makeAxiosError(422, { error: 'Cannot delete last admin' }),
+    )
+    const alertMock = vi.spyOn(window, 'alert').mockImplementation(vi.fn())
     renderApp(<UsersPageView users={[adminUser]} title="Users" />)
     await userEvent.click(screen.getByTestId('delete-user-1'))
     await userEvent.click(screen.getByTestId('delete-confirm-user-1'))
@@ -253,8 +251,8 @@ describe('UsersPageView', () => {
   })
 
   it('shows fallback alert when delete fails with no error message', async () => {
-    jest.spyOn(axios, 'delete').mockRejectedValue(makeAxiosError(500, {}))
-    const alertMock = jest.spyOn(window, 'alert').mockImplementation(jest.fn())
+    vi.spyOn(axios, 'delete').mockRejectedValue(makeAxiosError(500, {}))
+    const alertMock = vi.spyOn(window, 'alert').mockImplementation(vi.fn())
     renderApp(<UsersPageView users={[adminUser]} title="Users" />)
     await userEvent.click(screen.getByTestId('delete-user-1'))
     await userEvent.click(screen.getByTestId('delete-confirm-user-1'))
@@ -263,8 +261,8 @@ describe('UsersPageView', () => {
   })
 
   it('shows fallback alert when delete fails with non-axios error', async () => {
-    jest.spyOn(axios, 'delete').mockRejectedValue(new Error('Network failure'))
-    const alertMock = jest.spyOn(window, 'alert').mockImplementation(jest.fn())
+    vi.spyOn(axios, 'delete').mockRejectedValue(new Error('Network failure'))
+    const alertMock = vi.spyOn(window, 'alert').mockImplementation(vi.fn())
     renderApp(<UsersPageView users={[adminUser]} title="Users" />)
     await userEvent.click(screen.getByTestId('delete-user-1'))
     await userEvent.click(screen.getByTestId('delete-confirm-user-1'))
@@ -273,7 +271,7 @@ describe('UsersPageView', () => {
   })
 
   it('updates role via role select and updates all rows', async () => {
-    jest.spyOn(axios, 'patch').mockResolvedValue({
+    vi.spyOn(axios, 'patch').mockResolvedValue({
       data: {
         ...adminUser,
         role: 'editor',
@@ -296,12 +294,10 @@ describe('UsersPageView', () => {
   })
 
   it('shows alert when role update fails', async () => {
-    jest
-      .spyOn(axios, 'patch')
-      .mockRejectedValue(
-        makeAxiosError(422, { error: 'Cannot demote last admin' }),
-      )
-    const alertMock = jest.spyOn(window, 'alert').mockImplementation(jest.fn())
+    vi.spyOn(axios, 'patch').mockRejectedValue(
+      makeAxiosError(422, { error: 'Cannot demote last admin' }),
+    )
+    const alertMock = vi.spyOn(window, 'alert').mockImplementation(vi.fn())
     renderApp(<UsersPageView users={[adminUser]} title="Users" />)
     fireEvent.click(
       within(screen.getByTestId('role-select-user-1')).getByRole('option', {
@@ -315,8 +311,8 @@ describe('UsersPageView', () => {
   })
 
   it('shows fallback alert when role update fails with no error message', async () => {
-    jest.spyOn(axios, 'patch').mockRejectedValue(makeAxiosError(500, {}))
-    const alertMock = jest.spyOn(window, 'alert').mockImplementation(jest.fn())
+    vi.spyOn(axios, 'patch').mockRejectedValue(makeAxiosError(500, {}))
+    const alertMock = vi.spyOn(window, 'alert').mockImplementation(vi.fn())
     renderApp(<UsersPageView users={[adminUser]} title="Users" />)
     fireEvent.click(
       within(screen.getByTestId('role-select-user-1')).getByRole('option', {
@@ -328,8 +324,8 @@ describe('UsersPageView', () => {
   })
 
   it('shows fallback alert when role update fails with non-axios error', async () => {
-    jest.spyOn(axios, 'patch').mockRejectedValue(new Error('Network failure'))
-    const alertMock = jest.spyOn(window, 'alert').mockImplementation(jest.fn())
+    vi.spyOn(axios, 'patch').mockRejectedValue(new Error('Network failure'))
+    const alertMock = vi.spyOn(window, 'alert').mockImplementation(vi.fn())
     renderApp(<UsersPageView users={[adminUser]} title="Users" />)
     fireEvent.click(
       within(screen.getByTestId('role-select-user-1')).getByRole('option', {

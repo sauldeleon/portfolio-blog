@@ -1,23 +1,24 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import axios, { AxiosError } from 'axios'
 import { useRouter } from 'next/navigation'
+import type { Mock } from 'vitest'
 
 import { AdminQueryProvider } from './AdminQueryProvider'
 
-const mockPush = jest.fn()
+const mockPush = vi.fn()
 
-jest.mock('@tanstack/react-query-devtools', () => ({
+vi.mock('@tanstack/react-query-devtools', () => ({
   ReactQueryDevtools: () => null,
 }))
 
-jest.mock('next/navigation', () => ({
-  useRouter: jest.fn(),
+vi.mock('next/navigation', () => ({
+  useRouter: vi.fn(),
 }))
 
 describe('AdminQueryProvider', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
-    ;(useRouter as jest.Mock).mockReturnValue({ push: mockPush })
+    vi.clearAllMocks()
+    ;(useRouter as Mock).mockReturnValue({ push: mockPush })
   })
 
   it('renders children', () => {
@@ -92,7 +93,7 @@ describe('AdminQueryProvider', () => {
   })
 
   it('ejects interceptor on unmount', () => {
-    const ejectSpy = jest.spyOn(axios.interceptors.response, 'eject')
+    const ejectSpy = vi.spyOn(axios.interceptors.response, 'eject')
     const { unmount } = render(
       <AdminQueryProvider>
         <div />

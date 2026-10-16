@@ -5,9 +5,9 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { PostContentCanyonSummary } from './PostContentCanyonSummary'
 
-const mockDownloadPng = jest.fn<Promise<void>, [string]>()
+const mockDownloadPng = vi.fn<(filename: string) => Promise<void>>()
 
-jest.mock('@web/components/CanyonSummary', () => ({
+vi.mock('@web/components/CanyonSummary', () => ({
   CanyonSummaryMap: ({
     data,
     interaction,
@@ -25,7 +25,7 @@ jest.mock('@web/components/CanyonSummary', () => ({
 }))
 
 let mockLanguage = 'en'
-jest.mock('@web/i18n/client', () => ({
+vi.mock('@web/i18n/client', () => ({
   useClientTranslation: () => ({
     t: (key: string) => key,
     i18n: { language: mockLanguage },

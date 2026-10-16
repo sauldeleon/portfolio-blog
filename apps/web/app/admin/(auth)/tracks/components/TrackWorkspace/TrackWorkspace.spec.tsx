@@ -14,17 +14,19 @@ import { renderApp } from '@sdlgr/test-utils'
 import type { TrackEditorMapProps } from '../TrackEditorMap'
 import { TrackWorkspace } from './TrackWorkspace'
 
-const mockSaveTrackFile = jest.fn()
+const mockSaveTrackFile = vi.fn()
 
-jest.mock('@web/i18n/client', () => ({
+vi.mock('@web/i18n/client', () => ({
   useClientTranslation: () => ({
     t: (key: string, options?: Record<string, unknown>) =>
       options ? `${key} ${JSON.stringify(options)}` : key,
   }),
 }))
 
-jest.mock('../../utils/trackApi', () => ({
-  ...jest.requireActual('../../utils/trackApi'),
+vi.mock('../../utils/trackApi', async () => ({
+  ...(await vi.importActual<typeof import('../../utils/trackApi')>(
+    '../../utils/trackApi',
+  )),
   saveTrackFile: (...args: unknown[]) => mockSaveTrackFile(...args),
 }))
 
@@ -34,7 +36,7 @@ const mockCountPoints = (tracks: GpxTrack[]) =>
     0,
   )
 
-jest.mock('../TrackEditorMap', () => ({
+vi.mock('../TrackEditorMap', () => ({
   TrackEditorMap: (props: TrackEditorMapProps) => (
     <div
       data-testid="map"
@@ -95,7 +97,7 @@ jest.mock('../TrackEditorMap', () => ({
   ),
 }))
 
-jest.mock('../ElevationProfile', () => ({
+vi.mock('../ElevationProfile', () => ({
   ElevationProfile: (props: {
     points: unknown[]
     selection: unknown
@@ -118,7 +120,7 @@ jest.mock('../ElevationProfile', () => ({
   ),
 }))
 
-jest.mock('../CleanPanel', () => ({
+vi.mock('../CleanPanel', () => ({
   CleanPanel: (props: {
     options: CleanOptions
     onChange: (o: CleanOptions) => void
@@ -176,7 +178,7 @@ jest.mock('../CleanPanel', () => ({
   ),
 }))
 
-jest.mock('../EditPanel', () => ({
+vi.mock('../EditPanel', () => ({
   EditPanel: (props: {
     onDeleteSelection: () => void
     onClearSelection: () => void
@@ -197,7 +199,7 @@ jest.mock('../EditPanel', () => ({
   ),
 }))
 
-jest.mock('../WaypointsPanel', () => ({
+vi.mock('../WaypointsPanel', () => ({
   WaypointsPanel: (props: {
     waypoints: GpxWaypoint[]
     selectedId: string | null
@@ -252,7 +254,7 @@ const GPX = `<?xml version="1.0" encoding="UTF-8"?>
   <trk><name>B</name><trkseg><trkpt lat="43" lon="0"/><trkpt lat="43.1" lon="0"/></trkseg></trk>
 </gpx>`
 
-const mockWriteText = jest.fn()
+const mockWriteText = vi.fn()
 
 function renderWorkspace(
   existingPaths: string[] = [],
@@ -277,8 +279,8 @@ const key = (init: KeyboardEventInit, target: EventTarget = window) =>
   })
 
 beforeEach(() => {
-  jest.clearAllMocks()
-  window.scrollTo = jest.fn()
+  vi.clearAllMocks()
+  window.scrollTo = vi.fn()
   mockWriteText.mockResolvedValue(undefined)
   Object.assign(navigator, { clipboard: { writeText: mockWriteText } })
 })
@@ -646,10 +648,10 @@ describe('TrackWorkspace', () => {
   })
 
   it('downloads the GPX', () => {
-    const createObjectURL = jest.fn().mockReturnValue('blob:x')
-    const revokeObjectURL = jest.fn()
+    const createObjectURL = vi.fn().mockReturnValue('blob:x')
+    const revokeObjectURL = vi.fn()
     Object.assign(URL, { createObjectURL, revokeObjectURL })
-    const click = jest
+    const click = vi
       .spyOn(HTMLAnchorElement.prototype, 'click')
       .mockImplementation(function (this: HTMLAnchorElement) {
         expect(this.download).toBe('a-clean.gpx')

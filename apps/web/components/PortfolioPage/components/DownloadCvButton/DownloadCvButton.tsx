@@ -27,8 +27,8 @@ export function DownloadCvButton({
   filename,
 }: DownloadCvButtonProps) {
   const photoUrl = useMemo(
+    /* istanbul ignore next -- @preserve */
     () =>
-      /* istanbul ignore next */
       typeof window !== 'undefined' ? window.location.origin + photoPath : '',
     [photoPath],
   )

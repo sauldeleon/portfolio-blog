@@ -4,10 +4,10 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { DEFAULT_WAYPOINT_STATE, WaypointFields } from './WaypointFields'
 
-jest.mock('@web/i18n/client', () => {
-  const admin: Record<string, unknown> = jest.requireActual(
-    '@web/i18n/locales/en/admin.json',
-  )
+vi.mock('@web/i18n/client', async () => {
+  const admin: Record<string, unknown> = await vi.importActual<
+    typeof import('@web/i18n/locales/en/admin.json')
+  >('@web/i18n/locales/en/admin.json')
   return {
     useClientTranslation: () => ({
       t: (key: string): string => {
@@ -26,7 +26,7 @@ jest.mock('@web/i18n/client', () => {
   }
 })
 
-jest.mock('@sdlgr/select', () => ({
+vi.mock('@sdlgr/select', () => ({
   Select: ({
     value,
     onChange,
@@ -58,7 +58,7 @@ describe('WaypointFields', () => {
   const value = { ...DEFAULT_WAYPOINT_STATE }
 
   it('renders every field', () => {
-    renderApp(<WaypointFields value={value} onChange={jest.fn()} />)
+    renderApp(<WaypointFields value={value} onChange={vi.fn()} />)
     expect(screen.getByLabelText('Name')).toBeInTheDocument()
     expect(screen.getByTestId('wf-category')).toBeInTheDocument()
     expect(screen.getByLabelText('Latitude')).toBeInTheDocument()
@@ -69,7 +69,7 @@ describe('WaypointFields', () => {
   })
 
   it('emits a patch for each text input', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<WaypointFields value={value} onChange={onChange} />)
     const changes: Array<[string, string, Record<string, string>]> = [
       ['Name', 'Foo', { name: 'Foo' }],
@@ -88,7 +88,7 @@ describe('WaypointFields', () => {
   })
 
   it('emits a patch when a category is selected', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<WaypointFields value={value} onChange={onChange} />)
     fireEvent.click(screen.getByTestId('wf-category-opt-summit'))
     expect(onChange).toHaveBeenCalledWith({ category: 'summit' })

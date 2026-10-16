@@ -1,7 +1,8 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
 import axios, { AxiosError } from 'axios'
+import type { MockInstance } from 'vitest'
 
 function makeAxiosError(status: number): AxiosError {
   return new AxiosError('error', String(status), undefined, undefined, {
@@ -13,28 +14,28 @@ function makeAxiosError(status: number): AxiosError {
   })
 }
 
-let mockAxiosHead: jest.SpyInstance
+let mockAxiosHead: MockInstance
 
-const mockGetPostTranslations = jest.fn()
-const mockSendNewPostNotifications = jest.fn()
-const mockLoggerError = jest.fn()
-const mockLoggerWarn = jest.fn()
-const mockGetSiteUrl = jest.fn()
+const mockGetPostTranslations = vi.fn()
+const mockSendNewPostNotifications = vi.fn()
+const mockLoggerError = vi.fn()
+const mockLoggerWarn = vi.fn()
+const mockGetSiteUrl = vi.fn()
 
-jest.mock('@web/lib/db/queries/posts', () => ({
+vi.mock('@web/lib/db/queries/posts', () => ({
   getPostTranslations: mockGetPostTranslations,
 }))
-jest.mock('@web/lib/email/sendNewPostNotifications', () => ({
+vi.mock('@web/lib/email/sendNewPostNotifications', () => ({
   sendNewPostNotifications: mockSendNewPostNotifications,
 }))
-jest.mock('@web/lib/logger', () => ({
+vi.mock('@web/lib/logger', () => ({
   logger: { error: mockLoggerError, warn: mockLoggerWarn },
 }))
-jest.mock('@web/utils/url/generateUrl', () => ({
+vi.mock('@web/utils/url/generateUrl', () => ({
   getSiteUrl: mockGetSiteUrl,
 }))
 
-const { notifyPostPublished } = require('./notifyPostPublished') as {
+const { notifyPostPublished } = (await import('./notifyPostPublished')) as {
   notifyPostPublished: (
     post: {
       id: string
@@ -61,15 +62,15 @@ const mockPost = {
 
 describe('notifyPostPublished', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     mockGetSiteUrl.mockReturnValue('https://sawl.dev')
-    mockAxiosHead = jest.spyOn(axios, 'head').mockResolvedValue({})
+    mockAxiosHead = vi.spyOn(axios, 'head').mockResolvedValue({})
     mockGetPostTranslations.mockResolvedValue([])
     mockSendNewPostNotifications.mockResolvedValue(undefined)
   })
 
   afterEach(() => {
-    jest.restoreAllMocks()
+    vi.restoreAllMocks()
   })
 
   it('calls sendNewPostNotifications with built translations', async () => {

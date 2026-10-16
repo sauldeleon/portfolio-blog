@@ -6,23 +6,26 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { CommentForm } from './CommentForm'
 
-const mockT = jest.fn((key: string, opts?: { username?: string }) =>
+const mockT = vi.fn((key: string, opts?: { username?: string }) =>
   opts?.username ? `Reply to ${opts.username}` : key,
 )
-const mockUseClientTranslation = jest.fn()
-const mockTurnstileOnSuccess = jest.fn()
-const mockTurnstileOnError = jest.fn()
-const mockTurnstileOnExpire = jest.fn()
+const mockUseClientTranslation = vi.fn()
+const mockTurnstileOnSuccess = vi.fn()
+const mockTurnstileOnError = vi.fn()
+const mockTurnstileOnExpire = vi.fn()
 
-jest.mock('axios', () => ({ post: jest.fn() }))
+vi.mock('axios', () => {
+  const mod = { post: vi.fn() }
+  return { ...mod, default: mod }
+})
 
-const mockAxiosPost = jest.mocked(axios.post)
+const mockAxiosPost = vi.mocked(axios.post)
 
-jest.mock('@web/i18n/client', () => ({
+vi.mock('@web/i18n/client', () => ({
   useClientTranslation: () => mockUseClientTranslation(),
 }))
 
-jest.mock('@marsidev/react-turnstile', () => ({
+vi.mock('@marsidev/react-turnstile', () => ({
   Turnstile: ({
     onSuccess,
     onError,
@@ -49,7 +52,7 @@ const defaultProps = {
 }
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
   mockUseClientTranslation.mockReturnValue({ t: mockT })
   mockAxiosPost.mockResolvedValue({ data: {} })
   process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY = 'test-site-key'
@@ -178,7 +181,7 @@ describe('CommentForm', () => {
   })
 
   it('calls onCancelReply when cancel reply clicked', async () => {
-    const mockCancel = jest.fn()
+    const mockCancel = vi.fn()
     const user = userEvent.setup()
     renderApp(
       <CommentForm

@@ -1,26 +1,26 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
-const mockGetCommentsAdmin = jest.fn()
-const mockRequireAuth = jest.fn()
-const mockLoggerError = jest.fn()
+const mockGetCommentsAdmin = vi.fn()
+const mockRequireAuth = vi.fn()
+const mockLoggerError = vi.fn()
 
-jest.mock('@web/lib/db/queries/comments', () => ({
+vi.mock('@web/lib/db/queries/comments', () => ({
   getCommentsAdmin: (...args: unknown[]) => mockGetCommentsAdmin(...args),
 }))
-jest.mock('@web/lib/api/parseRequest', () => ({
+vi.mock('@web/lib/api/parseRequest', () => ({
   requireAuth: () => mockRequireAuth(),
 }))
-jest.mock('@web/lib/logger', () => ({
+vi.mock('@web/lib/logger', () => ({
   logger: {
     error: mockLoggerError,
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
   },
 }))
 
-const { GET } = require('./route') as {
+const { GET } = (await import('./route')) as unknown as {
   GET: (req: Request) => Promise<Response>
 }
 
@@ -43,7 +43,7 @@ function makeRequest(params: Record<string, string> = {}) {
 }
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
   mockRequireAuth.mockResolvedValue({ ok: true, session: mockSession })
   mockGetCommentsAdmin.mockResolvedValue([mockComment])
 })

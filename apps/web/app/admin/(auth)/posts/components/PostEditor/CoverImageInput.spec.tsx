@@ -9,13 +9,13 @@ const defaultProps = {
   placeholder: 'No cover image selected',
   clearTitle: 'Remove cover image',
   value: '',
-  onPick: jest.fn(),
-  onClear: jest.fn(),
+  onPick: vi.fn(),
+  onClear: vi.fn(),
 }
 
 describe('CoverImageInput', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   it('renders label and input', () => {

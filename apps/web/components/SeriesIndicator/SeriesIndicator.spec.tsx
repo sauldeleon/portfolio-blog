@@ -2,18 +2,18 @@ import { screen } from '@testing-library/react'
 
 import { renderApp } from '@sdlgr/test-utils'
 
-const mockGetPostsBySeries = jest.fn()
-const mockGetServerTranslation = jest.fn()
+const mockGetPostsBySeries = vi.fn()
+const mockGetServerTranslation = vi.fn()
 
-jest.mock('@web/lib/db/queries/posts', () => ({
+vi.mock('@web/lib/db/queries/posts', () => ({
   getPostsBySeries: (...args: unknown[]) => mockGetPostsBySeries(...args),
 }))
-jest.mock('@web/i18n/server', () => ({
+vi.mock('@web/i18n/server', () => ({
   getServerTranslation: mockGetServerTranslation,
 }))
 
 const { SeriesIndicator } =
-  require('./SeriesIndicator') as typeof import('./SeriesIndicator')
+  (await import('./SeriesIndicator')) as typeof import('./SeriesIndicator')
 
 const mockSeriesPost = (overrides: Record<string, unknown> = {}) => ({
   id: '01JX001',
@@ -46,7 +46,7 @@ beforeEach(() => {
 })
 
 afterEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
 })
 
 describe('SeriesIndicator', () => {

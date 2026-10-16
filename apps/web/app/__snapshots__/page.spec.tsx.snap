@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`RootPage should redirect to fallback language 1`] = `
+exports[`RootPage > should redirect to fallback language 1`] = `
 .c0 {
   background-color: #000000;
   height: 100vh;

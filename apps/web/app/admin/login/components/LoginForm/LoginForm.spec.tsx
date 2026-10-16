@@ -4,15 +4,15 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { LoginForm } from './LoginForm'
 
-const mockSignIn = jest.fn()
-const mockNavigateTo = jest.fn()
+const mockSignIn = vi.fn()
+const mockNavigateTo = vi.fn()
 
-jest.mock('@web/utils/navigation/navigate', () => ({
+vi.mock('@web/utils/navigation/navigate', () => ({
   navigateTo: (...args: unknown[]) => mockNavigateTo(...args),
 }))
 
-jest.mock('@web/i18n/client', () => ({
-  useClientTranslation: jest.fn().mockReturnValue({
+vi.mock('@web/i18n/client', () => ({
+  useClientTranslation: vi.fn().mockReturnValue({
     t: (key: string) => {
       const translations: Record<string, string> = {
         'login.email': 'Email',
@@ -29,13 +29,13 @@ jest.mock('@web/i18n/client', () => ({
   }),
 }))
 
-jest.mock('next-auth/react', () => ({
+vi.mock('next-auth/react', () => ({
   signIn: (...args: unknown[]) => mockSignIn(...args),
 }))
 
 describe('LoginForm', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   it('renders email and password inputs and submit button', () => {

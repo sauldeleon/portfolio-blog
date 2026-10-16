@@ -1,18 +1,19 @@
 import { render, screen } from '@testing-library/react'
+import type { Mock } from 'vitest'
 
 import { AdminNav } from '../components/AdminNav'
 import AuthLayout from './layout.next'
 
-const mockRequireAdminSession = jest.fn()
+const mockRequireAdminSession = vi.fn()
 
-jest.mock('@web/lib/auth/requireAdminSession', () => ({
+vi.mock('@web/lib/auth/requireAdminSession', () => ({
   requireAdminSession: (...args: unknown[]) => mockRequireAdminSession(...args),
 }))
 
-jest.mock('../components/AdminNav', () => {
-  const React = require('react')
+vi.mock('../components/AdminNav', async () => {
+  const React = await import('react')
   return {
-    AdminNav: jest
+    AdminNav: vi
       .fn()
       .mockReturnValue(
         React.createElement('nav', { 'data-testid': 'admin-nav' }),
@@ -20,11 +21,11 @@ jest.mock('../components/AdminNav', () => {
   }
 })
 
-const mockAdminNav = AdminNav as jest.Mock
+const mockAdminNav = AdminNav as Mock
 
 describe('AuthLayout', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   it('renders admin nav and children when authenticated', async () => {

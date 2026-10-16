@@ -1,10 +1,10 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
-const mockSlidingWindow = jest.fn().mockReturnValue('sliding-window-limiter')
-const mockRatelimitConstructor = jest.fn()
+const mockSlidingWindow = vi.fn().mockReturnValue('sliding-window-limiter')
+const mockRatelimitConstructor = vi.fn()
 
-jest.mock('@upstash/ratelimit', () => ({
+vi.mock('@upstash/ratelimit', () => ({
   Ratelimit: Object.assign(
     function (...args: unknown[]) {
       mockRatelimitConstructor(...args)
@@ -16,17 +16,17 @@ jest.mock('@upstash/ratelimit', () => ({
 
 describe('ratelimit', () => {
   afterEach(() => {
-    jest.resetModules()
+    vi.resetModules()
     mockRatelimitConstructor.mockClear()
     mockSlidingWindow.mockClear()
   })
 
-  it('creates Ratelimit instance when redis is available', () => {
+  it('creates Ratelimit instance when redis is available', async () => {
     const mockRedis = { _isMockRedis: true }
-    jest.doMock('../redis', () => ({ redis: mockRedis }))
-    jest.resetModules()
-    jest.doMock('../redis', () => ({ redis: mockRedis }))
-    const { ratelimit } = require('./index') as { ratelimit: unknown }
+    vi.doMock('../redis', () => ({ redis: mockRedis }))
+    vi.resetModules()
+    vi.doMock('../redis', () => ({ redis: mockRedis }))
+    const { ratelimit } = (await import('./index')) as { ratelimit: unknown }
     expect(ratelimit).not.toBeNull()
     expect(mockRatelimitConstructor).toHaveBeenCalledWith(
       expect.objectContaining({ redis: mockRedis }),
@@ -34,10 +34,10 @@ describe('ratelimit', () => {
     expect(mockSlidingWindow).toHaveBeenCalledWith(10, '1m')
   })
 
-  it('returns null when redis is null', () => {
-    jest.resetModules()
-    jest.doMock('../redis', () => ({ redis: null }))
-    const { ratelimit } = require('./index') as { ratelimit: unknown }
+  it('returns null when redis is null', async () => {
+    vi.resetModules()
+    vi.doMock('../redis', () => ({ redis: null }))
+    const { ratelimit } = (await import('./index')) as { ratelimit: unknown }
     expect(ratelimit).toBeNull()
     expect(mockRatelimitConstructor).not.toHaveBeenCalled()
   })

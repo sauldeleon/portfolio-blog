@@ -4,7 +4,7 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { FerrataForm } from './FerrataForm'
 
-jest.mock('../../../components/TrackUrlPicker', () => ({
+vi.mock('../../../components/TrackUrlPicker', () => ({
   TrackUrlPicker: ({
     id,
     value,
@@ -25,10 +25,10 @@ jest.mock('../../../components/TrackUrlPicker', () => ({
   ),
 }))
 
-jest.mock('@web/i18n/client', () => {
-  const admin: Record<string, unknown> = jest.requireActual(
-    '@web/i18n/locales/en/admin.json',
-  )
+vi.mock('@web/i18n/client', async () => {
+  const admin: Record<string, unknown> = await vi.importActual<
+    typeof import('@web/i18n/locales/en/admin.json')
+  >('@web/i18n/locales/en/admin.json')
   return {
     useClientTranslation: () => ({
       t: (key: string): string => {
@@ -47,7 +47,7 @@ jest.mock('@web/i18n/client', () => {
   }
 })
 
-jest.mock('../CardDateField', () => ({
+vi.mock('../CardDateField', () => ({
   CardDateField: ({
     value,
     onChange,
@@ -65,7 +65,7 @@ jest.mock('../CardDateField', () => ({
   ),
 }))
 
-jest.mock('@sdlgr/select', () => ({
+vi.mock('@sdlgr/select', () => ({
   Select: ({
     value,
     onChange,
@@ -93,7 +93,7 @@ jest.mock('@sdlgr/select', () => ({
   ),
 }))
 
-jest.mock('../GpxUrlField', () => {
+vi.mock('../GpxUrlField', () => {
   const FULL = {
     date: '15 Jul 2025',
     startTime: '09:00',
@@ -153,18 +153,18 @@ const defaultValue = { kind: 'summary-ferrata' as const, lang: 'es' as const }
 
 describe('FerrataForm', () => {
   it('renders the form', () => {
-    renderApp(<FerrataForm value={defaultValue} onChange={jest.fn()} />)
+    renderApp(<FerrataForm value={defaultValue} onChange={vi.fn()} />)
     expect(screen.getByTestId('ferrata-form')).toBeInTheDocument()
   })
 
   it('renders lang buttons', () => {
-    renderApp(<FerrataForm value={defaultValue} onChange={jest.fn()} />)
+    renderApp(<FerrataForm value={defaultValue} onChange={vi.fn()} />)
     expect(screen.getByTestId('lang-es')).toBeInTheDocument()
     expect(screen.getByTestId('lang-en')).toBeInTheDocument()
   })
 
   it('calls onChange with updated lang', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<FerrataForm value={defaultValue} onChange={onChange} />)
     fireEvent.click(screen.getByTestId('lang-en'))
     expect(onChange).toHaveBeenCalledWith(
@@ -173,7 +173,7 @@ describe('FerrataForm', () => {
   })
 
   it('calls onChange with updated title', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<FerrataForm value={defaultValue} onChange={onChange} />)
     fireEvent.change(screen.getByLabelText('Title'), {
       target: { value: 'Ferrata del Oso' },
@@ -184,7 +184,7 @@ describe('FerrataForm', () => {
   })
 
   it('calls onChange with updated date', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<FerrataForm value={defaultValue} onChange={onChange} />)
     fireEvent.change(screen.getByTestId('ft-date'), {
       target: { value: '1 AGO 2025' },
@@ -195,7 +195,7 @@ describe('FerrataForm', () => {
   })
 
   it('selects a grade from K1–K7', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<FerrataForm value={defaultValue} onChange={onChange} />)
     fireEvent.click(screen.getByTestId('ft-grade-opt-K3'))
     expect(onChange).toHaveBeenCalledWith(
@@ -207,14 +207,14 @@ describe('FerrataForm', () => {
     renderApp(
       <FerrataForm
         value={{ ...defaultValue, grade: 'K5' }}
-        onChange={jest.fn()}
+        onChange={vi.fn()}
       />,
     )
     expect(screen.getByTestId('ft-grade-value')).toHaveTextContent('K5')
   })
 
   it('calls onChange with updated cable', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<FerrataForm value={defaultValue} onChange={onChange} />)
     fireEvent.change(screen.getByLabelText('Cable length'), {
       target: { value: '800 m' },
@@ -225,7 +225,7 @@ describe('FerrataForm', () => {
   })
 
   it('calls onChange with updated vertical', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<FerrataForm value={defaultValue} onChange={onChange} />)
     fireEvent.change(screen.getByLabelText('Vertical drop'), {
       target: { value: '350 m' },
@@ -236,7 +236,7 @@ describe('FerrataForm', () => {
   })
 
   it('calls onChange with updated mov', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<FerrataForm value={defaultValue} onChange={onChange} />)
     fireEvent.change(screen.getByLabelText('Moving (H:MM)'), {
       target: { value: '2:30' },
@@ -247,7 +247,7 @@ describe('FerrataForm', () => {
   })
 
   it('calls onChange with updated det', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<FerrataForm value={defaultValue} onChange={onChange} />)
     fireEvent.change(screen.getByLabelText('Stopped (H:MM)'), {
       target: { value: '0:15' },
@@ -258,7 +258,7 @@ describe('FerrataForm', () => {
   })
 
   it('calls onChange with updated tot', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<FerrataForm value={defaultValue} onChange={onChange} />)
     fireEvent.change(screen.getByLabelText('Total (H:MM)'), {
       target: { value: '2:45' },
@@ -269,7 +269,7 @@ describe('FerrataForm', () => {
   })
 
   it('calls onChange with updated ini', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<FerrataForm value={defaultValue} onChange={onChange} />)
     fireEvent.change(screen.getByLabelText('Start'), {
       target: { value: '09:00' },
@@ -280,7 +280,7 @@ describe('FerrataForm', () => {
   })
 
   it('calls onChange with updated fin', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<FerrataForm value={defaultValue} onChange={onChange} />)
     fireEvent.change(screen.getByLabelText('End'), {
       target: { value: '11:45' },
@@ -291,7 +291,7 @@ describe('FerrataForm', () => {
   })
 
   it('calls onChange with updated ret', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<FerrataForm value={defaultValue} onChange={onChange} />)
     fireEvent.change(screen.getByLabelText('Return'), {
       target: { value: '12:30' },
@@ -302,7 +302,7 @@ describe('FerrataForm', () => {
   })
 
   it('calls onChange with updated gpxUrl', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<FerrataForm value={defaultValue} onChange={onChange} />)
     fireEvent.change(screen.getByLabelText('GPX url'), {
       target: { value: 'https://example.com/ferrata.gpx' },
@@ -313,7 +313,7 @@ describe('FerrataForm', () => {
   })
 
   it('prefills times, date and elevation from parsed GPX metrics', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<FerrataForm value={defaultValue} onChange={onChange} />)
     fireEvent.click(screen.getByTestId('gpx-full'))
     expect(onChange).toHaveBeenCalledWith(
@@ -330,7 +330,7 @@ describe('FerrataForm', () => {
   })
 
   it('keeps existing time/date values when metrics are empty', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     const value = {
       ...defaultValue,
       date: 'old',

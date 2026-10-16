@@ -1,17 +1,17 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
-const mockAuth = jest.fn()
+const mockAuth = vi.fn()
 
-jest.mock('@web/lib/auth/config', () => ({
+vi.mock('@web/lib/auth/config', () => ({
   auth: mockAuth,
 }))
 
-const { GET } = require('./route') as { GET: () => Promise<Response> }
+const { GET } = (await import('./route')) as { GET: () => Promise<Response> }
 
 describe('GET /api/auth/me', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   it('returns 401 when no session', async () => {

@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+import type { MockInstance } from 'vitest'
 
 import { MdxErrorBoundary } from './MdxErrorBoundary'
 
@@ -7,11 +8,11 @@ function Boom(): never {
 }
 
 describe('MdxErrorBoundary', () => {
-  let consoleError: jest.SpyInstance
+  let consoleError: MockInstance
 
   beforeEach(() => {
     // React logs caught render errors; silence to keep the test output clean.
-    consoleError = jest
+    consoleError = vi
       .spyOn(console, 'error')
       .mockImplementation(() => undefined)
   })

@@ -1,24 +1,24 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
-jest.mock('next-auth', () => ({
+vi.mock('next-auth', () => ({
   __esModule: true,
   default: () => ({
-    handlers: { GET: jest.fn(), POST: jest.fn() },
-    auth: jest.fn(),
-    signIn: jest.fn(),
-    signOut: jest.fn(),
+    handlers: { GET: vi.fn(), POST: vi.fn() },
+    auth: vi.fn(),
+    signIn: vi.fn(),
+    signOut: vi.fn(),
   }),
 }))
 
-jest.mock('next-auth/providers/credentials', () => ({
+vi.mock('next-auth/providers/credentials', () => ({
   __esModule: true,
-  default: jest.fn(),
+  default: vi.fn(),
 }))
 
-jest.mock('bcryptjs')
+vi.mock('bcryptjs')
 
-const { GET, POST } = require('./route') as typeof import('./route')
+const { GET, POST } = (await import('./route')) as typeof import('./route')
 
 describe('auth [...nextauth] route', () => {
   it('exports GET handler', () => {

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`[lng] route - Page should render successfully 1`] = `
+exports[`[lng] route - Page > should render successfully 1`] = `
 .c18 {
   position: relative;
   position: relative;

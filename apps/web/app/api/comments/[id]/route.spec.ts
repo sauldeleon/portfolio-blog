@@ -1,30 +1,30 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
-const mockGetCommentById = jest.fn()
-const mockUpdateCommentStatus = jest.fn()
-const mockDeleteComment = jest.fn()
-const mockRequireAuth = jest.fn()
-const mockLoggerError = jest.fn()
+const mockGetCommentById = vi.fn()
+const mockUpdateCommentStatus = vi.fn()
+const mockDeleteComment = vi.fn()
+const mockRequireAuth = vi.fn()
+const mockLoggerError = vi.fn()
 
-jest.mock('@web/lib/db/queries/comments', () => ({
+vi.mock('@web/lib/db/queries/comments', () => ({
   getCommentById: (...args: unknown[]) => mockGetCommentById(...args),
   updateCommentStatus: (...args: unknown[]) => mockUpdateCommentStatus(...args),
   deleteComment: (...args: unknown[]) => mockDeleteComment(...args),
 }))
-jest.mock('@web/lib/api/parseRequest', () => ({
+vi.mock('@web/lib/api/parseRequest', () => ({
   requireAuth: () => mockRequireAuth(),
 }))
-jest.mock('@web/lib/logger', () => ({
+vi.mock('@web/lib/logger', () => ({
   logger: {
     error: mockLoggerError,
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
   },
 }))
 
-const { PATCH, DELETE } = require('./route') as {
+const { PATCH, DELETE } = (await import('./route')) as unknown as {
   PATCH: (
     req: Request,
     ctx: { params: Promise<{ id: string }> },
@@ -67,7 +67,7 @@ function makeDeleteRequest() {
 }
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
   mockRequireAuth.mockResolvedValue({ ok: true, session: mockSession })
   mockGetCommentById.mockResolvedValue(mockComment)
   mockUpdateCommentStatus.mockResolvedValue({

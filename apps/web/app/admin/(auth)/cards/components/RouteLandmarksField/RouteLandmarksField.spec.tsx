@@ -6,7 +6,7 @@ import type { RouteLandmark } from '@web/lib/cards'
 
 import { RouteLandmarksField } from './RouteLandmarksField'
 
-jest.mock('@web/i18n/client', () => ({
+vi.mock('@web/i18n/client', () => ({
   useClientTranslation: () => ({ t: (key: string) => key }),
 }))
 
@@ -17,13 +17,13 @@ const LANDMARKS: RouteLandmark[] = [
 
 describe('RouteLandmarksField', () => {
   it('explains how to get them when there are none', () => {
-    renderApp(<RouteLandmarksField value={undefined} onChange={jest.fn()} />)
+    renderApp(<RouteLandmarksField value={undefined} onChange={vi.fn()} />)
     expect(screen.getByText('cards.fields.landmarksEmpty')).toBeInTheDocument()
     expect(screen.queryByTestId('rt-landmarks')).not.toBeInTheDocument()
   })
 
   it('lists summits and cols with their altitude and name', () => {
-    renderApp(<RouteLandmarksField value={LANDMARKS} onChange={jest.fn()} />)
+    renderApp(<RouteLandmarksField value={LANDMARKS} onChange={vi.fn()} />)
     const list = screen.getByTestId('rt-landmarks')
     expect(list).toHaveTextContent('▲ cards.fields.landmarkPeak')
     expect(list).toHaveTextContent('▼ cards.fields.landmarkCol')
@@ -33,7 +33,7 @@ describe('RouteLandmarksField', () => {
   })
 
   it('renames and clears names', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<RouteLandmarksField value={LANDMARKS} onChange={onChange} />)
     fireEvent.change(screen.getByTestId('rt-landmark-name-1'), {
       target: { value: 'El Ronzón' },
@@ -49,7 +49,7 @@ describe('RouteLandmarksField', () => {
   })
 
   it('removes one from the card', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<RouteLandmarksField value={LANDMARKS} onChange={onChange} />)
     fireEvent.click(screen.getByTestId('rt-landmark-remove-0'))
     expect(onChange).toHaveBeenCalledWith([LANDMARKS[1]])
@@ -59,7 +59,7 @@ describe('RouteLandmarksField', () => {
     renderApp(
       <RouteLandmarksField
         value={LANDMARKS}
-        onChange={jest.fn()}
+        onChange={vi.fn()}
         placesUnavailable
       />,
     )

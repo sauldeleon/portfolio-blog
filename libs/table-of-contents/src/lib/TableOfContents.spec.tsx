@@ -1,33 +1,34 @@
 import { act, fireEvent, screen, waitFor } from '@testing-library/react'
+import type { Mock } from 'vitest'
 
 import { renderWithTheme } from '@sdlgr/test-utils'
 
 import { TableOfContents } from './TableOfContents'
 import type { TocEntry } from './TableOfContents'
 
-const mockObserve = jest.fn()
-const mockDisconnect = jest.fn()
+const mockObserve = vi.fn()
+const mockDisconnect = vi.fn()
 let mockCallback: (entries: IntersectionObserverEntry[]) => void
 
 beforeAll(() => {
-  global.IntersectionObserver = jest.fn((callback) => {
+  global.IntersectionObserver = vi.fn(function (callback) {
     mockCallback = callback
     return {
       observe: mockObserve,
       disconnect: mockDisconnect,
-      unobserve: jest.fn(),
+      unobserve: vi.fn(),
     }
   }) as unknown as typeof IntersectionObserver
-  jest.spyOn(window.history, 'pushState').mockImplementation(() => undefined)
+  vi.spyOn(window.history, 'pushState').mockImplementation(() => undefined)
 })
 
 beforeEach(() => {
-  jest.clearAllMocks()
-  jest.useFakeTimers()
+  vi.clearAllMocks()
+  vi.useFakeTimers()
 })
 
 afterEach(() => {
-  jest.useRealTimers()
+  vi.useRealTimers()
 })
 
 const entries: TocEntry[] = [
@@ -101,7 +102,7 @@ describe('TableOfContents', () => {
     })
 
     act(() => {
-      jest.runAllTimers()
+      vi.runAllTimers()
     })
 
     expect(screen.getByRole('link', { name: 'Introduction' })).toHaveAttribute(
@@ -165,7 +166,7 @@ describe('TableOfContents', () => {
     })
 
     act(() => {
-      jest.runAllTimers()
+      vi.runAllTimers()
     })
 
     expect(screen.getByRole('link', { name: 'Conclusion' })).toHaveAttribute(
@@ -224,7 +225,7 @@ describe('TableOfContents', () => {
 
     unmount()
     act(() => {
-      jest.runAllTimers()
+      vi.runAllTimers()
     })
 
     document.body.removeChild(headingEl)
@@ -257,7 +258,7 @@ describe('TableOfContents', () => {
 
     unmount()
     act(() => {
-      jest.runAllTimers()
+      vi.runAllTimers()
     })
   })
 
@@ -305,12 +306,12 @@ describe('TableOfContents', () => {
 
   describe('link click scrolling', () => {
     let headingEl: HTMLElement
-    let scrollIntoView: jest.Mock
+    let scrollIntoView: Mock
 
     beforeEach(() => {
       headingEl = document.createElement('h2')
       headingEl.id = 'introduction'
-      scrollIntoView = jest.fn()
+      scrollIntoView = vi.fn()
       headingEl.scrollIntoView = scrollIntoView
       document.body.appendChild(headingEl)
     })
@@ -404,7 +405,7 @@ describe('TableOfContents', () => {
       expect(scrollIntoView).not.toHaveBeenCalled()
 
       act(() => {
-        jest.advanceTimersByTime(2000)
+        vi.advanceTimersByTime(2000)
       })
       expect(scrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth' })
 
@@ -428,7 +429,7 @@ describe('TableOfContents', () => {
       await waitFor(() => expect(scrollIntoView).toHaveBeenCalledTimes(1))
 
       act(() => {
-        jest.advanceTimersByTime(2000)
+        vi.advanceTimersByTime(2000)
       })
       expect(scrollIntoView).toHaveBeenCalledTimes(1)
 

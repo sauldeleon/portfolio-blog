@@ -1,5 +1,5 @@
-const mockGetPublishedPosts = jest.fn()
-jest.mock('@web/lib/db/queries/posts', () => ({
+const mockGetPublishedPosts = vi.fn()
+vi.mock('@web/lib/db/queries/posts', () => ({
   getPublishedPosts: mockGetPublishedPosts,
 }))
 
@@ -23,7 +23,7 @@ const mockPost = {
 
 describe('sitemap', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   it('should generate sitemap with static routes when no posts', async () => {
@@ -70,7 +70,7 @@ describe('sitemap', () => {
 
   it('includes blog post routes for each locale', async () => {
     mockGetPublishedPosts.mockResolvedValue([mockPost])
-    jest.resetModules()
+    vi.resetModules()
     const sitemap = (await import('./sitemap')).default
     const result = await sitemap()
     const urls = result.map((r) => r.url)
@@ -80,7 +80,7 @@ describe('sitemap', () => {
 
   it('uses post updatedAt as lastModified for blog routes', async () => {
     mockGetPublishedPosts.mockResolvedValue([mockPost])
-    jest.resetModules()
+    vi.resetModules()
     const sitemap = (await import('./sitemap')).default
     const result = await sitemap()
     const blogRoute = result.find((r) => r.url.includes('/blog/'))
@@ -93,7 +93,7 @@ describe('sitemap', () => {
       updatedAt: null as unknown as Date,
     }
     mockGetPublishedPosts.mockResolvedValue([postWithoutUpdatedAt])
-    jest.resetModules()
+    vi.resetModules()
     const sitemap = (await import('./sitemap')).default
     const result = await sitemap()
     const blogRoute = result.find((r) => r.url.includes('/blog/'))
@@ -102,7 +102,7 @@ describe('sitemap', () => {
 
   it('falls back to static routes when DB throws', async () => {
     mockGetPublishedPosts.mockRejectedValue(new Error('db error'))
-    jest.resetModules()
+    vi.resetModules()
     const sitemap = (await import('./sitemap')).default
     const result = await sitemap()
     expect(result).toHaveLength(8)

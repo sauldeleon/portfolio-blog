@@ -2,16 +2,16 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
-    "module": "commonjs",
     "types": [
-      "jest",
-      "@testing-library/jest-dom",
-      "jest-styled-components",
+      "vitest/globals",
+      "@testing-library/jest-dom/vitest",
+      "jest-styled-components/vitest",
       "node"
     ],
     "jsx": "react-jsx",
     "lib": ["DOM", "ES2022", "dom.iterable"],
-    "target": "ES2020"
+    "target": "ES2020",
+    "moduleDetection": "force"
   },
   "include": [
     "**/*.spec.ts",

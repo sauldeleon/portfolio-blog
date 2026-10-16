@@ -6,23 +6,26 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { SubscribeForm } from './SubscribeForm'
 
-const mockT = jest.fn((key: string, opts?: { email?: string }) =>
+const mockT = vi.fn((key: string, opts?: { email?: string }) =>
   opts?.email ? `Success email: ${opts.email}` : key,
 )
-const mockUseClientTranslation = jest.fn()
-const mockTurnstileOnSuccess = jest.fn()
-const mockTurnstileOnError = jest.fn()
-const mockTurnstileOnExpire = jest.fn()
+const mockUseClientTranslation = vi.fn()
+const mockTurnstileOnSuccess = vi.fn()
+const mockTurnstileOnError = vi.fn()
+const mockTurnstileOnExpire = vi.fn()
 
-jest.mock('axios', () => ({ post: jest.fn() }))
+vi.mock('axios', () => {
+  const mod = { post: vi.fn() }
+  return { ...mod, default: mod }
+})
 
-const mockAxiosPost = jest.mocked(axios.post)
+const mockAxiosPost = vi.mocked(axios.post)
 
-jest.mock('@web/i18n/client', () => ({
+vi.mock('@web/i18n/client', () => ({
   useClientTranslation: () => mockUseClientTranslation(),
 }))
 
-jest.mock('@marsidev/react-turnstile', () => ({
+vi.mock('@marsidev/react-turnstile', () => ({
   Turnstile: ({
     onSuccess,
     onError,
@@ -43,7 +46,7 @@ jest.mock('@marsidev/react-turnstile', () => ({
 const originalEnv = process.env
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
   process.env = {
     ...originalEnv,
     NEXT_PUBLIC_TURNSTILE_SITE_KEY: 'test-site-key',

@@ -1,3 +1,5 @@
+import type { Mock } from 'vitest'
+
 import { db } from '../index'
 import {
   confirmSubscription,
@@ -8,35 +10,35 @@ import {
   unsubscribeByToken,
 } from './subscriptions'
 
-jest.mock('../index', () => ({
+vi.mock('../index', () => ({
   db: {
-    select: jest.fn(),
-    insert: jest.fn(),
-    update: jest.fn(),
+    select: vi.fn(),
+    insert: vi.fn(),
+    update: vi.fn(),
   },
 }))
 
-jest.mock('ulid', () => ({ ulid: () => '01JWTEST000000000000000000' }))
+vi.mock('ulid', () => ({ ulid: () => '01JWTEST000000000000000000' }))
 
-const mockCrypto = { randomUUID: jest.fn(() => 'test-token-uuid') }
+const mockCrypto = { randomUUID: vi.fn(() => 'test-token-uuid') }
 Object.defineProperty(global, 'crypto', { value: mockCrypto, writable: true })
 
 const mockDb = db as unknown as {
-  select: jest.Mock
-  insert: jest.Mock
-  update: jest.Mock
+  select: Mock
+  insert: Mock
+  update: Mock
 }
 
 function makeChain(resolved: unknown) {
   const chain: Record<string, unknown> = {}
   const methods = ['from', 'where', 'values', 'set', 'returning']
   for (const m of methods) {
-    chain[m] = jest.fn().mockReturnValue(chain)
+    chain[m] = vi.fn().mockReturnValue(chain)
   }
   chain.then = (resolve: (v: unknown) => unknown) =>
     Promise.resolve(resolved).then(resolve)
-  chain.catch = jest.fn().mockReturnThis()
-  chain.finally = jest.fn().mockReturnThis()
+  chain.catch = vi.fn().mockReturnThis()
+  chain.finally = vi.fn().mockReturnThis()
   return chain
 }
 
@@ -54,7 +56,7 @@ const mockRow = {
 }
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
 })
 
 describe('getSubscriptionByEmail', () => {

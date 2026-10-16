@@ -1,52 +1,52 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
 import { GET, POST } from './route'
 
-const mockAuth = jest.fn()
-const mockGetSeriesForAdmin = jest.fn()
-const mockUpsertSeriesTranslation = jest.fn()
-const mockDbSelect = jest.fn()
-const mockDbInsert = jest.fn()
-const mockLoggerError = jest.fn()
+const mockAuth = vi.fn()
+const mockGetSeriesForAdmin = vi.fn()
+const mockUpsertSeriesTranslation = vi.fn()
+const mockDbSelect = vi.fn()
+const mockDbInsert = vi.fn()
+const mockLoggerError = vi.fn()
 
-jest.mock('@web/lib/auth/config', () => ({ auth: () => mockAuth() }))
-jest.mock('@web/lib/db/queries/series', () => ({
+vi.mock('@web/lib/auth/config', () => ({ auth: () => mockAuth() }))
+vi.mock('@web/lib/db/queries/series', () => ({
   getSeriesForAdmin: (...args: unknown[]) => mockGetSeriesForAdmin(...args),
   upsertSeriesTranslation: (...args: unknown[]) =>
     mockUpsertSeriesTranslation(...args),
 }))
-jest.mock('@web/lib/logger', () => ({
+vi.mock('@web/lib/logger', () => ({
   logger: {
     error: (...args: unknown[]) => mockLoggerError(...args),
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
   },
 }))
 
 function makeChain(resolved: unknown) {
   const chain: Record<string, unknown> = {}
   const methods = ['select', 'from', 'where', 'limit', 'insert', 'values']
-  for (const m of methods) chain[m] = jest.fn().mockReturnValue(chain)
+  for (const m of methods) chain[m] = vi.fn().mockReturnValue(chain)
   chain.then = (resolve: (v: unknown) => unknown) =>
     Promise.resolve(resolved).then(resolve)
-  chain.catch = jest.fn().mockReturnThis()
-  chain.finally = jest.fn().mockReturnThis()
+  chain.catch = vi.fn().mockReturnThis()
+  chain.finally = vi.fn().mockReturnThis()
   return chain
 }
 
-jest.mock('@web/lib/db', () => ({
+vi.mock('@web/lib/db', () => ({
   db: {
     select: (...args: unknown[]) => mockDbSelect(...args),
     insert: (...args: unknown[]) => mockDbInsert(...args),
   },
 }))
-jest.mock('@web/lib/db/schema', () => ({ series: {} }))
-jest.mock('drizzle-orm', () => ({ eq: jest.fn() }))
+vi.mock('@web/lib/db/schema', () => ({ series: {} }))
+vi.mock('drizzle-orm', () => ({ eq: vi.fn() }))
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
   mockAuth.mockResolvedValue({ user: { name: 'admin' } })
 })
 

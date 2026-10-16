@@ -3,13 +3,13 @@ import React from 'react'
 
 import { renderWithTheme } from '@sdlgr/test-utils'
 
-jest.mock('next-cloudinary', () => ({
+vi.mock('next-cloudinary', () => ({
   CldImage: ({ alt, style }: { alt: string; style?: React.CSSProperties }) => (
     <img data-testid="cover-image" alt={alt} style={style} />
   ),
 }))
 
-jest.mock('@web/utils/categoryIcons', () => ({
+vi.mock('@web/utils/categoryIcons', () => ({
   CategoryIconRenderer: ({
     slug: _slug,
     ...props
@@ -18,7 +18,7 @@ jest.mock('@web/utils/categoryIcons', () => ({
   ),
 }))
 
-jest.mock('next/link', () => ({
+vi.mock('next/link', () => ({
   __esModule: true,
   default: ({
     href,
@@ -36,7 +36,7 @@ jest.mock('next/link', () => ({
 }))
 
 const { LatestPostHero } =
-  require('./LatestPostHero') as typeof import('./LatestPostHero')
+  (await import('./LatestPostHero')) as typeof import('./LatestPostHero')
 
 const mockPost = {
   id: 'post1',

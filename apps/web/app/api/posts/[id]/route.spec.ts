@@ -1,45 +1,45 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
-const mockAuth = jest.fn()
-const mockGetCategoryBySlug = jest.fn()
-const mockGetPostById = jest.fn()
-const mockSlugExistsForLocale = jest.fn()
-const mockGetPostTranslations = jest.fn()
-const mockUpdatePost = jest.fn()
-const mockUpsertTranslation = jest.fn()
-const mockGetPostStatus = jest.fn()
-const mockSoftDeletePost = jest.fn()
-const mockHardDeletePost = jest.fn()
-const mockEnsureSeries = jest.fn()
-const mockUpsertSeriesTranslation = jest.fn()
-const mockSeriesOrderExistsForSeries = jest.fn()
+const mockAuth = vi.fn()
+const mockGetCategoryBySlug = vi.fn()
+const mockGetPostById = vi.fn()
+const mockSlugExistsForLocale = vi.fn()
+const mockGetPostTranslations = vi.fn()
+const mockUpdatePost = vi.fn()
+const mockUpsertTranslation = vi.fn()
+const mockGetPostStatus = vi.fn()
+const mockSoftDeletePost = vi.fn()
+const mockHardDeletePost = vi.fn()
+const mockEnsureSeries = vi.fn()
+const mockUpsertSeriesTranslation = vi.fn()
+const mockSeriesOrderExistsForSeries = vi.fn()
 
-const mockRevalidateTag = jest.fn()
-const mockRevalidatePath = jest.fn()
-const mockLoggerError = jest.fn()
-const mockNotifyPostPublished = jest.fn()
+const mockRevalidateTag = vi.fn()
+const mockRevalidatePath = vi.fn()
+const mockLoggerError = vi.fn()
+const mockNotifyPostPublished = vi.fn()
 
-jest.mock('next/cache', () => ({
+vi.mock('next/cache', () => ({
   revalidateTag: mockRevalidateTag,
   revalidatePath: mockRevalidatePath,
 }))
-jest.mock('@web/lib/email/notifyPostPublished', () => ({
+vi.mock('@web/lib/email/notifyPostPublished', () => ({
   notifyPostPublished: mockNotifyPostPublished,
 }))
-jest.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
-jest.mock('@web/lib/logger', () => ({
+vi.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
+vi.mock('@web/lib/logger', () => ({
   logger: {
     error: mockLoggerError,
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
   },
 }))
-jest.mock('@web/lib/db/queries/categories', () => ({
+vi.mock('@web/lib/db/queries/categories', () => ({
   getCategoryBySlug: mockGetCategoryBySlug,
 }))
-jest.mock('@web/lib/db/queries/posts', () => ({
+vi.mock('@web/lib/db/queries/posts', () => ({
   getPostById: mockGetPostById,
   slugExistsForLocale: mockSlugExistsForLocale,
   getPostTranslations: mockGetPostTranslations,
@@ -49,14 +49,14 @@ jest.mock('@web/lib/db/queries/posts', () => ({
   softDeletePost: mockSoftDeletePost,
   hardDeletePost: mockHardDeletePost,
 }))
-jest.mock('@web/lib/db/queries/series', () => ({
+vi.mock('@web/lib/db/queries/series', () => ({
   ensureSeries: mockEnsureSeries,
   upsertSeriesTranslation: mockUpsertSeriesTranslation,
   seriesOrderExistsForSeries: (...args: unknown[]) =>
     mockSeriesOrderExistsForSeries(...args),
 }))
 
-const { DELETE, GET, PUT } = require('./route') as {
+const { DELETE, GET, PUT } = (await import('./route')) as {
   GET: (
     req: Request,
     ctx: { params: Promise<{ id: string }> },
@@ -128,7 +128,7 @@ const mockPublishedPost = {
 
 describe('GET /api/posts/[id]', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   it('returns 400 when lng is missing', async () => {
@@ -216,7 +216,7 @@ describe('GET /api/posts/[id]', () => {
 
 describe('PUT /api/posts/[id]', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     mockGetPostStatus.mockResolvedValue('draft')
     mockNotifyPostPublished.mockResolvedValue(undefined)
     mockGetPostTranslations.mockResolvedValue([])
@@ -678,7 +678,7 @@ describe('PUT /api/posts/[id]', () => {
 
 describe('DELETE /api/posts/[id]', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   it('returns 401 when not authenticated', async () => {

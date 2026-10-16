@@ -5,7 +5,7 @@ import { renderWithTheme } from '@sdlgr/test-utils'
 
 import { PostContentSlideshow } from './PostContentSlideshow'
 
-jest.mock('@web/i18n/client', () => ({
+vi.mock('@web/i18n/client', () => ({
   useClientTranslation: () => ({
     t: (key: string) => {
       const map: Record<string, string> = {
@@ -20,19 +20,19 @@ jest.mock('@web/i18n/client', () => ({
   }),
 }))
 
-jest.mock('next/image', () => ({
+vi.mock('next/image', () => ({
   __esModule: true,
   default: ({ src, alt }: { src: string; alt: string }) => (
     <img src={src} alt={alt} />
   ),
 }))
 
-jest.mock('react-dom', () => ({
-  ...jest.requireActual<typeof ReactDOM>('react-dom'),
+vi.mock('react-dom', async () => ({
+  ...(await vi.importActual<typeof ReactDOM>('react-dom')),
   createPortal: (node: React.ReactNode) => node,
 }))
 
-jest.mock('./PostContent.styles', () => ({
+vi.mock('./PostContent.styles', () => ({
   StyledCaption: ({ children }: { children: React.ReactNode }) => (
     <figcaption data-testid="slideshow-caption">{children}</figcaption>
   ),

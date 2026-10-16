@@ -4,13 +4,13 @@ import { RenderProviders, renderApp } from '@sdlgr/test-utils'
 
 import { MarkdownPreview } from './MarkdownPreview'
 
-const mockSerializePreview = jest.fn()
+const mockSerializePreview = vi.fn()
 
-jest.mock('../../actions/serializePreview', () => ({
+vi.mock('../../actions/serializePreview', () => ({
   serializePreview: (...args: unknown[]) => mockSerializePreview(...args),
 }))
 
-jest.mock('@sdlgr/code-block', () => ({
+vi.mock('@sdlgr/code-block', () => ({
   CodeBlock: ({
     children,
     'data-language': language,
@@ -25,12 +25,12 @@ jest.mock('@sdlgr/code-block', () => ({
   ),
 }))
 
-jest.mock('@web/components/PostContent/PostContentImage', () => ({
+vi.mock('@web/components/PostContent/PostContentImage', () => ({
   PostContentImage: ({ src, alt }: { src?: string; alt?: string }) =>
     src ? <img src={src} alt={alt ?? ''} /> : null,
 }))
 
-jest.mock('@web/components/PostContent/PostContentEmbed', () => ({
+vi.mock('@web/components/PostContent/PostContentEmbed', () => ({
   PostContentEmbed: ({ type, url }: { type?: string; url?: string }) =>
     url ? (
       <div data-testid="embed-wrapper">
@@ -39,13 +39,13 @@ jest.mock('@web/components/PostContent/PostContentEmbed', () => ({
     ) : null,
 }))
 
-jest.mock('@web/components/PostContent/MdxTable', () => ({
+vi.mock('@web/components/PostContent/MdxTable', () => ({
   MdxTable: ({ children }: { children?: React.ReactNode }) => (
     <table data-testid="mdx-table">{children}</table>
   ),
 }))
 
-jest.mock('@web/components/PostContent/PostContentCroquis', () => ({
+vi.mock('@web/components/PostContent/PostContentCroquis', () => ({
   PostContentCroquis: ({ lang }: { lang?: string }) => (
     <div data-testid="croquis-preview">
       <span data-testid="croquis-lang">{lang}</span>
@@ -53,7 +53,7 @@ jest.mock('@web/components/PostContent/PostContentCroquis', () => ({
   ),
 }))
 
-jest.mock('@web/components/PostContent/PostContentCanyonSummary', () => ({
+vi.mock('@web/components/PostContent/PostContentCanyonSummary', () => ({
   PostContentCanyonSummary: ({ lang }: { lang?: string }) => (
     <div data-testid="canyon-summary-preview">
       <span data-testid="canyon-summary-lang">{lang}</span>
@@ -61,7 +61,7 @@ jest.mock('@web/components/PostContent/PostContentCanyonSummary', () => ({
   ),
 }))
 
-jest.mock('@web/components/PostContent/PostContentFerrataSummary', () => ({
+vi.mock('@web/components/PostContent/PostContentFerrataSummary', () => ({
   PostContentFerrataSummary: ({ lang }: { lang?: string }) => (
     <div data-testid="ferrata-summary-preview">
       <span data-testid="ferrata-summary-lang">{lang}</span>
@@ -69,7 +69,7 @@ jest.mock('@web/components/PostContent/PostContentFerrataSummary', () => ({
   ),
 }))
 
-jest.mock('@web/components/PostContent/PostContentRouteSummary', () => ({
+vi.mock('@web/components/PostContent/PostContentRouteSummary', () => ({
   PostContentRouteSummary: ({ lang }: { lang?: string }) => (
     <div data-testid="route-summary-preview">
       <span data-testid="route-summary-lang">{lang}</span>
@@ -77,7 +77,7 @@ jest.mock('@web/components/PostContent/PostContentRouteSummary', () => ({
   ),
 }))
 
-jest.mock('next-mdx-remote', () => ({
+vi.mock('next-mdx-remote', () => ({
   MDXRemote: ({
     compiledSource,
     components,
@@ -149,13 +149,13 @@ const fakeSerialized = {
 
 describe('MarkdownPreview', () => {
   beforeEach(() => {
-    jest.useFakeTimers()
-    jest.clearAllMocks()
+    vi.useFakeTimers()
+    vi.clearAllMocks()
     mockSerializePreview.mockResolvedValue(fakeSerialized)
   })
 
   afterEach(() => {
-    jest.useRealTimers()
+    vi.useRealTimers()
   })
 
   it('renders nothing when content is empty', () => {
@@ -186,7 +186,7 @@ describe('MarkdownPreview', () => {
       <MarkdownPreview content="# Hello" loadingLabel="Rendering…" lang="es" />,
     )
     await act(async () => {
-      jest.advanceTimersByTime(500)
+      vi.advanceTimersByTime(500)
       await Promise.resolve()
     })
     expect(screen.getByTestId('markdown-preview')).toBeInTheDocument()
@@ -202,7 +202,7 @@ describe('MarkdownPreview', () => {
       />,
     )
     await act(async () => {
-      jest.advanceTimersByTime(500)
+      vi.advanceTimersByTime(500)
       await Promise.resolve()
     })
     expect(mockSerializePreview).toHaveBeenCalledWith('# Hello world')
@@ -213,7 +213,7 @@ describe('MarkdownPreview', () => {
       <MarkdownPreview content="# Hello" loadingLabel="Rendering…" lang="es" />,
     )
     await act(async () => {
-      jest.advanceTimersByTime(500)
+      vi.advanceTimersByTime(500)
       await Promise.resolve()
     })
     expect(screen.getByTestId('markdown-preview')).toBeInTheDocument()
@@ -227,7 +227,7 @@ describe('MarkdownPreview', () => {
     renderApp(
       <MarkdownPreview content="# Hello" loadingLabel="Rendering…" lang="es" />,
     )
-    jest.advanceTimersByTime(499)
+    vi.advanceTimersByTime(499)
     expect(mockSerializePreview).not.toHaveBeenCalled()
   })
 
@@ -236,7 +236,7 @@ describe('MarkdownPreview', () => {
       <MarkdownPreview content="# Hello" loadingLabel="Rendering…" lang="es" />,
       { wrapper: RenderProviders },
     )
-    jest.advanceTimersByTime(400)
+    vi.advanceTimersByTime(400)
     rerender(
       <MarkdownPreview
         content="# Updated"
@@ -244,10 +244,10 @@ describe('MarkdownPreview', () => {
         lang="es"
       />,
     )
-    jest.advanceTimersByTime(400)
+    vi.advanceTimersByTime(400)
     expect(mockSerializePreview).not.toHaveBeenCalled()
     await act(async () => {
-      jest.advanceTimersByTime(200)
+      vi.advanceTimersByTime(200)
       await Promise.resolve()
     })
     expect(mockSerializePreview).toHaveBeenCalledTimes(1)
@@ -264,7 +264,7 @@ describe('MarkdownPreview', () => {
       />,
     )
     await act(async () => {
-      jest.advanceTimersByTime(500)
+      vi.advanceTimersByTime(500)
       await Promise.resolve()
     })
     expect(screen.queryByTestId('preview-loading')).not.toBeInTheDocument()
@@ -276,7 +276,7 @@ describe('MarkdownPreview', () => {
       <MarkdownPreview content="# Hello" loadingLabel="Rendering…" lang="es" />,
     )
     await act(async () => {
-      jest.advanceTimersByTime(500)
+      vi.advanceTimersByTime(500)
       await Promise.resolve()
     })
     expect(screen.getByTestId('code-block')).toBeInTheDocument()
@@ -288,7 +288,7 @@ describe('MarkdownPreview', () => {
       <MarkdownPreview content="# Hello" loadingLabel="Rendering…" lang="es" />,
     )
     await act(async () => {
-      jest.advanceTimersByTime(500)
+      vi.advanceTimersByTime(500)
       await Promise.resolve()
     })
     expect(screen.getByTestId('embed-wrapper')).toBeInTheDocument()
@@ -299,7 +299,7 @@ describe('MarkdownPreview', () => {
       <MarkdownPreview content="# Hello" loadingLabel="Rendering…" lang="es" />,
     )
     await act(async () => {
-      jest.advanceTimersByTime(500)
+      vi.advanceTimersByTime(500)
       await Promise.resolve()
     })
     const heading = screen.getByRole('heading', { name: 'Markdown H1 Heading' })
@@ -311,7 +311,7 @@ describe('MarkdownPreview', () => {
       <MarkdownPreview content="# Hello" loadingLabel="Rendering…" lang="es" />,
     )
     await act(async () => {
-      jest.advanceTimersByTime(500)
+      vi.advanceTimersByTime(500)
       await Promise.resolve()
     })
     expect(screen.getByTestId('mdx-table')).toBeInTheDocument()
@@ -322,7 +322,7 @@ describe('MarkdownPreview', () => {
       <MarkdownPreview content="# Hello" loadingLabel="Rendering…" lang="es" />,
     )
     await act(async () => {
-      jest.advanceTimersByTime(500)
+      vi.advanceTimersByTime(500)
       await Promise.resolve()
     })
     expect(screen.getByTestId('croquis-lang')).toHaveTextContent('es')
@@ -333,7 +333,7 @@ describe('MarkdownPreview', () => {
       <MarkdownPreview content="# Hello" loadingLabel="Rendering…" lang="es" />,
     )
     await act(async () => {
-      jest.advanceTimersByTime(500)
+      vi.advanceTimersByTime(500)
       await Promise.resolve()
     })
     expect(screen.getByTestId('canyon-summary-lang')).toHaveTextContent('es')
@@ -344,7 +344,7 @@ describe('MarkdownPreview', () => {
       <MarkdownPreview content="# Hello" loadingLabel="Rendering…" lang="es" />,
     )
     await act(async () => {
-      jest.advanceTimersByTime(500)
+      vi.advanceTimersByTime(500)
       await Promise.resolve()
     })
     expect(screen.getByTestId('ferrata-summary-lang')).toHaveTextContent('es')

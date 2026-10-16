@@ -1,22 +1,22 @@
-const mockSignOut = jest.fn()
-const mockRedirect = jest.fn()
+const mockSignOut = vi.fn()
+const mockRedirect = vi.fn()
 
-jest.mock('@web/lib/auth/config', () => ({
+vi.mock('@web/lib/auth/config', () => ({
   signOut: (...args: unknown[]) => mockSignOut(...args),
 }))
 
-jest.mock('next/navigation', () => ({
+vi.mock('next/navigation', () => ({
   redirect: (...args: unknown[]) => mockRedirect(...args),
 }))
 
 describe('logoutAction', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   it('calls signOut with redirect: false then redirects to /admin/login', async () => {
     mockSignOut.mockResolvedValue(undefined)
-    const { logoutAction } = require('./logout')
+    const { logoutAction } = await import('./logout')
     await logoutAction()
     expect(mockSignOut).toHaveBeenCalledWith({ redirect: false })
     expect(mockRedirect).toHaveBeenCalledWith('/admin/login')

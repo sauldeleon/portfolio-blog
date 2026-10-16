@@ -5,9 +5,9 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { PostContentRouteSummary } from './PostContentRouteSummary'
 
-const mockDownloadPng = jest.fn<Promise<void>, [string]>()
+const mockDownloadPng = vi.fn<(filename: string) => Promise<void>>()
 
-jest.mock('@web/components/RouteSummary', () => ({
+vi.mock('@web/components/RouteSummary', () => ({
   RouteSummaryMap: ({ data }: { data: { lang: string } }) => (
     <div data-testid="route-map-mock">
       <span data-testid="fm-lang">{data.lang}</span>
@@ -17,7 +17,7 @@ jest.mock('@web/components/RouteSummary', () => ({
 }))
 
 let mockLanguage = 'en'
-jest.mock('@web/i18n/client', () => ({
+vi.mock('@web/i18n/client', () => ({
   useClientTranslation: () => ({
     t: (key: string) => key,
     i18n: { language: mockLanguage },

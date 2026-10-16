@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SubscribeForm renders form fields and titles 1`] = `
+exports[`SubscribeForm > renders form fields and titles 1`] = `
 .c9 {
   display: flex;
   align-items: center;

@@ -2,16 +2,16 @@ import { render, screen } from '@testing-library/react'
 
 import UsersLayout from './layout.next'
 
-const mockRequireAdminRoleSession = jest.fn()
+const mockRequireAdminRoleSession = vi.fn()
 
-jest.mock('@web/lib/auth/requireAdminRoleSession', () => ({
+vi.mock('@web/lib/auth/requireAdminRoleSession', () => ({
   requireAdminRoleSession: (...args: unknown[]) =>
     mockRequireAdminRoleSession(...args),
 }))
 
 describe('UsersLayout', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   it('renders children when authorized', async () => {

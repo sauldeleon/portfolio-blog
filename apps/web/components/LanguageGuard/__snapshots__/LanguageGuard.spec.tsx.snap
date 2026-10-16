@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`LanguageGuard should render successfully 1`] = `
+exports[`LanguageGuard > should render successfully 1`] = `
 .c0 {
   opacity: 0;
   animation: k0 0.2s 0.1s linear forwards;

@@ -1,35 +1,35 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
-const mockRatelimit = { limit: jest.fn() }
-const mockGetSubscriptionByEmail = jest.fn()
-const mockCreateSubscription = jest.fn()
-const mockSendConfirmationEmail = jest.fn()
-const mockVerifyTurnstile = jest.fn()
-const mockLoggerError = jest.fn()
-const mockLoggerInfo = jest.fn()
+const mockRatelimit = { limit: vi.fn() }
+const mockGetSubscriptionByEmail = vi.fn()
+const mockCreateSubscription = vi.fn()
+const mockSendConfirmationEmail = vi.fn()
+const mockVerifyTurnstile = vi.fn()
+const mockLoggerError = vi.fn()
+const mockLoggerInfo = vi.fn()
 
-jest.mock('@web/lib/ratelimit', () => ({ ratelimit: mockRatelimit }))
-jest.mock('@web/lib/db/queries/subscriptions', () => ({
+vi.mock('@web/lib/ratelimit', () => ({ ratelimit: mockRatelimit }))
+vi.mock('@web/lib/db/queries/subscriptions', () => ({
   getSubscriptionByEmail: mockGetSubscriptionByEmail,
   createSubscription: mockCreateSubscription,
 }))
-jest.mock('@web/lib/email/sendConfirmationEmail', () => ({
+vi.mock('@web/lib/email/sendConfirmationEmail', () => ({
   sendConfirmationEmail: mockSendConfirmationEmail,
 }))
-jest.mock('@web/lib/turnstile/verify', () => ({
+vi.mock('@web/lib/turnstile/verify', () => ({
   verifyTurnstile: mockVerifyTurnstile,
 }))
-jest.mock('@web/lib/logger', () => ({
+vi.mock('@web/lib/logger', () => ({
   logger: {
     error: mockLoggerError,
     info: mockLoggerInfo,
-    debug: jest.fn(),
-    warn: jest.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
   },
 }))
 
-const { POST } = require('./route') as {
+const { POST } = (await import('./route')) as {
   POST: (req: import('next/server').NextRequest) => Promise<Response>
 }
 
@@ -74,7 +74,7 @@ const mockSubscription = {
 }
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
   mockRatelimit.limit.mockResolvedValue({ success: true })
   mockVerifyTurnstile.mockResolvedValue(true)
   mockGetSubscriptionByEmail.mockResolvedValue(null)
@@ -173,27 +173,27 @@ describe('POST /api/subscribe', () => {
   })
 
   it('skips rate limiting and proceeds when ratelimit is null', async () => {
-    jest.resetModules()
-    jest.mock('@web/lib/ratelimit', () => ({ ratelimit: null }))
-    jest.mock('@web/lib/db/queries/subscriptions', () => ({
+    vi.resetModules()
+    vi.doMock('@web/lib/ratelimit', () => ({ ratelimit: null }))
+    vi.doMock('@web/lib/db/queries/subscriptions', () => ({
       getSubscriptionByEmail: mockGetSubscriptionByEmail,
       createSubscription: mockCreateSubscription,
     }))
-    jest.mock('@web/lib/email/sendConfirmationEmail', () => ({
+    vi.doMock('@web/lib/email/sendConfirmationEmail', () => ({
       sendConfirmationEmail: mockSendConfirmationEmail,
     }))
-    jest.mock('@web/lib/turnstile/verify', () => ({
+    vi.doMock('@web/lib/turnstile/verify', () => ({
       verifyTurnstile: mockVerifyTurnstile,
     }))
-    jest.mock('@web/lib/logger', () => ({
+    vi.doMock('@web/lib/logger', () => ({
       logger: {
         error: mockLoggerError,
         info: mockLoggerInfo,
-        debug: jest.fn(),
-        warn: jest.fn(),
+        debug: vi.fn(),
+        warn: vi.fn(),
       },
     }))
-    const { POST: postFn } = require('./route') as {
+    const { POST: postFn } = (await import('./route')) as {
       POST: (req: import('next/server').NextRequest) => Promise<Response>
     }
     mockVerifyTurnstile.mockResolvedValue(true)
@@ -205,3 +205,5 @@ describe('POST /api/subscribe', () => {
     expect(mockRatelimit.limit).not.toHaveBeenCalled()
   })
 })
+
+export {}

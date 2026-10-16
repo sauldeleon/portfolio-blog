@@ -1,11 +1,12 @@
 import { act, fireEvent, screen, waitFor, within } from '@testing-library/react'
 import axios, { AxiosError } from 'axios'
+import type { Mock } from 'vitest'
 
 import { renderApp } from '@sdlgr/test-utils'
 
 import { UserForm } from './UserForm'
 
-jest.mock('@sdlgr/select', () => ({
+vi.mock('@sdlgr/select', () => ({
   Select: ({
     value,
     onChange,
@@ -35,11 +36,11 @@ jest.mock('@sdlgr/select', () => ({
   ),
 }))
 
-const mockRouterBack = jest.fn()
-const mockRouterPush = jest.fn()
-const mockRouterRefresh = jest.fn()
+const mockRouterBack = vi.fn()
+const mockRouterPush = vi.fn()
+const mockRouterRefresh = vi.fn()
 
-jest.mock('next/navigation', () => ({
+vi.mock('next/navigation', () => ({
   useRouter: () => ({
     back: mockRouterBack,
     push: mockRouterPush,
@@ -47,8 +48,8 @@ jest.mock('next/navigation', () => ({
   }),
 }))
 
-jest.mock('@web/i18n/client', () => ({
-  useClientTranslation: jest.fn().mockReturnValue({
+vi.mock('@web/i18n/client', () => ({
+  useClientTranslation: vi.fn().mockReturnValue({
     t: (key: string) => {
       const map: Record<string, string> = {
         'users.form.email': 'Email',
@@ -85,7 +86,7 @@ function makeAxiosError(status: number, data: unknown): AxiosError {
 }
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
 })
 
 describe('UserForm', () => {
@@ -160,7 +161,7 @@ describe('UserForm', () => {
   })
 
   it('submits form and navigates to /admin/users on success', async () => {
-    jest.spyOn(axios, 'post').mockResolvedValue({ data: {} })
+    vi.spyOn(axios, 'post').mockResolvedValue({ data: {} })
     renderApp(<UserForm title="Create User" backLabel="← Back to users" />)
     fireEvent.change(screen.getByTestId('email-input'), {
       target: { value: 'newuser@example.com' },
@@ -178,9 +179,9 @@ describe('UserForm', () => {
   })
 
   it('shows error when API returns error message', async () => {
-    jest
-      .spyOn(axios, 'post')
-      .mockRejectedValue(makeAxiosError(409, { error: 'Email already taken' }))
+    vi.spyOn(axios, 'post').mockRejectedValue(
+      makeAxiosError(409, { error: 'Email already taken' }),
+    )
     renderApp(<UserForm title="Create User" backLabel="← Back to users" />)
     fireEvent.change(screen.getByTestId('email-input'), {
       target: { value: 'admin@example.com' },
@@ -200,7 +201,7 @@ describe('UserForm', () => {
   })
 
   it('shows fallback error when API returns no error message', async () => {
-    jest.spyOn(axios, 'post').mockRejectedValue(makeAxiosError(500, {}))
+    vi.spyOn(axios, 'post').mockRejectedValue(makeAxiosError(500, {}))
     renderApp(<UserForm title="Create User" backLabel="← Back to users" />)
     fireEvent.change(screen.getByTestId('email-input'), {
       target: { value: 'admin@example.com' },
@@ -220,7 +221,7 @@ describe('UserForm', () => {
   })
 
   it('shows fallback error when request throws non-axios error', async () => {
-    jest.spyOn(axios, 'post').mockRejectedValue(new Error('Network error'))
+    vi.spyOn(axios, 'post').mockRejectedValue(new Error('Network error'))
     renderApp(<UserForm title="Create User" backLabel="← Back to users" />)
     fireEvent.change(screen.getByTestId('email-input'), {
       target: { value: 'admin@example.com' },
@@ -237,7 +238,7 @@ describe('UserForm', () => {
 
   it('disables submit button while submitting', async () => {
     let resolveRequest: ((value: unknown) => void) | undefined
-    jest.spyOn(axios, 'post').mockReturnValue(
+    vi.spyOn(axios, 'post').mockReturnValue(
       new Promise((resolve) => {
         resolveRequest = resolve
       }) as never,
@@ -265,7 +266,7 @@ describe('UserForm', () => {
   })
 
   it('sends correct POST body', async () => {
-    jest.spyOn(axios, 'post').mockResolvedValue({ data: {} })
+    vi.spyOn(axios, 'post').mockResolvedValue({ data: {} })
     renderApp(<UserForm title="Create User" backLabel="← Back to users" />)
     fireEvent.change(screen.getByTestId('email-input'), {
       target: { value: 'user@example.com' },
@@ -278,7 +279,7 @@ describe('UserForm', () => {
     })
     fireEvent.submit(screen.getByTestId('user-form'))
     await waitFor(() => expect(axios.post).toHaveBeenCalled())
-    const [url, body] = (axios.post as jest.Mock).mock.calls[0] as [
+    const [url, body] = (axios.post as Mock).mock.calls[0] as [
       string,
       Record<string, string>,
     ]
@@ -338,20 +339,20 @@ describe('UserForm', () => {
     })
 
     it('sends PATCH to /api/users/[id]', async () => {
-      jest.spyOn(axios, 'patch').mockResolvedValue({ data: {} })
+      vi.spyOn(axios, 'patch').mockResolvedValue({ data: {} })
       renderApp(<UserForm {...editProps} />)
       fireEvent.submit(screen.getByTestId('user-form'))
       await waitFor(() => expect(axios.patch).toHaveBeenCalled())
-      const [url] = (axios.patch as jest.Mock).mock.calls[0] as [string]
+      const [url] = (axios.patch as Mock).mock.calls[0] as [string]
       expect(url).toBe('/api/users/user-1')
     })
 
     it('does not include password in body when blank', async () => {
-      jest.spyOn(axios, 'patch').mockResolvedValue({ data: {} })
+      vi.spyOn(axios, 'patch').mockResolvedValue({ data: {} })
       renderApp(<UserForm {...editProps} />)
       fireEvent.submit(screen.getByTestId('user-form'))
       await waitFor(() => expect(axios.patch).toHaveBeenCalled())
-      const body = (axios.patch as jest.Mock).mock.calls[0][1] as Record<
+      const body = (axios.patch as Mock).mock.calls[0][1] as Record<
         string,
         unknown
       >
@@ -359,14 +360,14 @@ describe('UserForm', () => {
     })
 
     it('includes password in body when filled', async () => {
-      jest.spyOn(axios, 'patch').mockResolvedValue({ data: {} })
+      vi.spyOn(axios, 'patch').mockResolvedValue({ data: {} })
       renderApp(<UserForm {...editProps} />)
       fireEvent.change(screen.getByTestId('password-input'), {
         target: { value: 'newpassword123' },
       })
       fireEvent.submit(screen.getByTestId('user-form'))
       await waitFor(() => expect(axios.patch).toHaveBeenCalled())
-      const body = (axios.patch as jest.Mock).mock.calls[0][1] as Record<
+      const body = (axios.patch as Mock).mock.calls[0][1] as Record<
         string,
         unknown
       >
@@ -382,7 +383,7 @@ describe('UserForm', () => {
     })
 
     it('navigates to /admin/users on success', async () => {
-      jest.spyOn(axios, 'patch').mockResolvedValue({ data: {} })
+      vi.spyOn(axios, 'patch').mockResolvedValue({ data: {} })
       renderApp(<UserForm {...editProps} />)
       fireEvent.submit(screen.getByTestId('user-form'))
       await waitFor(() =>
@@ -392,7 +393,7 @@ describe('UserForm', () => {
   })
 
   it('sends selected role in POST body', async () => {
-    jest.spyOn(axios, 'post').mockResolvedValue({ data: {} })
+    vi.spyOn(axios, 'post').mockResolvedValue({ data: {} })
     renderApp(<UserForm title="Create User" backLabel="← Back to users" />)
     fireEvent.change(screen.getByTestId('email-input'), {
       target: { value: 'user@example.com' },
@@ -410,7 +411,7 @@ describe('UserForm', () => {
     )
     fireEvent.submit(screen.getByTestId('user-form'))
     await waitFor(() => expect(axios.post).toHaveBeenCalled())
-    const body = (axios.post as jest.Mock).mock.calls[0][1] as Record<
+    const body = (axios.post as Mock).mock.calls[0][1] as Record<
       string,
       unknown
     >

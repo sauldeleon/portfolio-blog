@@ -3,33 +3,33 @@ import React from 'react'
 
 import { PostHero } from '@sdlgr/post-hero'
 
-const mockNotFound = jest.fn()
+const mockNotFound = vi.fn()
 
-jest.mock('next/navigation', () => ({
+vi.mock('next/navigation', () => ({
   notFound: mockNotFound,
 }))
 
-const mockHeaders = jest.fn()
+const mockHeaders = vi.fn()
 
-jest.mock('next/headers', () => ({
+vi.mock('next/headers', () => ({
   headers: mockHeaders,
 }))
 
-const mockGetPostByPreviewToken = jest.fn()
+const mockGetPostByPreviewToken = vi.fn()
 
-jest.mock('@web/lib/db/queries/posts', () => ({
+vi.mock('@web/lib/db/queries/posts', () => ({
   getPostByPreviewToken: mockGetPostByPreviewToken,
 }))
 
-const mockAuth = jest.fn()
-jest.mock('@web/lib/auth/config', () => ({
+const mockAuth = vi.fn()
+vi.mock('@web/lib/auth/config', () => ({
   auth: () => mockAuth(),
 }))
 
-jest.mock('@sdlgr/post-hero', () => {
-  const React = require('react')
+vi.mock('@sdlgr/post-hero', async () => {
+  const React = await import('react')
   return {
-    PostHero: jest
+    PostHero: vi
       .fn()
       .mockReturnValue(
         React.createElement('div', { 'data-testid': 'post-hero' }),
@@ -37,28 +37,28 @@ jest.mock('@sdlgr/post-hero', () => {
   }
 })
 
-jest.mock('@web/lib/mdx/renderMDX', () => ({
-  renderMDX: jest.fn().mockReturnValue(null),
+vi.mock('@web/lib/mdx/renderMDX', () => ({
+  renderMDX: vi.fn().mockReturnValue(null),
 }))
 
-const mockPostComments = jest.fn()
-jest.mock('@web/components/PostComments', () => ({
+const mockPostComments = vi.fn()
+vi.mock('@web/components/PostComments', () => ({
   PostComments: (...args: unknown[]) => mockPostComments(...args),
 }))
 
-jest.mock('@web/components/PreviewBanner', () => ({
+vi.mock('@web/components/PreviewBanner', () => ({
   PreviewBanner: ({ label }: { label: string }) => (
     <div data-testid="preview-banner">{label}</div>
   ),
 }))
 
-jest.mock('@web/components/PostContent/PostContent', () => ({
+vi.mock('@web/components/PostContent/PostContent', () => ({
   PostContent: ({ children }: { children: React.ReactNode }) => (
     <article data-testid="post-content">{children}</article>
   ),
 }))
 
-jest.mock('./page.next.styles', () => ({
+vi.mock('./page.next.styles', () => ({
   StyledPage: ({ children }: { children: React.ReactNode }) => (
     <main data-testid="styled-page">{children}</main>
   ),
@@ -96,14 +96,14 @@ function makeHeadersList(acceptLanguage: string) {
 
 describe('blog/preview/[token] - PreviewPage', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     mockPostComments.mockReturnValue(<div data-testid="post-comments" />)
     mockAuth.mockResolvedValue({ user: { role: 'admin' } })
   })
 
   it('calls notFound when unauthenticated', async () => {
     mockAuth.mockResolvedValue(null)
-    const { default: PreviewPage } = require('./page.next')
+    const { default: PreviewPage } = await import('./page.next')
     await PreviewPage({ params: Promise.resolve({ token: 'valid-token' }) })
     expect(mockNotFound).toHaveBeenCalledTimes(1)
     expect(mockGetPostByPreviewToken).not.toHaveBeenCalled()
@@ -112,7 +112,7 @@ describe('blog/preview/[token] - PreviewPage', () => {
   it('calls notFound when token is invalid (null result)', async () => {
     mockGetPostByPreviewToken.mockResolvedValue(null)
     mockHeaders.mockResolvedValue(makeHeadersList('en'))
-    const { default: PreviewPage } = require('./page.next')
+    const { default: PreviewPage } = await import('./page.next')
     await PreviewPage({ params: Promise.resolve({ token: 'bad-token' }) })
     expect(mockNotFound).toHaveBeenCalledTimes(1)
   })
@@ -124,7 +124,7 @@ describe('blog/preview/[token] - PreviewPage', () => {
       authorName: 'Jane Doe',
     })
     mockHeaders.mockResolvedValue({ get: () => null })
-    const { default: PreviewPage } = require('./page.next')
+    const { default: PreviewPage } = await import('./page.next')
     const ui = await PreviewPage({
       params: Promise.resolve({ token: 'valid-token' }),
     })
@@ -142,7 +142,7 @@ describe('blog/preview/[token] - PreviewPage', () => {
       authorName: '',
     })
     mockHeaders.mockResolvedValue(makeHeadersList('en'))
-    const { default: PreviewPage } = require('./page.next')
+    const { default: PreviewPage } = await import('./page.next')
     await PreviewPage({ params: Promise.resolve({ token: 'valid-token' }) })
     expect(mockNotFound).toHaveBeenCalledTimes(1)
   })
@@ -154,7 +154,7 @@ describe('blog/preview/[token] - PreviewPage', () => {
       authorName: 'Jane Doe',
     })
     mockHeaders.mockResolvedValue(makeHeadersList('en'))
-    const { default: PreviewPage } = require('./page.next')
+    const { default: PreviewPage } = await import('./page.next')
     const ui = await PreviewPage({
       params: Promise.resolve({ token: 'valid-token' }),
     })
@@ -171,7 +171,7 @@ describe('blog/preview/[token] - PreviewPage', () => {
       authorName: 'Jane Doe',
     })
     mockHeaders.mockResolvedValue(makeHeadersList('es-ES,es;q=0.9'))
-    const { default: PreviewPage } = require('./page.next')
+    const { default: PreviewPage } = await import('./page.next')
     const ui = await PreviewPage({
       params: Promise.resolve({ token: 'valid-token' }),
     })
@@ -189,7 +189,7 @@ describe('blog/preview/[token] - PreviewPage', () => {
       authorName: 'Jane Doe',
     })
     mockHeaders.mockResolvedValue(makeHeadersList('fr-FR,fr;q=0.9'))
-    const { default: PreviewPage } = require('./page.next')
+    const { default: PreviewPage } = await import('./page.next')
     const ui = await PreviewPage({
       params: Promise.resolve({ token: 'valid-token' }),
     })
@@ -210,7 +210,7 @@ describe('blog/preview/[token] - PreviewPage', () => {
       authorName: 'Jane Doe',
     })
     mockHeaders.mockResolvedValue(makeHeadersList('de'))
-    const { default: PreviewPage } = require('./page.next')
+    const { default: PreviewPage } = await import('./page.next')
     const ui = await PreviewPage({
       params: Promise.resolve({ token: 'valid-token' }),
     })
@@ -228,7 +228,7 @@ describe('blog/preview/[token] - PreviewPage', () => {
       authorName: 'Jane Doe',
     })
     mockHeaders.mockResolvedValue(makeHeadersList('en'))
-    const { default: PreviewPage } = require('./page.next')
+    const { default: PreviewPage } = await import('./page.next')
     const ui = await PreviewPage({
       params: Promise.resolve({ token: 'valid-token' }),
     })
@@ -253,7 +253,7 @@ describe('blog/preview/[token] - PreviewPage', () => {
       authorName: 'Jane Doe',
     })
     mockHeaders.mockResolvedValue(makeHeadersList('en'))
-    const { default: PreviewPage } = require('./page.next')
+    const { default: PreviewPage } = await import('./page.next')
     const ui = await PreviewPage({
       params: Promise.resolve({ token: 'valid-token' }),
     })

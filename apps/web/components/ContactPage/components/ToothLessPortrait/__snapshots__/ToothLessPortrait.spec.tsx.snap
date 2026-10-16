@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ToothLessPortrait should render 1`] = `
+exports[`ToothLessPortrait > should render 1`] = `
 .c9 {
   position: relative;
   z-index: -1;

@@ -1,34 +1,34 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
-const mockGetScheduledPostsToPublish = jest.fn()
-const mockUpdatePost = jest.fn()
-const mockNotifyPostPublished = jest.fn()
-const mockRevalidateTag = jest.fn()
-const mockLoggerError = jest.fn()
+const mockGetScheduledPostsToPublish = vi.fn()
+const mockUpdatePost = vi.fn()
+const mockNotifyPostPublished = vi.fn()
+const mockRevalidateTag = vi.fn()
+const mockLoggerError = vi.fn()
 
-jest.mock('@web/lib/db/queries/posts', () => ({
+vi.mock('@web/lib/db/queries/posts', () => ({
   getScheduledPostsToPublish: mockGetScheduledPostsToPublish,
   updatePost: mockUpdatePost,
 }))
-jest.mock('@web/lib/email/notifyPostPublished', () => ({
+vi.mock('@web/lib/email/notifyPostPublished', () => ({
   notifyPostPublished: mockNotifyPostPublished,
 }))
 
-jest.mock('next/cache', () => ({
+vi.mock('next/cache', () => ({
   revalidateTag: mockRevalidateTag,
 }))
 
-jest.mock('@web/lib/logger', () => ({
+vi.mock('@web/lib/logger', () => ({
   logger: {
     error: mockLoggerError,
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
   },
 }))
 
-const { GET } = require('./route') as {
+const { GET } = (await import('./route')) as unknown as {
   GET: (req: Request) => Promise<Response>
 }
 
@@ -42,7 +42,7 @@ describe('GET /api/cron/publish', () => {
   const originalCronSecret = process.env.CRON_SECRET
 
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     process.env.CRON_SECRET = 'test-secret-xyz'
     mockGetScheduledPostsToPublish.mockResolvedValue([])
     mockUpdatePost.mockResolvedValue(null)

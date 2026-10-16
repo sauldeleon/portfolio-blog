@@ -2,16 +2,16 @@ import { render, screen } from '@testing-library/react'
 
 import AdminImagesPage from './page.next'
 
-const mockRequireAdminSession = jest.fn()
+const mockRequireAdminSession = vi.fn()
 
-jest.mock('@web/lib/auth/requireAdminSession', () => ({
+vi.mock('@web/lib/auth/requireAdminSession', () => ({
   requireAdminSession: (...args: unknown[]) => mockRequireAdminSession(...args),
 }))
 
-jest.mock('./components/ImageManager', () => {
-  const React = require('react')
+vi.mock('./components/ImageManager', async () => {
+  const React = await import('react')
   return {
-    ImageManager: jest
+    ImageManager: vi
       .fn()
       .mockReturnValue(
         React.createElement('div', { 'data-testid': 'image-manager' }),
@@ -21,7 +21,7 @@ jest.mock('./components/ImageManager', () => {
 
 describe('AdminImagesPage', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     mockRequireAdminSession.mockResolvedValue({ user: { name: 'admin' } })
   })
 
