@@ -1,5 +1,15 @@
 # Changelog Assets library
 
+## [0.8.0](https://github.com/sauldeleon/portfolio-blog/compare/assets-0.7.0...assets-0.8.0) (2026-10-16)
+
+### Features
+
+- improve cards, comments, maps, and test setup ([#134](https://github.com/sauldeleon/portfolio-blog/issues/134)) ([d23293f](https://github.com/sauldeleon/portfolio-blog/commit/d23293fe9a2cf39143bc5141b2b9eb3734e14b08))
+
+### Bug Fixes
+
+- strip diacritics from slugs and guard post notifications ([#132](https://github.com/sauldeleon/portfolio-blog/issues/132)) ([9f07d48](https://github.com/sauldeleon/portfolio-blog/commit/9f07d482e00d90af111ed875444f3f5000815ac7))
+
 # [0.7.0](https://github.com/sauldeleon/portfolio-blog/compare/assets-0.6.0...assets-0.7.0) (2026-06-09)
 
 ### Features
