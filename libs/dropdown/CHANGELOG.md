@@ -1,5 +1,7 @@
 # Changelog Dropdown library
 
+## [0.1.1](https://github.com/sauldeleon/portfolio-blog/compare/dropdown-0.1.0...dropdown-0.1.1) (2026-10-16)
+
 ## 0.1.0 (2026-10-16)
 
 ### Features
