@@ -1,13 +1,16 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
 import axios from 'axios'
 
 import { verifyTurnstile } from './verify'
 
-jest.mock('axios', () => ({ post: jest.fn() }))
+vi.mock('axios', () => {
+  const mod = { post: vi.fn() }
+  return { ...mod, default: mod }
+})
 
-const mockAxiosPost = jest.mocked(axios.post)
+const mockAxiosPost = vi.mocked(axios.post)
 
 const originalEnv = process.env
 

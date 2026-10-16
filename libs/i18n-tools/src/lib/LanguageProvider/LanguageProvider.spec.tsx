@@ -2,8 +2,8 @@ import { render } from '@testing-library/react'
 
 import { LanguageContextProvider } from './LanguageProvider'
 
-jest.mock('js-cookie', () => ({
-  set: jest.fn(),
+vi.mock('js-cookie', () => ({
+  set: vi.fn(),
 }))
 
 describe('LanguageProvider', () => {
@@ -15,7 +15,7 @@ describe('LanguageProvider', () => {
   })
 
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   it('should render successfully', () => {

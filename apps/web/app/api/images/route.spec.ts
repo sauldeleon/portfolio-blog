@@ -1,28 +1,28 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
 import { NextRequest } from 'next/server'
 
-const mockAuth = jest.fn()
-const mockListImages = jest.fn()
-const mockRenameImage = jest.fn()
-const mockLoggerError = jest.fn()
+const mockAuth = vi.fn()
+const mockListImages = vi.fn()
+const mockRenameImage = vi.fn()
+const mockLoggerError = vi.fn()
 
-jest.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
-jest.mock('@web/lib/cloudinary/images', () => ({
+vi.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
+vi.mock('@web/lib/cloudinary/images', () => ({
   listImages: mockListImages,
   renameImage: mockRenameImage,
 }))
-jest.mock('@web/lib/logger', () => ({
+vi.mock('@web/lib/logger', () => ({
   logger: {
     error: mockLoggerError,
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
   },
 }))
 
-const { GET, PATCH } = require('./route') as {
+const { GET, PATCH } = (await import('./route')) as {
   GET: (request: NextRequest) => Promise<Response>
   PATCH: (request: NextRequest) => Promise<Response>
 }
@@ -52,7 +52,7 @@ const mockImages = [
 
 describe('GET /api/images', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   it('returns 401 when not authenticated', async () => {
@@ -153,7 +153,7 @@ function makePatchRequest(body: Record<string, unknown>) {
 
 describe('PATCH /api/images', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   it('returns 401 when not authenticated', async () => {

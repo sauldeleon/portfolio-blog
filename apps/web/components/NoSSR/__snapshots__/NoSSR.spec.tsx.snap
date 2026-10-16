@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`NoSSR should render successfully 1`] = `
+exports[`NoSSR > should render successfully 1`] = `
 <body>
   <div>
     test

@@ -1,17 +1,18 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react'
 import axios, { AxiosError } from 'axios'
 import { useRouter } from 'next/navigation'
+import type { Mock } from 'vitest'
 
 import { renderApp } from '@sdlgr/test-utils'
 
 import { SeriesForm } from './SeriesForm'
 
-const mockPush = jest.fn()
-const mockBack = jest.fn()
-const mockRefresh = jest.fn()
+const mockPush = vi.fn()
+const mockBack = vi.fn()
+const mockRefresh = vi.fn()
 
-jest.mock('@web/i18n/client', () => ({
-  useClientTranslation: jest.fn().mockReturnValue({
+vi.mock('@web/i18n/client', () => ({
+  useClientTranslation: vi.fn().mockReturnValue({
     t: (key: string) => {
       const translations: Record<string, string> = {
         'series.form.id': 'Series ID',
@@ -30,8 +31,8 @@ jest.mock('@web/i18n/client', () => ({
   }),
 }))
 
-jest.mock('next/navigation', () => ({
-  useRouter: jest.fn(),
+vi.mock('next/navigation', () => ({
+  useRouter: vi.fn(),
 }))
 
 function setup() {
@@ -40,13 +41,13 @@ function setup() {
 
 describe('SeriesForm', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
-    ;(useRouter as jest.Mock).mockReturnValue({
+    vi.clearAllMocks()
+    ;(useRouter as Mock).mockReturnValue({
       push: mockPush,
       back: mockBack,
       refresh: mockRefresh,
     })
-    jest.spyOn(axios, 'post').mockResolvedValue({ data: {} })
+    vi.spyOn(axios, 'post').mockResolvedValue({ data: {} })
   })
 
   it('renders title and back link', () => {
@@ -123,7 +124,7 @@ describe('SeriesForm', () => {
     })
     fireEvent.click(screen.getByTestId('submit-button'))
     await waitFor(() => expect(axios.post).toHaveBeenCalled())
-    const body = (axios.post as jest.Mock).mock.calls[0][1] as {
+    const body = (axios.post as Mock).mock.calls[0][1] as {
       translations: Record<string, string>
     }
     expect(body.translations.es).toBeUndefined()
@@ -140,7 +141,7 @@ describe('SeriesForm', () => {
   })
 
   it('shows string error on API failure', async () => {
-    jest.spyOn(axios, 'post').mockRejectedValue(
+    vi.spyOn(axios, 'post').mockRejectedValue(
       new AxiosError('error', '409', undefined, undefined, {
         status: 409,
         data: { error: "Series 'my-series' already exists" },
@@ -160,7 +161,7 @@ describe('SeriesForm', () => {
   })
 
   it('shows fallback error when API error is not a string', async () => {
-    jest.spyOn(axios, 'post').mockRejectedValue(
+    vi.spyOn(axios, 'post').mockRejectedValue(
       new AxiosError('error', '400', undefined, undefined, {
         status: 400,
         data: { error: [{ message: 'invalid' }] },
@@ -180,7 +181,7 @@ describe('SeriesForm', () => {
   })
 
   it('silently ignores non-axios errors', async () => {
-    jest.spyOn(axios, 'post').mockRejectedValue(new Error('Network timeout'))
+    vi.spyOn(axios, 'post').mockRejectedValue(new Error('Network timeout'))
     setup()
     fireEvent.change(screen.getByTestId('en-title-input'), {
       target: { value: 'My Series' },

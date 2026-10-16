@@ -1,17 +1,18 @@
 import { act, fireEvent, screen, waitFor } from '@testing-library/react'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
+import type { Mock } from 'vitest'
 
 import { renderApp } from '@sdlgr/test-utils'
 
 import type { PostEditorProps } from './PostEditor'
 import { PostEditor } from './PostEditor'
 
-const mockPush = jest.fn()
-const mockRefresh = jest.fn()
+const mockPush = vi.fn()
+const mockRefresh = vi.fn()
 
-jest.mock('@web/i18n/client', () => ({
-  useClientTranslation: jest.fn().mockReturnValue({
+vi.mock('@web/i18n/client', () => ({
+  useClientTranslation: vi.fn().mockReturnValue({
     t: (key: string) => {
       const translations: Record<string, string> = {
         'postEditor.newTitle': 'New Post',
@@ -85,21 +86,21 @@ jest.mock('@web/i18n/client', () => ({
   }),
 }))
 
-jest.mock('next/navigation', () => ({
-  useRouter: jest.fn(),
+vi.mock('next/navigation', () => ({
+  useRouter: vi.fn(),
 }))
 
-jest.mock('../../../components/PublishNotifyModal', () => ({
+vi.mock('../../../components/PublishNotifyModal', () => ({
   PublishNotifyModal: () => null,
 }))
 
-jest.mock('../MarkdownPreview', () => ({
+vi.mock('../MarkdownPreview', () => ({
   MarkdownPreview: ({ content }: { content: string }) => (
     <div data-testid="markdown-preview">{content}</div>
   ),
 }))
 
-jest.mock('../EmbedInsertModal', () => ({
+vi.mock('../EmbedInsertModal', () => ({
   EmbedInsertModal: ({
     isOpen,
     onInsert,
@@ -139,18 +140,18 @@ const mockTranslation = {
     | { available: true }
     | { available: false; reason: string; message: string }
     | null,
-  recheck: jest.fn(),
-  translate: jest.fn(),
-  cancel: jest.fn(),
+  recheck: vi.fn(),
+  translate: vi.fn(),
+  cancel: vi.fn(),
   isTranslating: false,
   error: null as string | null,
 }
 
-jest.mock('./usePostTranslation', () => ({
+vi.mock('./usePostTranslation', () => ({
   usePostTranslation: () => mockTranslation,
 }))
 
-jest.mock('../LinkInsertModal', () => ({
+vi.mock('../LinkInsertModal', () => ({
   LinkInsertModal: ({
     isOpen,
     initialText,
@@ -173,7 +174,7 @@ jest.mock('../LinkInsertModal', () => ({
     ) : null,
 }))
 
-jest.mock('../SlideshowInsertModal', () => ({
+vi.mock('../SlideshowInsertModal', () => ({
   SlideshowInsertModal: ({
     isOpen,
     onInsert,
@@ -208,7 +209,7 @@ jest.mock('../SlideshowInsertModal', () => ({
     ) : null,
 }))
 
-jest.mock('../GpxMapModal', () => ({
+vi.mock('../GpxMapModal', () => ({
   GpxMapModal: ({
     isOpen,
     onInsert,
@@ -241,7 +242,7 @@ jest.mock('../GpxMapModal', () => ({
     ) : null,
 }))
 
-jest.mock('../ImagePicker', () => ({
+vi.mock('../ImagePicker', () => ({
   ImagePicker: ({
     open,
     onClose,
@@ -289,11 +290,11 @@ jest.mock('../ImagePicker', () => ({
     ) : null,
 }))
 
-jest.mock('@web/utils/slugify', () => ({
+vi.mock('@web/utils/slugify', () => ({
   slugify: (text: string) => text.toLowerCase().replace(/\s+/g, '-'),
 }))
 
-jest.mock('@sdlgr/date-picker', () => ({
+vi.mock('@sdlgr/date-picker', () => ({
   DateTimePicker: ({
     value,
     onChange,
@@ -330,7 +331,7 @@ jest.mock('@sdlgr/date-picker', () => ({
   ),
 }))
 
-jest.mock('@sdlgr/post-hero', () => ({
+vi.mock('@sdlgr/post-hero', () => ({
   PostHero: ({ readingTime }: { readingTime: number }) => (
     <div data-testid="post-hero-mock">
       <span data-testid="reading-time">{readingTime}</span>
@@ -338,7 +339,7 @@ jest.mock('@sdlgr/post-hero', () => ({
   ),
 }))
 
-jest.mock('@sdlgr/table-of-contents', () => ({
+vi.mock('@sdlgr/table-of-contents', () => ({
   TableOfContents: ({
     entries,
     label,
@@ -359,7 +360,7 @@ jest.mock('@sdlgr/table-of-contents', () => ({
   ),
 }))
 
-jest.mock('@web/lib/mdx/remarkHeadings', () => ({
+vi.mock('@web/lib/mdx/remarkHeadings', () => ({
   extractToc: (content: string) => {
     const lines = content.split('\n')
     return lines
@@ -377,11 +378,11 @@ jest.mock('@web/lib/mdx/remarkHeadings', () => ({
   },
 }))
 
-jest.mock('./PostCardPreview', () => ({
+vi.mock('./PostCardPreview', () => ({
   PostCardPreview: () => <div data-testid="post-card-preview-mock" />,
 }))
 
-jest.mock('./CoverImageInput', () => ({
+vi.mock('./CoverImageInput', () => ({
   CoverImageInput: ({
     value,
     onPick,
@@ -417,7 +418,7 @@ jest.mock('./CoverImageInput', () => ({
   ),
 }))
 
-jest.mock('@sdlgr/combobox', () => ({
+vi.mock('@sdlgr/combobox', () => ({
   Combobox: ({
     value,
     onChange,
@@ -450,7 +451,7 @@ jest.mock('@sdlgr/combobox', () => ({
   ),
 }))
 
-jest.mock('@sdlgr/select', () => ({
+vi.mock('@sdlgr/select', () => ({
   Select: ({
     value,
     onChange,
@@ -519,13 +520,13 @@ const mockUsers: PostEditorProps['users'] = [
 
 describe('PostEditor tools', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
-    ;(useRouter as jest.Mock).mockReturnValue({
+    vi.clearAllMocks()
+    ;(useRouter as Mock).mockReturnValue({
       push: mockPush,
       refresh: mockRefresh,
     })
-    jest.spyOn(axios, 'post').mockResolvedValue({ data: { id: 'new-post-id' } })
-    jest.spyOn(axios, 'put').mockResolvedValue({ data: {} })
+    vi.spyOn(axios, 'post').mockResolvedValue({ data: { id: 'new-post-id' } })
+    vi.spyOn(axios, 'put').mockResolvedValue({ data: {} })
   })
 
   describe('Link insert modal', () => {

@@ -1,26 +1,26 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
-const mockRender = jest.fn()
-const mockResendSend = jest.fn()
-const mockGetSiteUrl = jest.fn(() => 'https://example.com')
-const mockLoggerError = jest.fn()
+const mockRender = vi.fn()
+const mockResendSend = vi.fn()
+const mockGetSiteUrl = vi.fn(() => 'https://example.com')
+const mockLoggerError = vi.fn()
 
-jest.mock('@react-email/components', () => ({ render: mockRender }))
-jest.mock('@web/utils/url/generateUrl', () => ({
+vi.mock('@react-email/components', () => ({ render: mockRender }))
+vi.mock('@web/utils/url/generateUrl', () => ({
   getSiteUrl: mockGetSiteUrl,
 }))
-jest.mock('./resend', () => ({
+vi.mock('./resend', () => ({
   resend: { emails: { send: mockResendSend } },
 }))
-jest.mock('./templates/ConfirmSubscription', () => ({
-  ConfirmSubscriptionEmail: jest.fn(() => null),
+vi.mock('./templates/ConfirmSubscription', () => ({
+  ConfirmSubscriptionEmail: vi.fn(() => null),
 }))
-jest.mock('@web/lib/logger', () => ({
+vi.mock('@web/lib/logger', () => ({
   logger: { error: mockLoggerError },
 }))
 
-const { sendConfirmationEmail } = require('./sendConfirmationEmail') as {
+const { sendConfirmationEmail } = (await import('./sendConfirmationEmail')) as {
   sendConfirmationEmail: (
     p: import('./sendConfirmationEmail').SendConfirmationEmailParams,
   ) => Promise<void>
@@ -37,7 +37,7 @@ const translations = {
 }
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
   mockRender.mockResolvedValue('<html>email</html>')
   mockResendSend.mockResolvedValue({ data: { id: 'email-id' }, error: null })
 })
@@ -71,7 +71,7 @@ describe('sendConfirmationEmail', () => {
       translations,
     })
 
-    const templateArg = require('./templates/ConfirmSubscription')
+    const templateArg = (await import('./templates/ConfirmSubscription'))
       .ConfirmSubscriptionEmail.mock.calls[0][0]
     expect(templateArg.confirmUrl).toBe(
       'https://example.com/es/subscribe/confirmed?token=mytoken',
@@ -89,7 +89,7 @@ describe('sendConfirmationEmail', () => {
       locale: 'en',
       translations,
     })
-    const templateArg = require('./templates/ConfirmSubscription')
+    const templateArg = (await import('./templates/ConfirmSubscription'))
       .ConfirmSubscriptionEmail.mock.calls[0][0]
     expect(templateArg.blogImageUrl).toBe('https://example.com/og/blog.jpg')
   })
@@ -103,7 +103,7 @@ describe('sendConfirmationEmail', () => {
       locale: 'en',
       translations,
     })
-    const templateArg = require('./templates/ConfirmSubscription')
+    const templateArg = (await import('./templates/ConfirmSubscription'))
       .ConfirmSubscriptionEmail.mock.calls[0][0]
     expect(templateArg.blogImageUrl).toBeUndefined()
   })
@@ -131,22 +131,22 @@ describe('sendConfirmationEmail', () => {
   it('uses onboarding@resend.dev as from address when RESEND_FROM_EMAIL is not set', async () => {
     const originalFrom = process.env.RESEND_FROM_EMAIL
     delete process.env.RESEND_FROM_EMAIL
-    jest.resetModules()
-    jest.mock('./resend', () => ({
+    vi.resetModules()
+    vi.doMock('./resend', () => ({
       resend: { emails: { send: mockResendSend } },
     }))
-    jest.mock('@react-email/components', () => ({ render: mockRender }))
-    jest.mock('@web/utils/url/generateUrl', () => ({
+    vi.doMock('@react-email/components', () => ({ render: mockRender }))
+    vi.doMock('@web/utils/url/generateUrl', () => ({
       getSiteUrl: mockGetSiteUrl,
     }))
-    jest.mock('./templates/ConfirmSubscription', () => ({
-      ConfirmSubscriptionEmail: jest.fn(() => null),
+    vi.doMock('./templates/ConfirmSubscription', () => ({
+      ConfirmSubscriptionEmail: vi.fn(() => null),
     }))
-    jest.mock('@web/lib/logger', () => ({
+    vi.doMock('@web/lib/logger', () => ({
       logger: { error: mockLoggerError },
     }))
     const { sendConfirmationEmail: send } =
-      require('./sendConfirmationEmail') as typeof import('./sendConfirmationEmail')
+      (await import('./sendConfirmationEmail')) as typeof import('./sendConfirmationEmail')
     mockRender.mockResolvedValue('<html>email</html>')
     mockResendSend.mockResolvedValue({ data: { id: 'id' }, error: null })
     await send({
@@ -163,17 +163,17 @@ describe('sendConfirmationEmail', () => {
   })
 
   it('skips sending when resend is null', async () => {
-    jest.resetModules()
-    jest.mock('./resend', () => ({ resend: null }))
-    jest.mock('@react-email/components', () => ({ render: mockRender }))
-    jest.mock('@web/utils/url/generateUrl', () => ({
+    vi.resetModules()
+    vi.doMock('./resend', () => ({ resend: null }))
+    vi.doMock('@react-email/components', () => ({ render: mockRender }))
+    vi.doMock('@web/utils/url/generateUrl', () => ({
       getSiteUrl: mockGetSiteUrl,
     }))
-    jest.mock('./templates/ConfirmSubscription', () => ({
-      ConfirmSubscriptionEmail: jest.fn(() => null),
+    vi.doMock('./templates/ConfirmSubscription', () => ({
+      ConfirmSubscriptionEmail: vi.fn(() => null),
     }))
     const { sendConfirmationEmail: send } =
-      require('./sendConfirmationEmail') as typeof import('./sendConfirmationEmail')
+      (await import('./sendConfirmationEmail')) as typeof import('./sendConfirmationEmail')
     await send({
       to: 'user@example.com',
       name: 'User',
@@ -184,3 +184,5 @@ describe('sendConfirmationEmail', () => {
     expect(mockResendSend).not.toHaveBeenCalled()
   })
 })
+
+export {}

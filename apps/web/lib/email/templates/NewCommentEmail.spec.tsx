@@ -1,7 +1,6 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
-
 /* eslint-disable testing-library/render-result-naming-convention */
 import * as React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'

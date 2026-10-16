@@ -1,31 +1,34 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
-const mockResendSend = jest.fn()
-const mockRender = jest.fn()
-const mockLoggerError = jest.fn()
-const mockGetSiteUrl = jest.fn(() => 'https://sawl.dev')
+const mockResendSend = vi.fn()
+const mockRender = vi.fn()
+const mockLoggerError = vi.fn()
+const mockGetSiteUrl = vi.fn(() => 'https://sawl.dev')
 
-jest.mock('./resend', () => ({
+vi.mock('./resend', () => ({
   resend: { emails: { send: mockResendSend } },
 }))
-jest.mock('@react-email/components', () => ({
+vi.mock('@react-email/components', () => ({
   render: mockRender,
 }))
-jest.mock('@web/lib/logger', () => ({
+vi.mock('@web/lib/logger', () => ({
   logger: { error: mockLoggerError },
 }))
-jest.mock('@web/utils/url/generateUrl', () => ({
+vi.mock('@web/utils/url/generateUrl', () => ({
   getSiteUrl: mockGetSiteUrl,
 }))
-jest.mock('./templates/NewCommentEmail', () => ({
+vi.mock('./templates/NewCommentEmail', () => ({
   NewCommentEmail: () => null,
 }))
-jest.mock('react', () => ({
-  createElement: jest.fn(() => null),
-}))
+vi.mock('react', () => {
+  const mod = {
+    createElement: vi.fn(() => null),
+  }
+  return { ...mod, default: mod }
+})
 
-const { notifyNewComment } = require('./notifyNewComment') as {
+const { notifyNewComment } = (await import('./notifyNewComment')) as {
   notifyNewComment: (params: {
     username: string
     body: string
@@ -46,7 +49,7 @@ const params = {
 }
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
   mockRender.mockResolvedValue('<html>email</html>')
   mockResendSend.mockResolvedValue({ error: null })
   process.env.ADMIN_NOTIFICATION_EMAIL = 'admin@example.com'
@@ -68,9 +71,9 @@ describe('notifyNewComment', () => {
   })
 
   it('does nothing when resend is not configured', async () => {
-    jest.resetModules()
-    jest.mock('./resend', () => ({ resend: null }))
-    const { notifyNewComment: fn } = require('./notifyNewComment') as {
+    vi.resetModules()
+    vi.doMock('./resend', () => ({ resend: null }))
+    const { notifyNewComment: fn } = (await import('./notifyNewComment')) as {
       notifyNewComment: typeof notifyNewComment
     }
     await fn(params)
@@ -101,23 +104,26 @@ describe('notifyNewComment', () => {
   })
 
   it('uses RESEND_FROM_EMAIL env var as sender when set', async () => {
-    jest.resetModules()
+    vi.resetModules()
     process.env.RESEND_FROM_EMAIL = 'custom@sender.com'
-    jest.mock('./resend', () => ({
+    vi.doMock('./resend', () => ({
       resend: { emails: { send: mockResendSend } },
     }))
-    jest.mock('@react-email/components', () => ({ render: mockRender }))
-    jest.mock('@web/lib/logger', () => ({
+    vi.doMock('@react-email/components', () => ({ render: mockRender }))
+    vi.doMock('@web/lib/logger', () => ({
       logger: { error: mockLoggerError },
     }))
-    jest.mock('@web/utils/url/generateUrl', () => ({
+    vi.doMock('@web/utils/url/generateUrl', () => ({
       getSiteUrl: mockGetSiteUrl,
     }))
-    jest.mock('./templates/NewCommentEmail', () => ({
+    vi.doMock('./templates/NewCommentEmail', () => ({
       NewCommentEmail: () => null,
     }))
-    jest.mock('react', () => ({ createElement: jest.fn(() => null) }))
-    const { notifyNewComment: fn } = require('./notifyNewComment') as {
+    vi.doMock('react', () => {
+      const mod = { createElement: vi.fn(() => null) }
+      return { ...mod, default: mod }
+    })
+    const { notifyNewComment: fn } = (await import('./notifyNewComment')) as {
       notifyNewComment: typeof notifyNewComment
     }
     process.env.ADMIN_NOTIFICATION_EMAIL = 'admin@example.com'
@@ -128,3 +134,5 @@ describe('notifyNewComment', () => {
     delete process.env.RESEND_FROM_EMAIL
   })
 })
+
+export {}

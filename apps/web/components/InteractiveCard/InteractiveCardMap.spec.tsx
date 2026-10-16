@@ -11,7 +11,7 @@ beforeAll(() => {
   window.PointerEvent = class extends MouseEvent {}
 })
 
-afterEach(() => jest.useRealTimers())
+afterEach(() => vi.useRealTimers())
 
 const ZONES: CardZone[] = [
   { id: 'wide', kind: 'grade', key: 'x', x: 10, y: 10, w: 120, h: 60 },
@@ -108,13 +108,13 @@ describe('InteractiveCardMap', () => {
   })
 
   it('closes after mouse-leave via the deferred timer', () => {
-    jest.useFakeTimers()
+    vi.useFakeTimers()
     setup()
     const zone = screen.getByTestId('card-zone-wide')
     fireEvent.mouseEnter(zone)
     fireEvent.mouseLeave(zone)
     act(() => {
-      jest.advanceTimersByTime(200)
+      vi.advanceTimersByTime(200)
     })
     expect(screen.getByTestId('card-popover')).toHaveAttribute(
       'data-open',
@@ -123,19 +123,19 @@ describe('InteractiveCardMap', () => {
   })
 
   it('keeps the popover open while hovering it', () => {
-    jest.useFakeTimers()
+    vi.useFakeTimers()
     setup()
     fireEvent.mouseEnter(screen.getByTestId('card-zone-wide'))
     const pop = screen.getByTestId('card-popover')
     fireEvent.mouseLeave(screen.getByTestId('card-zone-wide'))
     fireEvent.mouseEnter(pop)
     act(() => {
-      jest.advanceTimersByTime(200)
+      vi.advanceTimersByTime(200)
     })
     expect(pop).toHaveAttribute('data-open', 'true')
     fireEvent.mouseLeave(pop)
     act(() => {
-      jest.advanceTimersByTime(200)
+      vi.advanceTimersByTime(200)
     })
     expect(pop).toHaveAttribute('data-open', 'false')
   })
@@ -192,7 +192,7 @@ describe('InteractiveCardMap', () => {
   })
 
   it('opens on focus and closes on blur', () => {
-    jest.useFakeTimers()
+    vi.useFakeTimers()
     setup()
     const zone = screen.getByTestId('card-zone-narrow')
     fireEvent.focus(zone)
@@ -202,7 +202,7 @@ describe('InteractiveCardMap', () => {
     )
     fireEvent.blur(zone)
     act(() => {
-      jest.advanceTimersByTime(200)
+      vi.advanceTimersByTime(200)
     })
     expect(screen.getByTestId('card-popover')).toHaveAttribute(
       'data-open',
@@ -211,20 +211,20 @@ describe('InteractiveCardMap', () => {
   })
 
   it('keeps the popover open when focus moves into it', () => {
-    jest.useFakeTimers()
+    vi.useFakeTimers()
     setup()
     const zone = screen.getByTestId('card-zone-narrow')
     fireEvent.focus(zone)
     const pop = screen.getByTestId('card-popover')
     fireEvent.blur(zone, { relatedTarget: pop })
     act(() => {
-      jest.advanceTimersByTime(200)
+      vi.advanceTimersByTime(200)
     })
     expect(pop).toHaveAttribute('data-open', 'true')
   })
 
   it('places the popover below the zone when it does not fit above', () => {
-    const spy = jest
+    const spy = vi
       .spyOn(Element.prototype, 'getBoundingClientRect')
       .mockReturnValue({
         top: 600,

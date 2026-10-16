@@ -4,29 +4,29 @@ import type { ReactElement, ReactNode } from 'react'
 
 import PreviewLayout from './layout.next'
 
-jest.mock('@sdlgr/i18n-tools', () => ({
+vi.mock('@sdlgr/i18n-tools', () => ({
   LanguageContextProvider: ({ children }: { children: React.ReactNode }) =>
     children,
 }))
 
-jest.mock('@sdlgr/main-theme', () => ({
+vi.mock('@sdlgr/main-theme', () => ({
   robotoMonoClassName: 'roboto-mono',
 }))
 
-jest.mock('@web/components/MainLayout/MainLayout', () => ({
+vi.mock('@web/components/MainLayout/MainLayout', () => ({
   MainLayout: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="main-layout">{children}</div>
   ),
 }))
 
-jest.mock(
+vi.mock(
   '@web/components/StyledComponentsRegistry/StyledComponentsRegistry',
-  () =>
-    ({ children }: { children: React.ReactNode }) =>
-      children,
+  () => ({
+    default: ({ children }: { children: React.ReactNode }) => children,
+  }),
 )
 
-jest.mock('../../../globals.css', () => ({}))
+vi.mock('../../../globals.css', () => ({}))
 
 function bodyChildren(layout: ReactElement): ReactNode {
   const { children: htmlChildren } = layout.props

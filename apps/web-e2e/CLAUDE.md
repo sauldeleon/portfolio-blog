@@ -34,3 +34,5 @@ src/
 1. Create `src/e2e/my-feature.cy.ts`
 2. Use `cy.visit('/')` in `beforeEach`
 3. Assert against the rendered UI
+4. If the spec creates data, name it with an `e2e` prefix, register each name with `trackCreated(kind, name)` and add `after(() => cleanupE2eData())` (`src/support/cleanup.ts`). Cleanup deletes only those exact items, even when the test fails
+5. To open a modal or panel on a freshly loaded page, use `clickUntilVisible(trigger, target)` instead of a single click

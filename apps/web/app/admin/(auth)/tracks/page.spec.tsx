@@ -2,19 +2,19 @@ import { render, screen } from '@testing-library/react'
 
 import AdminTracksPage from './page.next'
 
-const mockRequireAdminSession = jest.fn()
+const mockRequireAdminSession = vi.fn()
 
-jest.mock('@web/lib/auth/requireAdminSession', () => ({
+vi.mock('@web/lib/auth/requireAdminSession', () => ({
   requireAdminSession: (...args: unknown[]) => mockRequireAdminSession(...args),
 }))
 
-jest.mock('./components/TrackList', () => ({
+vi.mock('./components/TrackList', () => ({
   TrackList: () => <div data-testid="track-list" />,
 }))
 
 describe('AdminTracksPage', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     mockRequireAdminSession.mockResolvedValue({ user: { name: 'admin' } })
   })
 

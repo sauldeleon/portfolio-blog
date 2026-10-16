@@ -10,7 +10,7 @@
     "../../libs/types/styled.d.ts"
   ],
   "exclude": [
-    "jest.config.ts",
+    "vite.config.mts",
     "src/**/*.spec.ts",
     "src/**/*.test.ts",
     "src/**/*.spec.tsx",

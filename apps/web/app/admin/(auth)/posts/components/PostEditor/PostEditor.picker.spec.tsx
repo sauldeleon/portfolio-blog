@@ -5,19 +5,19 @@ import { renderApp } from '@sdlgr/test-utils'
 import type { PostEditorProps } from './PostEditor'
 import { PostEditor } from './PostEditor'
 
-jest.mock('./usePostTranslation', () => ({
+vi.mock('./usePostTranslation', () => ({
   usePostTranslation: () => ({
     status: { available: true },
-    recheck: jest.fn(),
-    translate: jest.fn(),
-    cancel: jest.fn(),
+    recheck: vi.fn(),
+    translate: vi.fn(),
+    cancel: vi.fn(),
     isTranslating: false,
     error: null,
   }),
 }))
 
-jest.mock('@web/i18n/client', () => ({
-  useClientTranslation: jest.fn().mockReturnValue({
+vi.mock('@web/i18n/client', () => ({
+  useClientTranslation: vi.fn().mockReturnValue({
     t: (key: string) => {
       const map: Record<string, string> = {
         'postEditor.newTitle': 'New Post',
@@ -75,15 +75,15 @@ jest.mock('@web/i18n/client', () => ({
   }),
 }))
 
-jest.mock('next/navigation', () => ({
-  useRouter: jest.fn().mockReturnValue({ push: jest.fn(), refresh: jest.fn() }),
+vi.mock('next/navigation', () => ({
+  useRouter: vi.fn().mockReturnValue({ push: vi.fn(), refresh: vi.fn() }),
 }))
 
-jest.mock('../MarkdownPreview', () => ({
+vi.mock('../MarkdownPreview', () => ({
   MarkdownPreview: () => <div data-testid="markdown-preview" />,
 }))
 
-jest.mock('../ImagePicker', () => ({
+vi.mock('../ImagePicker', () => ({
   ImagePicker: ({
     open,
     onClose,
@@ -135,7 +135,7 @@ jest.mock('../ImagePicker', () => ({
   },
 }))
 
-jest.mock('../ImageInsertModal', () => ({
+vi.mock('../ImageInsertModal', () => ({
   ImageInsertModal: ({
     isOpen,
     onInsert,
@@ -175,7 +175,7 @@ jest.mock('../ImageInsertModal', () => ({
         <button
           type="button"
           data-testid="modal-request-pick"
-          onClick={() => onRequestImagePick(jest.fn())}
+          onClick={() => onRequestImagePick(vi.fn())}
         >
           Request Pick
         </button>
@@ -183,7 +183,7 @@ jest.mock('../ImageInsertModal', () => ({
     ) : null,
 }))
 
-jest.mock('@sdlgr/combobox', () => ({
+vi.mock('@sdlgr/combobox', () => ({
   Combobox: ({
     value,
     onChange,
@@ -207,7 +207,7 @@ jest.mock('@sdlgr/combobox', () => ({
   ),
 }))
 
-jest.mock('@sdlgr/select', () => ({
+vi.mock('@sdlgr/select', () => ({
   Select: ({
     value,
     onChange,
@@ -251,11 +251,11 @@ jest.mock('@sdlgr/select', () => ({
   },
 }))
 
-jest.mock('@web/utils/slugify', () => ({
+vi.mock('@web/utils/slugify', () => ({
   slugify: (text: string) => text.toLowerCase().replace(/\s+/g, '-'),
 }))
 
-jest.mock('@sdlgr/date-picker', () => ({
+vi.mock('@sdlgr/date-picker', () => ({
   DateTimePicker: ({
     onChange,
     'data-testid': testId,
@@ -276,19 +276,19 @@ jest.mock('@sdlgr/date-picker', () => ({
   ),
 }))
 
-jest.mock('./PostCardPreview', () => ({
+vi.mock('./PostCardPreview', () => ({
   PostCardPreview: () => <div data-testid="post-card-preview-mock" />,
 }))
 
-jest.mock('@sdlgr/table-of-contents', () => ({
+vi.mock('@sdlgr/table-of-contents', () => ({
   TableOfContents: () => <nav data-testid="toc-mock" />,
 }))
 
-jest.mock('@web/lib/mdx/remarkHeadings', () => ({
+vi.mock('@web/lib/mdx/remarkHeadings', () => ({
   extractToc: () => [],
 }))
 
-jest.mock('./CoverImageInput', () => ({
+vi.mock('./CoverImageInput', () => ({
   CoverImageInput: ({
     value,
     onPick,

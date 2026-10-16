@@ -5,11 +5,11 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { WaypointsPanel, type WaypointsPanelProps } from './WaypointsPanel'
 
-jest.mock('@sdlgr/gpx-tools', () => ({
+vi.mock('@sdlgr/gpx-tools', () => ({
   WPT_ICON_URLS: { '': 'default-icon', Summit: 'summit-icon' },
 }))
 
-jest.mock('@web/i18n/client', () => ({
+vi.mock('@web/i18n/client', () => ({
   useClientTranslation: () => ({ t: (key: string) => key }),
 }))
 
@@ -28,11 +28,11 @@ const waypoints: GpxWaypoint[] = [
 
 function renderPanel(props: Partial<WaypointsPanelProps> = {}) {
   const callbacks = {
-    onSelect: jest.fn(),
-    onChange: jest.fn(),
-    onDelete: jest.fn(),
-    onMove: jest.fn(),
-    onToggleAddMode: jest.fn(),
+    onSelect: vi.fn(),
+    onChange: vi.fn(),
+    onDelete: vi.fn(),
+    onMove: vi.fn(),
+    onToggleAddMode: vi.fn(),
   }
   renderApp(
     <WaypointsPanel
@@ -174,7 +174,7 @@ describe('WaypointsPanel', () => {
 
   it('reorders by dragging the handle', () => {
     const { onMove } = renderPanel()
-    const setData = jest.fn()
+    const setData = vi.fn()
     fireEvent.dragStart(screen.getByTestId('waypoint-drag-w1'), {
       dataTransfer: { setData },
     })

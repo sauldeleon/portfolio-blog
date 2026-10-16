@@ -4,7 +4,7 @@ import { renderWithTheme } from '@sdlgr/test-utils'
 
 import { CodeBlock } from './CodeBlock'
 
-const mockWriteText = jest.fn()
+const mockWriteText = vi.fn()
 
 beforeAll(() => {
   Object.defineProperty(navigator, 'clipboard', {
@@ -14,13 +14,13 @@ beforeAll(() => {
 })
 
 beforeEach(() => {
-  jest.useFakeTimers()
+  vi.useFakeTimers()
   mockWriteText.mockResolvedValue(undefined)
 })
 
 afterEach(() => {
-  jest.useRealTimers()
-  jest.clearAllMocks()
+  vi.useRealTimers()
+  vi.clearAllMocks()
 })
 
 describe('CodeBlock', () => {
@@ -106,7 +106,7 @@ describe('CodeBlock', () => {
     })
     expect(screen.getByRole('button', { name: 'Copied!' })).toBeInTheDocument()
     act(() => {
-      jest.advanceTimersByTime(2000)
+      vi.advanceTimersByTime(2000)
     })
     expect(screen.getByRole('button', { name: 'Copy' })).toBeInTheDocument()
   })

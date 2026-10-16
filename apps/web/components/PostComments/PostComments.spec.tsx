@@ -5,13 +5,16 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { PostComments } from './PostComments'
 
-jest.mock('axios', () => ({
-  get: jest.fn(),
-}))
+vi.mock('axios', () => {
+  const mod = {
+    get: vi.fn(),
+  }
+  return { ...mod, default: mod }
+})
 
-jest.mock('@web/i18n/client', () => ({
-  useClientTranslation: jest.fn().mockReturnValue({
-    t: jest.fn((key: string, opts?: { username?: string }) => {
+vi.mock('@web/i18n/client', () => ({
+  useClientTranslation: vi.fn().mockReturnValue({
+    t: vi.fn((key: string, opts?: { username?: string }) => {
       if (opts?.username) return `Reply to ${opts.username}`
       if (key === 'comments.reply') return '↳ Reply'
       return key
@@ -19,7 +22,7 @@ jest.mock('@web/i18n/client', () => ({
   }),
 }))
 
-jest.mock('../CommentForm', () => ({
+vi.mock('../CommentForm', () => ({
   CommentForm: ({
     replyToUsername,
     onCancelReply,
@@ -38,7 +41,7 @@ jest.mock('../CommentForm', () => ({
   ),
 }))
 
-const mockAxiosGet = jest.mocked(axios.get)
+const mockAxiosGet = vi.mocked(axios.get)
 
 const baseProps = {
   postId: 'p1',
@@ -79,7 +82,7 @@ const mockDeepReply = {
 }
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
 })
 
 describe('PostComments', () => {

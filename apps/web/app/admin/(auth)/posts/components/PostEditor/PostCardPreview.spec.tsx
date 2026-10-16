@@ -4,7 +4,7 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { PostCardPreview } from './PostCardPreview'
 
-jest.mock('@sdlgr/post-card', () => ({
+vi.mock('@sdlgr/post-card', () => ({
   PostCard: (props: Record<string, unknown>) => (
     <div
       data-testid="post-card"
@@ -25,8 +25,8 @@ jest.mock('@sdlgr/post-card', () => ({
   ),
 }))
 
-jest.mock('@web/utils/computeReadingTime', () => ({
-  computeReadingTime: jest.fn().mockReturnValue(3),
+vi.mock('@web/utils/computeReadingTime', () => ({
+  computeReadingTime: vi.fn().mockReturnValue(3),
 }))
 
 const defaultProps = {
@@ -43,12 +43,12 @@ const defaultProps = {
 
 describe('PostCardPreview', () => {
   beforeAll(() => {
-    jest.useFakeTimers()
-    jest.setSystemTime(new Date('2026-01-15'))
+    vi.useFakeTimers()
+    vi.setSystemTime(new Date('2026-01-15'))
   })
 
   afterAll(() => {
-    jest.useRealTimers()
+    vi.useRealTimers()
   })
 
   it('renders the preview wrapper', () => {

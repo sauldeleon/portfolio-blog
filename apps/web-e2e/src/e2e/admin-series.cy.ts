@@ -1,6 +1,11 @@
+import { cleanupE2eData, trackCreated } from '../support/cleanup'
 import { loginViaUi } from '../support/login'
 
 describe('Admin series — create, edit, and delete', () => {
+  // Runs whether the tests passed or failed.
+  after(() => {
+    cleanupE2eData()
+  })
   let commitHash: string
 
   before(() => {
@@ -23,6 +28,7 @@ describe('Admin series — create, edit, and delete', () => {
     const enTitle = `E2E Series EN ${uid}`
     const esTitle = `E2E Serie ES ${uid}`
     const enTitleUpdated = `E2E Series EN Updated ${uid}`
+    trackCreated('series', seriesId)
 
     // --- Create new series ---
     cy.visit('/admin/series/new')

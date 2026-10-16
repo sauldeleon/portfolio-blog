@@ -4,7 +4,7 @@ import { renderWithTheme } from '@sdlgr/test-utils'
 
 import { BlogFilters } from './BlogFilters'
 
-jest.mock('./SearchInput', () => ({
+vi.mock('./SearchInput', () => ({
   SearchInput: ({
     placeholder,
     initialValue,
@@ -20,7 +20,7 @@ jest.mock('./SearchInput', () => ({
   ),
 }))
 
-jest.mock('./CategoryFilter', () => ({
+vi.mock('./CategoryFilter', () => ({
   CategoryFilter: ({
     isOpen,
     onToggle,
@@ -42,7 +42,7 @@ jest.mock('./CategoryFilter', () => ({
   ),
 }))
 
-jest.mock('./TagFilter', () => ({
+vi.mock('./TagFilter', () => ({
   TagFilter: ({
     isOpen,
     onToggle,
@@ -67,7 +67,7 @@ jest.mock('./TagFilter', () => ({
   ),
 }))
 
-jest.mock('./DateFilter', () => ({
+vi.mock('./DateFilter', () => ({
   DateFilter: ({
     isOpen,
     onToggle,
@@ -86,7 +86,7 @@ jest.mock('./DateFilter', () => ({
   ),
 }))
 
-jest.mock('./ActiveFilters', () => ({
+vi.mock('./ActiveFilters', () => ({
   ActiveFilters: ({ clearAllLabel }: { clearAllLabel?: string }) => (
     <div data-testid="active-filters-mock" data-clear-all={clearAllLabel} />
   ),
@@ -261,7 +261,7 @@ describe('BlogFilters', () => {
   })
 
   it('removes outside click listener on unmount', () => {
-    const removeSpy = jest.spyOn(document, 'removeEventListener')
+    const removeSpy = vi.spyOn(document, 'removeEventListener')
     const { unmount } = renderWithTheme(<BlogFilters {...defaultProps} />)
     unmount()
     expect(removeSpy).toHaveBeenCalledWith('mousedown', expect.any(Function))

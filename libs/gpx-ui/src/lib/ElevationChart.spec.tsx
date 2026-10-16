@@ -6,9 +6,9 @@ import { renderApp } from '@sdlgr/test-utils'
 import { ElevationChart } from './ElevationChart'
 
 type ChartState = { activeTooltipIndex?: number | string | null }
-const mockYAxis = jest.fn()
+const mockYAxis = vi.fn()
 
-jest.mock('recharts', () => ({
+vi.mock('recharts', () => ({
   ResponsiveContainer: ({ children }: { children: ReactNode }) => (
     <div>{children}</div>
   ),
@@ -62,7 +62,7 @@ const data = [
   { km: 1.5, ele: 1200 },
 ]
 
-beforeEach(() => jest.clearAllMocks())
+beforeEach(() => vi.clearAllMocks())
 
 describe('ElevationChart', () => {
   it('renders nothing without data', () => {
@@ -91,7 +91,7 @@ describe('ElevationChart', () => {
   })
 
   it('reports the hovered sample and clears on leave', () => {
-    const onHover = jest.fn()
+    const onHover = vi.fn()
     renderApp(<ElevationChart data={data} color="red" onHover={onHover} />)
     fireEvent.click(screen.getByTestId('move-1'))
     expect(onHover).toHaveBeenLastCalledWith(1)
@@ -104,7 +104,7 @@ describe('ElevationChart', () => {
   })
 
   it('reports clicked samples only', () => {
-    const onSelect = jest.fn()
+    const onSelect = vi.fn()
     renderApp(<ElevationChart data={data} color="red" onSelect={onSelect} />)
     fireEvent.click(screen.getByTestId('click-none'))
     expect(onSelect).not.toHaveBeenCalled()

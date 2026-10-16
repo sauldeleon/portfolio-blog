@@ -1,30 +1,32 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
-const mockOgImageTemplate = jest.fn()
-const mockLoggerWarn = jest.fn()
+import type { Mock } from 'vitest'
 
-jest.mock('./OgImageTemplate', () => ({
+const mockOgImageTemplate = vi.fn()
+const mockLoggerWarn = vi.fn()
+
+vi.mock('./OgImageTemplate', () => ({
   OgImageTemplate: (props: unknown) => mockOgImageTemplate(props),
 }))
-jest.mock('@web/lib/logger', () => ({
+vi.mock('@web/lib/logger', () => ({
   logger: {
     warn: mockLoggerWarn,
-    error: jest.fn(),
-    info: jest.fn(),
-    debug: jest.fn(),
+    error: vi.fn(),
+    info: vi.fn(),
+    debug: vi.fn(),
   },
 }))
 
-jest.mock('next-cloudinary', () => ({
-  getCldImageUrl: jest.fn(
-    () => 'https://res.cloudinary.com/test/image/upload/cover.jpg',
-  ),
+vi.mock('next-cloudinary', () => ({
+  getCldImageUrl: vi.fn(function () {
+    return 'https://res.cloudinary.com/test/image/upload/cover.jpg'
+  }),
 }))
 
-const mockImageResponse = jest.fn()
-jest.mock('next/og', () => ({
-  ImageResponse: jest.fn().mockImplementation((...args: unknown[]) => {
+const mockImageResponse = vi.fn()
+vi.mock('next/og', () => ({
+  ImageResponse: vi.fn().mockImplementation(function (...args: unknown[]) {
     mockImageResponse(...args)
     return new Response('image-data', {
       status: 200,
@@ -33,16 +35,16 @@ jest.mock('next/og', () => ({
   }),
 }))
 
-jest.mock('axios')
+vi.mock('axios')
 
 describe('GET /og', () => {
-  let mockAxiosGet: jest.Mock
+  let mockAxiosGet: Mock
 
-  beforeEach(() => {
-    jest.clearAllMocks()
+  beforeEach(async () => {
+    vi.clearAllMocks()
     mockOgImageTemplate.mockReturnValue(null)
-    const axios = require('axios')
-    mockAxiosGet = axios.get as jest.Mock
+    const { default: axios } = await import('axios')
+    mockAxiosGet = axios.get as Mock
     mockAxiosGet.mockResolvedValue({
       data: Buffer.from('fake-image-data').buffer,
       headers: { 'content-type': 'image/jpeg' },
@@ -50,7 +52,7 @@ describe('GET /og', () => {
   })
 
   it('calls ImageResponse with 1200x630 dimensions', async () => {
-    const { GET } = require('./route')
+    const { GET } = await import('./route')
     await GET(new Request('http://localhost/og?title=Test'))
     expect(mockImageResponse).toHaveBeenCalledWith(
       expect.anything(),
@@ -59,22 +61,22 @@ describe('GET /og', () => {
   })
 
   it('uses default title when no title param provided', async () => {
-    const { GET } = require('./route')
+    const { GET } = await import('./route')
     await GET(new Request('http://localhost/og'))
     const element = mockImageResponse.mock.calls[0][0]
     expect(element.props.title).toBe('Saúl de León')
   })
 
   it('passes title from query params', async () => {
-    const { GET } = require('./route')
+    const { GET } = await import('./route')
     await GET(new Request('http://localhost/og?title=My+Post+Title'))
     const element = mockImageResponse.mock.calls[0][0]
     expect(element.props.title).toBe('My Post Title')
   })
 
   it('fetches cover image by public ID and passes as data URI', async () => {
-    const { GET } = require('./route')
-    const { getCldImageUrl } = require('next-cloudinary')
+    const { GET } = await import('./route')
+    const { getCldImageUrl } = await import('next-cloudinary')
     await GET(
       new Request('http://localhost/og?title=Test&cover=blog%2Fcover.jpg'),
     )
@@ -94,7 +96,7 @@ describe('GET /og', () => {
       data: Buffer.from('fake-image-data').buffer,
       headers: {},
     })
-    const { GET } = require('./route')
+    const { GET } = await import('./route')
     await GET(
       new Request('http://localhost/og?title=Test&cover=blog%2Fcover.jpg'),
     )
@@ -105,7 +107,7 @@ describe('GET /og', () => {
   it('passes null cover and logs warn when fetch fails', async () => {
     const err = new Error('Network error')
     mockAxiosGet.mockRejectedValue(err)
-    const { GET } = require('./route')
+    const { GET } = await import('./route')
     await GET(
       new Request('http://localhost/og?title=Test&cover=blog%2Fcover.jpg'),
     )
@@ -118,14 +120,14 @@ describe('GET /og', () => {
   })
 
   it('passes null cover when not provided', async () => {
-    const { GET } = require('./route')
+    const { GET } = await import('./route')
     await GET(new Request('http://localhost/og?title=Test'))
     const element = mockImageResponse.mock.calls[0][0]
     expect(element.props.cover).toBeNull()
   })
 
   it('passes category param when provided', async () => {
-    const { GET } = require('./route')
+    const { GET } = await import('./route')
     await GET(
       new Request('http://localhost/og?title=Test&category=Engineering'),
     )
@@ -134,14 +136,14 @@ describe('GET /og', () => {
   })
 
   it('passes null category when not provided', async () => {
-    const { GET } = require('./route')
+    const { GET } = await import('./route')
     await GET(new Request('http://localhost/og?title=Test'))
     const element = mockImageResponse.mock.calls[0][0]
     expect(element.props.category).toBeNull()
   })
 
   it('returns the ImageResponse result', async () => {
-    const { GET } = require('./route')
+    const { GET } = await import('./route')
     const response = await GET(new Request('http://localhost/og?title=Test'))
     expect(response).toBeDefined()
   })

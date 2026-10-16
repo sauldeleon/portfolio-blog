@@ -5,7 +5,7 @@ import { renderApp } from '@sdlgr/test-utils'
 import { LinkInsertModal, buildLinkMarkdown } from './LinkInsertModal'
 
 function renderModal(props: { initialText?: string } = {}) {
-  const callbacks = { onInsert: jest.fn(), onCancel: jest.fn() }
+  const callbacks = { onInsert: vi.fn(), onCancel: vi.fn() }
   renderApp(<LinkInsertModal isOpen {...callbacks} {...props} />)
   return callbacks
 }
@@ -27,11 +27,7 @@ describe('buildLinkMarkdown', () => {
 describe('LinkInsertModal', () => {
   it('renders nothing when closed', () => {
     renderApp(
-      <LinkInsertModal
-        isOpen={false}
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
-      />,
+      <LinkInsertModal isOpen={false} onInsert={vi.fn()} onCancel={vi.fn()} />,
     )
     expect(screen.queryByTestId('link-url-input')).not.toBeInTheDocument()
   })

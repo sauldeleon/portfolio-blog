@@ -1,4 +1,5 @@
 import { screen } from '@testing-library/react'
+import type { Mock } from 'vitest'
 
 import { renderApp } from '@sdlgr/test-utils'
 
@@ -6,16 +7,16 @@ import type { AdminPost } from '@web/lib/db/queries/posts'
 
 import { PostsPageView } from './PostsPageView'
 
-jest.mock('@web/i18n/client', () => ({
-  useClientTranslation: jest.fn().mockReturnValue({
+vi.mock('@web/i18n/client', () => ({
+  useClientTranslation: vi.fn().mockReturnValue({
     t: (key: string) => key,
   }),
 }))
 
-jest.mock('next/navigation', () => ({
-  useRouter: jest.fn().mockReturnValue({ refresh: jest.fn(), push: jest.fn() }),
-  usePathname: jest.fn().mockReturnValue('/admin/posts/'),
-  useSearchParams: jest.fn().mockReturnValue(new URLSearchParams()),
+vi.mock('next/navigation', () => ({
+  useRouter: vi.fn().mockReturnValue({ refresh: vi.fn(), push: vi.fn() }),
+  usePathname: vi.fn().mockReturnValue('/admin/posts/'),
+  useSearchParams: vi.fn().mockReturnValue(new URLSearchParams()),
 }))
 
 const mockPosts: AdminPost[] = [
@@ -56,10 +57,11 @@ describe('PostsPageView', () => {
     expect(screen.getByTestId('post-table')).toBeInTheDocument()
   })
 
-  it('archived tab is active when URL has ?filter=archived', () => {
-    const { useSearchParams } = jest.requireMock('next/navigation') as {
-      useSearchParams: jest.Mock
-    }
+  it('archived tab is active when URL has ?filter=archived', async () => {
+    const { useSearchParams } =
+      (await import('next/navigation')) as unknown as {
+        useSearchParams: Mock
+      }
     useSearchParams.mockReturnValueOnce(new URLSearchParams('filter=archived'))
     const archivedPost = {
       ...mockPosts[0],

@@ -1,32 +1,32 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
-const mockAuth = jest.fn()
-const mockGetCategoryBySlug = jest.fn()
-const mockUpsertCategoryTranslation = jest.fn()
-const mockGetPublishedPostCountByCategory = jest.fn()
-const mockDeleteCategory = jest.fn()
-const mockLoggerError = jest.fn()
+const mockAuth = vi.fn()
+const mockGetCategoryBySlug = vi.fn()
+const mockUpsertCategoryTranslation = vi.fn()
+const mockGetPublishedPostCountByCategory = vi.fn()
+const mockDeleteCategory = vi.fn()
+const mockLoggerError = vi.fn()
 
-jest.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
-jest.mock('@web/lib/db/queries/categories', () => ({
+vi.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
+vi.mock('@web/lib/db/queries/categories', () => ({
   getCategoryBySlug: mockGetCategoryBySlug,
   upsertCategoryTranslation: mockUpsertCategoryTranslation,
   deleteCategory: mockDeleteCategory,
 }))
-jest.mock('@web/lib/db/queries/posts', () => ({
+vi.mock('@web/lib/db/queries/posts', () => ({
   getPublishedPostCountByCategory: mockGetPublishedPostCountByCategory,
 }))
-jest.mock('@web/lib/logger', () => ({
+vi.mock('@web/lib/logger', () => ({
   logger: {
     error: mockLoggerError,
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
   },
 }))
 
-const { DELETE, PUT } = require('./route') as typeof import('./route')
+const { DELETE, PUT } = (await import('./route')) as typeof import('./route')
 
 const mockCategory = { id: 1, slug: 'engineering' }
 const mockTranslation = {
@@ -51,7 +51,7 @@ function makePutRequest(body: unknown): Request {
 
 describe('PUT /api/categories/[slug]', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   it('returns 401 when not authenticated', async () => {
@@ -245,7 +245,7 @@ describe('PUT /api/categories/[slug]', () => {
 
 describe('DELETE /api/categories/[slug]', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   it('returns 401 when not authenticated', async () => {

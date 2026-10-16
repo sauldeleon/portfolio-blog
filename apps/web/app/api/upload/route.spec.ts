@@ -1,24 +1,24 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
-const mockAuth = jest.fn()
-const mockUploadImage = jest.fn()
-const mockLoggerError = jest.fn()
+const mockAuth = vi.fn()
+const mockUploadImage = vi.fn()
+const mockLoggerError = vi.fn()
 
-jest.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
-jest.mock('@web/lib/cloudinary/upload', () => ({
+vi.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
+vi.mock('@web/lib/cloudinary/upload', () => ({
   uploadImage: mockUploadImage,
 }))
-jest.mock('@web/lib/logger', () => ({
+vi.mock('@web/lib/logger', () => ({
   logger: {
     error: mockLoggerError,
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
   },
 }))
 
-const { POST } = require('./route') as {
+const { POST } = (await import('./route')) as {
   POST: (req: Request) => Promise<Response>
 }
 
@@ -49,13 +49,13 @@ function makeFormDataRequest(opts: {
   if (opts.name !== undefined) {
     fd.append('name', opts.name)
   }
-  jest.spyOn(Request.prototype, 'formData').mockResolvedValueOnce(fd)
+  vi.spyOn(Request.prototype, 'formData').mockResolvedValueOnce(fd)
   return req
 }
 
 describe('POST /api/upload', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   it('returns 401 when not authenticated', async () => {
@@ -68,9 +68,9 @@ describe('POST /api/upload', () => {
 
   it('returns 400 when form data is invalid', async () => {
     mockAuth.mockResolvedValue({ user: { name: 'admin' } })
-    jest
-      .spyOn(Request.prototype, 'formData')
-      .mockRejectedValueOnce(new Error('bad'))
+    vi.spyOn(Request.prototype, 'formData').mockRejectedValueOnce(
+      new Error('bad'),
+    )
     const response = await POST(
       new Request('http://localhost/api/upload', { method: 'POST' }),
     )

@@ -1,13 +1,13 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
-const mockGetRelatedPosts = jest.fn()
+const mockGetRelatedPosts = vi.fn()
 
-jest.mock('@web/lib/db/queries/posts', () => ({
+vi.mock('@web/lib/db/queries/posts', () => ({
   getRelatedPosts: mockGetRelatedPosts,
 }))
 
-const { GET } = require('./route') as {
+const { GET } = (await import('./route')) as {
   GET: (
     req: Request,
     ctx: { params: Promise<{ id: string }> },
@@ -37,7 +37,7 @@ const mockRelatedPost = {
 }
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
 })
 
 describe('GET /api/posts/[id]/related', () => {

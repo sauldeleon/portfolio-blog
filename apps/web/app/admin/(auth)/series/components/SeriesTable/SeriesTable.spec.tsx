@@ -1,6 +1,7 @@
 import { fireEvent, screen, waitFor, within } from '@testing-library/react'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
+import type { Mock } from 'vitest'
 
 import { renderApp } from '@sdlgr/test-utils'
 
@@ -8,10 +9,10 @@ import type { SeriesForAdmin } from '@web/lib/db/queries/series'
 
 import { SeriesTable } from './SeriesTable'
 
-const mockPush = jest.fn()
+const mockPush = vi.fn()
 
-jest.mock('@web/i18n/client', () => ({
-  useClientTranslation: jest.fn().mockReturnValue({
+vi.mock('@web/i18n/client', () => ({
+  useClientTranslation: vi.fn().mockReturnValue({
     t: (key: string, opts?: Record<string, unknown>) => {
       const translations: Record<string, string> = {
         'series.searchPlaceholder': 'Search series…',
@@ -41,8 +42,8 @@ jest.mock('@web/i18n/client', () => ({
   }),
 }))
 
-jest.mock('next/navigation', () => ({
-  useRouter: jest.fn(),
+vi.mock('next/navigation', () => ({
+  useRouter: vi.fn(),
 }))
 
 function makeSeries(overrides: Partial<SeriesForAdmin> = {}): SeriesForAdmin {
@@ -56,11 +57,11 @@ function makeSeries(overrides: Partial<SeriesForAdmin> = {}): SeriesForAdmin {
 
 describe('SeriesTable', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
-    ;(useRouter as jest.Mock).mockReturnValue({ push: mockPush })
-    jest.spyOn(axios, 'get').mockResolvedValue({ data: { data: [] } })
-    jest.spyOn(axios, 'put').mockResolvedValue({ data: {} })
-    jest.spyOn(axios, 'delete').mockResolvedValue({ data: {} })
+    vi.clearAllMocks()
+    ;(useRouter as Mock).mockReturnValue({ push: mockPush })
+    vi.spyOn(axios, 'get').mockResolvedValue({ data: { data: [] } })
+    vi.spyOn(axios, 'put').mockResolvedValue({ data: {} })
+    vi.spyOn(axios, 'delete').mockResolvedValue({ data: {} })
   })
 
   it('renders all series rows', () => {
@@ -136,7 +137,7 @@ describe('SeriesTable', () => {
 
   it('refresh button fetches series from API', async () => {
     const freshSeries = makeSeries({ id: 'fresh' })
-    jest.spyOn(axios, 'get').mockResolvedValueOnce({
+    vi.spyOn(axios, 'get').mockResolvedValueOnce({
       data: { data: [freshSeries] },
     })
     renderApp(<SeriesTable series={[]} />)
@@ -281,7 +282,7 @@ describe('SeriesTable', () => {
 
   it('shows loading state while posts are being fetched', async () => {
     let resolveGet!: (v: unknown) => void
-    jest.spyOn(axios, 'get').mockReturnValue(
+    vi.spyOn(axios, 'get').mockReturnValue(
       new Promise((res) => {
         resolveGet = res
       }) as never,
@@ -296,9 +297,7 @@ describe('SeriesTable', () => {
     const mockPosts = [
       { id: 'post-abc', seriesOrder: 1, enTitle: 'My Post', publishedAt: null },
     ]
-    jest
-      .spyOn(axios, 'get')
-      .mockResolvedValueOnce({ data: { data: mockPosts } })
+    vi.spyOn(axios, 'get').mockResolvedValueOnce({ data: { data: mockPosts } })
     renderApp(<SeriesTable series={[makeSeries({ postCount: 1 })]} />)
     fireEvent.click(screen.getByTestId('post-count'))
     const item = await screen.findByTestId('series-post-item')
@@ -316,9 +315,7 @@ describe('SeriesTable', () => {
         publishedAt: '2025-03-15T00:00:00.000Z',
       },
     ]
-    jest
-      .spyOn(axios, 'get')
-      .mockResolvedValueOnce({ data: { data: mockPosts } })
+    vi.spyOn(axios, 'get').mockResolvedValueOnce({ data: { data: mockPosts } })
     renderApp(<SeriesTable series={[makeSeries({ postCount: 1 })]} />)
     fireEvent.click(screen.getByTestId('post-count'))
     const item = await screen.findByTestId('series-post-item')
@@ -328,7 +325,7 @@ describe('SeriesTable', () => {
   })
 
   it('shows empty posts list when fetch fails', async () => {
-    jest.spyOn(axios, 'get').mockRejectedValue(new Error('Network error'))
+    vi.spyOn(axios, 'get').mockRejectedValue(new Error('Network error'))
     renderApp(<SeriesTable series={[makeSeries({ postCount: 1 })]} />)
     fireEvent.click(screen.getByTestId('post-count'))
     expect(await screen.findByTestId('posts-list')).toBeInTheDocument()
@@ -370,9 +367,7 @@ describe('SeriesTable', () => {
     const mockPosts = [
       { id: 'post-1', seriesOrder: 1, enTitle: 'My Post', publishedAt: null },
     ]
-    jest
-      .spyOn(axios, 'get')
-      .mockResolvedValueOnce({ data: { data: mockPosts } })
+    vi.spyOn(axios, 'get').mockResolvedValueOnce({ data: { data: mockPosts } })
     renderApp(<SeriesTable series={[makeSeries({ postCount: 1 })]} />)
     fireEvent.click(screen.getByTestId('post-count'))
     expect(await screen.findByTestId('series-posts-row')).toBeInTheDocument()
@@ -381,7 +376,7 @@ describe('SeriesTable', () => {
   })
 
   it('clicking post count again collapses the posts list', async () => {
-    jest.spyOn(axios, 'get').mockResolvedValueOnce({ data: { data: [] } })
+    vi.spyOn(axios, 'get').mockResolvedValueOnce({ data: { data: [] } })
     renderApp(<SeriesTable series={[makeSeries({ postCount: 2 })]} />)
     fireEvent.click(screen.getByTestId('post-count'))
     await screen.findByTestId('series-posts-row')
@@ -398,9 +393,7 @@ describe('SeriesTable', () => {
         publishedAt: null,
       },
     ]
-    jest
-      .spyOn(axios, 'get')
-      .mockResolvedValueOnce({ data: { data: mockPosts } })
+    vi.spyOn(axios, 'get').mockResolvedValueOnce({ data: { data: mockPosts } })
     renderApp(<SeriesTable series={[makeSeries({ postCount: 1 })]} />)
     fireEvent.click(screen.getByTestId('post-count'))
     const item = await screen.findByTestId('series-post-item')
@@ -415,9 +408,7 @@ describe('SeriesTable', () => {
     const mockPosts = [
       { id: 'post-abc', seriesOrder: null, enTitle: null, publishedAt: null },
     ]
-    jest
-      .spyOn(axios, 'get')
-      .mockResolvedValueOnce({ data: { data: mockPosts } })
+    vi.spyOn(axios, 'get').mockResolvedValueOnce({ data: { data: mockPosts } })
     renderApp(<SeriesTable series={[makeSeries({ postCount: 1 })]} />)
     fireEvent.click(screen.getByTestId('post-count'))
     const item = await screen.findByTestId('series-post-item')
@@ -453,9 +444,7 @@ describe('SeriesTable', () => {
     const mockPosts = [
       { id: 'post-abc', seriesOrder: 1, enTitle: 'My Post', publishedAt: null },
     ]
-    jest
-      .spyOn(axios, 'get')
-      .mockResolvedValueOnce({ data: { data: mockPosts } })
+    vi.spyOn(axios, 'get').mockResolvedValueOnce({ data: { data: mockPosts } })
     renderApp(<SeriesTable series={[makeSeries({ postCount: 1 })]} />)
     fireEvent.click(screen.getByTestId('post-count'))
     const item = await screen.findByTestId('series-post-item')
@@ -467,9 +456,7 @@ describe('SeriesTable', () => {
     const mockPosts = [
       { id: 'post-abc', seriesOrder: 1, enTitle: 'My Post', publishedAt: null },
     ]
-    jest
-      .spyOn(axios, 'get')
-      .mockResolvedValueOnce({ data: { data: mockPosts } })
+    vi.spyOn(axios, 'get').mockResolvedValueOnce({ data: { data: mockPosts } })
     renderApp(<SeriesTable series={[makeSeries({ postCount: 1 })]} />)
     fireEvent.click(screen.getByTestId('post-count'))
     const item = await screen.findByTestId('series-post-item')
@@ -486,9 +473,7 @@ describe('SeriesTable', () => {
       { id: 'post-1', seriesOrder: 1, enTitle: 'Post 1', publishedAt: null },
       { id: 'post-2', seriesOrder: 2, enTitle: 'Post 2', publishedAt: null },
     ]
-    jest
-      .spyOn(axios, 'get')
-      .mockResolvedValueOnce({ data: { data: mockPosts } })
+    vi.spyOn(axios, 'get').mockResolvedValueOnce({ data: { data: mockPosts } })
     renderApp(<SeriesTable series={[makeSeries({ postCount: 2 })]} />)
     fireEvent.click(screen.getByTestId('post-count'))
     await screen.findAllByTestId('series-post-item')
@@ -503,9 +488,7 @@ describe('SeriesTable', () => {
     const mockPosts = [
       { id: 'post-1', seriesOrder: 1, enTitle: 'Post 1', publishedAt: null },
     ]
-    jest
-      .spyOn(axios, 'get')
-      .mockResolvedValueOnce({ data: { data: mockPosts } })
+    vi.spyOn(axios, 'get').mockResolvedValueOnce({ data: { data: mockPosts } })
     renderApp(
       <SeriesTable
         series={[
@@ -531,9 +514,7 @@ describe('SeriesTable', () => {
         publishedAt: null,
       },
     ]
-    jest
-      .spyOn(axios, 'get')
-      .mockResolvedValueOnce({ data: { data: mockPosts } })
+    vi.spyOn(axios, 'get').mockResolvedValueOnce({ data: { data: mockPosts } })
     renderApp(<SeriesTable series={[makeSeries({ postCount: 1 })]} />)
     fireEvent.click(screen.getByTestId('post-count'))
     const item = await screen.findByTestId('series-post-item')

@@ -13,7 +13,7 @@ beforeAll(() => {
   window.PointerEvent = class extends MouseEvent {}
 })
 
-afterEach(() => jest.useRealTimers())
+afterEach(() => vi.useRealTimers())
 
 function ob(overrides: Partial<CroquisObstacle> = {}): CroquisObstacle {
   return {
@@ -64,7 +64,7 @@ describe('CroquisMap', () => {
   })
 
   it('opens the popover on mouse enter and closes shortly after leave', () => {
-    jest.useFakeTimers()
+    vi.useFakeTimers()
     renderApp(<CroquisMap obstacles={[ob()]} lang="en" />)
     const popover = screen.getByTestId('croquis-popover')
     expect(popover).toHaveAttribute('data-open', 'false')
@@ -75,13 +75,13 @@ describe('CroquisMap', () => {
     // Deferred: still open right after leaving.
     expect(popover).toHaveAttribute('data-open', 'true')
     act(() => {
-      jest.advanceTimersByTime(200)
+      vi.advanceTimersByTime(200)
     })
     expect(popover).toHaveAttribute('data-open', 'false')
   })
 
   it('keeps the popover open while the mouse is over it', () => {
-    jest.useFakeTimers()
+    vi.useFakeTimers()
     renderApp(<CroquisMap obstacles={[ob()]} lang="en" />)
     const popover = screen.getByTestId('croquis-popover')
     fireEvent.mouseEnter(screen.getByTestId('croquis-obstacle-0'))
@@ -89,13 +89,13 @@ describe('CroquisMap', () => {
     // Mouse travels into the popover before the close timer fires.
     fireEvent.mouseEnter(popover)
     act(() => {
-      jest.advanceTimersByTime(200)
+      vi.advanceTimersByTime(200)
     })
     expect(popover).toHaveAttribute('data-open', 'true')
     // Leaving the popover then closes it.
     fireEvent.mouseLeave(popover)
     act(() => {
-      jest.advanceTimersByTime(200)
+      vi.advanceTimersByTime(200)
     })
     expect(popover).toHaveAttribute('data-open', 'false')
   })
@@ -145,7 +145,7 @@ describe('CroquisMap', () => {
   })
 
   it('opens on focus and closes on blur', () => {
-    jest.useFakeTimers()
+    vi.useFakeTimers()
     renderApp(<CroquisMap obstacles={[ob()]} lang="en" />)
     fireEvent.focus(screen.getByTestId('croquis-obstacle-0'))
     expect(screen.getByTestId('croquis-popover')).toHaveAttribute(
@@ -154,7 +154,7 @@ describe('CroquisMap', () => {
     )
     fireEvent.blur(screen.getByTestId('croquis-obstacle-0'))
     act(() => {
-      jest.advanceTimersByTime(200)
+      vi.advanceTimersByTime(200)
     })
     expect(screen.getByTestId('croquis-popover')).toHaveAttribute(
       'data-open',
@@ -201,7 +201,7 @@ describe('CroquisMap', () => {
   })
 
   it('stays open when focus moves from the obstacle to a gallery thumbnail', () => {
-    jest.useFakeTimers()
+    vi.useFakeTimers()
     renderApp(
       <CroquisMap
         obstacles={[ob({ photos: ['https://x/a.jpg', 'https://x/b.jpg'] })]}
@@ -218,13 +218,13 @@ describe('CroquisMap', () => {
       relatedTarget: screen.getByTestId('croquis-thumb-1'),
     })
     act(() => {
-      jest.advanceTimersByTime(300)
+      vi.advanceTimersByTime(300)
     })
     expect(popover).toHaveAttribute('data-open', 'true')
   })
 
   it('stays open on a touch thumbnail tap where blur has no relatedTarget', () => {
-    jest.useFakeTimers()
+    vi.useFakeTimers()
     renderApp(
       <CroquisMap
         obstacles={[ob({ photos: ['https://x/a.jpg', 'https://x/b.jpg'] })]}
@@ -240,7 +240,7 @@ describe('CroquisMap', () => {
     fireEvent.blur(screen.getByTestId('croquis-obstacle-0'))
     fireEvent.click(screen.getByTestId('croquis-thumb-1'))
     act(() => {
-      jest.advanceTimersByTime(300)
+      vi.advanceTimersByTime(300)
     })
     expect(popover).toHaveAttribute('data-open', 'true')
     expect((screen.getByAltText('Jump one') as HTMLImageElement).src).toBe(
@@ -406,7 +406,7 @@ describe('CroquisMap', () => {
   })
 
   it('positions the popover above and clamps a far-right element', () => {
-    jest.spyOn(Element.prototype, 'getBoundingClientRect').mockReturnValue({
+    vi.spyOn(Element.prototype, 'getBoundingClientRect').mockReturnValue({
       top: 400,
       bottom: 450,
       left: 2000,
@@ -422,6 +422,6 @@ describe('CroquisMap', () => {
     const popover = screen.getByTestId('croquis-popover')
     expect(popover.style.top).toBe('138px')
     expect(Number.parseInt(popover.style.left, 10)).toBeLessThan(2000)
-    jest.restoreAllMocks()
+    vi.restoreAllMocks()
   })
 })

@@ -12,14 +12,14 @@ function setViewport(width: number, height: number) {
 }
 
 beforeEach(() => {
-  window.scrollTo = jest.fn()
-  jest
-    .spyOn(HTMLElement.prototype, 'getBoundingClientRect')
-    .mockReturnValue({ top: 200 } as DOMRect)
+  window.scrollTo = vi.fn()
+  vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockReturnValue({
+    top: 200,
+  } as DOMRect)
   document.documentElement.style.overflow = ''
 })
 
-afterEach(() => jest.restoreAllMocks())
+afterEach(() => vi.restoreAllMocks())
 
 describe('useFillViewport', () => {
   it('fills the space below the element and locks page scroll', () => {

@@ -5,7 +5,7 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { CroquisGenerator } from './CroquisGenerator'
 
-jest.mock('../../../components/TrackUrlPicker', () => ({
+vi.mock('../../../components/TrackUrlPicker', () => ({
   TrackUrlPicker: ({
     id,
     value,
@@ -36,10 +36,10 @@ function makeAxiosError(status: number, data: unknown): AxiosError {
   })
 }
 
-jest.mock('@web/i18n/client', () => {
-  const admin: Record<string, unknown> = jest.requireActual(
-    '@web/i18n/locales/en/admin.json',
-  )
+vi.mock('@web/i18n/client', async () => {
+  const admin: Record<string, unknown> = await vi.importActual<
+    typeof import('@web/i18n/locales/en/admin.json')
+  >('@web/i18n/locales/en/admin.json')
   return {
     useClientTranslation: () => ({
       t: (key: string): string => {
@@ -58,7 +58,7 @@ jest.mock('@web/i18n/client', () => {
   }
 })
 
-jest.mock('../Croquis', () => ({
+vi.mock('../Croquis', () => ({
   Croquis: ({
     obstacles,
     lang,
@@ -161,7 +161,7 @@ describe('CroquisGenerator', () => {
     }
 
     it('fills the textarea from parsed waypoints', async () => {
-      jest.spyOn(axios, 'get').mockResolvedValue({
+      vi.spyOn(axios, 'get').mockResolvedValue({
         data: { data: [{ categories: ['salto'], title: 'Jump', notes: [] }] },
       })
       renderApp(<CroquisGenerator />)
@@ -172,7 +172,7 @@ describe('CroquisGenerator', () => {
     })
 
     it('errors when the response has no data', async () => {
-      jest.spyOn(axios, 'get').mockResolvedValue({ data: {} })
+      vi.spyOn(axios, 'get').mockResolvedValue({ data: {} })
       renderApp(<CroquisGenerator />)
       enterUrl()
       fireEvent.click(screen.getByTestId('cg-import'))
@@ -182,7 +182,7 @@ describe('CroquisGenerator', () => {
     })
 
     it('errors when no waypoints are found', async () => {
-      jest.spyOn(axios, 'get').mockResolvedValue({ data: { data: [] } })
+      vi.spyOn(axios, 'get').mockResolvedValue({ data: { data: [] } })
       renderApp(<CroquisGenerator />)
       enterUrl()
       fireEvent.click(screen.getByTestId('cg-import'))
@@ -192,9 +192,9 @@ describe('CroquisGenerator', () => {
     })
 
     it('shows the server error message', async () => {
-      jest
-        .spyOn(axios, 'get')
-        .mockRejectedValue(makeAxiosError(400, { error: 'Bad GPX' }))
+      vi.spyOn(axios, 'get').mockRejectedValue(
+        makeAxiosError(400, { error: 'Bad GPX' }),
+      )
       renderApp(<CroquisGenerator />)
       enterUrl()
       fireEvent.click(screen.getByTestId('cg-import'))
@@ -202,7 +202,7 @@ describe('CroquisGenerator', () => {
     })
 
     it('falls back to a generic error when the axios error has no message', async () => {
-      jest.spyOn(axios, 'get').mockRejectedValue(makeAxiosError(500, {}))
+      vi.spyOn(axios, 'get').mockRejectedValue(makeAxiosError(500, {}))
       renderApp(<CroquisGenerator />)
       enterUrl()
       fireEvent.click(screen.getByTestId('cg-import'))
@@ -212,7 +212,7 @@ describe('CroquisGenerator', () => {
     })
 
     it('falls back to a generic error for non-axios failures', async () => {
-      jest.spyOn(axios, 'get').mockRejectedValue(new Error('boom'))
+      vi.spyOn(axios, 'get').mockRejectedValue(new Error('boom'))
       renderApp(<CroquisGenerator />)
       enterUrl()
       fireEvent.click(screen.getByTestId('cg-import'))
@@ -223,7 +223,7 @@ describe('CroquisGenerator', () => {
 
     it('shows a parsing label while loading', async () => {
       let resolve!: (v: unknown) => void
-      jest.spyOn(axios, 'get').mockReturnValue(
+      vi.spyOn(axios, 'get').mockReturnValue(
         new Promise((r) => {
           resolve = r
         }),
@@ -238,7 +238,7 @@ describe('CroquisGenerator', () => {
     })
 
     it('clears a previous error when the url changes', async () => {
-      jest.spyOn(axios, 'get').mockResolvedValue({ data: {} })
+      vi.spyOn(axios, 'get').mockResolvedValue({ data: {} })
       renderApp(<CroquisGenerator />)
       enterUrl()
       fireEvent.click(screen.getByTestId('cg-import'))

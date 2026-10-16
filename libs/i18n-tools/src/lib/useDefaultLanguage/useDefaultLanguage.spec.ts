@@ -10,7 +10,7 @@ const mockData = { fallbackLng: 'en', languages: ['en', 'es'] }
 describe('useDefaultLanguage', () => {
   let languageGetter: any
   beforeEach(() => {
-    languageGetter = jest.spyOn(window.navigator, 'language', 'get')
+    languageGetter = vi.spyOn(window.navigator, 'language', 'get')
     Object.defineProperty(window, 'localStorage', {
       value: new LocalStorageMock(),
       writable: true,

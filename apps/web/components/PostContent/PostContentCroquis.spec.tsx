@@ -12,9 +12,9 @@ const { __setMockPdf, __resetMockPdf } = ReactPdf as unknown as {
   __resetMockPdf: () => void
 }
 
-const mockDownloadPng = jest.fn<Promise<void>, [string]>()
+const mockDownloadPng = vi.fn<(filename: string) => Promise<void>>()
 
-jest.mock('@web/components/Croquis', () => ({
+vi.mock('@web/components/Croquis', () => ({
   CroquisMap: ({
     obstacles,
     lang,
@@ -37,7 +37,7 @@ jest.mock('@web/components/Croquis', () => ({
 }))
 
 let mockLanguage = 'en'
-jest.mock('@web/i18n/client', () => ({
+vi.mock('@web/i18n/client', () => ({
   useClientTranslation: () => ({
     t: (key: string) => key,
     i18n: { language: mockLanguage },
@@ -165,7 +165,7 @@ describe('PostContentCroquis', () => {
   })
 
   it('downloads the report PDF via a generated link', async () => {
-    const clickSpy = jest
+    const clickSpy = vi
       .spyOn(HTMLAnchorElement.prototype, 'click')
       .mockImplementation(() => undefined)
     renderApp(<PostContentCroquis obstacles={OB} title="Barranco X" />)

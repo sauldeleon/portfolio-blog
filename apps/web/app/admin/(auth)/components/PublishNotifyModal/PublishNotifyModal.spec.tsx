@@ -4,8 +4,8 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { PublishNotifyModal } from './PublishNotifyModal'
 
-jest.mock('@web/i18n/client', () => ({
-  useClientTranslation: jest.fn().mockReturnValue({
+vi.mock('@web/i18n/client', () => ({
+  useClientTranslation: vi.fn().mockReturnValue({
     t: (key: string) => {
       const translations: Record<string, string> = {
         'publishNotify.message': 'Do you want to notify subscribers?',
@@ -23,9 +23,9 @@ describe('PublishNotifyModal', () => {
     renderApp(
       <PublishNotifyModal
         isOpen
-        onPublishAndNotify={jest.fn()}
-        onPublishOnly={jest.fn()}
-        onCancel={jest.fn()}
+        onPublishAndNotify={vi.fn()}
+        onPublishOnly={vi.fn()}
+        onCancel={vi.fn()}
       />,
     )
     expect(
@@ -44,9 +44,9 @@ describe('PublishNotifyModal', () => {
     renderApp(
       <PublishNotifyModal
         isOpen={false}
-        onPublishAndNotify={jest.fn()}
-        onPublishOnly={jest.fn()}
-        onCancel={jest.fn()}
+        onPublishAndNotify={vi.fn()}
+        onPublishOnly={vi.fn()}
+        onCancel={vi.fn()}
       />,
     )
     expect(
@@ -55,13 +55,13 @@ describe('PublishNotifyModal', () => {
   })
 
   it('calls onPublishAndNotify when Publish & Notify clicked', () => {
-    const onPublishAndNotify = jest.fn()
+    const onPublishAndNotify = vi.fn()
     renderApp(
       <PublishNotifyModal
         isOpen
         onPublishAndNotify={onPublishAndNotify}
-        onPublishOnly={jest.fn()}
-        onCancel={jest.fn()}
+        onPublishOnly={vi.fn()}
+        onCancel={vi.fn()}
       />,
     )
     fireEvent.click(screen.getByTestId('publish-notify-publish-and-notify'))
@@ -69,13 +69,13 @@ describe('PublishNotifyModal', () => {
   })
 
   it('calls onPublishOnly when Publish Only clicked', () => {
-    const onPublishOnly = jest.fn()
+    const onPublishOnly = vi.fn()
     renderApp(
       <PublishNotifyModal
         isOpen
-        onPublishAndNotify={jest.fn()}
+        onPublishAndNotify={vi.fn()}
         onPublishOnly={onPublishOnly}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
       />,
     )
     fireEvent.click(screen.getByTestId('publish-notify-publish-only'))
@@ -83,12 +83,12 @@ describe('PublishNotifyModal', () => {
   })
 
   it('calls onCancel when Cancel clicked', () => {
-    const onCancel = jest.fn()
+    const onCancel = vi.fn()
     renderApp(
       <PublishNotifyModal
         isOpen
-        onPublishAndNotify={jest.fn()}
-        onPublishOnly={jest.fn()}
+        onPublishAndNotify={vi.fn()}
+        onPublishOnly={vi.fn()}
         onCancel={onCancel}
       />,
     )

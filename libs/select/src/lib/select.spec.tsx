@@ -4,10 +4,10 @@ import { RenderProviders } from '@sdlgr/test-utils'
 
 import { Select } from './select'
 
-const mockReactSelect = jest.fn()
-const mockCreatableReactSelect = jest.fn()
+const mockReactSelect = vi.fn()
+const mockCreatableReactSelect = vi.fn()
 
-jest.mock('react-select', () => ({
+vi.mock('react-select', () => ({
   __esModule: true,
   default: (props: Record<string, unknown>) => {
     mockReactSelect(props)
@@ -15,7 +15,7 @@ jest.mock('react-select', () => ({
   },
 }))
 
-jest.mock('react-select/creatable', () => ({
+vi.mock('react-select/creatable', () => ({
   __esModule: true,
   default: (props: Record<string, unknown>) => {
     mockCreatableReactSelect(props)
@@ -32,7 +32,7 @@ const options = [
 function renderSelect(
   overrides?: Partial<React.ComponentProps<typeof Select>>,
 ) {
-  const onChange = jest.fn()
+  const onChange = vi.fn()
   render(
     <Select
       value=""

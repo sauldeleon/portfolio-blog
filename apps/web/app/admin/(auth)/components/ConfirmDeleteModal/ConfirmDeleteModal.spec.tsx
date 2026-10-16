@@ -4,8 +4,8 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { ConfirmDeleteModal } from './ConfirmDeleteModal'
 
-jest.mock('@web/i18n/client', () => ({
-  useClientTranslation: jest.fn().mockReturnValue({
+vi.mock('@web/i18n/client', () => ({
+  useClientTranslation: vi.fn().mockReturnValue({
     t: (key: string) => {
       const translations: Record<string, string> = {
         'confirmDelete.confirm': 'Delete',
@@ -22,8 +22,8 @@ describe('ConfirmDeleteModal', () => {
       <ConfirmDeleteModal
         isOpen
         message="Delete this category?"
-        onConfirm={jest.fn()}
-        onCancel={jest.fn()}
+        onConfirm={vi.fn()}
+        onCancel={vi.fn()}
       />,
     )
     expect(screen.getByText('Delete this category?')).toBeInTheDocument()
@@ -34,8 +34,8 @@ describe('ConfirmDeleteModal', () => {
       <ConfirmDeleteModal
         isOpen
         message="Delete this?"
-        onConfirm={jest.fn()}
-        onCancel={jest.fn()}
+        onConfirm={vi.fn()}
+        onCancel={vi.fn()}
       />,
     )
     expect(screen.getByTestId('confirm-delete-confirm')).toBeInTheDocument()
@@ -47,21 +47,21 @@ describe('ConfirmDeleteModal', () => {
       <ConfirmDeleteModal
         isOpen={false}
         message="Delete this?"
-        onConfirm={jest.fn()}
-        onCancel={jest.fn()}
+        onConfirm={vi.fn()}
+        onCancel={vi.fn()}
       />,
     )
     expect(screen.queryByText('Delete this?')).not.toBeInTheDocument()
   })
 
   it('calls onConfirm when confirm button clicked', () => {
-    const onConfirm = jest.fn()
+    const onConfirm = vi.fn()
     renderApp(
       <ConfirmDeleteModal
         isOpen
         message="Delete this?"
         onConfirm={onConfirm}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
       />,
     )
     fireEvent.click(screen.getByTestId('confirm-delete-confirm'))
@@ -69,12 +69,12 @@ describe('ConfirmDeleteModal', () => {
   })
 
   it('calls onCancel when cancel button clicked', () => {
-    const onCancel = jest.fn()
+    const onCancel = vi.fn()
     renderApp(
       <ConfirmDeleteModal
         isOpen
         message="Delete this?"
-        onConfirm={jest.fn()}
+        onConfirm={vi.fn()}
         onCancel={onCancel}
       />,
     )
@@ -87,8 +87,8 @@ describe('ConfirmDeleteModal', () => {
       <ConfirmDeleteModal
         isOpen
         message="Delete this?"
-        onConfirm={jest.fn()}
-        onCancel={jest.fn()}
+        onConfirm={vi.fn()}
+        onCancel={vi.fn()}
       />,
     )
     expect(screen.getByTestId('confirm-delete-confirm')).toBeInTheDocument()
@@ -99,8 +99,8 @@ describe('ConfirmDeleteModal', () => {
       <ConfirmDeleteModal
         isOpen
         message="Archive this?"
-        onConfirm={jest.fn()}
-        onCancel={jest.fn()}
+        onConfirm={vi.fn()}
+        onCancel={vi.fn()}
         variant="warning"
       />,
     )
@@ -113,8 +113,8 @@ describe('ConfirmDeleteModal', () => {
       <ConfirmDeleteModal
         isOpen
         message="Replace it?"
-        onConfirm={jest.fn()}
-        onCancel={jest.fn()}
+        onConfirm={vi.fn()}
+        onCancel={vi.fn()}
         variant="warning"
         width="460px"
       />,

@@ -4,10 +4,10 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { CardGenerator } from './CardGenerator'
 
-jest.mock('@web/i18n/client', () => {
-  const admin: Record<string, unknown> = jest.requireActual(
-    '@web/i18n/locales/en/admin.json',
-  )
+vi.mock('@web/i18n/client', async () => {
+  const admin: Record<string, unknown> = await vi.importActual<
+    typeof import('@web/i18n/locales/en/admin.json')
+  >('@web/i18n/locales/en/admin.json')
   return {
     useClientTranslation: () => ({
       t: (key: string): string => {
@@ -26,7 +26,7 @@ jest.mock('@web/i18n/client', () => {
   }
 })
 
-jest.mock('../CardPreview', () => ({
+vi.mock('../CardPreview', () => ({
   CardPreview: ({ svg, filename }: { svg: string; filename: string }) => (
     <div data-testid="card-preview-mock">
       <span data-testid="preview-filename">{filename}</span>
@@ -35,7 +35,7 @@ jest.mock('../CardPreview', () => ({
   ),
 }))
 
-jest.mock('../CanyoningForm', () => ({
+vi.mock('../CanyoningForm', () => ({
   CanyoningForm: ({
     value,
     onChange,
@@ -71,7 +71,7 @@ jest.mock('../CanyoningForm', () => ({
   ),
 }))
 
-jest.mock('../RouteForm', () => ({
+vi.mock('../RouteForm', () => ({
   RouteForm: ({
     value,
     onChange,
@@ -98,7 +98,7 @@ jest.mock('../RouteForm', () => ({
   ),
 }))
 
-jest.mock('../FerrataForm', () => ({
+vi.mock('../FerrataForm', () => ({
   FerrataForm: ({
     value,
     onChange,
@@ -122,37 +122,37 @@ jest.mock('../FerrataForm', () => ({
   ),
 }))
 
-jest.mock('../WaypointGenerator', () => ({
+vi.mock('../WaypointGenerator', () => ({
   WaypointGenerator: () => <div data-testid="waypoint-generator-mock" />,
 }))
 
-jest.mock('../WaypointForm', () => ({
+vi.mock('../WaypointForm', () => ({
   WaypointForm: () => <div data-testid="waypoint-form-mock" />,
 }))
 
-jest.mock('../CanyonWaypointsGenerator', () => ({
+vi.mock('../CanyonWaypointsGenerator', () => ({
   CanyonWaypointsGenerator: () => (
     <div data-testid="canyon-waypoints-generator-mock" />
   ),
 }))
 
-jest.mock('../CroquisGenerator', () => ({
+vi.mock('../CroquisGenerator', () => ({
   CroquisGenerator: () => <div data-testid="croquis-generator-mock" />,
 }))
 
-jest.mock('../CanyonSummaryGenerator', () => ({
+vi.mock('../CanyonSummaryGenerator', () => ({
   CanyonSummaryGenerator: () => (
     <div data-testid="canyon-summary-generator-mock" />
   ),
 }))
 
-jest.mock('../RouteSummaryGenerator', () => ({
+vi.mock('../RouteSummaryGenerator', () => ({
   RouteSummaryGenerator: () => (
     <div data-testid="route-summary-generator-mock" />
   ),
 }))
 
-jest.mock('../FerrataSummaryGenerator', () => ({
+vi.mock('../FerrataSummaryGenerator', () => ({
   FerrataSummaryGenerator: () => (
     <div data-testid="ferrata-summary-generator-mock" />
   ),

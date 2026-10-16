@@ -1,19 +1,20 @@
 import { fireEvent, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { useIsScrolling } from 'react-use-is-scrolling'
+import type { Mock } from 'vitest'
 
 import { renderApp } from '@sdlgr/test-utils'
 
 import { PortfolioPage } from './PortfolioPage'
 
-jest.mock('react-use-is-scrolling', () => ({
-  useIsScrolling: jest.fn().mockImplementation(() => ({
+vi.mock('react-use-is-scrolling', () => ({
+  useIsScrolling: vi.fn().mockImplementation(() => ({
     isScrolling: false,
     scrollDirectionY: 'none',
   })),
 }))
 
-jest.mock('./components/DownloadCvButton/DownloadCvButton', () => ({
+vi.mock('./components/DownloadCvButton/DownloadCvButton', () => ({
   DownloadCvButton: () => (
     <div data-testid="mock-download-cv-button">Download CV</div>
   ),
@@ -27,7 +28,7 @@ describe('PortfolioPage', () => {
     Object.defineProperty(global.window, 'innerHeight', {
       get: () => 1400,
     })
-    global.scrollTo = jest.fn()
+    global.scrollTo = vi.fn()
   })
 
   it('should render successfully', async () => {
@@ -36,17 +37,19 @@ describe('PortfolioPage', () => {
 
     expect(screen.getByTestId('scrollColumn')).toHaveStyleRule('opacity: 0')
     expect(screen.getByTestId('scrollToTop')).toHaveStyleRule('translateY: 0px')
-    expect(screen.getByTestId('mock-download-cv-button')).toBeInTheDocument()
+    expect(
+      await screen.findByTestId('mock-download-cv-button'),
+    ).toBeInTheDocument()
     expect(baseElement).toMatchSnapshot()
   })
 
   it('should show scroll to top button', async () => {
-    ;(useIsScrolling as jest.Mock).mockReturnValueOnce({
+    ;(useIsScrolling as Mock).mockReturnValueOnce({
       isScrolling: true,
       scrollDirectionY: 'down',
     })
 
-    const watcher = jest.spyOn(global.window, 'scrollTo')
+    const watcher = vi.spyOn(global.window, 'scrollTo')
 
     renderApp(await PortfolioPage({ lng: 'en' }))
     expect(await screen.findByText('Profile')).toBeInTheDocument()
@@ -68,7 +71,7 @@ describe('PortfolioPage', () => {
     expect(watcher).toHaveBeenNthCalledWith(1, 0, 0)
 
     //scroll back
-    ;(useIsScrolling as jest.Mock).mockReturnValueOnce({
+    ;(useIsScrolling as Mock).mockReturnValueOnce({
       isScrolling: true,
       scrollDirectionY: 'up',
     })
@@ -88,8 +91,8 @@ describe('PortfolioPage', () => {
   })
 
   it('should copy the address url for sharing and the share function', async () => {
-    const writeText = jest.fn()
-    const shareFn = jest.fn()
+    const writeText = vi.fn()
+    const shareFn = vi.fn()
     Object.assign(navigator, {
       clipboard: { writeText },
       share: shareFn,
@@ -106,7 +109,7 @@ describe('PortfolioPage', () => {
   })
 
   it('should copy the address url for sharing but not call share method', async () => {
-    const writeText = jest.fn()
+    const writeText = vi.fn()
     Object.assign(navigator, {
       clipboard: { writeText },
       share: undefined,
@@ -126,11 +129,12 @@ describe('PortfolioPage', () => {
   })
 
   it('should handle non-array translation values gracefully', async () => {
-    jest
-      .spyOn(require('@web/i18n/server'), 'getServerTranslation')
-      .mockResolvedValue({ t: () => 'not-an-array' })
+    vi.spyOn(
+      await import('@web/i18n/server'),
+      'getServerTranslation',
+    ).mockResolvedValue({ t: () => 'not-an-array' })
     const { baseElement } = renderApp(await PortfolioPage({ lng: 'en' }))
     expect(baseElement).toBeTruthy()
-    jest.restoreAllMocks()
+    vi.restoreAllMocks()
   })
 })

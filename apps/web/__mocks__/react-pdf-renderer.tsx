@@ -86,4 +86,4 @@ export const __resetMockPdf = () => {
   mockPdf = { ...DEFAULT_PDF }
 }
 
-export const usePDF = () => [mockPdf, jest.fn()]
+export const usePDF = () => [mockPdf, vi.fn()]

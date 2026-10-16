@@ -1,3 +1,5 @@
+import type { Mock } from 'vitest'
+
 import { db } from '../index'
 import {
   ensureSeries,
@@ -9,16 +11,16 @@ import {
   upsertSeriesTranslation,
 } from './series'
 
-jest.mock('../index', () => ({
+vi.mock('../index', () => ({
   db: {
-    select: jest.fn(),
-    insert: jest.fn(),
+    select: vi.fn(),
+    insert: vi.fn(),
   },
 }))
 
 const mockDb = db as unknown as {
-  select: jest.Mock
-  insert: jest.Mock
+  select: Mock
+  insert: Mock
 }
 
 function makeChain(resolved: unknown) {
@@ -35,17 +37,17 @@ function makeChain(resolved: unknown) {
     'onConflictDoUpdate',
   ]
   for (const m of methods) {
-    chain[m] = jest.fn().mockReturnValue(chain)
+    chain[m] = vi.fn().mockReturnValue(chain)
   }
   chain.then = (resolve: (v: unknown) => unknown) =>
     Promise.resolve(resolved).then(resolve)
-  chain.catch = jest.fn().mockReturnThis()
-  chain.finally = jest.fn().mockReturnThis()
+  chain.catch = vi.fn().mockReturnThis()
+  chain.finally = vi.fn().mockReturnThis()
   return chain
 }
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
 })
 
 describe('getAllSeriesWithTranslations', () => {

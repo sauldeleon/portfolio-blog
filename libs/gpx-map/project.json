@@ -13,17 +13,10 @@
       }
     },
     "test": {
-      "executor": "@nx/jest:jest",
+      "executor": "@nx/vitest:test",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/gpx-map/jest.config.ts",
-        "passWithNoTests": true
-      },
-      "configurations": {
-        "ci": {
-          "ci": true,
-          "codeCoverage": true
-        }
+        "configFile": "libs/gpx-map/vite.config.mts"
       }
     }
   }

@@ -1,6 +1,11 @@
+import { cleanupE2eData, trackCreated } from '../support/cleanup'
 import { loginViaUi } from '../support/login'
 
 describe('Admin categories — create and delete', () => {
+  // Runs whether the tests passed or failed.
+  after(() => {
+    cleanupE2eData()
+  })
   let commitHash: string
 
   before(() => {
@@ -17,6 +22,7 @@ describe('Admin categories — create and delete', () => {
 
   it('creates a category and then deletes it', () => {
     const name = `e2e-cat-${commitHash}-${Date.now()}`
+    trackCreated('categories', name)
 
     cy.visit('/admin/categories/new')
     cy.url({ timeout: 10000 }).should('include', '/admin/categories/new')

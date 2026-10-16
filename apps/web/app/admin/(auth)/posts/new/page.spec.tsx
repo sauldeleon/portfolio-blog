@@ -3,38 +3,38 @@ import { render, screen } from '@testing-library/react'
 import { PostEditor } from '../components/PostEditor'
 import NewPostPage from './page.next'
 
-const mockRequireAdminSession = jest.fn()
-const mockGetCategoriesForAdmin = jest.fn()
-const mockGetAllTagsAdmin = jest.fn()
-const mockGetAllSeriesWithTranslations = jest.fn()
-const mockListUsers = jest.fn()
+const mockRequireAdminSession = vi.fn()
+const mockGetCategoriesForAdmin = vi.fn()
+const mockGetAllTagsAdmin = vi.fn()
+const mockGetAllSeriesWithTranslations = vi.fn()
+const mockListUsers = vi.fn()
 
-jest.mock('@web/lib/auth/requireAdminSession', () => ({
+vi.mock('@web/lib/auth/requireAdminSession', () => ({
   requireAdminSession: (...args: unknown[]) => mockRequireAdminSession(...args),
 }))
 
-jest.mock('@web/lib/db/queries/categories', () => ({
+vi.mock('@web/lib/db/queries/categories', () => ({
   getCategoriesForAdmin: (...args: unknown[]) =>
     mockGetCategoriesForAdmin(...args),
 }))
 
-jest.mock('@web/lib/db/queries/tags', () => ({
+vi.mock('@web/lib/db/queries/tags', () => ({
   getAllTagsAdmin: (...args: unknown[]) => mockGetAllTagsAdmin(...args),
 }))
 
-jest.mock('@web/lib/db/queries/series', () => ({
+vi.mock('@web/lib/db/queries/series', () => ({
   getAllSeriesWithTranslations: (...args: unknown[]) =>
     mockGetAllSeriesWithTranslations(...args),
 }))
 
-jest.mock('@web/lib/db/queries/users', () => ({
+vi.mock('@web/lib/db/queries/users', () => ({
   listUsers: (...args: unknown[]) => mockListUsers(...args),
 }))
 
-jest.mock('../components/PostEditor', () => {
-  const React = require('react')
+vi.mock('../components/PostEditor', async () => {
+  const React = await import('react')
   return {
-    PostEditor: jest
+    PostEditor: vi
       .fn()
       .mockReturnValue(
         React.createElement('div', { 'data-testid': 'post-editor' }),
@@ -80,7 +80,7 @@ describe('NewPostPage', () => {
   ]
 
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     mockRequireAdminSession.mockResolvedValue({
       user: { name: 'Saúl de León', id: 'user-1', role: 'admin' },
     })

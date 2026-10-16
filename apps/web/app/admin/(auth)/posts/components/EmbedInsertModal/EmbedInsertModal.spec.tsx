@@ -7,19 +7,13 @@ import { EmbedInsertModal, buildEmbedMarkdown } from './EmbedInsertModal'
 describe('EmbedInsertModal', () => {
   it('renders nothing when closed', () => {
     renderApp(
-      <EmbedInsertModal
-        isOpen={false}
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
-      />,
+      <EmbedInsertModal isOpen={false} onInsert={vi.fn()} onCancel={vi.fn()} />,
     )
     expect(screen.queryByTestId('embed-url-input')).not.toBeInTheDocument()
   })
 
   it('renders modal content when open', () => {
-    renderApp(
-      <EmbedInsertModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
-    )
+    renderApp(<EmbedInsertModal isOpen onInsert={vi.fn()} onCancel={vi.fn()} />)
     expect(screen.getByTestId('embed-type-youtube')).toBeInTheDocument()
     expect(screen.getByTestId('embed-type-maps')).toBeInTheDocument()
     expect(screen.getByTestId('embed-type-openstreetmap')).toBeInTheDocument()
@@ -30,9 +24,7 @@ describe('EmbedInsertModal', () => {
   })
 
   it('defaults to youtube type', () => {
-    renderApp(
-      <EmbedInsertModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
-    )
+    renderApp(<EmbedInsertModal isOpen onInsert={vi.fn()} onCancel={vi.fn()} />)
     expect(screen.getByTestId('embed-url-input')).toHaveAttribute(
       'placeholder',
       'https://www.youtube.com/embed/<video-id>',
@@ -40,16 +32,12 @@ describe('EmbedInsertModal', () => {
   })
 
   it('insert button is disabled when url is empty', () => {
-    renderApp(
-      <EmbedInsertModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
-    )
+    renderApp(<EmbedInsertModal isOpen onInsert={vi.fn()} onCancel={vi.fn()} />)
     expect(screen.getByTestId('embed-modal-insert')).toBeDisabled()
   })
 
   it('insert button enabled when url is filled', () => {
-    renderApp(
-      <EmbedInsertModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
-    )
+    renderApp(<EmbedInsertModal isOpen onInsert={vi.fn()} onCancel={vi.fn()} />)
     fireEvent.change(screen.getByTestId('embed-url-input'), {
       target: { value: 'https://www.youtube.com/embed/abc' },
     })
@@ -57,9 +45,7 @@ describe('EmbedInsertModal', () => {
   })
 
   it('shows preview when url is filled', () => {
-    renderApp(
-      <EmbedInsertModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
-    )
+    renderApp(<EmbedInsertModal isOpen onInsert={vi.fn()} onCancel={vi.fn()} />)
     fireEvent.change(screen.getByTestId('embed-url-input'), {
       target: { value: 'https://www.youtube.com/embed/abc' },
     })
@@ -70,16 +56,12 @@ describe('EmbedInsertModal', () => {
   })
 
   it('does not show preview when url is empty', () => {
-    renderApp(
-      <EmbedInsertModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
-    )
+    renderApp(<EmbedInsertModal isOpen onInsert={vi.fn()} onCancel={vi.fn()} />)
     expect(screen.queryByTestId('embed-preview')).not.toBeInTheDocument()
   })
 
   it('changes placeholder when type changes to maps', () => {
-    renderApp(
-      <EmbedInsertModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
-    )
+    renderApp(<EmbedInsertModal isOpen onInsert={vi.fn()} onCancel={vi.fn()} />)
     fireEvent.click(screen.getByTestId('embed-type-maps'))
     expect(screen.getByTestId('embed-url-input')).toHaveAttribute(
       'placeholder',
@@ -88,9 +70,7 @@ describe('EmbedInsertModal', () => {
   })
 
   it('changes placeholder when type changes to openstreetmap', () => {
-    renderApp(
-      <EmbedInsertModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
-    )
+    renderApp(<EmbedInsertModal isOpen onInsert={vi.fn()} onCancel={vi.fn()} />)
     fireEvent.click(screen.getByTestId('embed-type-openstreetmap'))
     expect(screen.getByTestId('embed-url-input')).toHaveAttribute(
       'placeholder',
@@ -99,9 +79,7 @@ describe('EmbedInsertModal', () => {
   })
 
   it('changes placeholder when type changes to wikiloc', () => {
-    renderApp(
-      <EmbedInsertModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
-    )
+    renderApp(<EmbedInsertModal isOpen onInsert={vi.fn()} onCancel={vi.fn()} />)
     fireEvent.click(screen.getByTestId('embed-type-wikiloc'))
     expect(screen.getByTestId('embed-url-input')).toHaveAttribute(
       'placeholder',
@@ -110,9 +88,9 @@ describe('EmbedInsertModal', () => {
   })
 
   it('inserts youtube markdown', () => {
-    const onInsert = jest.fn()
+    const onInsert = vi.fn()
     renderApp(
-      <EmbedInsertModal isOpen onInsert={onInsert} onCancel={jest.fn()} />,
+      <EmbedInsertModal isOpen onInsert={onInsert} onCancel={vi.fn()} />,
     )
     fireEvent.change(screen.getByTestId('embed-url-input'), {
       target: { value: 'https://www.youtube.com/embed/abc123' },
@@ -124,9 +102,9 @@ describe('EmbedInsertModal', () => {
   })
 
   it('inserts maps markdown', () => {
-    const onInsert = jest.fn()
+    const onInsert = vi.fn()
     renderApp(
-      <EmbedInsertModal isOpen onInsert={onInsert} onCancel={jest.fn()} />,
+      <EmbedInsertModal isOpen onInsert={onInsert} onCancel={vi.fn()} />,
     )
     fireEvent.click(screen.getByTestId('embed-type-maps'))
     fireEvent.change(screen.getByTestId('embed-url-input'), {
@@ -139,9 +117,9 @@ describe('EmbedInsertModal', () => {
   })
 
   it('inserts openstreetmap markdown', () => {
-    const onInsert = jest.fn()
+    const onInsert = vi.fn()
     renderApp(
-      <EmbedInsertModal isOpen onInsert={onInsert} onCancel={jest.fn()} />,
+      <EmbedInsertModal isOpen onInsert={onInsert} onCancel={vi.fn()} />,
     )
     fireEvent.click(screen.getByTestId('embed-type-openstreetmap'))
     fireEvent.change(screen.getByTestId('embed-url-input'), {
@@ -156,9 +134,9 @@ describe('EmbedInsertModal', () => {
   })
 
   it('inserts wikiloc markdown', () => {
-    const onInsert = jest.fn()
+    const onInsert = vi.fn()
     renderApp(
-      <EmbedInsertModal isOpen onInsert={onInsert} onCancel={jest.fn()} />,
+      <EmbedInsertModal isOpen onInsert={onInsert} onCancel={vi.fn()} />,
     )
     fireEvent.click(screen.getByTestId('embed-type-wikiloc'))
     fireEvent.change(screen.getByTestId('embed-url-input'), {
@@ -171,9 +149,9 @@ describe('EmbedInsertModal', () => {
   })
 
   it('trims whitespace from url on insert', () => {
-    const onInsert = jest.fn()
+    const onInsert = vi.fn()
     renderApp(
-      <EmbedInsertModal isOpen onInsert={onInsert} onCancel={jest.fn()} />,
+      <EmbedInsertModal isOpen onInsert={onInsert} onCancel={vi.fn()} />,
     )
     fireEvent.change(screen.getByTestId('embed-url-input'), {
       target: { value: '  https://www.youtube.com/embed/abc  ' },
@@ -185,18 +163,18 @@ describe('EmbedInsertModal', () => {
   })
 
   it('calls onCancel when cancel clicked', () => {
-    const onCancel = jest.fn()
+    const onCancel = vi.fn()
     renderApp(
-      <EmbedInsertModal isOpen onInsert={jest.fn()} onCancel={onCancel} />,
+      <EmbedInsertModal isOpen onInsert={vi.fn()} onCancel={onCancel} />,
     )
     fireEvent.click(screen.getByTestId('embed-modal-cancel'))
     expect(onCancel).toHaveBeenCalledTimes(1)
   })
 
   it('resets state after insert', () => {
-    const onInsert = jest.fn()
+    const onInsert = vi.fn()
     renderApp(
-      <EmbedInsertModal isOpen onInsert={onInsert} onCancel={jest.fn()} />,
+      <EmbedInsertModal isOpen onInsert={onInsert} onCancel={vi.fn()} />,
     )
     fireEvent.click(screen.getByTestId('embed-type-maps'))
     fireEvent.change(screen.getByTestId('embed-url-input'), {
@@ -214,12 +192,12 @@ describe('EmbedInsertModal', () => {
 
 describe('EmbedInsertModal initialValues', () => {
   it('pre-fills type and url when initialValues provided', () => {
-    const onInsert = jest.fn()
+    const onInsert = vi.fn()
     renderApp(
       <EmbedInsertModal
         isOpen
         onInsert={onInsert}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
         initialValues={{
           type: 'maps',
           url: 'https://maps.google.com/embed?pb=123',
@@ -240,8 +218,8 @@ describe('EmbedInsertModal initialValues', () => {
     renderApp(
       <EmbedInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         initialValues={null}
       />,
     )
@@ -251,24 +229,18 @@ describe('EmbedInsertModal initialValues', () => {
 
 describe('EmbedInsertModal 360°', () => {
   it('shows 360 checkbox when embed type is youtube', () => {
-    renderApp(
-      <EmbedInsertModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
-    )
+    renderApp(<EmbedInsertModal isOpen onInsert={vi.fn()} onCancel={vi.fn()} />)
     expect(screen.getByTestId('embed-is360-checkbox')).toBeInTheDocument()
   })
 
   it('hides 360 checkbox when embed type is maps', () => {
-    renderApp(
-      <EmbedInsertModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
-    )
+    renderApp(<EmbedInsertModal isOpen onInsert={vi.fn()} onCancel={vi.fn()} />)
     fireEvent.click(screen.getByTestId('embed-type-maps'))
     expect(screen.queryByTestId('embed-is360-checkbox')).not.toBeInTheDocument()
   })
 
   it('checking 360 updates preview to youtube-360 type', () => {
-    renderApp(
-      <EmbedInsertModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
-    )
+    renderApp(<EmbedInsertModal isOpen onInsert={vi.fn()} onCancel={vi.fn()} />)
     fireEvent.change(screen.getByTestId('embed-url-input'), {
       target: { value: 'https://www.youtube.com/embed/abc' },
     })
@@ -279,9 +251,9 @@ describe('EmbedInsertModal 360°', () => {
   })
 
   it('inserts youtube-360 markdown when 360 checkbox is checked', () => {
-    const onInsert = jest.fn()
+    const onInsert = vi.fn()
     renderApp(
-      <EmbedInsertModal isOpen onInsert={onInsert} onCancel={jest.fn()} />,
+      <EmbedInsertModal isOpen onInsert={onInsert} onCancel={vi.fn()} />,
     )
     fireEvent.change(screen.getByTestId('embed-url-input'), {
       target: { value: 'https://www.youtube.com/embed/xyz' },
@@ -294,9 +266,7 @@ describe('EmbedInsertModal 360°', () => {
   })
 
   it('resets is360 after insert', () => {
-    renderApp(
-      <EmbedInsertModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
-    )
+    renderApp(<EmbedInsertModal isOpen onInsert={vi.fn()} onCancel={vi.fn()} />)
     fireEvent.change(screen.getByTestId('embed-url-input'), {
       target: { value: 'https://www.youtube.com/embed/xyz' },
     })
@@ -306,9 +276,7 @@ describe('EmbedInsertModal 360°', () => {
   })
 
   it('switching away from youtube resets is360', () => {
-    renderApp(
-      <EmbedInsertModal isOpen onInsert={jest.fn()} onCancel={jest.fn()} />,
-    )
+    renderApp(<EmbedInsertModal isOpen onInsert={vi.fn()} onCancel={vi.fn()} />)
     fireEvent.click(screen.getByTestId('embed-is360-checkbox'))
     fireEvent.click(screen.getByTestId('embed-type-maps'))
     fireEvent.click(screen.getByTestId('embed-type-youtube'))
@@ -316,12 +284,12 @@ describe('EmbedInsertModal 360°', () => {
   })
 
   it('initialValues with youtube-360 sets type to youtube and checks 360', () => {
-    const onInsert = jest.fn()
+    const onInsert = vi.fn()
     renderApp(
       <EmbedInsertModal
         isOpen
         onInsert={onInsert}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
         initialValues={{
           type: 'youtube-360',
           url: 'https://www.youtube.com/embed/abc123',

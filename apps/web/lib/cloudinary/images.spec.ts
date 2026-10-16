@@ -1,19 +1,19 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
-const mockConfig = jest.fn()
-const mockExecute = jest.fn()
+const mockConfig = vi.fn()
+const mockExecute = vi.fn()
 const mockSearch = {
-  expression: jest.fn().mockReturnThis(),
-  sort_by: jest.fn().mockReturnThis(),
-  max_results: jest.fn().mockReturnThis(),
-  next_cursor: jest.fn().mockReturnThis(),
+  expression: vi.fn().mockReturnThis(),
+  sort_by: vi.fn().mockReturnThis(),
+  max_results: vi.fn().mockReturnThis(),
+  next_cursor: vi.fn().mockReturnThis(),
   execute: mockExecute,
 }
-const mockUploaderDestroy = jest.fn()
-const mockUploaderRename = jest.fn()
+const mockUploaderDestroy = vi.fn()
+const mockUploaderRename = vi.fn()
 
-jest.mock('cloudinary', () => ({
+vi.mock('cloudinary', () => ({
   v2: {
     config: mockConfig,
     search: mockSearch,
@@ -24,21 +24,22 @@ jest.mock('cloudinary', () => ({
   },
 }))
 
-const { listImages, destroyImage, renameImage } = require('./images') as {
-  listImages: (
-    nextCursor?: string,
-    maxResults?: number,
-    search?: string,
-  ) => Promise<{
-    images: import('./images').CloudinaryImage[]
-    nextCursor?: string
-  }>
-  destroyImage: (publicId: string) => Promise<void>
-  renameImage: (
-    publicId: string,
-    newName: string,
-  ) => Promise<import('./images').CloudinaryImage>
-}
+const { listImages, destroyImage, renameImage } =
+  (await import('./images')) as {
+    listImages: (
+      nextCursor?: string,
+      maxResults?: number,
+      search?: string,
+    ) => Promise<{
+      images: import('./images').CloudinaryImage[]
+      nextCursor?: string
+    }>
+    destroyImage: (publicId: string) => Promise<void>
+    renameImage: (
+      publicId: string,
+      newName: string,
+    ) => Promise<import('./images').CloudinaryImage>
+  }
 
 const mockResource = {
   public_id: 'sawl.dev - blog/sample',
@@ -52,7 +53,7 @@ const mockResource = {
 
 describe('listImages', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME = 'test-cloud'
     process.env.CLOUDINARY_API_KEY = 'test-key'
     process.env.CLOUDINARY_API_SECRET = 'test-secret'
@@ -160,7 +161,7 @@ describe('listImages', () => {
 
 describe('destroyImage', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME = 'test-cloud'
     process.env.CLOUDINARY_API_KEY = 'test-key'
     process.env.CLOUDINARY_API_SECRET = 'test-secret'
@@ -202,7 +203,7 @@ describe('renameImage', () => {
   }
 
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME = 'test-cloud'
     process.env.CLOUDINARY_API_KEY = 'test-key'
     process.env.CLOUDINARY_API_SECRET = 'test-secret'

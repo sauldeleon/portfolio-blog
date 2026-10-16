@@ -6,7 +6,7 @@ import type { CloudinaryImage } from '@web/lib/cloudinary/images'
 
 import { ImageCard } from './ImageCard'
 
-jest.mock('next/image', () => ({
+vi.mock('next/image', () => ({
   __esModule: true,
   default: ({
     src,
@@ -19,7 +19,7 @@ jest.mock('next/image', () => ({
   }) => <img src={src} alt={alt} {...props} />,
 }))
 
-jest.mock('@sdlgr/button', () => ({
+vi.mock('@sdlgr/button', () => ({
   Button: ({
     children,
     onClick,
@@ -35,8 +35,8 @@ jest.mock('@sdlgr/button', () => ({
   ),
 }))
 
-jest.mock('@web/i18n/client', () => ({
-  useClientTranslation: jest.fn().mockReturnValue({
+vi.mock('@web/i18n/client', () => ({
+  useClientTranslation: vi.fn().mockReturnValue({
     t: (key: string) => {
       const translations: Record<string, string> = {
         'images.copyUrl': 'Copy URL',
@@ -59,21 +59,21 @@ const mockImage: CloudinaryImage = {
   bytes: 1536000,
 }
 
-const mockOnDelete = jest.fn()
-const mockOnEdit = jest.fn()
+const mockOnDelete = vi.fn()
+const mockOnEdit = vi.fn()
 
 describe('ImageCard', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
-    jest.useFakeTimers()
+    vi.clearAllMocks()
+    vi.useFakeTimers()
     Object.defineProperty(navigator, 'clipboard', {
-      value: { writeText: jest.fn().mockResolvedValue(undefined) },
+      value: { writeText: vi.fn().mockResolvedValue(undefined) },
       writable: true,
     })
   })
 
   afterEach(() => {
-    jest.useRealTimers()
+    vi.useRealTimers()
   })
 
   it('renders card with testid', () => {
@@ -199,7 +199,7 @@ describe('ImageCard', () => {
       ),
     )
     act(() => {
-      jest.advanceTimersByTime(2000)
+      vi.advanceTimersByTime(2000)
     })
     await waitFor(() =>
       expect(screen.getByTestId('copy-url-button')).toHaveTextContent(

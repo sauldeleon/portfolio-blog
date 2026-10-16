@@ -1,6 +1,7 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
+import type { Mock } from 'vitest'
 
 import { renderApp } from '@sdlgr/test-utils'
 
@@ -8,11 +9,11 @@ import type { AdminPost } from '@web/lib/db/queries/posts'
 
 import { PostTable } from './PostTable'
 
-const mockRefresh = jest.fn()
-const mockPush = jest.fn()
+const mockRefresh = vi.fn()
+const mockPush = vi.fn()
 
-jest.mock('@web/i18n/client', () => ({
-  useClientTranslation: jest.fn().mockReturnValue({
+vi.mock('@web/i18n/client', () => ({
+  useClientTranslation: vi.fn().mockReturnValue({
     t: (key: string, vars?: Record<string, unknown>) => {
       const translations: Record<string, string> = {
         'posts.searchPlaceholder': 'Search posts…',
@@ -69,14 +70,14 @@ jest.mock('@web/i18n/client', () => ({
   }),
 }))
 
-jest.mock('@web/app/admin/(auth)/components/PublishNotifyModal', () => ({
+vi.mock('@web/app/admin/(auth)/components/PublishNotifyModal', () => ({
   PublishNotifyModal: () => null,
 }))
 
-jest.mock('next/navigation', () => ({
-  useRouter: jest.fn(),
-  usePathname: jest.fn().mockReturnValue('/admin/posts/'),
-  useSearchParams: jest.fn().mockReturnValue(new URLSearchParams()),
+vi.mock('next/navigation', () => ({
+  useRouter: vi.fn(),
+  usePathname: vi.fn().mockReturnValue('/admin/posts/'),
+  useSearchParams: vi.fn().mockReturnValue(new URLSearchParams()),
 }))
 
 const makePost = (overrides: Partial<AdminPost> = {}): AdminPost => ({
@@ -108,14 +109,14 @@ describe('PostTable — pagination', () => {
     )
 
   beforeEach(() => {
-    jest.clearAllMocks()
-    ;(useRouter as jest.Mock).mockReturnValue({
+    vi.clearAllMocks()
+    ;(useRouter as Mock).mockReturnValue({
       refresh: mockRefresh,
       push: mockPush,
     })
-    jest.spyOn(axios, 'get').mockResolvedValue({ data: { data: [] } })
-    jest.spyOn(axios, 'put').mockResolvedValue({ data: {} })
-    jest.spyOn(axios, 'delete').mockResolvedValue({ data: {} })
+    vi.spyOn(axios, 'get').mockResolvedValue({ data: { data: [] } })
+    vi.spyOn(axios, 'put').mockResolvedValue({ data: {} })
+    vi.spyOn(axios, 'delete').mockResolvedValue({ data: {} })
   })
 
   it('does not render pagination when posts <= 20', () => {

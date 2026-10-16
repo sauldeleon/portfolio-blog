@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react'
 
 import { PostContent } from './PostContent'
 
-jest.mock('./PostContent.styles', () => ({
+vi.mock('./PostContent.styles', () => ({
   StyledArticle: ({ children }: { children: React.ReactNode }) => (
     <article data-testid="post-content">{children}</article>
   ),

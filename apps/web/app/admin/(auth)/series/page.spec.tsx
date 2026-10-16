@@ -5,19 +5,19 @@ import type { SeriesForAdmin } from '@web/lib/db/queries/series'
 import { SeriesPageView } from './components/SeriesPageView'
 import AdminSeriesPage from './page.next'
 
-const mockGetSeriesForAdmin = jest.fn()
-const mockRequireAdminSession = jest.fn()
+const mockGetSeriesForAdmin = vi.fn()
+const mockRequireAdminSession = vi.fn()
 
-jest.mock('@web/lib/auth/requireAdminSession', () => ({
+vi.mock('@web/lib/auth/requireAdminSession', () => ({
   requireAdminSession: (...args: unknown[]) => mockRequireAdminSession(...args),
 }))
 
-jest.mock('@web/lib/db/queries/series', () => ({
+vi.mock('@web/lib/db/queries/series', () => ({
   getSeriesForAdmin: (...args: unknown[]) => mockGetSeriesForAdmin(...args),
 }))
 
-jest.mock('@web/i18n/server', () => ({
-  getServerTranslation: jest.fn().mockResolvedValue({
+vi.mock('@web/i18n/server', () => ({
+  getServerTranslation: vi.fn().mockResolvedValue({
     t: (key: string) => {
       const strings: Record<string, string> = {
         'series.title': 'Series',
@@ -27,10 +27,10 @@ jest.mock('@web/i18n/server', () => ({
   }),
 }))
 
-jest.mock('./components/SeriesPageView', () => {
-  const React = require('react')
+vi.mock('./components/SeriesPageView', async () => {
+  const React = await import('react')
   return {
-    SeriesPageView: jest
+    SeriesPageView: vi
       .fn()
       .mockReturnValue(
         React.createElement('div', { 'data-testid': 'series-page-view' }),
@@ -44,7 +44,7 @@ const mockSeries: SeriesForAdmin[] = [
 
 describe('AdminSeriesPage', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     mockRequireAdminSession.mockResolvedValue({ user: { name: 'admin' } })
     mockGetSeriesForAdmin.mockResolvedValue(mockSeries)
   })

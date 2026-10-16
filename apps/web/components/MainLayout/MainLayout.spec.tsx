@@ -4,10 +4,12 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { MainLayout } from './MainLayout'
 
-const mockPush = jest.fn()
-jest.mock('next/navigation', () => ({
-  ...jest.requireActual('next/navigation'),
-  usePathname: jest.fn().mockImplementation(() => '/en'),
+const mockPush = vi.fn()
+vi.mock('next/navigation', async () => ({
+  ...(await vi.importActual<typeof import('next/navigation')>(
+    'next/navigation',
+  )),
+  usePathname: vi.fn().mockImplementation(() => '/en'),
   useSelectedLayoutSegments: () => ['(home)'],
   useRouter: () => ({
     push: mockPush,

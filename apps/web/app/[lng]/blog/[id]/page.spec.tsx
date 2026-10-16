@@ -1,24 +1,24 @@
-const mockNotFound = jest.fn()
-const mockRedirect = jest.fn()
+const mockNotFound = vi.fn()
+const mockRedirect = vi.fn()
 
-jest.mock('next/navigation', () => ({
+vi.mock('next/navigation', () => ({
   notFound: mockNotFound,
   redirect: mockRedirect,
 }))
 
-const mockGetPostByNumber = jest.fn()
+const mockGetPostByNumber = vi.fn()
 
-jest.mock('@web/lib/db/queries/posts', () => ({
+vi.mock('@web/lib/db/queries/posts', () => ({
   getPostByNumber: mockGetPostByNumber,
 }))
 
 describe('[lng]/blog/[id] - PostRedirectPage', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   it('calls notFound when id is not a number', async () => {
-    const { default: PostRedirectPage } = require('./page.next')
+    const { default: PostRedirectPage } = await import('./page.next')
     await PostRedirectPage({
       params: Promise.resolve({ lng: 'en', id: 'not-a-number' }),
     })
@@ -28,7 +28,7 @@ describe('[lng]/blog/[id] - PostRedirectPage', () => {
 
   it('calls notFound when post is null', async () => {
     mockGetPostByNumber.mockResolvedValue(null)
-    const { default: PostRedirectPage } = require('./page.next')
+    const { default: PostRedirectPage } = await import('./page.next')
     await PostRedirectPage({
       params: Promise.resolve({ lng: 'en', id: '42' }),
     })
@@ -40,7 +40,7 @@ describe('[lng]/blog/[id] - PostRedirectPage', () => {
       postNumber: 42,
       slug: 'my-test-post',
     })
-    const { default: PostRedirectPage } = require('./page.next')
+    const { default: PostRedirectPage } = await import('./page.next')
     await PostRedirectPage({
       params: Promise.resolve({ lng: 'en', id: '42' }),
     })
@@ -53,7 +53,7 @@ describe('[lng]/blog/[id] - PostRedirectPage', () => {
       postNumber: 7,
       slug: 'mi-post',
     })
-    const { default: PostRedirectPage } = require('./page.next')
+    const { default: PostRedirectPage } = await import('./page.next')
     await PostRedirectPage({
       params: Promise.resolve({ lng: 'es', id: '7' }),
     })

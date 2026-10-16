@@ -9,14 +9,17 @@ import {
   uploadTrackFile,
 } from './trackApi'
 
-jest.mock('axios', () => ({ get: jest.fn(), put: jest.fn(), post: jest.fn() }))
+vi.mock('axios', () => {
+  const mod = { get: vi.fn(), put: vi.fn(), post: vi.fn() }
+  return { ...mod, default: mod }
+})
 
-const mockGet = jest.mocked(axios.get)
-const mockPut = jest.mocked(axios.put)
-const mockPost = jest.mocked(axios.post)
+const mockGet = vi.mocked(axios.get)
+const mockPut = vi.mocked(axios.put)
+const mockPost = vi.mocked(axios.post)
 
 describe('trackApi', () => {
-  beforeEach(() => jest.clearAllMocks())
+  beforeEach(() => vi.clearAllMocks())
 
   it('fetches the track list', async () => {
     const listing = { files: [{ path: 'a.gpx' }], truncated: false }

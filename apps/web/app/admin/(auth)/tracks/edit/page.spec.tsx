@@ -2,21 +2,21 @@ import { render, screen } from '@testing-library/react'
 
 import AdminTrackEditPage from './page.next'
 
-const mockRequireAdminSession = jest.fn()
-const mockRedirect = jest.fn()
+const mockRequireAdminSession = vi.fn()
+const mockRedirect = vi.fn()
 
-jest.mock('@web/lib/auth/requireAdminSession', () => ({
+vi.mock('@web/lib/auth/requireAdminSession', () => ({
   requireAdminSession: (...args: unknown[]) => mockRequireAdminSession(...args),
 }))
 
-jest.mock('next/navigation', () => ({
+vi.mock('next/navigation', () => ({
   redirect: (...args: unknown[]) => {
     mockRedirect(...args)
     throw new Error('NEXT_REDIRECT')
   },
 }))
 
-jest.mock('../components/TrackEditorLoader', () => ({
+vi.mock('../components/TrackEditorLoader', () => ({
   TrackEditorLoader: ({ path }: { path: string }) => (
     <div data-testid="track-editor-loader">{path}</div>
   ),
@@ -24,7 +24,7 @@ jest.mock('../components/TrackEditorLoader', () => ({
 
 describe('AdminTrackEditPage', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     mockRequireAdminSession.mockResolvedValue({ user: { name: 'admin' } })
   })
 

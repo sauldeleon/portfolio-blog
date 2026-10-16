@@ -5,7 +5,7 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { ImageManager } from './ImageManager'
 
-jest.mock('@sdlgr/button', () => ({
+vi.mock('@sdlgr/button', () => ({
   Button: ({
     children,
     onClick,
@@ -21,8 +21,8 @@ jest.mock('@sdlgr/button', () => ({
   ),
 }))
 
-jest.mock('@web/i18n/client', () => ({
-  useClientTranslation: jest.fn().mockReturnValue({
+vi.mock('@web/i18n/client', () => ({
+  useClientTranslation: vi.fn().mockReturnValue({
     t: (key: string) => {
       const translations: Record<string, string> = {
         'images.title': 'Images',
@@ -45,7 +45,7 @@ jest.mock('@web/i18n/client', () => ({
   }),
 }))
 
-jest.mock('../ImageCard', () => ({
+vi.mock('../ImageCard', () => ({
   ImageCard: ({
     image,
     onDelete,
@@ -73,7 +73,7 @@ jest.mock('../ImageCard', () => ({
   ),
 }))
 
-jest.mock('../ImageUploadModal', () => ({
+vi.mock('../ImageUploadModal', () => ({
   ImageUploadModal: ({
     isOpen,
     onClose,
@@ -109,7 +109,7 @@ jest.mock('../ImageUploadModal', () => ({
     ) : null,
 }))
 
-jest.mock('../ImageEditModal', () => ({
+vi.mock('../ImageEditModal', () => ({
   ImageEditModal: ({
     isOpen,
     image,
@@ -143,7 +143,7 @@ jest.mock('../ImageEditModal', () => ({
     ) : null,
 }))
 
-jest.mock('../../../components/ConfirmDeleteModal', () => ({
+vi.mock('../../../components/ConfirmDeleteModal', () => ({
   ConfirmDeleteModal: ({
     isOpen,
     onConfirm,
@@ -189,10 +189,10 @@ const mockImages = [
 
 describe('ImageManager', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
-    jest.spyOn(axios, 'get').mockResolvedValue({ data: { images: mockImages } })
-    jest.spyOn(axios, 'delete').mockResolvedValue({ data: {} })
-    jest.spyOn(axios, 'patch').mockResolvedValue({
+    vi.clearAllMocks()
+    vi.spyOn(axios, 'get').mockResolvedValue({ data: { images: mockImages } })
+    vi.spyOn(axios, 'delete').mockResolvedValue({ data: {} })
+    vi.spyOn(axios, 'patch').mockResolvedValue({
       data: {
         publicId: 'sawl.dev - blog/new-name',
         url: 'https://res.cloudinary.com/demo/new-name.jpg',
@@ -226,13 +226,13 @@ describe('ImageManager', () => {
   })
 
   it('shows loading state initially', () => {
-    jest.spyOn(axios, 'get').mockReturnValue(new Promise(jest.fn()))
+    vi.spyOn(axios, 'get').mockReturnValue(new Promise(vi.fn()))
     renderApp(<ImageManager />)
     expect(screen.getByTestId('loading-state')).toBeInTheDocument()
   })
 
   it('shows empty state when no images', async () => {
-    jest.spyOn(axios, 'get').mockResolvedValue({ data: { images: [] } })
+    vi.spyOn(axios, 'get').mockResolvedValue({ data: { images: [] } })
     renderApp(<ImageManager />)
     expect(await screen.findByTestId('empty-state')).toBeInTheDocument()
     expect(screen.getByTestId('empty-state')).toHaveTextContent(
@@ -241,7 +241,7 @@ describe('ImageManager', () => {
   })
 
   it('shows error state when fetch fails with non-ok response', async () => {
-    jest.spyOn(axios, 'get').mockRejectedValue(new Error('Request failed'))
+    vi.spyOn(axios, 'get').mockRejectedValue(new Error('Request failed'))
     renderApp(<ImageManager />)
     expect(await screen.findByTestId('error-state')).toBeInTheDocument()
     expect(screen.getByTestId('error-state')).toHaveTextContent(
@@ -250,7 +250,7 @@ describe('ImageManager', () => {
   })
 
   it('shows error state when fetch throws', async () => {
-    jest.spyOn(axios, 'get').mockRejectedValue(new Error('Network error'))
+    vi.spyOn(axios, 'get').mockRejectedValue(new Error('Network error'))
     renderApp(<ImageManager />)
     expect(await screen.findByTestId('error-state')).toBeInTheDocument()
   })
@@ -325,8 +325,7 @@ describe('ImageManager', () => {
       createdAt: '2024-03-01T00:00:00Z',
       bytes: 4321,
     }
-    jest
-      .spyOn(axios, 'get')
+    vi.spyOn(axios, 'get')
       .mockResolvedValueOnce({ data: { images: mockImages } })
       .mockResolvedValueOnce({ data: { images: [freshImage] } })
     renderApp(<ImageManager />)
@@ -339,9 +338,7 @@ describe('ImageManager', () => {
   })
 
   it('shows error if delete fetch throws', async () => {
-    jest
-      .spyOn(axios, 'delete')
-      .mockRejectedValueOnce(new Error('Network error'))
+    vi.spyOn(axios, 'delete').mockRejectedValueOnce(new Error('Network error'))
     renderApp(<ImageManager />)
     expect(await screen.findByTestId('image-grid')).toBeInTheDocument()
     fireEvent.click(screen.getByTestId('delete-sawl.dev - blog/photo1'))
@@ -390,7 +387,7 @@ describe('ImageManager', () => {
   })
 
   it('shows error in edit modal when rename fails', async () => {
-    jest.spyOn(axios, 'patch').mockRejectedValueOnce(new Error('Network error'))
+    vi.spyOn(axios, 'patch').mockRejectedValueOnce(new Error('Network error'))
     renderApp(<ImageManager />)
     expect(await screen.findByTestId('image-grid')).toBeInTheDocument()
     fireEvent.click(screen.getByTestId('edit-sawl.dev - blog/photo1'))

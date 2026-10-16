@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ProfileInfo should render successfully 1`] = `
+exports[`ProfileInfo > should render successfully 1`] = `
 .c0 {
   font-family: var(--font-roboto-mono);
   font-weight: 500;

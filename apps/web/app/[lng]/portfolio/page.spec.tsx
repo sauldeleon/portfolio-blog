@@ -4,7 +4,7 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import Page, { generateMetadata, revalidate } from './page.next'
 
-jest.mock('@web/components/PortfolioPage/PortfolioPage', () => ({
+vi.mock('@web/components/PortfolioPage/PortfolioPage', () => ({
   PortfolioPage: ({ lng }: { lng: string }) => (
     <div data-testid="portfolio-page" data-lng={lng} />
   ),

@@ -9,6 +9,7 @@ import {
 import axios from 'axios'
 import React from 'react'
 import { useMap } from 'react-leaflet'
+import type { Mock } from 'vitest'
 
 import {
   GpxMap,
@@ -18,8 +19,8 @@ import {
   parseWaypointsFromXml,
 } from './GpxMap'
 
-jest.mock('axios', () => ({ get: jest.fn() }))
-const mockAxiosGet = jest.mocked(axios.get)
+vi.mock('axios', () => ({ default: { get: vi.fn() } }))
+const mockAxiosGet = vi.mocked(axios.get)
 const mockAxiosGetData = (data: unknown) => {
   mockAxiosGet.mockResolvedValue({ data })
 }
@@ -31,10 +32,10 @@ const mockAxiosGetPending = () => {
   )
 }
 
-jest.mock('leaflet/dist/leaflet.css', () => ({}))
-jest.mock('leaflet-gpx', () => ({}))
+vi.mock('leaflet/dist/leaflet.css', () => ({}))
+vi.mock('leaflet-gpx', () => ({}))
 
-jest.mock('recharts', () => ({
+vi.mock('recharts', () => ({
   AreaChart: ({
     children,
     data,
@@ -81,17 +82,17 @@ jest.mock('recharts', () => ({
   ),
 }))
 
-jest.mock('leaflet', () => {
-  const on = jest.fn()
-  const addTo = jest.fn()
-  const getBounds = jest.fn().mockReturnValue({ _bounds: true })
-  const eachLayer = jest.fn()
-  const GPX = jest
-    .fn()
-    .mockImplementation(() => ({ on, addTo, getBounds, eachLayer }))
+vi.mock('leaflet', () => {
+  const on = vi.fn()
+  const addTo = vi.fn()
+  const getBounds = vi.fn().mockReturnValue({ _bounds: true })
+  const eachLayer = vi.fn()
+  const GPX = vi.fn().mockImplementation(function () {
+    return { on, addTo, getBounds, eachLayer }
+  })
   const IconDefault = {
     prototype: {},
-    mergeOptions: jest.fn(),
+    mergeOptions: vi.fn(),
   }
   return {
     __esModule: true,
@@ -102,7 +103,7 @@ jest.mock('leaflet', () => {
   }
 })
 
-jest.mock('react-leaflet', () => ({
+vi.mock('react-leaflet', () => ({
   MapContainer: ({
     children,
     scrollWheelZoom,
@@ -143,14 +144,14 @@ jest.mock('react-leaflet', () => ({
       data-color={pathOptions?.color}
     />
   ),
-  useMap: jest.fn(),
+  useMap: vi.fn(),
 }))
 
-jest.mock('./GpxMap.styles', () => ({
+vi.mock('./GpxMap.styles', async () => ({
   StyledGpxMap: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="gpx-map-wrapper">{children}</div>
   ),
-  StyledMapContainer: require('react').forwardRef(
+  StyledMapContainer: (await import('react')).forwardRef(
     (
       { children }: { children: React.ReactNode },
       ref: React.Ref<HTMLDivElement>,
@@ -346,7 +347,7 @@ jest.mock('./GpxMap.styles', () => ({
   ),
 }))
 
-const L = require('leaflet')
+const L = await import('leaflet')
 const { _testMocks } = L
 const {
   on: mockOn,
@@ -387,12 +388,12 @@ const GPX_XML_WITH_TRKPTS = `<?xml version="1.0"?>
 </gpx>`
 
 describe('GpxMap', () => {
-  const mockFitBounds = jest.fn()
-  const mockRemoveLayer = jest.fn()
-  const mockFlyTo = jest.fn()
-  const mockSetMaxZoom = jest.fn()
-  const mockMapOn = jest.fn()
-  const mockMapOff = jest.fn()
+  const mockFitBounds = vi.fn()
+  const mockRemoveLayer = vi.fn()
+  const mockFlyTo = vi.fn()
+  const mockSetMaxZoom = vi.fn()
+  const mockMapOn = vi.fn()
+  const mockMapOff = vi.fn()
 
   beforeEach(() => {
     mockFitBounds.mockReset()
@@ -407,8 +408,8 @@ describe('GpxMap', () => {
     mockGetBounds.mockReset()
     mockGetBounds.mockReturnValue({ _bounds: true })
     mockEachLayer.mockReset()
-    window.HTMLElement.prototype.scrollIntoView = jest.fn()
-    ;(useMap as jest.Mock).mockReturnValue({
+    window.HTMLElement.prototype.scrollIntoView = vi.fn()
+    ;(useMap as Mock).mockReturnValue({
       fitBounds: mockFitBounds,
       removeLayer: mockRemoveLayer,
       flyTo: mockFlyTo,
@@ -702,49 +703,47 @@ describe('GpxMap', () => {
   })
 
   describe('allowDownload', () => {
-    let mockAnchorClick: jest.Mock
+    let mockAnchorClick: Mock
     let capturedAnchor: HTMLAnchorElement | undefined
 
     beforeEach(() => {
-      mockAnchorClick = jest.fn()
+      mockAnchorClick = vi.fn()
       capturedAnchor = undefined
       Object.defineProperty(URL, 'createObjectURL', {
         writable: true,
-        value: jest.fn().mockReturnValue('blob:mock-url'),
+        value: vi.fn().mockReturnValue('blob:mock-url'),
       })
       Object.defineProperty(URL, 'revokeObjectURL', {
         writable: true,
-        value: jest.fn(),
+        value: vi.fn(),
       })
       const original = document.createElement.bind(document)
-      jest
-        .spyOn(document, 'createElement')
-        .mockImplementation((tag: string) => {
-          const el = original(tag)
-          if (tag === 'a') {
-            capturedAnchor = el as HTMLAnchorElement
-            jest.spyOn(el, 'click').mockImplementation(mockAnchorClick)
-          }
-          return el
-        })
+      vi.spyOn(document, 'createElement').mockImplementation((tag: string) => {
+        const el = original(tag)
+        if (tag === 'a') {
+          capturedAnchor = el as HTMLAnchorElement
+          vi.spyOn(el, 'click').mockImplementation(mockAnchorClick)
+        }
+        return el
+      })
       const origAppend = document.body.appendChild.bind(document.body)
-      jest
-        .spyOn(document.body, 'appendChild')
-        .mockImplementation((child: Node) => {
+      vi.spyOn(document.body, 'appendChild').mockImplementation(
+        (child: Node) => {
           if ((child as HTMLElement).tagName === 'A') return child
           return origAppend(child)
-        })
+        },
+      )
       const origRemove = document.body.removeChild.bind(document.body)
-      jest
-        .spyOn(document.body, 'removeChild')
-        .mockImplementation((child: Node) => {
+      vi.spyOn(document.body, 'removeChild').mockImplementation(
+        (child: Node) => {
           if ((child as HTMLElement).tagName === 'A') return child
           return origRemove(child)
-        })
+        },
+      )
     })
 
     afterEach(() => {
-      jest.restoreAllMocks()
+      vi.restoreAllMocks()
     })
 
     it('does not render download bar when allowDownload is false', () => {
@@ -1076,7 +1075,7 @@ describe('GpxMap', () => {
       render(<GpxMap url={GPX_URL} showWaypoints />)
       await screen.findByText('Refugio Mar')
       const container = screen.getByTestId('map-container-wrapper')
-      const mockScrollIntoView = jest.fn()
+      const mockScrollIntoView = vi.fn()
       container.scrollIntoView = mockScrollIntoView
       const buttons = screen.getAllByRole('button', { name: 'View on map' })
       fireEvent.click(buttons[0])
@@ -1249,8 +1248,8 @@ describe('GpxMap', () => {
 
     const makeWptMarker = (title: string) => ({
       options: { title, type: 'waypoint' },
-      unbindTooltip: jest.fn().mockReturnThis(),
-      bindPopup: jest.fn(),
+      unbindTooltip: vi.fn().mockReturnThis(),
+      bindPopup: vi.fn(),
     })
 
     it('binds the popup with description notes (matched by name)', () => {
@@ -1417,7 +1416,7 @@ describe('GpxMap', () => {
       mockAxiosGetPending()
       const marker = makeWptMarker('Refugio Mar')
       const innerGroup = {
-        eachLayer: jest.fn((cb: (l: unknown) => void) => cb(marker)),
+        eachLayer: vi.fn((cb: (l: unknown) => void) => cb(marker)),
       }
       mockEachLayer.mockImplementationOnce((cb: (l: unknown) => void) => {
         cb(innerGroup)
@@ -1445,8 +1444,8 @@ describe('GpxMap', () => {
       mockAxiosGetPending()
       const marker = {
         options: { type: 'waypoint' },
-        unbindTooltip: jest.fn().mockReturnThis(),
-        bindPopup: jest.fn(),
+        unbindTooltip: vi.fn().mockReturnThis(),
+        bindPopup: vi.fn(),
       }
       mockEachLayer.mockImplementationOnce((cb: (l: unknown) => void) => {
         cb(marker)
@@ -1472,8 +1471,8 @@ describe('GpxMap', () => {
       mockAxiosGetPending()
       const startMarker = {
         options: {},
-        unbindTooltip: jest.fn(),
-        bindPopup: jest.fn(),
+        unbindTooltip: vi.fn(),
+        bindPopup: vi.fn(),
       }
       mockEachLayer.mockImplementationOnce((cb: (l: unknown) => void) => {
         cb(startMarker)
@@ -1544,8 +1543,8 @@ describe('GpxMap', () => {
       mockAxiosGetPending()
       const marker = {
         options: { type: 'waypoint' },
-        unbindTooltip: jest.fn().mockReturnThis(),
-        bindPopup: jest.fn(),
+        unbindTooltip: vi.fn().mockReturnThis(),
+        bindPopup: vi.fn(),
       }
       mockEachLayer.mockImplementationOnce((cb: (l: unknown) => void) => {
         cb(marker)
@@ -2133,10 +2132,10 @@ describe('parseElevationFromXml', () => {
 })
 
 describe('GpxMap showElevation', () => {
-  const mockFitBounds = jest.fn()
-  const mockRemoveLayer = jest.fn()
-  const mockFlyTo = jest.fn()
-  const mockSetMaxZoom = jest.fn()
+  const mockFitBounds = vi.fn()
+  const mockRemoveLayer = vi.fn()
+  const mockFlyTo = vi.fn()
+  const mockSetMaxZoom = vi.fn()
 
   beforeEach(() => {
     mockFitBounds.mockReset()
@@ -2149,14 +2148,14 @@ describe('GpxMap showElevation', () => {
     mockGetBounds.mockReset()
     mockGetBounds.mockReturnValue({ _bounds: true })
     mockEachLayer.mockReset()
-    window.HTMLElement.prototype.scrollIntoView = jest.fn()
-    ;(useMap as jest.Mock).mockReturnValue({
+    window.HTMLElement.prototype.scrollIntoView = vi.fn()
+    ;(useMap as Mock).mockReturnValue({
       fitBounds: mockFitBounds,
       removeLayer: mockRemoveLayer,
       flyTo: mockFlyTo,
       setMaxZoom: mockSetMaxZoom,
-      on: jest.fn(),
-      off: jest.fn(),
+      on: vi.fn(),
+      off: vi.fn(),
     })
     mockAxiosGet.mockReset()
     mockAxiosGetData(GPX_XML_WITH_TRKPTS)

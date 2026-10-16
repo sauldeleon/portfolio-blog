@@ -4,11 +4,11 @@ import { useDebounce } from './useDebounce'
 
 describe('useDebounce', () => {
   beforeEach(() => {
-    jest.useFakeTimers()
+    vi.useFakeTimers()
   })
 
   afterEach(() => {
-    jest.useRealTimers()
+    vi.useRealTimers()
   })
 
   it('returns initial value immediately', () => {
@@ -32,7 +32,7 @@ describe('useDebounce', () => {
     )
     rerender({ value: 'world' })
     act(() => {
-      jest.advanceTimersByTime(300)
+      vi.advanceTimersByTime(300)
     })
     expect(result.current).toBe('world')
   })
@@ -44,15 +44,15 @@ describe('useDebounce', () => {
     )
     rerender({ value: 'ab' })
     act(() => {
-      jest.advanceTimersByTime(100)
+      vi.advanceTimersByTime(100)
     })
     rerender({ value: 'abc' })
     act(() => {
-      jest.advanceTimersByTime(100)
+      vi.advanceTimersByTime(100)
     })
     expect(result.current).toBe('a')
     act(() => {
-      jest.advanceTimersByTime(300)
+      vi.advanceTimersByTime(300)
     })
     expect(result.current).toBe('abc')
   })
@@ -64,7 +64,7 @@ describe('useDebounce', () => {
     )
     rerender({ value: 42 })
     act(() => {
-      jest.advanceTimersByTime(500)
+      vi.advanceTimersByTime(500)
     })
     expect(result.current).toBe(42)
   })

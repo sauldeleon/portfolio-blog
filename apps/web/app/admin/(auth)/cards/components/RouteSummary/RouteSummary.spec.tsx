@@ -17,10 +17,10 @@ function makeAxiosError(status: number, data: unknown): AxiosError {
   })
 }
 
-jest.mock('@web/i18n/client', () => {
-  const admin: Record<string, unknown> = jest.requireActual(
-    '@web/i18n/locales/en/admin.json',
-  )
+vi.mock('@web/i18n/client', async () => {
+  const admin: Record<string, unknown> = await vi.importActual<
+    typeof import('@web/i18n/locales/en/admin.json')
+  >('@web/i18n/locales/en/admin.json')
   return {
     useClientTranslation: () => ({
       t: (key: string): string => {
@@ -39,8 +39,10 @@ jest.mock('@web/i18n/client', () => {
   }
 })
 
-jest.mock('@web/components/RouteSummary', () => ({
-  ...jest.requireActual('@web/components/RouteSummary'),
+vi.mock('@web/components/RouteSummary', async () => ({
+  ...(await vi.importActual<typeof import('@web/components/RouteSummary')>(
+    '@web/components/RouteSummary',
+  )),
   RouteSummaryMap: () => <div data-testid="route-summary-map-mock" />,
 }))
 
@@ -58,13 +60,13 @@ const SuccessImage = class {
   }
 } as unknown as typeof Image
 
-const mockGetContext = jest.fn(() => ({
-  scale: jest.fn(),
-  drawImage: jest.fn(),
+const mockGetContext = vi.fn(() => ({
+  scale: vi.fn(),
+  drawImage: vi.fn(),
 }))
-const mockToBlob = jest.fn()
-const mockCreateObjectURL = jest.fn(() => 'blob:mock-url')
-const mockRevokeObjectURL = jest.fn()
+const mockToBlob = vi.fn()
+const mockCreateObjectURL = vi.fn(() => 'blob:mock-url')
+const mockRevokeObjectURL = vi.fn()
 
 beforeAll(() => {
   Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
@@ -78,7 +80,7 @@ beforeAll(() => {
 })
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
   global.URL.createObjectURL = mockCreateObjectURL
   global.URL.revokeObjectURL = mockRevokeObjectURL
   mockToBlob.mockImplementation((cb: (b: Blob) => void) =>
@@ -87,7 +89,7 @@ beforeEach(() => {
 })
 
 afterEach(() => {
-  jest.restoreAllMocks()
+  vi.restoreAllMocks()
 })
 
 describe('RouteSummary (admin preview)', () => {
@@ -125,7 +127,7 @@ describe('RouteSummary (admin preview)', () => {
     it('uploads and shows the link', async () => {
       const origImage = global.Image
       global.Image = SuccessImage
-      const postSpy = jest
+      const postSpy = vi
         .spyOn(axios, 'post')
         .mockResolvedValue({ data: { url: 'https://x/y.png' } })
       renderApp(<RouteSummary data={DATA} filename="c" />)
@@ -140,9 +142,9 @@ describe('RouteSummary (admin preview)', () => {
     it('shows the server error on failure', async () => {
       const origImage = global.Image
       global.Image = SuccessImage
-      jest
-        .spyOn(axios, 'post')
-        .mockRejectedValue(makeAxiosError(500, { error: 'Upload failed' }))
+      vi.spyOn(axios, 'post').mockRejectedValue(
+        makeAxiosError(500, { error: 'Upload failed' }),
+      )
       renderApp(<RouteSummary data={DATA} />)
       fireEvent.click(screen.getByTestId('route-summary-upload'))
       expect(
@@ -154,7 +156,7 @@ describe('RouteSummary (admin preview)', () => {
     it('shows a fallback error when the response has no url', async () => {
       const origImage = global.Image
       global.Image = SuccessImage
-      jest.spyOn(axios, 'post').mockResolvedValue({ data: {} })
+      vi.spyOn(axios, 'post').mockResolvedValue({ data: {} })
       renderApp(<RouteSummary data={DATA} />)
       fireEvent.click(screen.getByTestId('route-summary-upload'))
       expect(
@@ -167,7 +169,7 @@ describe('RouteSummary (admin preview)', () => {
       const origImage = global.Image
       global.Image = SuccessImage
       let resolve!: (v: unknown) => void
-      jest.spyOn(axios, 'post').mockReturnValue(
+      vi.spyOn(axios, 'post').mockReturnValue(
         new Promise((r) => {
           resolve = r
         }),

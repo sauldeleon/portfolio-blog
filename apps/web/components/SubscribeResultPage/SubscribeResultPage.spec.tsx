@@ -2,27 +2,23 @@ import { render, screen } from '@testing-library/react'
 
 import { SubscribeResultPage } from './SubscribeResultPage'
 
-jest.mock(
-  'next/link',
-  () =>
-    function MockLink({
-      children,
-      href,
-    }: {
-      children: React.ReactNode
-      href: string
-    }) {
-      return <a href={href}>{children}</a>
-    },
-)
+vi.mock('next/link', () => ({
+  default: function MockLink({
+    children,
+    href,
+  }: {
+    children: React.ReactNode
+    href: string
+  }) {
+    return <a href={href}>{children}</a>
+  },
+}))
 
-jest.mock(
-  'next/image',
-  () =>
-    function MockImage({ src, alt }: { src: string; alt: string }) {
-      return <img src={src} alt={alt} />
-    },
-)
+vi.mock('next/image', () => ({
+  default: function MockImage({ src, alt }: { src: string; alt: string }) {
+    return <img src={src} alt={alt} />
+  },
+}))
 
 const baseProps = {
   successTitle: 'Success!',

@@ -6,10 +6,10 @@ import type { CanyonWaypoint } from '@web/lib/cards'
 
 import { CanyonWaypointFields } from './CanyonWaypointFields'
 
-jest.mock('@web/i18n/client', () => {
-  const admin: Record<string, unknown> = jest.requireActual(
-    '@web/i18n/locales/en/admin.json',
-  )
+vi.mock('@web/i18n/client', async () => {
+  const admin: Record<string, unknown> = await vi.importActual<
+    typeof import('@web/i18n/locales/en/admin.json')
+  >('@web/i18n/locales/en/admin.json')
   return {
     useClientTranslation: () => ({
       t: (key: string): string => {
@@ -28,7 +28,7 @@ jest.mock('@web/i18n/client', () => {
   }
 })
 
-jest.mock('@sdlgr/select', () => ({
+vi.mock('@sdlgr/select', () => ({
   Select: ({
     value,
     onChange,
@@ -69,12 +69,12 @@ const base: CanyonWaypoint = {
 
 describe('CanyonWaypointFields', () => {
   it('renders the current title', () => {
-    renderApp(<CanyonWaypointFields value={base} onChange={jest.fn()} />)
+    renderApp(<CanyonWaypointFields value={base} onChange={vi.fn()} />)
     expect(screen.getByTestId('cwf-title')).toHaveValue('Salto 2m')
   })
 
   it('changes the title', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<CanyonWaypointFields value={base} onChange={onChange} />)
     fireEvent.change(screen.getByTestId('cwf-title'), {
       target: { value: 'Rápel 10m' },
@@ -83,7 +83,7 @@ describe('CanyonWaypointFields', () => {
   })
 
   it('shows the current primary category', () => {
-    renderApp(<CanyonWaypointFields value={base} onChange={jest.fn()} />)
+    renderApp(<CanyonWaypointFields value={base} onChange={vi.fn()} />)
     expect(screen.getByTestId('cwf-cat1-value')).toHaveTextContent('salto')
   })
 
@@ -91,28 +91,28 @@ describe('CanyonWaypointFields', () => {
     renderApp(
       <CanyonWaypointFields
         value={{ ...base, categories: [] }}
-        onChange={jest.fn()}
+        onChange={vi.fn()}
       />,
     )
     expect(screen.getByTestId('cwf-cat1-value')).toHaveTextContent('info')
   })
 
   it('changes the primary category and drops the empty second', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<CanyonWaypointFields value={base} onChange={onChange} />)
     fireEvent.click(screen.getByTestId('cwf-cat1-opt-rappel'))
     expect(onChange).toHaveBeenCalledWith({ categories: ['rappel'] })
   })
 
   it('adds a second category', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<CanyonWaypointFields value={base} onChange={onChange} />)
     fireEvent.click(screen.getByTestId('cwf-cat2-opt-rappel'))
     expect(onChange).toHaveBeenCalledWith({ categories: ['salto', 'rappel'] })
   })
 
   it('clears the second category with the none option', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(
       <CanyonWaypointFields
         value={{ ...base, categories: ['salto', 'rappel'] }}
@@ -125,7 +125,7 @@ describe('CanyonWaypointFields', () => {
   })
 
   it('parses a latitude into a number', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<CanyonWaypointFields value={base} onChange={onChange} />)
     fireEvent.change(screen.getByTestId('cwf-lat'), {
       target: { value: '43.5' },
@@ -134,7 +134,7 @@ describe('CanyonWaypointFields', () => {
   })
 
   it('clears the longitude when emptied', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<CanyonWaypointFields value={base} onChange={onChange} />)
     fireEvent.change(screen.getByTestId('cwf-lon'), { target: { value: '' } })
     expect(onChange).toHaveBeenCalledWith({ lon: undefined })
@@ -144,7 +144,7 @@ describe('CanyonWaypointFields', () => {
     renderApp(
       <CanyonWaypointFields
         value={{ ...base, lat: undefined, lon: undefined }}
-        onChange={jest.fn()}
+        onChange={vi.fn()}
       />,
     )
     expect(screen.getByTestId('cwf-lat')).toHaveValue(null)
@@ -152,25 +152,25 @@ describe('CanyonWaypointFields', () => {
   })
 
   it('renders notes as editable lines (leading space = nested)', () => {
-    renderApp(<CanyonWaypointFields value={base} onChange={jest.fn()} />)
+    renderApp(<CanyonWaypointFields value={base} onChange={vi.fn()} />)
     expect(screen.getByTestId('cwf-notes')).toHaveValue('- top\n - nested')
   })
 
   it('defaults side and severity to auto', () => {
-    renderApp(<CanyonWaypointFields value={base} onChange={jest.fn()} />)
+    renderApp(<CanyonWaypointFields value={base} onChange={vi.fn()} />)
     expect(screen.getByTestId('cwf-side-value')).toHaveTextContent('')
     expect(screen.getByTestId('cwf-sev-value')).toHaveTextContent('')
   })
 
   it('sets an explicit side', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<CanyonWaypointFields value={base} onChange={onChange} />)
     fireEvent.click(screen.getByTestId('cwf-side-opt-left'))
     expect(onChange).toHaveBeenCalledWith({ side: 'left' })
   })
 
   it('resets the side to auto', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(
       <CanyonWaypointFields
         value={{ ...base, side: 'left' }}
@@ -183,14 +183,14 @@ describe('CanyonWaypointFields', () => {
   })
 
   it('sets an explicit severity', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<CanyonWaypointFields value={base} onChange={onChange} />)
     fireEvent.click(screen.getByTestId('cwf-sev-opt-danger'))
     expect(onChange).toHaveBeenCalledWith({ severity: 'danger' })
   })
 
   it('resets the severity to auto', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(
       <CanyonWaypointFields
         value={{ ...base, severity: 'caution' }}
@@ -203,7 +203,7 @@ describe('CanyonWaypointFields', () => {
   })
 
   it('sets the drop height', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<CanyonWaypointFields value={base} onChange={onChange} />)
     fireEvent.change(screen.getByTestId('cwf-meters'), {
       target: { value: '10 m' },
@@ -212,7 +212,7 @@ describe('CanyonWaypointFields', () => {
   })
 
   it('clears the drop height', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(
       <CanyonWaypointFields
         value={{ ...base, meters: '5 m' }}
@@ -227,7 +227,7 @@ describe('CanyonWaypointFields', () => {
   })
 
   it('parses edited note lines back into structured notes', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<CanyonWaypointFields value={base} onChange={onChange} />)
     fireEvent.change(screen.getByTestId('cwf-notes'), {
       target: { value: '- one\n  - two\n\n plain' },

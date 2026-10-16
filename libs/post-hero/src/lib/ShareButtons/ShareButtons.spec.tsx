@@ -4,7 +4,7 @@ import { renderWithTheme } from '@sdlgr/test-utils'
 
 import { ShareButtons } from './ShareButtons'
 
-const mockWriteText = jest.fn()
+const mockWriteText = vi.fn()
 
 Object.defineProperty(navigator, 'clipboard', {
   value: { writeText: mockWriteText },
@@ -18,12 +18,12 @@ const defaultProps = {
 
 describe('ShareButtons', () => {
   beforeEach(() => {
-    jest.useFakeTimers()
+    vi.useFakeTimers()
     mockWriteText.mockResolvedValue(undefined)
   })
 
   afterEach(() => {
-    jest.useRealTimers()
+    vi.useRealTimers()
   })
 
   it('renders all platform links', () => {
@@ -143,7 +143,7 @@ describe('ShareButtons', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Copy link' }))
     await screen.findByText('Copied!')
     act(() => {
-      jest.advanceTimersByTime(2000)
+      vi.advanceTimersByTime(2000)
     })
     await waitFor(() => {
       expect(screen.queryByText('Copied!')).not.toBeInTheDocument()
@@ -155,7 +155,7 @@ describe('ShareButtons', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Copy link' }))
     await screen.findByRole('button', { name: 'Copied!' })
     act(() => {
-      jest.advanceTimersByTime(2000)
+      vi.advanceTimersByTime(2000)
     })
     expect(
       await screen.findByRole('button', { name: 'Copy link' }),

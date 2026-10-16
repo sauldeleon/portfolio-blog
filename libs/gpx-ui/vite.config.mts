@@ -1,0 +1,9 @@
+import { createVitestConfig } from '../../vitest.shared.mts'
+
+export default createVitestConfig(import.meta.dirname, {
+  test: {
+    coverage: {
+      exclude: ['**/*.styles.ts'],
+    },
+  },
+})

@@ -5,20 +5,20 @@ import type { CategoryForAdmin } from '@web/lib/db/queries/categories'
 import { CategoriesPageView } from './components/CategoriesPageView'
 import AdminCategoriesPage from './page.next'
 
-const mockGetCategoriesForAdmin = jest.fn()
-const mockRequireAdminSession = jest.fn()
+const mockGetCategoriesForAdmin = vi.fn()
+const mockRequireAdminSession = vi.fn()
 
-jest.mock('@web/lib/auth/requireAdminSession', () => ({
+vi.mock('@web/lib/auth/requireAdminSession', () => ({
   requireAdminSession: (...args: unknown[]) => mockRequireAdminSession(...args),
 }))
 
-jest.mock('@web/lib/db/queries/categories', () => ({
+vi.mock('@web/lib/db/queries/categories', () => ({
   getCategoriesForAdmin: (...args: unknown[]) =>
     mockGetCategoriesForAdmin(...args),
 }))
 
-jest.mock('@web/i18n/server', () => ({
-  getServerTranslation: jest.fn().mockResolvedValue({
+vi.mock('@web/i18n/server', () => ({
+  getServerTranslation: vi.fn().mockResolvedValue({
     t: (key: string) => {
       const strings: Record<string, string> = {
         'categories.title': 'Categories',
@@ -28,10 +28,10 @@ jest.mock('@web/i18n/server', () => ({
   }),
 }))
 
-jest.mock('./components/CategoriesPageView', () => {
-  const React = require('react')
+vi.mock('./components/CategoriesPageView', async () => {
+  const React = await import('react')
   return {
-    CategoriesPageView: jest
+    CategoriesPageView: vi
       .fn()
       .mockReturnValue(
         React.createElement('div', { 'data-testid': 'categories-page-view' }),
@@ -59,7 +59,7 @@ const mockCategories: CategoryForAdmin[] = [
 
 describe('AdminCategoriesPage', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     mockRequireAdminSession.mockResolvedValue({ user: { name: 'admin' } })
     mockGetCategoriesForAdmin.mockResolvedValue(mockCategories)
   })

@@ -1,21 +1,22 @@
 import { act, fireEvent, screen, waitFor } from '@testing-library/react'
 import axios from 'axios'
+import type { Mock } from 'vitest'
 
 import { renderApp } from '@sdlgr/test-utils'
 
 import { ImageUploadModal } from './ImageUploadModal'
 
-jest.mock('react-dropzone', () => ({
-  useDropzone: jest.fn().mockReturnValue({
+vi.mock('react-dropzone', () => ({
+  useDropzone: vi.fn().mockReturnValue({
     getRootProps: () => ({}),
     getInputProps: () => ({}),
     isDragActive: false,
   }),
 }))
 
-jest.mock('react-overlays/Modal', () => ({
-  __esModule: true,
-  default: ({
+vi.mock('react-overlays', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('react-overlays')>()),
+  Modal: ({
     show,
     children,
     renderBackdrop,
@@ -35,8 +36,8 @@ jest.mock('react-overlays/Modal', () => ({
     ) : null,
 }))
 
-jest.mock('@web/i18n/client', () => ({
-  useClientTranslation: jest.fn().mockReturnValue({
+vi.mock('@web/i18n/client', () => ({
+  useClientTranslation: vi.fn().mockReturnValue({
     t: (key: string) => {
       const translations: Record<string, string> = {
         'images.upload.title': 'Upload Image',
@@ -52,8 +53,8 @@ jest.mock('@web/i18n/client', () => ({
   }),
 }))
 
-const mockOnClose = jest.fn()
-const mockOnUploaded = jest.fn()
+const mockOnClose = vi.fn()
+const mockOnUploaded = vi.fn()
 
 const mockUploadResult = {
   publicId: 'sawl.dev - blog/new-photo',
@@ -67,8 +68,8 @@ const mockUploadResult = {
 
 describe('ImageUploadModal', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
-    jest.spyOn(axios, 'post').mockResolvedValue({ data: mockUploadResult })
+    vi.clearAllMocks()
+    vi.spyOn(axios, 'post').mockResolvedValue({ data: mockUploadResult })
   })
 
   it('renders when open', () => {
@@ -107,9 +108,9 @@ describe('ImageUploadModal', () => {
     ).toBeInTheDocument()
   })
 
-  it('shows drag-active text when isDragActive is true', () => {
-    const { useDropzone } = require('react-dropzone') as {
-      useDropzone: jest.Mock
+  it('shows drag-active text when isDragActive is true', async () => {
+    const { useDropzone } = (await import('react-dropzone')) as unknown as {
+      useDropzone: Mock
     }
     useDropzone.mockReturnValueOnce({
       getRootProps: () => ({}),
@@ -127,8 +128,8 @@ describe('ImageUploadModal', () => {
   })
 
   it('drop sets pending file and shows file-selected UI with name pre-filled', async () => {
-    const { useDropzone } = require('react-dropzone') as {
-      useDropzone: jest.Mock
+    const { useDropzone } = (await import('react-dropzone')) as unknown as {
+      useDropzone: Mock
     }
     let capturedOnDrop: ((files: File[]) => void) | null = null
     useDropzone.mockImplementation(
@@ -165,8 +166,8 @@ describe('ImageUploadModal', () => {
   })
 
   it('upload button click sends name in FormData and calls onUploaded on success', async () => {
-    const { useDropzone } = require('react-dropzone') as {
-      useDropzone: jest.Mock
+    const { useDropzone } = (await import('react-dropzone')) as unknown as {
+      useDropzone: Mock
     }
     let capturedOnDrop: ((files: File[]) => void) | null = null
     useDropzone.mockImplementation(
@@ -198,7 +199,7 @@ describe('ImageUploadModal', () => {
     await waitFor(() => {
       expect(axios.post).toHaveBeenCalledTimes(1)
     })
-    const formData = (axios.post as jest.Mock).mock.calls[0][1] as FormData
+    const formData = (axios.post as Mock).mock.calls[0][1] as FormData
     expect(formData.get('name')).toBe('my-photo')
 
     await waitFor(() => {
@@ -212,8 +213,8 @@ describe('ImageUploadModal', () => {
   })
 
   it('passes all fields from upload result to onUploaded', async () => {
-    const { useDropzone } = require('react-dropzone') as {
-      useDropzone: jest.Mock
+    const { useDropzone } = (await import('react-dropzone')) as unknown as {
+      useDropzone: Mock
     }
     let capturedOnDrop: ((files: File[]) => void) | null = null
     useDropzone.mockImplementation(
@@ -253,12 +254,12 @@ describe('ImageUploadModal', () => {
   })
 
   it('shows uploading state while axios.post is pending', async () => {
-    const { useDropzone } = require('react-dropzone') as {
-      useDropzone: jest.Mock
+    const { useDropzone } = (await import('react-dropzone')) as unknown as {
+      useDropzone: Mock
     }
     let capturedOnDrop: ((files: File[]) => void) | null = null
     let resolveUpload!: (v: unknown) => void
-    jest.spyOn(axios, 'post').mockReturnValue(
+    vi.spyOn(axios, 'post').mockReturnValue(
       new Promise((res) => {
         resolveUpload = res
       }),
@@ -297,13 +298,13 @@ describe('ImageUploadModal', () => {
   })
 
   it('shows error when upload fails', async () => {
-    const { useDropzone } = require('react-dropzone') as {
-      useDropzone: jest.Mock
+    const { useDropzone } = (await import('react-dropzone')) as unknown as {
+      useDropzone: Mock
     }
     let capturedOnDrop: ((files: File[]) => void) | null = null
-    jest
-      .spyOn(axios, 'post')
-      .mockRejectedValue(new Error('Request failed with status code 400'))
+    vi.spyOn(axios, 'post').mockRejectedValue(
+      new Error('Request failed with status code 400'),
+    )
     useDropzone.mockImplementation(
       ({ onDrop }: { onDrop: (files: File[]) => void }) => {
         capturedOnDrop = onDrop
@@ -336,11 +337,11 @@ describe('ImageUploadModal', () => {
   })
 
   it('shows error when fetch throws a network error', async () => {
-    const { useDropzone } = require('react-dropzone') as {
-      useDropzone: jest.Mock
+    const { useDropzone } = (await import('react-dropzone')) as unknown as {
+      useDropzone: Mock
     }
     let capturedOnDrop: ((files: File[]) => void) | null = null
-    jest.spyOn(axios, 'post').mockRejectedValue(new Error('Network error'))
+    vi.spyOn(axios, 'post').mockRejectedValue(new Error('Network error'))
     useDropzone.mockImplementation(
       ({ onDrop }: { onDrop: (files: File[]) => void }) => {
         capturedOnDrop = onDrop
@@ -370,8 +371,8 @@ describe('ImageUploadModal', () => {
   })
 
   it('does nothing when onDrop called with empty files array', async () => {
-    const { useDropzone } = require('react-dropzone') as {
-      useDropzone: jest.Mock
+    const { useDropzone } = (await import('react-dropzone')) as unknown as {
+      useDropzone: Mock
     }
     let capturedOnDrop: ((files: File[]) => void) | null = null
     useDropzone.mockImplementation(
@@ -403,8 +404,8 @@ describe('ImageUploadModal', () => {
   })
 
   it('handleClose resets state and calls onClose', async () => {
-    const { useDropzone } = require('react-dropzone') as {
-      useDropzone: jest.Mock
+    const { useDropzone } = (await import('react-dropzone')) as unknown as {
+      useDropzone: Mock
     }
     let capturedOnDrop: ((files: File[]) => void) | null = null
     useDropzone.mockImplementation(
@@ -440,8 +441,8 @@ describe('ImageUploadModal', () => {
   })
 
   it('user can edit the name input', async () => {
-    const { useDropzone } = require('react-dropzone') as {
-      useDropzone: jest.Mock
+    const { useDropzone } = (await import('react-dropzone')) as unknown as {
+      useDropzone: Mock
     }
     let capturedOnDrop: ((files: File[]) => void) | null = null
     useDropzone.mockImplementation(
@@ -473,8 +474,8 @@ describe('ImageUploadModal', () => {
   })
 
   it('sends custom name in FormData after user edits the name input', async () => {
-    const { useDropzone } = require('react-dropzone') as {
-      useDropzone: jest.Mock
+    const { useDropzone } = (await import('react-dropzone')) as unknown as {
+      useDropzone: Mock
     }
     let capturedOnDrop: ((files: File[]) => void) | null = null
     useDropzone.mockImplementation(
@@ -508,13 +509,13 @@ describe('ImageUploadModal', () => {
     await waitFor(() => {
       expect(axios.post).toHaveBeenCalledTimes(1)
     })
-    const formData = (axios.post as jest.Mock).mock.calls[0][1] as FormData
+    const formData = (axios.post as Mock).mock.calls[0][1] as FormData
     expect(formData.get('name')).toBe('custom-name')
   })
 
   it('strips extension correctly for file without extension', async () => {
-    const { useDropzone } = require('react-dropzone') as {
-      useDropzone: jest.Mock
+    const { useDropzone } = (await import('react-dropzone')) as unknown as {
+      useDropzone: Mock
     }
     let capturedOnDrop: ((files: File[]) => void) | null = null
     useDropzone.mockImplementation(

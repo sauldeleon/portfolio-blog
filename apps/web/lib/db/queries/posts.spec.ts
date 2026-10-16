@@ -1,3 +1,5 @@
+import type { Mock } from 'vitest'
+
 import { db } from '../index'
 import {
   createPost,
@@ -29,26 +31,26 @@ import {
   upsertTranslation,
 } from './posts'
 
-jest.mock('../index', () => ({
+vi.mock('../index', () => ({
   db: {
-    select: jest.fn(),
-    insert: jest.fn(),
-    update: jest.fn(),
-    delete: jest.fn(),
-    execute: jest.fn(),
-    transaction: jest.fn(),
+    select: vi.fn(),
+    insert: vi.fn(),
+    update: vi.fn(),
+    delete: vi.fn(),
+    execute: vi.fn(),
+    transaction: vi.fn(),
   },
 }))
 
-jest.mock('ulid', () => ({ ulid: () => '01JWTEST000000000000000000' }))
+vi.mock('ulid', () => ({ ulid: () => '01JWTEST000000000000000000' }))
 
 const mockDb = db as unknown as {
-  select: jest.Mock
-  insert: jest.Mock
-  update: jest.Mock
-  delete: jest.Mock
-  execute: jest.Mock
-  transaction: jest.Mock
+  select: Mock
+  insert: Mock
+  update: Mock
+  delete: Mock
+  execute: Mock
+  transaction: Mock
 }
 
 function makeChain(resolved: unknown) {
@@ -68,12 +70,12 @@ function makeChain(resolved: unknown) {
     'returning',
   ]
   for (const m of methods) {
-    chain[m] = jest.fn().mockReturnValue(chain)
+    chain[m] = vi.fn().mockReturnValue(chain)
   }
   chain.then = (resolve: (v: unknown) => unknown) =>
     Promise.resolve(resolved).then(resolve)
-  chain.catch = jest.fn().mockReturnThis()
-  chain.finally = jest.fn().mockReturnThis()
+  chain.catch = vi.fn().mockReturnThis()
+  chain.finally = vi.fn().mockReturnThis()
   return chain
 }
 
@@ -121,7 +123,7 @@ const mockPublicPost = {
 }
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
 })
 
 describe('getPublishedPosts', () => {
@@ -361,7 +363,7 @@ describe('createPost', () => {
   it('inserts post and translations in a transaction', async () => {
     const txInsertChain = makeChain([mockPost])
     const txMock = {
-      insert: jest.fn().mockReturnValue(txInsertChain),
+      insert: vi.fn().mockReturnValue(txInsertChain),
     }
     mockDb.transaction.mockImplementation(
       async (cb: (tx: typeof txMock) => Promise<unknown>) => cb(txMock),
@@ -442,7 +444,7 @@ describe('getPostMeta', () => {
 describe('softDeletePost', () => {
   it('sets status=archived and sets deletedAt', async () => {
     const chain = makeChain(undefined)
-    const mockSet = chain.set as jest.Mock
+    const mockSet = chain.set as Mock
     mockDb.update.mockReturnValue(chain)
 
     await softDeletePost('01JWTEST000000000000000000')
@@ -459,7 +461,7 @@ describe('softDeletePost', () => {
 describe('hardDeletePost', () => {
   it('permanently deletes a post by id', async () => {
     const chain = makeChain(undefined)
-    const mockWhere = chain.where as jest.Mock
+    const mockWhere = chain.where as Mock
     mockDb.delete.mockReturnValue(chain)
 
     await hardDeletePost('01JWTEST000000000000000000')
@@ -472,7 +474,7 @@ describe('hardDeletePost', () => {
 describe('restorePost', () => {
   it('sets status=draft and clears deletedAt', async () => {
     const chain = makeChain(undefined)
-    const mockSet = chain.set as jest.Mock
+    const mockSet = chain.set as Mock
     mockDb.update.mockReturnValue(chain)
 
     await restorePost('01JWTEST000000000000000000')

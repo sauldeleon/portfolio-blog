@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react'
 
 import { CvDocument } from './CvDocument'
 
-jest.mock('@react-pdf/renderer', () => ({
+vi.mock('@react-pdf/renderer', () => ({
   Document: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="pdf-document">{children}</div>
   ),

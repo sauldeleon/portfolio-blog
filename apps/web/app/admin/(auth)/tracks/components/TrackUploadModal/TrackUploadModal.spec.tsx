@@ -8,12 +8,12 @@ import {
   type TrackUploadModalProps,
 } from './TrackUploadModal'
 
-const mockUploadTrackFile = jest.fn()
-const mockSerializeGpxFile = jest.fn()
+const mockUploadTrackFile = vi.fn()
+const mockSerializeGpxFile = vi.fn()
 let mockOnDrop: ((files: File[]) => void) | null = null
 let mockIsDragActive = false
 
-jest.mock('react-dropzone', () => ({
+vi.mock('react-dropzone', () => ({
   useDropzone: ({ onDrop }: { onDrop: (files: File[]) => void }) => {
     mockOnDrop = onDrop
     return {
@@ -24,9 +24,9 @@ jest.mock('react-dropzone', () => ({
   },
 }))
 
-jest.mock('react-overlays/Modal', () => ({
-  __esModule: true,
-  default: ({
+vi.mock('react-overlays', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('react-overlays')>()),
+  Modal: ({
     show,
     children,
     renderBackdrop,
@@ -46,23 +46,27 @@ jest.mock('react-overlays/Modal', () => ({
     ) : null,
 }))
 
-jest.mock('@web/i18n/client', () => ({
+vi.mock('@web/i18n/client', () => ({
   useClientTranslation: () => ({
     t: (key: string, options?: Record<string, unknown>) =>
       options ? `${key} ${JSON.stringify(options)}` : key,
   }),
 }))
 
-jest.mock('@sdlgr/gpx-tools', () => ({
-  ...jest.requireActual('@sdlgr/gpx-tools'),
+vi.mock('@sdlgr/gpx-tools', async () => ({
+  ...(await vi.importActual<typeof import('@sdlgr/gpx-tools')>(
+    '@sdlgr/gpx-tools',
+  )),
   serializeGpxFile: (...args: unknown[]) => mockSerializeGpxFile(...args),
 }))
 
 const { serializeGpxFile: actualSerializeGpxFile } =
-  jest.requireActual('@sdlgr/gpx-tools')
+  await vi.importActual<typeof import('@sdlgr/gpx-tools')>('@sdlgr/gpx-tools')
 
-jest.mock('../../utils/trackApi', () => ({
-  ...jest.requireActual('../../utils/trackApi'),
+vi.mock('../../utils/trackApi', async () => ({
+  ...(await vi.importActual<typeof import('../../utils/trackApi')>(
+    '../../utils/trackApi',
+  )),
   uploadTrackFile: (...args: unknown[]) => mockUploadTrackFile(...args),
 }))
 
@@ -81,7 +85,7 @@ function gpxFile(name: string, content = GPX): File {
 }
 
 function renderModal(props: Partial<TrackUploadModalProps> = {}) {
-  const callbacks = { onClose: jest.fn(), onUploaded: jest.fn() }
+  const callbacks = { onClose: vi.fn(), onUploaded: vi.fn() }
   renderApp(
     <TrackUploadModal isOpen existingPaths={[]} {...callbacks} {...props} />,
   )
@@ -95,7 +99,7 @@ async function drop(file: File) {
 }
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
   mockSerializeGpxFile.mockImplementation(actualSerializeGpxFile)
   mockIsDragActive = false
   mockOnDrop = null
@@ -198,7 +202,9 @@ describe('TrackUploadModal', () => {
 
   it('refuses files too large to upload', async () => {
     renderModal()
-    mockSerializeGpxFile.mockImplementation(() => 'x'.repeat(4_000_001))
+    mockSerializeGpxFile.mockImplementation(function () {
+      return 'x'.repeat(4_000_001)
+    })
     await drop(gpxFile('big.gpx'))
     fireEvent.click(screen.getByTestId('upload-submit'))
     expect(screen.getByRole('alert')).toHaveTextContent(

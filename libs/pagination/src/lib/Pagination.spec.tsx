@@ -1,11 +1,12 @@
 import { fireEvent, screen } from '@testing-library/react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import type { Mock } from 'vitest'
 
 import { renderWithTheme } from '@sdlgr/test-utils'
 
 import { Pagination } from './Pagination'
 
-const mockPush = jest.fn()
+const mockPush = vi.fn()
 
 const defaultProps = {
   total: 25,
@@ -17,9 +18,9 @@ const defaultProps = {
 
 describe('Pagination', () => {
   beforeEach(() => {
-    ;(useRouter as jest.Mock).mockReturnValue({ push: mockPush })
-    ;(usePathname as jest.Mock).mockReturnValue('/en/blog')
-    ;(useSearchParams as jest.Mock).mockReturnValue(new URLSearchParams())
+    ;(useRouter as Mock).mockReturnValue({ push: mockPush })
+    ;(usePathname as Mock).mockReturnValue('/en/blog')
+    ;(useSearchParams as Mock).mockReturnValue(new URLSearchParams())
   })
 
   it('returns null when total fits on one page', () => {
@@ -79,7 +80,7 @@ describe('Pagination', () => {
   })
 
   it('preserves existing search params when navigating', () => {
-    ;(useSearchParams as jest.Mock).mockReturnValue(
+    ;(useSearchParams as Mock).mockReturnValue(
       new URLSearchParams('category=react'),
     )
     renderWithTheme(<Pagination {...defaultProps} page={1} />)

@@ -4,10 +4,10 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { CanyonGradeField, composeGrade, parseGrade } from './CanyonGradeField'
 
-jest.mock('@web/i18n/client', () => {
-  const admin: Record<string, unknown> = jest.requireActual(
-    '@web/i18n/locales/en/admin.json',
-  )
+vi.mock('@web/i18n/client', async () => {
+  const admin: Record<string, unknown> = await vi.importActual<
+    typeof import('@web/i18n/locales/en/admin.json')
+  >('@web/i18n/locales/en/admin.json')
   return {
     useClientTranslation: () => ({
       t: (key: string): string => {
@@ -26,7 +26,7 @@ jest.mock('@web/i18n/client', () => {
   }
 })
 
-jest.mock('@sdlgr/select', () => ({
+vi.mock('@sdlgr/select', () => ({
   Select: ({
     value,
     onChange,
@@ -98,7 +98,7 @@ describe('composeGrade', () => {
 
 describe('CanyonGradeField', () => {
   it('renders the three selects', () => {
-    renderApp(<CanyonGradeField onChange={jest.fn()} idPrefix="bc" />)
+    renderApp(<CanyonGradeField onChange={vi.fn()} idPrefix="bc" />)
     expect(screen.getByTestId('bc-grade-v')).toBeInTheDocument()
     expect(screen.getByTestId('bc-grade-a')).toBeInTheDocument()
     expect(screen.getByTestId('bc-grade-commitment')).toBeInTheDocument()
@@ -106,7 +106,7 @@ describe('CanyonGradeField', () => {
 
   it('shows the parsed values', () => {
     renderApp(
-      <CanyonGradeField value="v4 a3 III" onChange={jest.fn()} idPrefix="bc" />,
+      <CanyonGradeField value="v4 a3 III" onChange={vi.fn()} idPrefix="bc" />,
     )
     expect(screen.getByTestId('bc-grade-v-value')).toHaveTextContent('v4')
     expect(screen.getByTestId('bc-grade-a-value')).toHaveTextContent('a3')
@@ -116,7 +116,7 @@ describe('CanyonGradeField', () => {
   })
 
   it('composes the grade when the vertical select changes', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(
       <CanyonGradeField value="a3 III" onChange={onChange} idPrefix="bc" />,
     )
@@ -125,7 +125,7 @@ describe('CanyonGradeField', () => {
   })
 
   it('composes the grade when the aqua select changes', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(
       <CanyonGradeField value="v4 III" onChange={onChange} idPrefix="bc" />,
     )
@@ -134,7 +134,7 @@ describe('CanyonGradeField', () => {
   })
 
   it('composes the grade when the commitment select changes', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(
       <CanyonGradeField value="v4 a3" onChange={onChange} idPrefix="bc" />,
     )

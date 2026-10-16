@@ -8,7 +8,7 @@ import Modal from './modal'
 describe('Modal', () => {
   it('should render successfully', () => {
     renderApp(
-      <Modal isOpen setIsOpen={jest.fn()}>
+      <Modal isOpen setIsOpen={vi.fn()}>
         <div>test</div>
       </Modal>,
     )
@@ -16,7 +16,7 @@ describe('Modal', () => {
   })
 
   it('should close', async () => {
-    const mockFn = jest.fn()
+    const mockFn = vi.fn()
     renderApp(
       <Modal isOpen setIsOpen={mockFn}>
         <div>test</div>
@@ -28,7 +28,7 @@ describe('Modal', () => {
   })
 
   it('should close on backdrop event', async () => {
-    const mockFn = jest.fn()
+    const mockFn = vi.fn()
     renderApp(
       <Modal isOpen setIsOpen={mockFn}>
         <div>test</div>

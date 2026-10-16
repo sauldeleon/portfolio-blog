@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`OtherStuff should render successfully 1`] = `
+exports[`OtherStuff > should render successfully 1`] = `
 .c4 {
   position: relative;
   position: relative;

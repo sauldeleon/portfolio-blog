@@ -4,7 +4,7 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { RouteForm } from './RouteForm'
 
-jest.mock('../../../components/TrackUrlPicker', () => ({
+vi.mock('../../../components/TrackUrlPicker', () => ({
   TrackUrlPicker: ({
     id,
     value,
@@ -25,10 +25,10 @@ jest.mock('../../../components/TrackUrlPicker', () => ({
   ),
 }))
 
-jest.mock('@web/i18n/client', () => {
-  const admin: Record<string, unknown> = jest.requireActual(
-    '@web/i18n/locales/en/admin.json',
-  )
+vi.mock('@web/i18n/client', async () => {
+  const admin: Record<string, unknown> = await vi.importActual<
+    typeof import('@web/i18n/locales/en/admin.json')
+  >('@web/i18n/locales/en/admin.json')
   return {
     useClientTranslation: () => ({
       t: (key: string): string => {
@@ -47,7 +47,7 @@ jest.mock('@web/i18n/client', () => {
   }
 })
 
-jest.mock('../CardDateField', () => ({
+vi.mock('../CardDateField', () => ({
   CardDateField: ({
     value,
     onChange,
@@ -65,7 +65,7 @@ jest.mock('../CardDateField', () => ({
   ),
 }))
 
-jest.mock('../GpxUrlField', () => {
+vi.mock('../GpxUrlField', () => {
   const FULL = {
     date: '15 Jul 2025',
     startTime: '09:00',
@@ -127,18 +127,18 @@ const defaultValue = { kind: 'summary-route' as const, lang: 'es' as const }
 
 describe('RouteForm', () => {
   it('renders the form', () => {
-    renderApp(<RouteForm value={defaultValue} onChange={jest.fn()} />)
+    renderApp(<RouteForm value={defaultValue} onChange={vi.fn()} />)
     expect(screen.getByTestId('route-form')).toBeInTheDocument()
   })
 
   it('renders ES and EN lang buttons', () => {
-    renderApp(<RouteForm value={defaultValue} onChange={jest.fn()} />)
+    renderApp(<RouteForm value={defaultValue} onChange={vi.fn()} />)
     expect(screen.getByTestId('lang-es')).toBeInTheDocument()
     expect(screen.getByTestId('lang-en')).toBeInTheDocument()
   })
 
   it('calls onChange with updated lang when EN clicked', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<RouteForm value={defaultValue} onChange={onChange} />)
     fireEvent.click(screen.getByTestId('lang-en'))
     expect(onChange).toHaveBeenCalledWith(
@@ -147,7 +147,7 @@ describe('RouteForm', () => {
   })
 
   it('calls onChange with updated title', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<RouteForm value={defaultValue} onChange={onChange} />)
     fireEvent.change(screen.getByLabelText('Title'), {
       target: { value: 'Aneto' },
@@ -158,7 +158,7 @@ describe('RouteForm', () => {
   })
 
   it('calls onChange with updated date', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<RouteForm value={defaultValue} onChange={onChange} />)
     fireEvent.change(screen.getByTestId('rt-date'), {
       target: { value: '1 AGO 2025' },
@@ -169,7 +169,7 @@ describe('RouteForm', () => {
   })
 
   it('calls onChange with updated dist', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<RouteForm value={defaultValue} onChange={onChange} />)
     fireEvent.change(screen.getByLabelText('Distance'), {
       target: { value: '12 km' },
@@ -180,7 +180,7 @@ describe('RouteForm', () => {
   })
 
   it('calls onChange with updated dplus', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<RouteForm value={defaultValue} onChange={onChange} />)
     fireEvent.change(screen.getByLabelText('Ascent (D+)'), {
       target: { value: '800 m' },
@@ -191,7 +191,7 @@ describe('RouteForm', () => {
   })
 
   it('calls onChange with updated dminus', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<RouteForm value={defaultValue} onChange={onChange} />)
     fireEvent.change(screen.getByLabelText('Descent (D−)'), {
       target: { value: '800 m' },
@@ -202,7 +202,7 @@ describe('RouteForm', () => {
   })
 
   it('calls onChange with updated mov', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<RouteForm value={defaultValue} onChange={onChange} />)
     fireEvent.change(screen.getByLabelText('Moving (H:MM)'), {
       target: { value: '4:30' },
@@ -213,7 +213,7 @@ describe('RouteForm', () => {
   })
 
   it('calls onChange with updated det', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<RouteForm value={defaultValue} onChange={onChange} />)
     fireEvent.change(screen.getByLabelText('Stopped (H:MM)'), {
       target: { value: '0:30' },
@@ -224,7 +224,7 @@ describe('RouteForm', () => {
   })
 
   it('calls onChange with updated tot', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<RouteForm value={defaultValue} onChange={onChange} />)
     fireEvent.change(screen.getByLabelText('Total (H:MM)'), {
       target: { value: '5:00' },
@@ -235,7 +235,7 @@ describe('RouteForm', () => {
   })
 
   it('calls onChange with updated ini', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<RouteForm value={defaultValue} onChange={onChange} />)
     fireEvent.change(screen.getByLabelText('Start'), {
       target: { value: '08:00' },
@@ -246,7 +246,7 @@ describe('RouteForm', () => {
   })
 
   it('calls onChange with updated fin', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<RouteForm value={defaultValue} onChange={onChange} />)
     fireEvent.change(screen.getByLabelText('End'), {
       target: { value: '13:00' },
@@ -257,7 +257,7 @@ describe('RouteForm', () => {
   })
 
   it('calls onChange with updated gpxUrl', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<RouteForm value={defaultValue} onChange={onChange} />)
     fireEvent.change(screen.getByLabelText('GPX url'), {
       target: { value: 'https://example.com/aneto.gpx' },
@@ -271,14 +271,14 @@ describe('RouteForm', () => {
     renderApp(
       <RouteForm
         value={{ ...defaultValue, title: 'Maladeta' }}
-        onChange={jest.fn()}
+        onChange={vi.fn()}
       />,
     )
     expect(screen.getByDisplayValue('Maladeta')).toBeInTheDocument()
   })
 
   it('prefills fields from parsed GPX metrics', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<RouteForm value={defaultValue} onChange={onChange} />)
     fireEvent.click(screen.getByTestId('gpx-full'))
     expect(onChange).toHaveBeenCalledWith(
@@ -299,7 +299,7 @@ describe('RouteForm', () => {
   })
 
   it('keeps existing time/date values when metrics are empty', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     const value = {
       ...defaultValue,
       date: 'old',

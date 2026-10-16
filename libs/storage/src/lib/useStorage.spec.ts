@@ -14,9 +14,9 @@ describe('useStorage', () => {
       writable: true,
     })
 
-    jest.spyOn(console, 'warn').mockImplementation(() => jest.fn())
-    jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
-    jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
+    vi.spyOn(console, 'warn').mockImplementation(() => vi.fn())
+    vi.spyOn(console, 'error').mockImplementation(() => vi.fn())
+    vi.spyOn(console, 'log').mockImplementation(() => vi.fn())
   })
 
   it('MockStorage - should return initial value correctly', () => {

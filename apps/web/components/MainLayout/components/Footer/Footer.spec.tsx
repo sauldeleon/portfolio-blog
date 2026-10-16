@@ -1,28 +1,29 @@
 import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { usePathname } from 'next/navigation'
+import type { Mock } from 'vitest'
 
 import { renderApp } from '@sdlgr/test-utils'
 
 import { Footer } from './Footer'
 
-const mockPush = jest.fn()
-jest.mock('next/navigation', () => ({
-  usePathname: jest.fn().mockImplementation(() => '/en'),
+const mockPush = vi.fn()
+vi.mock('next/navigation', () => ({
+  usePathname: vi.fn().mockImplementation(() => '/en'),
   useRouter: () => ({
     push: mockPush,
   }),
 }))
 
-const mockSet = jest.fn()
-jest.mock('@sdlgr/storage', () => ({
-  ...jest.requireActual('@sdlgr/storage'),
-  useStorage: jest.fn().mockImplementation(() => [jest.fn(), mockSet]),
+const mockSet = vi.fn()
+vi.mock('@sdlgr/storage', async () => ({
+  ...(await vi.importActual<typeof import('@sdlgr/storage')>('@sdlgr/storage')),
+  useStorage: vi.fn().mockImplementation(() => [vi.fn(), mockSet]),
 }))
 
 describe('Footer', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
   it('should render successfully', async () => {
     const { baseElement } = renderApp(<Footer />)
@@ -40,7 +41,7 @@ describe('Footer', () => {
   })
 
   it('should toggle language to next available language', async () => {
-    ;(usePathname as jest.Mock).mockImplementation(() => '/en/path/slug')
+    ;(usePathname as Mock).mockImplementation(() => '/en/path/slug')
     renderApp(<Footer />)
     await screen.findByRole('navigation')
     const toggleLanguageButton = screen.getByRole('link', {

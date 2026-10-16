@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Button should render contained with colorScheme danger 1`] = `
+exports[`Button > should render contained with colorScheme danger 1`] = `
 .c0 {
   display: flex;
   align-items: center;
@@ -40,7 +40,7 @@ exports[`Button should render contained with colorScheme danger 1`] = `
 </body>
 `;
 
-exports[`Button should render contained with colorScheme success 1`] = `
+exports[`Button > should render contained with colorScheme success 1`] = `
 .c0 {
   display: flex;
   align-items: center;
@@ -80,7 +80,7 @@ exports[`Button should render contained with colorScheme success 1`] = `
 </body>
 `;
 
-exports[`Button should render contained with size xs 1`] = `
+exports[`Button > should render contained with size xs 1`] = `
 .c0 {
   display: flex;
   align-items: center;
@@ -118,7 +118,7 @@ exports[`Button should render contained with size xs 1`] = `
 </body>
 `;
 
-exports[`Button should render ghost with colorScheme danger 1`] = `
+exports[`Button > should render ghost with colorScheme danger 1`] = `
 .c0 {
   display: flex;
   align-items: center;
@@ -164,7 +164,7 @@ exports[`Button should render ghost with colorScheme danger 1`] = `
 </body>
 `;
 
-exports[`Button should render ghost with colorScheme success 1`] = `
+exports[`Button > should render ghost with colorScheme success 1`] = `
 .c0 {
   display: flex;
   align-items: center;
@@ -210,7 +210,7 @@ exports[`Button should render ghost with colorScheme success 1`] = `
 </body>
 `;
 
-exports[`Button should render ghost with colorScheme warning 1`] = `
+exports[`Button > should render ghost with colorScheme warning 1`] = `
 .c0 {
   display: flex;
   align-items: center;
@@ -256,7 +256,7 @@ exports[`Button should render ghost with colorScheme warning 1`] = `
 </body>
 `;
 
-exports[`Button should render inverted with size xs 1`] = `
+exports[`Button > should render inverted with size xs 1`] = `
 .c0 {
   display: flex;
   align-items: center;
@@ -292,7 +292,7 @@ exports[`Button should render inverted with size xs 1`] = `
 </body>
 `;
 
-exports[`Button should render variant contained with size sm 1`] = `
+exports[`Button > should render variant contained with size sm 1`] = `
 .c0 {
   display: flex;
   align-items: center;
@@ -330,7 +330,7 @@ exports[`Button should render variant contained with size sm 1`] = `
 </body>
 `;
 
-exports[`Button should render variant ghost 1`] = `
+exports[`Button > should render variant ghost 1`] = `
 .c0 {
   display: flex;
   align-items: center;
@@ -369,7 +369,7 @@ exports[`Button should render variant ghost 1`] = `
 </body>
 `;
 
-exports[`Button should render variant ghost with size lg 1`] = `
+exports[`Button > should render variant ghost with size lg 1`] = `
 .c0 {
   display: flex;
   align-items: center;
@@ -408,7 +408,7 @@ exports[`Button should render variant ghost with size lg 1`] = `
 </body>
 `;
 
-exports[`Button should render variant ghost with size sm 1`] = `
+exports[`Button > should render variant ghost with size sm 1`] = `
 .c0 {
   display: flex;
   align-items: center;
@@ -447,7 +447,7 @@ exports[`Button should render variant ghost with size sm 1`] = `
 </body>
 `;
 
-exports[`Button should render variant ghost with size xs 1`] = `
+exports[`Button > should render variant ghost with size xs 1`] = `
 .c0 {
   display: flex;
   align-items: center;
@@ -486,7 +486,7 @@ exports[`Button should render variant ghost with size xs 1`] = `
 </body>
 `;
 
-exports[`Button should render variant inverted 1`] = `
+exports[`Button > should render variant inverted 1`] = `
 .c0 {
   display: flex;
   align-items: center;
@@ -522,7 +522,7 @@ exports[`Button should render variant inverted 1`] = `
 </body>
 `;
 
-exports[`Button should render variant inverted with size lg 1`] = `
+exports[`Button > should render variant inverted with size lg 1`] = `
 .c0 {
   display: flex;
   align-items: center;
@@ -558,7 +558,7 @@ exports[`Button should render variant inverted with size lg 1`] = `
 </body>
 `;
 
-exports[`Button should render variant inverted with size sm 1`] = `
+exports[`Button > should render variant inverted with size sm 1`] = `
 .c0 {
   display: flex;
   align-items: center;
@@ -594,7 +594,7 @@ exports[`Button should render variant inverted with size sm 1`] = `
 </body>
 `;
 
-exports[`Button should render variant label as active 1`] = `
+exports[`Button > should render variant label as active 1`] = `
 .c0 {
   display: inline-flex;
   align-items: center;
@@ -620,7 +620,7 @@ exports[`Button should render variant label as active 1`] = `
 .c0:hover {
   opacity: 1;
   color: #98DFD6;
-  border-color: rgba(152,223,214,0.45);
+  border-color: rgba(152, 223, 214, 0.45);
 }
 
 .c0:disabled {
@@ -643,7 +643,7 @@ exports[`Button should render variant label as active 1`] = `
 </body>
 `;
 
-exports[`Button should render variant label as not active 1`] = `
+exports[`Button > should render variant label as not active 1`] = `
 .c0 {
   display: inline-flex;
   align-items: center;
@@ -669,7 +669,7 @@ exports[`Button should render variant label as not active 1`] = `
 .c0:hover {
   opacity: 1;
   color: #98DFD6;
-  border-color: rgba(152,223,214,0.45);
+  border-color: rgba(152, 223, 214, 0.45);
 }
 
 .c0:disabled {

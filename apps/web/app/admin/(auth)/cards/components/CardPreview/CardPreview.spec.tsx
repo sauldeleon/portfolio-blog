@@ -17,10 +17,10 @@ function makeAxiosError(status: number, data: unknown): AxiosError {
   })
 }
 
-jest.mock('@web/i18n/client', () => {
-  const admin: Record<string, unknown> = jest.requireActual(
-    '@web/i18n/locales/en/admin.json',
-  )
+vi.mock('@web/i18n/client', async () => {
+  const admin: Record<string, unknown> = await vi.importActual<
+    typeof import('@web/i18n/locales/en/admin.json')
+  >('@web/i18n/locales/en/admin.json')
   return {
     useClientTranslation: () => ({
       t: (key: string): string => {
@@ -42,14 +42,14 @@ jest.mock('@web/i18n/client', () => {
 const SAMPLE_SVG =
   '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50"><rect width="100" height="50" fill="red"/></svg>'
 
-const mockGetContext = jest.fn(() => ({
-  scale: jest.fn(),
-  drawImage: jest.fn(),
+const mockGetContext = vi.fn(() => ({
+  scale: vi.fn(),
+  drawImage: vi.fn(),
 }))
-const mockToBlob = jest.fn()
+const mockToBlob = vi.fn()
 
-const mockCreateObjectURL = jest.fn(() => 'blob:mock-url')
-const mockRevokeObjectURL = jest.fn()
+const mockCreateObjectURL = vi.fn(() => 'blob:mock-url')
+const mockRevokeObjectURL = vi.fn()
 
 beforeAll(() => {
   Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
@@ -63,7 +63,7 @@ beforeAll(() => {
 })
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
   global.URL.createObjectURL = mockCreateObjectURL
   global.URL.revokeObjectURL = mockRevokeObjectURL
   mockToBlob.mockImplementation((cb: (b: Blob) => void) => {
@@ -72,7 +72,7 @@ beforeEach(() => {
 })
 
 afterEach(() => {
-  jest.restoreAllMocks()
+  vi.restoreAllMocks()
 })
 
 describe('CardPreview', () => {
@@ -96,9 +96,9 @@ describe('CardPreview', () => {
   })
 
   it('triggers download on button click (canvas path)', async () => {
-    const mockClick = jest.fn()
+    const mockClick = vi.fn()
     const origCreate = document.createElement.bind(document)
-    jest.spyOn(document, 'createElement').mockImplementation((tag: string) => {
+    vi.spyOn(document, 'createElement').mockImplementation((tag: string) => {
       const el = origCreate(tag)
       if (tag === 'a') {
         Object.defineProperty(el, 'click', { value: mockClick })
@@ -133,7 +133,7 @@ describe('CardPreview', () => {
     })
 
     global.Image = origImage
-    jest.restoreAllMocks()
+    vi.restoreAllMocks()
     void imgLoadEvent
   })
 
@@ -231,7 +231,7 @@ describe('CardPreview', () => {
   })
 
   it('calls onSelect when the clickable preview is clicked', () => {
-    const onSelect = jest.fn()
+    const onSelect = vi.fn()
     renderApp(
       <CardPreview
         svg={SAMPLE_SVG}
@@ -252,7 +252,7 @@ describe('CardPreview', () => {
         svg={SAMPLE_SVG}
         cardWidth={100}
         cardHeight={50}
-        onSelect={jest.fn()}
+        onSelect={vi.fn()}
         selected
       />,
     )
@@ -293,7 +293,7 @@ describe('CardPreview', () => {
     it('uploads the PNG and shows the link on success', async () => {
       const origImage = global.Image
       global.Image = SuccessImage
-      const postSpy = jest.spyOn(axios, 'post').mockResolvedValue({
+      const postSpy = vi.spyOn(axios, 'post').mockResolvedValue({
         data: { url: 'https://res.cloudinary.com/x.png' },
       })
       renderApp(
@@ -316,7 +316,7 @@ describe('CardPreview', () => {
     it('uses filename for the public name, altText and the file name', async () => {
       const origImage = global.Image
       global.Image = SuccessImage
-      const postSpy = jest
+      const postSpy = vi
         .spyOn(axios, 'post')
         .mockResolvedValue({ data: { url: 'https://x/y.png' } })
       renderApp(
@@ -341,7 +341,7 @@ describe('CardPreview', () => {
     it('uploads via the imperative ref handle', async () => {
       const origImage = global.Image
       global.Image = SuccessImage
-      const postSpy = jest
+      const postSpy = vi
         .spyOn(axios, 'post')
         .mockResolvedValue({ data: { url: 'https://x/y.png' } })
       const ref = createRef<CardPreviewHandle>()
@@ -363,7 +363,7 @@ describe('CardPreview', () => {
     })
 
     it('does nothing via the ref handle when upload is disabled', async () => {
-      const postSpy = jest.spyOn(axios, 'post')
+      const postSpy = vi.spyOn(axios, 'post')
       const ref = createRef<CardPreviewHandle>()
       renderApp(
         <CardPreview
@@ -383,9 +383,9 @@ describe('CardPreview', () => {
     it('shows the server error on a failed upload', async () => {
       const origImage = global.Image
       global.Image = SuccessImage
-      jest
-        .spyOn(axios, 'post')
-        .mockRejectedValue(makeAxiosError(500, { error: 'Upload failed' }))
+      vi.spyOn(axios, 'post').mockRejectedValue(
+        makeAxiosError(500, { error: 'Upload failed' }),
+      )
       renderApp(
         <CardPreview svg={SAMPLE_SVG} cardWidth={100} cardHeight={50} />,
       )
@@ -399,7 +399,7 @@ describe('CardPreview', () => {
     it('shows a fallback error when the axios error has no message', async () => {
       const origImage = global.Image
       global.Image = SuccessImage
-      jest.spyOn(axios, 'post').mockRejectedValue(makeAxiosError(500, {}))
+      vi.spyOn(axios, 'post').mockRejectedValue(makeAxiosError(500, {}))
       renderApp(
         <CardPreview svg={SAMPLE_SVG} cardWidth={100} cardHeight={50} />,
       )
@@ -413,7 +413,7 @@ describe('CardPreview', () => {
     it('shows a fallback error when the response has no url', async () => {
       const origImage = global.Image
       global.Image = SuccessImage
-      jest.spyOn(axios, 'post').mockResolvedValue({ data: {} })
+      vi.spyOn(axios, 'post').mockResolvedValue({ data: {} })
       renderApp(
         <CardPreview svg={SAMPLE_SVG} cardWidth={100} cardHeight={50} />,
       )
@@ -427,7 +427,7 @@ describe('CardPreview', () => {
     it('shows an error on a non-axios upload error', async () => {
       const origImage = global.Image
       global.Image = SuccessImage
-      jest.spyOn(axios, 'post').mockRejectedValue(new Error('boom'))
+      vi.spyOn(axios, 'post').mockRejectedValue(new Error('boom'))
       renderApp(
         <CardPreview svg={SAMPLE_SVG} cardWidth={100} cardHeight={50} />,
       )
@@ -440,7 +440,7 @@ describe('CardPreview', () => {
       const origImage = global.Image
       global.Image = SuccessImage
       let resolve!: (v: unknown) => void
-      jest.spyOn(axios, 'post').mockReturnValue(
+      vi.spyOn(axios, 'post').mockReturnValue(
         new Promise((r) => {
           resolve = r
         }),

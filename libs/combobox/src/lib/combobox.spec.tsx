@@ -4,8 +4,8 @@ import { RenderProviders } from '@sdlgr/test-utils'
 
 import { Combobox } from './combobox'
 
-const mockCreatableSelect = jest.fn()
-jest.mock('react-select/creatable', () => ({
+const mockCreatableSelect = vi.fn()
+vi.mock('react-select/creatable', () => ({
   __esModule: true,
   default: (props: Record<string, unknown>) => {
     mockCreatableSelect(props)
@@ -21,7 +21,7 @@ describe('Combobox', () => {
   function renderCombobox(
     overrides?: Partial<React.ComponentProps<typeof Combobox>>,
   ) {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     render(
       <Combobox
         value={[]}
@@ -160,7 +160,7 @@ describe('Combobox', () => {
   })
 
   it('delegates to consumer isValidNewOption for format validation', () => {
-    const isValidNewOption = jest.fn().mockReturnValue(false)
+    const isValidNewOption = vi.fn().mockReturnValue(false)
     renderCombobox({ isValidNewOption })
     const fn = getIsValidNewOption()
     expect(fn('vue', null, opts)).toBe(false)
@@ -168,7 +168,7 @@ describe('Combobox', () => {
   })
 
   it('passes trimmed value to consumer isValidNewOption', () => {
-    const isValidNewOption = jest.fn().mockReturnValue(true)
+    const isValidNewOption = vi.fn().mockReturnValue(true)
     renderCombobox({ isValidNewOption })
     const fn = getIsValidNewOption()
     fn('  vue  ', null, opts)

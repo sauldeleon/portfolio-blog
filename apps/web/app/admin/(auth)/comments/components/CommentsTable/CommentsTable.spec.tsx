@@ -7,8 +7,8 @@ import type { CommentRecord } from '@web/lib/db/queries/comments'
 
 import { CommentsTable } from './CommentsTable'
 
-jest.mock('@web/i18n/client', () => ({
-  useClientTranslation: jest.fn().mockReturnValue({
+vi.mock('@web/i18n/client', () => ({
+  useClientTranslation: vi.fn().mockReturnValue({
     t: (key: string) => {
       const map: Record<string, string> = {
         refresh: 'Refresh',
@@ -54,10 +54,10 @@ const makeComment = (
 })
 
 beforeEach(() => {
-  jest.clearAllMocks()
-  jest.spyOn(axios, 'get').mockResolvedValue({ data: { comments: [] } })
-  jest.spyOn(axios, 'patch').mockResolvedValue({ data: {} })
-  jest.spyOn(axios, 'delete').mockResolvedValue({ data: {} })
+  vi.clearAllMocks()
+  vi.spyOn(axios, 'get').mockResolvedValue({ data: { comments: [] } })
+  vi.spyOn(axios, 'patch').mockResolvedValue({ data: {} })
+  vi.spyOn(axios, 'delete').mockResolvedValue({ data: {} })
 })
 
 describe('CommentsTable', () => {

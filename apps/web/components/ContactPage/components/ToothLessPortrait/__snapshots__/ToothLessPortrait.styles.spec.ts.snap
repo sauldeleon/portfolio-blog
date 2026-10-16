@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`generateKeyframeStep generate keyframe step snapshot for image 0 1`] = `
+exports[`generateKeyframeStep > generate keyframe step snapshot for image +0 1`] = `
 "
     24.9999% {
       background-image: none;
@@ -12,7 +12,7 @@ exports[`generateKeyframeStep generate keyframe step snapshot for image 0 1`] = 
   "
 `;
 
-exports[`generateKeyframeStep generate keyframe step snapshot for image 1 1`] = `
+exports[`generateKeyframeStep > generate keyframe step snapshot for image 1 1`] = `
 "
     49.9999% {
       background-image: url(1);
@@ -24,7 +24,7 @@ exports[`generateKeyframeStep generate keyframe step snapshot for image 1 1`] = 
   "
 `;
 
-exports[`generateKeyframeStep generate keyframe step snapshot for image 2 1`] = `
+exports[`generateKeyframeStep > generate keyframe step snapshot for image 2 1`] = `
 "
     99.9999% {
       background-image: url(1), url(2);
@@ -36,7 +36,7 @@ exports[`generateKeyframeStep generate keyframe step snapshot for image 2 1`] = 
   "
 `;
 
-exports[`swapImageAnimation generate keyframe snapshot for images 1`] = `
+exports[`swapImageAnimation > generate keyframe snapshot for images 1`] = `
 Lt {
   "id": "sc-keyframes-kzvgWv",
   "inject": [Function],

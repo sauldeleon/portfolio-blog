@@ -4,10 +4,10 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { FlowField } from './FlowField'
 
-jest.mock('@web/i18n/client', () => {
-  const admin: Record<string, unknown> = jest.requireActual(
-    '@web/i18n/locales/en/admin.json',
-  )
+vi.mock('@web/i18n/client', async () => {
+  const admin: Record<string, unknown> = await vi.importActual<
+    typeof import('@web/i18n/locales/en/admin.json')
+  >('@web/i18n/locales/en/admin.json')
   return {
     useClientTranslation: () => ({
       t: (key: string): string => {
@@ -26,7 +26,7 @@ jest.mock('@web/i18n/client', () => {
   }
 })
 
-jest.mock('@sdlgr/select', () => ({
+vi.mock('@sdlgr/select', () => ({
   Select: ({
     value,
     onChange,
@@ -56,28 +56,28 @@ jest.mock('@sdlgr/select', () => ({
 
 describe('FlowField', () => {
   it('renders the level, affects and phenomena inputs', () => {
-    renderApp(<FlowField value={{}} onChange={jest.fn()} idPrefix="sb" />)
+    renderApp(<FlowField value={{}} onChange={vi.fn()} idPrefix="sb" />)
     expect(screen.getByTestId('sb-flow-level')).toBeInTheDocument()
     expect(screen.getByTestId('sb-flow-rappels')).toBeInTheDocument()
     expect(screen.getByTestId('sb-phenomenon-murky')).toBeInTheDocument()
   })
 
   it('sets the flow level', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<FlowField value={{}} onChange={onChange} idPrefix="sb" />)
     fireEvent.click(screen.getByTestId('sb-flow-level-opt-normal'))
     expect(onChange).toHaveBeenCalledWith({ flowLevel: 'normal' })
   })
 
   it('sets the affects-rappels answer', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<FlowField value={{}} onChange={onChange} idPrefix="sb" />)
     fireEvent.click(screen.getByTestId('sb-flow-rappels-opt-some_water'))
     expect(onChange).toHaveBeenCalledWith({ flowRappels: 'some_water' })
   })
 
   it('adds a phenomenon when its checkbox is checked', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(
       <FlowField
         value={{ phenomena: ['murky'] }}
@@ -90,7 +90,7 @@ describe('FlowField', () => {
   })
 
   it('removes a phenomenon when its checkbox is unchecked', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(
       <FlowField
         value={{ phenomena: ['murky', 'siphon'] }}
@@ -106,7 +106,7 @@ describe('FlowField', () => {
     renderApp(
       <FlowField
         value={{ phenomena: ['murky'] }}
-        onChange={jest.fn()}
+        onChange={vi.fn()}
         idPrefix="sb"
       />,
     )

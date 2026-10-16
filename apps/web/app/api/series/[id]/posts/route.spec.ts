@@ -1,22 +1,22 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
 import { GET } from './route'
 
-const mockAuth = jest.fn()
-const mockGetPostsForSeries = jest.fn()
-const mockLoggerError = jest.fn()
+const mockAuth = vi.fn()
+const mockGetPostsForSeries = vi.fn()
+const mockLoggerError = vi.fn()
 
-jest.mock('@web/lib/auth/config', () => ({ auth: () => mockAuth() }))
-jest.mock('@web/lib/db/queries/series', () => ({
+vi.mock('@web/lib/auth/config', () => ({ auth: () => mockAuth() }))
+vi.mock('@web/lib/db/queries/series', () => ({
   getPostsForSeries: (...args: unknown[]) => mockGetPostsForSeries(...args),
 }))
-jest.mock('@web/lib/logger', () => ({
+vi.mock('@web/lib/logger', () => ({
   logger: {
     error: (...args: unknown[]) => mockLoggerError(...args),
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
   },
 }))
 
@@ -25,7 +25,7 @@ function makeParams(id: string) {
 }
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
   mockAuth.mockResolvedValue({ user: { name: 'admin' } })
 })
 

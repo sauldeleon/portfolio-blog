@@ -7,15 +7,13 @@ import { AboutModal } from './AboutModal'
 
 describe('AboutModal', () => {
   it('should render', async () => {
-    const { baseElement } = renderApp(
-      <AboutModal isOpen setIsOpen={jest.fn()} />,
-    )
+    const { baseElement } = renderApp(<AboutModal isOpen setIsOpen={vi.fn()} />)
     await screen.findByText('About this page')
     expect(baseElement).toMatchSnapshot()
   })
 
   it('should close', async () => {
-    const mockFn = jest.fn()
+    const mockFn = vi.fn()
     renderApp(<AboutModal isOpen setIsOpen={mockFn} />)
     const closeButton = await screen.findByRole('button', { name: /close/i })
     await userEvent.click(closeButton)
@@ -23,7 +21,7 @@ describe('AboutModal', () => {
   })
 
   it('should close on backdrop event', async () => {
-    const mockFn = jest.fn()
+    const mockFn = vi.fn()
     renderApp(<AboutModal isOpen setIsOpen={mockFn} />)
     const closeButton = await screen.findByRole('button', { name: /close/i })
     fireEvent.keyDown(closeButton, {

@@ -1,4 +1,5 @@
 import { act, fireEvent, screen } from '@testing-library/react'
+import type { Mock } from 'vitest'
 
 import { renderApp } from '@sdlgr/test-utils'
 
@@ -11,7 +12,7 @@ import {
 } from './SlideshowInsertModal'
 import type { SlideState } from './SlideshowInsertModal'
 
-jest.mock('react-overlays', () => ({
+vi.mock('react-overlays', () => ({
   Modal: ({
     show,
     children,
@@ -37,7 +38,7 @@ jest.mock('react-overlays', () => ({
   },
 }))
 
-jest.mock('@sdlgr/select', () => ({
+vi.mock('@sdlgr/select', () => ({
   Select: ({
     value,
     onChange,
@@ -84,7 +85,7 @@ function makeSlide(overrides: Partial<SlideState> = {}): SlideState {
   }
 }
 
-function pickImageForSlide(onRequestImagePick: jest.Mock, callIndex = 0) {
+function pickImageForSlide(onRequestImagePick: Mock, callIndex = 0) {
   const [cb] = onRequestImagePick.mock.calls[callIndex] as [
     (img: CloudinaryImage) => void,
   ]
@@ -209,10 +210,10 @@ describe('SlideshowInsertModal', () => {
     renderApp(
       <SlideshowInsertModal
         isOpen={false}
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
       />,
     )
     expect(screen.queryByTestId('slide-card-0')).not.toBeInTheDocument()
@@ -222,10 +223,10 @@ describe('SlideshowInsertModal', () => {
     renderApp(
       <SlideshowInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
       />,
     )
     expect(screen.getByTestId('slide-card-0')).toBeInTheDocument()
@@ -239,22 +240,22 @@ describe('SlideshowInsertModal', () => {
     renderApp(
       <SlideshowInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
       />,
     )
     expect(screen.getByTestId('slideshow-modal-insert')).toBeDisabled()
   })
 
   it('insert button is enabled when at least one image is selected', () => {
-    const onRequestImagePick = jest.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <SlideshowInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -265,12 +266,12 @@ describe('SlideshowInsertModal', () => {
   })
 
   it('clicking pick-image-button calls onRequestImagePick', () => {
-    const onRequestImagePick = jest.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <SlideshowInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -280,12 +281,12 @@ describe('SlideshowInsertModal', () => {
   })
 
   it('after image picked, thumbnail is shown and pick button label changes to Change', () => {
-    const onRequestImagePick = jest.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <SlideshowInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -305,10 +306,10 @@ describe('SlideshowInsertModal', () => {
     renderApp(
       <SlideshowInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
       />,
     )
     fireEvent.change(screen.getByTestId('alt-text-input-0'), {
@@ -323,10 +324,10 @@ describe('SlideshowInsertModal', () => {
     renderApp(
       <SlideshowInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
       />,
     )
     fireEvent.change(screen.getByTestId('caption-input-0'), {
@@ -338,13 +339,13 @@ describe('SlideshowInsertModal', () => {
   })
 
   it('toggling caption-pos-checkbox changes captionPos to top and back', () => {
-    const onInsert = jest.fn()
-    const onRequestImagePick = jest.fn()
+    const onInsert = vi.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <SlideshowInsertModal
         isOpen
         onInsert={onInsert}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -360,13 +361,13 @@ describe('SlideshowInsertModal', () => {
   })
 
   it('toggling caption-pos-checkbox back removes caption-pos=top', () => {
-    const onInsert = jest.fn()
-    const onRequestImagePick = jest.fn()
+    const onInsert = vi.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <SlideshowInsertModal
         isOpen
         onInsert={onInsert}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -382,13 +383,13 @@ describe('SlideshowInsertModal', () => {
   })
 
   it('toggling expand-checkbox changes expand', () => {
-    const onInsert = jest.fn()
-    const onRequestImagePick = jest.fn()
+    const onInsert = vi.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <SlideshowInsertModal
         isOpen
         onInsert={onInsert}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -404,10 +405,10 @@ describe('SlideshowInsertModal', () => {
     renderApp(
       <SlideshowInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
       />,
     )
     expect(screen.queryByTestId('photo-iso-input-0')).not.toBeInTheDocument()
@@ -425,10 +426,10 @@ describe('SlideshowInsertModal', () => {
     renderApp(
       <SlideshowInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
       />,
     )
     fireEvent.click(screen.getByTestId('photo-meta-checkbox-0'))
@@ -437,13 +438,13 @@ describe('SlideshowInsertModal', () => {
   })
 
   it('photo meta inputs update state', () => {
-    const onInsert = jest.fn()
-    const onRequestImagePick = jest.fn()
+    const onInsert = vi.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <SlideshowInsertModal
         isOpen
         onInsert={onInsert}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -472,13 +473,13 @@ describe('SlideshowInsertModal', () => {
   })
 
   it('focal length input accepts number value', () => {
-    const onInsert = jest.fn()
-    const onRequestImagePick = jest.fn()
+    const onInsert = vi.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <SlideshowInsertModal
         isOpen
         onInsert={onInsert}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -499,10 +500,10 @@ describe('SlideshowInsertModal', () => {
     renderApp(
       <SlideshowInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
       />,
     )
     expect(screen.queryByTestId('slide-card-1')).not.toBeInTheDocument()
@@ -514,10 +515,10 @@ describe('SlideshowInsertModal', () => {
     renderApp(
       <SlideshowInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
       />,
     )
     expect(screen.queryByTestId('remove-slide-0')).not.toBeInTheDocument()
@@ -527,10 +528,10 @@ describe('SlideshowInsertModal', () => {
     renderApp(
       <SlideshowInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
       />,
     )
     fireEvent.click(screen.getByTestId('add-slide-button'))
@@ -543,10 +544,10 @@ describe('SlideshowInsertModal', () => {
     renderApp(
       <SlideshowInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
       />,
     )
     expect(screen.getByTestId('move-up-0')).toBeDisabled()
@@ -556,10 +557,10 @@ describe('SlideshowInsertModal', () => {
     renderApp(
       <SlideshowInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
       />,
     )
     expect(screen.getByTestId('move-down-0')).toBeDisabled()
@@ -569,10 +570,10 @@ describe('SlideshowInsertModal', () => {
     renderApp(
       <SlideshowInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
       />,
     )
     fireEvent.click(screen.getByTestId('add-slide-button'))
@@ -591,10 +592,10 @@ describe('SlideshowInsertModal', () => {
     renderApp(
       <SlideshowInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
       />,
     )
     fireEvent.click(screen.getByTestId('add-slide-button'))
@@ -613,10 +614,10 @@ describe('SlideshowInsertModal', () => {
     renderApp(
       <SlideshowInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
       />,
     )
     fireEvent.click(screen.getByTestId('add-slide-button'))
@@ -633,22 +634,22 @@ describe('SlideshowInsertModal', () => {
     renderApp(
       <SlideshowInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
       />,
     )
     expect(screen.queryByTestId('insert-after-0')).not.toBeInTheDocument()
   })
 
   it('updating second slide does not affect first slide', () => {
-    const onRequestImagePick = jest.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <SlideshowInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -670,22 +671,22 @@ describe('SlideshowInsertModal', () => {
     renderApp(
       <SlideshowInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
       />,
     )
     expect(screen.queryByTestId('slideshow-preview')).not.toBeInTheDocument()
   })
 
   it('slideshow-preview shown with correct markdown when image is selected', () => {
-    const onRequestImagePick = jest.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <SlideshowInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -702,13 +703,13 @@ describe('SlideshowInsertModal', () => {
   })
 
   it('clicking insert calls onInsert with correct markdown and resets form', () => {
-    const onInsert = jest.fn()
-    const onRequestImagePick = jest.fn()
+    const onInsert = vi.fn()
+    const onRequestImagePick = vi.fn()
     renderApp(
       <SlideshowInsertModal
         isOpen
         onInsert={onInsert}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
         onRequestImagePick={onRequestImagePick}
       />,
@@ -726,14 +727,14 @@ describe('SlideshowInsertModal', () => {
   })
 
   it('clicking cancel calls onCancel', () => {
-    const onCancel = jest.fn()
+    const onCancel = vi.fn()
     renderApp(
       <SlideshowInsertModal
         isOpen
-        onInsert={jest.fn()}
+        onInsert={vi.fn()}
         onCancel={onCancel}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
       />,
     )
     fireEvent.click(screen.getByTestId('slideshow-modal-cancel'))
@@ -746,10 +747,10 @@ describe('SlideshowInsertModal initialValues', () => {
     renderApp(
       <SlideshowInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
         initialValues={{
           slides: [
             {
@@ -778,10 +779,10 @@ describe('SlideshowInsertModal initialValues', () => {
     renderApp(
       <SlideshowInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
         initialValues={{
           slides: [
             {
@@ -816,10 +817,10 @@ describe('SlideshowInsertModal initialValues', () => {
     renderApp(
       <SlideshowInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
         initialValues={null}
       />,
     )
@@ -831,10 +832,10 @@ describe('SlideshowInsertModal initialValues', () => {
     renderApp(
       <SlideshowInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
         initialValues={{
           slides: [
             {
@@ -857,10 +858,10 @@ describe('SlideshowInsertModal initialValues', () => {
     renderApp(
       <SlideshowInsertModal
         isOpen
-        onInsert={jest.fn()}
-        onCancel={jest.fn()}
+        onInsert={vi.fn()}
+        onCancel={vi.fn()}
         pickerOpen={false}
-        onRequestImagePick={jest.fn()}
+        onRequestImagePick={vi.fn()}
         initialValues={{
           slides: [
             {

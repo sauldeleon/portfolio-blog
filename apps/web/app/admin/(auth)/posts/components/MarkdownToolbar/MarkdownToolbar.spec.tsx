@@ -6,8 +6,8 @@ import { MarkdownToolbar, shortcutFor } from './MarkdownToolbar'
 
 describe('MarkdownToolbar', () => {
   it('formats with each button and opens the link modal', () => {
-    const onFormat = jest.fn()
-    const onLink = jest.fn()
+    const onFormat = vi.fn()
+    const onLink = vi.fn()
     renderApp(<MarkdownToolbar onFormat={onFormat} onLink={onLink} />)
     expect(screen.getByRole('toolbar')).toBeInTheDocument()
     fireEvent.click(screen.getByTestId('format-bold'))
@@ -19,7 +19,7 @@ describe('MarkdownToolbar', () => {
   })
 
   it('keeps the editor selection when pressing a button', () => {
-    renderApp(<MarkdownToolbar onFormat={jest.fn()} onLink={jest.fn()} />)
+    renderApp(<MarkdownToolbar onFormat={vi.fn()} onLink={vi.fn()} />)
     const event = new MouseEvent('mousedown', {
       bubbles: true,
       cancelable: true,

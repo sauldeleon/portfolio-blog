@@ -9,7 +9,7 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { CleanPanel } from './CleanPanel'
 
-jest.mock('@web/i18n/client', () => ({
+vi.mock('@web/i18n/client', () => ({
   useClientTranslation: () => ({ t: (key: string) => key }),
 }))
 
@@ -33,11 +33,11 @@ const points: GpxPoint[] = Array.from({ length: 5 }, (_, i) => ({
 
 function renderPanel(props: Partial<Parameters<typeof CleanPanel>[0]> = {}) {
   const callbacks = {
-    onChange: jest.fn(),
-    onApply: jest.fn(),
-    onReset: jest.fn(),
-    onScopeChange: jest.fn(),
-    onSectionChange: jest.fn(),
+    onChange: vi.fn(),
+    onApply: vi.fn(),
+    onReset: vi.fn(),
+    onScopeChange: vi.fn(),
+    onSectionChange: vi.fn(),
   }
   renderApp(
     <CleanPanel

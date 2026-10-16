@@ -4,35 +4,31 @@ import { Locale } from '@web/lib/db/schema'
 
 import Page, { generateMetadata } from './page.next'
 
-jest.mock('@web/lib/db/queries/subscriptions', () => ({
-  unsubscribeByToken: jest.fn(),
+vi.mock('@web/lib/db/queries/subscriptions', () => ({
+  unsubscribeByToken: vi.fn(),
 }))
 
-jest.mock('@web/i18n/server', () => ({
-  getServerTranslation: jest.fn(),
+vi.mock('@web/i18n/server', () => ({
+  getServerTranslation: vi.fn(),
 }))
 
-jest.mock(
-  'next/link',
-  () =>
-    function MockLink({
-      children,
-      href,
-    }: {
-      children: React.ReactNode
-      href: string
-    }) {
-      return <a href={href}>{children}</a>
-    },
-)
+vi.mock('next/link', () => ({
+  default: function MockLink({
+    children,
+    href,
+  }: {
+    children: React.ReactNode
+    href: string
+  }) {
+    return <a href={href}>{children}</a>
+  },
+}))
 
-jest.mock(
-  'next/image',
-  () =>
-    function MockImage({ src, alt }: { src: string; alt: string }) {
-      return <img src={src} alt={alt} />
-    },
-)
+vi.mock('next/image', () => ({
+  default: function MockImage({ src, alt }: { src: string; alt: string }) {
+    return <img src={src} alt={alt} />
+  },
+}))
 
 function makeParams(lng: Locale, token?: string) {
   return {
@@ -42,14 +38,15 @@ function makeParams(lng: Locale, token?: string) {
 }
 
 describe('[lng]/subscribe/unsubscribed — page', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-    const { getServerTranslation } = require('@web/i18n/server')
+  beforeEach(async () => {
+    vi.clearAllMocks()
+    const { getServerTranslation } = await import('@web/i18n/server')
     getServerTranslation.mockResolvedValue({ t: (key: string) => key })
   })
 
   it('shows unsubscribed title on success', async () => {
-    const { unsubscribeByToken } = require('@web/lib/db/queries/subscriptions')
+    const { unsubscribeByToken } =
+      await import('@web/lib/db/queries/subscriptions')
     unsubscribeByToken.mockResolvedValue({ id: '1', status: 'unsubscribed' })
     const ui = await Page(makeParams('en', 'valid-token'))
     render(ui)
@@ -58,7 +55,8 @@ describe('[lng]/subscribe/unsubscribed — page', () => {
   })
 
   it('shows error when token not found', async () => {
-    const { unsubscribeByToken } = require('@web/lib/db/queries/subscriptions')
+    const { unsubscribeByToken } =
+      await import('@web/lib/db/queries/subscriptions')
     unsubscribeByToken.mockResolvedValue(null)
     const ui = await Page(makeParams('en', 'bad-token'))
     render(ui)
@@ -67,7 +65,8 @@ describe('[lng]/subscribe/unsubscribed — page', () => {
   })
 
   it('shows error when no token provided', async () => {
-    const { unsubscribeByToken } = require('@web/lib/db/queries/subscriptions')
+    const { unsubscribeByToken } =
+      await import('@web/lib/db/queries/subscriptions')
     const ui = await Page(makeParams('en'))
     render(ui)
     expect(screen.getByText('unsubscribed.error')).toBeInTheDocument()
@@ -75,7 +74,8 @@ describe('[lng]/subscribe/unsubscribed — page', () => {
   })
 
   it('renders back to blog link', async () => {
-    const { unsubscribeByToken } = require('@web/lib/db/queries/subscriptions')
+    const { unsubscribeByToken } =
+      await import('@web/lib/db/queries/subscriptions')
     unsubscribeByToken.mockResolvedValue({ id: '1', status: 'unsubscribed' })
     const ui = await Page(makeParams('en', 'tok'))
     render(ui)
@@ -83,7 +83,8 @@ describe('[lng]/subscribe/unsubscribed — page', () => {
   })
 
   it('renders unsubscribe image on success', async () => {
-    const { unsubscribeByToken } = require('@web/lib/db/queries/subscriptions')
+    const { unsubscribeByToken } =
+      await import('@web/lib/db/queries/subscriptions')
     unsubscribeByToken.mockResolvedValue({ id: '1', status: 'unsubscribed' })
     const ui = await Page(makeParams('en', 'valid-token'))
     render(ui)
@@ -91,7 +92,8 @@ describe('[lng]/subscribe/unsubscribed — page', () => {
   })
 
   it('does not render unsubscribe image on error', async () => {
-    const { unsubscribeByToken } = require('@web/lib/db/queries/subscriptions')
+    const { unsubscribeByToken } =
+      await import('@web/lib/db/queries/subscriptions')
     unsubscribeByToken.mockResolvedValue(null)
     const ui = await Page(makeParams('en', 'bad-token'))
     render(ui)
@@ -102,8 +104,8 @@ describe('[lng]/subscribe/unsubscribed — page', () => {
 })
 
 describe('[lng]/subscribe/unsubscribed — metadata', () => {
-  beforeEach(() => {
-    const { getServerTranslation } = require('@web/i18n/server')
+  beforeEach(async () => {
+    const { getServerTranslation } = await import('@web/i18n/server')
     getServerTranslation.mockResolvedValue({ t: (key: string) => key })
   })
 

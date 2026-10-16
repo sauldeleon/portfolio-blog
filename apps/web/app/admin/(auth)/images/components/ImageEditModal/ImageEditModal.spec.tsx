@@ -6,7 +6,7 @@ import type { CloudinaryImage } from '@web/lib/cloudinary/images'
 
 import { ImageEditModal } from './ImageEditModal'
 
-jest.mock('react-overlays/Modal', () => ({
+vi.mock('react-overlays/Modal', () => ({
   __esModule: true,
   default: ({
     show,
@@ -25,8 +25,8 @@ jest.mock('react-overlays/Modal', () => ({
     ) : null,
 }))
 
-jest.mock('@web/i18n/client', () => ({
-  useClientTranslation: jest.fn().mockReturnValue({
+vi.mock('@web/i18n/client', () => ({
+  useClientTranslation: vi.fn().mockReturnValue({
     t: (key: string) => {
       const translations: Record<string, string> = {
         'images.renameModal.title': 'Rename Image',
@@ -55,13 +55,13 @@ const defaultProps = {
   image: mockImage,
   isSaving: false,
   error: null,
-  onClose: jest.fn(),
-  onSave: jest.fn(),
+  onClose: vi.fn(),
+  onSave: vi.fn(),
 }
 
 describe('ImageEditModal', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   it('renders nothing when closed', () => {
@@ -106,7 +106,7 @@ describe('ImageEditModal', () => {
   })
 
   it('calls onSave with trimmed new name when save clicked', () => {
-    const onSave = jest.fn()
+    const onSave = vi.fn()
     renderApp(<ImageEditModal {...defaultProps} onSave={onSave} />)
     fireEvent.change(screen.getByTestId('rename-input'), {
       target: { value: '  new-name  ' },
@@ -116,7 +116,7 @@ describe('ImageEditModal', () => {
   })
 
   it('calls onClose when cancel clicked', () => {
-    const onClose = jest.fn()
+    const onClose = vi.fn()
     renderApp(<ImageEditModal {...defaultProps} onClose={onClose} />)
     fireEvent.click(screen.getByTestId('rename-cancel-button'))
     expect(onClose).toHaveBeenCalled()

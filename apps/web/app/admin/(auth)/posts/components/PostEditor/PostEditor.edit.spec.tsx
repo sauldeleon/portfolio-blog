@@ -1,28 +1,29 @@
 import { act, fireEvent, screen, waitFor, within } from '@testing-library/react'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
+import type { Mock } from 'vitest'
 
 import { renderApp } from '@sdlgr/test-utils'
 
 import type { PostEditorProps } from './PostEditor'
 import { PostEditor } from './PostEditor'
 
-const mockPush = jest.fn()
-const mockRefresh = jest.fn()
+const mockPush = vi.fn()
+const mockRefresh = vi.fn()
 
-jest.mock('./usePostTranslation', () => ({
+vi.mock('./usePostTranslation', () => ({
   usePostTranslation: () => ({
     status: { available: true },
-    recheck: jest.fn(),
-    translate: jest.fn(),
-    cancel: jest.fn(),
+    recheck: vi.fn(),
+    translate: vi.fn(),
+    cancel: vi.fn(),
     isTranslating: false,
     error: null,
   }),
 }))
 
-jest.mock('@web/i18n/client', () => ({
-  useClientTranslation: jest.fn().mockReturnValue({
+vi.mock('@web/i18n/client', () => ({
+  useClientTranslation: vi.fn().mockReturnValue({
     t: (key: string) => {
       const translations: Record<string, string> = {
         'postEditor.newTitle': 'New Post',
@@ -96,17 +97,17 @@ jest.mock('@web/i18n/client', () => ({
   }),
 }))
 
-jest.mock('next/navigation', () => ({
-  useRouter: jest.fn(),
+vi.mock('next/navigation', () => ({
+  useRouter: vi.fn(),
 }))
 
-jest.mock('../MarkdownPreview', () => ({
+vi.mock('../MarkdownPreview', () => ({
   MarkdownPreview: ({ content }: { content: string }) => (
     <div data-testid="markdown-preview">{content}</div>
   ),
 }))
 
-jest.mock('../ImagePicker', () => ({
+vi.mock('../ImagePicker', () => ({
   ImagePicker: ({
     open,
     onClose,
@@ -154,11 +155,11 @@ jest.mock('../ImagePicker', () => ({
     ) : null,
 }))
 
-jest.mock('@web/utils/slugify', () => ({
+vi.mock('@web/utils/slugify', () => ({
   slugify: (text: string) => text.toLowerCase().replace(/\s+/g, '-'),
 }))
 
-jest.mock('@sdlgr/date-picker', () => ({
+vi.mock('@sdlgr/date-picker', () => ({
   DateTimePicker: ({
     value,
     onChange,
@@ -195,7 +196,7 @@ jest.mock('@sdlgr/date-picker', () => ({
   ),
 }))
 
-jest.mock('@sdlgr/post-hero', () => ({
+vi.mock('@sdlgr/post-hero', () => ({
   PostHero: ({ readingTime }: { readingTime: number }) => (
     <div data-testid="post-hero-mock">
       <span data-testid="reading-time">{readingTime}</span>
@@ -203,19 +204,19 @@ jest.mock('@sdlgr/post-hero', () => ({
   ),
 }))
 
-jest.mock('./PostCardPreview', () => ({
+vi.mock('./PostCardPreview', () => ({
   PostCardPreview: () => <div data-testid="post-card-preview-mock" />,
 }))
 
-jest.mock('@sdlgr/table-of-contents', () => ({
+vi.mock('@sdlgr/table-of-contents', () => ({
   TableOfContents: () => <nav data-testid="toc-mock" />,
 }))
 
-jest.mock('@web/lib/mdx/remarkHeadings', () => ({
+vi.mock('@web/lib/mdx/remarkHeadings', () => ({
   extractToc: () => [],
 }))
 
-jest.mock('./CoverImageInput', () => ({
+vi.mock('./CoverImageInput', () => ({
   CoverImageInput: ({
     value,
     onPick,
@@ -251,7 +252,7 @@ jest.mock('./CoverImageInput', () => ({
   ),
 }))
 
-jest.mock('@sdlgr/combobox', () => ({
+vi.mock('@sdlgr/combobox', () => ({
   Combobox: ({
     value,
     onChange,
@@ -284,7 +285,7 @@ jest.mock('@sdlgr/combobox', () => ({
   ),
 }))
 
-jest.mock('@sdlgr/select', () => ({
+vi.mock('@sdlgr/select', () => ({
   Select: ({
     value,
     onChange,
@@ -388,13 +389,13 @@ const mockExistingPost: PostEditorProps['post'] = {
 
 describe('PostEditor', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
-    ;(useRouter as jest.Mock).mockReturnValue({
+    vi.clearAllMocks()
+    ;(useRouter as Mock).mockReturnValue({
       push: mockPush,
       refresh: mockRefresh,
     })
-    jest.spyOn(axios, 'post').mockResolvedValue({ data: { id: 'new-post-id' } })
-    jest.spyOn(axios, 'put').mockResolvedValue({ data: {} })
+    vi.spyOn(axios, 'post').mockResolvedValue({ data: { id: 'new-post-id' } })
+    vi.spyOn(axios, 'put').mockResolvedValue({ data: {} })
   })
 
   describe('edit post (existing)', () => {
@@ -496,7 +497,7 @@ describe('PostEditor', () => {
       fireEvent.click(screen.getByTestId('publish-button'))
       fireEvent.click(screen.getByTestId('publish-notify-publish-and-notify'))
       await waitFor(() => expect(axios.put).toHaveBeenCalled())
-      const body = (axios.put as jest.Mock).mock.calls[0][1] as {
+      const body = (axios.put as Mock).mock.calls[0][1] as {
         status: string
         notify: boolean
       }
@@ -515,7 +516,7 @@ describe('PostEditor', () => {
       fireEvent.click(screen.getByTestId('publish-button'))
       fireEvent.click(screen.getByTestId('publish-notify-publish-only'))
       await waitFor(() => expect(axios.put).toHaveBeenCalled())
-      const body = (axios.put as jest.Mock).mock.calls[0][1] as {
+      const body = (axios.put as Mock).mock.calls[0][1] as {
         status: string
         notify: boolean
       }
@@ -547,7 +548,7 @@ describe('PostEditor', () => {
       )
       fireEvent.click(screen.getByTestId('save-button'))
       await waitFor(() => expect(axios.put).toHaveBeenCalled())
-      const body = (axios.put as jest.Mock).mock.calls[0][1] as {
+      const body = (axios.put as Mock).mock.calls[0][1] as {
         translations: Record<string, unknown>
       }
       expect(body.translations).toHaveProperty('en')
@@ -636,7 +637,7 @@ describe('PostEditor', () => {
       )
       fireEvent.click(screen.getByTestId('unarchive-button'))
       await waitFor(() => expect(axios.put).toHaveBeenCalled())
-      const body = (axios.put as jest.Mock).mock.calls[0][1] as {
+      const body = (axios.put as Mock).mock.calls[0][1] as {
         status: string
       }
       expect(body.status).toBe('draft')
@@ -688,7 +689,7 @@ describe('PostEditor', () => {
       )
       fireEvent.click(screen.getByTestId('save-button'))
       await waitFor(() => expect(axios.put).toHaveBeenCalled())
-      const body = (axios.put as jest.Mock).mock.calls[0][1] as Record<
+      const body = (axios.put as Mock).mock.calls[0][1] as Record<
         string,
         unknown
       >
@@ -780,7 +781,7 @@ describe('PostEditor', () => {
       )
       fireEvent.click(screen.getByTestId('save-button'))
       await waitFor(() => expect(axios.put).toHaveBeenCalled())
-      const body = (axios.put as jest.Mock).mock.calls[0][1] as Record<
+      const body = (axios.put as Mock).mock.calls[0][1] as Record<
         string,
         unknown
       >
@@ -816,7 +817,7 @@ describe('PostEditor', () => {
       )
       fireEvent.click(screen.getByTestId('save-button'))
       await waitFor(() => expect(axios.put).toHaveBeenCalled())
-      const body = (axios.put as jest.Mock).mock.calls[0][1] as {
+      const body = (axios.put as Mock).mock.calls[0][1] as {
         seriesTitles: Record<string, string>
       }
       expect(body.seriesTitles).not.toHaveProperty('en')
@@ -839,7 +840,7 @@ describe('PostEditor', () => {
       )
       fireEvent.click(screen.getByTestId('save-button'))
       await waitFor(() => expect(axios.put).toHaveBeenCalled())
-      const body = (axios.put as jest.Mock).mock.calls[0][1] as {
+      const body = (axios.put as Mock).mock.calls[0][1] as {
         seriesTitles: Record<string, string>
       }
       expect(body.seriesTitles).toHaveProperty('es', 'Mi Serie')
@@ -891,7 +892,7 @@ describe('PostEditor', () => {
       )
       fireEvent.click(screen.getByTestId('save-button'))
       await waitFor(() => expect(axios.put).toHaveBeenCalled())
-      const body = (axios.put as jest.Mock).mock.calls[0][1] as Record<
+      const body = (axios.put as Mock).mock.calls[0][1] as Record<
         string,
         unknown
       >
@@ -908,7 +909,7 @@ describe('PostEditor', () => {
       )
       fireEvent.click(screen.getByTestId('save-button'))
       await waitFor(() => expect(axios.put).toHaveBeenCalled())
-      const body = (axios.put as jest.Mock).mock.calls[0][1] as Record<
+      const body = (axios.put as Mock).mock.calls[0][1] as Record<
         string,
         unknown
       >
@@ -944,7 +945,7 @@ describe('PostEditor', () => {
       )
       fireEvent.click(screen.getByTestId('save-button'))
       await waitFor(() => expect(axios.put).toHaveBeenCalled())
-      const body = (axios.put as jest.Mock).mock.calls[0][1] as {
+      const body = (axios.put as Mock).mock.calls[0][1] as {
         tags: string[]
       }
       expect(body.tags).toEqual(['REACT', 'NEXTJS'])
@@ -1016,7 +1017,7 @@ describe('PostEditor', () => {
   describe('draft preview URL', () => {
     beforeEach(() => {
       Object.defineProperty(navigator, 'clipboard', {
-        value: { writeText: jest.fn().mockResolvedValue(undefined) },
+        value: { writeText: vi.fn().mockResolvedValue(undefined) },
         writable: true,
         configurable: true,
       })
@@ -1066,7 +1067,7 @@ describe('PostEditor', () => {
     })
 
     it('copy button writes full URL to clipboard and shows Copied!', async () => {
-      jest.useFakeTimers()
+      vi.useFakeTimers()
       renderApp(
         <PostEditor
           post={mockExistingPost}
@@ -1086,14 +1087,14 @@ describe('PostEditor', () => {
         ).toHaveTextContent('Copied!')
       })
       act(() => {
-        jest.runAllTimers()
+        vi.runAllTimers()
       })
       await waitFor(() => {
         expect(
           screen.getByTestId('draft-preview-copy-button'),
         ).toHaveTextContent('Copy')
       })
-      jest.useRealTimers()
+      vi.useRealTimers()
     })
   })
 
@@ -1109,7 +1110,7 @@ describe('PostEditor', () => {
 
     beforeEach(() => {
       Object.defineProperty(navigator, 'clipboard', {
-        value: { writeText: jest.fn().mockResolvedValue(undefined) },
+        value: { writeText: vi.fn().mockResolvedValue(undefined) },
         writable: true,
         configurable: true,
       })
@@ -1165,7 +1166,7 @@ describe('PostEditor', () => {
     })
 
     it('copy button writes URL to clipboard and shows Copied!', async () => {
-      jest.useFakeTimers()
+      vi.useFakeTimers()
       renderApp(
         <PostEditor
           post={publishedPost}
@@ -1185,14 +1186,14 @@ describe('PostEditor', () => {
         )
       })
       act(() => {
-        jest.runAllTimers()
+        vi.runAllTimers()
       })
       await waitFor(() => {
         expect(screen.getByTestId('published-url-copy-en')).toHaveTextContent(
           'Copy',
         )
       })
-      jest.useRealTimers()
+      vi.useRealTimers()
     })
   })
 })

@@ -1,46 +1,46 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
-const mockAuth = jest.fn()
-const mockGetCategoryBySlug = jest.fn()
-const mockSlugExistsForLocale = jest.fn()
-const mockCreatePost = jest.fn()
-const mockGetPublishedPostsPaginated = jest.fn()
-const mockGetAllPosts = jest.fn()
-const mockEnsureSeries = jest.fn()
-const mockUpsertSeriesTranslation = jest.fn()
-const mockSeriesOrderExistsForSeries = jest.fn()
+const mockAuth = vi.fn()
+const mockGetCategoryBySlug = vi.fn()
+const mockSlugExistsForLocale = vi.fn()
+const mockCreatePost = vi.fn()
+const mockGetPublishedPostsPaginated = vi.fn()
+const mockGetAllPosts = vi.fn()
+const mockEnsureSeries = vi.fn()
+const mockUpsertSeriesTranslation = vi.fn()
+const mockSeriesOrderExistsForSeries = vi.fn()
 
-const mockRevalidateTag = jest.fn()
-const mockLoggerError = jest.fn()
+const mockRevalidateTag = vi.fn()
+const mockLoggerError = vi.fn()
 
-jest.mock('next/cache', () => ({ revalidateTag: mockRevalidateTag }))
-jest.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
-jest.mock('@web/lib/logger', () => ({
+vi.mock('next/cache', () => ({ revalidateTag: mockRevalidateTag }))
+vi.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
+vi.mock('@web/lib/logger', () => ({
   logger: {
     error: mockLoggerError,
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
   },
 }))
-jest.mock('@web/lib/db/queries/categories', () => ({
+vi.mock('@web/lib/db/queries/categories', () => ({
   getCategoryBySlug: mockGetCategoryBySlug,
 }))
-jest.mock('@web/lib/db/queries/posts', () => ({
+vi.mock('@web/lib/db/queries/posts', () => ({
   createPost: mockCreatePost,
   slugExistsForLocale: mockSlugExistsForLocale,
   getPublishedPostsPaginated: mockGetPublishedPostsPaginated,
   getAllPosts: mockGetAllPosts,
 }))
-jest.mock('@web/lib/db/queries/series', () => ({
+vi.mock('@web/lib/db/queries/series', () => ({
   ensureSeries: mockEnsureSeries,
   upsertSeriesTranslation: mockUpsertSeriesTranslation,
   seriesOrderExistsForSeries: (...args: unknown[]) =>
     mockSeriesOrderExistsForSeries(...args),
 }))
 
-const { GET, POST } = require('./route') as {
+const { GET, POST } = (await import('./route')) as {
   GET: (req: Request) => Promise<Response>
   POST: (req: Request) => Promise<Response>
 }
@@ -125,7 +125,7 @@ const mockAdminPost = {
 
 describe('GET /api/posts (admin status=all)', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   it('returns 401 when status=all and no session', async () => {
@@ -166,7 +166,7 @@ describe('GET /api/posts (admin status=all)', () => {
 
 describe('GET /api/posts', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   it('returns 400 when lng is missing', async () => {
@@ -272,7 +272,7 @@ describe('GET /api/posts', () => {
 
 describe('POST /api/posts', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   it('returns 401 when not authenticated', async () => {

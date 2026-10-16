@@ -1,6 +1,7 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
+import type { Mock } from 'vitest'
 
 import { renderApp } from '@sdlgr/test-utils'
 
@@ -8,11 +9,11 @@ import type { AdminPost } from '@web/lib/db/queries/posts'
 
 import { PostTable } from './PostTable'
 
-const mockRefresh = jest.fn()
-const mockPush = jest.fn()
+const mockRefresh = vi.fn()
+const mockPush = vi.fn()
 
-jest.mock('@web/i18n/client', () => ({
-  useClientTranslation: jest.fn().mockReturnValue({
+vi.mock('@web/i18n/client', () => ({
+  useClientTranslation: vi.fn().mockReturnValue({
     t: (key: string, vars?: Record<string, unknown>) => {
       const translations: Record<string, string> = {
         'posts.searchPlaceholder': 'Search posts…',
@@ -71,7 +72,7 @@ jest.mock('@web/i18n/client', () => ({
   }),
 }))
 
-jest.mock('@web/app/admin/(auth)/components/PublishNotifyModal', () => ({
+vi.mock('@web/app/admin/(auth)/components/PublishNotifyModal', () => ({
   PublishNotifyModal: ({
     isOpen,
     onPublishOnly,
@@ -90,10 +91,10 @@ jest.mock('@web/app/admin/(auth)/components/PublishNotifyModal', () => ({
     ) : null,
 }))
 
-jest.mock('next/navigation', () => ({
-  useRouter: jest.fn(),
-  usePathname: jest.fn().mockReturnValue('/admin/posts/'),
-  useSearchParams: jest.fn().mockReturnValue(new URLSearchParams()),
+vi.mock('next/navigation', () => ({
+  useRouter: vi.fn(),
+  usePathname: vi.fn().mockReturnValue('/admin/posts/'),
+  useSearchParams: vi.fn().mockReturnValue(new URLSearchParams()),
 }))
 
 const makePost = (overrides: Partial<AdminPost> = {}): AdminPost => ({
@@ -121,14 +122,14 @@ const makePost = (overrides: Partial<AdminPost> = {}): AdminPost => ({
 
 describe('PostTable', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
-    ;(useRouter as jest.Mock).mockReturnValue({
+    vi.clearAllMocks()
+    ;(useRouter as Mock).mockReturnValue({
       refresh: mockRefresh,
       push: mockPush,
     })
-    jest.spyOn(axios, 'get').mockResolvedValue({ data: { data: [] } })
-    jest.spyOn(axios, 'put').mockResolvedValue({ data: {} })
-    jest.spyOn(axios, 'delete').mockResolvedValue({ data: {} })
+    vi.spyOn(axios, 'get').mockResolvedValue({ data: { data: [] } })
+    vi.spyOn(axios, 'put').mockResolvedValue({ data: {} })
+    vi.spyOn(axios, 'delete').mockResolvedValue({ data: {} })
   })
 
   it('renders all posts initially', () => {
@@ -181,10 +182,11 @@ describe('PostTable', () => {
     expect(screen.queryByText('Draft Post')).not.toBeInTheDocument()
   })
 
-  it('initialises filter from URL search params', () => {
-    const { useSearchParams } = jest.requireMock('next/navigation') as {
-      useSearchParams: jest.Mock
-    }
+  it('initialises filter from URL search params', async () => {
+    const { useSearchParams } =
+      (await import('next/navigation')) as unknown as {
+        useSearchParams: Mock
+      }
     useSearchParams.mockReturnValueOnce(new URLSearchParams('filter=archived'))
     const posts = [
       makePost({ id: '01', titleEn: 'Draft Post', status: 'draft' }),
@@ -437,7 +439,7 @@ describe('PostTable', () => {
 
   it('refresh button fetches posts from API', async () => {
     const freshPost = makePost({ titleEn: 'Fresh Post' })
-    jest.spyOn(axios, 'get').mockResolvedValueOnce({
+    vi.spyOn(axios, 'get').mockResolvedValueOnce({
       data: {
         data: [
           {
@@ -521,7 +523,7 @@ describe('PostTable', () => {
 
   it('refresh deserializes non-null publishedAt, deletedAt, scheduledAt', async () => {
     const freshPost = makePost({ titleEn: 'Fresh Post' })
-    jest.spyOn(axios, 'get').mockResolvedValueOnce({
+    vi.spyOn(axios, 'get').mockResolvedValueOnce({
       data: {
         data: [
           {

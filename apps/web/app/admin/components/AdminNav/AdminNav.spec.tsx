@@ -1,14 +1,15 @@
 import { screen } from '@testing-library/react'
 import { usePathname } from 'next/navigation'
+import type { Mock } from 'vitest'
 
 import { renderApp } from '@sdlgr/test-utils'
 
 import { AdminNav } from './AdminNav'
 
-const mockLogoutAction = jest.fn()
+const mockLogoutAction = vi.fn()
 
-jest.mock('@web/i18n/client', () => ({
-  useClientTranslation: jest.fn().mockReturnValue({
+vi.mock('@web/i18n/client', () => ({
+  useClientTranslation: vi.fn().mockReturnValue({
     t: (key: string) => {
       const translations: Record<string, string> = {
         'nav.posts': 'Posts',
@@ -26,16 +27,16 @@ jest.mock('@web/i18n/client', () => ({
   }),
 }))
 
-jest.mock('../../actions/logout', () => ({
+vi.mock('../../actions/logout', () => ({
   logoutAction: (...args: unknown[]) => mockLogoutAction(...args),
 }))
 
-jest.mock('next/navigation', () => ({
-  usePathname: jest.fn(),
+vi.mock('next/navigation', () => ({
+  usePathname: vi.fn(),
 }))
 
-jest.mock('next/link', () => {
-  const React = require('react')
+vi.mock('next/link', async () => {
+  const React = await import('react')
   return {
     __esModule: true,
     default: ({
@@ -50,8 +51,8 @@ jest.mock('next/link', () => {
 
 describe('AdminNav', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
-    ;(usePathname as jest.Mock).mockReturnValue('/admin/posts')
+    vi.clearAllMocks()
+    ;(usePathname as Mock).mockReturnValue('/admin/posts')
   })
 
   it('renders Posts link', () => {
@@ -95,7 +96,7 @@ describe('AdminNav', () => {
   })
 
   it('marks Cards link active when on cards route', () => {
-    ;(usePathname as jest.Mock).mockReturnValue('/admin/cards')
+    ;(usePathname as Mock).mockReturnValue('/admin/cards')
     renderApp(<AdminNav />)
     expect(screen.getByRole('link', { name: 'Cards' })).toBeInTheDocument()
   })
@@ -109,7 +110,7 @@ describe('AdminNav', () => {
   })
 
   it('marks Tracks link active when on tracks route', () => {
-    ;(usePathname as jest.Mock).mockReturnValue('/admin/tracks/edit')
+    ;(usePathname as Mock).mockReturnValue('/admin/tracks/edit')
     renderApp(<AdminNav />)
     expect(screen.getByRole('link', { name: 'Tracks' })).toBeInTheDocument()
   })
@@ -123,7 +124,7 @@ describe('AdminNav', () => {
   })
 
   it('marks Comments link active when on comments route', () => {
-    ;(usePathname as jest.Mock).mockReturnValue('/admin/comments')
+    ;(usePathname as Mock).mockReturnValue('/admin/comments')
     renderApp(<AdminNav />)
     expect(screen.getByRole('link', { name: 'Comments' })).toBeInTheDocument()
   })
@@ -156,33 +157,33 @@ describe('AdminNav', () => {
   })
 
   it('marks Posts link active when on posts route', () => {
-    ;(usePathname as jest.Mock).mockReturnValue('/admin/posts/some-id')
+    ;(usePathname as Mock).mockReturnValue('/admin/posts/some-id')
     renderApp(<AdminNav />)
     expect(screen.getByRole('link', { name: 'Posts' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Categories' })).toBeInTheDocument()
   })
 
   it('marks Categories link active when on categories route', () => {
-    ;(usePathname as jest.Mock).mockReturnValue('/admin/categories')
+    ;(usePathname as Mock).mockReturnValue('/admin/categories')
     renderApp(<AdminNav />)
     expect(screen.getByRole('link', { name: 'Posts' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Categories' })).toBeInTheDocument()
   })
 
   it('marks Series link active when on series route', () => {
-    ;(usePathname as jest.Mock).mockReturnValue('/admin/series')
+    ;(usePathname as Mock).mockReturnValue('/admin/series')
     renderApp(<AdminNav />)
     expect(screen.getByRole('link', { name: 'Series' })).toBeInTheDocument()
   })
 
   it('marks Images link active when on images route', () => {
-    ;(usePathname as jest.Mock).mockReturnValue('/admin/images')
+    ;(usePathname as Mock).mockReturnValue('/admin/images')
     renderApp(<AdminNav />)
     expect(screen.getByRole('link', { name: 'Images' })).toBeInTheDocument()
   })
 
   it('marks Users link active when on users route', () => {
-    ;(usePathname as jest.Mock).mockReturnValue('/admin/users')
+    ;(usePathname as Mock).mockReturnValue('/admin/users')
     renderApp(<AdminNav role="admin" />)
     expect(screen.getByRole('link', { name: 'Users' })).toBeInTheDocument()
   })

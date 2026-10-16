@@ -1,6 +1,7 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
+import type { Mock } from 'vitest'
 
 import { renderApp } from '@sdlgr/test-utils'
 
@@ -8,11 +9,11 @@ import type { CategoryForAdmin } from '@web/lib/db/queries/categories'
 
 import { CategoryTable } from './CategoryTable'
 
-const mockRefresh = jest.fn()
-const mockPush = jest.fn()
+const mockRefresh = vi.fn()
+const mockPush = vi.fn()
 
-jest.mock('@web/i18n/client', () => ({
-  useClientTranslation: jest.fn().mockReturnValue({
+vi.mock('@web/i18n/client', () => ({
+  useClientTranslation: vi.fn().mockReturnValue({
     t: (key: string, opts?: Record<string, unknown>) => {
       const translations: Record<string, string> = {
         'categories.searchPlaceholder': 'Search categories…',
@@ -39,8 +40,8 @@ jest.mock('@web/i18n/client', () => ({
   }),
 }))
 
-jest.mock('next/navigation', () => ({
-  useRouter: jest.fn(),
+vi.mock('next/navigation', () => ({
+  useRouter: vi.fn(),
 }))
 
 const makeCategory = (
@@ -64,14 +65,14 @@ const makeCategory = (
 
 describe('CategoryTable', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
-    ;(useRouter as jest.Mock).mockReturnValue({
+    vi.clearAllMocks()
+    ;(useRouter as Mock).mockReturnValue({
       refresh: mockRefresh,
       push: mockPush,
     })
-    jest.spyOn(axios, 'get').mockResolvedValue({ data: { data: [] } })
-    jest.spyOn(axios, 'put').mockResolvedValue({ data: {} })
-    jest.spyOn(axios, 'delete').mockResolvedValue({ data: {} })
+    vi.spyOn(axios, 'get').mockResolvedValue({ data: { data: [] } })
+    vi.spyOn(axios, 'put').mockResolvedValue({ data: {} })
+    vi.spyOn(axios, 'delete').mockResolvedValue({ data: {} })
   })
 
   it('renders all category rows', () => {
@@ -191,7 +192,7 @@ describe('CategoryTable', () => {
 
   it('refresh button fetches categories from API', async () => {
     const freshCategory = makeCategory({ slug: 'fresh', translations: [] })
-    jest.spyOn(axios, 'get').mockResolvedValueOnce({
+    vi.spyOn(axios, 'get').mockResolvedValueOnce({
       data: { data: [freshCategory] },
     })
     renderApp(<CategoryTable categories={[]} />)

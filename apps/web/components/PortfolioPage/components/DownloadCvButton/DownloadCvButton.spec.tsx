@@ -1,15 +1,16 @@
 import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import type { Mock } from 'vitest'
 
 import { renderApp } from '@sdlgr/test-utils'
 
 import { CvDocumentProps } from '../CvDocument/CvDocument'
 import { DownloadCvButton } from './DownloadCvButton'
 
-const mockUpdate = jest.fn()
-const mockUsePDF = jest.fn()
+const mockUpdate = vi.fn()
+const mockUsePDF = vi.fn()
 
-jest.mock('@react-pdf/renderer', () => ({
+vi.mock('@react-pdf/renderer', () => ({
   usePDF: (...args: unknown[]) => mockUsePDF(...args),
   Document: ({ children }: { children: React.ReactNode }) => (
     <div>{children}</div>
@@ -49,7 +50,7 @@ const defaultProps = {
 
 describe('DownloadCvButton', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     mockUsePDF.mockReturnValue([
       { url: 'blob:mock-url', loading: false, blob: null, error: null },
       mockUpdate,
@@ -93,21 +94,21 @@ describe('DownloadCvButton', () => {
     renderApp(<DownloadCvButton {...defaultProps} />)
     const button = await screen.findByRole('button', { name: /Download CV/ })
 
-    const mockClick = jest.fn()
+    const mockClick = vi.fn()
     const mockAnchor = {
       href: '',
       download: '',
       click: mockClick,
     } as unknown as HTMLAnchorElement
 
-    const mockAppend = jest
+    const mockAppend = vi
       .spyOn(document.body, 'appendChild')
       .mockReturnValue(mockAnchor as unknown as Node)
-    const mockRemove = jest
+    const mockRemove = vi
       .spyOn(document.body, 'removeChild')
       .mockReturnValue(mockAnchor as unknown as Node)
     const originalCreateElement = document.createElement.bind(document)
-    jest.spyOn(document, 'createElement').mockImplementation((tag: string) => {
+    vi.spyOn(document, 'createElement').mockImplementation((tag: string) => {
       if (tag === 'a') return mockAnchor
       return originalCreateElement(tag)
     })
@@ -120,7 +121,7 @@ describe('DownloadCvButton', () => {
 
     mockAppend.mockRestore()
     mockRemove.mockRestore()
-    ;(document.createElement as jest.Mock).mockRestore()
+    ;(document.createElement as Mock).mockRestore()
   })
 
   it('should not trigger download when url is null', async () => {

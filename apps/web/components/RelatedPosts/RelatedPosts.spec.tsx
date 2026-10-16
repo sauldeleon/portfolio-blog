@@ -1,26 +1,26 @@
 import { render, screen } from '@testing-library/react'
 
-const mockGetRelatedPosts = jest.fn()
-const mockGetServerTranslation = jest.fn()
-const mockComputeReadingTime = jest.fn().mockReturnValue(3)
+const mockGetRelatedPosts = vi.fn()
+const mockGetServerTranslation = vi.fn()
+const mockComputeReadingTime = vi.fn().mockReturnValue(3)
 
-jest.mock('@web/lib/db/queries/posts', () => ({
+vi.mock('@web/lib/db/queries/posts', () => ({
   getRelatedPosts: mockGetRelatedPosts,
 }))
-jest.mock('@web/i18n/server', () => ({
+vi.mock('@web/i18n/server', () => ({
   getServerTranslation: mockGetServerTranslation,
 }))
-jest.mock('@web/utils/computeReadingTime', () => ({
+vi.mock('@web/utils/computeReadingTime', () => ({
   computeReadingTime: mockComputeReadingTime,
 }))
-jest.mock('@sdlgr/post-card', () => ({
+vi.mock('@sdlgr/post-card', () => ({
   PostCard: ({ title }: { title: string }) => (
     <article data-testid="post-card">{title}</article>
   ),
 }))
 
 const { RelatedPosts } =
-  require('./RelatedPosts') as typeof import('./RelatedPosts')
+  (await import('./RelatedPosts')) as typeof import('./RelatedPosts')
 
 const mockPost = {
   id: '01JWTEST000000000000000000',
@@ -47,7 +47,7 @@ beforeEach(() => {
 })
 
 afterEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
 })
 
 describe('RelatedPosts', () => {

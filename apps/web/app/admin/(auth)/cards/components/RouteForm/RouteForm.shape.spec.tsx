@@ -4,7 +4,7 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { RouteForm } from './RouteForm'
 
-jest.mock('../../../components/TrackUrlPicker', () => ({
+vi.mock('../../../components/TrackUrlPicker', () => ({
   TrackUrlPicker: ({
     id,
     value,
@@ -25,10 +25,10 @@ jest.mock('../../../components/TrackUrlPicker', () => ({
   ),
 }))
 
-jest.mock('@web/i18n/client', () => {
-  const admin: Record<string, unknown> = jest.requireActual(
-    '@web/i18n/locales/en/admin.json',
-  )
+vi.mock('@web/i18n/client', async () => {
+  const admin: Record<string, unknown> = await vi.importActual<
+    typeof import('@web/i18n/locales/en/admin.json')
+  >('@web/i18n/locales/en/admin.json')
   return {
     useClientTranslation: () => ({
       t: (key: string): string => {
@@ -47,7 +47,7 @@ jest.mock('@web/i18n/client', () => {
   }
 })
 
-jest.mock('../CardDateField', () => ({
+vi.mock('../CardDateField', () => ({
   CardDateField: ({
     value,
     onChange,
@@ -65,7 +65,7 @@ jest.mock('../CardDateField', () => ({
   ),
 }))
 
-jest.mock('../GpxUrlField', () => {
+vi.mock('../GpxUrlField', () => {
   const FULL = {
     date: '15 Jul 2025',
     startTime: '09:00',
@@ -128,7 +128,7 @@ const defaultValue = { kind: 'summary-route' as const, lang: 'es' as const }
 
 describe('RouteForm route type and language', () => {
   it('sets the route type', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<RouteForm value={defaultValue} onChange={onChange} />)
     fireEvent.click(screen.getByTestId('rt-shape-loop'))
     expect(onChange).toHaveBeenLastCalledWith(
@@ -137,7 +137,7 @@ describe('RouteForm route type and language', () => {
   })
 
   it('clears the selected route type on a second click', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(
       <RouteForm
         value={{ ...defaultValue, shape: 'loop' }}
@@ -155,12 +155,12 @@ describe('RouteForm route type and language', () => {
   })
 
   it('hides the language toggle on request', () => {
-    renderApp(<RouteForm value={defaultValue} onChange={jest.fn()} hideLang />)
+    renderApp(<RouteForm value={defaultValue} onChange={vi.fn()} hideLang />)
     expect(screen.queryByTestId('lang-es')).not.toBeInTheDocument()
   })
 
   it('edits the summits and cols found in the GPX', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(
       <RouteForm
         value={{
@@ -179,7 +179,7 @@ describe('RouteForm route type and language', () => {
   })
 
   it('warns when OpenStreetMap did not answer on the last parse', () => {
-    renderApp(<RouteForm value={defaultValue} onChange={jest.fn()} />)
+    renderApp(<RouteForm value={defaultValue} onChange={vi.fn()} />)
     expect(
       screen.queryByTestId('rt-landmarks-osm-down'),
     ).not.toBeInTheDocument()

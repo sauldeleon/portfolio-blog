@@ -1,30 +1,30 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
-const mockGetPostStatus = jest.fn()
-const mockIncrementPostLikes = jest.fn()
-const mockLikesRatelimit = { limit: jest.fn() }
-const mockLoggerError = jest.fn()
+const mockGetPostStatus = vi.fn()
+const mockIncrementPostLikes = vi.fn()
+const mockLikesRatelimit = { limit: vi.fn() }
+const mockLoggerError = vi.fn()
 
-jest.mock('@web/lib/db/queries/posts', () => ({
+vi.mock('@web/lib/db/queries/posts', () => ({
   getPostStatus: (...args: unknown[]) => mockGetPostStatus(...args),
   incrementPostLikes: (...args: unknown[]) => mockIncrementPostLikes(...args),
 }))
-jest.mock('@web/lib/ratelimit', () => ({
+vi.mock('@web/lib/ratelimit', () => ({
   get likesRatelimit() {
     return mockLikesRatelimit
   },
 }))
-jest.mock('@web/lib/logger', () => ({
+vi.mock('@web/lib/logger', () => ({
   logger: {
     error: mockLoggerError,
-    info: jest.fn(),
-    debug: jest.fn(),
-    warn: jest.fn(),
+    info: vi.fn(),
+    debug: vi.fn(),
+    warn: vi.fn(),
   },
 }))
 
-const { POST } = require('./route') as {
+const { POST } = (await import('./route')) as unknown as {
   POST: (
     req: Request,
     ctx: { params: Promise<{ id: string }> },
@@ -43,7 +43,7 @@ function makeParams(id = 'post-ulid-123') {
 }
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
   mockLikesRatelimit.limit.mockResolvedValue({ success: true })
   mockGetPostStatus.mockResolvedValue('published')
   mockIncrementPostLikes.mockResolvedValue(42)
@@ -112,21 +112,22 @@ describe('POST /api/posts/[id]/like', () => {
   })
 
   it('skips rate limit when likesRatelimit is null', async () => {
-    jest.resetModules()
-    jest.mock('@web/lib/ratelimit', () => ({ likesRatelimit: null }))
-    jest.mock('@web/lib/db/queries/posts', () => ({
+    vi.resetModules()
+    vi.doMock('@web/lib/ratelimit', () => ({ likesRatelimit: null }))
+    vi.doMock('@web/lib/db/queries/posts', () => ({
       getPostStatus: () => Promise.resolve('published'),
       incrementPostLikes: () => Promise.resolve(1),
     }))
-    jest.mock('@web/lib/logger', () => ({
+    vi.doMock('@web/lib/logger', () => ({
       logger: {
-        error: jest.fn(),
-        info: jest.fn(),
-        debug: jest.fn(),
-        warn: jest.fn(),
+        error: vi.fn(),
+        info: vi.fn(),
+        debug: vi.fn(),
+        warn: vi.fn(),
       },
     }))
-    const { POST: POST2 } = require('./route') as typeof import('./route')
+    const { POST: POST2 } =
+      (await import('./route')) as typeof import('./route')
     const res = await POST2(makeRequest(), makeParams())
     expect(res.status).toBe(200)
   })

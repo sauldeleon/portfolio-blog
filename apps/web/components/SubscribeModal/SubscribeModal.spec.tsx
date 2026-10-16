@@ -5,13 +5,13 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { SubscribeModal } from './SubscribeModal'
 
-jest.mock('@web/components/SubscribeForm', () => ({
+vi.mock('@web/components/SubscribeForm', () => ({
   SubscribeForm: ({ lng }: { lng: string }) => (
     <div data-testid="subscribe-form" data-lng={lng} />
   ),
 }))
 
-jest.mock('@sdlgr/modal', () => ({
+vi.mock('@sdlgr/modal', () => ({
   Modal: ({
     isOpen,
     children,

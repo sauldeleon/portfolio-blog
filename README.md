@@ -8,7 +8,7 @@ Don't hesitate to open issues, or ask whatever you want about the decisions take
 
 - [Next.JS](https://nextjs.org/) with App router for the website
 - [Styled-components](https://styled-components.com/) >6
-- [Jest](https://jestjs.io/es-ES/) for testing
+- [Vitest](https://vitest.dev/) for testing
 - [Cypress](https://www.cypress.io/) for e2e testing
 - [Yarn](https://yarnpkg.com/) as package manager
 - [NX](https://nx.dev/) as the monorepo tool

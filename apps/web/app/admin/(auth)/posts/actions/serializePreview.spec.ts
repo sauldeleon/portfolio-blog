@@ -1,15 +1,15 @@
-const mockSerialize = jest.fn()
+const mockSerialize = vi.fn()
 
-jest.mock('next-mdx-remote/serialize', () => ({
+vi.mock('next-mdx-remote/serialize', () => ({
   serialize: (...args: unknown[]) => mockSerialize(...args),
 }))
 
-jest.mock('rehype-pretty-code', () => ({}))
-jest.mock('remark-gfm', () => ({}))
-jest.mock('@web/lib/mdx/remarkEmbeds', () => ({ remarkEmbeds: jest.fn() }))
+vi.mock('rehype-pretty-code', () => ({ default: {} }))
+vi.mock('remark-gfm', () => ({ default: {} }))
+vi.mock('@web/lib/mdx/remarkEmbeds', () => ({ remarkEmbeds: vi.fn() }))
 
 const { serializePreview } =
-  require('./serializePreview') as typeof import('./serializePreview')
+  (await import('./serializePreview')) as typeof import('./serializePreview')
 
 describe('serializePreview', () => {
   it('calls serialize with content, remark-gfm, and rehype-pretty-code options', async () => {
@@ -32,3 +32,5 @@ describe('serializePreview', () => {
     expect(result).toEqual(fakeResult)
   })
 })
+
+export {}

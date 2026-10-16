@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react'
 
 import { PostContentEmbed } from './PostContentEmbed'
 
-jest.mock('@web/i18n/client', () => ({
+vi.mock('@web/i18n/client', () => ({
   useClientTranslation: () => ({
     t: (key: string) => {
       const map: Record<string, string> = {
@@ -20,7 +20,7 @@ jest.mock('@web/i18n/client', () => ({
   }),
 }))
 
-jest.mock('./PostContent.styles', () => ({
+vi.mock('./PostContent.styles', () => ({
   StyledEmbedWrapper: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="post-embed-wrapper">{children}</div>
   ),
@@ -60,7 +60,7 @@ jest.mock('./PostContent.styles', () => ({
   ),
 }))
 
-jest.mock('@sdlgr/gpx-map', () => ({
+vi.mock('@sdlgr/gpx-map', () => ({
   GpxMap: ({
     url,
     tracks,
@@ -96,7 +96,7 @@ jest.mock('@sdlgr/gpx-map', () => ({
   ),
 }))
 
-jest.mock('next/dynamic', () => ({
+vi.mock('next/dynamic', () => ({
   __esModule: true,
   default: (fn: () => Promise<{ default: React.ComponentType<unknown> }>) => {
     let Component: React.ComponentType<unknown> = () => null

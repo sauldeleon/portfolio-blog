@@ -4,35 +4,31 @@ import { Locale } from '@web/lib/db/schema'
 
 import Page, { generateMetadata } from './page.next'
 
-jest.mock('@web/lib/db/queries/subscriptions', () => ({
-  confirmSubscription: jest.fn(),
+vi.mock('@web/lib/db/queries/subscriptions', () => ({
+  confirmSubscription: vi.fn(),
 }))
 
-jest.mock('@web/i18n/server', () => ({
-  getServerTranslation: jest.fn(),
+vi.mock('@web/i18n/server', () => ({
+  getServerTranslation: vi.fn(),
 }))
 
-jest.mock(
-  'next/link',
-  () =>
-    function MockLink({
-      children,
-      href,
-    }: {
-      children: React.ReactNode
-      href: string
-    }) {
-      return <a href={href}>{children}</a>
-    },
-)
+vi.mock('next/link', () => ({
+  default: function MockLink({
+    children,
+    href,
+  }: {
+    children: React.ReactNode
+    href: string
+  }) {
+    return <a href={href}>{children}</a>
+  },
+}))
 
-jest.mock(
-  'next/image',
-  () =>
-    function MockImage({ src, alt }: { src: string; alt: string }) {
-      return <img src={src} alt={alt} />
-    },
-)
+vi.mock('next/image', () => ({
+  default: function MockImage({ src, alt }: { src: string; alt: string }) {
+    return <img src={src} alt={alt} />
+  },
+}))
 
 function makeParams(lng: Locale, token?: string) {
   return {
@@ -42,14 +38,15 @@ function makeParams(lng: Locale, token?: string) {
 }
 
 describe('[lng]/subscribe/confirmed — page', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-    const { getServerTranslation } = require('@web/i18n/server')
+  beforeEach(async () => {
+    vi.clearAllMocks()
+    const { getServerTranslation } = await import('@web/i18n/server')
     getServerTranslation.mockResolvedValue({ t: (key: string) => key })
   })
 
   it('shows confirmed title on success', async () => {
-    const { confirmSubscription } = require('@web/lib/db/queries/subscriptions')
+    const { confirmSubscription } =
+      await import('@web/lib/db/queries/subscriptions')
     confirmSubscription.mockResolvedValue({
       id: '1',
       status: 'active',
@@ -62,7 +59,8 @@ describe('[lng]/subscribe/confirmed — page', () => {
   })
 
   it('shows error when token not found', async () => {
-    const { confirmSubscription } = require('@web/lib/db/queries/subscriptions')
+    const { confirmSubscription } =
+      await import('@web/lib/db/queries/subscriptions')
     confirmSubscription.mockResolvedValue(null)
     const ui = await Page(makeParams('en', 'bad-token'))
     render(ui)
@@ -71,7 +69,8 @@ describe('[lng]/subscribe/confirmed — page', () => {
   })
 
   it('shows error when no token provided', async () => {
-    const { confirmSubscription } = require('@web/lib/db/queries/subscriptions')
+    const { confirmSubscription } =
+      await import('@web/lib/db/queries/subscriptions')
     const ui = await Page(makeParams('en'))
     render(ui)
     expect(screen.getByText('confirmed.error')).toBeInTheDocument()
@@ -79,7 +78,8 @@ describe('[lng]/subscribe/confirmed — page', () => {
   })
 
   it('renders back to blog link', async () => {
-    const { confirmSubscription } = require('@web/lib/db/queries/subscriptions')
+    const { confirmSubscription } =
+      await import('@web/lib/db/queries/subscriptions')
     confirmSubscription.mockResolvedValue({ id: '1', status: 'active' })
     const ui = await Page(makeParams('en', 'tok'))
     render(ui)
@@ -87,7 +87,8 @@ describe('[lng]/subscribe/confirmed — page', () => {
   })
 
   it('renders subscribe image on success', async () => {
-    const { confirmSubscription } = require('@web/lib/db/queries/subscriptions')
+    const { confirmSubscription } =
+      await import('@web/lib/db/queries/subscriptions')
     confirmSubscription.mockResolvedValue({
       id: '1',
       status: 'active',
@@ -99,7 +100,8 @@ describe('[lng]/subscribe/confirmed — page', () => {
   })
 
   it('does not render subscribe image on error', async () => {
-    const { confirmSubscription } = require('@web/lib/db/queries/subscriptions')
+    const { confirmSubscription } =
+      await import('@web/lib/db/queries/subscriptions')
     confirmSubscription.mockResolvedValue(null)
     const ui = await Page(makeParams('en', 'bad-token'))
     render(ui)
@@ -108,8 +110,8 @@ describe('[lng]/subscribe/confirmed — page', () => {
 })
 
 describe('[lng]/subscribe/confirmed — metadata', () => {
-  beforeEach(() => {
-    const { getServerTranslation } = require('@web/i18n/server')
+  beforeEach(async () => {
+    const { getServerTranslation } = await import('@web/i18n/server')
     getServerTranslation.mockResolvedValue({ t: (key: string) => key })
   })
 

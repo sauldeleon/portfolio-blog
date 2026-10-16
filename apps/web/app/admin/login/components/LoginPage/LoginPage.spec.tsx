@@ -4,8 +4,8 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { LoginPage } from './LoginPage'
 
-jest.mock('@web/i18n/client', () => ({
-  useClientTranslation: jest.fn().mockReturnValue({
+vi.mock('@web/i18n/client', () => ({
+  useClientTranslation: vi.fn().mockReturnValue({
     t: (key: string) => {
       const translations: Record<string, string> = {
         'login.title': 'Admin Login',
@@ -16,10 +16,10 @@ jest.mock('@web/i18n/client', () => ({
   }),
 }))
 
-jest.mock('../LoginForm', () => {
-  const React = require('react')
+vi.mock('../LoginForm', async () => {
+  const React = await import('react')
   return {
-    LoginForm: jest
+    LoginForm: vi
       .fn()
       .mockReturnValue(
         React.createElement('div', { 'data-testid': 'login-form' }),

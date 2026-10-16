@@ -1,22 +1,23 @@
 import { act, fireEvent, screen } from '@testing-library/react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import type { Mock } from 'vitest'
 
 import { renderWithTheme } from '@sdlgr/test-utils'
 
 import { SearchInput } from './SearchInput'
 
-const mockReplace = jest.fn()
+const mockReplace = vi.fn()
 
 describe('SearchInput', () => {
   beforeEach(() => {
-    jest.useFakeTimers()
-    ;(useRouter as jest.Mock).mockReturnValue({ replace: mockReplace })
-    ;(usePathname as jest.Mock).mockReturnValue('/en/blog')
-    ;(useSearchParams as jest.Mock).mockReturnValue(new URLSearchParams())
+    vi.useFakeTimers()
+    ;(useRouter as Mock).mockReturnValue({ replace: mockReplace })
+    ;(usePathname as Mock).mockReturnValue('/en/blog')
+    ;(useSearchParams as Mock).mockReturnValue(new URLSearchParams())
   })
 
   afterEach(() => {
-    jest.useRealTimers()
+    vi.useRealTimers()
   })
 
   it('renders an input with the correct placeholder', () => {
@@ -35,7 +36,7 @@ describe('SearchInput', () => {
   it('does not call router.replace on mount', () => {
     renderWithTheme(<SearchInput />)
     act(() => {
-      jest.runAllTimers()
+      vi.runAllTimers()
     })
     expect(mockReplace).not.toHaveBeenCalled()
   })
@@ -54,7 +55,7 @@ describe('SearchInput', () => {
       target: { value: 'react' },
     })
     act(() => {
-      jest.advanceTimersByTime(300)
+      vi.advanceTimersByTime(300)
     })
     expect(mockReplace).toHaveBeenCalledWith('/en/blog?q=react', {
       scroll: false,
@@ -62,29 +63,25 @@ describe('SearchInput', () => {
   })
 
   it('clears q param when input is cleared', () => {
-    ;(useSearchParams as jest.Mock).mockReturnValue(
-      new URLSearchParams('q=react'),
-    )
+    ;(useSearchParams as Mock).mockReturnValue(new URLSearchParams('q=react'))
     renderWithTheme(<SearchInput initialValue="react" />)
     fireEvent.change(screen.getByTestId('search-input'), {
       target: { value: '' },
     })
     act(() => {
-      jest.advanceTimersByTime(300)
+      vi.advanceTimersByTime(300)
     })
     expect(mockReplace).toHaveBeenCalledWith('/en/blog?', { scroll: false })
   })
 
   it('clears page param when search changes', () => {
-    ;(useSearchParams as jest.Mock).mockReturnValue(
-      new URLSearchParams('page=3'),
-    )
+    ;(useSearchParams as Mock).mockReturnValue(new URLSearchParams('page=3'))
     renderWithTheme(<SearchInput />)
     fireEvent.change(screen.getByTestId('search-input'), {
       target: { value: 'test' },
     })
     act(() => {
-      jest.advanceTimersByTime(300)
+      vi.advanceTimersByTime(300)
     })
     expect(mockReplace).toHaveBeenCalledWith('/en/blog?q=test', {
       scroll: false,
@@ -97,7 +94,7 @@ describe('SearchInput', () => {
       target: { value: 'react' },
     })
     act(() => {
-      jest.advanceTimersByTime(100)
+      vi.advanceTimersByTime(100)
     })
     expect(mockReplace).not.toHaveBeenCalled()
   })

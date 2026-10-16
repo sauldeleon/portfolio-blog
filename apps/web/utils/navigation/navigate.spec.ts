@@ -12,7 +12,7 @@ describe('navigateTo', () => {
   })
 
   it('supports injecting a navigation target', () => {
-    const assign = jest.fn()
+    const assign = vi.fn()
     const location = { assign }
 
     navigateTo('/admin/posts', location)

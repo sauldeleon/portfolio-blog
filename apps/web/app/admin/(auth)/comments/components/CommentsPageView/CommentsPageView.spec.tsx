@@ -4,7 +4,7 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { CommentsPageView } from './CommentsPageView'
 
-jest.mock('../CommentsTable', () => ({
+vi.mock('../CommentsTable', () => ({
   CommentsTable: () => <div data-testid="comments-table-mock" />,
 }))
 

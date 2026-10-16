@@ -5,9 +5,9 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { PostContentFerrataSummary } from './PostContentFerrataSummary'
 
-const mockDownloadPng = jest.fn<Promise<void>, [string]>()
+const mockDownloadPng = vi.fn<(filename: string) => Promise<void>>()
 
-jest.mock('@web/components/FerrataSummary', () => ({
+vi.mock('@web/components/FerrataSummary', () => ({
   FerrataSummaryMap: ({
     data,
     interaction,
@@ -24,7 +24,7 @@ jest.mock('@web/components/FerrataSummary', () => ({
 }))
 
 let mockLanguage = 'en'
-jest.mock('@web/i18n/client', () => ({
+vi.mock('@web/i18n/client', () => ({
   useClientTranslation: () => ({
     t: (key: string) => key,
     i18n: { language: mockLanguage },

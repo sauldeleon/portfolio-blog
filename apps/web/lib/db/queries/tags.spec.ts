@@ -1,35 +1,37 @@
+import type { Mock } from 'vitest'
+
 import { db } from '../index'
 import { getAllTags, getAllTagsAdmin, getPostCountPerTag } from './tags'
 
-jest.mock('../index', () => ({
+vi.mock('../index', () => ({
   db: {
-    select: jest.fn(),
-    selectDistinct: jest.fn(),
-    execute: jest.fn(),
+    select: vi.fn(),
+    selectDistinct: vi.fn(),
+    execute: vi.fn(),
   },
 }))
 
 const mockDb = db as unknown as {
-  select: jest.Mock
-  selectDistinct: jest.Mock
-  execute: jest.Mock
+  select: Mock
+  selectDistinct: Mock
+  execute: Mock
 }
 
 function makeChain(resolved: unknown) {
   const chain: Record<string, unknown> = {}
   const methods = ['from', 'where', 'orderBy']
   for (const m of methods) {
-    chain[m] = jest.fn().mockReturnValue(chain)
+    chain[m] = vi.fn().mockReturnValue(chain)
   }
   chain.then = (resolve: (v: unknown) => unknown) =>
     Promise.resolve(resolved).then(resolve)
-  chain.catch = jest.fn().mockReturnThis()
-  chain.finally = jest.fn().mockReturnThis()
+  chain.catch = vi.fn().mockReturnThis()
+  chain.finally = vi.fn().mockReturnThis()
   return chain
 }
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
 })
 
 describe('getAllTags', () => {

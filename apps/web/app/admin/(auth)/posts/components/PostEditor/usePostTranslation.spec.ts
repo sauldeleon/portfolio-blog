@@ -20,13 +20,13 @@ function streamOf(chunks: string[]) {
   }
 }
 
-const mockStatus = jest.fn()
-const mockPost = jest.fn()
+const mockStatus = vi.fn()
+const mockPost = vi.fn()
 
 beforeEach(() => {
   mockStatus.mockReset().mockResolvedValue({ available: true })
   mockPost.mockReset()
-  global.fetch = jest.fn((_url: string, init?: RequestInit) =>
+  global.fetch = vi.fn((_url: string, init?: RequestInit) =>
     init?.method === 'POST'
       ? mockPost(init)
       : mockStatus().then((json: unknown) => ({ json: async () => json })),
@@ -80,7 +80,7 @@ describe('usePostTranslation', () => {
       ok: true,
       body: streamOf(['<title>Title</title><content>\nHel', 'lo\n</content>']),
     })
-    const onProgress = jest.fn()
+    const onProgress = vi.fn()
     const { result } = await renderReady()
     await act(() => result.current.translate('es', 'en', FIELDS, onProgress))
     expect(JSON.parse(mockPost.mock.calls[0][0].body)).toEqual({
@@ -106,7 +106,7 @@ describe('usePostTranslation', () => {
       json: async () => ({ reason: 'no_credit', message: 'server text' }),
     })
     const { result } = await renderReady()
-    await act(() => result.current.translate('es', 'en', FIELDS, jest.fn()))
+    await act(() => result.current.translate('es', 'en', FIELDS, vi.fn()))
     expect(result.current.status).toEqual({
       available: false,
       reason: 'no_credit',
@@ -121,7 +121,7 @@ describe('usePostTranslation', () => {
       json: async () => ({ reason: 'rate_limited', message: 'Slow down' }),
     })
     const { result } = await renderReady()
-    await act(() => result.current.translate('es', 'en', FIELDS, jest.fn()))
+    await act(() => result.current.translate('es', 'en', FIELDS, vi.fn()))
     expect(result.current.error).toBe('Slow down')
     expect(result.current.status).toEqual({ available: true })
 
@@ -129,7 +129,7 @@ describe('usePostTranslation', () => {
       ok: false,
       json: async () => ({ error: 'Invalid body' }),
     })
-    await act(() => result.current.translate('es', 'en', FIELDS, jest.fn()))
+    await act(() => result.current.translate('es', 'en', FIELDS, vi.fn()))
     expect(result.current.error).toBe('Invalid body')
   })
 
@@ -141,11 +141,11 @@ describe('usePostTranslation', () => {
       },
     })
     const { result } = await renderReady()
-    await act(() => result.current.translate('es', 'en', FIELDS, jest.fn()))
+    await act(() => result.current.translate('es', 'en', FIELDS, vi.fn()))
     expect(result.current.error).toBe('Translation failed')
 
     mockPost.mockRejectedValue('offline')
-    await act(() => result.current.translate('es', 'en', FIELDS, jest.fn()))
+    await act(() => result.current.translate('es', 'en', FIELDS, vi.fn()))
     expect(result.current.error).toBe('Translation failed')
   })
 
@@ -161,7 +161,7 @@ describe('usePostTranslation', () => {
     const { result } = await renderReady()
     let pending: Promise<void> = Promise.resolve()
     act(() => {
-      pending = result.current.translate('es', 'en', FIELDS, jest.fn())
+      pending = result.current.translate('es', 'en', FIELDS, vi.fn())
     })
     expect(result.current.isTranslating).toBe(true)
     await act(async () => {

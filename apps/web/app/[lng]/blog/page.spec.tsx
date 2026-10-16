@@ -5,10 +5,10 @@ import { Locale } from '@web/lib/db/schema'
 
 import Page, { generateMetadata } from './page.next'
 
-jest.mock('@web/components/BlogPage/BlogPage', () => {
-  const React = require('react')
+vi.mock('@web/components/BlogPage/BlogPage', async () => {
+  const React = await import('react')
   return {
-    BlogPage: jest
+    BlogPage: vi
       .fn()
       .mockReturnValue(
         React.createElement('div', { 'data-testid': 'blog-page' }),
@@ -16,12 +16,12 @@ jest.mock('@web/components/BlogPage/BlogPage', () => {
   }
 })
 
-jest.mock('@web/i18n/server', () => ({
-  getServerTranslation: jest.fn(),
+vi.mock('@web/i18n/server', () => ({
+  getServerTranslation: vi.fn(),
 }))
 
-jest.mock('@web/utils/url/generateUrl', () => ({
-  getSiteUrl: jest.fn().mockReturnValue('https://www.sawl.dev'),
+vi.mock('@web/utils/url/generateUrl', () => ({
+  getSiteUrl: vi.fn().mockReturnValue('https://www.sawl.dev'),
 }))
 
 function makeParams(lng: Locale) {
@@ -29,8 +29,8 @@ function makeParams(lng: Locale) {
 }
 
 describe('[lng]/blog — page', () => {
-  beforeEach(() => {
-    const { getServerTranslation } = require('@web/i18n/server')
+  beforeEach(async () => {
+    const { getServerTranslation } = await import('@web/i18n/server')
     getServerTranslation.mockResolvedValue({ t: (key: string) => key })
   })
 
@@ -67,8 +67,8 @@ describe('[lng]/blog — page', () => {
 })
 
 describe('[lng]/blog — metadata', () => {
-  beforeEach(() => {
-    const { getServerTranslation } = require('@web/i18n/server')
+  beforeEach(async () => {
+    const { getServerTranslation } = await import('@web/i18n/server')
     getServerTranslation.mockResolvedValue({ t: (key: string) => key })
   })
 

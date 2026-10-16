@@ -6,7 +6,7 @@ import type { CanyoningCardData } from '@web/lib/cards'
 
 import { CanyoningForm } from './CanyoningForm'
 
-jest.mock('../../../components/TrackUrlPicker', () => ({
+vi.mock('../../../components/TrackUrlPicker', () => ({
   TrackUrlPicker: ({
     id,
     value,
@@ -27,10 +27,10 @@ jest.mock('../../../components/TrackUrlPicker', () => ({
   ),
 }))
 
-jest.mock('@web/i18n/client', () => {
-  const admin: Record<string, unknown> = jest.requireActual(
-    '@web/i18n/locales/en/admin.json',
-  )
+vi.mock('@web/i18n/client', async () => {
+  const admin: Record<string, unknown> = await vi.importActual<
+    typeof import('@web/i18n/locales/en/admin.json')
+  >('@web/i18n/locales/en/admin.json')
   return {
     useClientTranslation: () => ({
       t: (key: string): string => {
@@ -49,7 +49,7 @@ jest.mock('@web/i18n/client', () => {
   }
 })
 
-jest.mock('../CardDateField', () => ({
+vi.mock('../CardDateField', () => ({
   CardDateField: ({
     value,
     onChange,
@@ -67,7 +67,7 @@ jest.mock('../CardDateField', () => ({
   ),
 }))
 
-jest.mock('../CanyonGradeField', () => ({
+vi.mock('../CanyonGradeField', () => ({
   CanyonGradeField: ({
     value,
     onChange,
@@ -86,7 +86,7 @@ jest.mock('../CanyonGradeField', () => ({
   ),
 }))
 
-jest.mock('../FlowField', () => ({
+vi.mock('../FlowField', () => ({
   FlowField: ({
     onChange,
   }: {
@@ -106,7 +106,7 @@ type ParsedMetrics = {
   elevation: number[]
 }
 
-jest.mock('../GpxUrlField', () => ({
+vi.mock('../GpxUrlField', () => ({
   GpxUrlField: ({
     value,
     onChange,
@@ -146,25 +146,25 @@ const base: CanyoningCardData = { kind: 'canyoning-data', lang: 'es' }
 
 describe('CanyoningForm', () => {
   it('renders without crashing', () => {
-    renderApp(<CanyoningForm value={base} onChange={jest.fn()} />)
+    renderApp(<CanyoningForm value={base} onChange={vi.fn()} />)
     expect(screen.getByTestId('canyoning-form')).toBeInTheDocument()
   })
 
   it('renders ES and EN lang toggle buttons', () => {
-    renderApp(<CanyoningForm value={base} onChange={jest.fn()} />)
+    renderApp(<CanyoningForm value={base} onChange={vi.fn()} />)
     expect(screen.getByTestId('lang-es')).toBeInTheDocument()
     expect(screen.getByTestId('lang-en')).toBeInTheDocument()
   })
 
   it('hides the lang toggle when hideLang is set', () => {
-    renderApp(<CanyoningForm value={base} onChange={jest.fn()} hideLang />)
+    renderApp(<CanyoningForm value={base} onChange={vi.fn()} hideLang />)
     expect(screen.queryByTestId('lang-es')).not.toBeInTheDocument()
     expect(screen.queryByTestId('lang-en')).not.toBeInTheDocument()
     expect(screen.getByTestId('canyoning-form')).toBeInTheDocument()
   })
 
   it('calls onChange with lang=en when EN clicked', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<CanyoningForm value={base} onChange={onChange} />)
     fireEvent.click(screen.getByTestId('lang-en'))
     expect(onChange).toHaveBeenCalledWith(
@@ -173,7 +173,7 @@ describe('CanyoningForm', () => {
   })
 
   it('calls onChange with lang=es when ES clicked', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(
       <CanyoningForm value={{ ...base, lang: 'en' }} onChange={onChange} />,
     )
@@ -185,16 +185,13 @@ describe('CanyoningForm', () => {
 
   it('renders title input with current value', () => {
     renderApp(
-      <CanyoningForm
-        value={{ ...base, title: 'Mascún' }}
-        onChange={jest.fn()}
-      />,
+      <CanyoningForm value={{ ...base, title: 'Mascún' }} onChange={vi.fn()} />,
     )
     expect(screen.getByLabelText('Title')).toHaveValue('Mascún')
   })
 
   it('calls onChange when title changes', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<CanyoningForm value={base} onChange={onChange} />)
     fireEvent.change(screen.getByLabelText('Title'), {
       target: { value: 'Nuevo título' },
@@ -205,7 +202,7 @@ describe('CanyoningForm', () => {
   })
 
   it('calls onChange when date changes', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<CanyoningForm value={base} onChange={onChange} />)
     fireEvent.change(screen.getByTestId('bc-date'), {
       target: { value: '15 JUL 2025' },
@@ -216,7 +213,7 @@ describe('CanyoningForm', () => {
   })
 
   it('calls onChange when grade changes', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<CanyoningForm value={base} onChange={onChange} />)
     fireEvent.click(screen.getByTestId('grade-set'))
     expect(onChange).toHaveBeenCalledWith(
@@ -225,7 +222,7 @@ describe('CanyoningForm', () => {
   })
 
   it('calls onChange when desnivel changes', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<CanyoningForm value={base} onChange={onChange} />)
     fireEvent.change(screen.getByLabelText('Descent'), {
       target: { value: '300 m' },
@@ -236,7 +233,7 @@ describe('CanyoningForm', () => {
   })
 
   it('calls onChange when maxRappel changes', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<CanyoningForm value={base} onChange={onChange} />)
     fireEvent.change(screen.getByLabelText('Max rappel'), {
       target: { value: '45 m' },
@@ -247,7 +244,7 @@ describe('CanyoningForm', () => {
   })
 
   it('calls onChange when rappels changes', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<CanyoningForm value={base} onChange={onChange} />)
     fireEvent.change(screen.getByLabelText('Rappels'), {
       target: { value: '12' },
@@ -258,7 +255,7 @@ describe('CanyoningForm', () => {
   })
 
   it('calls onChange when approach changes', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<CanyoningForm value={base} onChange={onChange} />)
     fireEvent.change(screen.getByLabelText('Approach (H:MM)'), {
       target: { value: '0:45' },
@@ -269,7 +266,7 @@ describe('CanyoningForm', () => {
   })
 
   it('calls onChange when inCanyon changes', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<CanyoningForm value={base} onChange={onChange} />)
     fireEvent.change(screen.getByLabelText('In canyon (H:MM)'), {
       target: { value: '3:00' },
@@ -280,7 +277,7 @@ describe('CanyoningForm', () => {
   })
 
   it('calls onChange when returnTime changes', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<CanyoningForm value={base} onChange={onChange} />)
     fireEvent.change(screen.getByLabelText('Return (H:MM)'), {
       target: { value: '0:20' },
@@ -291,7 +288,7 @@ describe('CanyoningForm', () => {
   })
 
   it('calls onChange when total changes', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<CanyoningForm value={base} onChange={onChange} />)
     fireEvent.change(screen.getByLabelText('Total (H:MM)'), {
       target: { value: '4:00' },
@@ -302,7 +299,7 @@ describe('CanyoningForm', () => {
   })
 
   it('calls onChange when rope changes', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<CanyoningForm value={base} onChange={onChange} />)
     fireEvent.change(screen.getByLabelText('Rope'), {
       target: { value: '2x 30 m' },
@@ -313,7 +310,7 @@ describe('CanyoningForm', () => {
   })
 
   it('calls onChange when the flow level is set', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<CanyoningForm value={base} onChange={onChange} />)
     fireEvent.click(screen.getByTestId('flow-set'))
     expect(onChange).toHaveBeenCalledWith(
@@ -322,7 +319,7 @@ describe('CanyoningForm', () => {
   })
 
   it('calls onChange when cars changes', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<CanyoningForm value={base} onChange={onChange} />)
     fireEvent.change(screen.getByLabelText('Cars'), {
       target: { value: '2' },
@@ -333,7 +330,7 @@ describe('CanyoningForm', () => {
   })
 
   it('calls onChange when season changes', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<CanyoningForm value={base} onChange={onChange} />)
     fireEvent.change(screen.getByLabelText('Season'), {
       target: { value: 'jun-sep' },
@@ -344,7 +341,7 @@ describe('CanyoningForm', () => {
   })
 
   it('calls onChange when the gpx url changes', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<CanyoningForm value={base} onChange={onChange} />)
     fireEvent.change(screen.getByTestId('bc-gpx'), {
       target: { value: 'https://example.com/a.gpx' },
@@ -355,7 +352,7 @@ describe('CanyoningForm', () => {
   })
 
   it('prefills date, descent and elevation from a parsed gpx', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(<CanyoningForm value={base} onChange={onChange} />)
     fireEvent.click(screen.getByTestId('gpx-parsed-full'))
     expect(onChange).toHaveBeenCalledWith(
@@ -368,7 +365,7 @@ describe('CanyoningForm', () => {
   })
 
   it('keeps existing date and descent when the gpx yields none', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(
       <CanyoningForm
         value={{ ...base, date: '10 JUN 2025', desnivel: '300 m' }}
@@ -386,7 +383,7 @@ describe('CanyoningForm', () => {
   })
 
   it('preserves existing fields when patching', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     const full: CanyoningCardData = {
       ...base,
       title: 'Mascún',

@@ -5,19 +5,19 @@ import type { AdminPost } from '@web/lib/db/queries/posts'
 import { PostsPageView } from './components/PostsPageView'
 import AdminPostsPage from './page.next'
 
-const mockGetAllPosts = jest.fn()
-const mockRequireAdminSession = jest.fn()
+const mockGetAllPosts = vi.fn()
+const mockRequireAdminSession = vi.fn()
 
-jest.mock('@web/lib/auth/requireAdminSession', () => ({
+vi.mock('@web/lib/auth/requireAdminSession', () => ({
   requireAdminSession: (...args: unknown[]) => mockRequireAdminSession(...args),
 }))
 
-jest.mock('@web/lib/db/queries/posts', () => ({
+vi.mock('@web/lib/db/queries/posts', () => ({
   getAllPosts: (...args: unknown[]) => mockGetAllPosts(...args),
 }))
 
-jest.mock('@web/i18n/server', () => ({
-  getServerTranslation: jest.fn().mockResolvedValue({
+vi.mock('@web/i18n/server', () => ({
+  getServerTranslation: vi.fn().mockResolvedValue({
     t: (key: string) => {
       const strings: Record<string, string> = {
         'posts.title': 'Posts',
@@ -28,10 +28,10 @@ jest.mock('@web/i18n/server', () => ({
   }),
 }))
 
-jest.mock('./components/PostsPageView', () => {
-  const React = require('react')
+vi.mock('./components/PostsPageView', async () => {
+  const React = await import('react')
   return {
-    PostsPageView: jest
+    PostsPageView: vi
       .fn()
       .mockReturnValue(
         React.createElement('div', { 'data-testid': 'posts-page-view' }),
@@ -62,7 +62,7 @@ const mockPosts: AdminPost[] = [
 
 describe('AdminPostsPage', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     mockRequireAdminSession.mockResolvedValue({ user: { name: 'admin' } })
     mockGetAllPosts.mockResolvedValue(mockPosts)
   })

@@ -1,18 +1,19 @@
 import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import type { Mock } from 'vitest'
 
 import { renderApp } from '@sdlgr/test-utils'
 import { useIsBot } from '@sdlgr/use-is-bot'
 
 import { ContactPage } from './ContactPage'
 
-jest.mock('@sdlgr/use-is-bot', () => ({
-  useIsBot: jest.fn(),
+vi.mock('@sdlgr/use-is-bot', () => ({
+  useIsBot: vi.fn(),
 }))
 
 describe('ContactPage', () => {
   it('should render successfully', async () => {
-    ;(useIsBot as jest.Mock).mockReturnValue({
+    ;(useIsBot as Mock).mockReturnValue({
       isBot: false,
       isLoading: false,
     })
@@ -22,7 +23,7 @@ describe('ContactPage', () => {
   })
 
   it('should swap images onClick', async () => {
-    ;(useIsBot as jest.Mock).mockReturnValue({
+    ;(useIsBot as Mock).mockReturnValue({
       isBot: false,
       isLoading: false,
     })
@@ -42,7 +43,7 @@ describe('ContactPage', () => {
   })
 
   it('should hide contact info if bot info is loading', async () => {
-    ;(useIsBot as jest.Mock).mockReturnValue({
+    ;(useIsBot as Mock).mockReturnValue({
       isBot: false,
       isLoading: true,
     })

@@ -31,11 +31,13 @@ Run tests for single file: `yarn nx test <app> --testFile=<path>`
 
 ## Testing
 
-- Jest + @testing-library/react
-- **100% coverage threshold** — no exceptions
+- Vitest + @testing-library/react (globals enabled: `describe`, `it`, `expect`, `vi`)
+- **100% coverage threshold** — no exceptions (istanbul provider)
 - **Snapshots** — update with `-u` when they fail after intentional change: `yarn nx test <app> -- -u`
 - Test files: `*.spec.ts` / `*.spec.tsx` co-located with source
-- Setup: `jest.setupafterenv.ts`
+- Config: shared `vitest.shared.mts` + per-project `vite.config.mts`
+- Setup: `vitest.setup.ts` (root), plus `apps/web/vitest.setup.ts`
+- Mocks are ES modules: a `vi.mock` factory used through a default import must return `default`; `vi.mock` is hoisted to the top of the file (use `vi.doMock` inside tests); mocks called with `new` need a `function`, not an arrow
 
 ## Design Patterns
 

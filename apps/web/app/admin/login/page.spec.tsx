@@ -3,10 +3,10 @@ import { render, screen } from '@testing-library/react'
 import { LoginPage } from './components/LoginPage'
 import Page from './page.next'
 
-jest.mock('./components/LoginPage', () => {
-  const React = require('react')
+vi.mock('./components/LoginPage', async () => {
+  const React = await import('react')
   return {
-    LoginPage: jest
+    LoginPage: vi
       .fn()
       .mockReturnValue(
         React.createElement('div', { 'data-testid': 'login-page' }),

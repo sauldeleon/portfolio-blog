@@ -4,20 +4,22 @@ import { renderApp } from '@sdlgr/test-utils'
 
 import { TrackEditor } from './TrackEditor'
 
-const mockFetchTrackFile = jest.fn()
-const mockFetchTrackFiles = jest.fn()
+const mockFetchTrackFile = vi.fn()
+const mockFetchTrackFiles = vi.fn()
 
-jest.mock('@web/i18n/client', () => ({
+vi.mock('@web/i18n/client', () => ({
   useClientTranslation: () => ({ t: (key: string) => key }),
 }))
 
-jest.mock('../../utils/trackApi', () => ({
-  ...jest.requireActual('../../utils/trackApi'),
+vi.mock('../../utils/trackApi', async () => ({
+  ...(await vi.importActual<typeof import('../../utils/trackApi')>(
+    '../../utils/trackApi',
+  )),
   fetchTrackFile: (path: string) => mockFetchTrackFile(path),
   fetchTrackFiles: () => mockFetchTrackFiles(),
 }))
 
-jest.mock('../TrackWorkspace', () => ({
+vi.mock('../TrackWorkspace', () => ({
   TrackWorkspace: ({
     path,
     file,
@@ -37,7 +39,7 @@ const GPX =
   '<gpx xmlns="http://www.topografix.com/GPX/1/1"><trk><trkseg><trkpt lat="1" lon="1"/></trkseg></trk></gpx>'
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
   mockFetchTrackFiles.mockResolvedValue({
     files: [{ path: 'a-clean.gpx' }],
     truncated: false,

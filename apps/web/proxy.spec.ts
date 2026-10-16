@@ -1,14 +1,16 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
-const mockRatelimitLimit = jest.fn()
-let mockRatelimit: { limit: jest.Mock } | null = { limit: mockRatelimitLimit }
+import type { Mock } from 'vitest'
 
-jest.mock('./lib/auth/config', () => ({
+const mockRatelimitLimit = vi.fn()
+let mockRatelimit: { limit: Mock } | null = { limit: mockRatelimitLimit }
+
+vi.mock('./lib/auth/config', () => ({
   auth: (fn: unknown) => fn,
 }))
 
-jest.mock('./lib/ratelimit', () => ({
+vi.mock('./lib/ratelimit', () => ({
   get ratelimit() {
     return mockRatelimit
   },
@@ -22,7 +24,7 @@ type AuthRequest = {
   auth?: { user?: unknown } | null
 }
 
-const { handleMiddleware } = require('./proxy') as {
+const { handleMiddleware } = (await import('./proxy')) as unknown as {
   handleMiddleware: (req: AuthRequest) => Promise<Response | undefined>
 }
 
@@ -38,7 +40,7 @@ function makeReq(
 
 describe('handleMiddleware', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     mockRatelimit = { limit: mockRatelimitLimit }
     mockRatelimitLimit.mockResolvedValue({ success: true })
   })
@@ -219,6 +221,16 @@ describe('handleMiddleware', () => {
       const res = await handleMiddleware(req)
       expect(res).toBeUndefined()
       expect(mockRatelimitLimit).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('matcher config', () => {
+    it('skips router prefetches of admin pages so they cannot refresh the session cookie', async () => {
+      const { config } = await import('./proxy')
+      expect(config.matcher).toContainEqual({
+        source: '/admin/:path*',
+        missing: [{ type: 'header', key: 'next-router-prefetch' }],
+      })
     })
   })
 })

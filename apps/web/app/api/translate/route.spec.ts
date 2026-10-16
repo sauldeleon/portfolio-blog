@@ -1,29 +1,31 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
 import Anthropic from '@anthropic-ai/sdk'
 
 import { GET, POST } from './route'
 
-const mockAuth = jest.fn()
-const mockCreate = jest.fn()
-const mockRetrieve = jest.fn()
-const mockLoggerError = jest.fn()
+const mockAuth = vi.fn()
+const mockCreate = vi.fn()
+const mockRetrieve = vi.fn()
+const mockLoggerError = vi.fn()
 
-jest.mock('@web/lib/auth/config', () => ({ auth: () => mockAuth() }))
-jest.mock('@web/lib/logger', () => ({
+vi.mock('@web/lib/auth/config', () => ({ auth: () => mockAuth() }))
+vi.mock('@web/lib/logger', () => ({
   logger: {
     error: (...args: unknown[]) => mockLoggerError(...args),
-    info: jest.fn(),
-    warn: jest.fn(),
+    info: vi.fn(),
+    warn: vi.fn(),
   },
 }))
-jest.mock('@anthropic-ai/sdk', () => ({
+vi.mock('@anthropic-ai/sdk', () => ({
   __esModule: true,
-  default: jest.fn().mockImplementation(() => ({
-    messages: { create: (...args: unknown[]) => mockCreate(...args) },
-    models: { retrieve: (...args: unknown[]) => mockRetrieve(...args) },
-  })),
+  default: vi.fn().mockImplementation(function () {
+    return {
+      messages: { create: (...args: unknown[]) => mockCreate(...args) },
+      models: { retrieve: (...args: unknown[]) => mockRetrieve(...args) },
+    }
+  }),
 }))
 
 const BODY = {
@@ -46,7 +48,7 @@ async function* events(items: unknown[]) {
 }
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
   mockAuth.mockResolvedValue({ user: { name: 'admin' } })
   process.env.ANTHROPIC_API_KEY = 'test-key'
   delete process.env.ANTHROPIC_MODEL
@@ -148,13 +150,13 @@ describe('POST /api/translate', () => {
   it('names the workspace for keys not scoped to one', async () => {
     mockCreate.mockResolvedValue(events([]))
     await (await POST(request(BODY))).text()
-    expect(jest.mocked(Anthropic)).toHaveBeenLastCalledWith({
+    expect(vi.mocked(Anthropic)).toHaveBeenLastCalledWith({
       apiKey: 'test-key',
       defaultHeaders: undefined,
     })
     process.env.ANTHROPIC_WORKSPACE_ID = 'wrkspc_1'
     await (await POST(request(BODY))).text()
-    expect(jest.mocked(Anthropic)).toHaveBeenLastCalledWith({
+    expect(vi.mocked(Anthropic)).toHaveBeenLastCalledWith({
       apiKey: 'test-key',
       defaultHeaders: { 'anthropic-workspace-id': 'wrkspc_1' },
     })

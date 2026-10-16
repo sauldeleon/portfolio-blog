@@ -6,7 +6,7 @@ import type { SeriesForAdmin } from '@web/lib/db/queries/series'
 
 import { SeriesPageView } from './SeriesPageView'
 
-jest.mock('../SeriesTable', () => ({
+vi.mock('../SeriesTable', () => ({
   SeriesTable: ({ series }: { series: SeriesForAdmin[] }) => (
     <div data-testid="series-table" data-count={series.length} />
   ),

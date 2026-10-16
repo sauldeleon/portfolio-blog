@@ -13,7 +13,7 @@ describe('Footer', () => {
   })
 
   it('should render with icons', async () => {
-    const mockClick = jest.fn()
+    const mockClick = vi.fn()
     renderWithTheme(
       <Footer
         navItems={[

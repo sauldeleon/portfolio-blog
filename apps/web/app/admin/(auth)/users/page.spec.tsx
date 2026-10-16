@@ -2,32 +2,32 @@ import { render, screen } from '@testing-library/react'
 
 import AdminUsersPage from './page.next'
 
-const mockRequireAdminRoleSession = jest.fn()
+const mockRequireAdminRoleSession = vi.fn()
 
-jest.mock('@web/lib/auth/requireAdminRoleSession', () => ({
+vi.mock('@web/lib/auth/requireAdminRoleSession', () => ({
   requireAdminRoleSession: (...args: unknown[]) =>
     mockRequireAdminRoleSession(...args),
 }))
 
-jest.mock('@web/i18n/server', () => ({
-  getServerTranslation: jest.fn().mockResolvedValue({
+vi.mock('@web/i18n/server', () => ({
+  getServerTranslation: vi.fn().mockResolvedValue({
     t: (key: string) => key,
   }),
 }))
 
-jest.mock('@web/lib/db/queries/users', () => ({
-  listUsers: jest.fn().mockResolvedValue([]),
+vi.mock('@web/lib/db/queries/users', () => ({
+  listUsers: vi.fn().mockResolvedValue([]),
 }))
 
-jest.mock('./components/UsersPageView', () => ({
-  UsersPageView: jest.fn(({ title }: { title: string }) => (
+vi.mock('./components/UsersPageView', () => ({
+  UsersPageView: vi.fn(({ title }: { title: string }) => (
     <div data-testid="users-page-view">{title}</div>
   )),
 }))
 
 describe('AdminUsersPage', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     mockRequireAdminRoleSession.mockResolvedValue({
       user: { id: 'user-1', name: 'Admin', role: 'admin' },
     })

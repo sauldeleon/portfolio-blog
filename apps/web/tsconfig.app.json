@@ -12,8 +12,8 @@
   ],
   "exclude": [
     "node_modules",
-    "jest.config.ts",
-    "jest.setupafterenv.ts",
+    "vite.config.mts",
+    "vitest.setup.ts",
     "**/*.spec.ts",
     "**/*.spec.tsx",
     "**/*.test.ts",

@@ -11,7 +11,7 @@ const providers = [
 
 describe('TileLayerSwitcher', () => {
   it('marks the active provider and reports clicks', () => {
-    const onChange = jest.fn()
+    const onChange = vi.fn()
     renderApp(
       <TileLayerSwitcher
         providers={providers}
@@ -37,7 +37,7 @@ describe('TileLayerSwitcher', () => {
       <TileLayerSwitcher
         providers={providers}
         activeIndex={0}
-        onChange={jest.fn()}
+        onChange={vi.fn()}
         testIdPrefix="editor-tile"
       />,
     )
