@@ -1,5 +1,7 @@
 # Changelog Button component
 
+## [0.6.1](https://github.com/sauldeleon/portfolio-blog/compare/button-0.6.0...button-0.6.1) (2026-10-16)
+
 ## [0.6.0](https://github.com/sauldeleon/portfolio-blog/compare/button-0.5.0...button-0.6.0) (2026-10-16)
 
 ### Features
