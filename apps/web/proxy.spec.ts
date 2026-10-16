@@ -274,6 +274,38 @@ describe('handleMiddleware', () => {
       expect(res?.headers.getSetCookie()).toEqual([])
     })
 
+    function rootReq(cookie?: string, acceptLanguage?: string) {
+      const url = 'http://localhost/'
+      return {
+        nextUrl: new URL(url),
+        url,
+        method: 'GET',
+        cookies: {
+          get: (name: string) =>
+            name === 'webLng' && cookie ? { value: cookie } : undefined,
+        },
+        headers: new Headers(
+          acceptLanguage ? { 'accept-language': acceptLanguage } : {},
+        ),
+      } as unknown as AuthRequest
+    }
+
+    it('redirects / to the language picked by the visitor', async () => {
+      const res = await proxy(rootReq('es', 'en-GB'))
+      expect(res?.status).toBe(307)
+      expect(res?.headers.get('location')).toBe('http://localhost/es/')
+    })
+
+    it('redirects / by Accept-Language when no language was picked', async () => {
+      const res = await proxy(rootReq(undefined, 'es-ES,es;q=0.9'))
+      expect(res?.headers.get('location')).toBe('http://localhost/es/')
+    })
+
+    it('redirects / to the fallback language otherwise', async () => {
+      const res = await proxy(rootReq())
+      expect(res?.headers.get('location')).toBe('http://localhost/en/')
+    })
+
     it('lets a well-formed blog URL through without touching the session', async () => {
       await expect(
         proxy(makeReq('/en/blog/547/from-valle-de-pineta-to-tucarroya/')),

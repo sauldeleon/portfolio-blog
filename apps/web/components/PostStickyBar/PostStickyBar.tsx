@@ -10,6 +10,7 @@ import { ShareButtons } from '@sdlgr/post-hero'
 import { LocalStorage, useStorage } from '@sdlgr/storage'
 
 import { getNextLanguage } from '@web/i18n/client'
+import { rememberLanguage } from '@web/utils/language/rememberLanguage'
 
 import {
   StyledActionsDivider,
@@ -66,6 +67,7 @@ export function PostStickyBar({
 
   const handleLangSwitch = () => {
     setItem(STORAGE_I18N_KEY, nextLanguage)
+    rememberLanguage(nextLanguage)
     router.push(altLangPath)
   }
 

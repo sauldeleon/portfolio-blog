@@ -1,9 +1,11 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
+import { LANGUAGE_COOKIE } from './i18n/languages'
 import { auth } from './lib/auth/config'
 import { ratelimit } from './lib/ratelimit'
 import { isServeableBlogPath } from './lib/routing/isServeableBlogPath'
+import { preferredLanguage } from './lib/routing/preferredLanguage'
 
 type AuthRequest = NextRequest & {
   ip?: string
@@ -84,6 +86,15 @@ export default async function proxy(
 ): Promise<Response | void> {
   const [req] = args
   const { pathname } = req.nextUrl
+  // Send `/` straight to the visitor's language on the server, instead of a
+  // client page that redirects after its JavaScript loads.
+  if (pathname === '/') {
+    const lng = preferredLanguage(
+      req.cookies.get(LANGUAGE_COOKIE)?.value,
+      req.headers.get('accept-language'),
+    )
+    return NextResponse.redirect(new URL(`/${lng}/`, req.url))
+  }
   // Public blog pages need no session: only guard their URL shape.
   if (PUBLIC_BLOG_PATH.test(pathname)) {
     return isServeableBlogPath(pathname)
@@ -96,6 +107,7 @@ export default async function proxy(
 
 export const config = {
   matcher: [
+    '/',
     '/:lng/blog/:path*',
     '/admin/:path*',
     '/api/posts/:path*',

@@ -15,6 +15,7 @@ import { mainTheme } from '@sdlgr/main-theme'
 import { LocalStorage, useStorage } from '@sdlgr/storage'
 
 import { getNextLanguage, useClientTranslation } from '@web/i18n/client'
+import { rememberLanguage } from '@web/utils/language/rememberLanguage'
 
 import { AboutModal } from './AboutModal'
 
@@ -56,6 +57,7 @@ export function Footer() {
       onClick: (e) => {
         e.preventDefault()
         setItem(STORAGE_I18N_KEY, nextLanguage)
+        rememberLanguage(nextLanguage)
         router.push(nextLanguagePath)
       },
       href: nextLanguagePath,
