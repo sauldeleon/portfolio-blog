@@ -1,5 +1,11 @@
 # Changelog web E2E tests
 
+## [0.5.1](https://github.com/sauldeleon/portfolio-blog/compare/web-e2e-0.5.0...web-e2e-0.5.1) (2026-10-16)
+
+### Bug Fixes
+
+- **e2e:** never publish posts and really clean up created posts ([df44609](https://github.com/sauldeleon/portfolio-blog/commit/df44609c083b85471e1c78cff04059fe1bbc7aaa))
+
 ## [0.5.0](https://github.com/sauldeleon/portfolio-blog/compare/web-e2e-0.4.0...web-e2e-0.5.0) (2026-10-16)
 
 ### Features
