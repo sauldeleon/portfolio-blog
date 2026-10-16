@@ -24,8 +24,14 @@ type AuthRequest = {
   auth?: { user?: unknown } | null
 }
 
-const { handleMiddleware } = (await import('./proxy')) as unknown as {
+const {
+  handleMiddleware,
+  withoutSessionRefresh,
+  default: proxy,
+} = (await import('./proxy')) as unknown as {
   handleMiddleware: (req: AuthRequest) => Promise<Response | undefined>
+  withoutSessionRefresh: (response: Response) => Response
+  default: (req: AuthRequest) => Promise<Response | void>
 }
 
 function makeReq(
@@ -224,13 +230,48 @@ describe('handleMiddleware', () => {
     })
   })
 
-  describe('matcher config', () => {
-    it('skips router prefetches of admin pages so they cannot refresh the session cookie', async () => {
-      const { config } = await import('./proxy')
-      expect(config.matcher).toContainEqual({
-        source: '/admin/:path*',
-        missing: [{ type: 'header', key: 'next-router-prefetch' }],
+  describe('withoutSessionRefresh', () => {
+    it('drops session cookies and keeps the rest of the response', async () => {
+      const headers = new Headers({ location: '/admin/login' })
+      headers.append('set-cookie', '__Secure-authjs.session-token=abc; Path=/')
+      headers.append('set-cookie', 'authjs.session-token.0=part; Path=/')
+      headers.append('set-cookie', 'authjs.csrf-token=xyz; Path=/')
+      const response = new Response('body', {
+        status: 307,
+        statusText: 'Temporary Redirect',
+        headers,
       })
+
+      const result = withoutSessionRefresh(response)
+
+      expect(result.headers.getSetCookie()).toEqual([
+        'authjs.csrf-token=xyz; Path=/',
+      ])
+      expect(result.status).toBe(307)
+      expect(result.statusText).toBe('Temporary Redirect')
+      expect(result.headers.get('location')).toBe('/admin/login')
+      expect(await result.text()).toBe('body')
+    })
+
+    it('returns the same response when it sets no session cookie', () => {
+      const response = new Response(null, {
+        headers: { 'set-cookie': 'other=1; Path=/' },
+      })
+      expect(withoutSessionRefresh(response)).toBe(response)
+    })
+  })
+
+  describe('default export', () => {
+    it('passes through when the handler lets the request continue', async () => {
+      await expect(
+        proxy(makeReq('/admin/posts', 'GET', { user: {} })),
+      ).resolves.toBeUndefined()
+    })
+
+    it('returns the handler response without session cookies', async () => {
+      const res = await proxy(makeReq('/admin/posts'))
+      expect(res?.status).toBe(307)
+      expect(res?.headers.getSetCookie()).toEqual([])
     })
   })
 })

@@ -11,7 +11,7 @@ type AuthRequest = NextRequest & {
 
 export async function handleMiddleware(
   req: AuthRequest,
-): Promise<Response | undefined> {
+): Promise<Response | void> {
   const { pathname } = req.nextUrl
   const isAuthenticated = !!req.auth
 
@@ -50,18 +50,42 @@ export async function handleMiddleware(
   }
 }
 
-export default auth(handleMiddleware)
+const SESSION_COOKIE = /^(__Secure-)?authjs\.session-token(\.\d+)?=/
+
+/**
+ * Auth.js re-issues the session cookie on every request the proxy handles,
+ * sliding its expiry. Any such response that lands after logout (an RSC
+ * navigation, a router prefetch, an admin API fetch, or the logout server
+ * action itself) put the session back. The proxy only reads the session now:
+ * it ends maxAge after login, and only sign-in and sign-out write the cookie.
+ */
+export function withoutSessionRefresh(response: Response): Response {
+  const cookies = response.headers.getSetCookie()
+  const kept = cookies.filter((cookie) => !SESSION_COOKIE.test(cookie))
+  if (kept.length === cookies.length) return response
+
+  const headers = new Headers(response.headers)
+  headers.delete('set-cookie')
+  kept.forEach((cookie) => headers.append('set-cookie', cookie))
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  })
+}
+
+const authProxy = auth(handleMiddleware)
+
+export default async function proxy(
+  ...args: Parameters<typeof authProxy>
+): Promise<Response | void> {
+  const response = await authProxy(...args)
+  return response ? withoutSessionRefresh(response) : response
+}
 
 export const config = {
   matcher: [
-    {
-      source: '/admin/:path*',
-      // Auth.js re-issues the session cookie on every request it handles. A
-      // router prefetch still in flight when the user logs out would answer with
-      // a fresh session cookie and log them back in. Prefetches skip the proxy;
-      // the (auth) layout still guards every admin page via requireAdminSession.
-      missing: [{ type: 'header', key: 'next-router-prefetch' }],
-    },
+    '/admin/:path*',
     '/api/posts/:path*',
     '/api/categories/:path*',
     '/api/upload',
