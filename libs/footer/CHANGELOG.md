@@ -1,5 +1,7 @@
 # Changelog Footer component
 
+## [0.4.1](https://github.com/sauldeleon/portfolio-blog/compare/footer-0.4.0...footer-0.4.1) (2026-10-16)
+
 ## [0.4.0](https://github.com/sauldeleon/portfolio-blog/compare/footer-0.3.4...footer-0.4.0) (2026-10-16)
 
 ### Features
