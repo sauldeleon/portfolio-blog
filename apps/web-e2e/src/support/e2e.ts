@@ -21,6 +21,22 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 })
 
 /**
+ * Preview deployments load the Vercel Toolbar, whose <vercel-live-feedback>
+ * overlay sits on top of the page (max z-index) and can cover the element a
+ * test clicks. Keep it out of e2e runs only: block its scripts and hide the
+ * element in case it is still created.
+ */
+Cypress.on('window:load', (win) => {
+  const style = win.document.createElement('style')
+  style.textContent = 'vercel-live-feedback { display: none !important; }'
+  win.document.head.appendChild(style)
+})
+
+beforeEach(() => {
+  cy.intercept({ url: /^https:\/\/vercel\.live\// }, { statusCode: 204 })
+})
+
+/**
  * E2E tests must never publish or schedule a post: they run against the real
  * database, and publishing can email subscribers and expose the post on the
  * blog, RSS and sitemap. Every request that would publish or schedule a post
