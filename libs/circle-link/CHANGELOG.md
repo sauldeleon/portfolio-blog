@@ -1,5 +1,11 @@
 # Changelog Circle Link component
 
+## [0.3.0](https://github.com/sauldeleon/portfolio-blog/compare/circle-link-0.2.5...circle-link-0.3.0) (2026-10-16)
+
+### Features
+
+- improve cards, comments, maps, and test setup ([#134](https://github.com/sauldeleon/portfolio-blog/issues/134)) ([d23293f](https://github.com/sauldeleon/portfolio-blog/commit/d23293fe9a2cf39143bc5141b2b9eb3734e14b08))
+
 ## [0.2.5](https://github.com/sauldeleon/portfolio-blog/compare/circle-link-0.2.4...circle-link-0.2.5) (2026-06-09)
 
 ## [0.2.4](https://github.com/sauldeleon/portfolio-blog/compare/circle-link-0.2.3...circle-link-0.2.4) (2026-05-11)
