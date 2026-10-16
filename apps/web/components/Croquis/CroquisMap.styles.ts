@@ -72,6 +72,8 @@ export const StyledPopover = styled.div<{ $hasPhoto: boolean }>`
   }
 
   .media {
+    position: relative;
+    overflow: hidden;
     height: ${({ $hasPhoto }) => ($hasPhoto ? '200px' : '128px')};
     background: #0a1218;
     border-bottom: 1px solid #223442;
@@ -109,6 +111,19 @@ export const StyledLightbox = styled.div`
     max-height: 92vh;
     object-fit: contain;
     cursor: default;
+  }
+`
+
+/* Fixed frame the lightbox image (and its blurred copy) fill with contain. */
+export const StyledLightboxFrame = styled.span`
+  position: relative;
+  display: block;
+  width: 92vw;
+  height: 92vh;
+
+  img {
+    max-width: none;
+    max-height: none;
   }
 `
 

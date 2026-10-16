@@ -32,6 +32,44 @@ export const StyledMapContainer = styled.div`
     margin: 0;
   }
 
+  /* Popup image: a blurred copy sizes the box until the image loads (flagged
+     by BlurUpScript's data-loaded), then the image fades in over it. */
+  .gpx-popup-media {
+    position: relative;
+    display: block;
+    overflow: hidden;
+  }
+
+  .gpx-popup-blur {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 260px;
+    object-fit: cover;
+    filter: blur(12px);
+    transform: scale(1.1);
+  }
+
+  .gpx-popup-media > .gpx-popup-main {
+    position: relative;
+    z-index: 1;
+    transition: opacity 0.6s ease-out;
+  }
+
+  .gpx-popup-media > .gpx-popup-main:not([data-loaded]) {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    opacity: 0;
+    transition: none;
+  }
+
+  .gpx-popup-media:has(> .gpx-popup-main[data-loaded]) > .gpx-popup-blur {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+  }
+
   .gpx-waypoint-popup .leaflet-popup-tip {
     background: #111;
   }
@@ -306,6 +344,19 @@ export const StyledLightbox = styled.div`
     max-height: 92vh;
     object-fit: contain;
     cursor: default;
+  }
+`
+
+/* Fixed frame the lightbox image (and its blurred copy) fill with contain. */
+export const StyledLightboxFrame = styled.span`
+  position: relative;
+  display: block;
+  width: 92vw;
+  height: 92vh;
+
+  img {
+    max-width: none;
+    max-height: none;
   }
 `
 

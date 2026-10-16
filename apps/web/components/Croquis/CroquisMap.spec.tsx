@@ -303,6 +303,24 @@ describe('CroquisMap', () => {
       expect(screen.queryByTestId('croquis-lightbox')).not.toBeInTheDocument()
     })
 
+    it('closes the fullscreen viewer on a click beside the picture', () => {
+      const media = openPopover()
+      fireEvent.pointerDown(media, { clientX: 100 })
+      fireEvent.pointerUp(media, { clientX: 105 })
+      const viewer = screen.getByTestId(
+        'croquis-lightbox-image',
+      ) as HTMLImageElement
+      // A 100x100 picture contained in a 300x100 box: bands at the sides.
+      Object.defineProperty(viewer, 'naturalWidth', { value: 100 })
+      Object.defineProperty(viewer, 'naturalHeight', { value: 100 })
+      viewer.getBoundingClientRect = () =>
+        ({ left: 0, top: 0, width: 300, height: 100 }) as DOMRect
+      fireEvent.click(viewer, { clientX: 150, clientY: 50 })
+      expect(screen.getByTestId('croquis-lightbox')).toBeInTheDocument()
+      fireEvent.click(viewer, { clientX: 20, clientY: 50 })
+      expect(screen.queryByTestId('croquis-lightbox')).not.toBeInTheDocument()
+    })
+
     it('navigates and closes the fullscreen viewer', () => {
       const media = openPopover()
       fireEvent.pointerDown(media, { clientX: 100 })

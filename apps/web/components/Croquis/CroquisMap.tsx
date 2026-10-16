@@ -4,6 +4,7 @@ import type { PointerEvent as ReactPointerEvent } from 'react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
+import { BlurUp, blurPlaceholderUrl, isOnContainedImage } from '@sdlgr/blur-up'
 import { ChevronIcon } from '@sdlgr/icons'
 
 import {
@@ -35,6 +36,7 @@ import {
   StyledKind,
   StyledLightbox,
   StyledLightboxClose,
+  StyledLightboxFrame,
   StyledLightboxNav,
   StyledName,
   StyledNotes,
@@ -246,13 +248,23 @@ export function CroquisMap({
             onPointerUp={onMediaPointerUp}
           >
             {photos.length > 0 ? (
-              <img
-                src={cloudinaryTransform(
-                  photos[imgIndex],
-                  'f_auto,q_auto,w_640',
+              <BlurUp
+                key={photos[imgIndex]}
+                fill
+                objectFit="cover"
+                placeholder={blurPlaceholderUrl(photos[imgIndex])}
+              >
+                {(image) => (
+                  <img
+                    src={cloudinaryTransform(
+                      photos[imgIndex],
+                      'f_auto,q_auto,w_640',
+                    )}
+                    alt={obstacle.title}
+                    {...image}
+                  />
                 )}
-                alt={obstacle.title}
-              />
+              </BlurUp>
             ) : (
               <div dangerouslySetInnerHTML={{ __html: scene(obstacle.type) }} />
             )}
@@ -434,15 +446,39 @@ export function CroquisMap({
             >
               ×
             </StyledLightboxClose>
-            <img
-              src={cloudinaryTransform(
-                lightbox.photos[lightbox.index],
-                'f_auto,q_auto,w_1600',
-              )}
-              alt=""
-              data-testid="croquis-lightbox-image"
-              onClick={(e) => e.stopPropagation()}
-            />
+            <StyledLightboxFrame>
+              <BlurUp
+                key={lightbox.photos[lightbox.index]}
+                fill
+                objectFit="contain"
+                placeholder={blurPlaceholderUrl(
+                  lightbox.photos[lightbox.index],
+                )}
+              >
+                {(image) => (
+                  <img
+                    src={cloudinaryTransform(
+                      lightbox.photos[lightbox.index],
+                      'f_auto,q_auto,w_1600',
+                    )}
+                    alt=""
+                    data-testid="croquis-lightbox-image"
+                    // Clicks on the picture keep it open; beside it, close.
+                    onClick={(e) => {
+                      if (
+                        isOnContainedImage(
+                          e.currentTarget,
+                          e.clientX,
+                          e.clientY,
+                        )
+                      )
+                        e.stopPropagation()
+                    }}
+                    {...image}
+                  />
+                )}
+              </BlurUp>
+            </StyledLightboxFrame>
             {lightbox.photos.length > 1 && (
               <StyledLightboxNav>
                 <button
