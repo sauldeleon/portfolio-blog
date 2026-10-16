@@ -6082,7 +6082,7 @@ __metadata:
     bcryptjs: 3.0.3
     circular-dependency-plugin: 5.2.2
     cloudinary: 2.11.0
-    cypress: 15.21.1
+    cypress: 16.1.1
     date-fns: 4.4.0
     drizzle-kit: 0.31.11
     drizzle-orm: 0.45.3
@@ -9870,9 +9870,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:15.21.1":
-  version: 15.21.1
-  resolution: "cypress@npm:15.21.1"
+"cypress@npm:16.1.1":
+  version: 16.1.1
+  resolution: "cypress@npm:16.1.1"
   dependencies:
     "@cypress/request": ^4.0.0
     "@cypress/xvfb": ^1.2.4
@@ -9890,7 +9890,7 @@ __metadata:
     cli-table3: 0.6.1
     commander: ^6.2.1
     common-tags: ^1.8.0
-    dayjs: ^1.10.4
+    dayjs: ^1.11.23
     debug: ^4.3.4
     eventemitter2: 6.4.7
     execa: 4.1.0
@@ -9915,7 +9915,7 @@ __metadata:
     yauzl: ^3.3.1
   bin:
     cypress: bin/cypress
-  checksum: a9dc6fa9800f7a99b58d43333df608a6f444b443efca8e92b9e9e829ed2e222c95e16653aeef910ce851524340ed99903ce125f63cbda45d720b3b2e44b6db16
+  checksum: efceef9f958102fabead3977e53e933754f5ab4021ec9cc68156a76bf6335e61aa80bf071a12fffcce5e8cc641e3026232970088146f1e53e08e85fe978f7d6e
   languageName: node
   linkType: hard
 
@@ -10099,10 +10099,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dayjs@npm:^1.10.4":
-  version: 1.11.10
-  resolution: "dayjs@npm:1.11.10"
-  checksum: a6b5a3813b8884f5cd557e2e6b7fa569f4c5d0c97aca9558e38534af4f2d60daafd3ff8c2000fed3435cfcec9e805bcebd99f90130c6d1c5ef524084ced588c4
+"dayjs@npm:^1.11.23":
+  version: 1.11.23
+  resolution: "dayjs@npm:1.11.23"
+  checksum: 2149ddb54548066e892a35099c7d90cba3eb467fe717b5df16f04ff4225e64bd653e14e7b420dd02bcf10566c1879508705798ca604f91c2424cc10de9135e84
   languageName: node
   linkType: hard
 
