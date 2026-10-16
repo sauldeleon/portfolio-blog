@@ -6121,7 +6121,7 @@ __metadata:
     react-cookie-consent: 10.0.2
     react-day-picker: 10
     react-dom: 19.3.0
-    react-dropzone: 15.0.0
+    react-dropzone: 20.1.2
     react-hook-form: 7.89.0
     react-i18next: 17.0.15
     react-is: 19.3.0
@@ -8457,10 +8457,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"attr-accept@npm:^2.2.4":
-  version: 2.2.5
-  resolution: "attr-accept@npm:2.2.5"
-  checksum: e6a23183c112f5d313ebfc7e63e454de0600caffe9ab88f86e9df420d2399a48e27e6c46ee8de2fc6f34fee3541ecdb557f2b86e6d8bd7d24fd3a66cc75e6349
+"attr-accept@npm:^4.0.0":
+  version: 4.0.1
+  resolution: "attr-accept@npm:4.0.1"
+  checksum: b8fd9f60311771599bf16d1e5837a6be5e4fb6a3bbefae0555a667c698099fc17e69985de9f32e11f04fce4418b414f72abfbb6ee77083a1b1099834f1356e7b
   languageName: node
   linkType: hard
 
@@ -11955,12 +11955,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"file-selector@npm:^2.1.0":
-  version: 2.1.2
-  resolution: "file-selector@npm:2.1.2"
-  dependencies:
-    tslib: ^2.7.0
-  checksum: 0e7c5233ca7d33a05eb99236e8cfc843ea304335589d954393aeb7c5b7595f30be23c79173d28180e728b6eb441cd1dd355d6ad7fbb03b8e4f37d20e3d5c3184
+"file-selector@npm:^5.0.0":
+  version: 5.0.1
+  resolution: "file-selector@npm:5.0.1"
+  checksum: 6e7b4fcb0156c20689a13d70bbfe6ec75a10de71a239800168794e77140393ce9638726cbb1fa884e350295668c2b687c9d8732bf5782edaa7708e0a6830fa3c
   languageName: node
   linkType: hard
 
@@ -17198,16 +17196,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dropzone@npm:15.0.0":
-  version: 15.0.0
-  resolution: "react-dropzone@npm:15.0.0"
+"react-dropzone@npm:20.1.2":
+  version: 20.1.2
+  resolution: "react-dropzone@npm:20.1.2"
   dependencies:
-    attr-accept: ^2.2.4
-    file-selector: ^2.1.0
-    prop-types: ^15.8.1
+    attr-accept: ^4.0.0
+    file-selector: ^5.0.0
   peerDependencies:
-    react: ">= 16.8 || 18.0.0"
-  checksum: f85a0a71a3a96282dd33515e07fd315f46fe4eb399aa2f79ba193c299d9812f061789ddea08bfbff97ebe035d6a271a8e547a848e2eb571988f626a961d5a5ff
+    "@types/react": "*"
+    react: ">= 18"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: 367e38b4e38075cd0650d25320c6299307ecf52684cd846d808c117a640a10d64c07b75d80b2b97baa4adeb668d15d517f3e870ebdfda781e6d2affd4efcb3d4
   languageName: node
   linkType: hard
 
@@ -19795,7 +19796,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:2.8.1, tslib@npm:^2.0.3, tslib@npm:^2.7.0, tslib@npm:^2.8.0":
+"tslib@npm:2.8.1, tslib@npm:^2.0.3, tslib@npm:^2.8.0":
   version: 2.8.1
   resolution: "tslib@npm:2.8.1"
   checksum: e4aba30e632b8c8902b47587fd13345e2827fa639e7c3121074d5ee0880723282411a8838f830b55100cbe4517672f84a2472667d355b81e8af165a55dc6203a
