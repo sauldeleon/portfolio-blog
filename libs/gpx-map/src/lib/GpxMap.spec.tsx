@@ -630,11 +630,11 @@ describe('GpxMap', () => {
           Summit: expect.stringContaining('data:image/svg+xml'),
         }),
       }),
-      gpx_options: { parseElements: ['track', 'route'] },
+      gpx_options: { parseElements: ['track', 'route', 'waypoint'] },
     })
   })
 
-  it('enables waypoint parsing for the GPX layer when showWaypoints is true', () => {
+  it('parses waypoints for the map whether or not the table is shown', () => {
     mockAxiosGetPending()
     render(<GpxMap url={GPX_URL} showWaypoints />)
     expect(MockGPX).toHaveBeenCalledWith(
@@ -1219,18 +1219,7 @@ describe('GpxMap', () => {
       expect(mockEachLayer).toHaveBeenCalled()
     })
 
-    it('does not call eachLayer when no waypointImages', () => {
-      render(<GpxMap url={GPX_URL} />)
-      const loadedCallback = mockOn.mock.calls.find(
-        (c: [string, () => void]) => c[0] === 'loaded',
-      )?.[1]
-      act(() => {
-        loadedCallback()
-      })
-      expect(mockEachLayer).not.toHaveBeenCalled()
-    })
-
-    it('does not call eachLayer when waypointImages are provided but showWaypoints is false', () => {
+    it('binds waypoint popups even when the waypoints table is hidden', () => {
       render(
         <GpxMap
           url={GPX_URL}
@@ -1243,7 +1232,7 @@ describe('GpxMap', () => {
       act(() => {
         loadedCallback()
       })
-      expect(mockEachLayer).not.toHaveBeenCalled()
+      expect(mockEachLayer).toHaveBeenCalled()
     })
 
     const makeWptMarker = (title: string) => ({
@@ -1794,7 +1783,7 @@ describe('GpxMap', () => {
       )
     })
 
-    it('uses per-track showWaypoints to control GPX waypoint parsing', () => {
+    it('parses waypoints of every track, even those without the table', () => {
       mockAxiosGetPending()
       render(
         <GpxMap
@@ -1818,7 +1807,7 @@ describe('GpxMap', () => {
         1,
         'https://example.com/t1.gpx',
         expect.objectContaining({
-          gpx_options: { parseElements: ['track', 'route'] },
+          gpx_options: { parseElements: ['track', 'route', 'waypoint'] },
         }),
       )
       expect(MockGPX).toHaveBeenNthCalledWith(
