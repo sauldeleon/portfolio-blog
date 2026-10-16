@@ -224,7 +224,7 @@ exports[`AboutModal > should render 1`] = `
 }
 
 <body
-  style="padding-right: 0px;"
+  style="overflow: hidden; padding-right: 0px;"
 >
   <div
     aria-hidden="true"
