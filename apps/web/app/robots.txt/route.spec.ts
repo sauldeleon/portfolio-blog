@@ -21,4 +21,10 @@ describe('GET /robots.txt', () => {
     expect(text).toContain('Sitemap: https://test.url/sitemap.xml')
     expect(text).toContain('Host: https://test.url')
   })
+
+  it('blocks commercial SEO crawlers entirely', async () => {
+    const text = await GET().text()
+    expect(text).toContain('User-agent: AhrefsBot\nDisallow: /')
+    expect(text).toContain('User-agent: SemrushBot\nDisallow: /')
+  })
 })

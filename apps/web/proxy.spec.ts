@@ -273,6 +273,17 @@ describe('handleMiddleware', () => {
       expect(res?.status).toBe(307)
       expect(res?.headers.getSetCookie()).toEqual([])
     })
+
+    it('lets a well-formed blog URL through without touching the session', async () => {
+      await expect(
+        proxy(makeReq('/en/blog/547/from-valle-de-pineta-to-tucarroya/')),
+      ).resolves.toBeUndefined()
+    })
+
+    it('answers an impossible blog URL with a 404 before it reaches the cache', async () => {
+      const res = await proxy(makeReq('/en/blog/not-a-number/junk/extra/'))
+      expect(res?.status).toBe(404)
+    })
   })
 })
 
