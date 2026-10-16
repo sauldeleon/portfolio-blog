@@ -10,6 +10,13 @@ const mockGetCategoryByLocaleSlug = vi.fn()
 const mockGetPostCountPerTag = vi.fn()
 const mockGetServerTranslation = vi.fn()
 
+// The query cache is a pass-through in tests; publicCache.spec covers it.
+vi.mock('next/cache', () => ({
+  unstable_cache: (fn: unknown) => fn,
+  revalidatePath: vi.fn(),
+  revalidateTag: vi.fn(),
+}))
+
 vi.mock('@web/lib/db/queries/posts', () => ({
   getPublishedPostsPaginated: mockGetPublishedPostsPaginated,
   getLatestPublishedPost: mockGetLatestPublishedPost,
