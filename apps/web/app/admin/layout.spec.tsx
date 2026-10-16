@@ -41,9 +41,9 @@ function bodyChildren(
   layout: ReactElement<{ children: ReactNode }>,
 ): ReactNode {
   const { children: htmlChildren } = layout.props
-  const body = Children.only(htmlChildren) as ReactElement<{
-    children: ReactNode
-  }>
+  const body = Children.toArray(htmlChildren).find(
+    (child) => (child as ReactElement).type === 'body',
+  ) as ReactElement<{ children: ReactNode }>
   const { children: bodyContent } = body.props
   return bodyContent
 }

@@ -1,6 +1,7 @@
 import { dir } from 'i18next'
 import 'react-day-picker/style.css'
 
+import { BlurUpScript } from '@sdlgr/blur-up'
 import { LanguageContextProvider } from '@sdlgr/i18n-tools'
 import { robotoMonoClassName } from '@sdlgr/main-theme'
 
@@ -23,6 +24,9 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       className={robotoMonoClassName}
       style={{ scrollBehavior: 'auto' }}
     >
+      <head>
+        <BlurUpScript />
+      </head>
       <body>
         <StyledComponentsRegistry>
           <LanguageContextProvider value={{ language: 'en' }}>

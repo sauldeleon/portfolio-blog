@@ -3,6 +3,7 @@ import { Viewport } from 'next'
 import Script from 'next/script'
 import { use } from 'react'
 
+import { BlurUpScript } from '@sdlgr/blur-up'
 import { LanguageContextProvider } from '@sdlgr/i18n-tools'
 import { robotoMonoClassName } from '@sdlgr/main-theme'
 
@@ -53,6 +54,7 @@ export default function RootLayout({ children, params }: RootLayoutProps) {
       data-scroll-behavior="smooth"
     >
       <head>
+        <BlurUpScript />
         <link
           rel="alternate"
           type="application/rss+xml"

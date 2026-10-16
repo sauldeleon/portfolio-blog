@@ -41,6 +41,7 @@
       "@sdlgr/pagination": ["./libs/pagination/src/index.ts"],
       "@sdlgr/post-card": ["./libs/post-card/src/index.ts"],
       "@sdlgr/post-hero": ["./libs/post-hero/src/index.ts"],
+      "@sdlgr/blur-up": ["./libs/blur-up/src/index.ts"],
       "@sdlgr/callout": ["./libs/callout/src/index.ts"],
       "@sdlgr/code-block": ["./libs/code-block/src/index.ts"],
       "@sdlgr/gpx-map": ["./libs/gpx-map/src/index.ts"],
