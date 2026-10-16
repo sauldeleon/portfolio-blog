@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
 import { parseAuthRequest, requireAuth } from '@web/lib/api/parseRequest'
+import { revalidatePublicContent } from '@web/lib/cache/revalidatePublicContent'
 import {
   createCategory,
   createCategoryTranslation,
@@ -101,6 +102,7 @@ export async function POST(request: Request) {
     }
 
     logger.info({ slug: canonicalSlug }, 'POST /api/categories: created')
+    revalidatePublicContent()
     return NextResponse.json(category, { status: 201 })
   } catch (err) {
     logger.error(err, 'Failed to create category')

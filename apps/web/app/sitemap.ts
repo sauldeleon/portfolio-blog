@@ -9,6 +9,10 @@ import { publicUrl } from '@web/utils/url/generateUrl'
 const LAST_MODIFIED =
   process.env.NEXT_PUBLIC_BUILD_DATE ?? '2026-05-11T00:00:00.000Z'
 
+// Static, refreshed by revalidatePublicContent() whenever posts change; the
+// time-based revalidation is only a backstop.
+export const revalidate = 86400
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const languagePaths = languages.map((lng) => `/${lng}`)
   const appPaths = ['/', '/contact/', '/experience/', '/portfolio/']

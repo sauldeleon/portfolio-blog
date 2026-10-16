@@ -14,7 +14,10 @@ const mockSeriesOrderExistsForSeries = vi.fn()
 const mockRevalidateTag = vi.fn()
 const mockLoggerError = vi.fn()
 
-vi.mock('next/cache', () => ({ revalidateTag: mockRevalidateTag }))
+vi.mock('next/cache', () => ({
+  revalidateTag: mockRevalidateTag,
+  revalidatePath: vi.fn(),
+}))
 vi.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
 vi.mock('@web/lib/logger', () => ({
   logger: {
@@ -437,7 +440,7 @@ describe('POST /api/posts', () => {
         es: validTranslations.es,
       }),
     )
-    expect(mockRevalidateTag).toHaveBeenCalledWith('posts', 'default')
+    expect(mockRevalidateTag).toHaveBeenCalledWith('posts', { expire: 0 })
   })
 
   it('creates post with ES-only translation', async () => {

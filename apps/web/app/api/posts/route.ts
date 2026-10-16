@@ -1,8 +1,8 @@
-import { revalidateTag } from 'next/cache'
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
 import { parseAuthRequest, requireAuth } from '@web/lib/api/parseRequest'
+import { revalidatePublicContent } from '@web/lib/cache/revalidatePublicContent'
 import { getCategoryBySlug } from '@web/lib/db/queries/categories'
 import {
   createPost,
@@ -214,7 +214,7 @@ export async function POST(request: Request) {
       { id: post.id, category: data.category },
       'POST /api/posts: created',
     )
-    revalidateTag('posts', 'default')
+    revalidatePublicContent()
     return NextResponse.json(post, { status: 201 })
   } catch (err) {
     logger.error(err, 'Failed to create post')

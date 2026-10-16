@@ -10,6 +10,10 @@ const mockCreateCategoryTranslation = vi.fn()
 const mockLoggerError = vi.fn()
 
 vi.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
+const mockRevalidatePublicContent = vi.fn()
+vi.mock('@web/lib/cache/revalidatePublicContent', () => ({
+  revalidatePublicContent: () => mockRevalidatePublicContent(),
+}))
 vi.mock('@web/lib/db/queries/categories', () => ({
   getCategories: mockGetCategories,
   getCategoriesForAdmin: mockGetCategoriesForAdmin,
@@ -215,6 +219,7 @@ describe('POST /api/categories', () => {
     mockCreateCategoryTranslation.mockResolvedValue(mockTranslationEN)
     const response = await POST(makeRequest(makeValidBody()))
     expect(response.status).toBe(201)
+    expect(mockRevalidatePublicContent).toHaveBeenCalled()
     const body = await response.json()
     expect(body).toMatchObject({ slug: 'engineering' })
     expect(mockCreateCategory).toHaveBeenCalledWith('engineering')

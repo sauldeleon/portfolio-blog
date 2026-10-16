@@ -1,8 +1,8 @@
-import { revalidatePath, revalidateTag } from 'next/cache'
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
 import { parseAuthRequest, requireAuth } from '@web/lib/api/parseRequest'
+import { revalidatePublicContent } from '@web/lib/cache/revalidatePublicContent'
 import { getCategoryBySlug } from '@web/lib/db/queries/categories'
 import {
   getPostById,
@@ -231,12 +231,7 @@ export async function PUT(
     }
 
     logger.info({ id, status: data.status }, 'PUT /api/posts/[id]: updated')
-    const updatedTranslations = await getPostTranslations(id)
-    for (const t of updatedTranslations) {
-      revalidatePath(`/${t.locale}/blog/${post.postNumber}/${t.slug}`)
-    }
-    revalidateTag('posts', 'default')
-    revalidateTag(`post-${id}`, 'default')
+    revalidatePublicContent()
     return NextResponse.json(post)
   } catch (err) {
     logger.error(err, 'Failed to update post')
@@ -271,8 +266,7 @@ export async function DELETE(
       }
       await hardDeletePost(id)
       logger.info({ id }, 'DELETE /api/posts/[id]: hard deleted')
-      revalidateTag('posts', 'default')
-      revalidateTag(`post-${id}`, 'default')
+      revalidatePublicContent()
       return new NextResponse(null, { status: 204 })
     }
 
@@ -285,8 +279,7 @@ export async function DELETE(
 
     await softDeletePost(id)
     logger.info({ id }, 'DELETE /api/posts/[id]: soft deleted')
-    revalidateTag('posts', 'default')
-    revalidateTag(`post-${id}`, 'default')
+    revalidatePublicContent()
     return new NextResponse(null, { status: 204 })
   } catch (err) {
     logger.error(err, 'Failed to delete post')

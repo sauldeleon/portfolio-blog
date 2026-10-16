@@ -99,8 +99,11 @@ const publicFieldsWithContent = {
   content: postTranslations.content,
 }
 
-export async function getPublishedPosts(locale: Locale): Promise<PublicPost[]> {
-  return db
+export async function getPublishedPosts(
+  locale: Locale,
+  { limit }: { limit?: number } = {},
+): Promise<PublicPost[]> {
+  const query = db
     .select(publicFields)
     .from(posts)
     .innerJoin(
@@ -120,6 +123,7 @@ export async function getPublishedPosts(locale: Locale): Promise<PublicPost[]> {
     .leftJoin(users, eq(users.id, posts.authorId))
     .where(and(eq(posts.status, 'published'), isNull(posts.deletedAt)))
     .orderBy(desc(posts.publishedAt))
+  return limit ? query.limit(limit) : query
 }
 
 export async function getPostById(

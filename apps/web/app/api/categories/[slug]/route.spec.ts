@@ -9,6 +9,10 @@ const mockDeleteCategory = vi.fn()
 const mockLoggerError = vi.fn()
 
 vi.mock('@web/lib/auth/config', () => ({ auth: mockAuth }))
+const mockRevalidatePublicContent = vi.fn()
+vi.mock('@web/lib/cache/revalidatePublicContent', () => ({
+  revalidatePublicContent: () => mockRevalidatePublicContent(),
+}))
 vi.mock('@web/lib/db/queries/categories', () => ({
   getCategoryBySlug: mockGetCategoryBySlug,
   upsertCategoryTranslation: mockUpsertCategoryTranslation,
@@ -124,6 +128,7 @@ describe('PUT /api/categories/[slug]', () => {
       makeParams('engineering'),
     )
     expect(response.status).toBe(200)
+    expect(mockRevalidatePublicContent).toHaveBeenCalled()
     const body = await response.json()
     expect(body).toMatchObject({ name: 'Updated' })
     expect(mockUpsertCategoryTranslation).toHaveBeenCalledWith(
@@ -284,6 +289,7 @@ describe('DELETE /api/categories/[slug]', () => {
       makeParams('engineering'),
     )
     expect(response.status).toBe(204)
+    expect(mockRevalidatePublicContent).toHaveBeenCalled()
     expect(mockDeleteCategory).toHaveBeenCalledWith('engineering')
   })
 

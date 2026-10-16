@@ -11,6 +11,10 @@ const mockDbInsert = vi.fn()
 const mockLoggerError = vi.fn()
 
 vi.mock('@web/lib/auth/config', () => ({ auth: () => mockAuth() }))
+const mockRevalidatePublicContent = vi.fn()
+vi.mock('@web/lib/cache/revalidatePublicContent', () => ({
+  revalidatePublicContent: () => mockRevalidatePublicContent(),
+}))
 vi.mock('@web/lib/db/queries/series', () => ({
   getSeriesForAdmin: (...args: unknown[]) => mockGetSeriesForAdmin(...args),
   upsertSeriesTranslation: (...args: unknown[]) =>
@@ -124,6 +128,7 @@ describe('POST /api/series', () => {
     mockUpsertSeriesTranslation.mockResolvedValue(undefined)
     const res = await POST(makeRequest({ id: 'my-series' }))
     expect(res.status).toBe(201)
+    expect(mockRevalidatePublicContent).toHaveBeenCalled()
     const json = await res.json()
     expect(json.id).toBe('my-series')
   })

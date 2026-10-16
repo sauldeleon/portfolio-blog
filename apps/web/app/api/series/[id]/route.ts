@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
 import { parseAuthRequest, requireAuth } from '@web/lib/api/parseRequest'
+import { revalidatePublicContent } from '@web/lib/cache/revalidatePublicContent'
 import { db } from '@web/lib/db'
 import { upsertSeriesTranslation } from '@web/lib/db/queries/series'
 import { posts, series, seriesTranslations } from '@web/lib/db/schema'
@@ -27,6 +28,7 @@ export async function PUT(
   try {
     await upsertSeriesTranslation(id, locale, title)
     logger.info({ id, locale }, 'PUT /api/series/[id]: updated')
+    revalidatePublicContent()
     return NextResponse.json({ id, locale, title })
   } catch (err) {
     logger.error(err, 'Failed to update series')
@@ -73,6 +75,7 @@ export async function DELETE(
     await db.delete(series).where(eq(series.id, id))
 
     logger.info({ id }, 'DELETE /api/series/[id]: deleted')
+    revalidatePublicContent()
     return NextResponse.json({ id })
   } catch (err) {
     logger.error(err, 'Failed to delete series')

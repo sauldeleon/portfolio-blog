@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
 import { parseAuthRequest, requireAuth } from '@web/lib/api/parseRequest'
+import { revalidatePublicContent } from '@web/lib/cache/revalidatePublicContent'
 import { db } from '@web/lib/db'
 import {
   getSeriesForAdmin,
@@ -71,6 +72,7 @@ export async function POST(request: Request) {
     }
 
     logger.info({ id }, 'POST /api/series: created')
+    revalidatePublicContent()
     return NextResponse.json({ id }, { status: 201 })
   } catch (err) {
     logger.error(err, 'Failed to create series')
