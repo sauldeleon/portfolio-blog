@@ -12,15 +12,10 @@ export const StyledCard = styled.div`
 `
 
 export const StyledImageWrapper = styled.div`
+  position: relative;
   width: 100%;
+  overflow: hidden;
   background: rgba(0, 0, 0, 0.3);
-
-  img {
-    width: 100% !important;
-    height: auto !important;
-    display: block;
-    position: relative !important;
-  }
 `
 
 export const StyledInfo = styled.div`

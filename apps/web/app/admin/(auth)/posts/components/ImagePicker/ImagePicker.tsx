@@ -1,9 +1,9 @@
 'use client'
 
 import axios from 'axios'
-import Image from 'next/image'
 import { useCallback, useEffect, useId, useRef, useState } from 'react'
 
+import { BlurUpImage } from '@web/components/BlurUpImage'
 import { useClientTranslation } from '@web/i18n/client'
 import type { CloudinaryImage } from '@web/lib/cloudinary/images'
 
@@ -331,11 +331,12 @@ export function ImagePicker({
                 data-testid="image-picker-item"
               >
                 <StyledImagePreview>
-                  <Image
+                  <BlurUpImage
                     src={image.url}
                     alt=""
-                    width={image.width}
-                    height={image.height}
+                    fill
+                    sizes="200px"
+                    objectFit="contain"
                   />
                 </StyledImagePreview>
                 <StyledImageName

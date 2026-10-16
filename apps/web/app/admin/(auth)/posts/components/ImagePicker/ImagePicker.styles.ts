@@ -106,6 +106,7 @@ export const StyledImageItem = styled(Button).attrs({ variant: 'ghost' })`
 `
 
 export const StyledImagePreview = styled.div`
+  position: relative;
   width: 100%;
   height: 120px;
   background: rgba(0, 0, 0, 0.4);
@@ -114,7 +115,7 @@ export const StyledImagePreview = styled.div`
   justify-content: center;
   overflow: hidden;
 
-  img {
+  img:not([aria-hidden]) {
     width: 100%;
     height: 100%;
     object-fit: contain;
