@@ -1,5 +1,37 @@
 # Changelog web app
 
+## [0.11.0](https://github.com/sauldeleon/portfolio-blog/compare/web-0.10.0...web-0.11.0) (2026-10-16)
+
+### Features
+
+- add first-party comment system with admin moderation ([#124](https://github.com/sauldeleon/portfolio-blog/issues/124)) ([c37d8b1](https://github.com/sauldeleon/portfolio-blog/commit/c37d8b114bc6fd61bf979514bd680f00ef0a84fc))
+- add personalised greeting to new post notification email ([#121](https://github.com/sauldeleon/portfolio-blog/issues/121)) ([b88bbb7](https://github.com/sauldeleon/portfolio-blog/commit/b88bbb7d29dcf6c9785f1d5450178069fafeaa77))
+- add post likes counter with IP rate limiting and localStorage d… ([#117](https://github.com/sauldeleon/portfolio-blog/issues/117)) ([defff53](https://github.com/sauldeleon/portfolio-blog/commit/defff53ecd6cf1697d9eee81ffceccf18ea2101d))
+- add slideshow block to post editor and content viewer ([#127](https://github.com/sauldeleon/portfolio-blog/issues/127)) ([86b8eb4](https://github.com/sauldeleon/portfolio-blog/commit/86b8eb491a3c5ecf894ea0ab6268a8bbfa22f4b2))
+- **admin:** add a GPX track editor backed by the GitHub tracks repo ([#145](https://github.com/sauldeleon/portfolio-blog/issues/145)) ([159aa0c](https://github.com/sauldeleon/portfolio-blog/commit/159aa0c7436c8361c95c12d0df57532150a86321))
+- **admin:** clean track sections and smoother point and waypoint editing ([#146](https://github.com/sauldeleon/portfolio-blog/issues/146)) ([a4e693d](https://github.com/sauldeleon/portfolio-blog/commit/a4e693d74b617a914d113ac76e5cb81aa8eb2828))
+- canyon waypoints card + merge canyon cards ([#136](https://github.com/sauldeleon/portfolio-blog/issues/136)) ([07e7acc](https://github.com/sauldeleon/portfolio-blog/commit/07e7acc0936f149beada3867180d0295aaee2d7f))
+- improve cards, comments, maps, and test setup ([#134](https://github.com/sauldeleon/portfolio-blog/issues/134)) ([d23293f](https://github.com/sauldeleon/portfolio-blog/commit/d23293fe9a2cf39143bc5141b2b9eb3734e14b08))
+- improve slideshow arrows and gpx waypoint tooltips ([#133](https://github.com/sauldeleon/portfolio-blog/issues/133)) ([5ec3a49](https://github.com/sauldeleon/portfolio-blog/commit/5ec3a490763b645fad608d4d37f239af0af7c8ce))
+- interactive canyoning croquis generator + post embed ([#137](https://github.com/sauldeleon/portfolio-blog/issues/137)) ([9b1619e](https://github.com/sauldeleon/portfolio-blog/commit/9b1619e1bbf3e268610968750fe5dda559d136bf))
+- multiple upload ([#135](https://github.com/sauldeleon/portfolio-blog/issues/135)) ([863a0b7](https://github.com/sauldeleon/portfolio-blog/commit/863a0b7c27e7775b1f4a3329089812490164e2f9))
+- optimizatrions ([#142](https://github.com/sauldeleon/portfolio-blog/issues/142)) ([bbc2392](https://github.com/sauldeleon/portfolio-blog/commit/bbc2392f00095b60d91b2eb75eb6b0fe00686e4f))
+- published live URLs in PostEditor + fix slideshow arrow stability ([#128](https://github.com/sauldeleon/portfolio-blog/issues/128)) ([86f2c8b](https://github.com/sauldeleon/portfolio-blog/commit/86f2c8b702c6dbf6d2ea434b2c26da56ffa53d06))
+- revalidate post static pages on update ([#119](https://github.com/sauldeleon/portfolio-blog/issues/119)) ([ad8c232](https://github.com/sauldeleon/portfolio-blog/commit/ad8c23217f9322ee6b613296a74ff5a603b3b0d5))
+- show Watch on YouTube card for 360° videos instead of embedding ([#118](https://github.com/sauldeleon/portfolio-blog/issues/118)) ([356b18f](https://github.com/sauldeleon/portfolio-blog/commit/356b18fd1928e7ffb39c6b24716ce293e7492a76))
+
+### Bug Fixes
+
+- 360° card clipped on mobile ([#122](https://github.com/sauldeleon/portfolio-blog/issues/122)) ([f779754](https://github.com/sauldeleon/portfolio-blog/commit/f779754592ffca05e426b72ab56a17e3ebfc762b))
+- gpx modal scroll, duplicate waypoints, and index-based image keys ([#129](https://github.com/sauldeleon/portfolio-blog/issues/129)) ([9fe6e95](https://github.com/sauldeleon/portfolio-blog/commit/9fe6e959f306b05ecbffe74ec90e44310398d09d))
+- image picker bugs + croquis/GPX interaction improvements ([#140](https://github.com/sauldeleon/portfolio-blog/issues/140)) ([a666d65](https://github.com/sauldeleon/portfolio-blog/commit/a666d65a6fbb51ac858d1a7f1601a0959ef28afc))
+- localise croquis labels and admin preview ([#141](https://github.com/sauldeleon/portfolio-blog/issues/141)) ([282ad3f](https://github.com/sauldeleon/portfolio-blog/commit/282ad3fd249461fee3f026caef1b44cef6e49d11))
+- **og:** align category pill colour with site theme, improve sawl.dev visibility ([#123](https://github.com/sauldeleon/portfolio-blog/issues/123)) ([47eb50e](https://github.com/sauldeleon/portfolio-blog/commit/47eb50ec49f217619873e1ed45a6d90f98d96428)), closes [#4ade80](https://github.com/sauldeleon/portfolio-blog/issues/4ade80) [#98DFD6](https://github.com/sauldeleon/portfolio-blog/issues/98DFD6)
+- prevent static-to-dynamic error on blog preview pages ([#125](https://github.com/sauldeleon/portfolio-blog/issues/125)) ([255c5f6](https://github.com/sauldeleon/portfolio-blog/commit/255c5f6a290d8bf9953520b008e600a550e02d69))
+- strip diacritics from slugs and guard post notifications ([#132](https://github.com/sauldeleon/portfolio-blog/issues/132)) ([9f07d48](https://github.com/sauldeleon/portfolio-blog/commit/9f07d482e00d90af111ed875444f3f5000815ac7))
+- use token-based preview route for draft posts ([#126](https://github.com/sauldeleon/portfolio-blog/issues/126)) ([acdd3cb](https://github.com/sauldeleon/portfolio-blog/commit/acdd3cb41fda470506cfa35f64201088e2b7e6f1))
+- use translated series title in series indicator and fix cookie b… ([#115](https://github.com/sauldeleon/portfolio-blog/issues/115)) ([967bc4e](https://github.com/sauldeleon/portfolio-blog/commit/967bc4ee99ae151b77fa7cdce41fd7d2d280c0ef))
+
 # [0.10.0](https://github.com/sauldeleon/portfolio-blog/compare/web-0.9.0...web-0.10.0) (2026-06-09)
 
 ### Bug Fixes

@@ -1,5 +1,11 @@
 # Changelog Visually Hidden component
 
+## [0.3.0](https://github.com/sauldeleon/portfolio-blog/compare/visually-hidden-0.2.3...visually-hidden-0.3.0) (2026-10-16)
+
+### Features
+
+- improve cards, comments, maps, and test setup ([#134](https://github.com/sauldeleon/portfolio-blog/issues/134)) ([d23293f](https://github.com/sauldeleon/portfolio-blog/commit/d23293fe9a2cf39143bc5141b2b9eb3734e14b08))
+
 ## [0.2.3](https://github.com/sauldeleon/portfolio-blog/compare/visually-hidden-0.2.2...visually-hidden-0.2.3) (2026-06-09)
 
 ## [0.2.2](https://github.com/sauldeleon/portfolio-blog/compare/visually-hidden-0.2.1...visually-hidden-0.2.2) (2026-05-11)

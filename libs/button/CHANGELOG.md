@@ -1,5 +1,11 @@
 # Changelog Button component
 
+## [0.6.0](https://github.com/sauldeleon/portfolio-blog/compare/button-0.5.0...button-0.6.0) (2026-10-16)
+
+### Features
+
+- improve cards, comments, maps, and test setup ([#134](https://github.com/sauldeleon/portfolio-blog/issues/134)) ([d23293f](https://github.com/sauldeleon/portfolio-blog/commit/d23293fe9a2cf39143bc5141b2b9eb3734e14b08))
+
 # [0.5.0](https://github.com/sauldeleon/portfolio-blog/compare/button-0.4.0...button-0.5.0) (2026-06-09)
 
 ### Bug Fixes

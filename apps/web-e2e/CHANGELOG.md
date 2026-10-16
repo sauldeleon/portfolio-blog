@@ -1,5 +1,14 @@
 # Changelog web E2E tests
 
+## [0.5.0](https://github.com/sauldeleon/portfolio-blog/compare/web-e2e-0.4.0...web-e2e-0.5.0) (2026-10-16)
+
+### Features
+
+- **admin:** add a GPX track editor backed by the GitHub tracks repo ([#145](https://github.com/sauldeleon/portfolio-blog/issues/145)) ([159aa0c](https://github.com/sauldeleon/portfolio-blog/commit/159aa0c7436c8361c95c12d0df57532150a86321))
+- **admin:** clean track sections and smoother point and waypoint editing ([#146](https://github.com/sauldeleon/portfolio-blog/issues/146)) ([a4e693d](https://github.com/sauldeleon/portfolio-blog/commit/a4e693d74b617a914d113ac76e5cb81aa8eb2828))
+- canyon waypoints card + merge canyon cards ([#136](https://github.com/sauldeleon/portfolio-blog/issues/136)) ([07e7acc](https://github.com/sauldeleon/portfolio-blog/commit/07e7acc0936f149beada3867180d0295aaee2d7f))
+- interactive canyoning croquis generator + post embed ([#137](https://github.com/sauldeleon/portfolio-blog/issues/137)) ([9b1619e](https://github.com/sauldeleon/portfolio-blog/commit/9b1619e1bbf3e268610968750fe5dda559d136bf))
+
 # [0.4.0](https://github.com/sauldeleon/portfolio-blog/compare/web-e2e-0.3.0...web-e2e-0.4.0) (2026-06-09)
 
 ### Bug Fixes

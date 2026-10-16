@@ -1,5 +1,11 @@
 # Changelog Typography component
 
+## [0.4.0](https://github.com/sauldeleon/portfolio-blog/compare/typography-0.3.2...typography-0.4.0) (2026-10-16)
+
+### Features
+
+- improve cards, comments, maps, and test setup ([#134](https://github.com/sauldeleon/portfolio-blog/issues/134)) ([d23293f](https://github.com/sauldeleon/portfolio-blog/commit/d23293fe9a2cf39143bc5141b2b9eb3734e14b08))
+
 ## [0.3.2](https://github.com/sauldeleon/portfolio-blog/compare/typography-0.3.1...typography-0.3.2) (2026-06-09)
 
 ## [0.3.1](https://github.com/sauldeleon/portfolio-blog/compare/typography-0.3.0...typography-0.3.1) (2026-05-11)

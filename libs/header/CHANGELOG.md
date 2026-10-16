@@ -1,5 +1,11 @@
 # Changelog Header component
 
+## [0.2.0](https://github.com/sauldeleon/portfolio-blog/compare/header-0.1.6...header-0.2.0) (2026-10-16)
+
+### Features
+
+- improve cards, comments, maps, and test setup ([#134](https://github.com/sauldeleon/portfolio-blog/issues/134)) ([d23293f](https://github.com/sauldeleon/portfolio-blog/commit/d23293fe9a2cf39143bc5141b2b9eb3734e14b08))
+
 ## [0.1.6](https://github.com/sauldeleon/portfolio-blog/compare/header-0.1.5...header-0.1.6) (2026-06-09)
 
 ## [0.1.5](https://github.com/sauldeleon/portfolio-blog/compare/header-0.1.4...header-0.1.5) (2026-05-11)

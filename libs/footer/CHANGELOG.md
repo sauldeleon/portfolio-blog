@@ -1,5 +1,11 @@
 # Changelog Footer component
 
+## [0.4.0](https://github.com/sauldeleon/portfolio-blog/compare/footer-0.3.4...footer-0.4.0) (2026-10-16)
+
+### Features
+
+- improve cards, comments, maps, and test setup ([#134](https://github.com/sauldeleon/portfolio-blog/issues/134)) ([d23293f](https://github.com/sauldeleon/portfolio-blog/commit/d23293fe9a2cf39143bc5141b2b9eb3734e14b08))
+
 ## [0.3.4](https://github.com/sauldeleon/portfolio-blog/compare/footer-0.3.3...footer-0.3.4) (2026-06-09)
 
 ## [0.3.3](https://github.com/sauldeleon/portfolio-blog/compare/footer-0.3.2...footer-0.3.3) (2026-05-11)
