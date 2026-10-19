@@ -9,19 +9,13 @@ export const StyledList = styled.ul`
   list-style: none;
 `
 
-export const StyledRow = styled.li`
+export const StyledRow = styled.li<{ $hidden: boolean }>`
   display: grid;
-  grid-template-columns: 6rem 4.5rem 1fr auto;
+  grid-template-columns: auto 12rem 6.5rem 1fr auto;
+  opacity: ${({ $hidden }) => ($hidden ? 0.4 : 1)};
   align-items: center;
   gap: 0.6rem;
   font-size: 0.75rem;
-`
-
-export const StyledKind = styled.span<{ $kind: 'peak' | 'col' }>`
-  color: ${({ $kind, theme }) =>
-    $kind === 'peak' ? theme.colors.green : theme.colors.white};
-  opacity: ${({ $kind }) => ($kind === 'peak' ? 1 : 0.7)};
-  white-space: nowrap;
 `
 
 export const StyledAltitude = styled.span`
@@ -33,4 +27,22 @@ export const StyledEmpty = styled.p`
   margin: 0;
   font-size: 0.7rem;
   opacity: 0.55;
+`
+
+export const StyledModes = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+`
+
+export const StyledTypeOption = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  line-height: 1;
+
+  > svg {
+    display: block;
+    flex: none;
+  }
 `

@@ -3,6 +3,8 @@ import axios, { AxiosError } from 'axios'
 
 import { renderApp } from '@sdlgr/test-utils'
 
+import { positionHash } from '@web/lib/cards'
+
 import { CanyonWaypointsGenerator } from './CanyonWaypointsGenerator'
 
 vi.mock('../../../components/TrackUrlPicker', () => ({
@@ -137,6 +139,9 @@ function makeAxiosError(status: number, data: unknown): AxiosError {
 const URL_GPX = 'https://example.com/route.gpx'
 const TWO =
   'salto: Resalte 1m - 42.6092 0.1412\n- Flexionar\n---\nrapel: Rappel 10m - 42.6056 0.1294'
+// Position codes of the two waypoints in TWO.
+const R1 = `-${positionHash(42.6092, 0.1412)}`
+const R2 = `-${positionHash(42.6056, 0.1294)}`
 const importedWaypoints = [
   { categories: ['rappel'], title: 'R1', lat: 42.5, lon: -1.2, notes: [] },
 ]
@@ -179,10 +184,10 @@ describe('CanyonWaypointsGenerator', () => {
     fireEvent.change(screen.getByTestId('cw-text'), { target: { value: TWO } })
     expect(screen.getAllByTestId('card-preview')).toHaveLength(2)
     expect(
-      screen.getByText('canyon-waypoint-canyon-en-01-resalte_1m'),
+      screen.getByText(`canyon-waypoint-canyon-en-01-resalte_1m${R1}`),
     ).toBeInTheDocument()
     expect(
-      screen.getByText('canyon-waypoint-canyon-en-02-rappel_10m'),
+      screen.getByText(`canyon-waypoint-canyon-en-02-rappel_10m${R2}`),
     ).toBeInTheDocument()
   })
 
@@ -193,7 +198,9 @@ describe('CanyonWaypointsGenerator', () => {
       target: { value: 'Barranco de Mascún' },
     })
     expect(
-      screen.getByText('canyon-waypoint-barranco_de_mascun-en-01-resalte_1m'),
+      screen.getByText(
+        `canyon-waypoint-barranco_de_mascun-en-01-resalte_1m${R1}`,
+      ),
     ).toBeInTheDocument()
   })
 
@@ -202,7 +209,7 @@ describe('CanyonWaypointsGenerator', () => {
     fireEvent.change(screen.getByTestId('cw-text'), { target: { value: TWO } })
     fireEvent.click(screen.getByTestId('cw-lang-es'))
     expect(
-      screen.getByText('canyon-waypoint-canyon-es-01-resalte_1m'),
+      screen.getByText(`canyon-waypoint-canyon-es-01-resalte_1m${R1}`),
     ).toBeInTheDocument()
   })
 
@@ -394,8 +401,8 @@ describe('CanyonWaypointsGenerator', () => {
     expect(mockSvgToPng).toHaveBeenCalledTimes(2)
     const files = mockZipStore.mock.calls[0][0] as Array<{ name: string }>
     expect(files.map((f) => f.name)).toEqual([
-      'canyon-waypoint-canyon-en-01-resalte_1m.png',
-      'canyon-waypoint-canyon-en-02-rappel_10m.png',
+      `canyon-waypoint-canyon-en-01-resalte_1m${R1}.png`,
+      `canyon-waypoint-canyon-en-02-rappel_10m${R2}.png`,
     ])
     expect(lastAnchor?.download).toBe('canyon-waypoints-canyon-en.zip')
   })

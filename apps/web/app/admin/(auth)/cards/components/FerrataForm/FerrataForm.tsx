@@ -1,5 +1,7 @@
 'use client'
 
+import { useState } from 'react'
+
 import { Button } from '@sdlgr/button'
 import { FieldGroup, FieldLabel, Input } from '@sdlgr/input'
 import { Select } from '@sdlgr/select'
@@ -10,6 +12,7 @@ import type { Lang, SummaryFerrataData } from '@web/lib/cards'
 
 import { CardDateField } from '../CardDateField'
 import { GpxUrlField } from '../GpxUrlField'
+import { LandmarksField } from '../LandmarksField'
 import {
   StyledFieldRow,
   StyledForm,
@@ -42,6 +45,7 @@ export function FerrataForm({
   hideLang = false,
 }: FerrataFormProps) {
   const { t } = useClientTranslation('admin')
+  const [placesUnavailable, setPlacesUnavailable] = useState(false)
   function set(patch: Partial<SummaryFerrataData>) {
     onChange({ ...value, ...patch })
   }
@@ -134,7 +138,8 @@ export function FerrataForm({
         <GpxUrlField
           value={value.gpxUrl}
           onChange={(gpxUrl) => set({ gpxUrl })}
-          onParsed={(m) =>
+          onParsed={(m) => {
+            setPlacesUnavailable(Boolean(m.placesUnavailable))
             set({
               date: m.date || value.date,
               ini: m.startTime || value.ini,
@@ -143,8 +148,16 @@ export function FerrataForm({
               det: m.stoppedTime || value.det,
               tot: m.totalTime || value.tot,
               elevation: m.elevation,
+              landmarks: m.landmarks,
             })
-          }
+          }}
+          idPrefix="ft"
+          withPlaceNames
+        />
+        <LandmarksField
+          value={value}
+          onChange={set}
+          placesUnavailable={placesUnavailable}
           idPrefix="ft"
         />
       </StyledSection>

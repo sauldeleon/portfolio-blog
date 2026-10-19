@@ -3,6 +3,8 @@ import axios, { AxiosError } from 'axios'
 
 import { renderApp } from '@sdlgr/test-utils'
 
+import { positionHash } from '@web/lib/cards'
+
 import { WaypointGenerator } from './WaypointGenerator'
 
 vi.mock('../../../components/TrackUrlPicker', () => ({
@@ -150,9 +152,19 @@ const waypoints = [
   { name: 'Rápel 1', lat: 42.6, lon: -1.3, ele: 1500, category: 'rappel' },
 ]
 
+// Altitude and position code that tell apart waypoints sharing a name.
+const FIRST = `-1850m-${positionHash(42.5, -1.2)}`
+const SECOND = `-1500m-${positionHash(42.6, -1.3)}`
+
 // Download filename / Cloudinary name shared format (Date.now mocked to 1234).
-const fileFor = (lang: string, slug: string, gpx = 'route') =>
-  `waypoint-${gpx}-1234-${lang}-${slug}`
+// Numbered in GPX order: 01 Refugio, 02 Rápel 1.
+const fileFor = (
+  lang: string,
+  slug: string,
+  gpx = 'route',
+  suffix = slug === 'rapel_1' ? SECOND : FIRST,
+  order = slug === 'rapel_1' ? '02' : '01',
+) => `waypoint-${gpx}-1234-${lang}-${order}-${slug}${suffix}`
 
 beforeEach(() => {
   vi.spyOn(Date, 'now').mockReturnValue(1234)
@@ -198,6 +210,58 @@ describe('WaypointGenerator', () => {
     expect(screen.getByText(fileFor('en', 'refugio'))).toBeInTheDocument()
   })
 
+  it('tells apart waypoints that share a name', async () => {
+    vi.spyOn(axios, 'get').mockResolvedValue({
+      data: {
+        data: [
+          {
+            name: 'Collado',
+            lat: 43.01,
+            lon: -5.9,
+            ele: 2114,
+            category: 'cruce',
+          },
+          {
+            name: 'Collado',
+            lat: 43.02,
+            lon: -5.9,
+            ele: 1952,
+            category: 'cruce',
+          },
+          // An exact repeat only differs by a counter.
+          {
+            name: 'Collado',
+            lat: 43.02,
+            lon: -5.9,
+            ele: 1952,
+            category: 'cruce',
+          },
+        ],
+      },
+    })
+    renderApp(<WaypointGenerator />)
+    fireEvent.change(screen.getByTestId('wp-gpx'), { target: { value: URL } })
+    fireEvent.click(screen.getByTestId('wp-generate'))
+    expect(
+      await screen.findByText(
+        fileFor(
+          'en',
+          'collado',
+          'route',
+          `-2114m-${positionHash(43.01, -5.9)}`,
+        ),
+      ),
+    ).toBeInTheDocument()
+    const same = `-1952m-${positionHash(43.02, -5.9)}`
+    // Numbered in order, so even an exact repeat gets its own file.
+    expect(
+      screen.getByText(fileFor('en', 'collado', 'route', same, '02')),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText(fileFor('en', 'collado', 'route', same, '03')),
+    ).toBeInTheDocument()
+  })
+
   it('overrides the filename prefix with the name field', async () => {
     vi.spyOn(axios, 'get').mockResolvedValue({ data: { data: waypoints } })
     renderApp(<WaypointGenerator />)
@@ -208,7 +272,7 @@ describe('WaypointGenerator', () => {
       target: { value: 'My Trip' },
     })
     expect(
-      screen.getByText('waypoint-my_trip-1234-en-refugio'),
+      screen.getByText(fileFor('en', 'refugio', 'my_trip')),
     ).toBeInTheDocument()
   })
 
@@ -468,8 +532,11 @@ describe('WaypointGenerator', () => {
     ].forEach((label) => {
       fireEvent.change(screen.getByLabelText(label), { target: { value: '' } })
     })
-    // the card still renders for the now coordinate-less waypoint
-    expect(screen.getByText(fileFor('en', 'refugio'))).toBeInTheDocument()
+    // the card still renders for the now coordinate-less waypoint, and its
+    // file name loses the altitude and position code
+    expect(
+      screen.getByText(fileFor('en', 'refugio', 'route', '')),
+    ).toBeInTheDocument()
   })
 
   it('marks the clicked card as selected', async () => {

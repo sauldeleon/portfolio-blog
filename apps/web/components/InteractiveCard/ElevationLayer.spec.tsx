@@ -144,4 +144,32 @@ describe('ElevationLayer', () => {
       '1,095 m',
     )
   })
+
+  it('catches the pointer over other waypoints too', () => {
+    render(
+      <svg>
+        <ElevationLayer
+          profile={{
+            ...profile,
+            landmarks: [
+              {
+                kind: 'point',
+                category: 'refugio',
+                index: 2,
+                ele: 1100,
+                lat: 0,
+                lon: 0,
+                name: 'Refugio',
+              },
+            ],
+          }}
+          lang="es"
+        />
+      </svg>,
+    )
+    const hut = screen.getByTestId('card-peak-2')
+    expect(hut).toHaveAttribute('data-kind', 'point')
+    expect(hut.getAttribute('d')).toContain('a11,11')
+    expect(hut).toHaveAttribute('fill', 'transparent')
+  })
 })

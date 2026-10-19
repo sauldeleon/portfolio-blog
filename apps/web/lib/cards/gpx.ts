@@ -2,6 +2,7 @@ import { computeStats, haversine } from '@sdlgr/gpx-tools'
 
 import { findCols, findPeaks } from './primitives'
 import type { RouteLandmark } from './types'
+import { resolveCategory } from './waypoints'
 
 /**
  * GPX parsing helpers. Regex-based so they run unchanged on the server
@@ -144,23 +145,39 @@ function sampleIndices(n: number, max: number): number[] {
   return Array.from({ length: max }, (_, i) => Math.round(i * step))
 }
 
-/** A waypoint this close to a summit or col lends it its name. */
-const WAYPOINT_NAME_RADIUS = 100
+/** A GPX waypoint this close to the track is drawn on its profile. */
+const WAYPOINT_TRACK_RADIUS = 150
+
+/** A detected summit or col this close to a GPX waypoint is that waypoint. */
+const SAME_SPOT_RADIUS = 100
+
+/** Names that make a waypoint a col, whatever its symbol. */
+const COL_NAME = /\b(collad[oa]|puerto|horcada|brecha|portillo|paso)\b/i
 
 const WPT_RE = /<wpt\b([^>]*?)>([\s\S]*?)<\/wpt>/g
 
+export interface NamedWaypoint {
+  lat: number
+  lon: number
+  name: string
+  ele?: number
+  sym?: string
+}
+
 /** Named `<wpt>` of a GPX document. */
-export function parseNamedWaypoints(
-  xml: string,
-): Array<{ lat: number; lon: number; name: string }> {
-  const waypoints: Array<{ lat: number; lon: number; name: string }> = []
+export function parseNamedWaypoints(xml: string): NamedWaypoint[] {
+  const waypoints: NamedWaypoint[] = []
   for (const match of xml.matchAll(WPT_RE)) {
     const lat = Number(/\blat="([^"]+)"/.exec(match[1])?.[1])
     const lon = Number(/\blon="([^"]+)"/.exec(match[1])?.[1])
     const name = /<name>([^<]*)<\/name>/.exec(match[2])?.[1].trim()
-    if (Number.isFinite(lat) && Number.isFinite(lon) && name) {
-      waypoints.push({ lat, lon, name: decodeXml(name) })
-    }
+    if (!Number.isFinite(lat) || !Number.isFinite(lon) || !name) continue
+    const waypoint: NamedWaypoint = { lat, lon, name: decodeXml(name) }
+    const ele = Number(/<ele>([^<]+)<\/ele>/.exec(match[2])?.[1])
+    if (Number.isFinite(ele)) waypoint.ele = ele
+    const sym = /<sym>([^<]*)<\/sym>/.exec(match[2])?.[1].trim()
+    if (sym) waypoint.sym = decodeXml(sym)
+    waypoints.push(waypoint)
   }
   return waypoints
 }
@@ -174,49 +191,91 @@ function decodeXml(text: string): string {
     .replace(/&amp;/g, '&')
 }
 
+/** Index of the item closest to `target` (by `distance`). */
+function closest<T>(items: T[], distance: (item: T) => number): number {
+  let best = 0
+  let bestDistance = Infinity
+  items.forEach((item, i) => {
+    const d = distance(item)
+    if (d < bestDistance) {
+      bestDistance = d
+      best = i
+    }
+  })
+  return best
+}
+
+/** The GPX waypoints lying on the track, placed on the sampled profile. */
+function waypointLandmarks(
+  points: Array<TrackPoint & { ele: number }>,
+  samples: number[],
+  waypoints: NamedWaypoint[],
+): RouteLandmark[] {
+  return waypoints.flatMap((w) => {
+    const j = closest(points, (p) => haversine(p, w))
+    if (haversine(points[j], w) > WAYPOINT_TRACK_RADIUS) return []
+    const category = resolveCategory(w.name, w.sym)
+    const kind: RouteLandmark['kind'] =
+      category === 'summit' ? 'peak' : COL_NAME.test(w.name) ? 'col' : 'point'
+    const landmark: RouteLandmark = {
+      kind,
+      index: closest(samples, (s) => Math.abs(s - j)),
+      ele: Math.round(w.ele ?? points[j].ele),
+      lat: w.lat,
+      lon: w.lon,
+      name: w.name,
+    }
+    if (kind === 'point') landmark.category = category
+    return [landmark]
+  })
+}
+
 /**
  * Summits and cols of the sampled profile. Each is moved to the real highest
  * (or lowest) track point around its sample, so its altitude and position are
- * exact, and named after the closest GPX waypoint, if any is near.
+ * exact.
  */
-function findLandmarks(
+function detectedLandmarks(
   points: Array<TrackPoint & { ele: number }>,
   samples: number[],
   elevation: number[],
-  waypoints: Array<{ lat: number; lon: number; name: string }>,
 ): RouteLandmark[] {
   const found: Array<readonly [RouteLandmark['kind'], number]> = [
     ...findPeaks(elevation, 4).map((i) => ['peak', i] as const),
     ...findCols(elevation, 3).map((i) => ['col', i] as const),
   ]
-  return found
-    .map(([kind, s]) => {
-      const from = samples[Math.max(0, s - 1)]
-      const to = samples[Math.min(samples.length - 1, s + 1)]
-      let best = samples[s]
-      for (let j = from; j <= to; j++) {
-        const better =
-          kind === 'peak'
-            ? points[j].ele > points[best].ele
-            : points[j].ele < points[best].ele
-        if (better) best = j
-      }
-      const { lat, lon, ele } = points[best]
-      const landmark: RouteLandmark = {
-        kind,
-        index: s,
-        ele: Math.round(ele),
-        lat,
-        lon,
-      }
-      const near = waypoints
-        .map((w) => ({ name: w.name, d: haversine(w, { lat, lon }) }))
-        .filter((w) => w.d <= WAYPOINT_NAME_RADIUS)
-        .sort((a, b) => a.d - b.d)[0]
-      if (near) landmark.name = near.name
-      return landmark
-    })
-    .sort((a, b) => a.index - b.index)
+  return found.map(([kind, s]) => {
+    const from = samples[Math.max(0, s - 1)]
+    const to = samples[Math.min(samples.length - 1, s + 1)]
+    let best = samples[s]
+    for (let j = from; j <= to; j++) {
+      const better =
+        kind === 'peak'
+          ? points[j].ele > points[best].ele
+          : points[j].ele < points[best].ele
+      if (better) best = j
+    }
+    const { lat, lon, ele } = points[best]
+    return { kind, index: s, ele: Math.round(ele), lat, lon }
+  })
+}
+
+/**
+ * Every spot worth pointing out on the profile, in route order: all the GPX
+ * waypoints on the track, plus the detected summits and cols no waypoint
+ * already marks (those get their names from OpenStreetMap later).
+ */
+function findLandmarks(
+  points: Array<TrackPoint & { ele: number }>,
+  samples: number[],
+  elevation: number[],
+  waypoints: NamedWaypoint[],
+): RouteLandmark[] {
+  const fromWaypoints = waypointLandmarks(points, samples, waypoints)
+  const detected = detectedLandmarks(points, samples, elevation).filter(
+    (d) => !fromWaypoints.some((w) => haversine(w, d) <= SAME_SPOT_RADIUS),
+  )
+  return [...fromWaypoints, ...detected].sort((a, b) => a.index - b.index)
 }
 
 /** Extract `<trkpt>` rows from a GPX document. */

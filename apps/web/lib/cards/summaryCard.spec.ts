@@ -213,7 +213,8 @@ describe('summaryCard', () => {
         x0: expect.any(Number),
         x1: expect.any(Number),
         top: 634,
-        bottom: 860,
+        // A line shorter: the GPS altitude note goes under it.
+        bottom: 838,
       })
       expect(buildSummaryCard({ ...baseRuta, elevation: [1] }).profile).toBe(
         undefined,
@@ -224,11 +225,120 @@ describe('summaryCard', () => {
       expect(
         buildSummaryCard({ ...baseRuta, elevation: [1000, 1200], landmarks })
           .profile?.landmarks,
-      ).toBe(landmarks)
+      ).toEqual(landmarks)
       expect(
         buildSummaryCard({ ...baseFerrata, elevation: [1000, 1200] }).profile
           ?.landmarks,
       ).toBeUndefined()
+    })
+
+    describe('summits and cols', () => {
+      const elevation = [1000, 1400, 1200, 1500, 1100]
+      const landmarks = [
+        {
+          kind: 'peak' as const,
+          index: 1,
+          ele: 1412,
+          lat: 0,
+          lon: 0,
+          name: 'Pico A',
+        },
+        {
+          kind: 'col' as const,
+          index: 2,
+          ele: 1195,
+          lat: 0,
+          lon: 0,
+          name: 'Collado',
+        },
+        {
+          kind: 'peak' as const,
+          index: 3,
+          ele: 1503,
+          lat: 0,
+          lon: 0,
+          hidden: true,
+          name: 'Oculto',
+        },
+        // Stale index beyond the profile: ignored.
+        {
+          kind: 'peak' as const,
+          index: 9,
+          ele: 1,
+          lat: 0,
+          lon: 0,
+          name: 'Fuera',
+        },
+      ]
+      const route = { ...baseRuta, elevation, landmarks }
+
+      it('names them next to their markers by default, with altitude', () => {
+        const card = buildSummaryCard(route)
+        expect(card.svg).toContain('Pico A')
+        expect(card.svg).toContain('1.412 m')
+        expect(card.svg).not.toContain('Oculto')
+        expect(card.svg).not.toContain('Fuera')
+        expect(card.height).toBe(900)
+        // The profile moves down to make room for the names.
+        expect(card.profile?.top).toBe(634 + 78)
+        expect(card.profile?.landmarks?.map((l) => l.name)).toEqual([
+          'Pico A',
+          'Collado',
+        ])
+      })
+
+      it('can leave the altitude out', () => {
+        const svg = summaryCard({
+          ...route,
+          landmarks: landmarks.map((l) => ({ ...l, hideAltitude: true })),
+        })
+        expect(svg).toContain('Pico A')
+        expect(svg).not.toContain('1.412 m')
+      })
+
+      it('puts a legend under the profile, growing the card', () => {
+        const card = buildSummaryCard({ ...route, landmarkLabels: 'legend' })
+        expect(card.height).toBeGreaterThan(900)
+        expect(card.svg).toContain(`viewBox="0 0 1600 ${card.height}"`)
+        expect(card.profile?.top).toBe(634 + 40)
+      })
+
+      it('has no legend panel without visible landmarks', () => {
+        const card = buildSummaryCard({
+          ...route,
+          landmarks: [{ ...landmarks[0], hidden: true }],
+          landmarkLabels: 'legend',
+        })
+        expect(card.height).toBe(900)
+        expect(card.profile?.landmarks).toBeUndefined()
+      })
+
+      it('notes that GPS altitudes may be off, in the card language', () => {
+        const es = buildSummaryCard(route)
+        expect(es.svg).toContain(
+          'Altitudes tomadas por GPS: pueden no ser exactas',
+        )
+        expect(es.profile?.bottom).toBe(838)
+        expect(summaryCard({ ...route, lang: 'en' })).toContain(
+          'Altitudes recorded by GPS: they may be inaccurate',
+        )
+        const off = buildSummaryCard({ ...route, altitudeNote: false })
+        expect(off.svg).not.toContain('data-altitude-note')
+        expect(off.profile?.bottom).toBe(860)
+      })
+
+      it('draws them on ferrata cards too', () => {
+        const card = buildSummaryCard({
+          ...baseFerrata,
+          elevation,
+          landmarks: route.landmarks,
+        })
+        expect(card.svg).toContain('data-altitude-note')
+        expect(card.profile?.top).toBe(634 + 78)
+        expect(card.profile?.landmarks).toEqual(
+          buildSummaryCard(route).profile?.landmarks,
+        )
+      })
     })
 
     it('handles a flat elevation series without dividing by zero', () => {

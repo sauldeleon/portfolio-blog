@@ -33,6 +33,7 @@ const CAT_ICON: Record<string, IconKind> = {
 const SYM_MAP: Record<string, string> = {
   shelter: 'refugio',
   lodge: 'refugio',
+  lodging: 'refugio',
   'drinking water': 'fuente',
   'water source': 'fuente',
   information: 'info',
@@ -41,6 +42,7 @@ const SYM_MAP: Record<string, string> = {
   summit: 'summit',
   alert: 'alert',
   danger: 'alert',
+  warning: 'alert',
   glacier: 'glacier',
 }
 
@@ -169,4 +171,66 @@ export function parseWaypoints(xml: string): Waypoint[] {
     })
   }
   return out
+}
+
+/**
+ * Short, stable code for a spot: 4 base-36 characters hashed (FNV-1a) from its
+ * coordinates, so the same waypoint always gets the same code.
+ */
+export function positionHash(lat: number, lon: number): string {
+  let hash = 0x811c9dc5
+  for (const ch of `${lat.toFixed(5)},${lon.toFixed(5)}`) {
+    hash ^= ch.charCodeAt(0)
+    hash = Math.imul(hash, 0x01000193) >>> 0
+  }
+  return (hash % 36 ** 4).toString(36).padStart(4, '0')
+}
+
+/** What a waypoint file name is built from. */
+export interface WaypointFileInfo {
+  name: string
+  lat?: number
+  lon?: number
+  ele?: number
+}
+
+/**
+ * The one place waypoint image names are built (download file and Cloudinary
+ * public_id): `<prefix>-<lang>[-<order>]-<name>[-<ele>m][-<code>]`. The order
+ * keeps files sorted and unique within a batch; altitude and the position
+ * code keep same-named waypoints apart across batches.
+ */
+export function waypointFilename(
+  prefix: string,
+  lang: string,
+  info: WaypointFileInfo,
+  order?: string,
+): string {
+  const parts = [prefix, lang]
+  if (order) parts.push(order)
+  parts.push(waypointSlug(info.name))
+  if (info.ele !== undefined && Number.isFinite(info.ele)) {
+    parts.push(`${Math.round(info.ele)}m`)
+  }
+  if (
+    info.lat !== undefined &&
+    info.lon !== undefined &&
+    Number.isFinite(info.lat) &&
+    Number.isFinite(info.lon)
+  ) {
+    parts.push(positionHash(info.lat, info.lon))
+  }
+  return parts.join('-')
+}
+
+/** Names for a batch of waypoints, numbered `01`, `02`… in their order. */
+export function waypointFilenames(
+  prefix: string,
+  lang: string,
+  infos: WaypointFileInfo[],
+): string[] {
+  const width = Math.max(2, String(infos.length).length)
+  return infos.map((info, i) =>
+    waypointFilename(prefix, lang, info, String(i + 1).padStart(width, '0')),
+  )
 }

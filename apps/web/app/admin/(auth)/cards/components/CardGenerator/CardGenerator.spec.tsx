@@ -140,22 +140,30 @@ vi.mock('../CroquisGenerator', () => ({
   CroquisGenerator: () => <div data-testid="croquis-generator-mock" />,
 }))
 
-vi.mock('../CanyonSummaryGenerator', () => ({
-  CanyonSummaryGenerator: () => (
-    <div data-testid="canyon-summary-generator-mock" />
-  ),
+function summaryMock(testId: string) {
+  return ({
+    data,
+    filename,
+  }: {
+    data: { title?: string }
+    filename: string
+  }) => (
+    <div data-testid={testId}>
+      {filename}|{data.title}
+    </div>
+  )
+}
+
+vi.mock('../CanyonSummary', () => ({
+  CanyonSummary: summaryMock('canyon-summary-mock'),
 }))
 
-vi.mock('../RouteSummaryGenerator', () => ({
-  RouteSummaryGenerator: () => (
-    <div data-testid="route-summary-generator-mock" />
-  ),
+vi.mock('../RouteSummary', () => ({
+  RouteSummary: summaryMock('route-summary-mock'),
 }))
 
-vi.mock('../FerrataSummaryGenerator', () => ({
-  FerrataSummaryGenerator: () => (
-    <div data-testid="ferrata-summary-generator-mock" />
-  ),
+vi.mock('../FerrataSummary', () => ({
+  FerrataSummary: summaryMock('ferrata-summary-mock'),
 }))
 
 describe('CardGenerator', () => {
@@ -356,31 +364,61 @@ describe('CardGenerator', () => {
     expect(screen.getByTestId('canyoning-form-mock')).toBeInTheDocument()
   })
 
-  it('shows the interactive canyon generator on its tab', () => {
-    renderApp(<CardGenerator />)
-    fireEvent.click(screen.getByTestId('card-type-canyon-summary'))
-    expect(
-      screen.getByTestId('canyon-summary-generator-mock'),
-    ).toBeInTheDocument()
-    expect(screen.queryByTestId('route-form-mock')).not.toBeInTheDocument()
-  })
+  describe('interactive preview', () => {
+    afterEach(() => {
+      window.localStorage.clear()
+      vi.restoreAllMocks()
+    })
 
-  it('shows the interactive ferrata generator on its tab', () => {
-    renderApp(<CardGenerator />)
-    fireEvent.click(screen.getByTestId('card-type-ferrata-summary'))
-    expect(
-      screen.getByTestId('ferrata-summary-generator-mock'),
-    ).toBeInTheDocument()
-    expect(screen.queryByTestId('route-form-mock')).not.toBeInTheDocument()
-  })
+    it('swaps the static preview for the interactive card of each kind', () => {
+      renderApp(<CardGenerator />)
+      const toggle = screen.getByLabelText('Interactive')
+      expect(toggle).not.toBeChecked()
+      fireEvent.click(toggle)
+      expect(screen.queryByTestId('card-preview-mock')).not.toBeInTheDocument()
+      expect(screen.getByTestId('route-summary-mock')).toHaveTextContent(
+        'en_route_route',
+      )
+      fireEvent.click(screen.getByTestId('card-type-canyoning-data'))
+      expect(screen.getByTestId('canyon-summary-mock')).toBeInTheDocument()
+      fireEvent.click(screen.getByTestId('card-type-summary-ferrata'))
+      expect(screen.getByTestId('ferrata-summary-mock')).toBeInTheDocument()
+      fireEvent.click(screen.getByLabelText('Interactive'))
+      expect(screen.getByTestId('card-preview-mock')).toBeInTheDocument()
+    })
 
-  it('shows the interactive route generator on its tab', () => {
-    renderApp(<CardGenerator />)
-    fireEvent.click(screen.getByTestId('card-type-route-summary'))
-    expect(
-      screen.getByTestId('route-summary-generator-mock'),
-    ).toBeInTheDocument()
-    expect(screen.queryByTestId('route-form-mock')).not.toBeInTheDocument()
+    it('keeps the form data when switching previews', () => {
+      renderApp(<CardGenerator />)
+      fireEvent.change(screen.getByTestId('mock-ruta-title'), {
+        target: { value: 'Peña Ubiña' },
+      })
+      fireEvent.click(screen.getByLabelText('Interactive'))
+      expect(screen.getByTestId('route-summary-mock')).toHaveTextContent(
+        'Peña Ubiña',
+      )
+    })
+
+    it('remembers the choice', () => {
+      window.localStorage.setItem('admin.cards.interactive', '1')
+      renderApp(<CardGenerator />)
+      expect(screen.getByLabelText('Interactive')).toBeChecked()
+      fireEvent.click(screen.getByLabelText('Interactive'))
+      expect(window.localStorage.getItem('admin.cards.interactive')).toBe('0')
+    })
+
+    it('works with storage blocked', () => {
+      vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
+        throw new Error('blocked')
+      })
+      vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+        throw new Error('blocked')
+      })
+      renderApp(<CardGenerator />)
+      const toggle = screen.getByLabelText('Interactive')
+      expect(toggle).not.toBeChecked()
+      fireEvent.click(toggle)
+      expect(toggle).toBeChecked()
+    })
   })
 
   it('returns to a spec form after leaving a waypoint tab', () => {

@@ -22,12 +22,12 @@ const notWide = () => false
 const noLabel = () => ''
 const noPopover = () => null
 
-const W = 1600
-const H = 900
-
 export interface InteractiveCardMapProps {
-  /** The static card SVG (1600×900). */
+  /** The static card SVG. */
   svg: string
+  /** Its size in user-space: 1600×900, taller when a legend grows it. */
+  width?: number
+  height?: number
   /** Interactive hit-zones laid over the card. */
   zones: CardZone[]
   /**
@@ -66,6 +66,8 @@ export function InteractiveCardMap({
   hint,
   profile,
   lang = 'en',
+  width: W = 1600,
+  height: H = 900,
 }: InteractiveCardMapProps) {
   const hoverEnabled = interaction !== 'click'
   const [active, setActive] = useState<CardZone | null>(null)

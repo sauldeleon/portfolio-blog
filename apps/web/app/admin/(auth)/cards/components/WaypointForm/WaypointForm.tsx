@@ -4,7 +4,7 @@ import { useMemo, useState } from 'react'
 
 import { Button } from '@sdlgr/button'
 
-import { waypointCard, waypointSlug } from '@web/lib/cards'
+import { waypointCard, waypointFilename } from '@web/lib/cards'
 import type { Lang } from '@web/lib/cards'
 
 import {
@@ -43,7 +43,14 @@ export function WaypointForm() {
     [data, lang],
   )
 
-  const filename = `${lang}_${waypointSlug(data.name || 'waypoint')}`
+  const optional = (value: string) =>
+    value.trim() === '' ? undefined : Number(value)
+  const filename = waypointFilename('waypoint', lang, {
+    name: data.name,
+    lat: optional(data.lat),
+    lon: optional(data.lon),
+    ele: optional(data.ele),
+  })
 
   return (
     <StyledLayout data-testid="waypoint-form">

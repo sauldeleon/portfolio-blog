@@ -4,12 +4,12 @@ import {
   badge,
   columnDivider,
   contours,
-  elevationProfile,
   esc,
   eyebrow,
   hRule,
   tw,
 } from './primitives'
+import { profileSection } from './profileSection'
 import {
   AMBER,
   BADGE_BG,
@@ -200,22 +200,32 @@ export function buildSummaryCard(data: SummaryCardData): CardResult {
 
   // --- elevation profile (drawn from GPX, else placeholder) ---
   const profileY = 602
-  const elevation = data.elevation ?? []
-  const profilePlaceholder =
-    elevation.length >= 2
-      ? eyebrow(CX0, profileY, S.profile) +
-        elevationProfile(elevation, CX0, CXR, profileY + 32, 860)
-      : `<text x="${(W / 2).toFixed(1)}" y="${profileY + 100}" text-anchor="middle" ` +
-        `font-family="Poppins" font-size="18" letter-spacing="3" fill="${COLD}" opacity="0.3">` +
-        `${esc(S.profile)} · GPX</text>`
+  const section = profileSection({
+    lang: data.lang,
+    elevation: data.elevation,
+    landmarks: data.landmarks,
+    labels: data.landmarkLabels,
+    altitudeNote: data.altitudeNote !== false,
+    y: profileY,
+    x0: CX0,
+    x1: CXR,
+    height: H,
+  })
+  const profilePlaceholder = section.profile
+    ? section.svg
+    : `<text x="${(W / 2).toFixed(1)}" y="${profileY + 100}" text-anchor="middle" ` +
+      `font-family="Poppins" font-size="18" letter-spacing="3" fill="${COLD}" opacity="0.3">` +
+      `${esc(S.profile)} · GPX</text>`
 
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
+  // A legend under the profile grows the card downwards.
+  const height = H + section.extraHeight
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${height}" width="${W}" height="${height}">
 <defs>
  ${FONT_STYLE}
  <linearGradient id="panel" x1="0" y1="0" x2="0.4" y2="1"><stop offset="0" stop-color="${BG_TOP}"/><stop offset="1" stop-color="${BG_BOT}"/></linearGradient>
- <clipPath id="pc"><rect x="16" y="16" width="${W - 32}" height="${H - 32}" rx="30"/></clipPath>
+ <clipPath id="pc"><rect x="16" y="16" width="${W - 32}" height="${height - 32}" rx="30"/></clipPath>
 </defs>
-<rect x="16" y="16" width="${W - 32}" height="${H - 32}" rx="30" fill="url(#panel)" stroke="${PANEL_STK}" stroke-width="1.6"/>
+<rect x="16" y="16" width="${W - 32}" height="${height - 32}" rx="30" fill="url(#panel)" stroke="${PANEL_STK}" stroke-width="1.6"/>
 <g clip-path="url(#pc)">${contours(
     [
       [70, 26],
@@ -240,19 +250,7 @@ ${hRule(CX0, CXR, 562)}
 ${profilePlaceholder}
 </svg>`
 
-  const profile =
-    elevation.length >= 2
-      ? {
-          elevation,
-          x0: CX0,
-          x1: CXR,
-          top: profileY + 32,
-          bottom: 860,
-          landmarks: data.kind === 'summary-route' ? data.landmarks : undefined,
-        }
-      : undefined
-
-  return { svg, width: W, height: H, zones, profile }
+  return { svg, width: W, height, zones, profile: section.profile }
 }
 
 /**

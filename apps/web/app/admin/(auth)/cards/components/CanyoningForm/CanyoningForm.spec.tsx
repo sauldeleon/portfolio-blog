@@ -2,7 +2,7 @@ import { fireEvent, screen } from '@testing-library/react'
 
 import { renderApp } from '@sdlgr/test-utils'
 
-import type { CanyoningCardData } from '@web/lib/cards'
+import type { CanyoningCardData, RouteLandmark } from '@web/lib/cards'
 
 import { CanyoningForm } from './CanyoningForm'
 
@@ -104,6 +104,8 @@ type ParsedMetrics = {
   date: string
   descent: string
   elevation: number[]
+  landmarks?: RouteLandmark[]
+  placesUnavailable?: boolean
 }
 
 vi.mock('../GpxUrlField', () => ({
@@ -130,6 +132,8 @@ vi.mock('../GpxUrlField', () => ({
             date: '01 JUL 2025',
             descent: '250 m',
             elevation: [1, 2, 3],
+            landmarks: [{ kind: 'point', index: 1, ele: 900, lat: 0, lon: 0 }],
+            placesUnavailable: true,
           })
         }
       />
@@ -402,5 +406,57 @@ describe('CanyoningForm', () => {
         season: 'jun-sep',
       }),
     )
+  })
+
+  describe('profile spots', () => {
+    const withSpots: CanyoningCardData = {
+      ...base,
+      landmarks: [{ kind: 'point', index: 1, ele: 900, lat: 0, lon: 0 }],
+    }
+
+    it('takes the spots found in the GPX and warns when OSM is down', () => {
+      const onChange = vi.fn()
+      renderApp(<CanyoningForm value={base} onChange={onChange} />)
+      expect(
+        screen.queryByTestId('bc-landmarks-osm-down'),
+      ).not.toBeInTheDocument()
+      fireEvent.click(screen.getByTestId('gpx-parsed-full'))
+      expect(onChange).toHaveBeenCalledWith(
+        expect.objectContaining({
+          landmarks: [expect.objectContaining({ ele: 900 })],
+        }),
+      )
+      expect(screen.getByTestId('bc-landmarks-osm-down')).toBeInTheDocument()
+      fireEvent.click(screen.getByTestId('gpx-parsed-empty'))
+      expect(
+        screen.queryByTestId('bc-landmarks-osm-down'),
+      ).not.toBeInTheDocument()
+    })
+
+    it('edits the spots and their label mode', () => {
+      const onChange = vi.fn()
+      renderApp(<CanyoningForm value={withSpots} onChange={onChange} />)
+      fireEvent.click(screen.getByTestId('bc-labels-legend'))
+      expect(onChange).toHaveBeenLastCalledWith(
+        expect.objectContaining({ landmarkLabels: 'legend' }),
+      )
+      fireEvent.click(screen.getByTestId('bc-landmark-remove-0'))
+      expect(onChange).toHaveBeenLastCalledWith(
+        expect.objectContaining({ landmarks: [] }),
+      )
+    })
+
+    it('shows the GPS altitude note unless turned off', () => {
+      const onChange = vi.fn()
+      renderApp(<CanyoningForm value={base} onChange={onChange} />)
+      const note = screen.getByLabelText(
+        'Note under the profile that GPS altitudes may be inaccurate',
+      )
+      expect(note).toBeChecked()
+      fireEvent.click(note)
+      expect(onChange).toHaveBeenLastCalledWith(
+        expect.objectContaining({ altitudeNote: false }),
+      )
+    })
   })
 })

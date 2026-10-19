@@ -2,8 +2,11 @@ import {
   categoryIcon,
   norm,
   parseWaypoints,
+  positionHash,
   resolveCategory,
   translateName,
+  waypointFilename,
+  waypointFilenames,
   waypointSlug,
 } from './waypoints'
 
@@ -129,5 +132,65 @@ describe('parseWaypoints', () => {
     const [w] = parseWaypoints(gpxWpt('lat="1" lon="2"', '<ele>1849.6</ele>'))
     expect(w.ele).toBe(1850)
     expect(w.name).toBe('')
+  })
+})
+
+describe('positionHash', () => {
+  it('gives the same 4-character code for the same spot', () => {
+    expect(positionHash(43.0236, -5.9583)).toMatch(/^[0-9a-z]{4}$/)
+    expect(positionHash(43.0236, -5.9583)).toBe(positionHash(43.0236, -5.9583))
+    // Below ~1 m apart it is the same spot.
+    expect(positionHash(43.0236, -5.9583)).toBe(
+      positionHash(43.023600001, -5.9583),
+    )
+  })
+
+  it('tells apart nearby spots', () => {
+    expect(positionHash(43.0236, -5.9583)).not.toBe(
+      positionHash(43.0237, -5.9583),
+    )
+  })
+})
+
+describe('waypointFilename', () => {
+  it('adds altitude and position code when known', () => {
+    expect(
+      waypointFilename('waypoint-x', 'es', {
+        name: 'Collado',
+        lat: 43.01,
+        lon: -5.9,
+        ele: 2113.6,
+      }),
+    ).toBe(`waypoint-x-es-collado-2114m-${positionHash(43.01, -5.9)}`)
+  })
+
+  it('leaves out what is missing or not a number', () => {
+    expect(waypointFilename('w', 'en', { name: 'Fuente' })).toBe('w-en-fuente')
+    expect(
+      waypointFilename('w', 'en', {
+        name: 'Fuente',
+        lat: 1,
+        lon: NaN,
+        ele: NaN,
+      }),
+    ).toBe('w-en-fuente')
+    expect(
+      waypointFilename('w', 'en', { name: 'Fuente', lat: 1, ele: 5 }, '07'),
+    ).toBe('w-en-07-fuente-5m')
+  })
+})
+
+describe('waypointFilenames', () => {
+  it('numbers a batch in order, padding to its size', () => {
+    expect(
+      waypointFilenames('w', 'en', [{ name: 'A' }, { name: 'A' }]),
+    ).toEqual(['w-en-01-a', 'w-en-02-a'])
+    const many = waypointFilenames(
+      'w',
+      'en',
+      Array.from({ length: 120 }, () => ({ name: 'P' })),
+    )
+    expect(many[0]).toBe('w-en-001-p')
+    expect(many[119]).toBe('w-en-120-p')
   })
 })

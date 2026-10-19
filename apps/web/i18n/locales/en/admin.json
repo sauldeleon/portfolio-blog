@@ -362,16 +362,14 @@
     "title": "Cards",
     "tabs": {
       "route": "Route",
-      "routeInteractive": "Route (interactive)",
       "canyonData": "Canyon",
-      "canyonInteractive": "Canyon (interactive)",
       "canyonWaypoints": "Canyon (waypoints)",
       "croquis": "Canyon (Croquis)",
       "ferrata": "Via Ferrata",
-      "ferrataInteractive": "Ferrata (interactive)",
       "waypointsGpx": "Waypoints (GPX)",
       "waypointSingle": "Waypoint (single)"
     },
+    "interactive": "Interactive",
     "sections": {
       "header": "Header",
       "metrics": "Metrics",
@@ -448,7 +446,24 @@
       "landmarkCol": "Col",
       "landmarkName": "Name (optional)",
       "landmarkRemove": "Remove from the card",
-      "landmarksOsmDown": "OpenStreetMap didn't answer, so names not in the GPX waypoints are missing. Press Parse again later, or type them."
+      "landmarksOsmDown": "OpenStreetMap didn't answer, so names not in the GPX waypoints are missing. Press Parse again later, or type them.",
+      "landmarkLabels": "Labels on the card",
+      "landmarkModes": {
+        "auto": "Auto",
+        "names": "Names",
+        "legend": "Legend",
+        "markers": "Markers"
+      },
+      "landmarkModeHints": {
+        "auto": "Names where they fit without covering anything; the rest keep just their marker.",
+        "names": "Every name next to its marker, moved up or down to avoid overlaps.",
+        "legend": "Numbers on the profile and a legend under it: the image grows taller.",
+        "markers": "Only the ▲ / ▼ markers, no text."
+      },
+      "landmarkAltitude": "Show all altitudes",
+      "landmarkHide": "Hide from the card",
+      "landmarkShow": "Show on the card",
+      "altitudeNote": "Note under the profile that GPS altitudes may be inaccurate"
     },
     "flow": {
       "observed": "Observed flow",
