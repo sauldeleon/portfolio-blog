@@ -1,6 +1,6 @@
 'use client'
 
-import { useId } from 'react'
+import { type ReactNode, useId } from 'react'
 import ReactSelect from 'react-select'
 import CreatableReactSelect from 'react-select/creatable'
 
@@ -24,6 +24,8 @@ export interface SelectProps {
   maxMenuHeight?: number
   /** Label of the "create" entry when `isCreatable` (react-select default otherwise). */
   formatCreateLabel?: (inputValue: string) => string
+  /** Custom content for each option and the selected value (e.g. an icon). */
+  formatOptionLabel?: (option: SelectOption) => ReactNode
   'data-testid'?: string
 }
 
@@ -44,6 +46,7 @@ export function Select({
   isClearable = false,
   maxMenuHeight,
   formatCreateLabel,
+  formatOptionLabel,
   'data-testid': testId,
 }: SelectProps) {
   const uid = useId()
@@ -69,6 +72,10 @@ export function Select({
     isSearchable,
     isClearable,
     ...(maxMenuHeight !== undefined && { maxMenuHeight }),
+    ...(formatOptionLabel && {
+      formatOptionLabel: (option: RsOption) =>
+        formatOptionLabel({ value: option.value, label: option.label }),
+    }),
   }
 
   return (

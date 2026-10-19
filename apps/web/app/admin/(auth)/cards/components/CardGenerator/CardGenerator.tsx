@@ -5,7 +5,7 @@ import { useMemo, useState } from 'react'
 import { Button } from '@sdlgr/button'
 
 import { useClientTranslation } from '@web/i18n/client'
-import { renderCard } from '@web/lib/cards'
+import { buildCard } from '@web/lib/cards'
 import type {
   CanyoningCardData,
   CardSpec,
@@ -120,7 +120,8 @@ export function CardGenerator() {
     }
   }
 
-  const svg = useMemo(() => renderCard(spec), [spec])
+  // Route cards with a legend grow taller, so the size comes from the card.
+  const card = useMemo(() => buildCard(spec), [spec])
 
   const filename = useMemo(() => {
     const slug = cardSlug(spec.kind)
@@ -179,9 +180,9 @@ export function CardGenerator() {
 
           <StyledPanelPreview>
             <CardPreview
-              svg={svg}
-              cardWidth={1600}
-              cardHeight={900}
+              svg={card.svg}
+              cardWidth={card.width}
+              cardHeight={card.height}
               filename={filename}
             />
           </StyledPanelPreview>

@@ -15,11 +15,16 @@ export interface RouteSummaryMapProps {
  * altitude read off its elevation profile on hover or tap.
  */
 export function RouteSummaryMap({ data }: RouteSummaryMapProps) {
-  const { svg, zones, profile } = useMemo(() => buildSummaryCard(data), [data])
+  const { svg, zones, profile, width, height } = useMemo(
+    () => buildSummaryCard(data),
+    [data],
+  )
 
   return (
     <InteractiveCardMap
       svg={svg}
+      width={width}
+      height={height}
       zones={zones}
       interaction="click"
       profile={profile}

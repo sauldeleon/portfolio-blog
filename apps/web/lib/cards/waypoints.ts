@@ -33,6 +33,7 @@ const CAT_ICON: Record<string, IconKind> = {
 const SYM_MAP: Record<string, string> = {
   shelter: 'refugio',
   lodge: 'refugio',
+  lodging: 'refugio',
   'drinking water': 'fuente',
   'water source': 'fuente',
   information: 'info',
@@ -41,6 +42,7 @@ const SYM_MAP: Record<string, string> = {
   summit: 'summit',
   alert: 'alert',
   danger: 'alert',
+  warning: 'alert',
   glacier: 'glacier',
 }
 

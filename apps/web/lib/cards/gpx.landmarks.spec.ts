@@ -8,13 +8,13 @@ describe('parseNamedWaypoints', () => {
   it('reads named waypoints, decoding entities and skipping the rest', () => {
     expect(
       parseNamedWaypoints(
-        '<gpx><wpt lat="43" lon="-5.9"><ele>2417</ele><name> Peña &amp; Ubiña </name></wpt>' +
+        '<gpx><wpt lat="43" lon="-5.9"><ele>2417</ele><name> Peña &amp; Ubiña </name><sym> Summit </sym></wpt>' +
           '<wpt lat="43.1" lon="-5.8"><ele>1</ele></wpt>' +
           '<wpt lat="x" lon="-5.8"><name>Bad</name></wpt>' +
           '<wpt lat="43.2" lon="-5.7"><name>&lt;&gt;&quot;&apos;</name></wpt></gpx>',
       ),
     ).toEqual([
-      { lat: 43, lon: -5.9, name: 'Peña & Ubiña' },
+      { lat: 43, lon: -5.9, name: 'Peña & Ubiña', ele: 2417, sym: 'Summit' },
       { lat: 43.2, lon: -5.7, name: '<>"\'' },
     ])
   })
@@ -38,17 +38,24 @@ describe('parseGpx landmarks', () => {
     expect(m.landmarks[0]).toMatchObject({ lat: 42.003, lon: 0 })
   })
 
-  it('names them after nearby GPX waypoints only', () => {
+  it('draws every GPX waypoint on the track, typed by symbol or name', () => {
     const m = parseGpx(
-      `<gpx><wpt lat="42.0076" lon="0"><name>Antecima</name></wpt>` +
-        `<wpt lat="42.0071" lon="0"><name>Pico Alto</name></wpt>` +
+      `<gpx><wpt lat="42.0071" lon="0"><ele>1702</ele><name>Pico Alto</name><sym>Summit</sym></wpt>` +
+        `<wpt lat="42.0050" lon="0"><ele>1351</ele><name>Collado X</name><sym>Information</sym></wpt>` +
+        `<wpt lat="42.0010" lon="0"><name>Refugio</name><sym>Lodging</sym></wpt>` +
         `<wpt lat="42.0050" lon="0.01"><name>Too far</name></wpt>` +
         `<trk><trkseg>${track}</trkseg></trk></gpx>`,
     )
-    expect(m.landmarks.map((l) => l.name)).toEqual([
-      undefined,
-      undefined,
-      'Pico Alto',
+    expect(
+      m.landmarks.map((l) => [l.kind, l.index, l.ele, l.name, l.category]),
+    ).toEqual([
+      // A hut: its own icon, the track's altitude as it has none.
+      ['point', 1, 1200, 'Refugio', 'refugio'],
+      // A detected summit no waypoint marks stays, unnamed.
+      ['peak', 3, 1600, undefined, undefined],
+      // Waypoints replace the summit and col detected at their spot.
+      ['col', 5, 1351, 'Collado X', undefined],
+      ['peak', 7, 1702, 'Pico Alto', undefined],
     ])
   })
 

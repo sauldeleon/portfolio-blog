@@ -191,4 +191,42 @@ describe('RouteForm route type and language', () => {
       screen.queryByTestId('rt-landmarks-osm-down'),
     ).not.toBeInTheDocument()
   })
+
+  it('passes the label mode and altitudes to the card data', () => {
+    const onChange = vi.fn()
+    renderApp(
+      <RouteForm
+        value={{
+          ...defaultValue,
+          landmarks: [
+            { kind: 'peak', index: 1, ele: 2417, lat: 43, lon: -5.9 },
+          ],
+        }}
+        onChange={onChange}
+      />,
+    )
+    fireEvent.click(screen.getByTestId('rt-labels-auto'))
+    expect(onChange).toHaveBeenLastCalledWith(
+      expect.objectContaining({ landmarkLabels: 'auto' }),
+    )
+    fireEvent.click(screen.getByLabelText('Show all altitudes'))
+    expect(onChange).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        landmarks: [expect.objectContaining({ hideAltitude: true })],
+      }),
+    )
+  })
+
+  it('shows the GPS altitude note unless turned off', () => {
+    const onChange = vi.fn()
+    renderApp(<RouteForm value={defaultValue} onChange={onChange} />)
+    const note = screen.getByLabelText(
+      'Note under the profile that GPS altitudes may be inaccurate',
+    )
+    expect(note).toBeChecked()
+    fireEvent.click(note)
+    expect(onChange).toHaveBeenLastCalledWith(
+      expect.objectContaining({ altitudeNote: false }),
+    )
+  })
 })

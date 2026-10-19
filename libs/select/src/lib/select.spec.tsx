@@ -191,6 +191,32 @@ describe('Select', () => {
     )
   })
 
+  it('renders custom option content through formatOptionLabel', () => {
+    const formatOptionLabel = vi.fn(
+      (option: { value: string; label: string }) => `★ ${option.label}`,
+    )
+    renderSelect({ formatOptionLabel })
+    const props = mockReactSelect.mock.calls[0][0]
+    expect(
+      props.formatOptionLabel({
+        value: 'design',
+        label: 'Design',
+        isDisabled: undefined,
+      }),
+    ).toBe('★ Design')
+    expect(formatOptionLabel).toHaveBeenCalledWith({
+      value: 'design',
+      label: 'Design',
+    })
+  })
+
+  it('keeps plain labels without formatOptionLabel', () => {
+    renderSelect()
+    expect(mockReactSelect.mock.calls[0][0]).not.toHaveProperty(
+      'formatOptionLabel',
+    )
+  })
+
   it('passes isSearchable false by default', () => {
     renderSelect()
     expect(mockReactSelect).toHaveBeenCalledWith(

@@ -22,9 +22,13 @@ type Marker = Pick<RouteLandmark, 'kind' | 'index' | 'name'> & { ele: number }
 /** ▲ for summits, ▼ for cols, centred on (x, y). */
 function markerPath(kind: Marker['kind'], x: number, y: number): string {
   const r = 9
+  if (kind === 'point') {
+    return `M${x - 11},${y} a11,11 0 1,0 22,0 a11,11 0 1,0 -22,0`
+  }
+  const h = r * 0.85
   return kind === 'peak'
-    ? `M${x},${y - r} L${x + r},${y + r * 0.7} L${x - r},${y + r * 0.7} Z`
-    : `M${x},${y + r} L${x + r},${y - r * 0.7} L${x - r},${y - r * 0.7} Z`
+    ? `M${x},${y - h} L${x + r},${y + h} L${x - r},${y + h} Z`
+    : `M${x},${y + h} L${x + r},${y - h} L${x - r},${y - h} Z`
 }
 
 export interface ElevationLayerProps {
@@ -52,6 +56,8 @@ export function ElevationLayer({ profile, lang }: ElevationLayerProps) {
           })),
     [profile.landmarks, profile.elevation],
   )
+  // The card draws named landmarks itself; here they only catch the pointer.
+  const drawnByCard = Boolean(profile.landmarks?.length)
   const last = profile.elevation.length - 1
 
   function indexAt(e: React.PointerEvent<SVGRectElement>): number {
@@ -100,9 +106,10 @@ export function ElevationLayer({ profile, lang }: ElevationLayerProps) {
             key={`${m.kind}-${m.index}`}
             className="peak"
             d={markerPath(m.kind, p.x, p.y)}
-            fill={m.kind === 'peak' ? AMBER : '#0E1820'}
-            stroke={AMBER}
-            strokeWidth={3}
+            // Without card-drawn landmarks these are the highest points.
+            fill={drawnByCard ? 'transparent' : AMBER}
+            stroke={drawnByCard ? 'transparent' : AMBER}
+            strokeWidth={drawnByCard ? 14 : 3}
             strokeLinejoin="round"
             tabIndex={0}
             role="img"

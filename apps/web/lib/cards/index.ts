@@ -1,7 +1,7 @@
 export { buildCanyonCard, canyoningCard } from './canyoningCard'
 export { buildSummaryCard, summaryCard } from './summaryCard'
 export type { SummaryCardData } from './summaryCard'
-export { renderCard } from './renderCard'
+export { buildCard, renderCard } from './renderCard'
 export { iconPath } from './icons'
 export {
   badge,
@@ -101,3 +101,5 @@ export type {
   SummaryFerrataData,
   Lang,
 } from './types'
+export { landmarkMarkerSvg } from './landmarksSvg'
+export type { LandmarkLabels } from './landmarksSvg'

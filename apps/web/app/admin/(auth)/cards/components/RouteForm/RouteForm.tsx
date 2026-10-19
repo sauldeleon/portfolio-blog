@@ -3,6 +3,7 @@
 import { useState } from 'react'
 
 import { Button } from '@sdlgr/button'
+import { Checkbox } from '@sdlgr/checkbox'
 import { FieldGroup, FieldLabel, Input } from '@sdlgr/input'
 
 import { useClientTranslation } from '@web/i18n/client'
@@ -167,6 +168,14 @@ export function RouteForm({ value, onChange, hideLang }: RouteFormProps) {
           value={value.landmarks}
           onChange={(landmarks) => set({ landmarks })}
           placesUnavailable={placesUnavailable}
+          labels={value.landmarkLabels}
+          onLabelsChange={(landmarkLabels) => set({ landmarkLabels })}
+        />
+        <Checkbox
+          id="rt-altitude-note"
+          label={t('cards.fields.altitudeNote')}
+          checked={value.altitudeNote !== false}
+          onChange={(altitudeNote) => set({ altitudeNote })}
         />
       </StyledSection>
 

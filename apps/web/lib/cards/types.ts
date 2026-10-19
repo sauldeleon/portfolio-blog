@@ -71,9 +71,14 @@ export interface CanyoningCardData {
   elevation?: number[]
 }
 
-/** A summit or col along a route, placed on its stored elevation profile. */
+/**
+ * A spot along a route, placed on its stored elevation profile: a summit, a
+ * col, or any other GPX waypoint (hut, spring, warning…).
+ */
 export interface RouteLandmark {
-  kind: 'peak' | 'col'
+  kind: 'peak' | 'col' | 'point'
+  /** Waypoint category (refugio, fuente…) that picks a point's icon. */
+  category?: string
   /** Sample of `elevation` it sits on. */
   index: number
   /** Real altitude at the spot, in metres. */
@@ -82,6 +87,10 @@ export interface RouteLandmark {
   lon: number
   /** From a GPX waypoint or OpenStreetMap; editable in the form. */
   name?: string
+  /** Kept in the data but left off the card. */
+  hidden?: boolean
+  /** Leave the altitude out of its label on the card. */
+  hideAltitude?: boolean
 }
 
 export interface SummaryRouteData {
@@ -102,8 +111,13 @@ export interface SummaryRouteData {
   ret?: string
   gpxUrl?: string
   elevation?: number[]
-  /** Summits and cols to point out on the interactive profile. */
+  /** Summits and cols to point out on the profile. */
   landmarks?: RouteLandmark[]
+  /** Note under the profile that GPS altitudes may be off (default: shown). */
+  altitudeNote?: boolean
+  /** How they are labelled on the card (default: names); a legend goes
+   * under the profile and makes the card taller. */
+  landmarkLabels?: 'auto' | 'names' | 'legend' | 'markers'
 }
 
 export interface SummaryFerrataData {
