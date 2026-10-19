@@ -49,13 +49,15 @@ describe('CanyonSummaryMap', () => {
     )
   })
 
-  it('renders no zones (and no hint) when there is no grade or flow', () => {
+  it('renders no zones but keeps the hint when there is no grade or flow', () => {
     renderApp(
       <CanyonSummaryMap data={{ kind: 'canyoning-data', lang: 'en' }} />,
     )
     expect(screen.queryByTestId('card-zone-flow')).not.toBeInTheDocument()
     expect(screen.queryByTestId('card-zone-grade-vert')).not.toBeInTheDocument()
-    expect(screen.queryByTestId('card-hint')).not.toBeInTheDocument()
+    expect(screen.getByTestId('card-hint')).toHaveTextContent(
+      'Tap the highlighted areas',
+    )
   })
 
   it('opens the verticality scale on hover', () => {

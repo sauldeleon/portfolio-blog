@@ -325,14 +325,19 @@ describe('summaryCard', () => {
         const off = buildSummaryCard({ ...route, altitudeNote: false })
         expect(off.svg).not.toContain('data-altitude-note')
         expect(off.profile?.bottom).toBe(860)
-        expect(summaryCard({ ...baseFerrata, elevation })).not.toContain(
-          'data-altitude-note',
-        )
       })
 
-      it('ignores them on ferrata cards', () => {
-        const card = buildSummaryCard({ ...baseFerrata, elevation })
-        expect(card.profile?.top).toBe(634)
+      it('draws them on ferrata cards too', () => {
+        const card = buildSummaryCard({
+          ...baseFerrata,
+          elevation,
+          landmarks: route.landmarks,
+        })
+        expect(card.svg).toContain('data-altitude-note')
+        expect(card.profile?.top).toBe(634 + 78)
+        expect(card.profile?.landmarks).toEqual(
+          buildSummaryCard(route).profile?.landmarks,
+        )
       })
     })
 

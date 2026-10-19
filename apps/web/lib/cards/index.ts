@@ -94,6 +94,7 @@ export type {
   CardSpec,
   CardProfile,
   CardResult,
+  ProfileLandmarks,
   RouteLandmark,
   CardZone,
   CanyoningCardData,

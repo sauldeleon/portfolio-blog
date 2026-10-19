@@ -49,7 +49,10 @@ export function CanyonSummaryMap({
 }: CanyonSummaryMapProps) {
   const strings = STRINGS[data.lang]
   const scales = CANYON_SCALES[data.lang]
-  const { svg, zones } = useMemo(() => buildCanyonCard(data), [data])
+  const { svg, zones, profile, width, height } = useMemo(
+    () => buildCanyonCard(data),
+    [data],
+  )
 
   function zoneLabel(zone: CardZone): string {
     if (zone.kind === 'grade') {
@@ -147,12 +150,16 @@ export function CanyonSummaryMap({
   return (
     <InteractiveCardMap
       svg={svg}
+      width={width}
+      height={height}
       zones={zones}
       interaction={interaction}
+      profile={profile}
+      lang={data.lang}
       isWide={isWide}
       zoneLabel={zoneLabel}
       renderPopover={renderPopover}
-      hint={zones.length > 0 ? scales.ui.hint : undefined}
+      hint={scales.ui.hint}
     />
   )
 }

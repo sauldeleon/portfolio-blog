@@ -1,22 +1,15 @@
 import { FONT_STYLE } from './fonts'
 import { iconPath } from './icons'
 import {
-  LEGEND_ROW_HEIGHT,
-  formatMetres,
-  landmarkSpace,
-  landmarksSvg,
-  legendRows,
-} from './landmarksSvg'
-import {
   badge,
   columnDivider,
   contours,
-  elevationProfile,
   esc,
   eyebrow,
   hRule,
   tw,
 } from './primitives'
+import { profileSection } from './profileSection'
 import {
   AMBER,
   BADGE_BG,
@@ -207,62 +200,25 @@ export function buildSummaryCard(data: SummaryCardData): CardResult {
 
   // --- elevation profile (drawn from GPX, else placeholder) ---
   const profileY = 602
-  const elevation = data.elevation ?? []
-  // Summits and cols shown on the card, with the room their labels take.
-  const landmarks =
-    data.kind === 'summary-route'
-      ? (data.landmarks ?? []).filter(
-          (l) => !l.hidden && l.index < elevation.length,
-        )
-      : []
-  // Route cards note under the profile that GPS altitudes may be off; the
-  // profile gives up a line for it.
-  const altitudeNote =
-    data.kind === 'summary-route' &&
-    data.altitudeNote !== false &&
-    elevation.length >= 2
-  const landmarkOpts = {
-    labels:
-      data.kind === 'summary-route'
-        ? (data.landmarkLabels ?? 'names')
-        : 'names',
-    formatAltitude: (m: number) => formatMetres(m, data.lang),
-    // Labels under the profile stop short of the note.
-    floor: altitudeNote ? 848 : undefined,
-  } as const
-  // A legend goes in a panel under the profile, growing the card.
-  const legendBelow =
-    landmarkOpts.labels === 'legend' &&
-    landmarks.length > 0 &&
-    elevation.length >= 2
-  const profileTop =
-    profileY + 32 + landmarkSpace(landmarks, landmarkOpts.labels)
-  const profileBottom = altitudeNote ? 838 : 860
-  const profileArea = {
-    elevation,
+  const section = profileSection({
+    lang: data.lang,
+    elevation: data.elevation,
+    landmarks: data.landmarks,
+    labels: data.landmarkLabels,
+    altitudeNote: data.altitudeNote !== false,
+    y: profileY,
     x0: CX0,
     x1: CXR,
-    top: profileTop,
-    bottom: profileBottom,
-  }
-  const profilePlaceholder =
-    elevation.length >= 2
-      ? eyebrow(CX0, profileY, S.profile) +
-        elevationProfile(elevation, CX0, CXR, profileTop, profileBottom) +
-        landmarksSvg(profileArea, landmarks, landmarkOpts, {
-          x0: CX0,
-          x1: CXR,
-          y: H + 30,
-        })
-      : `<text x="${(W / 2).toFixed(1)}" y="${profileY + 100}" text-anchor="middle" ` +
-        `font-family="Poppins" font-size="18" letter-spacing="3" fill="${COLD}" opacity="0.3">` +
-        `${esc(S.profile)} · GPX</text>`
+    height: H,
+  })
+  const profilePlaceholder = section.profile
+    ? section.svg
+    : `<text x="${(W / 2).toFixed(1)}" y="${profileY + 100}" text-anchor="middle" ` +
+      `font-family="Poppins" font-size="18" letter-spacing="3" fill="${COLD}" opacity="0.3">` +
+      `${esc(S.profile)} · GPX</text>`
 
   // A legend under the profile grows the card downwards.
-  const legendHeight = legendBelow
-    ? legendRows(landmarks, landmarkOpts, CX0, CXR) * LEGEND_ROW_HEIGHT + 30
-    : 0
-  const height = H + legendHeight
+  const height = H + section.extraHeight
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${height}" width="${W}" height="${height}">
 <defs>
  ${FONT_STYLE}
@@ -292,23 +248,9 @@ ${heroSvg}
 ${eyebrow(CX0, 383, S.times_header)}${dividersSvg}${tilesSvg}
 ${hRule(CX0, CXR, 562)}
 ${profilePlaceholder}
-${
-  altitudeNote
-    ? `<text x="${CXR}" y="866" text-anchor="end" font-family="Poppins" font-style="italic" font-size="15" fill="${COLD}" opacity="0.8" data-altitude-note="">${esc(S.altitude_note)}</text>`
-    : ''
-}
-${legendBelow ? hRule(CX0, CXR, H - 10) : ''}
 </svg>`
 
-  const profile =
-    elevation.length >= 2
-      ? {
-          ...profileArea,
-          landmarks: landmarks.length > 0 ? landmarks : undefined,
-        }
-      : undefined
-
-  return { svg, width: W, height, zones, profile }
+  return { svg, width: W, height, zones, profile: section.profile }
 }
 
 /**

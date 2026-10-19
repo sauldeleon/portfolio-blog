@@ -11,7 +11,11 @@ import {
   WAYPOINT_CATEGORY_KEYS,
   landmarkMarkerSvg,
 } from '@web/lib/cards'
-import type { LandmarkLabels, RouteLandmark } from '@web/lib/cards'
+import type {
+  LandmarkLabels,
+  ProfileLandmarks,
+  RouteLandmark,
+} from '@web/lib/cards'
 
 import {
   StyledAltitude,
@@ -20,16 +24,16 @@ import {
   StyledModes,
   StyledRow,
   StyledTypeOption,
-} from './RouteLandmarksField.styles'
+} from './LandmarksField.styles'
 
-interface RouteLandmarksFieldProps {
-  value: RouteLandmark[] | undefined
-  onChange: (next: RouteLandmark[]) => void
+interface LandmarksFieldProps {
+  /** The card data's profile spots, their label mode and the GPS note. */
+  value: ProfileLandmarks
+  onChange: (patch: ProfileLandmarks) => void
   /** OpenStreetMap did not answer on the last parse: some names are missing. */
   placesUnavailable?: boolean
-  /** How the card labels them (default: names). */
-  labels?: LandmarkLabels
-  onLabelsChange: (labels: LandmarkLabels) => void
+  /** Prefix of the field ids and test ids. */
+  idPrefix: string
 }
 
 const MODES: LandmarkLabels[] = ['auto', 'names', 'legend', 'markers']
@@ -73,18 +77,31 @@ function typePatch(value: string): Pick<RouteLandmark, 'kind' | 'category'> {
 }
 
 /**
+ * A stable key per row. Several waypoints can sit on the same profile sample
+ * (short canyons), so the key is their position, numbered when repeated.
+ */
+function rowKey(list: RouteLandmark[], i: number): string {
+  const id = (l: RouteLandmark) => `${l.kind}-${l.lat}-${l.lon}-${l.index}`
+  const own = id(list[i])
+  const repeat = list.slice(0, i).filter((l) => id(l) === own).length
+  return `${own}-${repeat}`
+}
+
+/**
  * The spots found when parsing the GPX (its waypoints plus detected summits
  * and cols), in route order: each one's type and name can be fixed, and any
  * of them hidden from the card or dropped.
  */
-export function RouteLandmarksField({
-  value = [],
+export function LandmarksField({
+  value,
   onChange,
   placesUnavailable,
-  labels = 'names',
-  onLabelsChange,
-}: RouteLandmarksFieldProps) {
+  idPrefix,
+}: LandmarksFieldProps) {
   const { t } = useClientTranslation('admin')
+  const spots = value.landmarks ?? []
+  const labels = value.landmarkLabels ?? 'names'
+  const setSpots = (landmarks: RouteLandmark[]) => onChange({ landmarks })
 
   // GPX symbols are not always right (a summit tagged "Information"): the
   // type of each spot can be changed here.
@@ -98,18 +115,21 @@ export function RouteLandmarksField({
   ]
 
   function patch(i: number, change: Partial<RouteLandmark>) {
-    onChange(value.map((l, k) => (k === i ? { ...l, ...change } : l)))
+    setSpots(spots.map((l, k) => (k === i ? { ...l, ...change } : l)))
   }
 
   return (
     <FieldGroup>
       <FieldLabel>{t('cards.fields.landmarks')}</FieldLabel>
       {placesUnavailable && (
-        <StyledEmpty role="status" data-testid="rt-landmarks-osm-down">
+        <StyledEmpty
+          role="status"
+          data-testid={`${idPrefix}-landmarks-osm-down`}
+        >
           {t('cards.fields.landmarksOsmDown')}
         </StyledEmpty>
       )}
-      {value.length > 0 && (
+      {spots.length > 0 && (
         <>
           <StyledModes
             role="group"
@@ -122,8 +142,8 @@ export function RouteLandmarksField({
                 variant="label"
                 active={labels === mode}
                 aria-pressed={labels === mode}
-                onClick={() => onLabelsChange(mode)}
-                data-testid={`rt-labels-${mode}`}
+                onClick={() => onChange({ landmarkLabels: mode })}
+                data-testid={`${idPrefix}-labels-${mode}`}
               >
                 {t(`cards.fields.landmarkModes.${mode}`)}
               </Button>
@@ -133,12 +153,12 @@ export function RouteLandmarksField({
             {t(`cards.fields.landmarkModeHints.${labels}`)}
           </StyledEmpty>
           <Checkbox
-            id="rt-landmark-altitude"
+            id={`${idPrefix}-landmark-altitude`}
             label={t('cards.fields.landmarkAltitude')}
-            checked={value.every((l) => !l.hideAltitude)}
+            checked={spots.every((l) => !l.hideAltitude)}
             onChange={(show) =>
-              onChange(
-                value.map((l) => ({
+              setSpots(
+                spots.map((l) => ({
                   ...l,
                   hideAltitude: show ? undefined : true,
                 })),
@@ -147,12 +167,12 @@ export function RouteLandmarksField({
           />
         </>
       )}
-      {value.length === 0 ? (
+      {spots.length === 0 ? (
         <StyledEmpty>{t('cards.fields.landmarksEmpty')}</StyledEmpty>
       ) : (
-        <StyledList data-testid="rt-landmarks">
-          {value.map((l, i) => (
-            <StyledRow key={`${l.kind}-${l.index}`} $hidden={Boolean(l.hidden)}>
+        <StyledList data-testid={`${idPrefix}-landmarks`}>
+          {spots.map((l, i) => (
+            <StyledRow key={rowKey(spots, i)} $hidden={Boolean(l.hidden)}>
               <Button
                 type="button"
                 variant="ghost"
@@ -169,21 +189,21 @@ export function RouteLandmarksField({
                     ? 'cards.fields.landmarkShow'
                     : 'cards.fields.landmarkHide',
                 )}
-                data-testid={`rt-landmark-toggle-${i}`}
+                data-testid={`${idPrefix}-landmark-toggle-${i}`}
               >
                 {l.hidden ? '◌' : '●'}
               </Button>
               <Select
-                id={`rt-landmark-type-${i}`}
+                id={`${idPrefix}-landmark-type-${i}`}
                 value={typeValue(l)}
-                onChange={(value) => patch(i, typePatch(value))}
+                onChange={(type) => patch(i, typePatch(type))}
                 options={typeOptions}
                 formatOptionLabel={typeOption}
-                data-testid={`rt-landmark-type-${i}`}
+                data-testid={`${idPrefix}-landmark-type-${i}`}
               />
               <StyledAltitude>
                 <Checkbox
-                  id={`rt-landmark-alt-${i}`}
+                  id={`${idPrefix}-landmark-alt-${i}`}
                   label={`${l.ele} m`}
                   checked={!l.hideAltitude}
                   onChange={(show) =>
@@ -198,16 +218,16 @@ export function RouteLandmarksField({
                 onChange={(e) =>
                   patch(i, { name: e.target.value || undefined })
                 }
-                data-testid={`rt-landmark-name-${i}`}
+                data-testid={`${idPrefix}-landmark-name-${i}`}
               />
               <Button
                 type="button"
                 variant="ghost"
                 size="xs"
-                onClick={() => onChange(value.filter((_, k) => k !== i))}
+                onClick={() => setSpots(spots.filter((_, k) => k !== i))}
                 aria-label={t('cards.fields.landmarkRemove')}
                 title={t('cards.fields.landmarkRemove')}
-                data-testid={`rt-landmark-remove-${i}`}
+                data-testid={`${idPrefix}-landmark-remove-${i}`}
               >
                 ✕
               </Button>
@@ -215,6 +235,12 @@ export function RouteLandmarksField({
           ))}
         </StyledList>
       )}
+      <Checkbox
+        id={`${idPrefix}-altitude-note`}
+        label={t('cards.fields.altitudeNote')}
+        checked={value.altitudeNote !== false}
+        onChange={(altitudeNote) => onChange({ altitudeNote })}
+      />
     </FieldGroup>
   )
 }

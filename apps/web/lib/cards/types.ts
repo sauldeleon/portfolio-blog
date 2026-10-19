@@ -46,7 +46,7 @@ export interface CardResult {
   profile?: CardProfile
 }
 
-export interface CanyoningCardData {
+export interface CanyoningCardData extends ProfileLandmarks {
   kind: 'canyoning-data'
   lang: Lang
   title?: string
@@ -71,6 +71,17 @@ export interface CanyoningCardData {
   elevation?: number[]
 }
 
+/** The spots on a card's elevation profile and how they are shown. */
+export interface ProfileLandmarks {
+  /** Spots drawn on the profile: GPX waypoints, summits and cols. */
+  landmarks?: RouteLandmark[]
+  /** Note under the profile that GPS altitudes may be off (default: shown). */
+  altitudeNote?: boolean
+  /** How they are labelled (default: names); a legend goes under the
+   * profile and makes the card taller. */
+  landmarkLabels?: 'auto' | 'names' | 'legend' | 'markers'
+}
+
 /**
  * A spot along a route, placed on its stored elevation profile: a summit, a
  * col, or any other GPX waypoint (hut, spring, warning…).
@@ -93,7 +104,7 @@ export interface RouteLandmark {
   hideAltitude?: boolean
 }
 
-export interface SummaryRouteData {
+export interface SummaryRouteData extends ProfileLandmarks {
   kind: 'summary-route'
   lang: Lang
   title?: string
@@ -111,16 +122,9 @@ export interface SummaryRouteData {
   ret?: string
   gpxUrl?: string
   elevation?: number[]
-  /** Summits and cols to point out on the profile. */
-  landmarks?: RouteLandmark[]
-  /** Note under the profile that GPS altitudes may be off (default: shown). */
-  altitudeNote?: boolean
-  /** How they are labelled on the card (default: names); a legend goes
-   * under the profile and makes the card taller. */
-  landmarkLabels?: 'auto' | 'names' | 'legend' | 'markers'
 }
 
-export interface SummaryFerrataData {
+export interface SummaryFerrataData extends ProfileLandmarks {
   kind: 'summary-ferrata'
   lang: Lang
   title?: string

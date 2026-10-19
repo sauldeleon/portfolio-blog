@@ -1,5 +1,7 @@
 'use client'
 
+import { useState } from 'react'
+
 import { Button } from '@sdlgr/button'
 import { FieldGroup, FieldLabel, Input } from '@sdlgr/input'
 
@@ -10,6 +12,7 @@ import { CanyonGradeField } from '../CanyonGradeField'
 import { CardDateField } from '../CardDateField'
 import { FlowField } from '../FlowField'
 import { GpxUrlField } from '../GpxUrlField'
+import { LandmarksField } from '../LandmarksField'
 import {
   StyledFieldRow,
   StyledForm,
@@ -34,6 +37,7 @@ export function CanyoningForm({
   hideLang = false,
 }: CanyoningFormProps) {
   const { t } = useClientTranslation('admin')
+  const [placesUnavailable, setPlacesUnavailable] = useState(false)
   function set(patch: Partial<CanyoningCardData>) {
     onChange({ ...value, ...patch })
   }
@@ -129,13 +133,22 @@ export function CanyoningForm({
         <GpxUrlField
           value={value.gpxUrl}
           onChange={(gpxUrl) => set({ gpxUrl })}
-          onParsed={(m) =>
+          onParsed={(m) => {
+            setPlacesUnavailable(Boolean(m.placesUnavailable))
             set({
               date: m.date || value.date,
               desnivel: m.descent || value.desnivel,
               elevation: m.elevation,
+              landmarks: m.landmarks,
             })
-          }
+          }}
+          idPrefix="bc"
+          withPlaceNames
+        />
+        <LandmarksField
+          value={value}
+          onChange={set}
+          placesUnavailable={placesUnavailable}
           idPrefix="bc"
         />
       </StyledSection>
