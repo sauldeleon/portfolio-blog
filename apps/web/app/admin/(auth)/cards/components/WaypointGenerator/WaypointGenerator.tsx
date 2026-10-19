@@ -11,6 +11,7 @@ import {
   svgToPng,
   translateName,
   waypointCard,
+  waypointFilenames,
   waypointSlug,
   zipStore,
 } from '@web/lib/cards'
@@ -151,30 +152,39 @@ export function WaypointGenerator() {
   // Filename prefix: the manual name overrides the GPX-derived one when set.
   const base = name.trim() !== '' ? waypointSlug(name) : gpxName
 
-  const cards = useMemo(
-    () =>
-      items.map((item, i) => {
-        const svg = waypointCard({
-          name: translateName(item.name, lang),
-          lat: item.lat.trim() === '' ? undefined : Number(item.lat),
-          lon: item.lon.trim() === '' ? undefined : Number(item.lon),
-          ele: item.ele.trim() === '' ? undefined : Number(item.ele),
-          emin: Number(item.emin) || 0,
-          emax: Number(item.emax) || 0,
-          category: item.category,
-          lang,
-        })
-        const nameSlug = waypointSlug(item.name)
-        return {
-          key: `wp-${i}`,
-          svg,
-          // Download filename and Cloudinary public_id share this single name.
-          filename: `waypoint-${base}-${stamp}-${lang}-${nameSlug}`,
-          disableUpload: item.name.trim() === '',
-        }
-      }),
-    [items, lang, base, stamp],
-  )
+  const cards = useMemo(() => {
+    const optional = (value: string) =>
+      value.trim() === '' ? undefined : Number(value)
+    const filenames = waypointFilenames(
+      `waypoint-${base}-${stamp}`,
+      lang,
+      items.map((item) => ({
+        name: item.name,
+        lat: optional(item.lat),
+        lon: optional(item.lon),
+        ele: optional(item.ele),
+      })),
+    )
+    return items.map((item, i) => {
+      const svg = waypointCard({
+        name: translateName(item.name, lang),
+        lat: item.lat.trim() === '' ? undefined : Number(item.lat),
+        lon: item.lon.trim() === '' ? undefined : Number(item.lon),
+        ele: item.ele.trim() === '' ? undefined : Number(item.ele),
+        emin: Number(item.emin) || 0,
+        emax: Number(item.emax) || 0,
+        category: item.category,
+        lang,
+      })
+      return {
+        key: `wp-${i}`,
+        svg,
+        // Download filename and Cloudinary public_id share this single name.
+        filename: filenames[i],
+        disableUpload: item.name.trim() === '',
+      }
+    })
+  }, [items, lang, base, stamp])
 
   // Pack every card's PNG into a single uncompressed zip and download it once,
   // avoiding the browser's "download multiple files" prompt.

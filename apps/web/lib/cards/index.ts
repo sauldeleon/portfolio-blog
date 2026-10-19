@@ -20,6 +20,9 @@ export type { GpxMetrics, TrackPoint } from './gpx'
 export {
   parseWaypoints,
   translateName,
+  positionHash,
+  waypointFilename,
+  waypointFilenames,
   waypointSlug,
   WAYPOINT_CATEGORY_KEYS,
 } from './waypoints'

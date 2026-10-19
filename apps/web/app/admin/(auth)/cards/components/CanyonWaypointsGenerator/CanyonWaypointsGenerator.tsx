@@ -12,6 +12,7 @@ import {
   parseCanyonWaypointsText,
   serializeCanyonWaypoints,
   svgToPng,
+  waypointFilenames,
   waypointSlug,
   zipStore,
 } from '@web/lib/cards'
@@ -83,32 +84,34 @@ export function CanyonWaypointsGenerator() {
 
   const base = name.trim() === '' ? 'canyon' : waypointSlug(name)
 
-  const cards = useMemo(
-    () =>
-      waypoints.map((wp, i) => {
-        const { svg, width, height } = canyonWaypointCard({
-          lang,
-          categories: wp.categories,
-          title: wp.title,
-          lat: wp.lat,
-          lon: wp.lon,
-          notes: wp.notes,
-          side: wp.side,
-          severity: wp.severity,
-          meters: wp.meters,
-        })
-        const order = String(i + 1).padStart(2, '0')
-        return {
-          key: `cw-${i}`,
-          svg,
-          width,
-          height,
-          filename: `canyon-waypoint-${base}-${lang}-${order}-${waypointSlug(wp.title)}`,
-          disableUpload: wp.title.trim() === '',
-        }
-      }),
-    [waypoints, lang, base],
-  )
+  const cards = useMemo(() => {
+    const filenames = waypointFilenames(
+      `canyon-waypoint-${base}`,
+      lang,
+      waypoints.map((wp) => ({ name: wp.title, lat: wp.lat, lon: wp.lon })),
+    )
+    return waypoints.map((wp, i) => {
+      const { svg, width, height } = canyonWaypointCard({
+        lang,
+        categories: wp.categories,
+        title: wp.title,
+        lat: wp.lat,
+        lon: wp.lon,
+        notes: wp.notes,
+        side: wp.side,
+        severity: wp.severity,
+        meters: wp.meters,
+      })
+      return {
+        key: `cw-${i}`,
+        svg,
+        width,
+        height,
+        filename: filenames[i],
+        disableUpload: wp.title.trim() === '',
+      }
+    })
+  }, [waypoints, lang, base])
 
   async function handleImport() {
     setLoading(true)

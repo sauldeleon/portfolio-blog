@@ -2,6 +2,8 @@ import { fireEvent, screen } from '@testing-library/react'
 
 import { renderApp } from '@sdlgr/test-utils'
 
+import { positionHash } from '@web/lib/cards'
+
 import { WaypointForm } from './WaypointForm'
 
 vi.mock('@web/i18n/client', async () => {
@@ -78,8 +80,8 @@ describe('WaypointForm', () => {
     expect(screen.getByLabelText('Name')).toBeInTheDocument()
     expect(screen.getByTestId('wf-category')).toBeInTheDocument()
     expect(screen.getByTestId('card-preview')).toBeInTheDocument()
-    // empty name -> default filename
-    expect(screen.getByTestId('cp-file')).toHaveTextContent('en_waypoint')
+    // empty name -> default slug
+    expect(screen.getByTestId('cp-file')).toHaveTextContent('waypoint-en-wpt')
   })
 
   it('updates the filename from the name and language', () => {
@@ -87,9 +89,13 @@ describe('WaypointForm', () => {
     fireEvent.change(screen.getByLabelText('Name'), {
       target: { value: 'Refugio Foo' },
     })
-    expect(screen.getByTestId('cp-file')).toHaveTextContent('en_refugio_foo')
+    expect(screen.getByTestId('cp-file')).toHaveTextContent(
+      'waypoint-en-refugio_foo',
+    )
     fireEvent.click(screen.getByTestId('wp-lang-es'))
-    expect(screen.getByTestId('cp-file')).toHaveTextContent('es_refugio_foo')
+    expect(screen.getByTestId('cp-file')).toHaveTextContent(
+      'waypoint-es-refugio_foo',
+    )
   })
 
   it('disables upload until a name is provided', () => {
@@ -125,5 +131,24 @@ describe('WaypointForm', () => {
       target: { value: '2500' },
     })
     expect(Number(screen.getByTestId('cp-len').textContent)).toBeGreaterThan(0)
+  })
+
+  it('adds the altitude and position code to the filename', () => {
+    renderApp(<WaypointForm />)
+    fireEvent.change(screen.getByLabelText('Name'), {
+      target: { value: 'Collado' },
+    })
+    fireEvent.change(screen.getByLabelText('Latitude'), {
+      target: { value: '43.01' },
+    })
+    fireEvent.change(screen.getByLabelText('Longitude'), {
+      target: { value: '-5.9' },
+    })
+    fireEvent.change(screen.getByLabelText('Elevation (m)'), {
+      target: { value: '2114' },
+    })
+    expect(screen.getByTestId('cp-file')).toHaveTextContent(
+      `waypoint-en-collado-2114m-${positionHash(43.01, -5.9)}`,
+    )
   })
 })
