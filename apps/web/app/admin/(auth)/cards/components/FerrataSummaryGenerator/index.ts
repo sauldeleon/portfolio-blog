@@ -1,1 +1,0 @@
-export { FerrataSummaryGenerator } from './FerrataSummaryGenerator'

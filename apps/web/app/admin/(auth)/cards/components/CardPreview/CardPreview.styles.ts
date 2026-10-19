@@ -6,17 +6,19 @@ export const StyledWrapper = styled.div`
   gap: 0.75rem;
 `
 
+/* Same frame as the interactive card (InteractiveCard's StyledFrame), so the
+   static and interactive previews look alike. */
 export const StyledPreviewFrame = styled.div<{
   $clickable?: boolean
   $selected?: boolean
 }>`
   width: 100%;
-  border-radius: 8px;
-  overflow: hidden;
   border: 1px solid
-    ${({ theme, $selected }) =>
-      $selected ? theme.colors.green : 'rgba(255, 255, 255, 0.08)'};
-  background: #0e1820;
+    ${({ theme, $selected }) => ($selected ? theme.colors.green : '#223442')};
+  border-radius: 16px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #14212c 0%, #0d161d 100%);
+  box-shadow: 0 24px 60px -30px #000;
 
   ${({ $clickable }) =>
     $clickable &&

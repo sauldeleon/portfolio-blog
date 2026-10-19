@@ -26,6 +26,13 @@ export const StyledCardTypeRow = styled.div`
   border-bottom: 1px solid rgba(251, 251, 251, 0.08);
 `
 
+/** Static / interactive preview switch, pushed to the end of the tab row. */
+export const StyledInteractiveToggle = styled.div`
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+`
+
 export const StyledLayout = styled.div`
   display: grid;
   grid-template-columns: minmax(560px, 900px) 1fr;

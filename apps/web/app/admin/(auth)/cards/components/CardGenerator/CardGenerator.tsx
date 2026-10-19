@@ -1,8 +1,9 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useSyncExternalStore } from 'react'
 
 import { Button } from '@sdlgr/button'
+import { Checkbox } from '@sdlgr/checkbox'
 
 import { useClientTranslation } from '@web/i18n/client'
 import { buildCard } from '@web/lib/cards'
@@ -13,19 +14,20 @@ import type {
   SummaryRouteData,
 } from '@web/lib/cards'
 
-import { CanyonSummaryGenerator } from '../CanyonSummaryGenerator'
+import { CanyonSummary } from '../CanyonSummary'
 import { CanyonWaypointsGenerator } from '../CanyonWaypointsGenerator'
 import { CanyoningForm } from '../CanyoningForm'
 import { CardPreview } from '../CardPreview'
 import { CroquisGenerator } from '../CroquisGenerator'
 import { FerrataForm } from '../FerrataForm'
-import { FerrataSummaryGenerator } from '../FerrataSummaryGenerator'
+import { FerrataSummary } from '../FerrataSummary'
 import { RouteForm } from '../RouteForm'
-import { RouteSummaryGenerator } from '../RouteSummaryGenerator'
+import { RouteSummary } from '../RouteSummary'
 import { WaypointForm } from '../WaypointForm'
 import { WaypointGenerator } from '../WaypointGenerator'
 import {
   StyledCardTypeRow,
+  StyledInteractiveToggle,
   StyledLayout,
   StyledPanelForm,
   StyledPanelPreview,
@@ -35,24 +37,14 @@ import {
 
 type CardKind = CardSpec['kind']
 type Tab =
-  | CardKind
-  | 'waypoints'
-  | 'waypoint-single'
-  | 'canyon-waypoints'
-  | 'croquis'
-  | 'canyon-summary'
-  | 'ferrata-summary'
-  | 'route-summary'
+  CardKind | 'waypoints' | 'waypoint-single' | 'canyon-waypoints' | 'croquis'
 
 const TABS = [
   { kind: 'summary-route', labelKey: 'cards.tabs.route' },
-  { kind: 'route-summary', labelKey: 'cards.tabs.routeInteractive' },
   { kind: 'canyoning-data', labelKey: 'cards.tabs.canyonData' },
-  { kind: 'canyon-summary', labelKey: 'cards.tabs.canyonInteractive' },
   { kind: 'canyon-waypoints', labelKey: 'cards.tabs.canyonWaypoints' },
   { kind: 'croquis', labelKey: 'cards.tabs.croquis' },
   { kind: 'summary-ferrata', labelKey: 'cards.tabs.ferrata' },
-  { kind: 'ferrata-summary', labelKey: 'cards.tabs.ferrataInteractive' },
   { kind: 'waypoints', labelKey: 'cards.tabs.waypointsGpx' },
   { kind: 'waypoint-single', labelKey: 'cards.tabs.waypointSingle' },
 ] as const satisfies ReadonlyArray<{ kind: Tab; labelKey: string }>
@@ -62,10 +54,38 @@ const NON_SPEC_TABS: Tab[] = [
   'waypoint-single',
   'canyon-waypoints',
   'croquis',
-  'canyon-summary',
-  'ferrata-summary',
-  'route-summary',
 ]
+
+/** Remembers whether the preview is the interactive card. */
+const INTERACTIVE_KEY = 'admin.cards.interactive'
+const interactiveListeners = new Set<() => void>()
+// Fallback when storage is blocked: the choice lasts until a reload.
+let interactiveMemory = false
+
+function readInteractive(): boolean {
+  try {
+    return window.localStorage.getItem(INTERACTIVE_KEY) === '1'
+  } catch {
+    return interactiveMemory
+  }
+}
+
+function saveInteractive(on: boolean) {
+  interactiveMemory = on
+  try {
+    window.localStorage.setItem(INTERACTIVE_KEY, on ? '1' : '0')
+  } catch {
+    // Storage blocked: the choice is kept in memory only.
+  }
+  interactiveListeners.forEach((listener) => listener())
+}
+
+function subscribeInteractive(listener: () => void) {
+  interactiveListeners.add(listener)
+  return () => {
+    interactiveListeners.delete(listener)
+  }
+}
 
 const DEFAULT_CANYONING: CanyoningCardData = {
   kind: 'canyoning-data',
@@ -112,6 +132,14 @@ export function CardGenerator() {
   const { t } = useClientTranslation('admin')
   const [activeKind, setActiveKind] = useState<Tab>('summary-route')
   const [spec, setSpec] = useState<CardSpec>(defaultSpec('summary-route'))
+  // Static PNG preview, or the explorable card built from the same data.
+  const interactive = useSyncExternalStore(
+    subscribeInteractive,
+    readInteractive,
+    // Server render: static until the stored choice is read.
+    /* istanbul ignore next */
+    () => false,
+  )
 
   function handleKindChange(kind: Tab) {
     setActiveKind(kind)
@@ -148,6 +176,16 @@ export function CardGenerator() {
             {t(labelKey)}
           </Button>
         ))}
+        {!NON_SPEC_TABS.includes(activeKind) && (
+          <StyledInteractiveToggle>
+            <Checkbox
+              id="card-interactive"
+              label={t('cards.interactive')}
+              checked={interactive}
+              onChange={saveInteractive}
+            />
+          </StyledInteractiveToggle>
+        )}
       </StyledCardTypeRow>
 
       {activeKind === 'waypoints' ? (
@@ -158,12 +196,6 @@ export function CardGenerator() {
         <CanyonWaypointsGenerator />
       ) : activeKind === 'croquis' ? (
         <CroquisGenerator />
-      ) : activeKind === 'canyon-summary' ? (
-        <CanyonSummaryGenerator />
-      ) : activeKind === 'ferrata-summary' ? (
-        <FerrataSummaryGenerator />
-      ) : activeKind === 'route-summary' ? (
-        <RouteSummaryGenerator />
       ) : (
         <StyledLayout>
           <StyledPanelForm>
@@ -179,12 +211,20 @@ export function CardGenerator() {
           </StyledPanelForm>
 
           <StyledPanelPreview>
-            <CardPreview
-              svg={card.svg}
-              cardWidth={card.width}
-              cardHeight={card.height}
-              filename={filename}
-            />
+            {!interactive ? (
+              <CardPreview
+                svg={card.svg}
+                cardWidth={card.width}
+                cardHeight={card.height}
+                filename={filename}
+              />
+            ) : spec.kind === 'canyoning-data' ? (
+              <CanyonSummary data={spec} filename={filename} />
+            ) : spec.kind === 'summary-route' ? (
+              <RouteSummary data={spec} filename={filename} />
+            ) : (
+              <FerrataSummary data={spec} filename={filename} />
+            )}
           </StyledPanelPreview>
         </StyledLayout>
       )}

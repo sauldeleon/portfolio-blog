@@ -362,16 +362,14 @@
     "title": "Cards",
     "tabs": {
       "route": "Route",
-      "routeInteractive": "Route (interactive)",
       "canyonData": "Canyon",
-      "canyonInteractive": "Canyon (interactive)",
       "canyonWaypoints": "Canyon (waypoints)",
       "croquis": "Canyon (Croquis)",
       "ferrata": "Via Ferrata",
-      "ferrataInteractive": "Ferrata (interactive)",
       "waypointsGpx": "Waypoints (GPX)",
       "waypointSingle": "Waypoint (single)"
     },
+    "interactive": "Interactive",
     "sections": {
       "header": "Header",
       "metrics": "Metrics",
