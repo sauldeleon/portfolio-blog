@@ -9,6 +9,7 @@ import { useClientTranslation } from '@web/i18n/client'
 import {
   STRINGS,
   WAYPOINT_CATEGORY_KEYS,
+  landmarkKeys,
   landmarkMarkerSvg,
 } from '@web/lib/cards'
 import type {
@@ -77,17 +78,6 @@ function typePatch(value: string): Pick<RouteLandmark, 'kind' | 'category'> {
 }
 
 /**
- * A stable key per row. Several waypoints can sit on the same profile sample
- * (short canyons), so the key is their position, numbered when repeated.
- */
-function rowKey(list: RouteLandmark[], i: number): string {
-  const id = (l: RouteLandmark) => `${l.kind}-${l.lat}-${l.lon}-${l.index}`
-  const own = id(list[i])
-  const repeat = list.slice(0, i).filter((l) => id(l) === own).length
-  return `${own}-${repeat}`
-}
-
-/**
  * The spots found when parsing the GPX (its waypoints plus detected summits
  * and cols), in route order: each one's type and name can be fixed, and any
  * of them hidden from the card or dropped.
@@ -101,6 +91,7 @@ export function LandmarksField({
   const { t } = useClientTranslation('admin')
   const spots = value.landmarks ?? []
   const labels = value.landmarkLabels ?? 'names'
+  const keys = landmarkKeys(spots)
   const setSpots = (landmarks: RouteLandmark[]) => onChange({ landmarks })
 
   // GPX symbols are not always right (a summit tagged "Information"): the
@@ -172,7 +163,7 @@ export function LandmarksField({
       ) : (
         <StyledList data-testid={`${idPrefix}-landmarks`}>
           {spots.map((l, i) => (
-            <StyledRow key={rowKey(spots, i)} $hidden={Boolean(l.hidden)}>
+            <StyledRow key={keys[i]} $hidden={Boolean(l.hidden)}>
               <Button
                 type="button"
                 variant="ghost"

@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react'
 
-import { AMBER, findPeaks, profilePoint } from '@web/lib/cards'
+import { AMBER, findPeaks, landmarkKeys, profilePoint } from '@web/lib/cards'
 import type { CardProfile, Lang, RouteLandmark } from '@web/lib/cards'
 
 import { StyledProfileLayer } from './InteractiveCardMap.styles'
@@ -56,6 +56,7 @@ export function ElevationLayer({ profile, lang }: ElevationLayerProps) {
           })),
     [profile.landmarks, profile.elevation],
   )
+  const keys = landmarkKeys(markers)
   // The card draws named landmarks itself; here they only catch the pointer.
   const drawnByCard = Boolean(profile.landmarks?.length)
   const last = profile.elevation.length - 1
@@ -98,12 +99,12 @@ export function ElevationLayer({ profile, lang }: ElevationLayerProps) {
         onPointerLeave={() => setIndex(null)}
         data-testid="card-profile-hit"
       />
-      {markers.map((m) => {
+      {markers.map((m, i) => {
         const p = profilePoint(profile, m.index)
         const altitude = formatAltitude(m.ele, lang)
         return (
           <path
-            key={`${m.kind}-${m.index}`}
+            key={keys[i]}
             className="peak"
             d={markerPath(m.kind, p.x, p.y)}
             // Without card-drawn landmarks these are the highest points.

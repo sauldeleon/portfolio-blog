@@ -102,5 +102,6 @@ export type {
   SummaryFerrataData,
   Lang,
 } from './types'
+export { landmarkKeys } from './landmarkKeys'
 export { landmarkMarkerSvg } from './landmarksSvg'
 export type { LandmarkLabels } from './landmarksSvg'
