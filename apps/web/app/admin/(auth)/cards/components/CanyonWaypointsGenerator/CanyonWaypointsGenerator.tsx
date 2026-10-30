@@ -1,6 +1,5 @@
 'use client'
 
-import axios, { isAxiosError } from 'axios'
 import { useMemo, useRef, useState } from 'react'
 
 import { Button } from '@sdlgr/button'
@@ -17,6 +16,10 @@ import {
   zipStore,
 } from '@web/lib/cards'
 import type { CanyonWaypoint, Lang, ZipFile } from '@web/lib/cards'
+import {
+  axiosErrorMessage,
+  fetchCanyonWaypoints,
+} from '@web/lib/cards/gpxImport'
 
 import { TrackUrlPicker } from '../../../components/TrackUrlPicker'
 import { CanyonWaypointFields } from '../CanyonWaypointFields'
@@ -117,11 +120,7 @@ export function CanyonWaypointsGenerator() {
     setLoading(true)
     setError(null)
     try {
-      const res = await axios.get<{ data?: CanyonWaypoint[] }>(
-        '/api/cards/canyon-waypoints',
-        { params: { url } },
-      )
-      const wpts = res.data.data
+      const wpts = await fetchCanyonWaypoints(url)
       if (!wpts) {
         setError(t('cards.errors.gpxParse'))
         return
@@ -132,11 +131,7 @@ export function CanyonWaypointsGenerator() {
       }
       setText(serializeCanyonWaypoints(wpts))
     } catch (err) {
-      setError(
-        isAxiosError(err)
-          ? (err.response?.data?.error ?? t('cards.errors.gpxParse'))
-          : t('cards.errors.gpxParse'),
-      )
+      setError(axiosErrorMessage(err, t('cards.errors.gpxParse')))
     } finally {
       setLoading(false)
     }

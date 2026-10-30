@@ -172,4 +172,28 @@ describe('ElevationLayer', () => {
     expect(hut.getAttribute('d')).toContain('a11,11')
     expect(hut).toHaveAttribute('fill', 'transparent')
   })
+
+  it('marks waypoints that share a profile sample without key clashes', () => {
+    const errorSpy = vi
+      .spyOn(console, 'error')
+      .mockImplementation(() => vi.fn())
+    const spot = { kind: 'point' as const, index: 0, ele: 1000, lat: 0, lon: 0 }
+    render(
+      <svg>
+        <ElevationLayer
+          profile={{
+            ...profile,
+            landmarks: [
+              { ...spot, name: 'Parking' },
+              { ...spot, name: 'Refugio' },
+            ],
+          }}
+          lang="es"
+        />
+      </svg>,
+    )
+    expect(screen.getAllByTestId('card-peak-0')).toHaveLength(2)
+    expect(errorSpy).not.toHaveBeenCalled()
+    errorSpy.mockRestore()
+  })
 })

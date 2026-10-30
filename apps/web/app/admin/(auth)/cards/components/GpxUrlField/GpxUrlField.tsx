@@ -1,13 +1,17 @@
 'use client'
 
-import axios, { isAxiosError } from 'axios'
 import { useState } from 'react'
 
 import { Button } from '@sdlgr/button'
 import { FieldGroup, FieldLabel } from '@sdlgr/input'
 
 import { useClientTranslation } from '@web/i18n/client'
-import type { GpxMetrics, RouteLandmark } from '@web/lib/cards'
+import type { GpxMetrics } from '@web/lib/cards'
+import {
+  axiosErrorMessage,
+  fetchGpxMetrics,
+  withOsmNames,
+} from '@web/lib/cards/gpxImport'
 
 import { TrackUrlPicker } from '../../../components/TrackUrlPicker'
 import { StyledError, StyledRow } from './GpxUrlField.styles'
@@ -28,23 +32,6 @@ const PHASE_LABELS = {
   parsing: 'cards.actions.parsing',
   naming: 'cards.actions.namingPlaces',
 } as const
-
-/**
- * Names the parsed landmarks from OpenStreetMap through its own request, so a
- * slow Overpass never holds up the parse. Any failure keeps them as they were.
- */
-async function withOsmNames(metrics: GpxMetrics): Promise<GpxMetrics> {
-  if (!metrics.landmarks?.some((l) => !l.name)) return metrics
-  try {
-    const res = await axios.post<{
-      data: { landmarks: RouteLandmark[]; unavailable: boolean }
-    }>('/api/cards/places', { landmarks: metrics.landmarks })
-    const { landmarks, unavailable } = res.data.data
-    return { ...metrics, landmarks, placesUnavailable: unavailable }
-  } catch {
-    return { ...metrics, placesUnavailable: true }
-  }
-}
 
 /**
  * GPX url input with a manual "Parse" button. Fetches + parses the file via
@@ -69,10 +56,7 @@ export function GpxUrlField({
     setPhase('parsing')
     setError(null)
     try {
-      const res = await axios.get<{ data?: GpxMetrics }>('/api/cards/gpx', {
-        params: { url },
-      })
-      const metrics = res.data.data
+      const metrics = await fetchGpxMetrics(url)
       if (!metrics) {
         setError(t('cards.errors.gpxParse'))
         return
@@ -84,11 +68,7 @@ export function GpxUrlField({
       setPhase('naming')
       onParsed(await withOsmNames(metrics))
     } catch (err) {
-      setError(
-        isAxiosError(err)
-          ? (err.response?.data?.error ?? t('cards.errors.gpxParse'))
-          : t('cards.errors.gpxParse'),
-      )
+      setError(axiosErrorMessage(err, t('cards.errors.gpxParse')))
     } finally {
       setPhase('idle')
     }
