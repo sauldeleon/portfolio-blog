@@ -7,7 +7,7 @@ import { Button } from '@sdlgr/button'
 import { FieldGroup, FieldLabel } from '@sdlgr/input'
 
 import { useClientTranslation } from '@web/i18n/client'
-import type { GpxMetrics } from '@web/lib/cards'
+import type { GpxMetrics, RouteLandmark } from '@web/lib/cards'
 
 import { TrackUrlPicker } from '../../../components/TrackUrlPicker'
 import { StyledError, StyledRow } from './GpxUrlField.styles'
@@ -19,14 +19,38 @@ interface GpxUrlFieldProps {
   onParsed: (metrics: GpxMetrics) => void
   /** Prefix for input ids / test ids (e.g. "rt", "ft", "sb"). */
   idPrefix: string
-  /** Also name summits and cols from OpenStreetMap (slower). */
+  /** Then name the unnamed summits and cols from OpenStreetMap (slower). */
   withPlaceNames?: boolean
+}
+
+const PHASE_LABELS = {
+  idle: 'cards.actions.parse',
+  parsing: 'cards.actions.parsing',
+  naming: 'cards.actions.namingPlaces',
+} as const
+
+/**
+ * Names the parsed landmarks from OpenStreetMap through its own request, so a
+ * slow Overpass never holds up the parse. Any failure keeps them as they were.
+ */
+async function withOsmNames(metrics: GpxMetrics): Promise<GpxMetrics> {
+  if (!metrics.landmarks?.some((l) => !l.name)) return metrics
+  try {
+    const res = await axios.post<{
+      data: { landmarks: RouteLandmark[]; unavailable: boolean }
+    }>('/api/cards/places', { landmarks: metrics.landmarks })
+    const { landmarks, unavailable } = res.data.data
+    return { ...metrics, landmarks, placesUnavailable: unavailable }
+  } catch {
+    return { ...metrics, placesUnavailable: true }
+  }
 }
 
 /**
  * GPX url input with a manual "Parse" button. Fetches + parses the file via
  * the server proxy, surfacing failures inline. Parsed metrics are handed to
- * the parent through `onParsed`; the parent decides which fields to prefill.
+ * the parent through `onParsed`, once, with the place names already in; the
+ * parent decides which fields to prefill.
  */
 export function GpxUrlField({
   value,
@@ -36,23 +60,29 @@ export function GpxUrlField({
   withPlaceNames,
 }: GpxUrlFieldProps) {
   const { t } = useClientTranslation('admin')
-  const [loading, setLoading] = useState(false)
+  const [phase, setPhase] = useState<keyof typeof PHASE_LABELS>('idle')
   const [error, setError] = useState<string | null>(null)
 
   const url = value ?? ''
 
   async function handleParse() {
-    setLoading(true)
+    setPhase('parsing')
     setError(null)
     try {
       const res = await axios.get<{ data?: GpxMetrics }>('/api/cards/gpx', {
-        params: withPlaceNames ? { url, places: '1' } : { url },
+        params: { url },
       })
-      if (!res.data.data) {
+      const metrics = res.data.data
+      if (!metrics) {
         setError(t('cards.errors.gpxParse'))
         return
       }
-      onParsed(res.data.data)
+      if (!withPlaceNames) {
+        onParsed(metrics)
+        return
+      }
+      setPhase('naming')
+      onParsed(await withOsmNames(metrics))
     } catch (err) {
       setError(
         isAxiosError(err)
@@ -60,7 +90,7 @@ export function GpxUrlField({
           : t('cards.errors.gpxParse'),
       )
     } finally {
-      setLoading(false)
+      setPhase('idle')
     }
   }
 
@@ -85,10 +115,10 @@ export function GpxUrlField({
           colorScheme="success"
           size="sm"
           onClick={() => void handleParse()}
-          disabled={!url || loading}
+          disabled={!url || phase !== 'idle'}
           data-testid={`${idPrefix}-gpx-parse`}
         >
-          {loading ? t('cards.actions.parsing') : t('cards.actions.parse')}
+          {t(PHASE_LABELS[phase])}
         </Button>
       </StyledRow>
       {error && (

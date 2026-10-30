@@ -19,6 +19,9 @@ export interface OsmNaming {
 /** How far from a summit or col an OpenStreetMap feature may be. */
 const OSM_RADIUS = 150
 
+/** Names are a nicety: give up soon rather than keep the form waiting. */
+const OVERPASS_TIMEOUT_S = 4
+
 interface OsmNode {
   lat: number
   lon: number
@@ -64,7 +67,7 @@ export async function nameLandmarksFromOsm(
         `node(around:${OSM_RADIUS},${lat},${lon})["mountain_pass"="yes"]["name"];`,
     )
     .join('')
-  const query = `[out:json][timeout:10];(${clauses});out body;`
+  const query = `[out:json][timeout:${OVERPASS_TIMEOUT_S}];(${clauses});out body;`
 
   const ask = async (url: string): Promise<OsmNode[]> => {
     const res = await fetchImpl(url, {
@@ -74,7 +77,7 @@ export async function nameLandmarksFromOsm(
         'User-Agent': 'sawl.dev blog card generator',
       },
       body: `data=${encodeURIComponent(query)}`,
-      signal: AbortSignal.timeout(10_000),
+      signal: AbortSignal.timeout(OVERPASS_TIMEOUT_S * 1000),
     })
     if (!res.ok) throw new Error(`Overpass ${res.status}`)
     return ((await res.json()) as { elements?: OsmNode[] }).elements ?? []

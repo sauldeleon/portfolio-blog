@@ -4,27 +4,28 @@ import { z } from 'zod'
 
 import { requireAuth } from '@web/lib/api/parseRequest'
 import { parseGpx } from '@web/lib/cards'
-import { nameLandmarksFromOsm } from '@web/lib/cards/osmLandmarks'
 import { logger } from '@web/lib/logger'
+
+/** A GPX host that hangs must not hang the function with it. */
+const FETCH_TIMEOUT_MS = 8_000
 
 const querySchema = z.object({
   url: z
     .string()
     .url()
     .refine((u) => /^https?:\/\//i.test(u), 'Only http(s) URLs allowed'),
-  /** Look up summit and col names on OpenStreetMap (route cards only). */
-  places: z.literal('1').optional(),
 })
 
+/**
+ * Fetches and parses a GPX. Summit and col names from OpenStreetMap are asked
+ * for separately (`/api/cards/places`): a slow Overpass must never stall this.
+ */
 export async function GET(request: Request) {
   const authResult = await requireAuth()
   if (!authResult.ok) return authResult.response
 
   const { searchParams } = new URL(request.url)
-  const parsed = querySchema.safeParse({
-    url: searchParams.get('url'),
-    places: searchParams.get('places') ?? undefined,
-  })
+  const parsed = querySchema.safeParse({ url: searchParams.get('url') })
   if (!parsed.success) {
     return NextResponse.json({ error: 'Invalid GPX URL' }, { status: 400 })
   }
@@ -33,6 +34,7 @@ export async function GET(request: Request) {
   try {
     const res = await axios.get<string>(parsed.data.url, {
       responseType: 'text',
+      timeout: FETCH_TIMEOUT_MS,
     })
     text = res.data
   } catch (err) {
@@ -40,20 +42,12 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'Failed to fetch GPX' }, { status: 502 })
   }
 
-  let data
   try {
-    data = parseGpx(text)
+    return NextResponse.json({ data: parseGpx(text) })
   } catch {
     return NextResponse.json(
       { error: 'Could not parse GPX file' },
       { status: 422 },
     )
   }
-  if (parsed.data.places) {
-    const { landmarks, unavailable } = await nameLandmarksFromOsm(
-      data.landmarks,
-    )
-    data = { ...data, landmarks, placesUnavailable: unavailable }
-  }
-  return NextResponse.json({ data })
 }
