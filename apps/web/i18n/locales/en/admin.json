@@ -473,6 +473,7 @@
     "actions": {
       "parse": "Parse",
       "parsing": "Parsing…",
+      "namingPlaces": "Looking up names…",
       "download": "Download PNG",
       "downloadAll": "Download all (.zip)",
       "downloading": "Preparing zip…",

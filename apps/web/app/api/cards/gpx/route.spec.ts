@@ -17,10 +17,6 @@ vi.mock('@web/lib/auth/config', () => ({ auth: () => mockAuth() }))
 vi.mock('@web/lib/cards', () => ({
   parseGpx: (...args: unknown[]) => mockParseGpx(...args),
 }))
-const mockNameLandmarks = vi.fn()
-vi.mock('@web/lib/cards/osmLandmarks', () => ({
-  nameLandmarksFromOsm: (...args: unknown[]) => mockNameLandmarks(...args),
-}))
 vi.mock('@web/lib/logger', () => ({
   logger: {
     error: (...args: unknown[]) => mockLoggerError(...args),
@@ -95,26 +91,9 @@ describe('GET /api/cards/gpx', () => {
     expect(res.status).toBe(200)
     const body = (await res.json()) as { data: unknown }
     expect(body.data).toEqual(metrics)
-    expect(mockNameLandmarks).not.toHaveBeenCalled()
-  })
-
-  it('names summits and cols from OpenStreetMap on request', async () => {
-    mockAxiosGet.mockResolvedValue({ data: '<gpx/>' })
-    mockParseGpx.mockReturnValue({ ...metrics, landmarks: [{ kind: 'peak' }] })
-    mockNameLandmarks.mockResolvedValue({
-      landmarks: [{ kind: 'peak', name: 'Pico' }],
-      unavailable: true,
+    expect(mockAxiosGet).toHaveBeenCalledWith('https://example.com/a.gpx', {
+      responseType: 'text',
+      timeout: 8000,
     })
-    const res = await GET(
-      new Request(
-        `http://localhost/api/cards/gpx?url=${encodeURIComponent('https://example.com/a.gpx')}&places=1`,
-      ),
-    )
-    expect(mockNameLandmarks).toHaveBeenCalledWith([{ kind: 'peak' }])
-    const { data } = (await res.json()) as {
-      data: { landmarks: unknown; placesUnavailable: unknown }
-    }
-    expect(data.landmarks).toEqual([{ kind: 'peak', name: 'Pico' }])
-    expect(data.placesUnavailable).toBe(true)
   })
 })

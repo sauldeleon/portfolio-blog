@@ -122,25 +122,100 @@ describe('GpxUrlField', () => {
     })
   })
 
-  it('asks for place names when told to', async () => {
-    const getSpy = vi
-      .spyOn(axios, 'get')
-      .mockResolvedValue({ data: { data: metrics } })
-    renderApp(
-      <GpxUrlField
-        value={URL}
-        onChange={vi.fn()}
-        onParsed={vi.fn()}
-        idPrefix="rt"
-        withPlaceNames
-      />,
-    )
-    fireEvent.click(screen.getByTestId('rt-gpx-parse'))
-    await waitFor(() =>
-      expect(getSpy).toHaveBeenCalledWith('/api/cards/gpx', {
-        params: { url: URL, places: '1' },
-      }),
-    )
+  describe('with place names', () => {
+    const PEAK = { kind: 'peak', index: 1, ele: 2417, lat: 43, lon: -5.9 }
+    const NAMED = { ...PEAK, name: 'Peña Ubiña' }
+
+    function parseWithNames(onParsed = vi.fn()) {
+      renderApp(
+        <GpxUrlField
+          value={URL}
+          onChange={vi.fn()}
+          onParsed={onParsed}
+          idPrefix="rt"
+          withPlaceNames
+        />,
+      )
+      fireEvent.click(screen.getByTestId('rt-gpx-parse'))
+      return onParsed
+    }
+
+    it('names unnamed landmarks in a second request', async () => {
+      vi.spyOn(axios, 'get').mockResolvedValue({
+        data: { data: { ...metrics, landmarks: [PEAK] } },
+      })
+      const postSpy = vi.spyOn(axios, 'post').mockResolvedValue({
+        data: { data: { landmarks: [NAMED], unavailable: false } },
+      })
+      const onParsed = parseWithNames()
+      await waitFor(() =>
+        expect(onParsed).toHaveBeenCalledWith({
+          ...metrics,
+          landmarks: [NAMED],
+          placesUnavailable: false,
+        }),
+      )
+      expect(onParsed).toHaveBeenCalledTimes(1)
+      expect(postSpy).toHaveBeenCalledWith('/api/cards/places', {
+        landmarks: [PEAK],
+      })
+    })
+
+    it('flags the names as unavailable when that request fails', async () => {
+      vi.spyOn(axios, 'get').mockResolvedValue({
+        data: { data: { ...metrics, landmarks: [PEAK] } },
+      })
+      vi.spyOn(axios, 'post').mockRejectedValue(new Error('timeout'))
+      const onParsed = parseWithNames()
+      await waitFor(() =>
+        expect(onParsed).toHaveBeenCalledWith({
+          ...metrics,
+          landmarks: [PEAK],
+          placesUnavailable: true,
+        }),
+      )
+    })
+
+    it('skips the lookup when every landmark has a name', async () => {
+      vi.spyOn(axios, 'get').mockResolvedValue({
+        data: { data: { ...metrics, landmarks: [NAMED] } },
+      })
+      const postSpy = vi.spyOn(axios, 'post')
+      const onParsed = parseWithNames()
+      await waitFor(() =>
+        expect(onParsed).toHaveBeenCalledWith({
+          ...metrics,
+          landmarks: [NAMED],
+        }),
+      )
+      expect(postSpy).not.toHaveBeenCalled()
+    })
+
+    it('skips the lookup when the GPX has no landmarks', async () => {
+      vi.spyOn(axios, 'get').mockResolvedValue({ data: { data: metrics } })
+      const postSpy = vi.spyOn(axios, 'post')
+      const onParsed = parseWithNames()
+      await waitFor(() => expect(onParsed).toHaveBeenCalledWith(metrics))
+      expect(postSpy).not.toHaveBeenCalled()
+    })
+
+    it('shows a lookup label while naming', async () => {
+      vi.spyOn(axios, 'get').mockResolvedValue({
+        data: { data: { ...metrics, landmarks: [PEAK] } },
+      })
+      let resolve!: (v: unknown) => void
+      vi.spyOn(axios, 'post').mockReturnValue(
+        new Promise((r) => {
+          resolve = r
+        }),
+      )
+      parseWithNames()
+      const button = screen.getByTestId('rt-gpx-parse')
+      await waitFor(() => expect(button).toHaveTextContent('Looking up names…'))
+      expect(button).toBeDisabled()
+      resolve({ data: { data: { landmarks: [NAMED], unavailable: false } } })
+      await waitFor(() => expect(button).toHaveTextContent('Parse'))
+    })
   })
 
   it('shows the server error message on a failed response', async () => {
