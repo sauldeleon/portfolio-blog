@@ -1,77 +1,16 @@
 /**
  * @vitest-environment node
  */
-import axios from 'axios'
+import { parseWaypoints } from '@web/lib/cards'
 
 import { GET } from './route'
 
-const mockAuth = vi.fn()
-const mockParseWaypoints = vi.fn()
-const mockLoggerError = vi.fn()
-
-vi.mock('axios', () => {
-  const mod = { get: vi.fn() }
-  return { ...mod, default: mod }
-})
-vi.mock('@web/lib/auth/config', () => ({ auth: () => mockAuth() }))
-vi.mock('@web/lib/cards', () => ({
-  parseWaypoints: (...args: unknown[]) => mockParseWaypoints(...args),
+vi.mock('@web/lib/api/gpxUrlRoute', () => ({
+  gpxUrlRoute: (parse: unknown, label: string) => ({ parse, label }),
 }))
-vi.mock('@web/lib/logger', () => ({
-  logger: {
-    error: (...args: unknown[]) => mockLoggerError(...args),
-    info: vi.fn(),
-    debug: vi.fn(),
-    warn: vi.fn(),
-  },
-}))
-
-const mockAxiosGet = vi.mocked(axios.get)
-
-function request(url: string | null): Request {
-  const qs = url === null ? '' : `?url=${encodeURIComponent(url)}`
-  return new Request(`http://localhost/api/cards/waypoints${qs}`)
-}
-
-const waypoints = [
-  { name: 'Refugio', lat: 42.5, lon: -1.2, ele: 1850, category: 'refugio' },
-]
-
-beforeEach(() => {
-  vi.clearAllMocks()
-  mockAuth.mockResolvedValue({ user: { name: 'admin' } })
-})
 
 describe('GET /api/cards/waypoints', () => {
-  it('returns 401 when not authenticated', async () => {
-    mockAuth.mockResolvedValue(null)
-    const res = await GET(request('https://example.com/a.gpx'))
-    expect(res.status).toBe(401)
-  })
-
-  it('returns 400 when url is missing', async () => {
-    const res = await GET(request(null))
-    expect(res.status).toBe(400)
-  })
-
-  it('returns 400 for a non-http(s) url', async () => {
-    const res = await GET(request('ftp://example.com/a.gpx'))
-    expect(res.status).toBe(400)
-  })
-
-  it('returns 502 when the fetch fails', async () => {
-    mockAxiosGet.mockRejectedValue(new Error('network'))
-    const res = await GET(request('https://example.com/a.gpx'))
-    expect(res.status).toBe(502)
-    expect(mockLoggerError).toHaveBeenCalled()
-  })
-
-  it('returns 200 with parsed waypoints on success', async () => {
-    mockAxiosGet.mockResolvedValue({ data: '<gpx/>' })
-    mockParseWaypoints.mockReturnValue(waypoints)
-    const res = await GET(request('https://example.com/a.gpx'))
-    expect(res.status).toBe(200)
-    const body = (await res.json()) as { data: unknown }
-    expect(body.data).toEqual(waypoints)
+  it('serves parseWaypoints through the shared GPX route', () => {
+    expect(GET).toEqual({ parse: parseWaypoints, label: 'GPX waypoints' })
   })
 })

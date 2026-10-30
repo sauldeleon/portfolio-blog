@@ -1,6 +1,5 @@
 'use client'
 
-import axios, { isAxiosError } from 'axios'
 import { useMemo, useRef, useState } from 'react'
 
 import { Button } from '@sdlgr/button'
@@ -16,6 +15,7 @@ import {
   zipStore,
 } from '@web/lib/cards'
 import type { Lang, Waypoint, ZipFile } from '@web/lib/cards'
+import { axiosErrorMessage, fetchWaypoints } from '@web/lib/cards/gpxImport'
 
 import { TrackUrlPicker } from '../../../components/TrackUrlPicker'
 import {
@@ -98,11 +98,7 @@ export function WaypointGenerator() {
     setError(null)
     setEditing(null)
     try {
-      const res = await axios.get<{ data?: Waypoint[] }>(
-        '/api/cards/waypoints',
-        { params: { url } },
-      )
-      const wpts = res.data.data
+      const wpts = await fetchWaypoints(url)
       if (!wpts) {
         setError(t('cards.errors.gpxParse'))
         return
@@ -116,11 +112,7 @@ export function WaypointGenerator() {
       setStamp(Date.now())
       setItems(toItems(wpts))
     } catch (err) {
-      setError(
-        isAxiosError(err)
-          ? (err.response?.data?.error ?? t('cards.errors.gpxParse'))
-          : t('cards.errors.gpxParse'),
-      )
+      setError(axiosErrorMessage(err, t('cards.errors.gpxParse')))
     } finally {
       setLoading(false)
     }
