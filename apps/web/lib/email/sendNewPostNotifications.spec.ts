@@ -1,6 +1,8 @@
 /**
  * @vitest-environment node
  */
+import type { ManageLinkParams } from '@web/lib/subscriptions/manageLink'
+
 const mockRender = vi.fn()
 const mockBatchSend = vi.fn()
 const mockGetActiveSubscribers = vi.fn()
@@ -31,11 +33,13 @@ vi.mock('@web/lib/db/queries/categories', () => ({
 vi.mock('@web/i18n/server', () => ({
   getServerTranslation: mockGetServerTranslation,
 }))
-const mockCreateManageLinkParams = vi.fn((token: string) => ({
-  token,
-  expires: '123',
-  signature: 'sig',
-}))
+const mockCreateManageLinkParams = vi.fn(
+  (token: string): ManageLinkParams | null => ({
+    token,
+    expires: '123',
+    signature: 'sig',
+  }),
+)
 vi.mock('@web/lib/subscriptions/manageLink', async (importOriginal) => ({
   ...(await importOriginal<
     typeof import('@web/lib/subscriptions/manageLink')
