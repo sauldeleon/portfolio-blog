@@ -109,7 +109,7 @@ describe('verifyManageLink', () => {
   })
 
   it('uses the current time by default', () => {
-    const params = signed(Date.now())
-    expect(verifyManageLink(params)).toBe('valid')
+    const params = createManageLinkParams('tok')
+    expect(params && verifyManageLink(params)).toBe('valid')
   })
 })
