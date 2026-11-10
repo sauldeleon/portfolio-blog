@@ -1,9 +1,18 @@
 'use client'
 
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import {
+  type InfiniteData,
+  keepPreviousData,
+  useInfiniteQuery,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query'
 import axios from 'axios'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
+import { useDebounce } from '@sdlgr/blog-filters'
+
+import { useInfiniteScroll } from '@web/app/admin/(auth)/hooks/useInfiniteScroll'
 import { useClientTranslation } from '@web/i18n/client'
 import type { CloudinaryImage } from '@web/lib/cloudinary/images'
 
@@ -27,6 +36,30 @@ import {
 } from './ImageManager.styles'
 
 const QUERY_KEY = ['admin-images'] as const
+const SEARCH_DEBOUNCE_MS = 300
+
+interface ImagesPage {
+  images: CloudinaryImage[]
+  nextCursor?: string
+}
+
+type ImagesData = InfiniteData<ImagesPage, string | undefined>
+
+/** Applies `update` to the images of every loaded page, in every search. */
+function updateImages(
+  old: ImagesData | undefined,
+  update: (images: CloudinaryImage[], pageIndex: number) => CloudinaryImage[],
+): ImagesData | undefined {
+  /* istanbul ignore next */
+  if (!old) return old
+  return {
+    ...old,
+    pages: old.pages.map((page, i) => ({
+      ...page,
+      images: update(page.images, i),
+    })),
+  }
+}
 
 export function ImageManager() {
   const { t } = useClientTranslation('admin')
@@ -38,20 +71,49 @@ export function ImageManager() {
   const [editTargetId, setEditTargetId] = useState<string | null>(null)
   const [renameError, setRenameError] = useState<string | null>(null)
 
+  const debouncedSearch = useDebounce(search.trim(), SEARCH_DEBOUNCE_MS)
+  const sentinelRef = useRef<HTMLDivElement>(null)
+
+  // Same paging as the post editor's image picker: Cloudinary pages by
+  // cursor, so the list grows as the end scrolls into view.
   const {
-    data: images = [],
+    data,
     isLoading,
     isError,
     refetch,
-  } = useQuery({
-    queryKey: QUERY_KEY,
-    queryFn: async () => {
-      const { data } = await axios.get<{ images: CloudinaryImage[] }>(
-        '/api/images/',
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
+    queryKey: [...QUERY_KEY, debouncedSearch],
+    queryFn: async ({ pageParam }) => {
+      const params = new URLSearchParams()
+      if (debouncedSearch) params.set('search', debouncedSearch)
+      if (pageParam) params.set('cursor', pageParam)
+      const qs = params.toString()
+      const { data } = await axios.get<ImagesPage>(
+        `/api/images/${qs ? `?${qs}` : ''}`,
       )
-      return data.images
+      return data
     },
+    initialPageParam: undefined as string | undefined,
+    getNextPageParam: (last) => last.nextCursor,
+    // Keep showing the current images while a new search loads.
+    placeholderData: keepPreviousData,
   })
+
+  useInfiniteScroll(sentinelRef, () => {
+    if (hasNextPage && !isFetchingNextPage) void fetchNextPage()
+  })
+
+  const seen = new Set<string>()
+  const images = (data?.pages.flatMap((page) => page.images) ?? []).filter(
+    (img) => {
+      if (seen.has(img.publicId)) return false
+      seen.add(img.publicId)
+      return true
+    },
+  )
 
   const displayError = !isLoading
     ? isError
@@ -60,16 +122,6 @@ export function ImageManager() {
     : null
 
   const editTarget = images.find((img) => img.publicId === editTargetId) ?? null
-
-  const filteredImages = (
-    search
-      ? images.filter((img) =>
-          img.publicId.toLowerCase().includes(search.toLowerCase()),
-        )
-      : [...images]
-  ).sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-  )
 
   const renameMutation = useMutation({
     mutationFn: async ({
@@ -86,11 +138,11 @@ export function ImageManager() {
       return data
     },
     onSuccess: (updated, { publicId }) => {
-      queryClient.setQueryData<CloudinaryImage[]>(QUERY_KEY, (old) => {
-        /* istanbul ignore next */
-        if (!old) return []
-        return old.map((img) => (img.publicId === publicId ? updated : img))
-      })
+      queryClient.setQueriesData<ImagesData>({ queryKey: QUERY_KEY }, (old) =>
+        updateImages(old, (images) =>
+          images.map((img) => (img.publicId === publicId ? updated : img)),
+        ),
+      )
       setEditTargetId(null)
       setRenameError(null)
     },
@@ -100,11 +152,9 @@ export function ImageManager() {
   })
 
   function handleUploaded(image: CloudinaryImage) {
-    queryClient.setQueryData<CloudinaryImage[]>(QUERY_KEY, (old) => {
-      /* istanbul ignore next */
-      if (!old) return [image]
-      return [image, ...old]
-    })
+    queryClient.setQueriesData<ImagesData>({ queryKey: QUERY_KEY }, (old) =>
+      updateImages(old, (images, i) => (i === 0 ? [image, ...images] : images)),
+    )
     setIsUploadOpen(false)
   }
 
@@ -116,11 +166,11 @@ export function ImageManager() {
     try {
       const encodedId = id.split('/').map(encodeURIComponent).join('/')
       await axios.delete(`/api/images/${encodedId}/`)
-      queryClient.setQueryData<CloudinaryImage[]>(QUERY_KEY, (old) => {
-        /* istanbul ignore next */
-        if (!old) return []
-        return old.filter((img) => img.publicId !== id)
-      })
+      queryClient.setQueriesData<ImagesData>({ queryKey: QUERY_KEY }, (old) =>
+        updateImages(old, (images) =>
+          images.filter((img) => img.publicId !== id),
+        ),
+      )
     } catch {
       setDeleteError(t('images.deleteError'))
     }
@@ -178,24 +228,27 @@ export function ImageManager() {
         <StyledError data-testid="error-state">{displayError}</StyledError>
       )}
 
-      {!isLoading && !displayError && images.length === 0 && (
-        <StyledEmptyState data-testid="empty-state">
-          {t('images.emptyState')}
-        </StyledEmptyState>
-      )}
+      {!isLoading &&
+        !displayError &&
+        images.length === 0 &&
+        debouncedSearch === '' && (
+          <StyledEmptyState data-testid="empty-state">
+            {t('images.emptyState')}
+          </StyledEmptyState>
+        )}
 
       {!isLoading &&
         !displayError &&
-        images.length > 0 &&
-        filteredImages.length === 0 && (
+        images.length === 0 &&
+        debouncedSearch !== '' && (
           <StyledEmptyState data-testid="no-results-state">
             {t('images.noResults')}
           </StyledEmptyState>
         )}
 
-      {!isLoading && !displayError && filteredImages.length > 0 && (
+      {!isLoading && !displayError && images.length > 0 && (
         <StyledGrid data-testid="image-grid">
-          {filteredImages.map((image) => (
+          {images.map((image) => (
             <ImageCard
               key={image.publicId}
               image={image}
@@ -208,6 +261,13 @@ export function ImageManager() {
             />
           ))}
         </StyledGrid>
+      )}
+
+      <div ref={sentinelRef} data-testid="image-list-end" />
+      {isFetchingNextPage && (
+        <StyledLoading data-testid="loading-more">
+          {t('images.picker.loading')}
+        </StyledLoading>
       )}
 
       <ImageUploadModal

@@ -30,6 +30,17 @@
   "unsubscribed.message": "Ya no recibirás correos de este blog.",
   "unsubscribed.error": "Este enlace para cancelar la suscripción no es válido.",
   "unsubscribed.imageAlt": "Ilustración de cancelación de suscripción",
+  "manage.title": "Gestiona tu suscripción",
+  "manage.subtitle": "Suscrito como {{email}}",
+  "manage.localeLabel": "Idioma de los correos",
+  "manage.locale.en": "English",
+  "manage.locale.es": "Español",
+  "manage.submit": "Guardar cambios",
+  "manage.submitting": "Guardando...",
+  "manage.success": "Tu suscripción se ha actualizado.",
+  "manage.error": "Este enlace no es válido.",
+  "manage.expired": "Este enlace ha caducado. Usa el de tu correo más reciente.",
+  "manage.unsubscribeHint": "¿Ya no quieres recibir estos correos?",
   "backToBlog": "Volver al blog",
   "notification.subject": "Nuevo post: {{title}}",
   "notification.previewText": "Se ha publicado un nuevo post en sawl.dev.",
@@ -38,5 +49,6 @@
   "notification.heading": "Nuevo post",
   "notification.buttonLabel": "Leer post",
   "notification.footerText": "Recibes esto porque te suscribiste a sawl.dev.",
-  "notification.unsubscribeText": "Cancelar suscripción"
+  "notification.unsubscribeText": "Cancelar suscripción",
+  "notification.manageText": "Gestionar suscripción"
 }

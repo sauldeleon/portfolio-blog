@@ -8,6 +8,7 @@ import {
   StyledAdminEmpty,
   StyledAdminRefreshButton,
   StyledAdminRowActions,
+  StyledAdminStatusBadge,
   StyledAdminTable,
   StyledAdminTbody,
   StyledAdminTd,
@@ -38,33 +39,7 @@ export const StyledActions = styled(StyledAdminRowActions)``
 export const StyledDeleteButton = styled(StyledAdminDeleteButton)``
 export const StyledEmpty = styled(StyledAdminEmpty)``
 
-export const StyledStatusBadge = styled.span<{ $status: string }>`
-  font-size: 0.6rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  padding: 2px 8px;
-  border-radius: 2px;
-  font-weight: 500;
-  color: ${({ $status, theme }) =>
-    $status === 'approved'
-      ? theme.colors.green
-      : $status === 'rejected'
-        ? theme.colors.orange
-        : theme.colors.yellow};
-  background: ${({ $status, theme }) =>
-    $status === 'approved'
-      ? `${theme.colors.green}18`
-      : $status === 'rejected'
-        ? `${theme.colors.orange}18`
-        : `${theme.colors.yellow}18`};
-  border: 1px solid
-    ${({ $status, theme }) =>
-      $status === 'approved'
-        ? `${theme.colors.green}40`
-        : $status === 'rejected'
-          ? `${theme.colors.orange}40`
-          : `${theme.colors.yellow}40`};
-`
+export const StyledStatusBadge = styled(StyledAdminStatusBadge)``
 
 export const StyledApproveButton = styled(Button).attrs({
   variant: 'ghost',

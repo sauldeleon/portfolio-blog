@@ -12,6 +12,7 @@ const baseProps = {
   postExcerpt: 'A brief excerpt about this post.',
   postUrl: 'https://example.com/en/blog/1/my-great-post',
   unsubscribeUrl: 'https://example.com/en/subscribe/unsubscribed?token=tok',
+  manageUrl: 'https://example.com/en/subscribe/manage?token=tok',
   siteUrl: 'https://example.com',
   previewText: 'New post from sawl.dev',
   greeting: "Hi John, there's a new post.",
@@ -20,6 +21,7 @@ const baseProps = {
   buttonLabel: 'Read more',
   footerText: 'You are subscribed.',
   unsubscribeText: 'Unsubscribe',
+  manageText: 'Manage subscription',
 }
 
 describe('NewPostEmail', () => {
@@ -27,6 +29,23 @@ describe('NewPostEmail', () => {
     expect(
       renderToStaticMarkup(React.createElement(NewPostEmail, baseProps)),
     ).toMatchSnapshot()
+  })
+
+  it('renders manage and unsubscribe links in the footer', () => {
+    const html = renderToStaticMarkup(
+      React.createElement(NewPostEmail, baseProps),
+    )
+    expect(html).toContain('https://example.com/en/subscribe/manage?token=tok')
+    expect(html).toContain('Manage subscription')
+    expect(html).toContain('Unsubscribe')
+  })
+
+  it('renders only the unsubscribe link without a manage URL', () => {
+    const html = renderToStaticMarkup(
+      React.createElement(NewPostEmail, { ...baseProps, manageUrl: undefined }),
+    )
+    expect(html).not.toContain('Manage subscription')
+    expect(html).toContain('Unsubscribe')
   })
 
   it('renders greeting text', () => {

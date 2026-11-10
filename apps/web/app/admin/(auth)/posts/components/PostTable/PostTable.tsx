@@ -5,16 +5,14 @@ import axios from 'axios'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 
+import { AdminPagination } from '@web/app/admin/(auth)/components/AdminPagination'
 import { ConfirmDeleteModal } from '@web/app/admin/(auth)/components/ConfirmDeleteModal'
 import { PublishNotifyModal } from '@web/app/admin/(auth)/components/PublishNotifyModal'
+import { useUrlPagination } from '@web/app/admin/(auth)/hooks/useUrlPagination'
 import { useClientTranslation } from '@web/i18n/client'
 import type { AdminPost } from '@web/lib/db/queries/posts'
 
-import {
-  PAGE_LIMIT,
-  STATUS_FILTERS,
-  type StatusFilter,
-} from './PostTable.constants'
+import { STATUS_FILTERS, type StatusFilter } from './PostTable.constants'
 import {
   StyledActions,
   StyledArchiveButton,
@@ -39,9 +37,6 @@ import {
   StyledLangChips,
   StyledLeftGroup,
   StyledNewPostButton,
-  StyledPageButton,
-  StyledPageInfo,
-  StyledPagination,
   StyledPublishButton,
   StyledRefreshButton,
   StyledSearchInput,
@@ -112,7 +107,6 @@ export function PostTable({ posts }: PostTableProps) {
   const [hardDeleteTargetId, setHardDeleteTargetId] = useState<string | null>(
     null,
   )
-  const [page, setPage] = useState(1)
 
   const QUERY_KEY = ['admin-posts'] as const
 
@@ -143,12 +137,7 @@ export function PostTable({ posts }: PostTableProps) {
     return matchesStatus && matchesSearch
   })
 
-  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_LIMIT))
-  const effectivePage = Math.min(page, totalPages)
-  const paginated = filtered.slice(
-    (effectivePage - 1) * PAGE_LIMIT,
-    effectivePage * PAGE_LIMIT,
-  )
+  const { page, pageItems: paginated, resetPage } = useUrlPagination(filtered)
 
   function handleArchive(e: React.MouseEvent, id: string) {
     e.stopPropagation()
@@ -397,7 +386,7 @@ export function PostTable({ posts }: PostTableProps) {
             value={search}
             onChange={(e) => {
               setSearch(e.target.value)
-              setPage(1)
+              resetPage()
             }}
             data-testid="search-input"
           />
@@ -409,8 +398,8 @@ export function PostTable({ posts }: PostTableProps) {
                 onClick={() => {
                   setFilter(s)
                   setSelectedIds(new Set())
-                  setPage(1)
                   const params = new URLSearchParams(searchParams.toString())
+                  params.delete('page')
                   if (s === 'all') {
                     params.delete('filter')
                   } else {
@@ -662,30 +651,7 @@ export function PostTable({ posts }: PostTableProps) {
         </StyledTbody>
       </StyledTable>
 
-      {totalPages > 1 && (
-        <StyledPagination data-testid="pagination">
-          <StyledPageButton
-            onClick={() => setPage(effectivePage - 1)}
-            disabled={effectivePage === 1}
-            data-testid="pagination-prev"
-          >
-            {t('posts.pagination.prev')}
-          </StyledPageButton>
-          <StyledPageInfo data-testid="pagination-info">
-            {t('posts.pagination.pageOf', {
-              page: effectivePage,
-              total: totalPages,
-            })}
-          </StyledPageInfo>
-          <StyledPageButton
-            onClick={() => setPage(effectivePage + 1)}
-            disabled={effectivePage === totalPages}
-            data-testid="pagination-next"
-          >
-            {t('posts.pagination.next')}
-          </StyledPageButton>
-        </StyledPagination>
-      )}
+      <AdminPagination total={filtered.length} page={page} />
 
       <ConfirmDeleteModal
         isOpen={archiveTargetId !== null}

@@ -5,6 +5,10 @@ import { getCategoryTranslations } from '@web/lib/db/queries/categories'
 import { getSeriesTranslationsById } from '@web/lib/db/queries/series'
 import { getActiveSubscribers } from '@web/lib/db/queries/subscriptions'
 import { logger } from '@web/lib/logger'
+import {
+  buildManageUrl,
+  createManageLinkParams,
+} from '@web/lib/subscriptions/manageLink'
 import { getSiteUrl } from '@web/utils/url/generateUrl'
 
 import { resend } from './resend'
@@ -91,6 +95,10 @@ export async function sendNewPostNotifications({
 
         const postUrl = `${siteUrl}/${locale}/blog/${postNumber}/${postTranslation.slug}`
         const unsubscribeUrl = `${siteUrl}/${locale}/subscribe/unsubscribed?token=${subscriber.token}`
+        const manageLink = createManageLinkParams(subscriber.token)
+        const manageUrl = manageLink
+          ? buildManageUrl(siteUrl, locale, manageLink)
+          : undefined
 
         const html = await render(
           NewPostEmail({
@@ -98,6 +106,7 @@ export async function sendNewPostNotifications({
             postExcerpt: postTranslation.excerpt,
             postUrl,
             unsubscribeUrl,
+            manageUrl,
             siteUrl,
             coverImageUrl,
             category: categoryName,
@@ -111,6 +120,7 @@ export async function sendNewPostNotifications({
             buttonLabel: t('notification.buttonLabel'),
             footerText: t('notification.footerText'),
             unsubscribeText: t('notification.unsubscribeText'),
+            manageText: t('notification.manageText'),
           }),
         )
 

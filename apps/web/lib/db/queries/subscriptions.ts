@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm'
+import { type SQL, and, desc, eq } from 'drizzle-orm'
 import { ulid } from 'ulid'
 
 import { db } from '../index'
@@ -13,7 +13,10 @@ export type SubscriptionRecord = {
   locale: Locale
   createdAt: Date
   confirmedAt: Date | null
+  enabled: boolean
 }
+
+export type AdminSubscriptionRecord = Omit<SubscriptionRecord, 'token'>
 
 function mapRow(row: typeof subscriptions.$inferSelect): SubscriptionRecord {
   return {
@@ -25,7 +28,15 @@ function mapRow(row: typeof subscriptions.$inferSelect): SubscriptionRecord {
     locale: row.locale as Locale,
     createdAt: row.createdAt,
     confirmedAt: row.confirmedAt ?? null,
+    enabled: row.enabled,
   }
+}
+
+function toAdminRecord({
+  token: _token,
+  ...rest
+}: SubscriptionRecord): AdminSubscriptionRecord {
+  return rest
 }
 
 export async function getSubscriptionByEmail(
@@ -87,8 +98,58 @@ export async function getActiveSubscribers(): Promise<SubscriptionRecord[]> {
   const rows = await db
     .select()
     .from(subscriptions)
-    .where(eq(subscriptions.status, 'active'))
+    .where(
+      and(eq(subscriptions.status, 'active'), eq(subscriptions.enabled, true)),
+    )
   return rows.map(mapRow)
+}
+
+export async function getSubscriptionsAdmin(): Promise<
+  AdminSubscriptionRecord[]
+> {
+  const rows = await db
+    .select()
+    .from(subscriptions)
+    .orderBy(desc(subscriptions.createdAt))
+  return rows.map((row) => toAdminRecord(mapRow(row)))
+}
+
+type SubscriptionPatch = Partial<
+  Pick<SubscriptionRecord, 'name' | 'locale' | 'enabled'>
+>
+
+async function updateSubscriptionWhere(
+  where: SQL,
+  patch: SubscriptionPatch,
+): Promise<SubscriptionRecord | null> {
+  const rows = await db
+    .update(subscriptions)
+    .set(patch)
+    .where(where)
+    .returning()
+  const row = rows[0]
+  return row ? mapRow(row) : null
+}
+
+/** Admin edit: any of name, locale or the enabled flag. */
+export async function updateSubscriptionById(
+  id: string,
+  patch: SubscriptionPatch,
+): Promise<AdminSubscriptionRecord | null> {
+  const record = await updateSubscriptionWhere(eq(subscriptions.id, id), patch)
+  return record ? toAdminRecord(record) : null
+}
+
+/** Subscriber self-service via their email link: name and locale only. */
+export async function updateSubscriptionByToken(
+  token: string,
+  patch: Pick<SubscriptionRecord, 'name' | 'locale'>,
+): Promise<AdminSubscriptionRecord | null> {
+  const record = await updateSubscriptionWhere(
+    eq(subscriptions.token, token),
+    patch,
+  )
+  return record ? toAdminRecord(record) : null
 }
 
 export async function unsubscribeByToken(

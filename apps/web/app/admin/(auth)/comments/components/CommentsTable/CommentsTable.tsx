@@ -4,7 +4,10 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import axios from 'axios'
 import { useState } from 'react'
 
+import { AdminPagination } from '@web/app/admin/(auth)/components/AdminPagination'
+import type { AdminStatusTone } from '@web/app/admin/(auth)/components/AdminTable/AdminTable.styles'
 import { ConfirmDeleteModal } from '@web/app/admin/(auth)/components/ConfirmDeleteModal'
+import { useUrlPagination } from '@web/app/admin/(auth)/hooks/useUrlPagination'
 import { useClientTranslation } from '@web/i18n/client'
 import type { CommentRecord } from '@web/lib/db/queries/comments'
 import type { CommentStatus } from '@web/lib/db/schema'
@@ -46,6 +49,12 @@ const STATUS_FILTERS: StatusFilter[] = [
   'approved',
   'rejected',
 ]
+
+const STATUS_TONE: Record<CommentStatus, AdminStatusTone> = {
+  approved: 'success',
+  pending: 'warning',
+  rejected: 'danger',
+}
 
 const QUERY_KEY = (status: StatusFilter) => ['admin-comments', status] as const
 
@@ -176,7 +185,8 @@ export function CommentsTable({ initialComments }: CommentsTableProps) {
     setSelectedIds(new Set())
   }
 
-  const displayed = comments ?? []
+  const filtered = comments ?? []
+  const { page, pageItems: displayed, resetPage } = useUrlPagination(filtered)
   const allSelected =
     displayed.length > 0 && displayed.every((c) => selectedIds.has(c.id))
 
@@ -188,7 +198,10 @@ export function CommentsTable({ initialComments }: CommentsTableProps) {
             <StyledFilterButton
               key={s}
               $active={statusFilter === s}
-              onClick={() => setStatusFilter(s)}
+              onClick={() => {
+                setStatusFilter(s)
+                resetPage()
+              }}
               data-testid={`filter-${s}`}
             >
               {t(`comments.filters.${s}`)}
@@ -285,7 +298,7 @@ export function CommentsTable({ initialComments }: CommentsTableProps) {
               </StyledTd>
               <StyledTd>
                 <StyledStatusBadge
-                  $status={comment.status}
+                  $tone={STATUS_TONE[comment.status]}
                   data-testid="status-badge"
                 >
                   {t(`comments.status.${comment.status}`)}
@@ -328,6 +341,7 @@ export function CommentsTable({ initialComments }: CommentsTableProps) {
           ))}
         </StyledTbody>
       </StyledTable>
+      <AdminPagination total={filtered.length} page={page} />
 
       <ConfirmDeleteModal
         isOpen={deleteTargetId !== null}

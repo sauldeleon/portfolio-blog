@@ -39,8 +39,12 @@ vi.mock('@sdlgr/select', () => ({
 const mockRouterRefresh = vi.fn()
 const mockRouterPush = vi.fn()
 
+let mockSearchParams = new URLSearchParams()
+
 vi.mock('next/navigation', () => ({
   useRouter: () => ({ refresh: mockRouterRefresh, push: mockRouterPush }),
+  usePathname: () => '/admin/users/',
+  useSearchParams: () => mockSearchParams,
 }))
 
 vi.mock('@web/i18n/client', () => ({
@@ -340,5 +344,31 @@ describe('UsersPageView', () => {
     renderApp(<UsersPageView users={[adminUser]} title="Users" />)
     await userEvent.click(screen.getByTestId('edit-user-user-1'))
     expect(mockRouterPush).toHaveBeenCalledWith('/admin/users/user-1')
+  })
+
+  describe('pagination', () => {
+    const many = Array.from({ length: 25 }, (_, i) => ({
+      ...editorUser,
+      id: `user-${i}`,
+      email: `u${i}@example.com`,
+    }))
+
+    afterEach(() => {
+      mockSearchParams = new URLSearchParams()
+    })
+
+    it('shows 20 rows and the page links', () => {
+      renderApp(<UsersPageView users={many} title="Users" />)
+      expect(screen.getAllByTestId(/^user-row-/)).toHaveLength(20)
+      expect(
+        screen.getByRole('navigation', { name: 'pagination' }),
+      ).toBeInTheDocument()
+    })
+
+    it('shows the page from the URL', () => {
+      mockSearchParams = new URLSearchParams('page=2')
+      renderApp(<UsersPageView users={many} title="Users" />)
+      expect(screen.getAllByTestId(/^user-row-/)).toHaveLength(5)
+    })
   })
 })

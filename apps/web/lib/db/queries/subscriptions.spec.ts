@@ -7,7 +7,10 @@ import {
   getActiveSubscribers,
   getSubscriptionByEmail,
   getSubscriptionByToken,
+  getSubscriptionsAdmin,
   unsubscribeByToken,
+  updateSubscriptionById,
+  updateSubscriptionByToken,
 } from './subscriptions'
 
 vi.mock('../index', () => ({
@@ -31,7 +34,7 @@ const mockDb = db as unknown as {
 
 function makeChain(resolved: unknown) {
   const chain: Record<string, unknown> = {}
-  const methods = ['from', 'where', 'values', 'set', 'returning']
+  const methods = ['from', 'where', 'values', 'set', 'returning', 'orderBy']
   for (const m of methods) {
     chain[m] = vi.fn().mockReturnValue(chain)
   }
@@ -53,6 +56,7 @@ const mockRow = {
   locale: 'en',
   createdAt: now,
   confirmedAt: null,
+  enabled: true,
 }
 
 beforeEach(() => {
@@ -72,6 +76,7 @@ describe('getSubscriptionByEmail', () => {
       locale: 'en',
       createdAt: now,
       confirmedAt: null,
+      enabled: true,
     })
   })
 
@@ -114,6 +119,7 @@ describe('createSubscription', () => {
       locale: 'en',
       createdAt: now,
       confirmedAt: null,
+      enabled: true,
     })
   })
 })
@@ -163,6 +169,70 @@ describe('unsubscribeByToken', () => {
   it('returns null when token not found', async () => {
     mockDb.update.mockReturnValue(makeChain([]))
     const result = await unsubscribeByToken('missing-token')
+    expect(result).toBeNull()
+  })
+})
+
+describe('getSubscriptionsAdmin', () => {
+  it('returns all subscriptions without tokens', async () => {
+    mockDb.select.mockReturnValue(makeChain([mockRow]))
+    const result = await getSubscriptionsAdmin()
+    expect(result).toEqual([
+      {
+        id: mockRow.id,
+        email: mockRow.email,
+        name: mockRow.name,
+        status: 'pending',
+        locale: 'en',
+        createdAt: now,
+        confirmedAt: null,
+        enabled: true,
+      },
+    ])
+    expect(result[0]).not.toHaveProperty('token')
+  })
+})
+
+describe('updateSubscriptionById', () => {
+  it('applies the patch and returns the record without token', async () => {
+    const chain = makeChain([{ ...mockRow, enabled: false, name: 'New' }])
+    mockDb.update.mockReturnValue(chain)
+    const result = await updateSubscriptionById(mockRow.id, {
+      enabled: false,
+      name: 'New',
+    })
+    expect(chain.set).toHaveBeenCalledWith({ enabled: false, name: 'New' })
+    expect(result?.enabled).toBe(false)
+    expect(result?.name).toBe('New')
+    expect(result).not.toHaveProperty('token')
+  })
+
+  it('returns null when subscription not found', async () => {
+    mockDb.update.mockReturnValue(makeChain([]))
+    const result = await updateSubscriptionById('missing', { enabled: true })
+    expect(result).toBeNull()
+  })
+})
+
+describe('updateSubscriptionByToken', () => {
+  it('updates name and locale and returns the record without token', async () => {
+    const chain = makeChain([{ ...mockRow, name: 'Ana', locale: 'es' }])
+    mockDb.update.mockReturnValue(chain)
+    const result = await updateSubscriptionByToken('test-token-uuid', {
+      name: 'Ana',
+      locale: 'es',
+    })
+    expect(chain.set).toHaveBeenCalledWith({ name: 'Ana', locale: 'es' })
+    expect(result).toMatchObject({ name: 'Ana', locale: 'es' })
+    expect(result).not.toHaveProperty('token')
+  })
+
+  it('returns null when token not found', async () => {
+    mockDb.update.mockReturnValue(makeChain([]))
+    const result = await updateSubscriptionByToken('missing', {
+      name: 'Ana',
+      locale: 'es',
+    })
     expect(result).toBeNull()
   })
 })

@@ -5,5 +5,3 @@ export const STATUS_FILTERS: StatusFilter[] = [
   'draft',
   'archived',
 ]
-
-export const PAGE_LIMIT = 20

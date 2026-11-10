@@ -185,3 +185,30 @@ export const StyledAdminLocaleTab = styled(Button).attrs({ variant: 'label' })`
       active ? theme.colors.green : theme.colors.white};
   }
 `
+
+export type AdminStatusTone = 'success' | 'warning' | 'danger'
+
+function toneColor(
+  tone: AdminStatusTone,
+  colors: { green: string; orange: string; yellow: string },
+) {
+  return tone === 'success'
+    ? colors.green
+    : tone === 'danger'
+      ? colors.orange
+      : colors.yellow
+}
+
+/** Outlined, tinted status label (comments, subscribers). */
+export const StyledAdminStatusBadge = styled.span<{ $tone: AdminStatusTone }>`
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 2px 8px;
+  border-radius: 2px;
+  font-weight: 500;
+  color: ${({ $tone, theme }) => toneColor($tone, theme.colors)};
+  background: ${({ $tone, theme }) => `${toneColor($tone, theme.colors)}18`};
+  border: 1px solid
+    ${({ $tone, theme }) => `${toneColor($tone, theme.colors)}40`};
+`

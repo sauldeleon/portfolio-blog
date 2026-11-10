@@ -42,8 +42,12 @@ vi.mock('@web/i18n/client', () => ({
   }),
 }))
 
+let mockSearchParams = new URLSearchParams()
+
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn(),
+  usePathname: () => '/admin/series/',
+  useSearchParams: () => mockSearchParams,
 }))
 
 function makeSeries(overrides: Partial<SeriesForAdmin> = {}): SeriesForAdmin {
@@ -522,5 +526,29 @@ describe('SeriesTable', () => {
     await waitFor(() =>
       expect(screen.queryByTestId('series-posts-row')).not.toBeInTheDocument(),
     )
+  })
+
+  describe('pagination', () => {
+    const many = Array.from({ length: 25 }, (_, i) =>
+      makeSeries({ id: `series-${i}` }),
+    )
+
+    afterEach(() => {
+      mockSearchParams = new URLSearchParams()
+    })
+
+    it('shows 20 rows and the page links', () => {
+      renderApp(<SeriesTable series={many} />)
+      expect(screen.getAllByTestId('series-row')).toHaveLength(20)
+      expect(
+        screen.getByRole('navigation', { name: 'pagination' }),
+      ).toBeInTheDocument()
+    })
+
+    it('shows the page from the URL', () => {
+      mockSearchParams = new URLSearchParams('page=2')
+      renderApp(<SeriesTable series={many} />)
+      expect(screen.getAllByTestId('series-row')).toHaveLength(5)
+    })
   })
 })

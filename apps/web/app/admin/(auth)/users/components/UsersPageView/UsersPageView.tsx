@@ -6,6 +6,8 @@ import { useState } from 'react'
 
 import { Select } from '@sdlgr/select'
 
+import { AdminPagination } from '@web/app/admin/(auth)/components/AdminPagination'
+import { useUrlPagination } from '@web/app/admin/(auth)/hooks/useUrlPagination'
 import { useClientTranslation } from '@web/i18n/client'
 import type { UserRecord } from '@web/lib/db/queries/users'
 import type { UserRole } from '@web/lib/db/schema'
@@ -56,6 +58,7 @@ export function UsersPageView({
       (u.name?.toLowerCase().includes(q) ?? false)
     )
   })
+  const { page, pageItems, resetPage } = useUrlPagination(filtered)
 
   async function handleDelete(id: string) {
     try {
@@ -97,7 +100,10 @@ export function UsersPageView({
             type="search"
             placeholder={t('users.searchPlaceholder')}
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => {
+              setSearch(e.target.value)
+              resetPage()
+            }}
             data-testid="search-input"
           />
           <StyledButtonGroup>
@@ -137,7 +143,7 @@ export function UsersPageView({
               </tr>
             </StyledThead>
             <StyledTbody>
-              {filtered.map((user) => (
+              {pageItems.map((user) => (
                 <StyledTr key={user.id} data-testid={`user-row-${user.id}`}>
                   <StyledTd>{user.email}</StyledTd>
                   <StyledTd>{user.name}</StyledTd>
@@ -204,6 +210,7 @@ export function UsersPageView({
             </StyledTbody>
           </StyledTable>
         )}
+        <AdminPagination total={filtered.length} page={page} />
       </StyledContent>
     </StyledPage>
   )

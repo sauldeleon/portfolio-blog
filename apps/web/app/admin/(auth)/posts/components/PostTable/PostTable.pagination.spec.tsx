@@ -11,6 +11,8 @@ import { PostTable } from './PostTable'
 
 const mockRefresh = vi.fn()
 const mockPush = vi.fn()
+const mockReplace = vi.fn()
+let mockSearchParams = new URLSearchParams()
 
 vi.mock('@web/i18n/client', () => ({
   useClientTranslation: vi.fn().mockReturnValue({
@@ -48,9 +50,8 @@ vi.mock('@web/i18n/client', () => ({
         'posts.archiveDisabledPublished': 'Unpublish the post before archiving',
         'posts.empty': 'No posts found',
         'posts.newPost': 'New post',
-        'posts.pagination.prev': '← Prev',
-        'posts.pagination.next': 'Next →',
-        'posts.pagination.pageOf': '{{page}} of {{total}}',
+        'pagination.previous': '← Prev',
+        'pagination.next': 'Next →',
         refresh: 'Refresh',
         'confirmDelete.confirm': 'Confirm delete',
         'confirmDelete.cancel': 'Cancel delete',
@@ -77,7 +78,7 @@ vi.mock('@web/app/admin/(auth)/components/PublishNotifyModal', () => ({
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn(),
   usePathname: vi.fn().mockReturnValue('/admin/posts/'),
-  useSearchParams: vi.fn().mockReturnValue(new URLSearchParams()),
+  useSearchParams: () => mockSearchParams,
 }))
 
 const makePost = (overrides: Partial<AdminPost> = {}): AdminPost => ({
@@ -109,11 +110,16 @@ describe('PostTable — pagination', () => {
       makePost({ id: `p${i}`, titleEn: `Post ${i}` }),
     )
 
+  const pagination = () =>
+    screen.queryByRole('navigation', { name: 'pagination' })
+
   beforeEach(() => {
     vi.clearAllMocks()
+    mockSearchParams = new URLSearchParams()
     ;(useRouter as Mock).mockReturnValue({
       refresh: mockRefresh,
       push: mockPush,
+      replace: mockReplace,
     })
     vi.spyOn(axios, 'get').mockResolvedValue({ data: { data: [] } })
     vi.spyOn(axios, 'put').mockResolvedValue({ data: {} })
@@ -122,81 +128,63 @@ describe('PostTable — pagination', () => {
 
   it('does not render pagination when posts <= 20', () => {
     renderApp(<PostTable posts={[makePost()]} />)
-    expect(screen.queryByTestId('pagination')).not.toBeInTheDocument()
+    expect(pagination()).not.toBeInTheDocument()
   })
 
-  it('renders pagination when posts > 20', () => {
+  it('renders pagination and the first 20 rows when posts > 20', () => {
     renderApp(<PostTable posts={make21Posts()} />)
-    expect(screen.getByTestId('pagination')).toBeInTheDocument()
-    expect(screen.getByTestId('pagination-info')).toHaveTextContent('1 of 2')
-  })
-
-  it('shows only first 20 rows on page 1', () => {
-    renderApp(<PostTable posts={make21Posts()} />)
+    expect(pagination()).toBeInTheDocument()
     expect(screen.getAllByTestId('post-row')).toHaveLength(20)
     expect(screen.getByText('Post 0')).toBeInTheDocument()
     expect(screen.queryByText('Post 20')).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '← Prev' })).toBeDisabled()
   })
 
-  it('prev button is disabled on first page', () => {
+  it('shows the page from the URL', () => {
+    mockSearchParams = new URLSearchParams('page=2')
     renderApp(<PostTable posts={make21Posts()} />)
-    expect(screen.getByTestId('pagination-prev')).toBeDisabled()
-  })
-
-  it('next button is disabled on last page', () => {
-    renderApp(<PostTable posts={make21Posts()} />)
-    fireEvent.click(screen.getByTestId('pagination-next'))
-    expect(screen.getByTestId('pagination-next')).toBeDisabled()
-  })
-
-  it('clicking next shows page 2 with remaining rows', () => {
-    renderApp(<PostTable posts={make21Posts()} />)
-    fireEvent.click(screen.getByTestId('pagination-next'))
     expect(screen.getAllByTestId('post-row')).toHaveLength(1)
     expect(screen.getByText('Post 20')).toBeInTheDocument()
-    expect(screen.getByTestId('pagination-info')).toHaveTextContent('2 of 2')
+    expect(screen.getByRole('button', { name: 'Next →' })).toBeDisabled()
   })
 
-  it('clicking prev returns to page 1', () => {
+  it('clamps a page past the end to the last page', () => {
+    mockSearchParams = new URLSearchParams('page=9')
     renderApp(<PostTable posts={make21Posts()} />)
-    fireEvent.click(screen.getByTestId('pagination-next'))
-    fireEvent.click(screen.getByTestId('pagination-prev'))
-    expect(screen.getAllByTestId('post-row')).toHaveLength(20)
-    expect(screen.getByTestId('pagination-info')).toHaveTextContent('1 of 2')
+    expect(screen.getAllByTestId('post-row')).toHaveLength(1)
   })
 
-  it('changing filter resets to page 1', () => {
-    const posts = [
-      ...Array.from({ length: 21 }, (_, i) =>
-        makePost({ id: `d${i}`, titleEn: `Draft ${i}`, status: 'draft' }),
-      ),
-      makePost({ id: 'p1', titleEn: 'Published', status: 'published' }),
-    ]
-    renderApp(<PostTable posts={posts} />)
-    fireEvent.click(screen.getByTestId('pagination-next'))
-    expect(screen.getByTestId('pagination-info')).toHaveTextContent('2 of 2')
+  it('navigates to the next page through the URL', () => {
+    renderApp(<PostTable posts={make21Posts()} />)
+    fireEvent.click(screen.getByRole('button', { name: 'Next →' }))
+    expect(mockPush).toHaveBeenCalledWith('/admin/posts/?page=2')
+  })
+
+  it('changing filter drops the page from the URL', () => {
+    mockSearchParams = new URLSearchParams('page=2')
+    renderApp(<PostTable posts={make21Posts()} />)
     fireEvent.click(screen.getByTestId('filter-published'))
-    expect(screen.queryByTestId('pagination')).not.toBeInTheDocument()
+    expect(mockPush).toHaveBeenCalledWith('/admin/posts/?filter=published', {
+      scroll: false,
+    })
   })
 
   it('changing search resets to page 1', () => {
+    mockSearchParams = new URLSearchParams('page=2')
     renderApp(<PostTable posts={make21Posts()} />)
-    fireEvent.click(screen.getByTestId('pagination-next'))
     fireEvent.change(screen.getByTestId('search-input'), {
       target: { value: 'Post' },
     })
-    expect(screen.getByTestId('pagination-info')).toHaveTextContent('1 of 2')
+    expect(mockReplace).toHaveBeenCalledWith('/admin/posts/')
   })
 
   it('auto-adjusts to last page when current page becomes empty', async () => {
+    mockSearchParams = new URLSearchParams('page=2')
     renderApp(<PostTable posts={make21Posts()} />)
-    fireEvent.click(screen.getByTestId('pagination-next'))
     expect(screen.getAllByTestId('post-row')).toHaveLength(1)
     fireEvent.click(screen.getByTestId('archive-button'))
     fireEvent.click(screen.getByTestId('confirm-delete-confirm'))
-    await waitFor(() =>
-      expect(screen.queryByTestId('pagination')).not.toBeInTheDocument(),
-    )
+    await waitFor(() => expect(pagination()).not.toBeInTheDocument())
     expect(screen.getAllByTestId('post-row')).toHaveLength(20)
   })
 })

@@ -5,7 +5,9 @@ import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { Fragment, useState } from 'react'
 
+import { AdminPagination } from '@web/app/admin/(auth)/components/AdminPagination'
 import { ConfirmDeleteModal } from '@web/app/admin/(auth)/components/ConfirmDeleteModal'
+import { useUrlPagination } from '@web/app/admin/(auth)/hooks/useUrlPagination'
 import { useClientTranslation } from '@web/i18n/client'
 import type { PostInSeries, SeriesForAdmin } from '@web/lib/db/queries/series'
 
@@ -108,6 +110,7 @@ export function SeriesTable({ series }: SeriesTableProps) {
       getDisplayTitle(s).toLowerCase().includes(q)
     )
   })
+  const { page, pageItems, resetPage } = useUrlPagination(filtered)
 
   function handleStartEdit(s: SeriesForAdmin) {
     setEditId(s.id)
@@ -199,7 +202,10 @@ export function SeriesTable({ series }: SeriesTableProps) {
           type="search"
           placeholder={t('series.searchPlaceholder')}
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => {
+            setSearch(e.target.value)
+            resetPage()
+          }}
           data-testid="search-input"
         />
         <StyledButtonGroup>
@@ -239,7 +245,7 @@ export function SeriesTable({ series }: SeriesTableProps) {
               </StyledTd>
             </tr>
           )}
-          {filtered.map((s) => (
+          {pageItems.map((s) => (
             <Fragment key={s.id}>
               <StyledTr data-testid="series-row">
                 <StyledTd>
@@ -415,6 +421,7 @@ export function SeriesTable({ series }: SeriesTableProps) {
           ))}
         </StyledTbody>
       </StyledTable>
+      <AdminPagination total={filtered.length} page={page} />
 
       <ConfirmDeleteModal
         isOpen={deleteTargetId !== null}

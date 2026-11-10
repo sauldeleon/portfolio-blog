@@ -1,0 +1,1 @@
+export { SubscribersTable } from './SubscribersTable'

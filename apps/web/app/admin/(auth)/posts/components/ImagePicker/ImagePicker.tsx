@@ -3,6 +3,7 @@
 import axios from 'axios'
 import { useCallback, useEffect, useId, useRef, useState } from 'react'
 
+import { useInfiniteScroll } from '@web/app/admin/(auth)/hooks/useInfiniteScroll'
 import { BlurUpImage } from '@web/components/BlurUpImage'
 import { useClientTranslation } from '@web/i18n/client'
 import type { CloudinaryImage } from '@web/lib/cloudinary/images'
@@ -155,25 +156,9 @@ export function ImagePicker({
     }
   }, [])
 
-  useEffect(() => {
-    const sentinel = sentinelRef.current
-    /* istanbul ignore next */
-    if (!sentinel) return
-
-    const observer = new IntersectionObserver((entries) => {
-      const entry = entries[0]
-      if (
-        entry.isIntersecting &&
-        nextCursorRef.current &&
-        !loadingMoreRef.current
-      ) {
-        void loadMore()
-      }
-    })
-
-    observer.observe(sentinel)
-    return () => observer.disconnect()
-  }, [loadMore])
+  useInfiniteScroll(sentinelRef, () => {
+    if (nextCursorRef.current && !loadingMoreRef.current) void loadMore()
+  })
 
   async function handleUpload(file: File) {
     setUploading(true)

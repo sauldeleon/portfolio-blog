@@ -19,6 +19,7 @@ vi.mock('@web/i18n/client', () => ({
         'nav.cards': 'Cards',
         'nav.tracks': 'Tracks',
         'nav.comments': 'Comments',
+        'nav.subscribers': 'Subscribers',
         'nav.users': 'Users',
         'nav.logout': 'Logout',
       }
@@ -127,6 +128,22 @@ describe('AdminNav', () => {
     ;(usePathname as Mock).mockReturnValue('/admin/comments')
     renderApp(<AdminNav />)
     expect(screen.getByRole('link', { name: 'Comments' })).toBeInTheDocument()
+  })
+
+  it('renders Subscribers link', () => {
+    renderApp(<AdminNav />)
+    expect(screen.getByRole('link', { name: 'Subscribers' })).toHaveAttribute(
+      'href',
+      '/admin/subscribers',
+    )
+  })
+
+  it('marks Subscribers link active when on subscribers route', () => {
+    ;(usePathname as Mock).mockReturnValue('/admin/subscribers')
+    renderApp(<AdminNav />)
+    expect(
+      screen.getByRole('link', { name: 'Subscribers' }),
+    ).toBeInTheDocument()
   })
 
   it('renders Logout button', () => {
