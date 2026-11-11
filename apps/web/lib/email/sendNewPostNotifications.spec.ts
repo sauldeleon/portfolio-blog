@@ -1,6 +1,8 @@
 /**
  * @vitest-environment node
  */
+import type { ManageLinkParams } from '@web/lib/subscriptions/manageLink'
+
 const mockRender = vi.fn()
 const mockBatchSend = vi.fn()
 const mockGetActiveSubscribers = vi.fn()
@@ -31,6 +33,20 @@ vi.mock('@web/lib/db/queries/categories', () => ({
 vi.mock('@web/i18n/server', () => ({
   getServerTranslation: mockGetServerTranslation,
 }))
+const mockCreateManageLinkParams = vi.fn(
+  (token: string): ManageLinkParams | null => ({
+    token,
+    expires: '123',
+    signature: 'sig',
+  }),
+)
+vi.mock('@web/lib/subscriptions/manageLink', async (importOriginal) => ({
+  ...(await importOriginal<
+    typeof import('@web/lib/subscriptions/manageLink')
+  >()),
+  createManageLinkParams: (token: string) => mockCreateManageLinkParams(token),
+}))
+
 vi.mock('@web/lib/logger', () => ({
   logger: { error: mockLoggerError },
 }))
@@ -51,6 +67,7 @@ const mockSubscriber = {
   locale: 'en' as const,
   createdAt: new Date(),
   confirmedAt: new Date(),
+  enabled: true,
 }
 
 const mockTranslations = {
@@ -113,6 +130,23 @@ describe('sendNewPostNotifications', () => {
     expect(templateArg.unsubscribeUrl).toBe(
       'https://example.com/en/subscribe/unsubscribed?token=tok-abc',
     )
+    expect(templateArg.manageUrl).toBe(
+      'https://example.com/en/subscribe/manage?token=tok-abc&expires=123&signature=sig',
+    )
+  })
+
+  it('omits the manage link when links cannot be signed', async () => {
+    mockCreateManageLinkParams.mockReturnValueOnce(null)
+    await sendNewPostNotifications({
+      postId: 'p1',
+      postNumber: 7,
+      translations: mockTranslations,
+    })
+    const templateArg = mockNewPostEmail.mock.calls[0][0] as Record<
+      string,
+      unknown
+    >
+    expect(templateArg.manageUrl).toBeUndefined()
   })
 
   it('falls back to en translation when subscriber locale has no translation', async () => {

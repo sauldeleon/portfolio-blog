@@ -191,7 +191,9 @@ describe('TrackList', () => {
     renderApp(<TrackList />)
     const rows = await screen.findAllByTestId(/^track-row-/)
     expect(rows).toHaveLength(TRACKS_PER_PAGE)
-    expect(rows[0]).toHaveTextContent('2026-01-30 route')
+    expect(rows[0]).toHaveTextContent(
+      `2026-01-${String(TRACKS_PER_PAGE + 5).padStart(2, '0')} route`,
+    )
     expect(screen.getByTestId('tracks-count')).toHaveTextContent(
       'tracks.list.count',
     )

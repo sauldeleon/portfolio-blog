@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 
+import { getClientIp } from '@web/lib/api/getClientIp'
 import {
   createSubscription,
   getSubscriptionByEmail,
@@ -28,10 +29,7 @@ const subscribeSchema = z.object({
 })
 
 export async function POST(request: NextRequest) {
-  const ip =
-    request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ??
-    request.headers.get('x-real-ip') ??
-    'anonymous'
+  const ip = getClientIp(request)
 
   if (ratelimit) {
     const { success } = await ratelimit.limit(`subscribe:${ip}`)

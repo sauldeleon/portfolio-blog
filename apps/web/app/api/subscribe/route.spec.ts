@@ -71,6 +71,7 @@ const mockSubscription = {
   locale: 'en',
   createdAt: new Date(),
   confirmedAt: null,
+  enabled: true,
 }
 
 beforeEach(() => {

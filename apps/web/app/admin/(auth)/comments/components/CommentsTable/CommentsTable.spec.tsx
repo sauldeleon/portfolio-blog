@@ -7,6 +7,15 @@ import type { CommentRecord } from '@web/lib/db/queries/comments'
 
 import { CommentsTable } from './CommentsTable'
 
+let mockSearchParams = new URLSearchParams()
+const mockReplace = vi.fn()
+
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({ push: vi.fn(), replace: mockReplace }),
+  usePathname: () => '/admin/comments/',
+  useSearchParams: () => mockSearchParams,
+}))
+
 vi.mock('@web/i18n/client', () => ({
   useClientTranslation: vi.fn().mockReturnValue({
     t: (key: string) => {
@@ -310,5 +319,29 @@ describe('CommentsTable', () => {
     expect(
       screen.queryByText('Permanently delete selected comments?'),
     ).not.toBeInTheDocument()
+  })
+
+  describe('pagination', () => {
+    const many = Array.from({ length: 25 }, (_, i) =>
+      makeComment({ id: `c${i}` }),
+    )
+
+    afterEach(() => {
+      mockSearchParams = new URLSearchParams()
+    })
+
+    it('shows 20 rows and the page links', () => {
+      renderApp(<CommentsTable initialComments={many} />)
+      expect(screen.getAllByTestId('comment-row')).toHaveLength(20)
+      expect(
+        screen.getByRole('navigation', { name: 'pagination' }),
+      ).toBeInTheDocument()
+    })
+
+    it('shows the page from the URL', () => {
+      mockSearchParams = new URLSearchParams('page=2')
+      renderApp(<CommentsTable initialComments={many} />)
+      expect(screen.getAllByTestId('comment-row')).toHaveLength(5)
+    })
   })
 })

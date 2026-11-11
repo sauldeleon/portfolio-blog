@@ -40,8 +40,12 @@ vi.mock('@web/i18n/client', () => ({
   }),
 }))
 
+let mockSearchParams = new URLSearchParams()
+
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn(),
+  usePathname: () => '/admin/categories/',
+  useSearchParams: () => mockSearchParams,
 }))
 
 const makeCategory = (
@@ -633,5 +637,41 @@ describe('CategoryTable', () => {
       target: { value: 'Montañismo' },
     })
     expect(screen.getByTestId('edit-slug-input')).toHaveValue('montanismo')
+  })
+
+  describe('pagination', () => {
+    const many = Array.from({ length: 25 }, (_, i) =>
+      makeCategory({
+        id: i,
+        slug: `cat-${i}`,
+        translations: [
+          {
+            categorySlug: `cat-${i}`,
+            locale: 'en' as const,
+            name: `Category ${i}`,
+            description: null,
+            slug: `cat-${i}`,
+          },
+        ],
+      }),
+    )
+
+    afterEach(() => {
+      mockSearchParams = new URLSearchParams()
+    })
+
+    it('shows 20 rows and the page links', () => {
+      renderApp(<CategoryTable categories={many} />)
+      expect(screen.getAllByTestId('category-row')).toHaveLength(20)
+      expect(
+        screen.getByRole('navigation', { name: 'pagination' }),
+      ).toBeInTheDocument()
+    })
+
+    it('shows the page from the URL', () => {
+      mockSearchParams = new URLSearchParams('page=2')
+      renderApp(<CategoryTable categories={many} />)
+      expect(screen.getAllByTestId('category-row')).toHaveLength(5)
+    })
   })
 })

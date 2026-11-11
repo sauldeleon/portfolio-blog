@@ -30,6 +30,17 @@
   "unsubscribed.message": "You'll no longer receive emails from this blog.",
   "unsubscribed.error": "This unsubscribe link is invalid.",
   "unsubscribed.imageAlt": "Unsubscribed illustration",
+  "manage.title": "Manage your subscription",
+  "manage.subtitle": "Subscribed as {{email}}",
+  "manage.localeLabel": "Email language",
+  "manage.locale.en": "English",
+  "manage.locale.es": "Español",
+  "manage.submit": "Save changes",
+  "manage.submitting": "Saving...",
+  "manage.success": "Your subscription has been updated.",
+  "manage.error": "This link is invalid.",
+  "manage.expired": "This link has expired. Use the one in your most recent email.",
+  "manage.unsubscribeHint": "Don't want these emails anymore?",
   "backToBlog": "Back to blog",
   "notification.subject": "New post: {{title}}",
   "notification.previewText": "A new post has been published on sawl.dev.",
@@ -38,5 +49,6 @@
   "notification.heading": "New post",
   "notification.buttonLabel": "Read post",
   "notification.footerText": "You're receiving this because you subscribed to sawl.dev.",
-  "notification.unsubscribeText": "Unsubscribe"
+  "notification.unsubscribeText": "Unsubscribe",
+  "notification.manageText": "Manage subscription"
 }

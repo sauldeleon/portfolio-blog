@@ -12,8 +12,12 @@ vi.mock('@web/i18n/client', () => ({
   }),
 }))
 
+const mockSearchParams = new URLSearchParams()
+
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn().mockReturnValue({ refresh: vi.fn() }),
+  usePathname: () => '/admin/categories/',
+  useSearchParams: () => mockSearchParams,
 }))
 
 vi.mock('next/link', async () => {

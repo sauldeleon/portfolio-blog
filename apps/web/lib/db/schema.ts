@@ -163,6 +163,7 @@ export const subscriptions = pgTable('subscriptions', {
     .notNull()
     .defaultNow(),
   confirmedAt: timestamp('confirmed_at', { withTimezone: true }),
+  enabled: boolean('enabled').notNull().default(true),
 })
 
 export type Category = typeof categories.$inferSelect

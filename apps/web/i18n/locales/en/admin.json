@@ -19,10 +19,15 @@
     "cards": "Cards",
     "tracks": "Tracks",
     "comments": "Comments",
+    "subscribers": "Subscribers",
     "users": "Users",
     "logout": "Logout"
   },
   "refresh": "Refresh",
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next"
+  },
   "posts": {
     "title": "Posts",
     "newPost": "New post",
@@ -61,12 +66,7 @@
     "bulkArchiveConfirm": "Archive selected posts? Only draft posts will be archived. You can restore them later.",
     "bulkUnarchiveConfirm": "Unarchive selected posts? They will be restored as drafts.",
     "bulkDeleteConfirm": "Permanently delete selected posts? This cannot be undone.",
-    "empty": "No posts found",
-    "pagination": {
-      "prev": "← Prev",
-      "next": "Next →",
-      "pageOf": "{{page}} of {{total}}"
-    }
+    "empty": "No posts found"
   },
   "confirmDelete": {
     "confirm": "Confirm",
@@ -308,6 +308,46 @@
       "rejected": "Rejected"
     }
   },
+  "subscribers": {
+    "title": "Subscribers",
+    "searchPlaceholder": "Search by name…",
+    "empty": "No subscribers yet",
+    "noResults": "No subscribers match your search",
+    "count": "{{count}} of {{total}} receiving emails",
+    "enabled": "Enabled",
+    "disabled": "Disabled",
+    "toggleLabel": "Send new post emails to {{email}}",
+    "inactiveHint": "Only active subscribers receive emails",
+    "table": {
+      "name": "Name",
+      "email": "Email",
+      "status": "Status",
+      "locale": "Locale",
+      "createdAt": "Subscribed",
+      "enabled": "Receives emails",
+      "actions": "Actions"
+    },
+    "status": {
+      "pending": "Pending",
+      "active": "Active",
+      "unsubscribed": "Unsubscribed"
+    },
+    "edit": "Edit",
+    "editTitle": "Edit subscription",
+    "form": {
+      "name": "Name",
+      "locale": "Email language",
+      "localeOptions": {
+        "en": "English",
+        "es": "Español"
+      },
+      "save": "Save",
+      "saving": "Saving…",
+      "success": "Saved",
+      "error": "Could not save the subscription",
+      "cancel": "Cancel"
+    }
+  },
   "users": {
     "title": "Users",
     "newUser": "New user",
@@ -514,8 +554,6 @@
       "copyUrl": "Copy URL",
       "copied": "Copied",
       "count": "{{count}} tracks",
-      "previous": "Previous",
-      "next": "Next",
       "truncated": "GitHub returned an incomplete list (the repo is too large); some tracks are missing."
     },
     "tabs": {

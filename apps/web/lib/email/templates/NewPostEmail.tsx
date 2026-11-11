@@ -33,6 +33,8 @@ export interface NewPostEmailProps {
   postExcerpt: string
   postUrl: string
   unsubscribeUrl: string
+  /** Expiring self-service link; omitted when links can't be signed. */
+  manageUrl?: string
   siteUrl: string
   previewText: string
   greeting: string
@@ -41,6 +43,7 @@ export interface NewPostEmailProps {
   buttonLabel: string
   footerText: string
   unsubscribeText: string
+  manageText: string
   coverImageUrl?: string
   category?: string
   tags?: string[]
@@ -53,6 +56,7 @@ export function NewPostEmail({
   postExcerpt,
   postUrl,
   unsubscribeUrl,
+  manageUrl,
   siteUrl,
   previewText,
   greeting,
@@ -61,6 +65,7 @@ export function NewPostEmail({
   buttonLabel,
   footerText,
   unsubscribeText,
+  manageText,
   coverImageUrl,
   category,
   tags,
@@ -141,6 +146,14 @@ export function NewPostEmail({
           <Hr style={hrStyle} />
 
           <Section style={footerSectionStyle}>
+            {manageUrl && (
+              <>
+                <Link href={manageUrl} style={unsubscribeLinkStyle}>
+                  {manageText}
+                </Link>
+                <span style={footerSeparatorStyle}> · </span>
+              </>
+            )}
             <Link href={unsubscribeUrl} style={unsubscribeLinkStyle}>
               {unsubscribeText}
             </Link>
@@ -152,6 +165,11 @@ export function NewPostEmail({
 }
 
 export default NewPostEmail
+
+const footerSeparatorStyle: React.CSSProperties = {
+  color: '#555555',
+  fontSize: '12px',
+}
 
 const headerStyle: React.CSSProperties = {
   marginBottom: '24px',

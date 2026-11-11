@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { act, fireEvent, screen, waitFor } from '@testing-library/react'
 import axios from 'axios'
 
 import { renderApp } from '@sdlgr/test-utils'
@@ -405,45 +405,139 @@ describe('ImageManager', () => {
     expect(screen.getByTestId('search-input')).toBeInTheDocument()
   })
 
-  it('filters images by search query', async () => {
+  it('searches on the server after a short pause', async () => {
+    vi.mocked(axios.get).mockImplementation(async (url: string) =>
+      url.includes('search=photo1')
+        ? { data: { images: [mockImages[0]] } }
+        : { data: { images: mockImages } },
+    )
     renderApp(<ImageManager />)
     expect(await screen.findByTestId('image-grid')).toBeInTheDocument()
     fireEvent.change(screen.getByTestId('search-input'), {
-      target: { value: 'photo1' },
+      target: { value: ' photo1 ' },
     })
+    await waitFor(() =>
+      expect(
+        screen.queryByTestId('image-card-sawl.dev - blog/photo2'),
+      ).not.toBeInTheDocument(),
+    )
+    expect(axios.get).toHaveBeenCalledWith('/api/images/?search=photo1')
     expect(
       screen.getByTestId('image-card-sawl.dev - blog/photo1'),
     ).toBeInTheDocument()
-    expect(
-      screen.queryByTestId('image-card-sawl.dev - blog/photo2'),
-    ).not.toBeInTheDocument()
   })
 
   it('shows no-results state when search matches nothing', async () => {
+    vi.mocked(axios.get).mockImplementation(async (url: string) =>
+      url.includes('search=')
+        ? { data: { images: [] } }
+        : { data: { images: mockImages } },
+    )
     renderApp(<ImageManager />)
     expect(await screen.findByTestId('image-grid')).toBeInTheDocument()
     fireEvent.change(screen.getByTestId('search-input'), {
       target: { value: 'nonexistent' },
     })
-    expect(screen.getByTestId('no-results-state')).toBeInTheDocument()
-    expect(screen.getByTestId('no-results-state')).toHaveTextContent(
+    expect(await screen.findByTestId('no-results-state')).toHaveTextContent(
       'No images match your search.',
     )
     expect(screen.queryByTestId('image-grid')).not.toBeInTheDocument()
+    expect(screen.queryByTestId('empty-state')).not.toBeInTheDocument()
   })
 
-  it('search is case-insensitive', async () => {
-    renderApp(<ImageManager />)
-    expect(await screen.findByTestId('image-grid')).toBeInTheDocument()
-    fireEvent.change(screen.getByTestId('search-input'), {
-      target: { value: 'PHOTO1' },
+  describe('infinite scroll', () => {
+    let observerCallback: IntersectionObserverCallback
+
+    function reachEnd() {
+      act(() => {
+        observerCallback(
+          [{ isIntersecting: true }] as IntersectionObserverEntry[],
+          {} as IntersectionObserver,
+        )
+      })
+    }
+
+    beforeEach(() => {
+      global.IntersectionObserver = vi.fn(function (
+        cb: IntersectionObserverCallback,
+      ) {
+        observerCallback = cb
+        return { observe: vi.fn(), disconnect: vi.fn() }
+      }) as unknown as typeof IntersectionObserver
     })
-    expect(
-      screen.getByTestId('image-card-sawl.dev - blog/photo1'),
-    ).toBeInTheDocument()
-    expect(
-      screen.queryByTestId('image-card-sawl.dev - blog/photo2'),
-    ).not.toBeInTheDocument()
+
+    it('loads the next page when the end of the list is reached', async () => {
+      const page2 = { ...mockImages[0], publicId: 'sawl.dev - blog/photo3' }
+      vi.mocked(axios.get).mockImplementation(async (url: string) =>
+        url.includes('cursor=next-1')
+          ? { data: { images: [page2, mockImages[0]] } }
+          : { data: { images: mockImages, nextCursor: 'next-1' } },
+      )
+      renderApp(<ImageManager />)
+      expect(await screen.findByTestId('image-grid')).toBeInTheDocument()
+      reachEnd()
+      expect(
+        await screen.findByTestId('image-card-sawl.dev - blog/photo3'),
+      ).toBeInTheDocument()
+      expect(axios.get).toHaveBeenCalledWith('/api/images/?cursor=next-1')
+      // An image returned twice by Cloudinary is shown once.
+      expect(
+        screen.getAllByTestId('image-card-sawl.dev - blog/photo1'),
+      ).toHaveLength(1)
+    })
+
+    it('shows a loading line while the next page loads', async () => {
+      vi.mocked(axios.get).mockImplementation((url: string) =>
+        url.includes('cursor=')
+          ? new Promise(vi.fn())
+          : Promise.resolve({
+              data: { images: mockImages, nextCursor: 'next-1' },
+            }),
+      )
+      renderApp(<ImageManager />)
+      expect(await screen.findByTestId('image-grid')).toBeInTheDocument()
+      reachEnd()
+      expect(await screen.findByTestId('loading-more')).toBeInTheDocument()
+      reachEnd()
+      expect(
+        vi
+          .mocked(axios.get)
+          .mock.calls.filter(([u]) => String(u).includes('cursor=')),
+      ).toHaveLength(1)
+    })
+
+    it('puts an upload first even when several pages are loaded', async () => {
+      const page2 = { ...mockImages[0], publicId: 'sawl.dev - blog/photo3' }
+      vi.mocked(axios.get).mockImplementation(async (url: string) =>
+        url.includes('cursor=next-1')
+          ? { data: { images: [page2] } }
+          : { data: { images: mockImages, nextCursor: 'next-1' } },
+      )
+      renderApp(<ImageManager />)
+      expect(await screen.findByTestId('image-grid')).toBeInTheDocument()
+      reachEnd()
+      expect(
+        await screen.findByTestId('image-card-sawl.dev - blog/photo3'),
+      ).toBeInTheDocument()
+      fireEvent.click(screen.getByTestId('upload-button'))
+      fireEvent.click(screen.getByTestId('mock-upload'))
+      const cards = await screen.findAllByTestId(/^image-card-/)
+      expect(cards[0]).toHaveAttribute(
+        'data-testid',
+        'image-card-sawl.dev - blog/new',
+      )
+      expect(cards.at(-1)).toHaveAttribute(
+        'data-testid',
+        'image-card-sawl.dev - blog/photo3',
+      )
+    })
+
+    it('does not fetch more when there is no next page', async () => {
+      renderApp(<ImageManager />)
+      expect(await screen.findByTestId('image-grid')).toBeInTheDocument()
+      reachEnd()
+      expect(axios.get).toHaveBeenCalledTimes(1)
+    })
   })
 
   it('shows all images when search is cleared', async () => {
@@ -456,7 +550,7 @@ describe('ImageManager', () => {
       target: { value: '' },
     })
     expect(
-      screen.getByTestId('image-card-sawl.dev - blog/photo1'),
+      await screen.findByTestId('image-card-sawl.dev - blog/photo1'),
     ).toBeInTheDocument()
     expect(
       screen.getByTestId('image-card-sawl.dev - blog/photo2'),

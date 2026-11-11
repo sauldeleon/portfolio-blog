@@ -1,12 +1,15 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 
 import { Button } from '@sdlgr/button'
-import { Pagination } from '@sdlgr/pagination'
 
+import { AdminPagination } from '@web/app/admin/(auth)/components/AdminPagination'
+import {
+  ADMIN_PAGE_SIZE,
+  useUrlPagination,
+} from '@web/app/admin/(auth)/hooks/useUrlPagination'
 import { useClientTranslation } from '@web/i18n/client'
 
 import { formatSize } from '../../utils/format'
@@ -70,7 +73,7 @@ function TrackVersion({
   )
 }
 
-export const TRACKS_PER_PAGE = 25
+export const TRACKS_PER_PAGE = ADMIN_PAGE_SIZE
 
 export function TrackList() {
   const { t } = useClientTranslation('admin')
@@ -78,10 +81,6 @@ export function TrackList() {
   const [copiedPath, setCopiedPath] = useState<string | null>(null)
   const [isUploadOpen, setIsUploadOpen] = useState(false)
   const [uploaded, setUploaded] = useState<SavedTrackFile | null>(null)
-
-  const router = useRouter()
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
 
   const {
     data: listing,
@@ -94,20 +93,12 @@ export function TrackList() {
   const groups = groupTrackFiles(files).filter((g) =>
     g.name.toLowerCase().includes(search.toLowerCase()),
   )
-  const totalPages = Math.max(1, Math.ceil(groups.length / TRACKS_PER_PAGE))
-  const page = Math.min(
-    Math.max(1, parseInt(searchParams.get('page') ?? '1', 10) || 1),
-    totalPages,
-  )
-  const pageGroups = groups.slice(
-    (page - 1) * TRACKS_PER_PAGE,
-    page * TRACKS_PER_PAGE,
-  )
+  const { page, pageItems: pageGroups, resetPage } = useUrlPagination(groups)
 
   function changeSearch(value: string) {
     setSearch(value)
     // A new filter starts again from the first page.
-    if (searchParams.get('page')) router.replace(pathname)
+    resetPage()
   }
 
   function copyUrl(file: TrackFile) {
@@ -196,13 +187,7 @@ export function TrackList() {
           </StyledRow>
         ))}
       </StyledList>
-      <Pagination
-        total={groups.length}
-        page={page}
-        limit={TRACKS_PER_PAGE}
-        previousLabel={t('tracks.list.previous')}
-        nextLabel={t('tracks.list.next')}
-      />
+      <AdminPagination total={groups.length} page={page} />
       <TrackUploadModal
         isOpen={isUploadOpen}
         onClose={() => setIsUploadOpen(false)}

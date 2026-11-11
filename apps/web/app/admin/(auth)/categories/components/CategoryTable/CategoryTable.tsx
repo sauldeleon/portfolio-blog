@@ -5,7 +5,9 @@ import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
+import { AdminPagination } from '@web/app/admin/(auth)/components/AdminPagination'
 import { ConfirmDeleteModal } from '@web/app/admin/(auth)/components/ConfirmDeleteModal'
+import { useUrlPagination } from '@web/app/admin/(auth)/hooks/useUrlPagination'
 import { useClientTranslation } from '@web/i18n/client'
 import type {
   CategoryForAdmin,
@@ -84,6 +86,7 @@ export function CategoryTable({ categories }: CategoryTableProps) {
     const q = search.toLowerCase()
     return getDisplayName(c).toLowerCase().includes(q) || c.slug.includes(q)
   })
+  const { page, pageItems, resetPage } = useUrlPagination(filtered)
 
   function handleStartEdit(cat: CategoryForAdmin) {
     const tr = getTranslation(cat, 'en')
@@ -188,7 +191,10 @@ export function CategoryTable({ categories }: CategoryTableProps) {
           type="search"
           placeholder={t('categories.searchPlaceholder')}
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => {
+            setSearch(e.target.value)
+            resetPage()
+          }}
           data-testid="search-input"
         />
         <StyledButtonGroup>
@@ -228,7 +234,7 @@ export function CategoryTable({ categories }: CategoryTableProps) {
               </StyledTd>
             </tr>
           )}
-          {filtered.map((cat) => (
+          {pageItems.map((cat) => (
             <StyledTr key={cat.slug} data-testid="category-row">
               <StyledTd>
                 {editSlug === cat.slug ? (
@@ -333,6 +339,7 @@ export function CategoryTable({ categories }: CategoryTableProps) {
           ))}
         </StyledTbody>
       </StyledTable>
+      <AdminPagination total={filtered.length} page={page} />
       <ConfirmDeleteModal
         isOpen={deleteTargetSlug !== null}
         message={t('categories.deleteConfirm')}
